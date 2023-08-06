@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
 const params = {
 	domain: 'localhost',
@@ -7,7 +8,7 @@ const params = {
 	httpOnly: true
 };
 
-export const load = (event) => {
+export const load: PageServerLoad = (event) => {
 	const urlParams = new URLSearchParams(event.url.searchParams);
 	const secret = urlParams.get('secret');
 	if (!secret) throw error(409);

@@ -9,7 +9,9 @@
 	$: (async () => {
 		if (!browser || !$user) return;
 		ssrAccount.setSessionIntoLocalStorage(data.session);
-		if (!data.user?.myId) goto(`/auth/register/createAccount/${$user.$id}`); // * when user does not exist => create it
+		if (!data.user?.myId) goto(`/auth/register/createAccount/${$user.$id}`);
+		// * when user does not exist => create it
+		else goto('/');
 	})();
 </script>
 
