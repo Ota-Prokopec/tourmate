@@ -1,0 +1,42 @@
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+@import url('normalize.scss');
+@import url('fonts.scss');
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+#app {
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	display: flex;
+}
+
+.mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-bottom-right {
+	display: none !important;
+}
+
+:root {
+	--quizHeader: 300px;
+	--fontSize: 40px;
+	--blue: #96ddff;
+	--border-radius: 25px;
+	--grey: rgba(0, 0, 0, 0.4);
+
+	--max-viewport-width: 500px;
+}

@@ -1,0 +1,13 @@
+{
+	"editor.formatOnSave": true,
+	"svelte.plugin.typescript.format.enable": true, // enable Svelte formatter for TypeScript in Svelte files
+	"svelte.plugin.svelte.format.enable": true, // enable Svelte formatter for HTML and CSS in Svelte files
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode" // enable Prettier formatter for JavaScript files
+	},
+	"[ts]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode" // enable Prettier formatter for JavaScript files
+	},
+	"editor.fontFamily": "Fira Code",
+	"editor.fontLigatures": true
+}
