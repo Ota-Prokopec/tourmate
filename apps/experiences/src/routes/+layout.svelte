@@ -8,7 +8,7 @@
 
 	const queryClient = new QueryClient();
 
-	$: if (!$user && !$isLoading) goto('login'); //this is client-side Auth controll
+	//$: if (!$user && !$isLoading) goto('login'); //this is client-side Auth controll
 </script>
 
 <QueryClientProvider client={queryClient}>

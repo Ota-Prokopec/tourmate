@@ -13,6 +13,6 @@ export const load: ServerLoad = async (event): Promise<{ user: TGetAccountOutput
 		if (event.url.href?.includes('auth')) {
 			return { user: null };
 		}
-		throw redirect(302, '/auth/login');
+		//throw redirect(302, '/auth/login');
 	}
 };
