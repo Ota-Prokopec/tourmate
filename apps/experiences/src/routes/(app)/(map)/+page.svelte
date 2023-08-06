@@ -9,12 +9,14 @@
 	let myPosition: Position;
 
 	const tookPhoto = (e: CustomEvent<{ base64: string }>) => {
+		console.log(e.detail.base64);
+
 		$myNewExperienceStore = { imageSrc: e.detail.base64, position: myPosition };
-		goto(`/createNewExperience`);
+		//goto(`/createNewExperience`);
 	};
 </script>
 
-{#if $mapOrTakePhoto === 'map'}
+{#if false}
 	<Map bind:position={myPosition} />
 {:else}
 	<TakePhoto on:image={tookPhoto} />

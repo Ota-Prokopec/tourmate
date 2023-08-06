@@ -1,81 +1,87 @@
 <script lang="ts">
-	import { device, elementIdGenerator } from '@app/utils';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import ShootButton from './ShootButton.svelte';
-	import { blobToBase64 } from '@app/utils/src/utils/operations';
-	import type { Base64 } from '@app/ts-types';
+	import { browser } from '$app/environment';
+
+	let video_source: HTMLVideoElement;
+	let canvas: HTMLCanvasElement;
+
+	$: screenWidth = browser ? document.body.offsetWidth : 0;
+	$: screenHeight = browser ? document.body.offsetHeight : 0;
+
+	let constraints: MediaStreamConstraints;
+	let a: MediaTrackConstraints;
+
+	$: constraints = {
+		video: {
+			width: { ideal: 2160 },
+			height: { ideal: 4096 },
+			facingMode: 'environment'
+		},
+		audio: false
+	};
+
+	let className = '';
+	export { className as class };
+
 	const dispatch = createEventDispatcher<{
 		image: { base64: string };
 	}>();
 
-	export let base64Image: Base64 | undefined = undefined;
+	onMount(() => (canvas = document.createElement('canvas')));
 
-	const id = elementIdGenerator('video-');
-	let imageCapture: ImageCapture;
-	const getVideoElement = () => document.getElementById(id) as HTMLVideoElement;
+	async function access_webcam() {
+		try {
+			const stream = await navigator.mediaDevices.getUserMedia(constraints);
+			video_source.srcObject = stream;
+			video_source.play();
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
-	onMount(async () => {
-		const videoElement = getVideoElement();
-		if (!videoElement) throw new TypeError('document not found');
+	function takePicture() {
+		var context = canvas.getContext('2d')!;
 
-		let videoDevices: MediaDeviceInfo[] = [];
+		if (video_source.videoWidth && video_source.videoHeight) {
+			canvas.width = video_source.videoWidth;
+			canvas.height = video_source.videoHeight;
+			context.drawImage(
+				video_source,
+				0,
+				0,
+				video_source.videoWidth,
+				video_source.videoHeight
+			);
 
-		await navigator.mediaDevices.enumerateDevices().then((devices) => {
-			videoDevices = devices.filter((device) => device.kind === 'videoinput');
-		});
+			var base64 = canvas.toDataURL('image/png');
 
-		const width = document.body.offsetWidth;
-		const height = document.body.offsetHeight;
+			dispatch('image', {
+				base64: base64
+			});
+		}
+	}
 
-		const constraints: MediaTrackConstraints = {
-			width: width,
-			height: height,
-			deviceId: videoDevices[0].deviceId
-		};
-
-		navigator.mediaDevices
-			.getUserMedia({
-				video: constraints,
-				audio: false
-			})
-			.then(gotMedia);
-	});
-
-	const gotMedia = (stream: MediaStream) => {
-		const videoElement = getVideoElement();
-		if (!videoElement) throw new TypeError('document not found');
-		videoElement.srcObject = stream;
-		let mediaStreamTrack = stream.getVideoTracks()[0];
-		imageCapture = new ImageCapture(mediaStreamTrack);
-	};
-
-	const takePhoto = async () => {
-		const blob = await imageCapture.takePhoto();
-		const base64 = await blobToBase64(blob);
-		base64Image = base64;
-		dispatch('image', { base64: base64Image });
-	};
-
-	const rotatingClass = '';
-	let className = '';
-	export { className as class };
+	onMount(access_webcam);
 </script>
 
-<video
-	{id}
-	autoplay
-	class={twMerge('w-full h-full object-fill absolute', rotatingClass, className)}
-	src=""
->
-	<track kind="captions" />
-</video>
-<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
-	<ShootButton on:click={takePhoto} />
+<div class="h-full w-full relative">
+	<video
+		autoplay
+		bind:this={video_source}
+		class={twMerge('w-full h-full object-fill absolute', className)}
+	>
+		<track kind="captions" />
+	</video>
+	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
+		<ShootButton on:click={takePicture} />
+	</div>
 </div>
 
 <style>
-	.rotate {
-		transform: rotateY(180deg);
+	video {
+		-webkit-transform: scaleX(-1);
+		transform: scaleX(-1);
 	}
 </style>
