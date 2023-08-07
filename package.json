@@ -19,5 +19,7 @@
 		"apps/*",
 		"packages/*"
 	],
-	"dependencies": {}
+	"dependencies": {
+		"deep-equal": "^2.2.2"
+	}
 }

@@ -47,3 +47,16 @@ export const blobToBase64 = (blob: Blob): Promise<Base64> => {
 		reader.readAsDataURL(blob)
 	})
 }
+
+export const countSameItemsInArray = <InputArr extends Array<any>>(arr: InputArr): Record<string, number> =>
+	arr.reduce(
+		(cnt, cur) => (
+			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] = cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1),
+			cnt
+		),
+		{},
+	)
+
+export const roundNumber = (num: number, digits: number): number => {
+	return JSON.parse(num.toFixed(digits))
+}

@@ -20,10 +20,13 @@
 
 	$: placeDetailsPromise = browser ? getDetailsByLatAndLong(location[0], location[1]) : null;
 
-	onMount(async () => {
-		location = await getUsersLocation();
-		isLoading = false;
-	});
+	if (browser)
+		getUsersLocation().then((res) => {
+			location = res;
+			isLoading = false;
+		});
+
+	$: console.log(isLoading);
 
 	const onZoom = (e: CustomEvent<{ zoom: number }>) => {
 		zoom = e.detail.zoom;
@@ -31,6 +34,49 @@
 
 	let className = '';
 	export { className as class };
+
+	const videoStyle = {
+		version: 8,
+		sources: {
+			satellite: {
+				type: 'raster',
+				url: 'mapbox://mapbox.satellite',
+				tileSize: 256
+			},
+			video: {
+				type: 'video',
+				urls: [
+					'https://static-assets.mapbox.com/mapbox-gl-js/drone.mp4',
+					'https://static-assets.mapbox.com/mapbox-gl-js/drone.webm'
+				],
+				coordinates: [
+					[-122.51596391201019, 37.56238816766053],
+					[-122.51467645168304, 37.56410183312965],
+					[-122.51309394836426, 37.563391708549425],
+					[-122.51423120498657, 37.56161849366671]
+				]
+			}
+		},
+		layers: [
+			{
+				id: 'background',
+				type: 'background',
+				paint: {
+					'background-color': 'rgb(4,7,14)'
+				}
+			},
+			{
+				id: 'satellite',
+				type: 'raster',
+				source: 'satellite'
+			},
+			{
+				id: 'video',
+				type: 'raster',
+				source: 'video'
+			}
+		]
+	};
 </script>
 
 {#if !isLoading}
@@ -51,7 +97,7 @@
 	<Map
 		center={[location[1], location[0]]}
 		accessToken={token}
-		style="mapbox://styles/mapbox/outdoors-v12?optimize=true"
+		style={videoStyle}
 		bind:this={map}
 		{zoom}
 		on:zoom={(e) => {

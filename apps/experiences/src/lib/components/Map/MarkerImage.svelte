@@ -12,7 +12,8 @@
 	export let hovered: boolean = false;
 	const dispatch = createEventDispatcher<{ fullScreen: { imgSrc: string | Base64 } }>();
 
-	let button: HTMLButtonElement | null;
+	export let stacked = false;
+	export let offset: [number, number] = [0, 0];
 
 	let className = '';
 	export { className as class };
@@ -21,7 +22,7 @@
 	const onHoverEnd = () => (hovered = false);
 </script>
 
-<Marker {location}>
+<Marker {offset} {location}>
 	<button
 		on:mouseover={onHoverStart}
 		on:mouseout={onHoverEnd}
@@ -33,16 +34,15 @@
 				? 'w-16 h-16 hover:w-40 hover:h-auto hover:rounded-2xl group-hover:rounded-2xl'
 				: ''
 		)}
-		bind:this={button}
 	>
 		<Avatar
+			{stacked}
 			class={twMerge(
 				'rounded-full object-cover w-full h-full group',
 				zoom > 17 ? 'rounded-2xl  h-auto' : '',
 				className
 			)}
 			rounded
-			border
 			src={imgSrc}
 		/>
 		{#if hovered}

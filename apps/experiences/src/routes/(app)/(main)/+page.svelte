@@ -5,14 +5,15 @@
 	import { mapOrTakePhoto } from '../+layout.svelte';
 	import { myNewExperienceStore } from '../createNewExperience/newExperienceStore';
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
-	import type { Base64 } from '@app/ts-types';
+	import type { Base64, Location } from '@app/ts-types';
 	import Carousel from '$lib/components/Carousel/Carousel.svelte';
 	import type { CarouselImage } from '$lib/components/Carousel/types';
 	import { browser } from '$app/environment';
+	import { countSameItemsInArray, roundNumber } from '@app/utils';
+	import { json } from '@sveltejs/kit';
+	import { isEqual } from 'lodash';
 
 	export let data;
-
-	$: console.log(data.loadedExperiences.length);
 
 	const images: CarouselImage[] = data.loadedExperiences.map((exp) => ({
 		imgurl: exp.imgSrc,
@@ -29,12 +30,34 @@
 
 	let fullScreen = false;
 	let fullScreenImageSrc: string | Base64;
+
+	const experiencesLocations = data.loadedExperiences.map((exp) =>
+		exp.location.map((xy) => roundNumber(xy, 5))
+	) as Location[];
+
+	const sameLocation = countSameItemsInArray(experiencesLocations);
+
+	const howManyBeforeMe = (myLocation: Location, myIndex: number) => {
+		const res = experiencesLocations.filter(
+			(location, index) =>
+				isEqual([roundNumber(myLocation[0], 5), roundNumber(myLocation[1], 5)], location) &&
+				myIndex < index
+		).length;
+
+		return res;
+	};
+
+	$: console.log($myNewExperienceStore.location);
 </script>
 
 {#if $mapOrTakePhoto === 'map'}
-	<Map bind:zoom={mapZoom} bind:location={$myNewExperienceStore.location}>
-		{#each data.loadedExperiences as experience}
+	<Map bind:location={$myNewExperienceStore.location}>
+		{#each data.loadedExperiences as experience, index}
 			<MarkerImage
+				offset={[howManyBeforeMe(experience.location, index) * 20, 0]}
+				stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1
+					? true
+					: false}
 				on:fullScreen={(e) => {
 					fullScreen = true;
 					fullScreenImageSrc = e.detail.imgSrc;

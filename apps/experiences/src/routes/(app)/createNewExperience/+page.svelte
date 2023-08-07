@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Card, Img } from 'flowbite-svelte';
-	import { myNewExperienceStore } from './newExperienceStore.js';
+	import { myNewExperienceStore } from './newExperienceStore';
 	import Button from '$lib/components/Common/Button.svelte';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import { trpc } from '$lib/trpc.js';
@@ -11,11 +11,9 @@
 
 	export let data;
 
-	$: console.log($myNewExperienceStore);
+	$: console.log(location);
 
 	const { imgSrc, location } = $myNewExperienceStore;
-
-	$: console.log(location);
 
 	let state: 'loading' | 'success' | 'failure' | null = null;
 
@@ -26,7 +24,7 @@
 	const publicExp = async () => {
 		try {
 			state = 'loading';
-			const res = await trpc($page).experience.create.mutate({ imgSrc, location });
+			const res = await trpc($page).experience.create.mutate($myNewExperienceStore);
 			state = 'success';
 		} catch (error) {
 			state = 'failure';
