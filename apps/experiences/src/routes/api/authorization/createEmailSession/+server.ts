@@ -26,7 +26,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		);
 
 		const sessionTokenCookie = cookies.serialize(sessionToken.name, sessionToken.value, {
-			domain: 'localhost',
+			domain: process.env.HOSTNAME,
 			secure: sessionToken.secure,
 			sameSite: sessionToken.sameSite,
 			path: '/',
@@ -38,7 +38,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 			sessionLegacyToken.name,
 			sessionLegacyToken.value,
 			{
-				domain: 'localhost',
+				domain: process.env.HOSTNAME,
 				secure: sessionToken.secure,
 				sameSite: sessionToken.sameSite,
 				path: '/',
