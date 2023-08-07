@@ -7,10 +7,17 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			animation: {
+				cardShrinking: 'cardShrinking 2s linear'
+			},
 			keyframes: {
 				rotate45deg: {
 					'0%': { transform: 'rotate(0deg)' },
-					'100%': { transform: 'rotate(3deg)' }
+					'100%': { transform: 'rotate(45deg)' }
+				},
+				cardShrinking: {
+					'0%': { transform: 'scale(1) rotate(0deg)' },
+					'100%': { transform: 'scale(0.1) rotate(25deg)' }
 				}
 			}
 		},

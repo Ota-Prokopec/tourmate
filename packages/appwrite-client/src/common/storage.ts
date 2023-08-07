@@ -4,8 +4,7 @@ import { createBucketDispatcher } from '../Ludvik/main'
 export default (client: Client) => {
 	const Bucket = createBucketDispatcher(new Storage(client))
 
-	const profilePictures = new Bucket('profile-pictures')
-	const quizPictures = new Bucket('quiz-pictures')
+	const experiencesPictures = new Bucket('experiences-pictures')
 
-	return { profilePictures, quizPictures }
+	return { experiencesPictures }
 }

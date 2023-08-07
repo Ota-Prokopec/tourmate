@@ -8,8 +8,8 @@ export const userInfoZod = z
 		myId: string(),
 		username: string(),
 	})
-	.extend(appWriteDocumentOptionalZod)
-export const userInfoDocumentZod = userInfoZod.extend(appWriteDocumentZod)
+	.merge(appWriteDocumentOptionalZod)
+export const userInfoDocumentZod = userInfoZod.merge(appWriteDocumentZod)
 export const userInfoDocumentCreateZod = userInfoDocumentZod.omit({
 	...appwriteDocumentForOmit,
 })

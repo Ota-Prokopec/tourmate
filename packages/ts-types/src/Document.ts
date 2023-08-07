@@ -1,23 +1,23 @@
 import { z } from 'zod'
 import { Models } from 'appwrite'
 
-export const appWriteDocumentZod = {
+export const appWriteDocumentZod = z.object({
 	$id: z.string(),
 	$collectionId: z.string(),
 	$databaseId: z.string(),
 	$createdAt: z.string(),
 	$updatedAt: z.string(),
 	$permissions: z.string().array(),
-}
+})
 
-export const appWriteDocumentOptionalZod = {
+export const appWriteDocumentOptionalZod = z.object({
 	$id: z.string().optional(),
 	$collectionId: z.string().optional(),
 	$databaseId: z.string().optional(),
 	$createdAt: z.string().optional(),
 	$updatedAt: z.string().optional(),
 	$permissions: z.string().array().optional(),
-}
+})
 
 export const appwriteDocumentForOmit = {
 	$id: true,

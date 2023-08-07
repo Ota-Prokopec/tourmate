@@ -1,7 +1,7 @@
-import type { Base64, Position } from '@app/ts-types';
+import type { Base64, Location } from '@app/ts-types';
 import { writable } from 'svelte/store';
 
 export const myNewExperienceStore = writable<{
-	imageSrc: string | Base64;
-	position: Position;
-}>();
+	imgSrc: string | Base64;
+	location: Location;
+}>({ imgSrc: '', location: [0, 0] });

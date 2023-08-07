@@ -6,7 +6,7 @@ import browserStorage from './utils/localStorage'
 import { isTrivial, proxify } from './utils/treasureUtils'
 import { navigate } from './utils/navigation'
 import { elementIdGenerator } from './utils/elementIdGenerator'
-import { getUsersLocation } from './utils/location'
+import { getUsersLocation, getDetailsByLatAndLong } from './utils/location'
 import device from './utils/device'
 
 export {
@@ -26,4 +26,5 @@ export {
 	removeItemsFromArray,
 	isTrivial,
 	proxify,
+	getDetailsByLatAndLong,
 }

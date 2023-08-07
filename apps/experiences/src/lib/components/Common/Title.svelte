@@ -1,8 +1,8 @@
 <script>
-	let className = ''
-	export { className as class }
+	let className = '';
+	export { className as class };
 </script>
 
-<div class={'text-4xl ' + className}>
+<div class={'text-4xl text-center ' + className}>
 	<slot />
 </div>

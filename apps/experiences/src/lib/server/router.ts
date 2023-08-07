@@ -1,7 +1,9 @@
 import { accountRouter } from './routers/account/router';
+import { experienceRouter } from './routers/experiences/router';
 import { router } from './trpc';
 export const appRouter = router({
-	account: accountRouter
+	account: accountRouter,
+	experience: experienceRouter
 });
 
 // Export only the type of a router!

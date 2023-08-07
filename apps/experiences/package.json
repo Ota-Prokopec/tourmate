@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev --host",
+		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
@@ -49,6 +49,7 @@
 	"dependencies": {
 		"@app/appwrite-client": "*",
 		"@app/appwrite-server": "*",
+		"@app/experience-database-server": "*",
 		"@app/ts-types": "*",
 		"@app/user-database-server": "*",
 		"@app/utils": "*",
@@ -75,6 +76,7 @@
 		"puppeteer": "^21.0.1",
 		"superjson": "^1.12.3",
 		"svelte-appwrite-client": "^0.2.3",
+		"svelte-carousel": "^1.0.25",
 		"svelte-i18n": "^3.6.0",
 		"svelte-routing": "^1.6.0",
 		"tailwind-merge": "^1.14.0",

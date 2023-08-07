@@ -7,17 +7,28 @@
 	let video_source: HTMLVideoElement;
 	let canvas: HTMLCanvasElement;
 
-	$: screenWidth = browser ? document.body.offsetWidth : 0;
-	$: screenHeight = browser ? document.body.offsetHeight : 0;
+	const desiredAspectRatio = 16 / 9;
+
+	$: screenWidth = browser ? window.screen.width : 0;
+	$: screenHeight = browser ? window.screen.height : 0;
+
+	$: videoWidth = screenWidth;
+	$: videoHeight = screenWidth / desiredAspectRatio;
+
+	// Adjust video dimensions if height exceeds the screen height
+	if (videoHeight > screenHeight) {
+		videoHeight = screenHeight;
+		videoWidth = screenHeight * desiredAspectRatio;
+	}
 
 	let constraints: MediaStreamConstraints;
 	let a: MediaTrackConstraints;
 
 	$: constraints = {
 		video: {
-			width: { ideal: 2160 },
-			height: { ideal: 4096 },
-			facingMode: 'environment'
+			width: { ideal: 4096 }, // Max 4K width
+			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
+			facingMode: 'environment' // or 'user' for front-facing camera
 		},
 		audio: false
 	};
@@ -45,17 +56,12 @@
 		var context = canvas.getContext('2d')!;
 
 		if (video_source.videoWidth && video_source.videoHeight) {
-			canvas.width = video_source.videoWidth;
-			canvas.height = video_source.videoHeight;
-			context.drawImage(
-				video_source,
-				0,
-				0,
-				video_source.videoWidth,
-				video_source.videoHeight
-			);
+			const offsetWidth = (video_source.offsetWidth - screenWidth) / 2;
+			canvas.width = video_source.offsetWidth;
+			canvas.height = video_source.offsetHeight;
 
-			var base64 = canvas.toDataURL('image/png');
+			context.drawImage(video_source, offsetWidth, 0, screenWidth, screenHeight);
+			const base64 = canvas.toDataURL('image/png');
 
 			dispatch('image', {
 				base64: base64
@@ -70,7 +76,7 @@
 	<video
 		autoplay
 		bind:this={video_source}
-		class={twMerge('w-full h-full object-fill absolute', className)}
+		class={twMerge('w-full h-full object-cover  absolute', className)}
 	>
 		<track kind="captions" />
 	</video>

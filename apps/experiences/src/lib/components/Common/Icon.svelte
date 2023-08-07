@@ -2,28 +2,27 @@
 	import { goto } from '$app/navigation';
 	import { Avatar } from 'flowbite-svelte';
 
-	export let link: string = '';
-	export let icon: string | URL;
+	export let icon: string | URL | null = null;
 	export let outlineOnly: boolean = false;
 
 	let className: string = '';
 	export { className as class };
-
-	export let click = () => {
-		goto(link);
-	};
 </script>
 
 <button
+	on:mouseover
+	on:mouseout
+	on:touchstart
+	on:touchend
 	on:click
-	on:click={click}
 	class={`w-min h-min flex justify-center items-center ${className}`}
 >
 	{#if typeof icon === 'string' && icon.startsWith('http')}
 		<Avatar src={icon} size="md" />
-	{:else}
+	{:else if typeof icon === 'string'}
 		<i class:outlineOnly class={icon + '  flex justify-self-start'} />
 	{/if}
+	<slot />
 </button>
 
 <style>

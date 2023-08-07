@@ -3,10 +3,9 @@ import storage_func from './storage'
 
 export default (storage: Storage) => {
 	const Bucket = storage_func(storage)
-	const profilePictures = new Bucket('profile-pictures')
-	const quizPictures = new Bucket('quiz-pictures')
+	const experiencesPictures = new Bucket('experiences-pictures')
+
 	return {
-		profilePictures,
-		quizPictures,
+		experiencesPictures,
 	}
 }

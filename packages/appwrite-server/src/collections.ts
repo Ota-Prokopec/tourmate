@@ -1,5 +1,5 @@
 import { Databases } from 'node-appwrite'
-import { UserInfoDocument, UserInfoDocumentCreate } from '@app/ts-types'
+import { ExperienceDocument, ExperienceDocumentCreate, UserInfoDocument, UserInfoDocumentCreate } from '@app/ts-types'
 import database from './database'
 
 export default (databases: Databases) => {
@@ -7,5 +7,6 @@ export default (databases: Databases) => {
 
 	return {
 		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('account', 'userInfo'),
+		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 	}
 }

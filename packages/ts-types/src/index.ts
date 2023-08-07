@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { appWriteDocumentOptionalZod, appwriteDocumentForOmit, Document, ExcludeDocument, ExcludeDocumentDeep, PartialDocumentDeepZod, PartialDocumentDdeepZod } from './Document'
 
 import { userInfoDocumentCreateZod, userInfoDocumentZod, userInfoZod } from './Account'
-import { Position } from './Experience'
+import { ExperienceDocument, Experience, experienceDocumentZod, experienceZod, experienceDocumentCreateZod, ExperienceDocumentCreate, locationZod, Location } from './Experience'
 
 export type { Base64 } from './TsTypes'
 
@@ -17,7 +17,14 @@ export {
 	type ExcludeDocumentDeep,
 	PartialDocumentDeepZod,
 	PartialDocumentDdeepZod,
-	type Position,
+	type Location,
+	type ExperienceDocument,
+	type Experience,
+	experienceDocumentZod,
+	experienceZod,
+	experienceDocumentCreateZod,
+	type ExperienceDocumentCreate,
+	locationZod,
 }
 
 export type UserInfo = z.infer<typeof userInfoZod>

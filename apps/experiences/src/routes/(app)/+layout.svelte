@@ -5,6 +5,7 @@
 	import IconSettings from '$lib/components/Icons/IconSettings.svelte';
 	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
+	import { myNewExperienceStore } from './createNewExperience/newExperienceStore';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 </script>
@@ -20,6 +21,7 @@
 		</BottomNavItem>
 		<BottomNavItem
 			on:click={() => {
+				if ($myNewExperienceStore.location === undefined) return;
 				$mapOrTakePhoto = $mapOrTakePhoto === 'map' ? 'takePhoto' : 'map';
 			}}
 			appBtnPosition="middle"
