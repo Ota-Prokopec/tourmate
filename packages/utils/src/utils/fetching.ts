@@ -13,3 +13,6 @@ export default fetchnative
 export const post = (path: string, body: Body | undefined = undefined, headers: HeadersInit = []) => {
 	return fetchnative(path, 'POST', body, headers)
 }
+export const get = (path: string, body: Body | undefined = undefined, headers: HeadersInit = []) => {
+	return fetchnative(path, 'GET', body, headers)
+}

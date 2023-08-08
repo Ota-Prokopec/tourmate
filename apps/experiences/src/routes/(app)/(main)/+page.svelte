@@ -6,12 +6,12 @@
 	import { myNewExperienceStore } from '../createNewExperience/newExperienceStore';
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
 	import type { Base64, Location } from '@app/ts-types';
-	import Carousel from '$lib/components/Carousel/Carousel.svelte';
 	import type { CarouselImage } from '$lib/components/Carousel/types';
-	import { browser } from '$app/environment';
 	import { countSameItemsInArray, roundNumber } from '@app/utils';
-	import { json } from '@sveltejs/kit';
-	import { isEqual } from 'lodash';
+	import { isEqual, pick } from 'lodash';
+	import Carousel from '$lib/components/Carousel/Carousel.svelte';
+	import { Img } from 'flowbite-svelte';
+	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 
 	export let data;
 
@@ -28,11 +28,12 @@
 
 	let mapZoom: number;
 
-	let fullScreen = false;
-	let fullScreenImageSrc: string | Base64;
+	let almostProfile = true;
+	let almostProfileImageSrc: string | Base64 =
+		'https://cloud.appwrite.io/v1/storage/buckets/experiences-pictures/files/64d0bc360456fd8daebf/view?project=experiences';
 
 	const experiencesLocations = data.loadedExperiences.map((exp) =>
-		exp.location.map((xy) => roundNumber(xy, 5))
+		exp.location.map((xy) => roundNumber(xy, 4))
 	) as Location[];
 
 	const sameLocation = countSameItemsInArray(experiencesLocations);
@@ -40,34 +41,46 @@
 	const howManyBeforeMe = (myLocation: Location, myIndex: number) => {
 		const res = experiencesLocations.filter(
 			(location, index) =>
-				isEqual([roundNumber(myLocation[0], 5), roundNumber(myLocation[1], 5)], location) &&
-				myIndex < index
+				isEqual([roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)], location) &&
+				myIndex > index
 		).length;
 
 		return res;
 	};
-
-	$: console.log($myNewExperienceStore.location);
 </script>
 
-{#if $mapOrTakePhoto === 'map'}
-	<Map bind:location={$myNewExperienceStore.location}>
-		{#each data.loadedExperiences as experience, index}
-			<MarkerImage
-				offset={[howManyBeforeMe(experience.location, index) * 20, 0]}
-				stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1
-					? true
-					: false}
-				on:fullScreen={(e) => {
-					fullScreen = true;
-					fullScreenImageSrc = e.detail.imgSrc;
-				}}
-				zoom={mapZoom}
-				imgSrc={experience.imgSrc}
-				location={experience.location}
-			/>
-		{/each}
-	</Map>
-{:else}
-	<TakePhoto on:image={tookPhoto} />
-{/if}
+<div class="w-full h-full flex justify-center items-center">
+	{#if $mapOrTakePhoto === 'map'}
+		<Map bind:zoom={mapZoom} bind:location={$myNewExperienceStore.location}>
+			{#each data.loadedExperiences as experience, index}
+				<MarkerImage
+					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1
+						? true
+						: false}
+					on:fullScreen={(e) => {
+						almostProfile = true;
+						almostProfileImageSrc = e.detail.imgSrc;
+					}}
+					zoom={mapZoom}
+					imgSrc={experience.imgSrc}
+					location={[
+						experience.location[0],
+						experience.location[1] +
+							howManyBeforeMe(experience.location, index) * 0.00008
+					]}
+				/>
+			{/each}
+		</Map>
+	{:else}
+		<TakePhoto on:image={tookPhoto} />
+	{/if}
+
+	{#if almostProfile}
+		<AlmostProfileWithMainImage
+			on:close={() => (almostProfile = false)}
+			class="absolute sm:left-0 sm:top-0 sm:m-4 z-[60]"
+			userInfo={pick(data.user, 'myId', 'username', 'userId')}
+			imgSrc={almostProfileImageSrc}
+		/>
+	{/if}
+</div>

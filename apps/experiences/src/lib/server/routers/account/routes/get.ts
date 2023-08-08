@@ -15,7 +15,7 @@ export type TGetAccountOutputData =
 				userInfoCreatedAt: string;
 			};
 
-export const get = protectedProcedure.mutation(async ({ ctx }): Promise<TGetAccountOutputData> => {
+export const get = protectedProcedure.query(async ({ ctx }): Promise<TGetAccountOutputData> => {
 	const { account } = appwriteSveltekitSSR.set(ctx.appwriteClients.user);
 	const [appwriteAccount, quiziAccount] = await Promise.all([
 		account.get(),

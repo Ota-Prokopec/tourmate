@@ -4,6 +4,7 @@
 	// @ts-ignore
 	import Carousel from 'svelte-carousel';
 	import type { CarouselImage } from './types';
+	import { twMerge } from 'tailwind-merge';
 
 	const dispatch = createEventDispatcher();
 
@@ -30,7 +31,7 @@
 	});
 </script>
 
-<div class={'h-auto w-full' + className}>
+<div class={twMerge('h-auto w-full', className)}>
 	<Carousel
 		{arrows}
 		{pauseOnFocus}

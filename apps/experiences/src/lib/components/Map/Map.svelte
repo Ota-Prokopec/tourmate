@@ -3,12 +3,12 @@
 	import { getDetailsByLatAndLong, getUsersLocation } from '@app/utils';
 	import { Map } from '@beyonk/svelte-mapbox';
 	import GeolocateControl from '@beyonk/svelte-mapbox/map/controls/GeolocateControl.svelte';
-	import { onMount } from 'svelte';
 	import Title from '../Common/Title.svelte';
-	import { twMerge } from 'tailwind-merge';
 	import Loading from '../Common/Loading.svelte';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
 	import { browser } from '$app/environment';
+	import NavigationControl from '@beyonk/svelte-mapbox/map/controls/NavigationControl.svelte';
+	import ScaleControl from '@beyonk/svelte-mapbox/map/controls/ScaleControl.svelte';
 
 	const token =
 		'pk.eyJ1IjoiZXJhbnQ0MiIsImEiOiJjbDdybXo4dmswZ3E5M3FwMnFsazdpb3VoIn0.wXblbreOUt3e8N81CAH0Wg';
@@ -20,13 +20,10 @@
 
 	$: placeDetailsPromise = browser ? getDetailsByLatAndLong(location[0], location[1]) : null;
 
-	if (browser)
-		getUsersLocation().then((res) => {
-			location = res;
-			isLoading = false;
-		});
-
-	$: console.log(isLoading);
+	getUsersLocation().then((res) => {
+		location = res;
+		isLoading = false;
+	});
 
 	const onZoom = (e: CustomEvent<{ zoom: number }>) => {
 		zoom = e.detail.zoom;
@@ -80,7 +77,7 @@
 </script>
 
 {#if !isLoading}
-	<div class="absolute w-full flex justify-center items-center z-40 mt-10">
+	<div class="absolute w-full flex justify-center items-center mt-10 top-0">
 		{#await placeDetailsPromise}
 			<Loading />
 		{:then placeDetails}
@@ -95,11 +92,12 @@
 	</div>
 
 	<Map
+		on:click
 		center={[location[1], location[0]]}
 		accessToken={token}
 		style={videoStyle}
 		bind:this={map}
-		{zoom}
+		zoom={14}
 		on:zoom={(e) => {
 			//@ts-ignore
 			onZoom(e);
@@ -115,15 +113,10 @@
 					enableHighAccuracy: true
 				}
 			}}
-			on:geolocate={(e) => {
-				console.log(e);
-
-				// @ts-ignore
-				const { latitude, longitude } = e.detail.coords;
-				location = [latitude, longitude];
-			}}
 		/>
 		<slot />
+		<NavigationControl />
+		<ScaleControl />
 	</Map>
 {:else}
 	<FullPageLoading />

@@ -14,8 +14,9 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"node-appwrite": "^9.0.0",
 		"@app/ts-types": "*",
+		"lodash": "^4.17.21",
+		"node-appwrite": "^9.0.0",
 		"zod": "^3.21.4"
 	}
 }

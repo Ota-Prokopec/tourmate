@@ -1,4 +1,5 @@
-import appwriteServer, { Models } from '@app/appwrite-server'
+import appwriteServer, { Models, appwriteDocumentKeys } from '@app/appwrite-server'
+import { omit } from 'lodash'
 import { Query } from 'node-appwrite'
 
 export const getUserIdByMyId = async (myId: string) => {
@@ -15,6 +16,25 @@ export const getUserByMyId = async (myId: string) => {
 export const getUserInfoByUserId = async (userId: string) => {
 	const { collections } = appwriteServer.setAdmin()
 	return await collections.userInfo.getDocument([Query.equal('userId', userId)])
+}
+
+export const getUserProfileByUserId = async (userId: string) => {
+	const { collections, users } = appwriteServer.setAdmin()
+
+	const userInfo = await collections.userInfo.getDocument([Query.equal('userId', userId)])
+	const isActive = (await users.listSessions(userId)).total > 0
+
+	return {
+		...omit(userInfo, appwriteDocumentKeys),
+		detail: {
+			isActive,
+		},
+	}
+}
+export const getUserProfileByMyId = async (quiziId: string) => {
+	const { collections } = appwriteServer.setAdmin()
+	const userId: string = (await collections.userInfo.getDocument([Query.equal('quiziId', quiziId)])).userId
+	return await getUserProfileByUserId(userId)
 }
 /*
 export const searchUsers = async (searchText: string, limit = 10) => {

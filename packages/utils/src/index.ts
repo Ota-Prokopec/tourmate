@@ -1,6 +1,6 @@
 import { getUniqueListBy } from './utils/array'
 import { removeKeysFromObject } from './utils/object'
-import { post } from './utils/fetching'
+import { post, get } from './utils/fetching'
 import {
 	removeItemsFromArray,
 	uniqueArrayItems,
@@ -29,6 +29,7 @@ export {
 	isBase64,
 	removeKeysFromObject,
 	post,
+	get,
 	device,
 	getParsed,
 	uniqueArrayItems,

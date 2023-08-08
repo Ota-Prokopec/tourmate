@@ -7,6 +7,7 @@ export const userInfoZod = z
 		userId: string(),
 		myId: string(),
 		username: string(),
+		profilePictureURL: string().url().optional(),
 	})
 	.merge(appWriteDocumentOptionalZod)
 export const userInfoDocumentZod = userInfoZod.merge(appWriteDocumentZod)

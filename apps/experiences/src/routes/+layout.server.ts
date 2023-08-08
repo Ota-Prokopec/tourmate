@@ -5,7 +5,7 @@ import type { TGetAccountOutputData } from '$lib/server/routers/account/routes/g
 export const load: ServerLoad = async (event): Promise<{ user: TGetAccountOutputData | null }> => {
 	try {
 		return {
-			user: await trpc(event).account.get.mutate()
+			user: await trpc(event).account.get.query()
 		};
 	} catch (error) {
 		console.log(error);
