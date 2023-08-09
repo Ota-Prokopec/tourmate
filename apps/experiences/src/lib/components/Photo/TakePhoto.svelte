@@ -34,7 +34,6 @@
 
 	$: MediaStreamConstraints = {
 		video: {
-			aspectRatio: desiredAspectRatio,
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: facingMode
