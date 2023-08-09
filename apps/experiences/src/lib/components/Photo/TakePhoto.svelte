@@ -26,6 +26,7 @@
 
 	$: constraints = {
 		video: {
+			frameRate: { max: 100, ideal: 60 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: 'environment' // or 'user' for front-facing camera
@@ -87,7 +88,8 @@
 
 <style>
 	video {
-		-webkit-transform: scaleX(-1);
+		/*	-webkit-transform: scaleX(-1);
 		transform: scaleX(-1);
+		*/
 	}
 </style>

@@ -9,6 +9,7 @@
 	import { browser } from '$app/environment';
 	import NavigationControl from '@beyonk/svelte-mapbox/map/controls/NavigationControl.svelte';
 	import ScaleControl from '@beyonk/svelte-mapbox/map/controls/ScaleControl.svelte';
+	import { twMerge } from 'tailwind-merge';
 
 	const token =
 		'pk.eyJ1IjoiZXJhbnQ0MiIsImEiOiJjbDdybXo4dmswZ3E5M3FwMnFsazdpb3VoIn0.wXblbreOUt3e8N81CAH0Wg';
@@ -74,53 +75,41 @@
 	};
 </script>
 
-{#if !isLoading}
-	<div class="absolute w-full flex justify-center items-center mt-10 top-0">
-		{#await getDetailsByLatAndLong(location[0], location[1])}
-			<Loading />
-		{:then placeDetails}
-			<Title class="z-50"
-				>{placeDetails?.suburb ??
-					placeDetails?.city ??
-					placeDetails?.state ??
-					placeDetails?.country ??
-					placeDetails?.name}</Title
-			>
-		{/await}
-	</div>
-
-	<Map
-		on:click
-		center={[location[1], location[0]]}
-		accessToken={token}
-		style={videoStyle}
-		bind:this={map}
-		zoom={14}
-		on:zoom={(e) => {
-			//@ts-ignore
-			onZoom(e);
-		}}
-	>
-		<GeolocateControl
-			options={{
-				trackUserLocation: true,
-				showUserHeading: true,
-				showAccuracyCircle: false,
-				positionOptions: {
-					enableHighAccuracy: true
-				}
+<div class={twMerge('w-full h-full relative', className)}>
+	{#if !isLoading}
+		<Map
+			on:click
+			center={[location[1], location[0]]}
+			accessToken={token}
+			style={'mapbox://styles/mapbox/satellite-streets-v12'}
+			bind:this={map}
+			zoom={14}
+			on:zoom={(e) => {
+				//@ts-ignore
+				onZoom(e);
 			}}
-			on:geolocate={(e) => {
-				location = [e.detail.coords.latitude, e.detail.coords.longitude];
-			}}
-		/>
-		<slot />
-		<NavigationControl />
-		<ScaleControl />
-	</Map>
-{:else}
-	<FullPageLoading />
-{/if}
+		>
+			<GeolocateControl
+				options={{
+					trackUserLocation: true,
+					showUserHeading: true,
+					showAccuracyCircle: false,
+					positionOptions: {
+						enableHighAccuracy: true
+					}
+				}}
+				on:geolocate={(e) => {
+					location = [e.detail.coords.latitude, e.detail.coords.longitude];
+				}}
+			/>
+			<slot />
+			<NavigationControl />
+			<ScaleControl />
+		</Map>
+	{:else}
+		<FullPageLoading />
+	{/if}
+</div>
 
 <style>
 	:global(.mapboxgl-marker) {

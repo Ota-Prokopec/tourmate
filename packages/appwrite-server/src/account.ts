@@ -18,7 +18,7 @@ export class Account extends AccountServer {
 
 			if (json.code >= 400) throw new Error('wrong email or password at appwrite-server account/createSession')
 
-			const SSRHostName = process.env.SSR_HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`
+			const SSRHostName = process.env.HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`
 
 			const cookiesStr = (response.headers.get('set-cookie') ?? '').split(SSRHostName).join(SSRHostName)
 

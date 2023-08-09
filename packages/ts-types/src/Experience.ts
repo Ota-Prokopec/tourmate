@@ -21,6 +21,9 @@ export const experienceDocumentZod = z
 	.merge(appWriteDocumentZod)
 export const experienceDocumentCreateZod = experienceDocumentZod.omit(appwriteDocumentForOmit)
 
+export const loadedExperienceZod = experienceZod.merge(appWriteDocumentZod)
+
 export type ExperienceDocument = z.infer<typeof experienceDocumentZod>
 export type Experience = z.infer<typeof experienceZod> & { imgSrc: string | Base64 }
 export type ExperienceDocumentCreate = z.infer<typeof experienceDocumentCreateZod>
+export type LoadedExperience = z.infer<typeof loadedExperienceZod>

@@ -22,19 +22,21 @@ export const getUserInfoByUserId = async (userId: string) => {
 export const getUserProfileByUserId = async (userId: string) => {
 	const { collections, users } = appwriteServer.setAdmin()
 
-	const userInfo = await collections.userInfo.getDocument([Query.equal('userId', userId)])
-	const isActive = (await users.listSessions(userId)).total > 0
+	const userInfoPromise = collections.userInfo.getDocument([Query.equal('userId', userId)])
+	const sessionsPromise = users.listSessions(userId)
+
+	const [userInfo, sessions] = await Promise.all([userInfoPromise, sessionsPromise])
 
 	return {
 		...omit(userInfo, appwriteDocumentKeys),
 		detail: {
-			isActive,
+			isActive: sessions.total > 0,
 		},
 	}
 }
-export const getUserProfileByMyId = async (quiziId: string) => {
+export const getUserProfileByMyId = async (myId: string) => {
 	const { collections } = appwriteServer.setAdmin()
-	const userId: string = (await collections.userInfo.getDocument([Query.equal('quiziId', quiziId)])).userId
+	const userId: string = (await collections.userInfo.getDocument([Query.equal('myId', myId)])).userId
 	return await getUserProfileByUserId(userId)
 }
 /*

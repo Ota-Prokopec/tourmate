@@ -17,6 +17,7 @@ import { elementIdGenerator } from './utils/elementIdGenerator'
 import { getUsersLocation, getDetailsByLatAndLong } from './utils/location'
 import device from './utils/device'
 import { roundNumber } from './utils/operations'
+import clipboard from './utils/clipboard'
 
 export {
 	browserStorage,
@@ -39,4 +40,5 @@ export {
 	getDetailsByLatAndLong,
 	countSameItemsInArray,
 	roundNumber,
+	clipboard,
 }

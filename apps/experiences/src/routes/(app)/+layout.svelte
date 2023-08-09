@@ -15,7 +15,7 @@
 		<slot />
 	</wrap>
 
-	<BottomNav position="absolute" navType="application" classInner="grid-cols-3">
+	<BottomNav position="fixed" navType="application" classInner="grid-cols-3">
 		<BottomNavItem appBtnPosition="left">
 			<IconEnvelope />
 		</BottomNavItem>
