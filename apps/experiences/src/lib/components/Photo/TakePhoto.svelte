@@ -66,10 +66,10 @@
 			canvas.width = video_source.offsetWidth;
 			canvas.height = video_source.offsetHeight;
 
-			if (facingMode === 'user') {
-				context.scale(-1, 1);
-				context.setTransform(1, 0, 0, 1, 0, 0);
-			}
+			context.save();
+			context.scale(0.75, 1);
+			context.setTransform(1, 0, 0, 1, 0, 0);
+			context.strokeRect(5, 5, 25, 15);
 
 			context.drawImage(video_source, offsetWidth, 0, screenWidth, screenHeight);
 			const base64 = canvas.toDataURL('image/png');
