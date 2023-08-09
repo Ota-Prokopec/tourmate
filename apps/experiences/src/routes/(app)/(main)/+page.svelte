@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Map from '$lib/components/Map/Map.svelte';
-	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
+	import TakePhoto from '$lib/components/Photo/TakePhotoOld.svelte';
 	import { goto } from '$app/navigation';
 	import { mapOrTakePhoto } from '../+layout.svelte';
 	import { myNewExperienceStore } from '../createNewExperience/newExperienceStore';
