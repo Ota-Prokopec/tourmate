@@ -4,7 +4,6 @@
 	import ShootButton from './ShootButton.svelte';
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
-	import { f } from 'vitest/dist/index-5aad25c1';
 
 	export let facingMode: 'user' | 'environment' = 'environment';
 
@@ -47,9 +46,10 @@
 	$: access_webcam(MediaStreamConstraints);
 
 	onMount(() => (canvas = document.createElement('canvas')));
-	if (!browser) return;
 
 	async function access_webcam(constraints: MediaStreamConstraints) {
+		if (!browser) return;
+
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia(constraints);
 			video_source.srcObject = stream;
