@@ -35,7 +35,7 @@
 	$: MediaStreamConstraints = {
 		video: {
 			aspectRatio: desiredAspectRatio,
-			frameRate: { min: 30, ideal: 60 },
+			frameRate: { min: 30, ideal: 40 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: facingMode
@@ -65,6 +65,11 @@
 			const offsetWidth = (video_source.offsetWidth - screenWidth) / 2;
 			canvas.width = video_source.offsetWidth;
 			canvas.height = video_source.offsetHeight;
+
+			if (facingMode === 'user') {
+				context.scale(-1, 1);
+				context.setTransform(1, 0, 0, 1, 0, 0);
+			}
 
 			context.drawImage(video_source, offsetWidth, 0, screenWidth, screenHeight);
 			const base64 = canvas.toDataURL('image/png');
