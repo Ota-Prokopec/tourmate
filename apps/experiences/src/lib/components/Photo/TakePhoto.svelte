@@ -4,6 +4,7 @@
 	import ShootButton from './ShootButton.svelte';
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
+	import { f } from 'vitest/dist/index-5aad25c1';
 
 	export let facingMode: 'user' | 'environment' = 'environment';
 
@@ -35,7 +36,6 @@
 	$: MediaStreamConstraints = {
 		video: {
 			aspectRatio: desiredAspectRatio,
-			frameRate: { min: 10, ideal: 40 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: facingMode
@@ -44,9 +44,10 @@
 		audio: false
 	};
 
-	$: if (browser) access_webcam(MediaStreamConstraints);
+	$: access_webcam(MediaStreamConstraints);
 
 	onMount(() => (canvas = document.createElement('canvas')));
+	if (!browser) return;
 
 	async function access_webcam(constraints: MediaStreamConstraints) {
 		try {
