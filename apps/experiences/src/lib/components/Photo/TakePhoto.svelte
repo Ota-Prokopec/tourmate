@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
 
-	export let facingMode: 'user' | 'environment' = 'user';
+	export let facingMode: 'user' | 'environment' = 'environment';
 
 	let className = '';
 	export { className as class };
@@ -52,6 +52,7 @@
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia(constraints);
 			video_source.srcObject = stream;
+			video_source.play();
 		} catch (error) {
 			console.error(error);
 		}
