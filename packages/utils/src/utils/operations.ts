@@ -60,3 +60,14 @@ export const countSameItemsInArray = <InputArr extends Array<any>>(arr: InputArr
 export const roundNumber = (num: number, digits: number): number => {
 	return JSON.parse(num.toFixed(digits))
 }
+
+export const arrayBufferIntoBase64 = (arrBuff: ArrayBuffer): Base64 => Buffer.from(arrBuff).toString('base64') as Base64
+
+export const fileToBase64 = (file: File): Promise<string | Base64 | null> => {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader()
+		reader.readAsDataURL(file)
+		reader.onload = () => resolve(reader.result as string | Base64)
+		reader.onerror = () => reject(reader.error)
+	})
+}

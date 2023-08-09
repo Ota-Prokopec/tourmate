@@ -16,7 +16,7 @@ import { navigate } from './utils/navigation'
 import { elementIdGenerator } from './utils/elementIdGenerator'
 import { getUsersLocation, getDetailsByLatAndLong } from './utils/location'
 import device from './utils/device'
-import { roundNumber } from './utils/operations'
+import { roundNumber, fileToBase64 } from './utils/operations'
 import clipboard from './utils/clipboard'
 
 export {
@@ -41,4 +41,5 @@ export {
 	countSameItemsInArray,
 	roundNumber,
 	clipboard,
+	fileToBase64,
 }

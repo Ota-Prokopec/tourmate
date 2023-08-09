@@ -4,7 +4,7 @@
 	import { Avatar, Button, ButtonGroup, Dropzone } from 'flowbite-svelte';
 	import MyAlert from './MyAlert.svelte';
 	import { Button as FlowbiteButton } from 'flowbite-svelte';
-	import { clipboard, elementIdGenerator } from '@app/utils';
+	import { clipboard, elementIdGenerator, fileToBase64 } from '@app/utils';
 	import IconUpload from '../Icons/IconUpload.svelte';
 	import type { Base64 } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
@@ -27,7 +27,7 @@
 	export let style: 'avatar' | 'basic' = 'basic';
 
 	const change = async (file: File) => {
-		const base64 = await getBase64(file);
+		const base64 = await fileToBase64(file);
 		dispatch('image', { name: file.name, base64: base64, file: file });
 		if (autoImagesrcCompleter) imageSrc = base64;
 	};
@@ -57,15 +57,6 @@
 	const handleChange = async (event: any) => {
 		const files = event.target.files;
 		if (files.length > 0) change(files[0]);
-	};
-
-	const getBase64 = (file: File): Promise<string | Base64 | null> => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = () => resolve(reader.result as string | Base64);
-			reader.onerror = () => reject(reader.error);
-		});
 	};
 
 	const openGallery = () => {
