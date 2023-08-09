@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Map from '$lib/components/Map/Map.svelte';
-	import TakePhoto from '$lib/components/Photo/TakePhotoOld.svelte';
+	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
 	import { goto } from '$app/navigation';
 	import { mapOrTakePhoto } from '../+layout.svelte';
 	import { myNewExperienceStore } from '../createNewExperience/newExperienceStore';
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
 	import type { Base64, Location } from '@app/ts-types';
-	import type { CarouselImage } from '$lib/components/Carousel/types';
 	import { countSameItemsInArray, roundNumber } from '@app/utils';
 	import { isEqual, pick } from 'lodash';
 
