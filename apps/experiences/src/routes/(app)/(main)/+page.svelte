@@ -7,7 +7,7 @@
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
 	import type { Base64, Location } from '@app/ts-types';
 	import { countSameItemsInArray, roundNumber } from '@app/utils';
-	import { isEqual, pick } from 'lodash';
+	import lodash from 'lodash';
 
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 
@@ -39,8 +39,10 @@
 	const howManyBeforeMe = (myLocation: Location, myIndex: number) => {
 		const res = experiencesLocations.filter(
 			(location, index) =>
-				isEqual([roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)], location) &&
-				myIndex > index
+				lodash.isEqual(
+					[roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)],
+					location
+				) && myIndex > index
 		).length;
 
 		return res;
@@ -78,7 +80,7 @@
 			<AlmostProfileWithMainImage
 				on:close={() => (almostProfile = false)}
 				class="absolute sm:left-0 sm:top-0 sm:m-4 z-[60]"
-				userInfo={pick(data.user, 'myId', 'username', 'userId')}
+				userInfo={lodash.pick(data.user, 'myId', 'username', 'userId')}
 				imgSrc={almostProfileImageSrc}
 			/>
 		{/if}

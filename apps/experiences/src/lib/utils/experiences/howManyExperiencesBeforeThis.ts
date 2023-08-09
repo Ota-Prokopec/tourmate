@@ -1,6 +1,6 @@
 import type { Experience, Location } from '@app/ts-types';
 import { roundNumber } from '@app/utils';
-import { isEqual } from 'lodash';
+import lodash from 'lodash';
 
 export const howManyExperiencesBefore = (
 	experiences: Experience[],
@@ -13,8 +13,10 @@ export const howManyExperiencesBefore = (
 
 	const res = experiencesLocations.filter(
 		(location, index) =>
-			isEqual([roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)], location) &&
-			myIndex > index
+			lodash.isEqual(
+				[roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)],
+				location
+			) && myIndex > index
 	).length;
 
 	return res;
