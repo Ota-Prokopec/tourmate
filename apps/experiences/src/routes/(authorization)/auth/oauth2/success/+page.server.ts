@@ -14,8 +14,8 @@ export const load: PageServerLoad = (event) => {
 	console.log(secret);
 	if (!secret) throw error(409);
 
-	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, params);
-	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}_legacy`, secret, params);
+	event.cookies.set(`a_session_${'experiences'}`, secret, params);
+	event.cookies.set(`a_session_${'experiences'}_legacy`, secret, params);
 	return {
 		session: secret
 	};
