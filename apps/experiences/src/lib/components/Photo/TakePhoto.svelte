@@ -3,10 +3,19 @@
 	import { twMerge } from 'tailwind-merge';
 	import ShootButton from './ShootButton.svelte';
 	import { browser } from '$app/environment';
+	import Icon from '../Common/Icon.svelte';
+
+	export let facingMode: 'user' | 'environment' = 'user';
+
+	let className = '';
+	export { className as class };
+
+	const dispatch = createEventDispatcher<{
+		image: { base64: string };
+	}>();
 
 	let video_source: HTMLVideoElement;
 	let canvas: HTMLCanvasElement;
-
 	const desiredAspectRatio = 16 / 9;
 
 	$: screenWidth = browser ? window.screen.width : 0;
@@ -21,34 +30,28 @@
 		videoWidth = screenHeight * desiredAspectRatio;
 	}
 
-	let constraints: MediaStreamConstraints;
-	let a: MediaTrackConstraints;
+	let MediaStreamConstraints: MediaStreamConstraints;
 
-	$: constraints = {
+	$: MediaStreamConstraints = {
 		video: {
+			aspectRatio: desiredAspectRatio,
 			frameRate: { min: 30, ideal: 60 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
-			facingMode: 'environment' // or 'user' for front-facing camera
+			facingMode: facingMode
 		},
 
 		audio: false
 	};
 
-	let className = '';
-	export { className as class };
-
-	const dispatch = createEventDispatcher<{
-		image: { base64: string };
-	}>();
+	$: if (browser) access_webcam(MediaStreamConstraints);
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
-	async function access_webcam() {
+	async function access_webcam(constraints: MediaStreamConstraints) {
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia(constraints);
 			video_source.srcObject = stream;
-			video_source.play();
 		} catch (error) {
 			console.error(error);
 		}
@@ -71,25 +74,30 @@
 		}
 	}
 
-	onMount(access_webcam);
+	const swapCameras = () => (facingMode = facingMode === 'user' ? 'environment' : 'user');
 </script>
 
 <div class="h-full w-full relative">
 	<video
 		autoplay
 		bind:this={video_source}
-		class={twMerge('w-full h-full object-cover  absolute', className)}
+		class={twMerge(
+			'w-full h-full object-cover  absolute',
+			facingMode === 'user' ? 'scale-x-[-1]' : '',
+			className
+		)}
 	>
 		<track kind="captions" />
 	</video>
 	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
-		<ShootButton on:click={takePicture} />
+		<ShootButton class="active:animate-ping" on:click={takePicture} />
+		<Icon
+			on:click={swapCameras}
+			icon="fas fa-sync-alt"
+			class="text-4xl absolute right-0 m-14 active:animate-ping"
+		/>
 	</div>
 </div>
 
 <style>
-	video {
-		-webkit-transform: scaleX(-1);
-		transform: scaleX(-1);
-	}
 </style>
