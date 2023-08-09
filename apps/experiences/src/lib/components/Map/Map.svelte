@@ -18,8 +18,6 @@
 	export let zoom: number = 16;
 	export let isLoading = true;
 
-	$: placeDetailsPromise = browser ? getDetailsByLatAndLong(location[0], location[1]) : null;
-
 	getUsersLocation().then((res) => {
 		location = res;
 		isLoading = false;
@@ -78,10 +76,10 @@
 
 {#if !isLoading}
 	<div class="absolute w-full flex justify-center items-center mt-10 top-0">
-		{#await placeDetailsPromise}
+		{#await getDetailsByLatAndLong(location[0], location[1])}
 			<Loading />
 		{:then placeDetails}
-			<Title class=""
+			<Title class="z-50"
 				>{placeDetails?.suburb ??
 					placeDetails?.city ??
 					placeDetails?.state ??
@@ -107,11 +105,13 @@
 			options={{
 				trackUserLocation: true,
 				showUserHeading: true,
-				showUserLocation: true,
-				showAccuracyCircle: true,
+				showAccuracyCircle: false,
 				positionOptions: {
 					enableHighAccuracy: true
 				}
+			}}
+			on:geolocate={(e) => {
+				location = [e.detail.coords.latitude, e.detail.coords.longitude];
 			}}
 		/>
 		<slot />

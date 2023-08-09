@@ -1,5 +1,6 @@
 import appwriteServer, { Models, appwriteDocumentKeys } from '@app/appwrite-server'
-import { omit } from 'lodash'
+import lodash from 'lodash'
+const { omit } = lodash
 import { Query } from 'node-appwrite'
 
 export const getUserIdByMyId = async (myId: string) => {

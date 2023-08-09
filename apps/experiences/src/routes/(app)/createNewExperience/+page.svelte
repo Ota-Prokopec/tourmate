@@ -11,21 +11,23 @@
 
 	export let data;
 
-	$: console.log(location);
-
 	const { imgSrc, location } = $myNewExperienceStore;
+
+	console.log(imgSrc);
 
 	let state: 'loading' | 'success' | 'failure' | null = null;
 
 	$: if (state === 'success') {
-		setTimeout(() => goto('/'), 1500);
+		//setTimeout(() => goto('/'), 1500);
 	}
 
 	const publicExp = async () => {
 		try {
 			state = 'loading';
 			const res = await trpc($page).experience.create.mutate($myNewExperienceStore);
-			state = 'success';
+			//state = 'success';
+			$myNewExperienceStore.rightNowAddedExperience = res;
+			goto('/');
 		} catch (error) {
 			state = 'failure';
 		}
@@ -49,9 +51,5 @@
 				<IconNext class="w-10" /></Button
 			>
 		</div>
-	{:else if state === 'success'}
-		<Card class="!w-full h-full max-w-none p-0 m-0 animate-cardShrinking">
-			<Img class="w-full" src={imgSrc} />
-		</Card>
 	{/if}
 </div>

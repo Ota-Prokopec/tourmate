@@ -9,28 +9,27 @@
 	import type { CarouselImage } from '$lib/components/Carousel/types';
 	import { countSameItemsInArray, roundNumber } from '@app/utils';
 	import { isEqual, pick } from 'lodash';
-	import Carousel from '$lib/components/Carousel/Carousel.svelte';
-	import { Img } from 'flowbite-svelte';
+
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 
 	export let data;
 
-	const images: CarouselImage[] = data.loadedExperiences.map((exp) => ({
-		imgurl: exp.imgSrc,
-		id: exp.$id
-	}));
+	let location: Location;
+
+	//remove old right now added experinece from store and load it into variable to screen it to user
+	const rightNowAddedExperience = $myNewExperienceStore.rightNowAddedExperience;
+	$myNewExperienceStore.rightNowAddedExperience = undefined;
 
 	const tookPhoto = (e: CustomEvent<{ base64: string }>) => {
 		$mapOrTakePhoto = 'map';
-		$myNewExperienceStore.imgSrc = e.detail.base64;
+		$myNewExperienceStore = { imgSrc: e.detail.base64, location: location };
 		goto(`/createNewExperience`);
 	};
 
 	let mapZoom: number;
 
-	let almostProfile = true;
-	let almostProfileImageSrc: string | Base64 =
-		'https://cloud.appwrite.io/v1/storage/buckets/experiences-pictures/files/64d0bc360456fd8daebf/view?project=experiences';
+	let almostProfile = false;
+	let almostProfileImageSrc: string | Base64;
 
 	const experiencesLocations = data.loadedExperiences.map((exp) =>
 		exp.location.map((xy) => roundNumber(xy, 4))
@@ -51,13 +50,18 @@
 
 <div class="w-full h-full flex justify-center items-center">
 	{#if $mapOrTakePhoto === 'map'}
-		<Map bind:zoom={mapZoom} bind:location={$myNewExperienceStore.location}>
+		<Map
+			isLoading={!$myNewExperienceStore.rightNowAddedExperience}
+			bind:zoom={mapZoom}
+			bind:location
+		>
 			{#each data.loadedExperiences as experience, index}
 				<MarkerImage
+					class={rightNowAddedExperience?.$id === experience.$id ? 'animate-bounce' : ''}
 					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1
 						? true
 						: false}
-					on:fullScreen={(e) => {
+					on:almostProfile={(e) => {
 						almostProfile = true;
 						almostProfileImageSrc = e.detail.imgSrc;
 					}}
@@ -71,16 +75,15 @@
 				/>
 			{/each}
 		</Map>
+		{#if almostProfile}
+			<AlmostProfileWithMainImage
+				on:close={() => (almostProfile = false)}
+				class="absolute sm:left-0 sm:top-0 sm:m-4 z-[60]"
+				userInfo={pick(data.user, 'myId', 'username', 'userId')}
+				imgSrc={almostProfileImageSrc}
+			/>
+		{/if}
 	{:else}
 		<TakePhoto on:image={tookPhoto} />
-	{/if}
-
-	{#if almostProfile}
-		<AlmostProfileWithMainImage
-			on:close={() => (almostProfile = false)}
-			class="absolute sm:left-0 sm:top-0 sm:m-4 z-[60]"
-			userInfo={pick(data.user, 'myId', 'username', 'userId')}
-			imgSrc={almostProfileImageSrc}
-		/>
 	{/if}
 </div>

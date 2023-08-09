@@ -4,10 +4,10 @@ const { merge, omit } = pkg
 import { numberTimingCoords } from './settings'
 import { Models } from '@app/appwrite-server'
 
-export const transformExperienceDocumentIntoExperience = (...expDocuments: ExperienceDocument[]) => {
-	return expDocuments.map((exp) =>
-		merge(omit(exp, 'latitute', 'longitute'), {
-			location: [exp.latitute / numberTimingCoords, exp.longitute / numberTimingCoords],
-		}),
-	) as (Experience & Models.Document)[]
-}
+export const transformExperienceDocumentIntoExperience = (...expDocuments: ExperienceDocument[]): (Experience & Models.Document)[] =>
+	expDocuments.map((exp) => ({
+		...omit(exp, 'latitute', 'longitute'),
+		...{
+			location: [exp.latitude / numberTimingCoords, exp.longitude / numberTimingCoords],
+		},
+	}))

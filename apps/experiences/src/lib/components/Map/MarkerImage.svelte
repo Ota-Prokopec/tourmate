@@ -10,7 +10,7 @@
 	export let imgSrc: string | Base64;
 	export let zoom: number;
 	export let hovered: boolean = false;
-	const dispatch = createEventDispatcher<{ fullScreen: { imgSrc: string | Base64 } }>();
+	const dispatch = createEventDispatcher<{ almostProfile: { imgSrc: string | Base64 } }>();
 
 	export let stacked = false;
 	export let offset: [number, number] = [0, 0];
@@ -24,7 +24,7 @@
 
 <Marker {offset} {location}>
 	<button
-		on:click={() => dispatch('fullScreen', { imgSrc: imgSrc })}
+		on:click={() => dispatch('almostProfile', { imgSrc: imgSrc })}
 		class={twMerge(
 			'w-12 h-12 ',
 			zoom > 17

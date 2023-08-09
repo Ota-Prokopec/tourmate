@@ -26,8 +26,8 @@ export const createExperience = protectedProcedure
 				return await collections.experience.createDocument({
 					userId: ctx.user.$id,
 					imgSrc: imgSrc,
-					latitute: input.location[0] * numberTimingCoords,
-					longitute: input.location[1] * numberTimingCoords
+					latitude: input.location[0] * numberTimingCoords,
+					longitude: input.location[1] * numberTimingCoords
 				});
 			});
 

@@ -23,16 +23,12 @@ export const getExperiencesByLocation = protectedProcedure
 		const rangeLatitudeMin = Math.floor((input.location[0] - zoomRange) * numberTimingCoords);
 		const rangeLongitudeMax = Math.floor((input.location[1] + zoomRange) * numberTimingCoords);
 		const rangeLongitudeMin = Math.floor((input.location[1] - zoomRange) * numberTimingCoords);
-		console.log(rangeLatitudeMax);
-		console.log(rangeLatitudeMin);
-		console.log(rangeLongitudeMax);
-		console.log(rangeLongitudeMin);
 
 		const experienceDocuments = await collections.experience.listDocuments([
-			Query.lessThan('latitute', rangeLatitudeMax),
-			Query.greaterThan('latitute', rangeLatitudeMin),
-			Query.lessThan('longitute', rangeLongitudeMax),
-			Query.greaterThan('longitute', rangeLongitudeMin)
+			Query.lessThan('latitude', rangeLatitudeMax),
+			Query.greaterThan('latitude', rangeLatitudeMin),
+			Query.lessThan('longitude', rangeLongitudeMax),
+			Query.greaterThan('longitude', rangeLongitudeMin)
 		]);
 		const experiences = transformExperienceDocumentIntoExperience(
 			...experienceDocuments.documents

@@ -15,8 +15,8 @@ export const experienceDocumentZod = z
 	.object({
 		userId: z.string(),
 		imgSrc: z.union([z.string(), z.string().url(), base64TypeZod]),
-		latitute: z.number(),
-		longitute: z.number(),
+		latitude: z.number(),
+		longitude: z.number(),
 	})
 	.merge(appWriteDocumentZod)
 export const experienceDocumentCreateZod = experienceDocumentZod.omit(appwriteDocumentForOmit)
