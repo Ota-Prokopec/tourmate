@@ -35,7 +35,7 @@
 
 	$: mediaStreamConstraints = {
 		video: {
-			frameRate: { min: 50, ideal: 60 },
+			frameRate: { min: 30, ideal: 60 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: facingMode
@@ -67,20 +67,10 @@
 
 		console.log(offsetWidth);
 
-		canvas.width = video_source.offsetWidth;
-		canvas.height = video_source.offsetHeight;
+		canvas.width = 4000;
+		canvas.height = 2000;
 
-		context.drawImage(
-			video_source,
-			-offsetWidth,
-			0,
-			screenWidth,
-			screenHeight,
-			0,
-			0,
-			screenWidth,
-			screenHeight
-		);
+		context.drawImage(video_source, 0, 0);
 
 		const base64 = canvas.toDataURL('image/png');
 
