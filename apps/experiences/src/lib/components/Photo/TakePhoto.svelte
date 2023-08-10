@@ -33,11 +33,9 @@
 
 	let mediaStreamConstraints: MediaStreamConstraints;
 
-	let frameRate: number;
-
 	$: mediaStreamConstraints = {
 		video: {
-			frameRate: { min: frameRate, ideal: 60 },
+			frameRate: { min: 60, ideal: 60 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: facingMode
@@ -83,8 +81,6 @@
 
 	const swapCameras = () => (facingMode = facingMode === 'user' ? 'environment' : 'user');
 </script>
-
-<input class="z-[9999]" bind:value={frameRate} max="60" min="10" type="range" />
 
 <div class="h-full w-full relative">
 	<video
