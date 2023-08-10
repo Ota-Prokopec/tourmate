@@ -4,6 +4,7 @@
 	import ShootButton from './ShootButton.svelte';
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
+	import Cropper from 'cropperjs';
 
 	export let facingMode: 'user' | 'environment' = 'environment';
 
@@ -30,10 +31,11 @@
 		videoWidth = screenHeight * desiredAspectRatio;
 	}
 
-	let MediaStreamConstraints: MediaStreamConstraints;
+	let mediaStreamConstraints: MediaStreamConstraints;
 
-	$: MediaStreamConstraints = {
+	$: mediaStreamConstraints = {
 		video: {
+			frameRate: { min: 30, ideal: 60 },
 			width: { ideal: 4096 }, // Max 4K width
 			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
 			facingMode: facingMode
@@ -42,7 +44,7 @@
 		audio: false
 	};
 
-	$: access_webcam(MediaStreamConstraints);
+	$: access_webcam(mediaStreamConstraints);
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
@@ -61,23 +63,30 @@
 	function takePicture() {
 		var context = canvas.getContext('2d')!;
 
-		if (video_source.videoWidth && video_source.videoHeight) {
-			const offsetWidth = (video_source.offsetWidth - screenWidth) / 2;
-			canvas.width = video_source.offsetWidth;
-			canvas.height = video_source.offsetHeight;
+		const offsetWidth = (video_source.offsetWidth - screenWidth) / 2;
 
-			context.save();
-			context.scale(0.75, 1);
-			context.setTransform(1, 0, 0, 1, 0, 0);
-			context.strokeRect(5, 5, 25, 15);
+		console.log(offsetWidth);
 
-			context.drawImage(video_source, offsetWidth, 0, screenWidth, screenHeight);
-			const base64 = canvas.toDataURL('image/png');
+		canvas.width = video_source.offsetWidth;
+		canvas.height = video_source.offsetHeight;
 
-			dispatch('image', {
-				base64: base64
-			});
-		}
+		context.drawImage(
+			video_source,
+			-offsetWidth,
+			0,
+			screenWidth,
+			screenHeight,
+			0,
+			0,
+			screenWidth,
+			screenHeight
+		);
+
+		const base64 = canvas.toDataURL('image/png');
+
+		dispatch('image', {
+			base64: base64
+		});
 	}
 
 	const swapCameras = () => (facingMode = facingMode === 'user' ? 'environment' : 'user');

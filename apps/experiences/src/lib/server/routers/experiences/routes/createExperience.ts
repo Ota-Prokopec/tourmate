@@ -22,12 +22,14 @@ export const createExperience = protectedProcedure
 				...permissions.owner(ctx.user.$id)
 			])
 			.then(async (file) => {
+				console.log(input.location[0] * numberTimingCoords);
+
 				const imgSrc = buckets.experiencesPictures.getFileURL(file.$id);
 				return await collections.experience.createDocument({
 					userId: ctx.user.$id,
 					imgSrc: imgSrc,
-					latitude: input.location[0] * numberTimingCoords,
-					longitude: input.location[1] * numberTimingCoords
+					latitude: Math.round(input.location[0] * numberTimingCoords),
+					longitude: Math.round(input.location[1] * numberTimingCoords)
 				});
 			});
 

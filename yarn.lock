@@ -804,6 +804,16 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@pqina/pintura@^8.62.0":
+  version "8.62.0"
+  resolved "https://registry.yarnpkg.com/@pqina/pintura/-/pintura-8.62.0.tgz#f4de37be249bf20213e632e0d2eeb97c6bbfdb53"
+  integrity sha512-hRWAZXhK0MGyV6YJYkk+fopCsYiohuwozvmxXrf7Vqys704pdQxDCXI/eTlARaEyU3GCu85TOkwbNVN2+4ZR4g==
+
+"@pqina/svelte-pintura@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@pqina/svelte-pintura/-/svelte-pintura-9.0.1.tgz#786c6bdc08fd5c10f7c75d2b65ef956a1f00d407"
+  integrity sha512-7I1L2NisSzzj2+/QoxZqrCTtmJdeeLYg/+A3hcUCSxoyX39uwic3YvS0o1BRwqPLXg9310UKDQJQfCQpLyfQQg==
+
 "@puppeteer/browsers@1.5.1":
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-1.5.1.tgz#90e26741467aad32faf78021a7fc02e98e18dd71"
@@ -2199,6 +2209,11 @@ create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
+
+cropperjs@^1.5.13:
+  version "1.5.13"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.13.tgz#eb1682f01d17c70ed5244317091d745c9a249ef8"
+  integrity sha512-by7jKAo73y5/Do0K6sxdTKHgndY0NMjG2bEdgeJxycbcmHuCiMXqw8sxy5C5Y5WTOTcDGmbT7Sr5CgKOXR06OA==
 
 cross-fetch@3.1.5:
   version "3.1.5"
