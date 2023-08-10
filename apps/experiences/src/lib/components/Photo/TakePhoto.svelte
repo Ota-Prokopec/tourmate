@@ -59,6 +59,7 @@
 			console.error(error);
 		}
 	}
+	() => {};
 
 	function takePicture() {
 		var context = canvas.getContext('2d')!;
