@@ -84,6 +84,8 @@
 	const swapCameras = () => (facingMode = facingMode === 'user' ? 'environment' : 'user');
 </script>
 
+<input class="z-[9999]" bind:value={frameRate} max="60" min="10" type="range" />
+
 <div class="h-full w-full relative">
 	<video
 		autoplay
@@ -96,7 +98,6 @@
 	>
 		<track kind="captions" />
 	</video>
-	<input bind:value={frameRate} max="60" min="10" type="range" />
 	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
 		<ShootButton class="active:animate-ping" on:click={takePicture} />
 		<Icon
