@@ -1,12 +1,9 @@
 <script lang="ts">
 	import type { Location } from '@app/ts-types';
-	import { Marker } from '@beyonk/svelte-mapbox';
+	import { Marker } from 'svelte-maplibre';
 	export let location: Location;
-	export let label: string = '';
-
-	export let offset: [number, number] = [0, 0];
 </script>
 
-<Marker markerOffset={offset} {label} lat={location[0]} lng={location[1]} popup={false}>
+<Marker interactive lngLat={{ lat: location[0], lon: location[1] }}>
 	<slot />
 </Marker>

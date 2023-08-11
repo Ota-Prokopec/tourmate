@@ -68,11 +68,7 @@
 					}}
 					zoom={mapZoom}
 					imgSrc={experience.imgSrc}
-					location={[
-						experience.location[0],
-						experience.location[1] +
-							howManyBeforeMe(experience.location, index) * 0.00008
-					]}
+					location={[experience.location[0], experience.location[1] + 0]}
 				/>
 			{/each}
 		</Map>

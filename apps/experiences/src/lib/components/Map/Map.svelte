@@ -1,111 +1,92 @@
 <script lang="ts">
 	import type { Location } from '@app/ts-types';
-	import { getDetailsByLatAndLong, getUsersLocation } from '@app/utils';
-	import { Map } from '@beyonk/svelte-mapbox';
-	import GeolocateControl from '@beyonk/svelte-mapbox/map/controls/GeolocateControl.svelte';
-	import Title from '../Common/Title.svelte';
-	import Loading from '../Common/Loading.svelte';
+	import { getUsersLocation } from '@app/utils';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
-	import { browser } from '$app/environment';
-	import NavigationControl from '@beyonk/svelte-mapbox/map/controls/NavigationControl.svelte';
-	import ScaleControl from '@beyonk/svelte-mapbox/map/controls/ScaleControl.svelte';
 	import { twMerge } from 'tailwind-merge';
-
-	const token =
-		'pk.eyJ1IjoiZXJhbnQ0MiIsImEiOiJjbDdybXo4dmswZ3E5M3FwMnFsazdpb3VoIn0.wXblbreOUt3e8N81CAH0Wg';
+	import {
+		FillExtrusionLayer,
+		GeolocateControl,
+		MapLibre,
+		NavigationControl,
+		ScaleControl
+	} from 'svelte-maplibre';
+	import type { Map } from 'maplibre-gl';
 
 	export let map: Map | null = null;
 	export let location: Location = [0, 0];
 	export let zoom: number = 16;
 	export let isLoading = true;
+	export let deg = 0;
+	let style =
+		'https://api.maptiler.com/maps/4f1c74c8-1b8c-4deb-b478-1f58653a6389/style.json?key=gplNC5uqgFO1autCCLdg';
 
 	getUsersLocation().then((res) => {
 		location = res;
 		isLoading = false;
 	});
 
-	const onZoom = (e: CustomEvent<{ zoom: number }>) => {
-		zoom = e.detail.zoom;
-	};
-
 	let className = '';
 	export { className as class };
-
-	const videoStyle = {
-		version: 8,
-		sources: {
-			satellite: {
-				type: 'raster',
-				url: 'mapbox://mapbox.satellite',
-				tileSize: 256
-			},
-			video: {
-				type: 'video',
-				urls: [
-					'https://static-assets.mapbox.com/mapbox-gl-js/drone.mp4',
-					'https://static-assets.mapbox.com/mapbox-gl-js/drone.webm'
-				],
-				coordinates: [
-					[-122.51596391201019, 37.56238816766053],
-					[-122.51467645168304, 37.56410183312965],
-					[-122.51309394836426, 37.563391708549425],
-					[-122.51423120498657, 37.56161849366671]
-				]
-			}
-		},
-		layers: [
-			{
-				id: 'background',
-				type: 'background',
-				paint: {
-					'background-color': 'rgb(4,7,14)'
-				}
-			},
-			{
-				id: 'satellite',
-				type: 'raster',
-				source: 'satellite'
-			},
-			{
-				id: 'video',
-				type: 'raster',
-				source: 'video'
-			}
-		]
-	};
 </script>
 
 <div class={twMerge('w-full h-full relative', className)}>
 	{#if !isLoading}
-		<Map
+		<MapLibre
 			on:click
+			{style}
+			bind:map
 			center={[location[1], location[0]]}
-			accessToken={token}
-			style={'mapbox://styles/mapbox/satellite-streets-v12'}
-			bind:this={map}
 			zoom={14}
+			bind:pitch={deg}
 			on:zoom={(e) => {
-				//@ts-ignore
-				onZoom(e);
+				zoom = e.detail.map.getZoom();
 			}}
 		>
-			<GeolocateControl
-				options={{
-					trackUserLocation: true,
-					showUserHeading: true,
-					showAccuracyCircle: false,
-					positionOptions: {
-						enableHighAccuracy: true
-					}
-				}}
-				on:geolocate={(e) => {
-					location = [e.detail.coords.latitude, e.detail.coords.longitude];
+			<NavigationControl position="top-right" />
+			<ScaleControl position="top-left" />
+			<GeolocateControl position="top-left" positionOptions={{}} />
+			<FillExtrusionLayer
+				source="maptiler_planet"
+				sourceLayer="building"
+				beforeLayerType={(l) => l.type === 'symbol' && !!l.paint?.['text-color']}
+				minzoom={14}
+				paint={{
+					// Show lower buildings in green, higher in red.
+					'fill-extrusion-color': [
+						'interpolate',
+						['linear'],
+						['get', 'render_height'],
+						0,
+						'#0a0',
+						70,
+						'#a00'
+					],
+
+					// use an 'interpolate' expression to add a smooth transition effect to the
+					// buildings as the user zooms in
+					'fill-extrusion-height': [
+						'interpolate',
+						['linear'],
+						['zoom'],
+						14,
+						0,
+						14.05,
+						['get', 'render_height']
+					],
+					'fill-extrusion-base': [
+						'interpolate',
+						['linear'],
+						['zoom'],
+						14,
+						0,
+						14.05,
+						['get', 'render_min_height']
+					],
+					'fill-extrusion-opacity': 0.6
 				}}
 			/>
 			<slot />
-			<NavigationControl />
-			<ScaleControl />
-		</Map>
+		</MapLibre>
 	{:else}
 		<FullPageLoading />
 	{/if}

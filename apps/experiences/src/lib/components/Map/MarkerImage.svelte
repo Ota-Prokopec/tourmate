@@ -3,8 +3,6 @@
 	import Marker from './Marker.svelte';
 	import { Avatar, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import IconFullSize from '../Icons/IconMaximize.svelte';
-	import Icon from '../Common/Icon.svelte';
 	import { createEventDispatcher } from 'svelte';
 	export let location: Location;
 	export let imgSrc: string | Base64;
@@ -22,7 +20,7 @@
 	const onHoverEnd = () => (hovered = false);
 </script>
 
-<Marker {offset} {location}>
+<Marker {location}>
 	<button
 		on:click={() => dispatch('almostProfile', { imgSrc: imgSrc })}
 		class={twMerge(
