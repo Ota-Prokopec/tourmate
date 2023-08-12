@@ -2,6 +2,7 @@ import { protectedProcedure } from '$server/middlewares/isAuthed';
 import { z } from 'zod';
 import { locationZod } from '@app/ts-types';
 import appwriteServer, { Query } from '@app/appwrite-server';
+import { transformExperienceDocumentsIntoExperience } from '@app/experience-database-server/src/transformers';
 
 export const getExperiencesByUserByMyId = protectedProcedure
 	.input(
@@ -19,5 +20,5 @@ export const getExperiencesByUserByMyId = protectedProcedure
 			Query.limit(100)
 		]);
 
-		return experiences.documents;
+		return transformExperienceDocumentsIntoExperience(...experiences.documents);
 	});

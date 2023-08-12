@@ -4,7 +4,7 @@ const { merge, omit } = pkg
 import { numberTimingCoords } from './settings'
 import { Models } from '@app/appwrite-server'
 
-export const transformExperienceDocumentIntoExperience = (...expDocuments: ExperienceDocument[]): (Experience & Models.Document)[] =>
+export const transformExperienceDocumentsIntoExperience = (...expDocuments: ExperienceDocument[]): (Experience & Models.Document)[] =>
 	expDocuments.map((exp) => ({
 		...omit(exp, 'latitute', 'longitute'),
 		...{

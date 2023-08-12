@@ -44,7 +44,13 @@
 		>
 			<NavigationControl position="top-right" />
 			<ScaleControl position="top-left" />
-			<GeolocateControl position="top-left" positionOptions={{}} />
+			<GeolocateControl
+				position="top-left"
+				positionOptions={{ enableHighAccuracy: true }}
+				trackUserLocation
+				showAccuracyCircle
+				showUserLocation
+			/>
 			<FillExtrusionLayer
 				source="maptiler_planet"
 				sourceLayer="building"

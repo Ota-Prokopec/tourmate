@@ -4,7 +4,7 @@ import appwriteServer, { Models, Query } from '@app/appwrite-server';
 import { locationZod } from '@app/ts-types';
 import {
 	numberTimingCoords,
-	transformExperienceDocumentIntoExperience
+	transformExperienceDocumentsIntoExperience
 } from '@app/experience-database-server';
 
 const zoomRange = 1 / 14;
@@ -30,7 +30,7 @@ export const getExperiencesByLocation = protectedProcedure
 			Query.lessThan('longitude', rangeLongitudeMax),
 			Query.greaterThan('longitude', rangeLongitudeMin)
 		]);
-		const experiences = transformExperienceDocumentIntoExperience(
+		const experiences = transformExperienceDocumentsIntoExperience(
 			...experienceDocuments.documents
 		);
 

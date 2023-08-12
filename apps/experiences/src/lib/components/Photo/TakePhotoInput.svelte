@@ -1,32 +1,45 @@
 <script lang="ts">
-	import type { Base64 } from '@app/ts-types';
-	import { elementIdGenerator, fileToBase64 } from '@app/utils';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import Uppy from '@uppy/core';
+	import Webcam from '@uppy/webcam';
+	import Dashboard from '@uppy//dashboard';
+	import { onMount } from 'svelte';
+	import '@uppy/core/dist/style.min.css';
+	import '@uppy/dashboard/dist/style.min.css';
+	import '@uppy/webcam/dist/style.min.css';
+	import { browser } from '$app/environment';
 
-	const id = elementIdGenerator();
-	onMount(() => {
-		const input = document.getElementById(id) as HTMLInputElement;
-		input.click();
-	});
+	let constrains: MediaTrackConstraints;
 
-	const dispatch = createEventDispatcher<{
-		image: { base64: string | Base64 };
-		error: undefined;
-	}>();
+	const load = (divEl: HTMLElement) => {
+		const screenWith = document.body.offsetWidth;
+		const screenHeight = document.body.offsetHeight;
+		const constrains = {
+			width: { min: 1, max: screenWith, ideal: screenWith },
+			height: { min: 1, max: screenHeight, ideal: screenHeight }
+		};
 
-	const change = async (e: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
-		const files = e.currentTarget.files;
-		if (!files) {
-			dispatch('error');
-			throw new Error('user did not take photo');
-		}
-		const base64 = await fileToBase64(files[0]);
-		if (!base64) {
-			dispatch('error');
-			throw new Error('user did not take photo');
-		}
-		dispatch('image', { base64: base64 });
+		const uppy = new Uppy();
+		uppy.use(Dashboard, { inline: true, target: divEl }).use(Webcam, {
+			mirror: true,
+			facingMode: 'user',
+			showRecordingLength: true,
+			target: Dashboard,
+			modes: ['picture'],
+			videoConstraints: constrains
+		});
 	};
 </script>
 
-<input class="hidden" {id} on:change={change} type="file" accept="image/*" capture="environment" />
+<div class="w-full h-full" use:load />
+
+<style>
+	:global(.uppy-Dashboard-inner) {
+		height: 100dvh !important;
+	}
+	:global(.uppy-Webcam-container) {
+		height: 100dvh !important;
+		position: absolute !important;
+		top: 0 !important;
+		z-index: 999999 !important;
+	}
+</style>

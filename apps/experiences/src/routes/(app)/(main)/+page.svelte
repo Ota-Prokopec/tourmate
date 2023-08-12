@@ -10,8 +10,9 @@
 	import lodash from 'lodash';
 
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
+	import type { PageData } from './$types';
 
-	export let data;
+	export let data: PageData;
 
 	let location: Location;
 
@@ -50,8 +51,9 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	{#if $mapOrTakePhoto === 'map'}
+	{#if false}
 		<Map
+			deg={45}
 			isLoading={!$myNewExperienceStore.rightNowAddedExperience}
 			bind:zoom={mapZoom}
 			bind:location
@@ -68,7 +70,7 @@
 					}}
 					zoom={mapZoom}
 					imgSrc={experience.imgSrc}
-					location={[experience.location[0], experience.location[1] + 0]}
+					location={[experience.location[0], experience.location[1]]}
 				/>
 			{/each}
 		</Map>

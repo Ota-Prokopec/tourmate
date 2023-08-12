@@ -1,108 +1,47 @@
 <script lang="ts">
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { twMerge } from 'tailwind-merge';
-	import ShootButton from './ShootButton.svelte';
-	import { browser } from '$app/environment';
-	import Icon from '../Common/Icon.svelte';
-	import Cropper from 'cropperjs';
+	import Uppy from '@uppy/core';
+	import Webcam from '@uppy/webcam';
+	import Dashboard from '@uppy//dashboard';
+	import ImageEditor from '@uppy/image-editor';
+	import '@uppy/core/dist/style.min.css';
+	import '@uppy/dashboard/dist/style.min.css';
+	import '@uppy/webcam/dist/style.min.css';
+	import '@uppy/image-editor/dist/style.min.css';
 
-	export let facingMode: 'user' | 'environment' = 'environment';
+	let constrains: MediaTrackConstraints;
 
-	let className = '';
-	export { className as class };
+	const load = (divEl: HTMLElement) => {
+		const screenWith = document.body.offsetWidth;
+		const screenHeight = document.body.offsetHeight;
+		const constrains = {
+			width: { min: 1, max: screenWith, ideal: screenWith },
+			height: { min: 1, max: screenHeight, ideal: screenHeight }
+		};
 
-	const dispatch = createEventDispatcher<{
-		image: { base64: string };
-	}>();
-
-	let video_source: HTMLVideoElement;
-	let canvas: HTMLCanvasElement;
-	const desiredAspectRatio = 16 / 9;
-
-	$: screenWidth = browser ? window.screen.width : 0;
-	$: screenHeight = browser ? window.screen.height : 0;
-
-	$: videoWidth = screenWidth;
-	$: videoHeight = screenWidth / desiredAspectRatio;
-
-	// Adjust video dimensions if height exceeds the screen height
-	if (videoHeight > screenHeight) {
-		videoHeight = screenHeight;
-		videoWidth = screenHeight * desiredAspectRatio;
-	}
-
-	let mediaStreamConstraints: MediaStreamConstraints;
-
-	$: mediaStreamConstraints = {
-		video: {
-			frameRate: { min: 60, ideal: 60 },
-			width: { ideal: 4096 }, // Max 4K width
-			height: { ideal: 2304 }, // Max 4K height with 16:9 aspect ratio
-			facingMode: facingMode
-		},
-
-		audio: false
+		const uppy = new Uppy();
+		uppy.use(Dashboard, { inline: true, target: divEl })
+			.use(Webcam, {
+				mirror: true,
+				facingMode: 'environment',
+				showRecordingLength: true,
+				target: Dashboard,
+				modes: ['picture'],
+				videoConstraints: constrains
+			})
+			.use(ImageEditor, { target: Dashboard });
 	};
-
-	$: access_webcam(mediaStreamConstraints);
-
-	onMount(() => (canvas = document.createElement('canvas')));
-
-	async function access_webcam(constraints: MediaStreamConstraints) {
-		if (!browser) return;
-
-		try {
-			const stream = await navigator.mediaDevices.getUserMedia(constraints);
-			video_source.srcObject = stream;
-			video_source.play();
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	function takePicture() {
-		var context = canvas.getContext('2d')!;
-
-		const offsetWidth = (video_source.offsetWidth - screenWidth) / 2;
-
-		console.log(offsetWidth);
-
-		canvas.width = 4000;
-		canvas.height = 2000;
-
-		context.drawImage(video_source, 0, 0);
-
-		const base64 = canvas.toDataURL('image/png');
-
-		dispatch('image', {
-			base64: base64
-		});
-	}
-
-	const swapCameras = () => (facingMode = facingMode === 'user' ? 'environment' : 'user');
 </script>
 
-<div class="h-full w-full relative">
-	<video
-		autoplay
-		bind:this={video_source}
-		class={twMerge(
-			'w-full h-full object-cover  absolute',
-			facingMode === 'user' ? 'scale-x-[-1]' : '',
-			className
-		)}
-	>
-		<track kind="captions" />
-	</video>
-	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
-		<ShootButton class="active:animate-ping" on:click={takePicture} />
-		<Icon
-			on:click={swapCameras}
-			icon="fas fa-sync-alt"
-			class="text-4xl absolute right-0 m-14 active:animate-ping"
-		/>
-	</div>
-</div>
+<div class="w-full h-full" use:load />
 
 <style>
+	:global(.uppy-Dashboard-inner) {
+		height: 100dvh !important;
+	}
+	:global(.uppy-Webcam-container) {
+		height: 100dvh !important;
+		position: absolute !important;
+		top: 0 !important;
+		z-index: 999999 !important;
+	}
 </style>
