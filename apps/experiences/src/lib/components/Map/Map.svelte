@@ -12,7 +12,7 @@
 	} from 'svelte-maplibre';
 	import type { Map } from 'maplibre-gl';
 
-	export let map: Map | null = null;
+	export let map: Map | undefined = undefined;
 	export let location: Location = [0, 0];
 	export let zoom: number = 16;
 	export let isLoading = true;
@@ -43,7 +43,6 @@
 			}}
 		>
 			<NavigationControl position="top-right" />
-			<ScaleControl position="top-left" />
 			<GeolocateControl
 				position="top-left"
 				positionOptions={{ enableHighAccuracy: true }}

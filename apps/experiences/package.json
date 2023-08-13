@@ -90,6 +90,7 @@
 		"trpc-sveltekit": "^3.5.14",
 		"vite-plugin-mkcert": "^1.14.0",
 		"webcam-easy": "^1.1.1",
+		"webcam-easy-v2": "^3.0.2",
 		"zod": "3.21.4"
 	}
 }

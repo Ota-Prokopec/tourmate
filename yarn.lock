@@ -8404,6 +8404,11 @@ web-namespaces@^2.0.0:
   resolved "https://registry.yarnpkg.com/web-namespaces/-/web-namespaces-2.0.1.tgz#1010ff7c650eccb2592cebeeaf9a1b253fd40692"
   integrity sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==
 
+webcam-easy-v2@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/webcam-easy-v2/-/webcam-easy-v2-3.0.2.tgz#a52a10b29ee747ed43809757cca97c165eaa0212"
+  integrity sha512-vwJIlot2OCusm4wzdMU9usM2YChf+hOWW/x8NKhgW5PiHWbvgjLlkd4yUPbleSNhz8sIal10DEWl9yHyQvknVg==
+
 webcam-easy@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/webcam-easy/-/webcam-easy-1.1.1.tgz#64ce3dbdb72e45f6c3cb70217a51e9649faf07b3"

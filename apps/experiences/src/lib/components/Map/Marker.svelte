@@ -4,6 +4,6 @@
 	export let location: Location;
 </script>
 
-<Marker interactive lngLat={{ lat: location[0], lon: location[1] }}>
+<Marker lngLat={{ lat: location[0], lon: location[1] }}>
 	<slot />
 </Marker>

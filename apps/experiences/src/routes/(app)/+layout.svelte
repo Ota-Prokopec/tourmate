@@ -6,6 +6,8 @@
 	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
 	import { myNewExperienceStore } from './createNewExperience/newExperienceStore';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import { goto } from '$app/navigation';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 </script>
@@ -33,8 +35,8 @@
 			{/if}
 		</BottomNavItem>
 
-		<BottomNavItem appBtnPosition="right">
-			<IconSettings />
+		<BottomNavItem on:click={() => goto('/addFamousPlace')} appBtnPosition="right">
+			<IconLocation />
 		</BottomNavItem>
 	</BottomNav>
 </div>
