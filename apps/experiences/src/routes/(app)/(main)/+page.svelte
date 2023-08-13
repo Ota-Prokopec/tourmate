@@ -51,7 +51,7 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	{#if true}
+	{#if $mapOrTakePhoto === "map"}
 		<Map
 			deg={45}
 			isLoading={!$myNewExperienceStore.rightNowAddedExperience}
