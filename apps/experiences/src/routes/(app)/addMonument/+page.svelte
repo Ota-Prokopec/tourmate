@@ -5,20 +5,25 @@
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { numberTimingCoords } from '@app/experience-database-client';
 	import type { Location } from '@app/ts-types';
-	import { Button } from 'flowbite-svelte';
+	import { Alert, Button } from 'flowbite-svelte';
 	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
 	import type { PageData } from './$types';
+	import { useQuery } from '@sveltestack/svelte-query';
+	import { getDetailsByLatAndLong } from '@app/utils';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
 
 	export let data: PageData;
 	let map: Map;
-	let location: Location;
-	let markerLocation: Location;
+	let location: Location | undefined;
+	let markerLocation: Location | undefined;
 
-	$: marker = map
-		? new maplibregl.Marker({ draggable: true })
-				.setLngLat({ lat: location[0], lng: location[1] })
-				.addTo(map)
-		: undefined;
+	$: marker =
+		map && location
+			? new maplibregl.Marker({ draggable: true })
+					.setLngLat({ lat: location[0], lng: location[1] })
+					.addTo(map)
+			: undefined;
 
 	$: marker?.addClassName('z-50');
 
@@ -30,15 +35,34 @@
 
 	$: if (location) markerLocation = location;
 
-	const createLocation = () =>
+	const createLocation = () => {
+		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
 		goto(
 			`/addMonument/detail/${markerLocation[0] * numberTimingCoords}-${
 				markerLocation[1] * numberTimingCoords
 			}`
 		);
+	};
+
+	$: positionDetails = useQuery('positionDetails', async () => {
+		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
+		return await getDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
+	});
 </script>
 
 <div class="w-[100dvw] h-[100dvh]">
+	<Alert class="absolute m-2 z-50 pl-5 pr-5 flex flex-wrap flex-col gap-0" color="dark">
+		{#if typeof $positionDetails.data?.name === 'undefined' || !markerLocation}
+			<Loading />
+		{:else}
+			<div class="flex flex-wrap flex-row gap-4 mb-2">
+				<Icon icon="fas fa-map-marker-alt" class="text-2xl text-red-500" />
+				{$positionDetails.data?.name}
+			</div>
+			<span>lat: {markerLocation[0]}</span>
+			<span> lng: {markerLocation[1]} </span>
+		{/if}
+	</Alert>
 	<ExpMap bind:location bind:map class="w-full h-full">
 		{#each data.monuments as monument}
 			<MonumentMarker {monument} />

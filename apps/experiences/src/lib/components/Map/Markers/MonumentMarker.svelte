@@ -7,6 +7,8 @@
 	import Marker from '../Marker.svelte';
 	import { goto } from '$app/navigation';
 	import type { Models } from '@app/appwrite-server';
+	import { useQuery } from '@sveltestack/svelte-query';
+	import { getDetailsByLatAndLong } from '@app/utils';
 
 	export let monument: Monument & Models.Document;
 	export let bouncing = false;

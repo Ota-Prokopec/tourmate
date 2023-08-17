@@ -8,6 +8,8 @@
 	import { myNewExperienceStore } from './createNewExperience/newExperienceStore';
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { browser } from '$app/environment';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 </script>
@@ -23,12 +25,16 @@
 		</BottomNavItem>
 		<BottomNavItem
 			on:click={() => {
-				if ($myNewExperienceStore.location === undefined) return;
-				$mapOrTakePhoto = $mapOrTakePhoto === 'map' ? 'takePhoto' : 'map';
+				if ($mapOrTakePhoto === 'map' && $page.url.pathname === '/') {
+					$mapOrTakePhoto = 'takePhoto';
+				} else {
+					$mapOrTakePhoto = 'map';
+				}
+				goto('/');
 			}}
 			appBtnPosition="middle"
 		>
-			{#if $mapOrTakePhoto === 'map'}
+			{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
 				<IconPlus />
 			{:else}
 				<IconHome />

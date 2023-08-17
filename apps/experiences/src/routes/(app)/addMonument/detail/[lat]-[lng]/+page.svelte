@@ -15,6 +15,9 @@
 	import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-client/src/transformers';
 	import type { Models } from 'node-appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
+	import { useQuery } from '@sveltestack/svelte-query';
+	import { getDetailsByLatAndLong } from '@app/utils';
+	import Popover from '$lib/components/Common/Popover.svelte';
 
 	export let data: PageData;
 

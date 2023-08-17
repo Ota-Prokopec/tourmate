@@ -6,6 +6,7 @@
 	export let trigger: 'hover' | 'click' =
 		device.recognizeWidth() === 'mobile' ? 'click' : 'hover';
 	export let title: string = '';
+	export let open = false;
 	export let color:
 		| 'gray'
 		| 'red'
@@ -28,6 +29,6 @@
 	export { className as class };
 </script>
 
-<Popover {title} class={className} {color} {trigger} {placement}>
+<Popover {open} {title} class={className} {color} {trigger} {placement}>
 	<slot />
 </Popover>
