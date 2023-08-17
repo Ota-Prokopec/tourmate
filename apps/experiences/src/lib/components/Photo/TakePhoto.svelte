@@ -26,31 +26,45 @@
 	$: mediaStreamConstraints = {
 		video: {
 			frameRate: { min: 1, max: 60, ideal: 60 },
+			facingMode: facingMode,
 			width: { min: 1, max: screenWidth, ideal: screenHeight },
 			height: {
 				min: 1,
 				max: screenHeight,
 				ideal: screenHeight
-			},
-			facingMode: { ideal: facingMode }
+			}
 		},
 		audio: false
 	};
 
-	$: if (browser) access_webcam(mediaStreamConstraints);
-
 	onMount(() => (canvas = document.createElement('canvas')));
 
-	async function access_webcam(constraints: MediaStreamConstraints) {
-		try {
-			const stream = await navigator.mediaDevices.getUserMedia(constraints);
-			if (!video_source) throw new TypeError('video_source is not null');
-			video_source.srcObject = stream;
-			video_source.play();
-		} catch (error) {
-			console.error(error);
-		}
-	}
+	//set width and height for best quality of screen
+	onMount(() => {
+		navigator.mediaDevices.getUserMedia(mediaStreamConstraints).then((stream) => {
+			const track = stream.getVideoTracks()[0]; //track i am currently using
+			const settings = track.getSettings();
+			if (!mediaStreamConstraints.video || typeof mediaStreamConstraints.video === 'boolean')
+				throw TypeError('constraints.video type is not supported');
+
+			const width = settings.width;
+			const height = settings.height;
+
+			mediaStreamConstraints.video.height = { min: height, max: height, ideal: height };
+			mediaStreamConstraints.video.width = { min: width, max: width, ideal: width };
+			mediaStreamConstraints.video.aspectRatio = settings.aspectRatio;
+		});
+	});
+
+	$: if (mediaStreamConstraints) start();
+
+	const start = () => {
+		navigator.mediaDevices.getUserMedia(mediaStreamConstraints).then((stream) => {
+			if (!video_source) throw new TypeError('video_source is null');
+
+			video_source.srcObject = stream; //set video to video element
+		});
+	};
 
 	function takePicture() {
 		if (!canvas) throw new TypeError('canvas is null');
@@ -58,8 +72,14 @@
 
 		var context = canvas.getContext('2d')!;
 
-		canvas.width = video_source.videoWidth;
-		canvas.height = video_source.videoHeight;
+		if (!mediaStreamConstraints.video || typeof mediaStreamConstraints.video === 'boolean')
+			throw TypeError('constraints.video type is not supported');
+		if (!mediaStreamConstraints.video.width || !mediaStreamConstraints.video.height) return;
+
+		//@ts-ignore
+		canvas.width = mediaStreamConstraints.video.width.ideal as number;
+		//@ts-ignore
+		canvas.height = mediaStreamConstraints.video.height.ideal as number;
 
 		context.drawImage(video_source, 0, 0);
 

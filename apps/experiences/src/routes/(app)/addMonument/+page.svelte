@@ -5,13 +5,14 @@
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { numberTimingCoords } from '@app/experience-database-client';
 	import type { Location } from '@app/ts-types';
-	import { Alert, Button } from 'flowbite-svelte';
+	import { Alert, Button, Img } from 'flowbite-svelte';
 	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
 	import type { PageData } from './$types';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { getDetailsByLatAndLong } from '@app/utils';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
+	import { SyncLoader } from 'svelte-loading-spinners';
+	import { avatars } from '@app/appwrite-client';
 
 	export let data: PageData;
 	let map: Map;
@@ -53,7 +54,7 @@
 <div class="w-[100dvw] h-[100dvh]">
 	<Alert class="absolute m-2 z-50 pl-5 pr-5 flex flex-wrap flex-col gap-0" color="dark">
 		{#if typeof $positionDetails.data?.name === 'undefined' || !markerLocation}
-			<Loading />
+			<SyncLoader color="black" size={30} />
 		{:else}
 			<div class="flex flex-wrap flex-row gap-4 mb-2">
 				<Icon icon="fas fa-map-marker-alt" class="text-2xl text-red-500" />

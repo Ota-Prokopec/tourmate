@@ -1,7 +1,8 @@
 import { trpc } from '$lib/trpc';
 import appwriteServer from '@app/appwrite-server';
+import type { PageServerLoad } from './$types';
 
-export const load = async (event) => {
+export const load: PageServerLoad = async (event) => {
 	const { locale } = await appwriteServer.setCookie(event.cookies.getAll());
 	const location = await locale.getLocation();
 

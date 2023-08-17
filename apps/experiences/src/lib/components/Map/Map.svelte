@@ -13,7 +13,7 @@
 	import type { Map } from 'maplibre-gl';
 
 	export let map: Map | undefined = undefined;
-	export let location: Location | undefined;
+	export let location: Location | undefined = undefined;
 	export let zoom: number = 16;
 	export let isLoading = typeof location === 'undefined';
 	export let deg = 0;

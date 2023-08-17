@@ -43,7 +43,7 @@
 	</div>
 
 	{#if imgSrc}
-		<Card class="">
+		<Card class="max-w-[75%] justify-self-center">
 			<Img class="rounded-lg object-cover " src={imgSrc} />
 		</Card>
 	{/if}

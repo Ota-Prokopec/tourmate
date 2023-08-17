@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Avatar, Button, ButtonGroup, Card, Img } from 'flowbite-svelte';
+	import { Avatar, Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import ImageInput from '$lib/components/Common/ImageInput.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
@@ -7,7 +7,7 @@
 	import Map from '$lib/components/Map/Map.svelte';
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
 	import type { Location } from '@app/ts-types';
-	import { countSameItemsInArray, roundNumber } from '@app/utils';
+	import { roundNumber } from '@app/utils';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 
 	export let data: PageData;
@@ -23,8 +23,6 @@
 	const experiencesLocations = data.usersExperiences.map((exp) =>
 		exp.location.map((xy) => roundNumber(xy, 4))
 	) as Location[];
-
-	const sameLocation = countSameItemsInArray(experiencesLocations);
 
 	const categories = [
 		{ title: 'map', key: 'map' },
@@ -76,8 +74,8 @@
 			/>
 		</Card>
 	{:else}
-		<Map location={[0, 0]} class="z-[999] h-[600px] w-full max-w-[1000px] sm:m-4">
-			{#each data.usersExperiences as experience, index}
+		<Map class="z-[999] h-[600px] w-full max-w-[1000px] ">
+			{#each data.usersExperiences as experience}
 				<MarkerImage
 					imgSrc={experience.imgSrc}
 					location={[experience.location[0], experience.location[1]]}

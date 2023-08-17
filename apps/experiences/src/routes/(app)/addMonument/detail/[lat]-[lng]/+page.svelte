@@ -30,14 +30,12 @@
 
 	const create = async () => {
 		try {
-			res = transformMonumentsDocumentsIntoMonuments(
-				await trpc($page).experience.createMonument.mutate({
-					location: data.newMonument.location,
-					name: name,
-					about: about,
-					pictureURL: image
-				})
-			)[0];
+			res = await trpc($page).experience.createMonument.mutate({
+				location: data.newMonument.location,
+				name: name,
+				about: about,
+				pictureURL: image
+			});
 		} catch (err) {
 			if (err instanceof AppwriteException) error = err;
 		}

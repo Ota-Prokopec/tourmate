@@ -11,6 +11,7 @@ export default class Locale extends LocaleAppwrite {
 	async getLocation(): Promise<Location> {
 		const { ip } = await this.locale.get()
 		const res = await getUsersLocationDataByIP(ip)
+		if (!res.latitude || !res.longitude) throw Error('getUsersLocationDataByIP in localization exceeded rate limit (ipapi.co)')
 		return [res.latitude, res.longitude]
 	}
 }

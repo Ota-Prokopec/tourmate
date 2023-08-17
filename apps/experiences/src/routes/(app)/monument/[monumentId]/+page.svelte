@@ -6,6 +6,7 @@
 	import UserItem from '$lib/components/Common/UserItem.svelte';
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import Popover from '$lib/components/Common/Popover.svelte';
+	import Marker from '$lib/components/Map/Marker.svelte';
 
 	export let data: PageData;
 </script>
@@ -38,5 +39,9 @@
 		</Popover>
 	</Card>
 
-	<Map location={data.monument.location} class="h-[100dvh] fixed top-0" />
+	<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
+		<Marker class="z-50" location={data.monument.location}>
+			<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
+		</Marker>
+	</Map>
 </div>

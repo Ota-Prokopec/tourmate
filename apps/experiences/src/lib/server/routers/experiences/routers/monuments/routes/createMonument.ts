@@ -3,6 +3,7 @@ import appwriteServer, { permissions } from '@app/appwrite-server';
 import { monumentZod } from '@app/ts-types';
 import { numberTimingCoords } from '@app/experience-database-server';
 import { isBase64 } from '@app/utils';
+import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-client/src/transformers';
 
 export const createMonument = protectedProcedure
 	.input(monumentZod.omit({ creatorUserId: true }))
@@ -26,5 +27,5 @@ export const createMonument = protectedProcedure
 			},
 			[ctx.user]
 		);
-		return res;
+		return transformMonumentsDocumentsIntoMonuments(res)[0];
 	});
