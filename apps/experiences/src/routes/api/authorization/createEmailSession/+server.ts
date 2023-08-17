@@ -6,9 +6,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	try {
 		const { email, password }: { email: string; password: string } = await request.json();
 
-		const { account, client } = appwriteServer.none();
-
-		console.log(client);
+		const { account, client } = appwriteServer.setNone();
 
 		const { sessionLegacyToken, sessionToken } = await account.createSession(
 			async () =>

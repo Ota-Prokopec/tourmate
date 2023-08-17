@@ -1,26 +1,14 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import { initTRPC, inferAsyncReturnType, TRPCError } from '@trpc/server';
-import appwriteServer, { adminAppwriteClient } from '@app/appwrite-server';
+import appwriteServer from '@app/appwrite-server';
 import { AppwriteException } from 'appwrite';
 
 export const createContext = async (event: RequestEvent) => {
-	console.log(event.url.pathname);
+	const { client: adminAppwriteClient } = appwriteServer.setAdmin();
 
 	try {
-		const sessionNames = [
-			'a_session_' + process.env.APPWRITE_PROJECT_ID?.toLowerCase(),
-			'a_session_' + process.env.APPWRITE_PROJECT_ID?.toLowerCase() + '_legacy'
-		];
+		const { account, client } = await appwriteServer.setCookie(event.cookies.getAll());
 
-		const session =
-			event.cookies.get(sessionNames[0]) ?? event.cookies.get(sessionNames[1]) ?? '';
-
-		const { account: accountAsNobody } = appwriteServer.none();
-		const { jwt } = await accountAsNobody.createJwtWithSession(session);
-
-		console.log(jwt);
-
-		const { client, account } = appwriteServer.setJWT(jwt);
 		const user = await account.get();
 
 		return {

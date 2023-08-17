@@ -10,6 +10,15 @@ import {
 } from './Document'
 
 import { userInfoDocumentCreateZod, userInfoDocumentZod, userInfoZod } from './Account'
+import { IP, IPApiResponse } from './TsTypes'
+import {
+	Monument,
+	MonumentDocument,
+	monumentDocumentZod,
+	monumentZod,
+	MonumentDocumentCreate,
+	monumentDocumentCreateZod,
+} from './Experience'
 import {
 	ExperienceDocument,
 	Experience,
@@ -46,6 +55,14 @@ export {
 	locationZod,
 	type LoadedExperience,
 	loadedExperienceZod,
+	monumentZod,
+	monumentDocumentZod,
+	type MonumentDocument,
+	type Monument,
+	type MonumentDocumentCreate,
+	monumentDocumentCreateZod,
+	type IP,
+	type IPApiResponse,
 }
 
 export type UserInfo = z.infer<typeof userInfoZod>

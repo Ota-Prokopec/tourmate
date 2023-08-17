@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { Base64 } from '@app/ts-types';
+	import type { UserInfo } from '@app/ts-types';
 	import { Avatar } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let imgSrc: string | Base64;
+	export let data: UserInfo;
 
 	let className = '';
 	export { className as class };
 </script>
 
-<div class={twMerge('flex items-center space-x-4', className)}>
-	<Avatar src={imgSrc} rounded />
+<button on:click class={twMerge('flex items-center space-x-4', className)}>
+	<Avatar src={data.profilePictureURL} rounded />
 	<div class="space-y-1 font-medium dark:text-white">
 		<div>
-			<slot name="username" />
+			{data.username}
 		</div>
 		<div class="text-sm text-gray-500 dark:text-gray-400">
-			<slot name="myId" />
+			{data.myId}
 		</div>
 	</div>
-</div>
+</button>

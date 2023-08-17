@@ -2,10 +2,14 @@
 	import { goto } from '$app/navigation';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import ExpMap from '$lib/components/Map/Map.svelte';
+	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
+	import { numberTimingCoords } from '@app/experience-database-client';
 	import type { Location } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
+	import type { PageData } from './$types';
 
+	export let data: PageData;
 	let map: Map;
 	let location: Location;
 	let markerLocation: Location;
@@ -16,20 +20,30 @@
 				.addTo(map)
 		: undefined;
 
+	$: marker?.addClassName('z-50');
+
 	$: marker?.on('dragend', () => {
 		if (!marker) throw new TypeError('Marker is undefined');
 		const lngLat = marker.getLngLat();
 		markerLocation = [lngLat.lat, lngLat.lng];
 	});
 
-	$: console.log(markerLocation);
+	$: if (location) markerLocation = location;
 
 	const createLocation = () =>
-		goto(`/addFamousPlace/detail/${markerLocation[0]}/${markerLocation[1]}`);
+		goto(
+			`/addMonument/detail/${markerLocation[0] * numberTimingCoords}-${
+				markerLocation[1] * numberTimingCoords
+			}`
+		);
 </script>
 
 <div class="w-[100dvw] h-[100dvh]">
-	<ExpMap bind:location bind:map class="w-full h-full" />
+	<ExpMap bind:location bind:map class="w-full h-full">
+		{#each data.monuments as monument}
+			<MonumentMarker {monument} />
+		{/each}
+	</ExpMap>
 
 	<Button
 		class="absolute bottom-0 right-0 mb-24 mr-4 flex flex-wrap flex-row gap-2"

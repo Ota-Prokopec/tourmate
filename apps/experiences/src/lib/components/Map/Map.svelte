@@ -13,24 +13,25 @@
 	import type { Map } from 'maplibre-gl';
 
 	export let map: Map | undefined = undefined;
-	export let location: Location = [0, 0];
+	export let location: Location | undefined;
 	export let zoom: number = 16;
-	export let isLoading = true;
+	export let isLoading = typeof location === 'undefined';
 	export let deg = 0;
 	let style =
 		'https://api.maptiler.com/maps/4f1c74c8-1b8c-4deb-b478-1f58653a6389/style.json?key=gplNC5uqgFO1autCCLdg';
 
-	getUsersLocation().then((res) => {
-		location = res;
-		isLoading = false;
-	});
+	if (!location)
+		getUsersLocation().then((res) => {
+			location = res;
+			isLoading = false;
+		});
 
 	let className = '';
 	export { className as class };
 </script>
 
 <div class={twMerge('w-full h-full relative', className)}>
-	{#if !isLoading}
+	{#if !isLoading && location}
 		<MapLibre
 			on:click
 			{style}

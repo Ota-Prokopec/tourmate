@@ -14,7 +14,7 @@ import browserStorage from './utils/localStorage'
 import { isTrivial, proxify } from './utils/treasureUtils'
 import { navigate } from './utils/navigation'
 import { elementIdGenerator } from './utils/elementIdGenerator'
-import { getUsersLocation, getDetailsByLatAndLong } from './utils/location'
+import { getUsersLocation, getDetailsByLatAndLong, getUsersLocationDataByIP } from './utils/location'
 import device from './utils/device'
 import { roundNumber, fileToBase64 } from './utils/operations'
 import clipboard from './utils/clipboard'
@@ -42,4 +42,5 @@ export {
 	roundNumber,
 	clipboard,
 	fileToBase64,
+	getUsersLocationDataByIP,
 }

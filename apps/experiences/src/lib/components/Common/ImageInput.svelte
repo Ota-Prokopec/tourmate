@@ -11,7 +11,7 @@
 
 	//	import clipboard from '$lib/utils/clipboard'
 	const dispatch = createEventDispatcher<{
-		image: { name: string; file: File; base64: string | ArrayBuffer | null };
+		image: { name: string; file: File; base64: Base64 };
 		error: {
 			message: string;
 			code: number;

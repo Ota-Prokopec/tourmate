@@ -9,8 +9,9 @@
 	import { goto } from '$app/navigation';
 	const dispatch = createEventDispatcher<{ close: undefined }>();
 
-	export let imgSrc: string | Base64;
-	export let userInfo: UserInfoDocument | UserInfo;
+	export let imgSrc: string | Base64 | undefined = undefined;
+	export let userInfo: UserInfo;
+	export let disableCloseButton = false;
 
 	const userInitials = `${userInfo.username.split(' ')[0][0]}${
 		userInfo.username.split(' ')[1][0]
@@ -25,7 +26,7 @@
 	padding="md"
 	class={twMerge('grid grid-rows-[auto_auto] justify-center max-h-[95dvh] ', className)}
 >
-	<div class="w-full h-auto flex justify-end mt-2 grid grid-cols-[1fr_min-content]">
+	<div class="w-full h-auto justify-end mt-2 grid grid-cols-[1fr_min-content]">
 		<button
 			on:click={() => goto(`/account/${userInfo.myId}`)}
 			class="w-auto flex flex-wrap flex-col"
@@ -34,12 +35,16 @@
 			<span>{userInfo.username}</span>
 			<span>{userInfo.myId}</span>
 		</button>
-		<Icon on:click={() => dispatch('close')}>
-			<IconTimes class="w-10 h-10" />
-		</Icon>
+		{#if !disableCloseButton}
+			<Icon on:click={() => dispatch('close')}>
+				<IconTimes class="w-10 h-10" />
+			</Icon>
+		{/if}
 	</div>
 
-	<Card class="">
-		<Img class="rounded-lg object-cover " src={imgSrc} />
-	</Card>
+	{#if imgSrc}
+		<Card class="">
+			<Img class="rounded-lg object-cover " src={imgSrc} />
+		</Card>
+	{/if}
 </Card>
