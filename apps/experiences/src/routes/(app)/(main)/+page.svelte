@@ -11,6 +11,8 @@
 
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import type { PageData } from './$types';
+	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
+	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 
 	export let data: PageData;
 
@@ -59,19 +61,18 @@
 			bind:location
 		>
 			{#each data.loadedExperiences as experience, index}
-				<MarkerImage
-					class={rightNowAddedExperience?.$id === experience.$id ? 'animate-bounce' : ''}
-					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1
-						? true
-						: false}
+				<ExperienceMarker
+					bouncing={rightNowAddedExperience?.$id === experience.$id}
+					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1}
 					on:almostProfile={(e) => {
 						almostProfile = true;
 						almostProfileImageSrc = e.detail.imgSrc;
 					}}
-					zoom={mapZoom}
-					imgSrc={experience.imgSrc}
-					location={[experience.location[0], experience.location[1]]}
+					{experience}
 				/>
+			{/each}
+			{#each data.loadedMonuments as monument, index}
+				<MonumentMarker {monument} />
 			{/each}
 		</Map>
 		{#if almostProfile}

@@ -13,7 +13,13 @@ export default (storage: Storage) => {
 		getFile(fileId: string) {
 			return storage.getFile(this.bucketId, fileId)
 		}
-		async createFile(base64: Base64, permissions: string[], filename = 'file.png', type = 'image/png', fileId: string = ID.unique()) {
+		async createFile(
+			base64: Base64,
+			permissions: string[] | undefined = undefined,
+			filename = 'file.png',
+			type = 'image/png',
+			fileId: string = ID.unique(),
+		) {
 			const options = {
 				headers: {
 					type: type,
@@ -35,7 +41,8 @@ export default (storage: Storage) => {
 			return storage.updateFile(this.bucketId, fileId, permissions)
 		}
 		getFileURL(fileId: string) {
-			const url = `${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}` as unknown
+			const url =
+				`${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}` as unknown
 			return url as string
 		}
 		getIdFromURL(URL: string) {

@@ -1,6 +1,5 @@
-import { OAuth2Providers } from '@app/ts-types'
 import { browserStorage, post } from '@app/utils'
-import { Account, Client } from 'appwrite'
+import { Client } from 'appwrite'
 import Cookies from 'js-cookie'
 
 export class SSRAccount {

@@ -76,7 +76,7 @@
 			/>
 		</Card>
 	{:else}
-		<Map class="z-[999] h-[600px] w-full max-w-[1000px] sm:m-4">
+		<Map location={[0, 0]} class="z-[999] h-[600px] w-full max-w-[1000px] sm:m-4">
 			{#each data.usersExperiences as experience, index}
 				<MarkerImage
 					imgSrc={experience.imgSrc}

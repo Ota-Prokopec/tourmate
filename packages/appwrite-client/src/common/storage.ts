@@ -6,6 +6,7 @@ export default (client: Client) => {
 
 	const experiencesPictures = new Bucket('experiences-pictures')
 	const profilePictures = new Bucket('profile-pictures')
+	const monumentsPictures = new Bucket('monuments-pictures')
 
-	return { experiencesPictures, profilePictures }
+	return { experiencesPictures, profilePictures, monumentsPictures }
 }

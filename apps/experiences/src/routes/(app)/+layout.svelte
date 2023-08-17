@@ -35,7 +35,7 @@
 			{/if}
 		</BottomNavItem>
 
-		<BottomNavItem on:click={() => goto('/addFamousPlace')} appBtnPosition="right">
+		<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="right">
 			<IconLocation />
 		</BottomNavItem>
 	</BottomNav>

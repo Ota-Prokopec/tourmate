@@ -63,11 +63,11 @@ export const roundNumber = (num: number, digits: number): number => {
 
 export const arrayBufferIntoBase64 = (arrBuff: ArrayBuffer): Base64 => Buffer.from(arrBuff).toString('base64') as Base64
 
-export const fileToBase64 = (file: File): Promise<string | Base64 | null> => {
+export const fileToBase64 = (file: File): Promise<Base64> => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader()
 		reader.readAsDataURL(file)
-		reader.onload = () => resolve(reader.result as string | Base64)
+		reader.onload = () => resolve(reader.result as Base64)
 		reader.onerror = () => reject(reader.error)
 	})
 }

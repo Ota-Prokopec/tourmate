@@ -5,7 +5,7 @@ export const envSchema = z.object({
 	APPWRITE_ENDPOINT: z.string(),
 	APPWRITE_API_KEY: z.string(),
 	HOSTNAME: z.string(),
-	MAPBOX_API_KEY: z.string()
+	MAP_TILER_API_KEY: z.string()
 });
 
 envSchema.parse(process.env);

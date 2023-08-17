@@ -16,7 +16,7 @@
 		"preserveValueImports": false,
 		"noImplicitAny": true,
 		"noEmitOnError": false,
-		"importsNotUsedAsValues": "error",
+		"importsNotUsedAsValues": "preserve",
 
 		"noImplicitReturns": true,
 		"noUnusedLocals": false,

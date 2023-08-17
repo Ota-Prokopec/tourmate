@@ -1,8 +1,8 @@
 //@ts-ignore
 import * as setCookie from 'set-cookie-parser'
 
-import { Client, Account as AccountClient } from 'appwrite'
 import { Client as ClientServer, Account as AccountServer } from 'node-appwrite'
+import { Client as ClientBrowser, Account as AccountBrowser } from 'appwrite'
 
 export class Account extends AccountServer {
 	constructor(public client: ClientServer) {
@@ -59,14 +59,13 @@ export class Account extends AccountServer {
 
 	async createJwtWithSession(session: string) {
 		if (!process.env.APPWRITE_ENDPOINT || !process.env.APPWRITE_PROJECT_ID) throw TypeError('project id or peoject endpoint is not set')
-		const clientBrowser = new Client().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
+		const clientBrowser = new ClientBrowser().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
 		const authCookies: any = {}
 		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = session
 		clientBrowser.headers['X-Fallback-Cookies'] = JSON.stringify(authCookies)
-		const account = new AccountClient(clientBrowser)
+		const account = new AccountBrowser(clientBrowser)
 		const jwt = (await account.createJWT()).jwt
 		return { jwt }
 	}
-
 	//async deleteSession(sessionId: string) {}
 }
