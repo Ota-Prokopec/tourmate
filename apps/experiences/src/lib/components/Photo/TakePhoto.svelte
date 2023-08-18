@@ -4,7 +4,6 @@
 	import ShootButton from './ShootButton.svelte';
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
-	import Cropper from 'cropperjs';
 
 	export let facingMode: 'user' | 'environment' = 'user';
 
@@ -25,6 +24,7 @@
 
 	$: mediaStreamConstraints = {
 		video: {
+			deviceId: cameraDeviceId,
 			frameRate: { min: 1, max: 120, ideal: 120 },
 			facingMode: facingMode,
 			width: { min: 1, max: screenWidth, ideal: screenHeight },
@@ -37,7 +37,15 @@
 		audio: false
 	};
 
-	$: console.log(mediaStreamConstraints.video);
+	$: console.log(mediaStreamConstraints);
+
+	let cameraDevices: MediaDeviceInfo[] | undefined;
+	let cameraDeviceId: string | undefined;
+
+	onMount(async () => {
+		cameraDevices = await navigator.mediaDevices.enumerateDevices();
+		cameraDevices.filter((device) => device.kind === 'videoinput');
+	});
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
@@ -61,15 +69,12 @@
 	$: if (mediaStreamConstraints) start();
 
 	const start = async () => {
-		console.log('start');
+		try {
+			if (!video_source) throw new TypeError('video_source is null');
+			const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
 
-		if (!video_source) throw new TypeError('video_source is null');
-		video_source.pause();
-		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
-		video_source.play();
-		console.log('play');
-
-		video_source.srcObject = stream; //set video to video element
+			video_source.srcObject = stream; //set video to video element
+		} catch (error) {}
 	};
 
 	function takePicture() {
@@ -96,7 +101,14 @@
 		});
 	}
 
-	const swapCameras = () => (facingMode = facingMode === 'user' ? 'environment' : 'user');
+	const swapCameras = () => {
+		facingMode = facingMode === 'user' ? 'environment' : 'user';
+		if (!cameraDevices) return;
+		cameraDeviceId =
+			cameraDevices[0].deviceId === cameraDeviceId
+				? cameraDevices[1].deviceId
+				: cameraDevices[0].deviceId;
+	};
 </script>
 
 <div class="h-full w-full relative">
