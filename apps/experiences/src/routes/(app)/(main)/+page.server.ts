@@ -6,6 +6,8 @@ export const load: PageServerLoad = async (event) => {
 	const { locale } = await appwriteServer.setCookie(event.cookies.getAll());
 	const location = await locale.getLocation();
 
+	console.log({ location });
+
 	const experiences = await trpc(event).experience.getListByLocation.query({
 		location: location,
 		zoom: 14
