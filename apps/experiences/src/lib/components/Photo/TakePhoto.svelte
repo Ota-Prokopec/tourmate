@@ -25,7 +25,7 @@
 
 	$: mediaStreamConstraints = {
 		video: {
-			frameRate: { min: 1, max: 60, ideal: 60 },
+			frameRate: { min: 1, max: 120, ideal: 120 },
 			facingMode: { exact: facingMode },
 			width: { min: 1, max: screenWidth, ideal: screenHeight },
 			height: {
