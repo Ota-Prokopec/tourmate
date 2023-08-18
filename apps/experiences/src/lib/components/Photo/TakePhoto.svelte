@@ -107,9 +107,9 @@
 		facingMode = facingMode === 'user' ? 'environment' : 'user';
 		if (!cameraDevices) return;
 		cameraDeviceId =
-			cameraDevices[0].deviceId === cameraDeviceId
-				? cameraDevices[1].deviceId
-				: cameraDevices[0].deviceId;
+			facingMode === 'user'
+				? cameraDevices.filter((d) => d.label.includes('front'))[0].deviceId
+				: cameraDevices.filter((d) => d.label.includes('back'))[0].deviceId;
 	};
 </script>
 
