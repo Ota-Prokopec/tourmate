@@ -62,9 +62,13 @@ export class Account extends AccountServer {
 		const clientBrowser = new ClientBrowser().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
 		const authCookies: any = {}
 		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = session
-		clientBrowser.headers['X-Fallback-Cookies'] = JSON.stringify(authCookies)
+		clientBrowser.headers['X-Fallback-Cookies'] = authCookies
+		clientBrowser.headers['Cookie'] = `a_session_console=${session}; a_session_experiences=${session}`
+
 		const account = new AccountBrowser(clientBrowser)
+
 		const jwt = (await account.createJWT()).jwt
+
 		return { jwt }
 	}
 	//async deleteSession(sessionId: string) {}

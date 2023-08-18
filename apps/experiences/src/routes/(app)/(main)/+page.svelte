@@ -16,8 +16,6 @@
 
 	export let data: PageData;
 
-	console.log(data);
-
 	let location: Location;
 
 	//remove old right now added experinece from store and load it into variable to screen it to user
