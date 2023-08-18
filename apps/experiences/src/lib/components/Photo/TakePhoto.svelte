@@ -26,7 +26,7 @@
 	$: mediaStreamConstraints = {
 		video: {
 			frameRate: { min: 1, max: 60, ideal: 60 },
-			facingMode: facingMode,
+			facingMode: { exact: facingMode },
 			width: { min: 1, max: screenWidth, ideal: screenHeight },
 			height: {
 				min: 1,
@@ -36,6 +36,8 @@
 		},
 		audio: false
 	};
+
+	$: console.log(mediaStreamConstraints.video);
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
