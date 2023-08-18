@@ -18,6 +18,7 @@ import { getUsersLocation, getDetailsByLatAndLong, getUsersLocationDataByIP } fr
 import device from './utils/device'
 import { roundNumber, fileToBase64 } from './utils/operations'
 import clipboard from './utils/clipboard'
+import { notify } from './utils/notification'
 
 export {
 	browserStorage,
@@ -43,4 +44,5 @@ export {
 	clipboard,
 	fileToBase64,
 	getUsersLocationDataByIP,
+	notify,
 }

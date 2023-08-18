@@ -1,17 +1,31 @@
 import lodash from 'lodash'
 const { merge, pick } = lodash
 import { get } from './fetching'
-import { IP, IPApiResponse } from '@app/ts-types'
+import type { IP, IPApiResponse, Location } from '@app/ts-types'
 
-export const getUsersLocation = (): Promise<[number, number]> => {
+export const getUsersLocation = (): Promise<Location> => {
 	return new Promise((res) => {
 		if (typeof window === 'undefined') res([0, 0])
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function (position) {
-				res([position.coords.latitude, position.coords.longitude])
-			})
+			navigator.geolocation.getCurrentPosition(
+				function (position) {
+					res([position.coords.latitude, position.coords.longitude])
+				},
+				() => {},
+				{ enableHighAccuracy: true },
+			)
 		}
 	})
+}
+
+export const watchUsersLocation = (callback: (location: Location) => void): void => {
+	navigator.geolocation.watchPosition(
+		(position) => {
+			callback([position.coords.latitude, position.coords.longitude])
+		},
+		() => {},
+		{ enableHighAccuracy: true },
+	)
 }
 
 export const getDetailsByLatAndLong = async (lat: number, long: number) => {

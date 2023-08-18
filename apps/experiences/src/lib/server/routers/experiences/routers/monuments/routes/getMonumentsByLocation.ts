@@ -4,7 +4,7 @@ import appwriteServer, { Query } from '@app/appwrite-server';
 import { numberTimingCoords } from '@app/experience-database-server';
 import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-client/src/transformers';
 
-const zoomRange = 10;
+const zoomRange = 1 / 20;
 
 export const getMonumentsByLocation = protectedProcedure
 	.input(
@@ -17,16 +17,16 @@ export const getMonumentsByLocation = protectedProcedure
 		const { collections } = appwriteServer.set(ctx.appwriteClients.user);
 
 		const rangeLatitudeMax = Math.floor(
-			(input.location[0] + zoomRange / input.zoom) * numberTimingCoords
+			(input.location[0] + zoomRange * input.zoom) * numberTimingCoords
 		);
 		const rangeLatitudeMin = Math.floor(
-			(input.location[0] - zoomRange / input.zoom) * numberTimingCoords
+			(input.location[0] - zoomRange * input.zoom) * numberTimingCoords
 		);
 		const rangeLongitudeMax = Math.floor(
-			(input.location[1] + zoomRange / input.zoom) * numberTimingCoords
+			(input.location[1] + zoomRange * input.zoom) * numberTimingCoords
 		);
 		const rangeLongitudeMin = Math.floor(
-			(input.location[1] - zoomRange / input.zoom) * numberTimingCoords
+			(input.location[1] - zoomRange * input.zoom) * numberTimingCoords
 		);
 
 		const MonumentDocuments = await collections.monument.listDocuments([

@@ -4,8 +4,9 @@
 	import ShootButton from './ShootButton.svelte';
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
+	import { SyncLoader } from 'svelte-loading-spinners';
 
-	export let facingMode: 'user' | 'environment' = 'user';
+	export let facingMode: 'user' | 'environment' = 'environment';
 
 	let className = '';
 	export { className as class };
@@ -16,11 +17,10 @@
 
 	let video_source: HTMLVideoElement | null;
 	let canvas: HTMLCanvasElement | null;
-
 	$: screenWidth = browser ? document.body.offsetWidth : 0;
 	$: screenHeight = browser ? document.body.offsetHeight : 0;
-
 	let mediaStreamConstraints: MediaStreamConstraints;
+	let isLoading = true;
 
 	$: mediaStreamConstraints = {
 		video: {
@@ -37,8 +37,6 @@
 		audio: false
 	};
 
-	$: console.log(mediaStreamConstraints);
-
 	let cameraDevices: MediaDeviceInfo[] | undefined;
 	let cameraDeviceId: string | undefined;
 
@@ -46,8 +44,6 @@
 		cameraDevices = await navigator.mediaDevices.enumerateDevices();
 		cameraDevices = cameraDevices.filter((device) => device.kind === 'videoinput');
 	});
-
-	$: console.log(cameraDevices);
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
@@ -71,12 +67,14 @@
 	$: if (mediaStreamConstraints) start();
 
 	const start = async () => {
+		isLoading = true;
 		try {
 			if (!video_source) throw new TypeError('video_source is null');
 			const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
 
 			video_source.srcObject = stream; //set video to video element
 		} catch (error) {}
+		isLoading = false;
 	};
 
 	function takePicture() {
@@ -107,24 +105,29 @@
 		facingMode = facingMode === 'user' ? 'environment' : 'user';
 		if (!cameraDevices) return;
 		cameraDeviceId =
-			facingMode === 'user'
-				? cameraDevices.filter((d) => d.label.includes('front'))[0].deviceId
-				: cameraDevices.filter((d) => d.label.includes('back'))[0].deviceId;
+			facingMode === 'user' ? cameraDevices[0].deviceId : cameraDevices[1].deviceId;
 	};
 </script>
 
-<div class="h-full w-full relative">
+<div class="h-full w-full relative flex justify-center items-center">
+	{#if isLoading}
+		<div class="z-50">
+			<SyncLoader color="black" size={60} />
+		</div>
+	{/if}
 	<video
 		autoplay
 		bind:this={video_source}
 		class={twMerge(
-			'h-full object-cover  absolute',
+			'h-full object-cover absolute',
+			isLoading && 'blur-sm',
 			facingMode === 'user' ? 'scale-x-[-1]' : '',
 			className
 		)}
 	>
 		<track kind="captions" />
 	</video>
+
 	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
 		<ShootButton class="active:animate-ping" on:click={takePicture} />
 		<Icon
