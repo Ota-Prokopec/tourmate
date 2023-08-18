@@ -44,30 +44,8 @@
 
 	onMount(async () => {
 		cameraDevices = await navigator.mediaDevices.enumerateDevices();
-		let types: string[] = [];
-		cameraDevices = cameraDevices
-			.filter((device) => device.kind === 'videoinput')
-			.filter((device) => {
-				if (!types.length) return true;
-				const type = device.label.includes('facing front')
-					? 'front'
-					: device.label.includes('facing back')
-					? 'back'
-					: undefined;
-
-				if (!type) return false;
-
-				if (types.includes(type)) return false;
-				else {
-					types.push(type);
-					return true;
-				}
-			});
+		cameraDevices = cameraDevices.filter((device) => device.kind === 'videoinput');
 	});
-
-	$: console.log(cameraDevices);
-
-	('camera2 2, facing back');
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
@@ -126,10 +104,9 @@
 	const swapCameras = () => {
 		facingMode = facingMode === 'user' ? 'environment' : 'user';
 		if (!cameraDevices) return;
-		cameraDeviceId =
-			cameraDevices[0].deviceId === cameraDeviceId
-				? cameraDevices[1].deviceId
-				: cameraDevices[0].deviceId;
+		cameraDeviceId = cameraDevices.filter((device) =>
+			device.label.includes(`facing ${facingMode === 'user' ? 'front' : 'back'}`)
+		)[0].deviceId;
 	};
 </script>
 
