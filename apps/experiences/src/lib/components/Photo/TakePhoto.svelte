@@ -58,12 +58,16 @@
 
 	$: if (mediaStreamConstraints) start();
 
-	const start = () => {
-		navigator.mediaDevices.getUserMedia(mediaStreamConstraints).then((stream) => {
-			if (!video_source) throw new TypeError('video_source is null');
+	const start = async () => {
+		console.log('start');
 
-			video_source.srcObject = stream; //set video to video element
-		});
+		if (!video_source) throw new TypeError('video_source is null');
+		video_source.pause();
+		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
+		video_source.play();
+		console.log('play');
+
+		video_source.srcObject = stream; //set video to video element
 	};
 
 	function takePicture() {

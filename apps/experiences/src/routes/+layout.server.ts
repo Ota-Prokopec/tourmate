@@ -8,8 +8,6 @@ export const load: ServerLoad = async (event): Promise<{ user: TGetAccountOutput
 			user: await trpc(event).account.get.query()
 		};
 	} catch (error) {
-		console.log(error);
-
 		if (event.url.href?.includes('auth')) {
 			return { user: null };
 		}
