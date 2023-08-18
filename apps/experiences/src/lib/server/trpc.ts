@@ -20,7 +20,6 @@ export const createContext = async (event: RequestEvent) => {
 			...event
 		};
 	} catch (error) {
-		console.log(error);
 		if (error instanceof AppwriteException) {
 			if (error.code === 429) throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
 		}

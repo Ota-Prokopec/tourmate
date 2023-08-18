@@ -16,6 +16,8 @@
 
 	export let data: PageData;
 
+	console.log(data);
+
 	let location: Location;
 
 	//remove old right now added experinece from store and load it into variable to screen it to user
@@ -53,7 +55,7 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	{#if $mapOrTakePhoto === "map"}
+	{#if $mapOrTakePhoto === 'map'}
 		<Map
 			deg={45}
 			isLoading={!$myNewExperienceStore.rightNowAddedExperience}

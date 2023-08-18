@@ -17,7 +17,7 @@
 	export let data: PageData;
 	let map: Map;
 	let location: Location | undefined;
-	let markerLocation: Location | undefined;
+	$: markerLocation = location;
 
 	$: marker =
 		map && location
@@ -34,8 +34,6 @@
 		markerLocation = [lngLat.lat, lngLat.lng];
 	});
 
-	$: if (location) markerLocation = location;
-
 	const createLocation = () => {
 		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
 		goto(
@@ -46,8 +44,12 @@
 	};
 
 	$: positionDetails = useQuery('positionDetails', async () => {
-		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-		return await getDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
+		try {
+			if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
+			return await getDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
+		} catch (error) {
+			return null;
+		}
 	});
 </script>
 

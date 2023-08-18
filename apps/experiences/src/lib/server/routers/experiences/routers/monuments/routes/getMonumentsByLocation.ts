@@ -16,8 +16,6 @@ export const getMonumentsByLocation = protectedProcedure
 	.query(async ({ ctx, input }) => {
 		const { collections } = appwriteServer.set(ctx.appwriteClients.user);
 
-		console.log(input.location);
-
 		const rangeLatitudeMax = Math.floor(
 			(input.location[0] + zoomRange / input.zoom) * numberTimingCoords
 		);

@@ -23,12 +23,14 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 				})
 		);
 
+		const maxAge = 2 ^ 31;
+
 		const sessionTokenCookie = cookies.serialize(sessionToken.name, sessionToken.value, {
 			domain: process.env.HOSTNAME,
 			secure: sessionToken.secure,
 			sameSite: sessionToken.sameSite,
 			path: '/',
-			maxAge: sessionToken.maxAge,
+			maxAge: maxAge,
 			httpOnly: sessionToken.httpOnly,
 			expires: sessionToken.expires
 		});
@@ -54,7 +56,6 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 			}
 		});
 	} catch (err) {
-		console.log(err);
 		throw error(401);
 		return json({});
 	}
