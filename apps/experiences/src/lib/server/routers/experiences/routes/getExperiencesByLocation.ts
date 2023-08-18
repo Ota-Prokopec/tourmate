@@ -32,15 +32,21 @@ export const getExperiencesByLocation = protectedProcedure
 			(input.location[1] - zoomRange / input.zoom) * numberTimingCoords
 		);
 
-		const experienceDocuments = await collections.experience.listDocuments([
-			Query.lessThan('latitude', rangeLatitudeMax),
-			Query.greaterThan('latitude', rangeLatitudeMin),
-			Query.lessThan('longitude', rangeLongitudeMax),
-			Query.greaterThan('longitude', rangeLongitudeMin)
-		]);
-		const experiences = transformExperienceDocumentsIntoExperience(
-			...experienceDocuments.documents
-		);
+		try {
+			const experienceDocuments = await collections.experience.listDocuments([
+				Query.lessThan('latitude', rangeLatitudeMax),
+				Query.greaterThan('latitude', rangeLatitudeMin),
+				Query.lessThan('longitude', rangeLongitudeMax),
+				Query.greaterThan('longitude', rangeLongitudeMin)
+			]);
+			const experiences = transformExperienceDocumentsIntoExperience(
+				...experienceDocuments.documents
+			);
 
-		return experiences;
+			console.log({ experienceDocuments });
+
+			return experiences;
+		} catch (error) {
+			console.log(error);
+		}
 	});
