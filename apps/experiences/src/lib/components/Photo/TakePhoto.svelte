@@ -104,9 +104,10 @@
 	const swapCameras = () => {
 		facingMode = facingMode === 'user' ? 'environment' : 'user';
 		if (!cameraDevices) return;
-		cameraDeviceId = cameraDevices.filter((device) =>
-			device.label.includes(`facing ${facingMode === 'user' ? 'front' : 'back'}`)
-		)[0].deviceId;
+		cameraDeviceId =
+			cameraDevices[0].deviceId === cameraDeviceId
+				? cameraDevices[1].deviceId
+				: cameraDevices[0].deviceId;
 	};
 </script>
 
