@@ -44,8 +44,24 @@
 
 	onMount(async () => {
 		cameraDevices = await navigator.mediaDevices.enumerateDevices();
-		cameraDevices.filter((device) => device.kind === 'videoinput');
+		let type: 'front' | 'back' | undefined = undefined;
+		cameraDevices = cameraDevices
+			.filter((device) => device.kind === 'videoinput')
+			.filter((device) => {
+				if (!type) return true;
+				const res = !device.label.includes(type);
+				type = device.label.includes('facing front')
+					? 'front'
+					: device.label.includes('facing back')
+					? 'back'
+					: undefined;
+				return res;
+			});
 	});
+
+	$: console.log(cameraDevices);
+
+	('camera2 2, facing back');
 
 	onMount(() => (canvas = document.createElement('canvas')));
 
