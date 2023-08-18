@@ -6,7 +6,7 @@
 	import Icon from '../Common/Icon.svelte';
 	import Cropper from 'cropperjs';
 
-	export let facingMode: 'user' | 'environment' = 'environment';
+	export let facingMode: 'user' | 'environment' = 'user';
 
 	let className = '';
 	export { className as class };
