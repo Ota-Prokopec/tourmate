@@ -47,6 +47,8 @@
 		cameraDevices = cameraDevices.filter((device) => device.kind === 'videoinput');
 	});
 
+	$: console.log(cameraDevices);
+
 	onMount(() => (canvas = document.createElement('canvas')));
 
 	//set width and height for best quality of screen
