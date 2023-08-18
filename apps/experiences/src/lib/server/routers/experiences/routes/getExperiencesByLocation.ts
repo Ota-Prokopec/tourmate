@@ -33,17 +33,10 @@ export const getExperiencesByLocation = protectedProcedure
 		);
 
 		try {
-			const experienceDocuments = await collections.experience.listDocuments([
-				Query.lessThan('latitude', rangeLatitudeMax),
-				Query.greaterThan('latitude', rangeLatitudeMin),
-				Query.lessThan('longitude', rangeLongitudeMax),
-				Query.greaterThan('longitude', rangeLongitudeMin)
-			]);
+			const experienceDocuments = await collections.experience.listDocuments([]);
 			const experiences = transformExperienceDocumentsIntoExperience(
 				...experienceDocuments.documents
 			);
-
-			console.log({ experienceDocuments });
 
 			return experiences;
 		} catch (error) {
