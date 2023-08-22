@@ -29,6 +29,8 @@
 		notifications.watchNotifications((payload) => (foregroundNotification = payload));
 	});
 
+	$: console.log(foregroundNotification);
+
 	export let data: LayoutData;
 </script>
 

@@ -8,7 +8,7 @@
 </script>
 
 {#if message?.notification}
-	<MyAlert class="m-4" color="green">
+	<MyAlert class="m-4 min-w-[400px]" color="green">
 		<svelte:fragment slot="title">
 			{message.notification.title}
 		</svelte:fragment>

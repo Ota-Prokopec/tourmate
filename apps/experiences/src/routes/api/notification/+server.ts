@@ -17,10 +17,12 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const { title, body } = (await request.json()) as { title: string; body: string };
 
+		console.log(title, body);
+
 		const { collections } = appwriteServer.setAdmin();
 
 		//check api key
-		//	if (!apiKey || !checkExperiencesAPIKey(apiKey)) throw error(403);
+		if (!apiKey || !checkExperiencesAPIKey(apiKey)) throw error(403);
 
 		//get all users for notification
 		const docs = await collections.token.listDocuments([Query.limit(100)]);
