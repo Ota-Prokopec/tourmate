@@ -18,6 +18,9 @@ const config = {
 			$src: path.resolve('src'),
 			$routes: path.resolve('src', 'routes'),
 			$server: path.resolve('src', 'lib/server')
+		},
+		files: {
+			serviceWorker: 'src/firebase-messaging-sw.js'
 		}
 	}
 };

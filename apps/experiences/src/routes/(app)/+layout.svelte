@@ -12,6 +12,14 @@
 
 <script lang="ts">
 	import type { LayoutData } from './$types';
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		const { notifications } = await import('@app/firebase-client');
+		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {});
+		console.log(await notifications.initUser(data.user.$id, reg));
+		notifications.watchNotifications(console.log);
+	});
 
 	export let data: LayoutData;
 </script>

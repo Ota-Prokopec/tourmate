@@ -1,5 +1,5 @@
-import { initializeApp, FirebaseOptions } from 'firebase/app';
-import { getMessaging } from 'firebase/messaging/sw';
+import { FirebaseOptions, initializeApp } from 'firebase/app'
+import Notifications from './utils/notification'
 
 const firebaseConfig: FirebaseOptions = {
 	apiKey: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
@@ -8,9 +8,13 @@ const firebaseConfig: FirebaseOptions = {
 	storageBucket: 'experiences-5dfad.appspot.com',
 	messagingSenderId: '501553004716',
 	appId: '1:501553004716:web:c0395217ddcb42d5e21f09',
-	measurementId: 'G-BM0VH8CLR6'
-};
+	measurementId: 'G-BM0VH8CLR6',
+}
 
-const firebase = initializeApp(firebaseConfig);
+// set service-worker
 
-const messaging = getMessaging(firebase);
+const firebase = initializeApp(firebaseConfig)
+
+const notifications = Notifications(firebase)
+
+export { notifications }

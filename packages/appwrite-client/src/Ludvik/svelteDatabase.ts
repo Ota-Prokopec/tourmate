@@ -3,6 +3,7 @@ import { Query, ID } from 'appwrite'
 
 import type { Writable } from 'svelte/store'
 import type { Models, RealtimeResponseEvent, Databases } from 'appwrite'
+import { executeFunctionBeforeAndAfterClassMethod } from '@app/utils'
 type DatabaseValueTypes = string | number | string[] | number[] | boolean
 
 const convertObjectInfoArray = (data: Record<string, string>): string[] => {
@@ -12,16 +13,26 @@ const convertObjectInfoArray = (data: Record<string, string>): string[] => {
 export default (databases: Databases) => {
 	const client = databases.client
 
-	return class Collection<TDocumentGet extends Models.Document, TDocumentCreate extends Record<string, DatabaseValueTypes>> {
+	class Collection<TDocumentGet extends Models.Document, TDocumentCreate extends Record<string, DatabaseValueTypes>> {
 		constructor(public databaseId: string, public collectionId: string) {}
 
 		createDocument(data: TDocumentCreate, permissions: string[] | undefined = undefined, id: string = ID.unique()) {
 			return databases.createDocument(this.databaseId, this.collectionId, id, data, permissions)
 		}
 
-		updateDocument(documentId: string | Models.Document, data: Partial<TDocumentCreate>, permissions: string[] | undefined = undefined) {
+		updateDocument(
+			documentId: string | Models.Document,
+			data: Partial<TDocumentCreate>,
+			permissions: string[] | undefined = undefined,
+		) {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
-			return databases.updateDocument(this.databaseId, this.collectionId, typeof documentId === 'string' ? documentId : documentId.$id, data, permissions)
+			return databases.updateDocument(
+				this.databaseId,
+				this.collectionId,
+				typeof documentId === 'string' ? documentId : documentId.$id,
+				data,
+				permissions,
+			)
 		}
 
 		async deleteDocument(filters: string[]): Promise<{}>
@@ -47,23 +58,26 @@ export default (databases: Databases) => {
 			})
 		}
 
-		listenInsert<TDocumentGet>(filter: (document: Models.Document) => boolean = () => true) {
-			const dataStore = writable<Models.Document[]>([])
+		listenInsert(filter: (document: Models.Document) => boolean = () => true): Readonly<Writable<TDocumentGet[]>> {
+			const dataStore = writable<TDocumentGet[]>([])
 
-			client.subscribe(`databases.${this.databaseId}.collections.${this.collectionId}.documents`, (response: RealtimeResponseEvent<any>) => {
-				if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.*.create`)) {
-					if (filter(response.payload) === false) return
+			client.subscribe(
+				`databases.${this.databaseId}.collections.${this.collectionId}.documents`,
+				(response: RealtimeResponseEvent<any>) => {
+					if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.*.create`)) {
+						if (filter(response.payload) === false) return
 
-					dataStore.update((current) => {
-						current.push(response.payload)
-						return current
-					})
+						dataStore.update((current) => {
+							current.push(response.payload)
+							return current
+						})
 
-					this.subscribeCollectionUpdate(response.payload, dataStore)
-				}
-			})
+						this.subscribeCollectionUpdate(response.payload, dataStore)
+					}
+				},
+			)
 
-			return { subscribe: dataStore.subscribe }
+			return dataStore
 		}
 
 		getDocument(documentId: string): Readonly<[Writable<TDocumentGet | null>, Writable<boolean>]>
@@ -84,7 +98,8 @@ export default (databases: Databases) => {
 			} else {
 				databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, documentId).then((data) => {
 					//if (data.total < 1) throw new Error('Document that matches the query not found')
-					if (data.total > 1) throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
+					if (data.total > 1)
+						throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
 
 					store.set(data.documents[0] ?? null)
 					loading.set(false)
@@ -98,7 +113,7 @@ export default (databases: Databases) => {
 			return [store, loading] as const
 		}
 
-		listDocuments<TDocumentGet extends Models.Document>(
+		listDocuments(
 			filters: string[] = [],
 			offset: number = 0,
 			limit: number = -1,
@@ -145,7 +160,11 @@ export default (databases: Databases) => {
 			const store = {
 				subscribe: dataStore.subscribe,
 				next: async () => {
-					const data = await databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit), Query.offset(offset)])
+					const data = await databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [
+						...queries,
+						Query.limit(limit),
+						Query.offset(offset),
+					])
 					data.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
 
 					dataStore.update((current) => [...current, ...data.documents])
@@ -166,11 +185,13 @@ export default (databases: Databases) => {
 			const dataStore = writable<TDocumentGet[]>([])
 			let lastId: string
 
-			databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit)]).then((firstData) => {
-				dataStore.set(firstData.documents)
-				firstData.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
-				lastId = firstData.documents[firstData.documents.length - 1].$id
-			})
+			databases
+				.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit)])
+				.then((firstData) => {
+					dataStore.set(firstData.documents)
+					firstData.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
+					lastId = firstData.documents[firstData.documents.length - 1].$id
+				})
 
 			const observer = new IntersectionObserver((entries, me) => {
 				if (lastId === null) return
@@ -178,17 +199,23 @@ export default (databases: Databases) => {
 				entries.forEach((entry) => {
 					if (!entry.isIntersecting) return
 
-					databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit), Query.cursorAfter(lastId)]).then((data) => {
-						dataStore.update((current) => {
-							current.push(...data.documents)
-							lastId = current[current.length - 1].$id
-							return current
+					databases
+						.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [
+							...queries,
+							Query.limit(limit),
+							Query.cursorAfter(lastId),
+						])
+						.then((data) => {
+							dataStore.update((current) => {
+								current.push(...data.documents)
+								lastId = current[current.length - 1].$id
+								return current
+							})
+
+							data.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
+
+							entry.target.dispatchEvent(new CustomEvent('fetch', entry.target as CustomEventInit<HTMLElement>))
 						})
-
-						data.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
-
-						entry.target.dispatchEvent(new CustomEvent('fetch', entry.target as CustomEventInit<HTMLElement>))
-					})
 				})
 			}, observerOptions)
 
@@ -207,27 +234,47 @@ export default (databases: Databases) => {
 
 		subscribeCollectionUpdate<TDocumentGet>(document: Models.Document, store: Writable<Models.Document[]>): void
 		subscribeCollectionUpdate<TDocumentGet>(document: Models.Document, store: Writable<Models.Document>): void
-		subscribeCollectionUpdate<TDocumentGet>(document: Models.Document, store: Writable<Models.Document[]> | Writable<Models.Document>): void {
-			client.subscribe(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}`, (response: RealtimeResponseEvent<any>) => {
-				if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.delete`)) {
-					//@ts-ignore
-					return store.update((current) => {
-						if (Array.isArray(current) === false) return null
-
-						current.splice(current.indexOf(document), 1)
-						return current
-					})
-				}
-
-				if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.update`)) {
-					return store.update((current) => {
-						if (Array.isArray(current) === false) return response.payload
+		subscribeCollectionUpdate<TDocumentGet>(
+			document: Models.Document,
+			store: Writable<Models.Document[]> | Writable<Models.Document>,
+		): void {
+			client.subscribe(
+				`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}`,
+				(response: RealtimeResponseEvent<any>) => {
+					if (
+						response.events.includes(
+							`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.delete`,
+						)
+					) {
 						//@ts-ignore
-						current[current.indexOf(document)] = response.payload
-						return current
-					})
-				}
-			})
+						return store.update((current) => {
+							if (Array.isArray(current) === false) return null
+
+							current.splice(current.indexOf(document), 1)
+							return current
+						})
+					}
+
+					if (
+						response.events.includes(
+							`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.update`,
+						)
+					) {
+						return store.update((current) => {
+							if (Array.isArray(current) === false) return response.payload
+							//@ts-ignore
+							current[current.indexOf(document)] = response.payload
+							return current
+						})
+					}
+				},
+			)
 		}
 	}
+
+	executeFunctionBeforeAndAfterClassMethod(Collection, {
+		before: () => typeof window === 'object',
+	})
+
+	return Collection
 }

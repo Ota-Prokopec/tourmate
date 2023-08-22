@@ -7,6 +7,10 @@
 	"orientation": "portrait",
 	"scope": "/",
 	"start_url": "/",
+	"background": {
+		"service_worker": "firebase-messaging-sw.js",
+		"type": "module"
+	},
 	"icons": [
 		{
 			"src": "icons/icon-72x72.png",

@@ -6,14 +6,18 @@
 	import { QueryClientProvider, QueryClient } from '@sveltestack/svelte-query';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import { browser } from '$app/environment';
-	import { start } from '../service-worker/serviceWorker';
+	//import { start } from '../service-worker/serviceWorker';
+	import { onMount } from 'svelte';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
 
 	const queryClient = new QueryClient();
 
 	//$: if (!$user && !$isLoading) goto('login'); //this is client-side Auth controll
 
 	//auto localization
-	$: browser && start();
+	//	$: browser && start();
 </script>
 
 <QueryClientProvider client={queryClient}>

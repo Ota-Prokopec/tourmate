@@ -9,8 +9,19 @@ import {
 	PartialDocumentDdeepZod,
 } from './Document'
 
-import { userInfoDocumentCreateZod, userInfoDocumentZod, userInfoZod } from './Account'
+import {
+	userInfoDocumentCreateZod,
+	userInfoDocumentZod,
+	userInfoZod,
+	tokenZod,
+	tokenDocumentZod,
+	tokenDocumentCreateZod,
+	Token,
+	TokenDocument,
+	TokenDocumentCreate,
+} from './Account'
 import { IP, IPApiResponse } from './TsTypes'
+import { UserInfoDocument, UserInfoDocumentCreate } from './Account'
 import {
 	Monument,
 	MonumentDocument,
@@ -63,11 +74,15 @@ export {
 	monumentDocumentCreateZod,
 	type IP,
 	type IPApiResponse,
+	tokenZod,
+	tokenDocumentZod,
+	tokenDocumentCreateZod,
+	type Token,
+	type TokenDocument,
+	type TokenDocumentCreate,
+	type UserInfoDocument,
+	type UserInfoDocumentCreate,
 }
-
-export type UserInfo = z.infer<typeof userInfoZod>
-export type UserInfoDocument = z.infer<typeof userInfoDocumentZod>
-export type UserInfoDocumentCreate = z.infer<typeof userInfoDocumentCreateZod>
 
 export type OAuth2Providers = 'facebook' | 'google'
 

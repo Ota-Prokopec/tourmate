@@ -22,7 +22,7 @@ export const isFile = (value: unknown): value is File => {
 }
 export const base64ToBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
 	const byteCharacters = atob(b64Data)
-	const byteArrays = []
+	const byteArrays: Uint8Array[] = []
 
 	for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
 		const slice = byteCharacters.slice(offset, offset + sliceSize)
