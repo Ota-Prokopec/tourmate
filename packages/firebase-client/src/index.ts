@@ -4,7 +4,7 @@ import Notifications from './utils/notification'
 //@ts-ignore
 const { VITE_FIREBASE_MESSAGING_VAPID_KEY, VITE_FIREBASE_API_KEY } = {
 	VITE_FIREBASE_API_KEY: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
-	VITE_FIREBASE_MESSAGING_VAPID_KEY: 'BORZK8G04pvCDA7bsFEKd1WcKsCeqpjHKxqBG9gLZVzDeq8s298FdkEsrFI1xBnptMUojchQrJfFPunlJ8R',
+	VITE_FIREBASE_MESSAGING_VAPID_KEY: 'BORZK8G04pvCDA7bsFEKd1WcKsCeqpjHKxqBG9gLZVzDeq8s298FdkEsrFI1xBnptMUojchQrJfFPunlJ8R-zDc',
 }
 
 const firebaseConfig: FirebaseOptions = {
