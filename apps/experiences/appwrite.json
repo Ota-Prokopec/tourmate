@@ -1,0 +1,21 @@
+{
+    "projectId": "experiences",
+    "projectName": "",
+    "functions": [
+        {
+            "$id": "monumentCreateNotifications",
+            "name": "monumentCreateNotifications",
+            "runtime": "node-16.0",
+            "path": "functions/monumentCreateNotifications",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}

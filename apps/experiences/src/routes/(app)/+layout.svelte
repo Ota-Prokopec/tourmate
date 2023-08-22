@@ -6,13 +6,18 @@
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import type { MessagePayload } from 'firebase/messaging';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 </script>
 
 <script lang="ts">
+	import FirebaseNotification from '$lib/components/Common/FirebaseNotification.svelte';
+	import MyAlert from '$lib/components/Common/MyAlert.svelte';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
+
+	let foregroundNotification: MessagePayload | undefined;
 
 	onMount(async () => {
 		const { notifications } = await import('@app/firebase-client');
@@ -20,12 +25,14 @@
 			type: 'classic',
 			scope: './'
 		});
-		console.log(await notifications.initUser(data.user.$id, reg));
-		notifications.watchNotifications(console.log);
+		await notifications.initUser(data.user.$id, reg);
+		notifications.watchNotifications((payload) => (foregroundNotification = payload));
 	});
 
 	export let data: LayoutData;
 </script>
+
+<FirebaseNotification message={foregroundNotification} />
 
 <div class="w-full h-full">
 	<wrap class="w-full h-auto">

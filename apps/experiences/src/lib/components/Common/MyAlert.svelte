@@ -31,6 +31,7 @@
 
 {#if visible}
 	<Alert
+		on:click
 		shadow
 		{dismissable}
 		class={`rounded-xl max-w-[500px] z-[9999] max-h-[300px] ml-auto mr-auto mt-5 absolute ${className}`}
@@ -38,9 +39,9 @@
 		{color}
 	>
 		<span slot="icon" />
-		<span class="text-lg font-medium"><slot name="title" /></span>
+		<span class="text-lg font-medium break-all"><slot name="title" /></span>
 		<div>
-			<div class="mt-2 mb-4 text-sm"><slot /><slot name="message" /></div>
+			<div class="mt-2 mb-4 text-sm break-all"><slot /><slot name="message" /></div>
 			<div class="flex gap-2">
 				<slot name="buttons" />
 			</div>

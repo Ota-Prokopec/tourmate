@@ -9,6 +9,7 @@
 	//import { start } from '../service-worker/serviceWorker';
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
+	import { trpc } from '$lib/trpc';
 
 	export let data: LayoutData;
 

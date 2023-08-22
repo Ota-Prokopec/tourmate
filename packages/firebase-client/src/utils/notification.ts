@@ -2,14 +2,14 @@ import { FirebaseApp } from 'firebase/app'
 import * as messaging from 'firebase/messaging'
 import { collections, permissions } from '@app/appwrite-client'
 
-export default (firebase: FirebaseApp) => {
+export default (firebase: FirebaseApp, vapidKey: string) => {
 	const notifications = messaging.getMessaging(firebase)
 
 	const generateToken = async (serviceWorkerRegistration: ServiceWorkerRegistration) => {
 		const permissions = await Notification.requestPermission()
 		if (permissions !== 'granted') throw new Error('permissions denied')
 		return await messaging.getToken(notifications, {
-			vapidKey: 'BORZK8G04pvCDA7bsFEKd1WcKsCeqpjHKxqBG9gLZVzDeq8s298FdkEsrFI1xBnptMUojchQrJfFPunlJ8R-zDc',
+			vapidKey: vapidKey,
 			serviceWorkerRegistration: serviceWorkerRegistration,
 		})
 	}

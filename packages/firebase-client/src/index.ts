@@ -1,8 +1,11 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
 import Notifications from './utils/notification'
 
+//@ts-ignore
+const { VITE_FIREBASE_MESSAGING_VAPID_KEY, VITE_FIREBASE_API_KEY } = import.meta.env as Record<string, string>
+
 const firebaseConfig: FirebaseOptions = {
-	apiKey: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
+	apiKey: VITE_FIREBASE_API_KEY,
 	authDomain: 'experiences-5dfad.firebaseapp.com',
 	projectId: 'experiences-5dfad',
 	storageBucket: 'experiences-5dfad.appspot.com',
@@ -15,6 +18,6 @@ const firebaseConfig: FirebaseOptions = {
 
 const firebase = initializeApp(firebaseConfig)
 
-const notifications = Notifications(firebase)
+const notifications = Notifications(firebase, VITE_FIREBASE_MESSAGING_VAPID_KEY)
 
 export { notifications }

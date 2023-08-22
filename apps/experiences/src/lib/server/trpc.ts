@@ -23,7 +23,6 @@ export const createContext = async (event: RequestEvent) => {
 		if (error instanceof AppwriteException) {
 			if (error.code === 429) throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
 		}
-
 		return {
 			user: null, //this is an annonymous user
 			appwriteClients: {
