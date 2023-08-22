@@ -6,16 +6,13 @@ import cookies from 'cookie';
 import { notifications } from '@app/firebase-server';
 
 import '@total-typescript/ts-reset';
-import { MonumentDocument } from '@app/ts-types';
 
 export const GET: RequestHandler = async ({ request }) => {
 	console.log('post');
 
 	try {
-		//const apiKey = request.headers.get('apiKey');
-		// monumentDocument: MonumentDocument = (await request.json()) as MonumentDocument;
-
-		//console.log(apiKey, monumentDocument);
+		const apiKey = request.headers.get('apiKey');
+		const { title, body } = (await request.json()) as { title: string; body: string };
 
 		const { collections } = appwriteServer.setAdmin();
 
@@ -32,8 +29,8 @@ export const GET: RequestHandler = async ({ request }) => {
 
 		const notificationRes = await notifications.create(
 			{
-				title: 'new monument has been discovered',
-				body: 'jjjj'
+				title: title,
+				body: body
 			},
 			tokens
 		);
