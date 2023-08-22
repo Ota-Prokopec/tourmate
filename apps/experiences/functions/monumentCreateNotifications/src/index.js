@@ -5,12 +5,15 @@ module.exports = async function (req) {
 
 	console.log(serverUrl, apiKey);
 
-	const response = await fetch(`${serverUrl}/api/notifications/appwriteOnMonumentCreateEvent`, {
+	const response = await fetch(`${serverUrl}/api/notification`, {
 		method: 'POST',
 		headers: {
 			apiKey: apiKey
 		},
-		body: JSON.stringify(req.payload)
+		body: JSON.stringify({
+			title: 'new monument',
+			body: req.payload.name
+		})
 	});
 
 	return response;

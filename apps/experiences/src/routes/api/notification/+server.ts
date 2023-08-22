@@ -7,11 +7,14 @@ import { notifications } from '@app/firebase-server';
 
 import '@total-typescript/ts-reset';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	console.log('post');
 
 	try {
 		const apiKey = request.headers.get('apiKey');
+
+		console.log(apiKey);
+
 		const { title, body } = (await request.json()) as { title: string; body: string };
 
 		const { collections } = appwriteServer.setAdmin();
