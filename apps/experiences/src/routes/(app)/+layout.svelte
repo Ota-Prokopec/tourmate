@@ -16,7 +16,10 @@
 
 	onMount(async () => {
 		const { notifications } = await import('@app/firebase-client');
-		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {});
+		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+			type: 'classic',
+			scope: './'
+		});
 		console.log(await notifications.initUser(data.user.$id, reg));
 		notifications.watchNotifications(console.log);
 	});
