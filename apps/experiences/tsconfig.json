@@ -23,6 +23,7 @@
 		"noUnusedParameters": false,
 		"moduleResolution": "node",
 		"importHelpers": true,
+
 		"paths": {
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"],
