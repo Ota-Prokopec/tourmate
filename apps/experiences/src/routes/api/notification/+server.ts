@@ -5,17 +5,19 @@ import type { RequestHandler } from './$types';
 import cookies from 'cookie';
 import { notifications } from '@app/firebase-server';
 
-import '@total-typescript/ts-reset';
-
 export const POST: RequestHandler = async ({ request }) => {
-	console.log('post');
+	console.log('notification', { request });
 
 	try {
 		const apiKey = request.headers.get('apiKey');
 
 		console.log(apiKey);
 
-		const { title, body } = (await request.json()) as { title: string; body: string };
+		const { title, body, imageUrl } = (await request.json()) as {
+			title: string | undefined;
+			body: string | undefined;
+			imageUrl: string | undefined;
+		};
 
 		console.log(title, body);
 
@@ -34,8 +36,9 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const notificationRes = await notifications.create(
 			{
+				body: body,
 				title: title,
-				body: body
+				imageUrl: imageUrl
 			},
 			tokens
 		);

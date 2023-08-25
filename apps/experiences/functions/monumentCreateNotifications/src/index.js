@@ -12,7 +12,8 @@ module.exports = async function (req, res) {
 		},
 		body: JSON.stringify({
 			title: 'Byl přidán nový zážitek',
-			body: eventData.name
+			body: eventData.name,
+			imageUrl: eventData.pictureURL
 		})
 	});
 

@@ -25,7 +25,7 @@
 	let name = '';
 	let about = '';
 	let image: Base64 | undefined;
-	let res: Monument & Models.Document;
+	let res: (Monument & Models.Document) | undefined;
 	let error: AppwriteException;
 
 	const create = async () => {

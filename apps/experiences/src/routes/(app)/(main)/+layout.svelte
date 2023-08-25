@@ -3,7 +3,6 @@
 	import MyAlert from '$lib/components/Common/MyAlert.svelte';
 	import { svelteCollections, collections } from '@app/appwrite-client';
 	import type { Location, MonumentDocument } from '@app/ts-types';
-	import { useQueryWithCallback } from '@app/utils';
 	import { watchUsersLocation } from '@app/utils/src/utils/location';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { writable } from 'svelte/store';

@@ -20,7 +20,6 @@ import { roundNumber, fileToBase64 } from './utils/operations'
 import clipboard from './utils/clipboard'
 import { notify } from './utils/notification'
 import { executeFunctionBeforeAndAfterClassMethod } from './utils/classes'
-import { useQueryWithCallback } from './utils/svelte'
 
 export {
 	browserStorage,
@@ -48,5 +47,4 @@ export {
 	getUsersLocationDataByIP,
 	notify,
 	executeFunctionBeforeAndAfterClassMethod,
-	useQueryWithCallback,
 }

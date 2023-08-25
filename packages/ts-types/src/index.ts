@@ -21,7 +21,7 @@ import {
 	TokenDocumentCreate,
 } from './Account'
 import { IP, IPApiResponse } from './TsTypes'
-import { UserInfoDocument, UserInfoDocumentCreate } from './Account'
+import type { UserInfoDocument, UserInfoDocumentCreate, UserInfo } from './Account'
 import {
 	Monument,
 	MonumentDocument,
@@ -82,6 +82,7 @@ export {
 	type TokenDocumentCreate,
 	type UserInfoDocument,
 	type UserInfoDocumentCreate,
+	type UserInfo,
 }
 
 export type OAuth2Providers = 'facebook' | 'google'

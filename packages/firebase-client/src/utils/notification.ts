@@ -20,13 +20,15 @@ export default (firebase: FirebaseApp, vapidKey: string) => {
 
 	const initUser = async (userId: string, serviceWorkerRegistration: ServiceWorkerRegistration) => {
 		const token = await generateToken(serviceWorkerRegistration)
-		await collections.token.createDocument(
-			{
-				userId,
-				fcmFirebaseToken: token,
-			},
-			permissions.owner(userId),
-		)
+		try {
+			await collections.token.createDocument(
+				{
+					userId,
+					fcmFirebaseToken: token,
+				},
+				permissions.owner(userId),
+			)
+		} catch (error) {}
 	}
 
 	return { generateToken, initUser, watchNotifications }

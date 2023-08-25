@@ -11,7 +11,10 @@ const convertObjectInfoArray = (data: Record<string, string>): string[] => {
 	return Object.values(data)
 }
 
-type ExcludeAppwriteDocumentRequirements<T extends Models.Document> = Omit<T, '$id' | '$permissions' | '$documentId' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt'>
+type ExcludeAppwriteDocumentRequirements<T extends Models.Document> = Omit<
+	T,
+	'$id' | '$permissions' | '$documentId' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt'
+>
 
 export default (databases: Databases) => {
 	return class Collection<TDocumentGet extends Models.Document, TDocumentCreate extends Record<string, DatabaseValueTypes>> {
@@ -23,11 +26,22 @@ export default (databases: Databases) => {
 		//create document with node-appwrite
 		createDocument(data: TDocumentCreate, permissions?: Models.User<Models.Preferences>[], id?: string): Promise<TDocumentGet>
 		createDocument(data: TDocumentCreate, permissions?: string[], id?: string): Promise<TDocumentGet>
-		createDocument(data: TDocumentCreate, permissions: string[] | undefined | Models.User<Models.Preferences>[] = undefined, id: string = ID.unique()): Promise<TDocumentGet> {
+		createDocument(
+			data: TDocumentCreate,
+			permissions: string[] | undefined | Models.User<Models.Preferences>[] = undefined,
+			id: string = ID.unique(),
+		): Promise<TDocumentGet> {
 			try {
 				if ((permissions && isArrayString(permissions)) || !permissions) {
 					return databases.createDocument<TDocumentGet>(this.databaseId, this.collectionId, id, data, permissions)
-				} else return databases.createDocument<TDocumentGet>(this.databaseId, this.collectionId, id, data, permissionslib.owner(...permissions.map((user) => user.$id)))
+				} else
+					return databases.createDocument<TDocumentGet>(
+						this.databaseId,
+						this.collectionId,
+						id,
+						data,
+						permissionslib.owner(...permissions.map((user) => user.$id)),
+					)
 			} catch (error) {
 				console.log(`Error:${error} databaseId: ${this.databaseId} collectionId: ${this.collectionId}`)
 				throw error
@@ -35,15 +49,31 @@ export default (databases: Databases) => {
 		}
 
 		//update document with node-appwrite
-		updateDocument<TData extends TDocumentGet>(documentId: string | Models.Document, data: ExcludeAppwriteDocumentRequirements<TDocumentGet> | undefined | {}, permissions: string[] | undefined = undefined) {
+		updateDocument<TData extends TDocumentGet>(
+			documentId: string | Models.Document,
+			data: ExcludeAppwriteDocumentRequirements<TDocumentGet> | undefined | {},
+			permissions: string[] | undefined = undefined,
+		) {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
-			return databases.updateDocument<TData>(this.databaseId, this.collectionId, typeof documentId === 'string' ? documentId : documentId.$id, data ?? {}, permissions)
+			return databases.updateDocument<TData>(
+				this.databaseId,
+				this.collectionId,
+				typeof documentId === 'string' ? documentId : documentId.$id,
+				data ?? {},
+				permissions,
+			)
 		}
 
 		//update document with node-appwrite
 		updatePermissions<TData extends TDocumentGet>(documentId: string | Models.Document, permissions: string[] | undefined = undefined) {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
-			return databases.updateDocument<TData>(this.databaseId, this.collectionId, typeof documentId === 'string' ? documentId : documentId.$id, {}, permissions)
+			return databases.updateDocument<TData>(
+				this.databaseId,
+				this.collectionId,
+				typeof documentId === 'string' ? documentId : documentId.$id,
+				{},
+				permissions,
+			)
 		}
 
 		//delete document with node-appwrite
@@ -63,7 +93,7 @@ export default (databases: Databases) => {
 		}
 
 		//delete documents with node-appwrite
-		async deleteDocuments(filters: string[]): Promise<string[]> {
+		async deleteDocuments(filters?: string[]): Promise<string[]> {
 			const { documents } = await this.listDocuments(filters)
 			if (documents.length === 0) throw new TypeError('No document found to delete')
 			return await Promise.all(documents.map((document) => this.deleteDocument(document.$id)))
@@ -83,13 +113,19 @@ export default (databases: Databases) => {
 						throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
 				data = list.documents[0]
 			}
-			if (typeof data?.$permissions === 'object' && !Array.isArray(data?.$permissions)) data.$permissions = convertObjectInfoArray(data.$permissions)
+			if (typeof data?.$permissions === 'object' && !Array.isArray(data?.$permissions))
+				data.$permissions = convertObjectInfoArray(data.$permissions)
 
 			return data
 		}
 
 		//list documents with node-appwrite
-		async listDocuments<TData extends TDocumentGet>(filters: string[] = [], offset = 0, limit = -1, orderType: 'ASC' | 'DESC' | null = null) {
+		async listDocuments<TData extends TDocumentGet>(
+			filters: string[] = [],
+			offset = 0,
+			limit = -1,
+			orderType: 'ASC' | 'DESC' | null = null,
+		) {
 			if (Number.isInteger(offset) === false) throw new TypeError('offset must be a non-negative integer')
 			if (offset < 0) throw new TypeError('limit must be a non-negative integer')
 			if (Number.isInteger(limit) === false) throw new TypeError('limit must be a non-negative integer or -1')

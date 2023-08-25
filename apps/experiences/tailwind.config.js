@@ -8,7 +8,8 @@ module.exports = {
 	theme: {
 		extend: {
 			animation: {
-				cardShrinking: 'cardShrinking 2s linear'
+				cardShrinking: 'cardShrinking 2s linear',
+				bouncing: 'bouncing 2s linear'
 			},
 			keyframes: {
 				rotate45deg: {
@@ -18,6 +19,11 @@ module.exports = {
 				cardShrinking: {
 					'0%': { transform: 'scale(1) rotate(0deg)' },
 					'100%': { transform: 'scale(0.1) rotate(25deg)' }
+				},
+				bouncing: {
+					'0%': { transform: 'translate(0px)' },
+					'50%': { transform: 'translate(20px)' },
+					'100%': { transform: 'translate(0px)' }
 				}
 			}
 		},

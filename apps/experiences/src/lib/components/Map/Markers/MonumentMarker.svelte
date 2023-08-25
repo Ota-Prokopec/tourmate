@@ -7,22 +7,22 @@
 	import Marker from '../Marker.svelte';
 	import { goto } from '$app/navigation';
 	import type { Models } from '@app/appwrite-server';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import { getDetailsByLatAndLong } from '@app/utils';
 
 	export let monument: Monument & Models.Document;
 	export let bouncing = false;
+
+	console.log(monument.location);
 
 	let className = '';
 	export { className as class };
 </script>
 
 <Marker
-	class={twMerge('bg-inherit', bouncing && 'animate-bounce', className)}
+	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing', className*/)}
 	location={monument.location}
 >
 	<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
-	<Popover class="w-max" placement="top">
+	<Popover class="w-max" placement="top" open={bouncing}>
 		<Card img={monument.pictureURL} class="mb-4">
 			<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 				{monument.name}

@@ -40,8 +40,6 @@ export const getDetailsByLatAndLong = async (lat: number, long: number) => {
 		}
 	} = await get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${long}&format=json`)
 
-	console.log(res)
-
 	return merge(pick(res?.address, 'country', 'postcode', 'suburb', 'city', 'state'), {
 		fullName: res.display_name,
 		name: res.address.suburb ?? res.address.city ?? res.address.state ?? res.address.country ?? res.display_name,

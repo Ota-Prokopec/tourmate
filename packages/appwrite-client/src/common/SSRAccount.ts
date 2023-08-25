@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 export class SSRAccount {
 	constructor(public client: Client, public projectId: string) {}
 	async createEmailSession(email: string, password: string) {
-		const session: string | { message: string } = await post('/api/authorization/createEmailSession', { email, password })
+		const session = (await post('/api/authorization/createEmailSession', { email, password })) as string | { message: string }
 		console.log(session)
 		if (typeof session === 'object') throw new Error('email or password are wrong')
 		this.setSessionIntoLocalStorage(session)
