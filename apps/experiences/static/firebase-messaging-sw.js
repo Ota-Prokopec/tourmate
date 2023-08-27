@@ -1,6 +1,34 @@
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js');
 
+const cacheName = 'expsCache';
+
+self.addEventListener('install', (event) => {
+	event.waitUntil(
+		caches.open(cacheName).then((cache) => {
+			return cache.addAll(['/icon.png']);
+		})
+	);
+});
+
+self.addEventListener('fetch', (event) => {
+	event.respondWith(
+		caches.match(event.request).then((response) => {
+			return response || fetch(event.request);
+		})
+	);
+});
+
+self.addEventListener('push', (event) => {
+	event.waitUntil(
+		self.registration.showNotification('Push Notification', {
+			icon: '/icon.png',
+			badge: '/icon.png',
+			image: '/icon.png'
+		})
+	);
+});
+
 const firebaseConfig = {
 	apiKey: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
 	authDomain: 'experiences-5dfad.firebaseapp.com',
@@ -11,10 +39,6 @@ const firebaseConfig = {
 	measurementId: 'G-BM0VH8CLR6'
 };
 
-// set service-worker
-
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
 const messaging = firebase.messaging();

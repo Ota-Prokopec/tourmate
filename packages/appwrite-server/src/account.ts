@@ -14,8 +14,6 @@ export class Account extends AccountServer {
 
 			const json = await response.json()
 
-			console.log(json)
-
 			if (json.code >= 400) throw new Error('wrong email or password at appwrite-server account/createSession')
 
 			const SSRHostName = process.env.HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`

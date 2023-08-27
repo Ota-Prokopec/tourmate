@@ -23,7 +23,7 @@
 		const { notifications } = await import('@app/firebase-client');
 		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
 			type: 'classic',
-			scope: './'
+			scope: '/'
 		});
 		await notifications.initUser(data.user.$id, reg);
 		notifications.watchNotifications((payload) => (foregroundNotification = payload));
