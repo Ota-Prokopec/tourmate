@@ -22,7 +22,6 @@
 		| 'none'
 		| undefined = 'blue';
 	export let dismissable: true | false = false;
-	export let accent: boolean = true;
 	export let visible: boolean = true;
 
 	let className = '';

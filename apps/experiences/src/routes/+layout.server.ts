@@ -2,8 +2,6 @@ import { trpc } from '$lib/trpc';
 import { ServerLoad, redirect } from '@sveltejs/kit';
 import type { TGetAccountOutputData } from '$lib/server/routers/account/routes/get';
 
-export const prerender = true;
-
 export const load: ServerLoad = async (event): Promise<{ user: TGetAccountOutputData | null }> => {
 	try {
 		return {

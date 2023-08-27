@@ -6,7 +6,6 @@ import type { Models, RealtimeResponseEvent, Storage } from 'appwrite'
 
 export default (storage: Storage) => {
 	const client = storage.client
-	console.log(client)
 
 	return class Bucket {
 		constructor(public bucketId: string) {}
@@ -135,16 +134,22 @@ export default (storage: Storage) => {
 			})
 		}
 
-		subscribeFileUpdateCallback(file: string | Models.File, callback: ({ fileId, event }: { fileId: string; event: 'update' | 'delete' }) => any) {
-			client.subscribe(`buckets.${this.bucketId}.files.${typeof file === 'string' ? file : file.$id}`, (response: RealtimeResponseEvent<any>) => {
-				if (response.events.includes(`buckets.${this.bucketId}.files.${typeof file === 'string' ? file : file.$id}.update`)) {
-					return callback({ fileId: typeof file === 'string' ? file : file.$id, event: 'update' })
-				}
+		subscribeFileUpdateCallback(
+			file: string | Models.File,
+			callback: ({ fileId, event }: { fileId: string; event: 'update' | 'delete' }) => any,
+		) {
+			client.subscribe(
+				`buckets.${this.bucketId}.files.${typeof file === 'string' ? file : file.$id}`,
+				(response: RealtimeResponseEvent<any>) => {
+					if (response.events.includes(`buckets.${this.bucketId}.files.${typeof file === 'string' ? file : file.$id}.update`)) {
+						return callback({ fileId: typeof file === 'string' ? file : file.$id, event: 'update' })
+					}
 
-				if (response.events.includes(`buckets.${this.bucketId}.files.${typeof file === 'string' ? file : file.$id}.delete`)) {
-					return callback({ fileId: typeof file === 'string' ? file : file.$id, event: 'delete' })
-				}
-			})
+					if (response.events.includes(`buckets.${this.bucketId}.files.${typeof file === 'string' ? file : file.$id}.delete`)) {
+						return callback({ fileId: typeof file === 'string' ? file : file.$id, event: 'delete' })
+					}
+				},
+			)
 		}
 	}
 }

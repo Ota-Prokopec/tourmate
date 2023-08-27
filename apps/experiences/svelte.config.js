@@ -1,5 +1,5 @@
 import { vitePreprocess } from '@sveltejs/kit/vite';
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-auto';
 
 import path from 'path';
 
@@ -8,17 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		outDir: '.svelte-kit',
-		adapter: adapter({
-			// default options are shown. On some platforms
-			// these options are set automatically — see below
-
-			pages: '.svelte-kit/output',
-			assets: 'static',
-			fallback: null,
-			precompress: false,
-			strict: true
-		}),
+		adapter: adapter(),
 		env: {
 			dir: '../../.env.development',
 			publicPrefix: 'VITE_'
@@ -29,12 +19,6 @@ const config = {
 			$src: path.resolve('src'),
 			$routes: path.resolve('src', 'routes'),
 			$server: path.resolve('src', 'lib/server')
-		},
-		files: {
-			serviceWorker: 'src/firebase-messaging-sw.js'
-		},
-		prerender: {
-			handleHttpError: () => {}
 		}
 	}
 };

@@ -18,7 +18,7 @@
 </script>
 
 <Marker
-	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing', className*/)}
+	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing'*/, className)}
 	location={monument.location}
 >
 	<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
