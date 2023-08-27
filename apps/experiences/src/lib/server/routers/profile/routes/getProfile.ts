@@ -1,4 +1,4 @@
-import { protectedProcedure } from '$lib/server/middlewares/isAuthed';
+import { protectedProcedure } from '$server/middlewares/isAuthed';
 import { publicProcedure } from '$lib/server/trpc';
 import { getUserProfileByUserId } from '@app/user-database-server';
 import { TRPCError } from '@trpc/server';

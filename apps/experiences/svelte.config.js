@@ -13,8 +13,8 @@ const config = {
 			// default options are shown. On some platforms
 			// these options are set automatically — see below
 
-			pages: '.svelte-kit/output',
-			assets: 'static',
+			pages: '.svelte-kit',
+			assets: '.svelte-kit',
 			fallback: null,
 			precompress: false,
 			strict: true
@@ -28,7 +28,8 @@ const config = {
 			$root: path.resolve('/'),
 			$src: path.resolve('src'),
 			$routes: path.resolve('src', 'routes'),
-			$server: path.resolve('src', 'lib/server')
+			$server: path.resolve('src', 'lib/server'),
+			$api: path.resolve('../', 'api')
 		},
 		files: {
 			serviceWorker: 'src/firebase-messaging-sw.js'

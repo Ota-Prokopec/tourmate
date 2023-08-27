@@ -12,11 +12,18 @@
 	import Link from '$lib/components/Common/Link.svelte';
 	import { browser } from '$app/environment';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { trpc } from '$lib/trpc';
 
 	let password = 'aaaaaaaa';
 	let email = 'otaprokopec@gmail.com';
 	let error = '';
 	let loading = false;
+
+	onMount(() => {
+		trpc($page).account.get.query();
+	});
 
 	$: console.log($user);
 
