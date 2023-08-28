@@ -25,7 +25,7 @@
 	$: mediaStreamConstraints = {
 		video: {
 			deviceId: cameraDeviceId,
-			frameRate: { min: 1, max: 120, ideal: 120 },
+			frameRate: { min: 30, max: 60, ideal: 60 },
 			facingMode: facingMode,
 			width: { min: 1, max: 4900, ideal: 4900 },
 			height: { min: 1, max: 4900, ideal: 4900 }
