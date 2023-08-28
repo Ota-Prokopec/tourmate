@@ -92,6 +92,8 @@
 		if (!cameraDevices) return;
 		cameraDeviceId =
 			facingMode === 'user' ? cameraDevices[0].deviceId : cameraDevices[1].deviceId;
+
+		startCamera(false);
 	};
 </script>
 
