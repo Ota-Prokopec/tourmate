@@ -24,6 +24,7 @@
 	export let facingMode: 'user' | 'environment' = 'environment';
 	$: mediaStreamConstraints = {
 		video: {
+			aspectRatio: 16 / 9,
 			deviceId: cameraDeviceId,
 			frameRate: { min: 30, max: 60, ideal: 60 },
 			facingMode: facingMode,
@@ -54,7 +55,7 @@
 		if (!setting.height || !setting.width) return;
 
 		mediaStreamConstraints.video.height = setting.height;
-		mediaStreamConstraints.video.width = setting.height / setting.width;
+		mediaStreamConstraints.video.width = setting.width;
 		startCamera(false);
 	};
 
@@ -74,8 +75,8 @@
 
 		var context = canvas.getContext('2d')!;
 
-		canvas.width = document.body.offsetWidth;
-		canvas.height = document.body.offsetHeight;
+		canvas.width = videoElement.videoWidth;
+		canvas.height = videoElement.videoHeight;
 
 		context.drawImage(videoElement, 0, 0);
 
