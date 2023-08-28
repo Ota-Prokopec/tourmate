@@ -48,12 +48,11 @@
 		const cameraAspectRatio = (setting.height ?? 0) / (setting.width ?? 0);
 		if (typeof mediaStreamConstraints.video !== 'object') return;
 		const bodyAspectRatio = document.body.offsetWidth / document.body.offsetHeight;
-		console.log(bodyAspectRatio);
-		console.log((setting.height ?? 0) * bodyAspectRatio);
-		console.log((setting.width ?? 0) / bodyAspectRatio);
 
-		mediaStreamConstraints.video.height = (setting.height ?? 0) * bodyAspectRatio;
-		mediaStreamConstraints.video.width = (setting.width ?? 0) * bodyAspectRatio;
+		mediaStreamConstraints.video.aspectRatio = bodyAspectRatio;
+
+		mediaStreamConstraints.video.height = document.body.offsetHeight;
+		mediaStreamConstraints.video.width = document.body.offsetWidth;
 		startCamera(false);
 	};
 
