@@ -5,8 +5,7 @@
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
-
-	export let facingMode: 'user' | 'environment' = 'environment';
+	import { elementIdGenerator } from '@app/utils';
 
 	let className = '';
 	export { className as class };
@@ -15,84 +14,55 @@
 		image: { base64: string };
 	}>();
 
-	let video_source: HTMLVideoElement | null;
-	let canvas: HTMLCanvasElement | null;
-	$: screenWidth = browser ? document.body.offsetWidth : 0;
-	$: screenHeight = browser ? document.body.offsetHeight : 0;
-	let mediaStreamConstraints: MediaStreamConstraints;
+	const id = elementIdGenerator();
+
+	$: videoElement = isLoading ? null : (document.getElementById(id) as HTMLVideoElement);
+	$: canvas = browser ? document.createElement('canvas') : null;
+
 	let isLoading = true;
+	export let facingMode: 'user' | 'environment' = 'environment';
+
+	$: if (!isLoading && mediaStreamConstraints) startCamera();
+
+	const startCamera = async () => {
+		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
+		if (videoElement) videoElement.srcObject = stream; //set video to video element
+	};
 
 	$: mediaStreamConstraints = {
 		video: {
 			deviceId: cameraDeviceId,
 			frameRate: { min: 1, max: 120, ideal: 120 },
 			facingMode: facingMode,
-			width: { min: 1, max: screenWidth, ideal: screenHeight },
-			height: {
-				min: 1,
-				max: screenHeight,
-				ideal: screenHeight
-			}
+			width: { min: 1, max: 4900, ideal: 4900 },
+			height: { min: 1, max: 4900, ideal: 4900 }
 		},
 		audio: false
-	};
+	} as MediaStreamConstraints;
 
 	let cameraDevices: MediaDeviceInfo[] | undefined;
 	let cameraDeviceId: string | undefined;
 
+	// get camera devices
 	onMount(async () => {
 		cameraDevices = await navigator.mediaDevices.enumerateDevices();
 		cameraDevices = cameraDevices.filter((device) => device.kind === 'videoinput');
 	});
 
-	onMount(() => (canvas = document.createElement('canvas')));
-
-	//set width and height for best quality of screen
-	onMount(() => {
-		navigator.mediaDevices.getUserMedia(mediaStreamConstraints).then((stream) => {
-			const track = stream.getVideoTracks()[0]; //track i am currently using
-			const settings = track.getSettings();
-			if (!mediaStreamConstraints.video || typeof mediaStreamConstraints.video === 'boolean')
-				throw TypeError('constraints.video type is not supported');
-
-			const width = settings.width;
-			const height = settings.height;
-
-			mediaStreamConstraints.video.height = { min: height, max: height, ideal: height };
-			mediaStreamConstraints.video.width = { min: width, max: width, ideal: width };
-			mediaStreamConstraints.video.aspectRatio = settings.aspectRatio;
-		});
-	});
-
-	$: if (mediaStreamConstraints) start();
-
-	const start = async () => {
-		isLoading = true;
-		try {
-			if (!video_source) throw new TypeError('video_source is null');
-			const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
-
-			video_source.srcObject = stream; //set video to video element
-		} catch (error) {}
+	const onLoad = (videoElement: HTMLVideoElement) => {
 		isLoading = false;
 	};
 
 	function takePicture() {
 		if (!canvas) throw new TypeError('canvas is null');
-		if (!video_source) throw new TypeError('video_source is not null');
+		if (!videoElement) throw new TypeError('videoElement is not null');
 
 		var context = canvas.getContext('2d')!;
 
-		if (!mediaStreamConstraints.video || typeof mediaStreamConstraints.video === 'boolean')
-			throw TypeError('constraints.video type is not supported');
-		if (!mediaStreamConstraints.video.width || !mediaStreamConstraints.video.height) return;
+		canvas.width = videoElement.videoWidth;
+		canvas.height = videoElement.videoHeight;
 
-		//@ts-ignore
-		canvas.width = mediaStreamConstraints.video.width.ideal as number;
-		//@ts-ignore
-		canvas.height = mediaStreamConstraints.video.height.ideal as number;
-
-		context.drawImage(video_source, 0, 0);
+		context.drawImage(videoElement, 0, 0);
 
 		const base64 = canvas.toDataURL('image/png');
 
@@ -117,7 +87,8 @@
 	{/if}
 	<video
 		autoplay
-		bind:this={video_source}
+		{id}
+		use:onLoad
 		class={twMerge(
 			'h-full object-cover absolute',
 			isLoading && 'blur-sm',
@@ -130,11 +101,13 @@
 
 	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
 		<ShootButton class="active:animate-ping" on:click={takePicture} />
-		<Icon
-			on:click={swapCameras}
-			icon="fas fa-sync-alt"
-			class="text-4xl absolute right-0 m-14 active:animate-ping"
-		/>
+		{#if cameraDevices && cameraDevices?.length > 1}
+			<Icon
+				on:click={swapCameras}
+				icon="fas fa-sync-alt"
+				class="text-4xl absolute right-0 m-14 active:animate-ping"
+			/>
+		{/if}
 	</div>
 </div>
 

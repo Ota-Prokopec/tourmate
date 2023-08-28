@@ -11,8 +11,6 @@
 	export let monument: Monument & Models.Document;
 	export let bouncing = false;
 
-	console.log(monument.location);
-
 	let className = '';
 	export { className as class };
 </script>
