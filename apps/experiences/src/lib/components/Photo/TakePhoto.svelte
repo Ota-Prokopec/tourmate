@@ -18,17 +18,10 @@
 
 	$: videoElement = isLoading ? null : (document.getElementById(id) as HTMLVideoElement);
 	$: canvas = browser ? document.createElement('canvas') : null;
+	$: aspectRatio = browser ? screen.width / screen.height : 1;
 
 	let isLoading = true;
 	export let facingMode: 'user' | 'environment' = 'environment';
-
-	$: if (!isLoading && mediaStreamConstraints) startCamera();
-
-	const startCamera = async () => {
-		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
-		if (videoElement) videoElement.srcObject = stream; //set video to video element
-	};
-
 	$: mediaStreamConstraints = {
 		video: {
 			deviceId: cameraDeviceId,
@@ -42,6 +35,27 @@
 
 	let cameraDevices: MediaDeviceInfo[] | undefined;
 	let cameraDeviceId: string | undefined;
+
+	$: if (!isLoading) startCamera(true);
+
+	const startCamera = async (setUp: boolean) => {
+		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
+		if (videoElement) videoElement.srcObject = stream; //set video to video element
+		if (setUp) settings(stream.getVideoTracks()[0].getSettings());
+	};
+
+	const settings = (setting: MediaTrackSettings) => {
+		const cameraAspectRatio = (setting.height ?? 0) / (setting.width ?? 0);
+		if (typeof mediaStreamConstraints.video !== 'object') return;
+		const bodyAspectRatio = document.body.offsetWidth / document.body.offsetHeight;
+		console.log(bodyAspectRatio);
+		console.log((setting.height ?? 0) * bodyAspectRatio);
+		console.log((setting.width ?? 0) / bodyAspectRatio);
+
+		mediaStreamConstraints.video.height = (setting.height ?? 0) * bodyAspectRatio;
+		mediaStreamConstraints.video.width = (setting.width ?? 0) * bodyAspectRatio;
+		startCamera(false);
+	};
 
 	// get camera devices
 	onMount(async () => {

@@ -12,6 +12,8 @@ export class Account extends AccountServer {
 		try {
 			const response = await callbackFetch()
 
+			console.log(response)
+
 			const json = await response.json()
 
 			if (json.code >= 400) throw new Error('wrong email or password at appwrite-server account/createSession')
