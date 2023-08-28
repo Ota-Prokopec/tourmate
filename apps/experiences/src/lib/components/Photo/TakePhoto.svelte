@@ -72,8 +72,8 @@
 
 		var context = canvas.getContext('2d')!;
 
-		canvas.width = videoElement.videoWidth;
-		canvas.height = videoElement.videoHeight;
+		canvas.width = document.body.offsetWidth;
+		canvas.height = document.body.offsetHeight;
 
 		context.drawImage(videoElement, 0, 0);
 

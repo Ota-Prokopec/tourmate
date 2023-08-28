@@ -64,10 +64,15 @@ export class Account extends AccountServer {
 		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = session
 		clientBrowser.headers['X-Fallback-Cookies'] = authCookies
 		clientBrowser.headers['Cookie'] = `a_session_console=${session}; a_session_experiences=${session}`
+		console.log(session)
 
 		const account = new AccountBrowser(clientBrowser)
 
+		console.log(account)
+
 		const jwt = (await account.createJWT()).jwt
+
+		console.log(jwt)
 
 		return { jwt }
 	}

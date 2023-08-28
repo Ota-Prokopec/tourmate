@@ -7,7 +7,10 @@ export const createContext = async (event: RequestEvent) => {
 	const { client: adminAppwriteClient } = appwriteServer.setAdmin();
 
 	try {
+		console.log('start');
+
 		const { account, client } = await appwriteServer.setCookie(event.cookies.getAll());
+		console.log(client);
 
 		const user = await account.get();
 
@@ -20,6 +23,8 @@ export const createContext = async (event: RequestEvent) => {
 			...event
 		};
 	} catch (error) {
+		console.log(error);
+
 		if (error instanceof AppwriteException) {
 			if (error.code === 429) throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
 		}
