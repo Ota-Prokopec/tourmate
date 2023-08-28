@@ -18,15 +18,14 @@
 
 	$: videoElement = isLoading ? null : (document.getElementById(id) as HTMLVideoElement);
 	$: canvas = browser ? document.createElement('canvas') : null;
-	$: aspectRatio = browser ? screen.width / screen.height : 1;
 
 	let isLoading = true;
-	export let facingMode: 'user' | 'environment' = 'environment';
+	export let facingMode: 'user' | 'environment' = 'user';
 	$: mediaStreamConstraints = {
 		video: {
 			aspectRatio: 16 / 9,
 			deviceId: cameraDeviceId,
-			frameRate: { min: 30, max: 60, ideal: 60 },
+			frameRate: { min: 1, max: 120, ideal: 120 },
 			facingMode: facingMode,
 			width: { min: 1, max: 4900, ideal: 4900 },
 			height: { min: 1, max: 4900, ideal: 4900 }
@@ -34,12 +33,17 @@
 		audio: false
 	} as MediaStreamConstraints;
 
-	let cameraDevices: MediaDeviceInfo[] | undefined;
+	let cameraDevices: {
+		user: MediaDeviceInfo;
+		environment: MediaDeviceInfo;
+	};
 	let cameraDeviceId: string | undefined;
 
 	$: if (!isLoading) startCamera(true);
 
 	const startCamera = async (setUp: boolean) => {
+		console.log(mediaStreamConstraints.video);
+
 		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
 		if (videoElement) videoElement.srcObject = stream; //set video to video element
 		if (setUp) settings(stream.getVideoTracks()[0].getSettings());
@@ -61,8 +65,17 @@
 
 	// get camera devices
 	onMount(async () => {
-		cameraDevices = await navigator.mediaDevices.enumerateDevices();
-		cameraDevices = cameraDevices.filter((device) => device.kind === 'videoinput');
+		const devs = await navigator.mediaDevices.enumerateDevices();
+		const vidDevs = devs.filter((device) => device.kind === 'videoinput');
+		cameraDevices = {
+			user: vidDevs.filter(
+				(device) => device.label.includes('ace') || device.label.includes('ront') // ace = face, ront = front
+			)[0],
+			environment: vidDevs.filter(
+				(device) => !device.label.includes('ace') && !device.label.includes('ront')
+			)[0]
+		};
+		cameraDeviceId = cameraDevices[facingMode].deviceId;
 	});
 
 	const onLoad = (videoElement: HTMLVideoElement) => {
@@ -89,9 +102,16 @@
 
 	const swapCameras = () => {
 		facingMode = facingMode === 'user' ? 'environment' : 'user';
+
 		if (!cameraDevices) return;
-		cameraDeviceId =
-			facingMode === 'user' ? cameraDevices[0].deviceId : cameraDevices[1].deviceId;
+		if (typeof mediaStreamConstraints.video !== 'object') return;
+
+		cameraDeviceId = cameraDevices[facingMode].deviceId;
+
+		console.log(cameraDeviceId);
+
+		mediaStreamConstraints.video.facingMode = facingMode;
+		mediaStreamConstraints.video.deviceId = cameraDeviceId;
 
 		startCamera(false);
 	};
@@ -119,7 +139,7 @@
 
 	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
 		<ShootButton class="active:animate-ping" on:click={takePicture} />
-		{#if cameraDevices && cameraDevices?.length > 1}
+		{#if cameraDevices && cameraDevices.user && cameraDevices.environment}
 			<Icon
 				on:click={swapCameras}
 				icon="fas fa-sync-alt"

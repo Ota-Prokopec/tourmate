@@ -71,7 +71,7 @@ export class Account extends AccountServer {
 			const jwt = (await account.createJWT()).jwt
 			return { jwt }
 		} catch (error) {
-			//console.log(error)
+			console.log(error)
 			throw error
 		}
 	}
