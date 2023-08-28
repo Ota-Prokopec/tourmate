@@ -13,6 +13,7 @@
 	import type { PageData } from './$types';
 	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
+	import { user } from '@app/appwrite-client';
 
 	export let data: PageData;
 

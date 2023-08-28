@@ -51,8 +51,10 @@
 
 		mediaStreamConstraints.video.aspectRatio = bodyAspectRatio;
 
-		mediaStreamConstraints.video.height = document.body.offsetHeight;
-		mediaStreamConstraints.video.width = document.body.offsetWidth;
+		if (!setting.height || !setting.width) return;
+
+		mediaStreamConstraints.video.height = setting.height;
+		mediaStreamConstraints.video.width = setting.height / setting.width;
 		startCamera(false);
 	};
 

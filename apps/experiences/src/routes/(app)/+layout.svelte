@@ -16,6 +16,7 @@
 	import MyAlert from '$lib/components/Common/MyAlert.svelte';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
+	import { user } from '@app/appwrite-client';
 
 	let foregroundNotification: MessagePayload | undefined;
 

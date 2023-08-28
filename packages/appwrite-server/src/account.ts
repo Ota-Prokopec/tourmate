@@ -61,20 +61,19 @@ export class Account extends AccountServer {
 		if (!process.env.APPWRITE_ENDPOINT || !process.env.APPWRITE_PROJECT_ID) throw TypeError('project id or peoject endpoint is not set')
 		const clientBrowser = new ClientBrowser().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
 		const authCookies: any = {}
-		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = session
+		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = `'${session}'`
 		clientBrowser.headers['X-Fallback-Cookies'] = authCookies
 		clientBrowser.headers['Cookie'] = `a_session_console=${session}; a_session_experiences=${session}`
-		console.log(session)
 
 		const account = new AccountBrowser(clientBrowser)
 
-		console.log(account)
-
-		const jwt = (await account.createJWT()).jwt
-
-		console.log(jwt)
-
-		return { jwt }
+		try {
+			const jwt = (await account.createJWT()).jwt
+			return { jwt }
+		} catch (error) {
+			//console.log(error)
+			throw error
+		}
 	}
 	//async deleteSession(sessionId: string) {}
 }

@@ -13,6 +13,8 @@
 
 	export let data: LayoutData;
 
+	console.log(user.client);
+
 	const queryClient = new QueryClient();
 
 	//$: if (!$user && !$isLoading) goto('login'); //this is client-side Auth controll
