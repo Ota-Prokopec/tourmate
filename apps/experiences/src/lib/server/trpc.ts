@@ -9,6 +9,8 @@ export const createContext = async (event: RequestEvent) => {
 	try {
 		const { account, client } = await appwriteServer.setCookie(event.cookies.getAll());
 
+		console.log(client);
+
 		const user = await account.get();
 
 		return {

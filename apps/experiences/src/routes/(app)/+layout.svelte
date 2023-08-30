@@ -9,6 +9,19 @@
 	import type { MessagePayload } from 'firebase/messaging';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
+
+	import lsSvelte from '$lib/utils/svelteLocalStorage';
+	import { watchUsersLocation } from '@app/utils/src/utils/location';
+	import { browser } from '$app/environment';
+
+	browser &&
+		watchUsersLocation(
+			async (location) => {
+				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
+				user.addPreferences({ location: location });
+			},
+			{ enableHighAccuracy: false }
+		);
 </script>
 
 <script lang="ts">

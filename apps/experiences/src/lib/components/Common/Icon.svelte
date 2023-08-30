@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Avatar } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
 
 	export let icon: string | URL | null = null;
 	export let outlineOnly: boolean = false;
@@ -9,13 +10,14 @@
 	export { className as class };
 </script>
 
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <button
 	on:mouseover
 	on:mouseout
 	on:touchstart
 	on:touchend
 	on:click
-	class={`w-min h-min flex justify-center items-center ${className}`}
+	class={twMerge('w-min h-min flex justify-center items-center', className)}
 >
 	{#if typeof icon === 'string' && icon.startsWith('http')}
 		<Avatar src={icon} size="md" />

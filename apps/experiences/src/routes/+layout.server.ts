@@ -1,8 +1,13 @@
 import { trpc } from '$lib/trpc';
 import { ServerLoad, redirect } from '@sveltejs/kit';
 import type { TGetAccountOutputData } from '$lib/server/routers/account/routes/get';
+import appwriteSSR from '@app/appwrite-ssr-experineces';
 
-export const load: ServerLoad = async (event): Promise<{ user: TGetAccountOutputData | null }> => {
+export const load: ServerLoad = async (event) => {
+	const { account } = appwriteSSR.setCookie(event.cookies.getAll());
+	const user = await account.get();
+	console.log(user);
+
 	try {
 		return {
 			user: await trpc(event).account.get.query()

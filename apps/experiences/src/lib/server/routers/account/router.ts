@@ -2,11 +2,13 @@ import { router } from '../../trpc';
 import { get } from './routes/get';
 import { deleteAccount } from './routes/deleteAccount';
 import { createAccount } from './routes/createAccount';
+import { test } from './routes/ret';
 
 export const accountRouter = router({
 	create: createAccount,
 	delete: deleteAccount,
-	get: get
+	get: get,
+	test: test
 });
 
 // Export only the type of a router!

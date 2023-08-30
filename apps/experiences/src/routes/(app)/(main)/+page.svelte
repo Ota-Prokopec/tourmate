@@ -8,12 +8,10 @@
 	import type { Base64, Location } from '@app/ts-types';
 	import { countSameItemsInArray, roundNumber } from '@app/utils';
 	import lodash from 'lodash';
-
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import type { PageData } from './$types';
 	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { user } from '@app/appwrite-client';
 
 	export let data: PageData;
 
@@ -54,13 +52,8 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	{#if $mapOrTakePhoto === 'map' && false}
-		<Map
-			deg={45}
-			isLoading={!$myNewExperienceStore.rightNowAddedExperience}
-			bind:zoom={mapZoom}
-			bind:location
-		>
+	{#if $mapOrTakePhoto === 'map'}
+		<Map deg={45} bind:zoom={mapZoom} bind:location>
 			{#each data.loadedExperiences as experience, index}
 				<ExperienceMarker
 					bouncing={rightNowAddedExperience?.$id === experience.$id}
