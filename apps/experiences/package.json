@@ -51,6 +51,7 @@
 	"dependencies": {
 		"@app/appwrite-client": "*",
 		"@app/appwrite-server": "*",
+		"@app/appwrite-ssr": "*",
 		"@app/experience-database-client": "*",
 		"@app/experience-database-server": "*",
 		"@app/firebase-client": "*",
@@ -59,7 +60,6 @@
 		"@app/ts-types": "*",
 		"@app/user-database-server": "*",
 		"@app/utils": "*",
-		"@app/appwrite-ssr": "*",
 		"@beyonk/svelte-mapbox": "^9.1.0",
 		"@maptiler/client": "^1.6.0",
 		"@onsvisual/svelte-maps": "^1.1.6",

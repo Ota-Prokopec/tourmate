@@ -67,7 +67,7 @@ export default (account: Account) => {
 		}
 
 		async createAccount(email: string, password: string, name: string) {
-			await account.create(ID.unique(), email, password, name)
+			return await account.create(ID.unique(), email, password, name)
 		}
 
 		async addPreferences(prefs: Partial<Preferences>) {

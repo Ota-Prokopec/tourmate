@@ -3,7 +3,7 @@
 	import { getUsersLocation } from '@app/utils';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
 	import { twMerge } from 'tailwind-merge';
-	import lsSvelte from '$lib/utils/svelteLocalStorage';
+	import lsSvelte from '$lib/utils/lsStore';
 	import {
 		FillExtrusionLayer,
 		GeolocateControl,

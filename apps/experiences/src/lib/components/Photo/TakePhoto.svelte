@@ -27,8 +27,8 @@
 			deviceId: cameraDeviceId,
 			frameRate: { min: 1, max: 120, ideal: 120 },
 			facingMode: facingMode,
-			width: { min: 1, max: 4900, ideal: 4900 },
-			height: { min: 1, max: 4900, ideal: 4900 }
+			width: browser ? document.body.offsetWidth : 1080,
+			height: browser ? document.body.offsetHeight : 720
 		},
 		audio: false
 	} as MediaStreamConstraints;
@@ -42,25 +42,8 @@
 	$: if (!isLoading) startCamera(true);
 
 	const startCamera = async (setUp: boolean) => {
-		console.log(mediaStreamConstraints.video);
-
 		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
 		if (videoElement) videoElement.srcObject = stream; //set video to video element
-		if (setUp) settings(stream.getVideoTracks()[0].getSettings());
-	};
-
-	const settings = (setting: MediaTrackSettings) => {
-		const cameraAspectRatio = (setting.height ?? 0) / (setting.width ?? 0);
-		if (typeof mediaStreamConstraints.video !== 'object') return;
-		const bodyAspectRatio = document.body.offsetWidth / document.body.offsetHeight;
-
-		mediaStreamConstraints.video.aspectRatio = bodyAspectRatio;
-
-		if (!setting.height || !setting.width) return;
-
-		mediaStreamConstraints.video.height = setting.height;
-		mediaStreamConstraints.video.width = setting.width;
-		startCamera(false);
 	};
 
 	// get camera devices
@@ -91,8 +74,18 @@
 		canvas.width = videoElement.videoWidth;
 		canvas.height = videoElement.videoHeight;
 
-		context.drawImage(videoElement, 0, 0);
+		if (facingMode === 'user') {
+			//rotate picture y-axis
 
+			let { width, height } = canvas;
+			Object.assign(context.canvas, { width, height });
+			context.save();
+			context.translate(width, 0);
+			context.scale(-1, 1);
+		}
+
+		context.drawImage(videoElement, 0, 0);
+		context.restore();
 		const base64 = canvas.toDataURL('image/png');
 
 		dispatch('image', {

@@ -52,7 +52,7 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	{#if $mapOrTakePhoto === 'map'}
+	{#if $mapOrTakePhoto === 'map' && false}
 		<Map deg={45} bind:zoom={mapZoom} bind:location>
 			{#each data.loadedExperiences as experience, index}
 				<ExperienceMarker

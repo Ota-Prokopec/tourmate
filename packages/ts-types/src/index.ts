@@ -20,7 +20,7 @@ import {
 	TokenDocument,
 	TokenDocumentCreate,
 } from './Account'
-import { IP, IPApiResponse } from './TsTypes'
+import { IP, IPApiResponse, SocialPlatform } from './TsTypes'
 import type { UserInfoDocument, UserInfoDocumentCreate, UserInfo } from './Account'
 import { Preferences } from './Account'
 import {
@@ -85,6 +85,7 @@ export {
 	type UserInfoDocumentCreate,
 	type UserInfo,
 	type Preferences,
+	type SocialPlatform,
 }
 
 export type OAuth2Providers = 'facebook' | 'google'

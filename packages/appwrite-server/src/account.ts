@@ -85,8 +85,6 @@ export class Account extends AccountServer {
 			},
 		})
 
-		console.log(res)
-
 		const { jwt } = await res.json()
 
 		return { jwt }

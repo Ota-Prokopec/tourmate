@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { user } from '@app/appwrite-client';
-	import LoginButtonViaFacebook from './LoginButtonViaFacebook.svelte';
-	import LoginButtonViaGoogle from './LoginButtonViaGoogle.svelte';
 	import IconFacebook from '$lib/components/Icons/IconFacebook.svelte';
 	import IconGoogle from '$lib/components/Icons/IconGoogle.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconDiscord from '$lib/components/Icons/IconDiscord.svelte';
 	import IconGithub from '$lib/components/Icons/IconGithub.svelte';
-	let termsAccepted = false;
+	import { createEventDispatcher } from 'svelte';
+	import type { SocialPlatform } from '@app/ts-types';
+	const dispatch = createEventDispatcher<{ beforeLogin: SocialPlatform }>();
 
 	const logout = async () => {
 		try {
@@ -15,8 +15,9 @@
 		} catch (error) {}
 	};
 
-	const login = async (platform: string) => {
+	const login = async (platform: SocialPlatform) => {
 		await logout();
+		dispatch('beforeLogin', platform);
 		await user.createOAuth2Session(
 			platform,
 			`${location.origin}/auth/oauth2/success`,

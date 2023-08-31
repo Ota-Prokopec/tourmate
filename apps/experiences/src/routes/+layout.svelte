@@ -23,3 +23,11 @@
 		<slot />
 	{/if}
 </QueryClientProvider>
+
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+
+	:global(*) {
+		font-family: 'Poppins', sans-serif;
+	}
+</style>

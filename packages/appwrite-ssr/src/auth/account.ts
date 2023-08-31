@@ -1,4 +1,4 @@
-import { Account, Client } from 'appwrite'
+import { Account, Client, ID } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
 
 export const getSessionFromCookie = (
@@ -24,7 +24,7 @@ export default (client: Client) => {
 			super(client)
 		}
 
-		logInViaEmail(email: string, password: string) {
+		loginViaEmail(email: string, password: string) {
 			const promise = fetch(`${process.env.APPWRITE_ENDPOINT}/account/sessions/email`, {
 				method: 'POST',
 				headers: {

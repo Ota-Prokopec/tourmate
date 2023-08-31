@@ -1,14 +1,21 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import type { Location } from '@app/ts-types';
 
-const storage: Record<string | number, any> = !browser
+export type Storage =
+	| {
+			location?: Location;
+			usersBeforeLoginViaSocialMediaData?: { username: string; myId: string };
+	  } & Record<string, any>;
+
+const storage: Storage = !browser
 	? {}
 	: Object.entries<string>(localStorage)
-			.map(([key, value]) => [key, JSON.parse(value)])
+			.map(([key, value]) => [key, JSON.parse(value)] as [keyof Storage, any])
 			.reduce((res, current) => {
 				res[current[0]] = current[1];
 				return res;
-			}, {} as Record<string, any>);
+			}, {} as Storage);
 
 const store = writable(storage);
 
@@ -22,3 +29,6 @@ store.subscribe((storeValue) => {
 });
 
 export default store;
+export const typedStore = <Type>() => {
+	return writable<Type>(storage as Type);
+};

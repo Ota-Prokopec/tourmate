@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { device } from '@app/utils';
-	import { Popover } from 'flowbite-svelte';
-	import { twMerge } from 'tailwind-merge';
-
+	import Icon from './Icon.svelte';
+	import Popover from './Popover.svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	export let placement: 'bottom' | 'left' | 'right' | 'top' = 'bottom';
 	export let trigger: 'hover' | 'click' =
 		device.recognizeWidth() === 'mobile' ? 'click' : 'hover';
-	export let title: string = '';
-	export let open = false;
 	export let color:
 		| 'gray'
 		| 'red'
@@ -25,18 +23,7 @@
 		| 'navbarUl'
 		| 'form'
 		| 'none' = 'green';
-
-	let className = '';
-	export { className as class };
 </script>
 
-<Popover
-	{open}
-	{title}
-	class={twMerge('break-words w-96 z-50', className)}
-	{color}
-	{trigger}
-	{placement}
->
-	<slot />
-</Popover>
+<Icon class="text-sm text-blue-500" icon="fa fa-question-circle" />
+<Popover {trigger} {placement} {color}><slot /></Popover>
