@@ -28,7 +28,7 @@
 	<Button
 		{id}
 		class={twMerge(
-			'w-[244px] rounded-[24px] flex justify-center items-center text-white bg-blue-500 p-4 pl-8 pr-8 text-xl font-bold',
+			'  flex justify-center items-center text-white bg-blue-500 p-4 pl-8 pr-8 text-xl font-bold',
 			className
 		)}
 		on:click
@@ -40,7 +40,7 @@
 		{id}
 		disabled
 		class={twMerge(
-			'w-[244px] rounded-[24px] flex justify-center items-center bg-slate-700 text-white p-4 pl-8 pr-8 text-xl font-bold',
+			' flex justify-center items-center bg-slate-700 text-white p-4 pl-8 pr-8 text-xl font-bold',
 			className,
 			classForDisabled
 		)}

@@ -9,7 +9,7 @@ module.exports = {
 		extend: {
 			animation: {
 				cardShrinking: 'cardShrinking 2s linear',
-				bouncing: 'bouncing 2s linear'
+				bouncing: 'bouncing 1s linear'
 			},
 			keyframes: {
 				rotate45deg: {
@@ -21,9 +21,9 @@ module.exports = {
 					'100%': { transform: 'scale(0.1) rotate(25deg)' }
 				},
 				bouncing: {
-					'0%': { transform: 'translate(0px)' },
-					'50%': { transform: 'translate(20px)' },
-					'100%': { transform: 'translate(0px)' }
+					'0%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-20px)' },
+					'100%': { transform: 'translateY(0px)' }
 				}
 			}
 		},

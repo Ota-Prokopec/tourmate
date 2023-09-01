@@ -1,5 +1,7 @@
 import { string, z, number, boolean } from 'zod'
 import { appWriteDocumentOptionalZod, appWriteDocumentZod, appwriteDocumentForOmit } from './Document'
+import { Models } from 'node-appwrite'
+import type { Location } from './Experience'
 
 //////// UserInfo ///////////
 export const userInfoZod = z.object({
@@ -17,6 +19,8 @@ export const userInfoDocumentZod = userInfoZod.merge(appWriteDocumentZod)
 export const userInfoDocumentCreateZod = userInfoDocumentZod.omit({
 	...appwriteDocumentForOmit,
 })
+
+export type Preferences = { termsAccepted: boolean; location: Location }
 
 export type UserInfo = z.infer<typeof userInfoZod>
 export type UserInfoDocument = z.infer<typeof userInfoDocumentZod>

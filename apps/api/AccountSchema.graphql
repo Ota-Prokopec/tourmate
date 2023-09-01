@@ -1,0 +1,4 @@
+interface Account {
+	id: String
+	name: String
+}

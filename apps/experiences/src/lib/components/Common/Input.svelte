@@ -120,14 +120,14 @@
 	<input
 		use:retype
 		{id}
-		class="input rounded-xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
+		class="input rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
 			? iconPosition === 'left'
 				? 'pl-12'
 				: 'pr-12'
 			: ''}  {readOnly ? 'cursor-pointer' : ''} {floatingLabel
-			? 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+			? '  w-full text-gray-900 bg-transparent border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 			: ''} {className}"
-		placeholder={!floatingLabel ? placeholder : ''}
+		{placeholder}
 		bind:value={inputValue}
 		on:input
 		readonly={readOnly ? true : null}
@@ -138,7 +138,7 @@
 	{#if floatingLabel}
 		<label
 			for={id}
-			class="absolute text-sm ml-4 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+			class="absolute ml-4 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 			>{floatingLabel}</label
 		>
 	{/if}
@@ -147,9 +147,7 @@
 <style>
 	.input::placeholder {
 		color: #8f8f8f;
-		font-size: 18px;
 		font-style: normal;
-		font-weight: 600;
 		line-height: 28px;
 	}
 </style>

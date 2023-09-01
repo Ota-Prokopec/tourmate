@@ -3,6 +3,8 @@ import { writable } from 'svelte/store'
 
 import type { Models } from 'appwrite'
 import type { Writable } from 'svelte/store'
+import { Preferences } from '@app/ts-types'
+import lodash from 'lodash'
 
 export default (account: Account) => {
 	const client = account.client
@@ -65,7 +67,16 @@ export default (account: Account) => {
 		}
 
 		async createAccount(email: string, password: string, name: string) {
-			await account.create(ID.unique(), email, password, name)
+			return await account.create(ID.unique(), email, password, name)
+		}
+
+		async addPreferences(prefs: Partial<Preferences>) {
+			const currentPrefs = await account.getPrefs<Preferences>()
+			return await account.updatePrefs({ ...currentPrefs, ...prefs })
+		}
+		async removePreferences(...prefsNames: string[]) {
+			const currentPrefs = await account.getPrefs<Preferences>()
+			return await account.updatePrefs(lodash.omit(currentPrefs, prefsNames))
 		}
 
 		async __get() {

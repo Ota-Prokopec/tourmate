@@ -3,35 +3,29 @@
 	import { getUsersLocation } from '@app/utils';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
 	import { twMerge } from 'tailwind-merge';
+	import lsSvelte from '$lib/utils/lsStore';
 	import {
 		FillExtrusionLayer,
 		GeolocateControl,
 		MapLibre,
-		NavigationControl,
-		ScaleControl
+		NavigationControl
 	} from 'svelte-maplibre';
 	import type { Map } from 'maplibre-gl';
 
 	export let map: Map | undefined = undefined;
-	export let location: Location | undefined = undefined;
+	export let location: Location | undefined = $lsSvelte.usersLocation;
+
 	export let zoom: number = 16;
-	export let isLoading = typeof location === 'undefined';
 	export let deg = 0;
 	let style =
 		'https://api.maptiler.com/maps/4f1c74c8-1b8c-4deb-b478-1f58653a6389/style.json?key=gplNC5uqgFO1autCCLdg';
-
-	if (!location)
-		getUsersLocation().then((res) => {
-			location = res;
-			isLoading = false;
-		});
 
 	let className = '';
 	export { className as class };
 </script>
 
 <div class={twMerge('w-full h-full relative', className)}>
-	{#if !isLoading && location}
+	{#if location}
 		<MapLibre
 			on:click
 			{style}

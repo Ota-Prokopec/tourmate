@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { device } from '@app/utils';
 	import { Popover } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
 
 	export let placement: 'bottom' | 'left' | 'right' | 'top' = 'bottom';
 	export let trigger: 'hover' | 'click' =
@@ -29,6 +30,13 @@
 	export { className as class };
 </script>
 
-<Popover {open} {title} class={className} {color} {trigger} {placement}>
+<Popover
+	{open}
+	{title}
+	class={twMerge('break-words w-96 z-50', className)}
+	{color}
+	{trigger}
+	{placement}
+>
 	<slot />
 </Popover>

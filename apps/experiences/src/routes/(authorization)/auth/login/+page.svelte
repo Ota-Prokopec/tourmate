@@ -18,8 +18,6 @@
 	let error = '';
 	let loading = false;
 
-	$: console.log($user);
-
 	$: condition = email.length >= 1 && password.length >= 1;
 
 	const login = async () => {

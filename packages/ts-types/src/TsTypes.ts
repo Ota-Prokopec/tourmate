@@ -30,3 +30,5 @@ export type IPApiResponse = {
 	asn: string
 	org: string
 }
+
+export type SocialPlatform = 'facebook' | 'google' | 'discord' | 'github'

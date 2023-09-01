@@ -15,9 +15,13 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
+		"@types/tough-cookie": "^4.0.2",
 		"appwrite": "latest",
+		"axios-cookiejar-support": "^4.0.7",
 		"js-cookie": "^3.0.5",
+		"lodash": "^4.17.21",
 		"svelte-appwrite-client": "latest",
+		"tough-cookie": "^4.1.3",
 		"zod": "^3.21.4"
 	}
 }
