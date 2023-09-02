@@ -5,15 +5,17 @@
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import { browser } from '$app/environment';
 	import { trpc } from '$lib/trpc';
+	import { Posts } from '../graphql/generated';
 
 	const queryClient = new QueryClient();
-
-	if (browser) trpc($page).account.test.query();
 
 	//$: if (!$user && !$isLoading) goto('login'); //this is client-side Auth controll
 
 	//auto localization
 	//	$: browser && start();
+
+	$: postsQuery = Posts({});
+	$: posts = $postsQuery.loading || $postsQuery.error ? null : $postsQuery.data.posts;
 </script>
 
 <QueryClientProvider client={queryClient}>

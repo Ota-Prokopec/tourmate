@@ -21,5 +21,8 @@ export default defineConfig({
 			$server: path.resolve(__dirname, 'src', 'lib/server'),
 			$stores: path.resolve(__dirname, 'src', 'lib', 'stores')
 		}
+	},
+	optimizeDeps: {
+		exclude: ['@urql/svelte']
 	}
 });

@@ -4,5 +4,6 @@
 	"proseWrap": "preserve",
 	"printWidth": 140,
 	"useTabs": true,
-	"singleQuote": true
+	"singleQuote": true,
+	"tabWidth": 2
 }

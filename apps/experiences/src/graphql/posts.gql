@@ -1,0 +1,12 @@
+query Posts {
+	posts {
+		id
+		body
+	}
+}
+
+query PostsID {
+	posts {
+		id
+	}
+}
