@@ -1,24 +1,28 @@
 import { Account, Client, ID } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
+import { Types } from '../types/Types'
 
-export const getSessionFromCookie = (
-	cookies: {
-		name: string
-		value: string
-	}[],
-) => {
+const userHasCookies = (cookies: {}): cookies is Types.Cookie[] => Object.entries(cookies).length !== 0
+
+export const getSessionFromCookie = (cookies: Types.Cookie[] | {}[]): string | undefined => {
+	if (!userHasCookies(cookies)) throw new Error('User does not have any cookies')
+
 	const sessionNames = [
 		'a_session_' + process.env.APPWRITE_PROJECT_ID?.toLowerCase(),
 		'a_session_' + process.env.APPWRITE_PROJECT_ID?.toLowerCase() + '_legacy',
 	]
-	const appwriteCookies = cookies.filter((cookie) => sessionNames.includes(cookie.name)).sort((a, b) => a.name.length - b.name.length)
 
-	const session = appwriteCookies[0] ?? appwriteCookies[1] // [0] is a_session_...... and [1] is a_session_........_legacy, because of sorting
+	const appwriteCookies: Types.Cookie[] | undefined[] = cookies
+		.filter((cookie) => sessionNames.includes(cookie.name))
+		.sort((a, b) => a.name.length - b.name.length) as Types.Cookie[] | undefined[]
+
+	const session = appwriteCookies[0] // [0] is a_session_...... and [1] is a_session_........_legacy, because of sorting
+
+	if (!session) throw new Error('User does not have session cookie')
 	return session.value
 }
 
 export default (client: Client) => {
-	const account = new Account(client)
 	return class Auth extends Account {
 		constructor() {
 			super(client)

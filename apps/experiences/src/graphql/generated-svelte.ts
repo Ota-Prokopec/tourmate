@@ -1,6 +1,10 @@
-import { GraphQLClient } from 'graphql-request';
-import { GraphQLClientRequestHeaders } from 'graphql-request/build/cjs/types';
-import gql from 'graphql-tag';
+import client from "./client";
+import type {
+        ApolloQueryResult, ObservableQuery, WatchQueryOptions
+      } from "@apollo/client";
+import { readable } from "svelte/store";
+import type { Readable } from "svelte/store";
+import gql from "graphql-tag"
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -79,7 +83,7 @@ export type PostsQueryVariables = Exact<{
 export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, body?: string | null, author: { __typename?: 'User', id: number } }> };
 
 
-export const PostsDocument = gql`
+export const PostsDoc = gql`
     query Posts($email: String!) {
   posts {
     id
@@ -90,17 +94,38 @@ export const PostsDocument = gql`
   }
 }
     `;
-
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
-
-
-const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
-
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
-  return {
-    Posts(variables: PostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PostsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<PostsQuery>(PostsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Posts', 'query');
-    }
-  };
-}
-export type Sdk = ReturnType<typeof getSdk>;
+export const Posts = (
+            options: Omit<
+              WatchQueryOptions<PostsQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<PostsQuery> & {
+              query: ObservableQuery<
+                PostsQuery,
+                PostsQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: PostsDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<PostsQuery> & {
+                query: ObservableQuery<
+                  PostsQuery,
+                  PostsQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        

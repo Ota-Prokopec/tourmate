@@ -2,7 +2,6 @@ import { makeSchema } from 'nexus'
 import { join } from 'path'
 import * as resolvers from './resolvers/index'
 import * as schema from './schema/index'
-import __dirname from './lib/__dirname'
 
 export default makeSchema({
 	types: [resolvers, schema],
@@ -16,6 +15,6 @@ export default makeSchema({
 	},
 	nonNullDefaults: {
 		output: true,
-		input: false,
+		input: true,
 	},
 })

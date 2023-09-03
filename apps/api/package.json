@@ -4,20 +4,25 @@
 	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
-	"type": "module",
+	"imports": {
+		"$lib": "./src/lib/*"
+	},
 	"scripts": {
-		"dev": "vite",
-		"dev-nodemon": "nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
+		"dev": "console-ninja  nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-graphql-schema",
-		"build": "tsc",
+		"build": "tsc --build",
 		"generate-graphql-schema": "ts-node ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers"
 	},
 	"dependencies": {
 		"@apollo/server": "^4.9.3",
+		"@types/cookie-parser": "^1.4.3",
 		"apollo-server": "^3.12.1",
 		"apollo-server-express": "^3.12.1",
+		"appwrite": "^12.0.0",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
 		"express": "^4.18.2",
 		"graphql": "^16.8.0",
 		"http-server": "^14.1.1",
@@ -26,6 +31,7 @@
 		"vite": "^4.4.9",
 		"vite-express": "^0.10.0",
 		"vite-node": "^0.34.3",
+		"vite-plugin-commonjs": "^0.9.0",
 		"vite-plugin-node": "^3.0.2"
 	},
 	"devDependencies": {

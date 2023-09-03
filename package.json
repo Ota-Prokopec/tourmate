@@ -3,6 +3,8 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "dotenv -e .env.development -- turbo run dev",
+		"api": "dotenv -e .env.development -- turbo run dev --filter=api",
+		"web": "dotenv -e .env.development -- turbo run dev --filter=experiences",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\""
 	},

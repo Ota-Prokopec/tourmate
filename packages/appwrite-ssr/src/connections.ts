@@ -2,14 +2,17 @@ import { Avatars, Client, Databases, Functions, Graphql, Locale, Teams } from 'a
 import account_, { getSessionFromCookie } from './auth/account'
 import databse_ from './databases/Collection'
 import storage_ from './storage/storage'
+import type { Types } from './types/Types'
 
-let env = {
+let envs = {
 	projectId: process.env.APPWRITE_PROJECT_ID,
 	projectEndPoint: process.env.APPWRITE_ENDPOINT,
 }
 
 const set = (callback?: (c: Client) => Client) => {
-	let client = new Client().setEndpoint(env.projectEndPoint).setProject(env.projectId)
+	let client = new Client()
+
+	client.setEndpoint(envs.projectEndPoint).setProject(envs.projectId)
 	if (callback) client = callback(client)
 
 	const Auth = account_(client)
@@ -39,7 +42,7 @@ const set = (callback?: (c: Client) => Client) => {
 }
 
 const connections = {
-	setSession: (session: string) => {
+	setSession: (session: string | undefined) => {
 		return set((client) => {
 			client.headers['X-Fallback-Cookies'] = JSON.stringify({
 				[`a_session_${process.env.APPWRITE_PROJECT_ID}`]: session,
@@ -47,18 +50,13 @@ const connections = {
 			return client
 		})
 	},
-	setCookie: (
-		cookies: {
-			name: string
-			value: string
-		}[],
-	) => connections.setSession(getSessionFromCookie(cookies)),
+	setCookie: (cookies: Types.Cookie[]) => connections.setSession(getSessionFromCookie(cookies)),
 
 	none: () => set(),
 }
 
 const setProject = ({ projectId, projectEndPoint }: { projectId: string; projectEndPoint: string }) => {
-	env = {
+	envs = {
 		projectId,
 		projectEndPoint,
 	}

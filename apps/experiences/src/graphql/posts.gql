@@ -1,12 +1,9 @@
-query Posts {
+query Posts($email: String!) {
 	posts {
 		id
 		body
-	}
-}
-
-query PostsID {
-	posts {
-		id
+		author(email: $email) {
+			id
+		}
 	}
 }
