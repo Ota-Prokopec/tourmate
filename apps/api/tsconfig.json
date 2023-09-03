@@ -4,11 +4,9 @@
 		"outDir": "dist",
 		"rootDir": "src",
 		"target": "ES6",
-		"paths": {
-			"$lib/*": ["./src/lib/*"]
-		}
+		"moduleResolution": "node"
 	},
 
-	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js"],
+	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
 	"exclude": ["node_modules", "dist"]
 }

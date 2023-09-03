@@ -34,7 +34,7 @@ export default (client: Client) => {
 				headers: {
 					'Content-Type': 'application/json',
 					'x-appwrite-project': process.env.APPWRITE_PROJECT_ID,
-				},
+				} as HeadersInit,
 				body: JSON.stringify({
 					email,
 					password,
@@ -49,7 +49,7 @@ export default (client: Client) => {
 
 				const json = await response.json()
 
-				if (json.code >= 400) throw new Error('create session error')
+				if (json.code >= 400) throw new Error(`create session error, status: ${response.status}`)
 
 				const SSRHostName = process.env.HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`
 

@@ -1,0 +1,5 @@
+query LoginViaEmail($email: String!, $password: String!) {
+	logInViaEmail(email: $email, password: $password) {
+		session
+	}
+}

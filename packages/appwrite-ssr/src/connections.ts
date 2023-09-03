@@ -12,7 +12,9 @@ let envs = {
 const set = (callback?: (c: Client) => Client) => {
 	let client = new Client()
 
-	client.setEndpoint(envs.projectEndPoint).setProject(envs.projectId)
+	if (!envs.projectEndPoint || !envs.projectId) throw new Error('project id or project end point is not set')
+
+	client.setEndpoint(envs.projectEndPoint as string).setProject(envs.projectId as string)
 	if (callback) client = callback(client)
 
 	const Auth = account_(client)

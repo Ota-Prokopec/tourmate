@@ -1,5 +1,5 @@
 {
-	"name": "experiences",
+	"name": "web",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
@@ -93,7 +93,6 @@
 		"firebase": "^10.2.0",
 		"flowbite": "^1.7.0",
 		"flowbite-svelte": "^0.40.1",
-		"graphql-request": "^6.1.0",
 		"js-cookie": "^3.0.5",
 		"kolorist": "^1.8.0",
 		"mapbox": "^1.0.0-beta10",

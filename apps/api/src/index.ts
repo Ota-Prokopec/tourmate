@@ -11,7 +11,7 @@ const app = express()
 
 const start = async () => {
 	await server.start()
-	server.applyMiddleware({ app, path: '/graphql' })
+	server.applyMiddleware({ app, path: '/graphql', cors: false })
 }
 
 app.use(cookieParser())

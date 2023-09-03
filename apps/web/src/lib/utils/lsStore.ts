@@ -6,6 +6,7 @@ export type Storage =
 	| {
 			location?: Location;
 			usersBeforeLoginViaSocialMediaData?: { username: string; myId: string };
+			cookieFallback?: Record<'a_session_experiences', string>;
 	  } & Record<string, any>;
 
 const storage: Storage = !browser

@@ -19,74 +19,33 @@ export type Scalars = {
 
 export type EmailLogin = {
   __typename?: 'EmailLogin';
-  success: Scalars['Boolean']['output'];
-};
-
-export type Post = {
-  __typename?: 'Post';
-  author: User;
-  authors: Array<User>;
-  body?: Maybe<Scalars['String']['output']>;
-  id: Scalars['Int']['output'];
-  published: Scalars['Boolean']['output'];
-  title: Scalars['String']['output'];
-};
-
-
-export type PostAuthorArgs = {
-  email: Scalars['String']['input'];
-};
-
-export type PostInput = {
-  body?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['Int']['input'];
-  published: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
+  session: Scalars['String']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
   logInViaEmail: EmailLogin;
-  posts: Array<Post>;
-  users: Array<User>;
 };
 
 
 export type QueryLogInViaEmailArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  posts: PostInput;
 };
 
-
-export type QueryPostsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type User = {
-  __typename?: 'User';
-  email: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  posts: Array<Post>;
-  username: Scalars['String']['output'];
-};
-
-export type PostsQueryVariables = Exact<{
+export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, body?: string | null, author: { __typename?: 'User', id: number } }> };
+export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
 
 
-export const PostsDocument = gql`
-    query Posts($email: String!) {
-  posts {
-    id
-    body
-    author(email: $email) {
-      id
-    }
+export const LoginViaEmailDocument = gql`
+    query LoginViaEmail($email: String!, $password: String!) {
+  logInViaEmail(email: $email, password: $password) {
+    session
   }
 }
     `;
@@ -98,8 +57,8 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    Posts(variables: PostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PostsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<PostsQuery>(PostsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Posts', 'query');
+    LoginViaEmail(variables: LoginViaEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginViaEmailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginViaEmailQuery>(LoginViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'LoginViaEmail', 'query');
     }
   };
 }

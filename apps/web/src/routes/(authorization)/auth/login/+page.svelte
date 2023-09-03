@@ -12,6 +12,8 @@
 	import Link from '$lib/components/Common/Link.svelte';
 	import { browser } from '$app/environment';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import lsStore from '$lib/utils/lsStore';
 
 	let password = 'aaaaaaaa';
 	let email = 'otaprokopec@gmail.com';
@@ -21,15 +23,15 @@
 	$: condition = email.length >= 1 && password.length >= 1;
 
 	const login = async () => {
-		loading = true;
+		//loading = true;
 
 		try {
 			await user.deleteSessions(); //first things first, i will delete session, if some exists
 		} catch (error) {}
 
 		try {
-			await ssrAccount.createEmailSession(email, password);
-
+			const res = await sdk.LoginViaEmail({ email, password });
+			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');
 		} catch (err) {
 			console.log(err);

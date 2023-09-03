@@ -1,8 +1,9 @@
 import { objectType } from 'nexus'
 
 export default objectType({
-	name: 'EmailLogin',
+	name: 'UsersPreferences',
 	definition: (t) => {
-		t.string('session')
+		t.list.float('location')
+		t.boolean('termsAccepted')
 	},
 })

@@ -67,27 +67,18 @@ export class Account extends AccountServer {
 		const authCookies: any = {}
 		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = `${session}`
 
-		//clientBrowser.headers['X-Fallback-Cookies'] = authCookies
-		//clientBrowser.headers['Cookie'] = `a_session_console=${session}; a_session_experiences=${session}`
-
-		//const account = new AccountBrowser(clientBrowser)
-
-		//	console.log(`${process.env.APPWRITE_ENDPOINT}/account/jwt`)
-
 		const res = await fetch(`${process.env.APPWRITE_ENDPOINT}/account/jwt`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'X-appwrite-project': process.env.APPWRITE_PROJECT_ID,
-				'X-Appwrite-Key': process.env.APPWRITE_API_KEY,
 				'X-Fallback-Cookies': authCookies,
 				Cookie: `a_session_console=${session}; a_session_experiences=${session}`,
-			},
+			} as HeadersInit,
 		})
 
 		const { jwt } = await res.json()
 
 		return { jwt }
 	}
-	//async deleteSession(sessionId: string) {}
 }

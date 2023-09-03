@@ -6,7 +6,7 @@ export default new ApolloClient({
 	// Provide required constructor fields
 	cache: cache,
 	uri: 'http://localhost:4444/graphql',
-	credentials: 'include',
+	credentials: 'same-origin',
 	queryDeduplication: false,
 	defaultOptions: {
 		watchQuery: {
@@ -14,3 +14,14 @@ export default new ApolloClient({
 		}
 	}
 });
+
+/*
+query Posts($email: String!) {
+	posts {
+		id
+		body
+		author(email: $email) {
+			id
+		}
+	}
+}*/
