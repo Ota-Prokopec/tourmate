@@ -1,9 +1,8 @@
 import { inputObjectType } from 'nexus'
 
 export default inputObjectType({
-	name: 'createAccount',
+	name: 'MonumentInput',
 	definition: (t) => {
-		t.string('myId')
-		t.string('username')
+		t.list.float('location'), t.int('zoom')
 	},
 })

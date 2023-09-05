@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import appwriteSSR, { Types, appwrite } from '@app/appwrite-ssr'
-import { Client, Models } from 'appwrite'
+import { Types } from '@app/appwrite-ssr'
+import { Models } from 'appwrite'
 import type { Preferences } from '@app/ts-types'
-import { adminAppwriteClient } from '@app/appwrite-server'
+import appwriteConnections from '@app/appwrite-ssr-experiences'
 
 export const context = async ({ req, res }: { res: Response; req: Request }) => {
 	try {
@@ -13,28 +13,27 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 
 		console.log(cookies)
 
-		let appwriteClient: appwrite.Client
-		let appwriteUser: Models.User<Preferences> | undefined = undefined
+		let user: Models.User<Preferences> | null = null
+		let appwrite: ReturnType<typeof appwriteConnections.setCookie>
 
 		try {
-			const { client, account } = appwriteSSR.setCookie(cookies)
-			appwriteClient = client
-			appwriteUser = await account.get<Preferences>()
+			appwrite = appwriteConnections.setCookie(cookies)
+			user = await appwrite.account.get<Preferences>()
 		} catch (error) {
-			const { client } = appwriteSSR.none()
-			appwriteClient = client
+			appwrite = appwriteConnections.setNone()
+			//user is equal to null
 		}
 
 		return {
 			req,
 			res,
-			isAuthed: typeof appwriteUser !== 'undefined',
-			appwriteClient,
-			appwriteAdminClient: adminAppwriteClient,
-			user: appwriteUser,
+			isAuthed: (ctxUser: unknown): ctxUser is NonNullable<typeof user> => ctxUser !== null,
+			user: user,
+			appwrite: appwrite,
 		}
 	} catch (error) {
 		console.log(error)
+		throw error
 	}
 }
 

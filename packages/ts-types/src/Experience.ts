@@ -5,6 +5,7 @@ import { Base64 } from './TsTypes'
 
 export const locationZod = z.tuple([z.number(), z.number()])
 export type Location = [number, number]
+export const isLocation = (arg: unknown[]): arg is Location => typeof arg[0] === 'number' && typeof arg[1] === 'number' && arg.length === 2
 
 export const experienceZod = z.object({
 	userId: z.string(),

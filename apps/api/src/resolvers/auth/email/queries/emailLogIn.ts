@@ -1,14 +1,14 @@
 import { arg, nonNull, queryField, stringArg } from 'nexus'
-import { client } from '../../../../lib/appwrite'
 import { ApolloError } from 'apollo-server-express'
 
+// ! dont check if user has created Account in userInfo because user logs in with this query in register for creating an acccount
 //	args: { email: stringArg(), password: stringArg(), posts: arg({ type: 'PostInput' }) },
 
 export default queryField('logInViaEmail', {
 	type: 'EmailLogin',
 	args: { email: stringArg(), password: stringArg() },
 	resolve: async (source, args, ctx, info) => {
-		const { account } = client.none()
+		const { account } = ctx.appwrite
 
 		try {
 			const { sessionToken: cookie } = await account.loginViaEmail(args.email, args.password)

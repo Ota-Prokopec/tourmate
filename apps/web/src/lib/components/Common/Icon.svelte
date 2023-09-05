@@ -5,6 +5,7 @@
 
 	export let icon: string | URL | null = null;
 	export let outlineOnly: boolean = false;
+	export let disabled = false;
 
 	let className: string = '';
 	export { className as class };
@@ -12,6 +13,7 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <button
+	{disabled}
 	on:mouseover
 	on:mouseout
 	on:touchstart

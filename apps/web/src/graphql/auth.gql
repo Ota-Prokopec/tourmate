@@ -1,5 +1,142 @@
-query LoginViaEmail($email: String!, $password: String!) {
+query loginViaEmail($email: String!, $password: String!) {
 	logInViaEmail(email: $email, password: $password) {
 		session
+	}
+}
+
+query createAccount($myId: String!, $username: String!) {
+	createAccount(myId: $myId, username: $username) {
+		updatedAt
+		createdAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		prefs {
+			location
+			termsAccepted
+		}
+	}
+}
+
+query getAccount($userId: String) {
+	getAccount(userId: $userId) {
+		updatedAt
+		createdAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		profilePictureURL
+		prefs {
+			location
+			termsAccepted
+		}
+	}
+}
+
+query getAccountWithExperiences($userId: String) {
+	getAccount(userId: $userId) {
+		updatedAt
+		createdAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		profilePictureURL
+		prefs {
+			location
+			termsAccepted
+		}
+		experiences {
+			userId
+			imgSrc
+			location
+			createdAt
+			updatedAt
+			collectionId
+			id
+			permissions
+			databaseId
+		}
+	}
+}
+
+query getAccountWithMonuments($userId: String) {
+	getAccount(userId: $userId) {
+		updatedAt
+		createdAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		profilePictureURL
+		prefs {
+			location
+			termsAccepted
+		}
+		monuments {
+			location
+			creatorUserId
+			name
+			about
+			pictureURL
+			createdAt
+			updatedAt
+			collectionId
+			id
+			permissions
+			databaseId
+		}
+	}
+}
+
+query getAccountWithExperiencesAndMonuments($userId: String) {
+	getAccount(userId: $userId) {
+		updatedAt
+		createdAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		profilePictureURL
+		prefs {
+			location
+			termsAccepted
+		}
+		monuments {
+			location
+			creatorUserId
+			name
+			about
+			pictureURL
+			createdAt
+			updatedAt
+			collectionId
+			id
+			permissions
+			databaseId
+		}
+		experiences {
+			userId
+			imgSrc
+			location
+			createdAt
+			updatedAt
+			collectionId
+			id
+			permissions
+			databaseId
+		}
 	}
 }

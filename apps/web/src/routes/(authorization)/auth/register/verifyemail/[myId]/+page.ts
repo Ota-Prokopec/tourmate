@@ -6,8 +6,6 @@ export const load = async ({ params, url }) => {
 	if (!userId || !secret) throw new Error('Missing userId');
 
 	return {
-		userId,
-		secret,
-		myId
+		params: { userId, secret, myId }
 	};
 };

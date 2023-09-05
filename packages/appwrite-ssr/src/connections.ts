@@ -9,7 +9,7 @@ let envs = {
 	projectEndPoint: process.env.APPWRITE_ENDPOINT,
 }
 
-const set = (callback?: (c: Client) => Client) => {
+export const set = (callback?: (c: Client) => Client) => {
 	let client = new Client()
 
 	if (!envs.projectEndPoint || !envs.projectId) throw new Error('project id or project end point is not set')
@@ -62,7 +62,7 @@ const setProject = ({ projectId, projectEndPoint }: { projectId: string; project
 		projectId,
 		projectEndPoint,
 	}
-	return connections
+	return { ...connections, ...set() }
 }
 
 export { connections, setProject }

@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import {
 	appWriteDocumentOptionalZod,
 	appwriteDocumentForOmit,
@@ -23,6 +22,7 @@ import {
 import { IP, IPApiResponse, SocialPlatform } from './TsTypes'
 import type { UserInfoDocument, UserInfoDocumentCreate, UserInfo } from './Account'
 import { Preferences } from './Account'
+import { isLocation } from './Experience'
 import {
 	Monument,
 	MonumentDocument,
@@ -87,6 +87,8 @@ export {
 	type Preferences,
 	type SocialPlatform,
 }
+
+export { isLocation }
 
 export type OAuth2Providers = 'facebook' | 'google'
 

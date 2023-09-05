@@ -1,10 +1,8 @@
 {
-	"name": "@app/appwrite-ssr-experineces",
-	"version": "1.0.0",
-	"private": true,
-	"type": "module",
+	"name": "@app/appwrite-ssr-experiences",
 	"main": "src/index.ts",
 	"types": "src/index.ts",
+	"version": "0.0.1",
 	"scripts": {
 		"build": "tsc --build"
 	},
@@ -14,6 +12,6 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-	"@app/appwrite-ssr": "*"
+		"@app/appwrite-ssr": "*"
 	}
 }

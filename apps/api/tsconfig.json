@@ -4,7 +4,9 @@
 		"outDir": "dist",
 		"rootDir": "src",
 		"target": "ES6",
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"declaration": false,
+		"declarationMap": false
 	},
 
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],

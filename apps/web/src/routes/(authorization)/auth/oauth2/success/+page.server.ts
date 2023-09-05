@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 const params = {
-	domain: process.env.HOSTNAME,
+	domain: process.env.SERVER_HOSTNAME,
 	secure: false,
 	path: '/',
 	httpOnly: true

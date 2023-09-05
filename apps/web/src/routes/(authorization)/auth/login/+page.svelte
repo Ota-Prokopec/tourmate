@@ -30,7 +30,7 @@
 		} catch (error) {}
 
 		try {
-			const res = await sdk.LoginViaEmail({ email, password });
+			const res = await sdk.loginViaEmail({ email, password });
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');
 		} catch (err) {

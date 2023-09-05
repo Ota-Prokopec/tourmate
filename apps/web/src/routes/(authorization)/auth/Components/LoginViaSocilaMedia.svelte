@@ -7,7 +7,10 @@
 	import IconGithub from '$lib/components/Icons/IconGithub.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import type { SocialPlatform } from '@app/ts-types';
-	const dispatch = createEventDispatcher<{ beforeLogin: SocialPlatform }>();
+	import { twMerge } from 'tailwind-merge';
+	const dispatch = createEventDispatcher<{ click: undefined }>();
+
+	export let termsAccepted: boolean = true;
 
 	const logout = async () => {
 		try {
@@ -17,26 +20,47 @@
 
 	const login = async (platform: SocialPlatform) => {
 		await logout();
-		dispatch('beforeLogin', platform);
 		await user.createOAuth2Session(
 			platform,
 			`${location.origin}/auth/oauth2/success`,
 			`${location.origin}/oauth2/failure`
 		);
 	};
+
+	const blurryClass = 'opacity-[0.7]  ';
 </script>
 
-<div class="w-auto flex flex-wrap flex-row gap-10 items-center justify-center">
-	<Icon class="w-14" on:click={() => login('facebook')}>
+<button class="w-auto flex flex-wrap flex-row gap-10 items-center justify-center">
+	<Icon
+		on:click={() => dispatch('click')}
+		disabled={!termsAccepted}
+		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		on:click={() => login('facebook')}
+	>
 		<IconFacebook />
 	</Icon>
-	<Icon class="w-14" on:click={() => login('google')}>
+	<Icon
+		on:click={() => dispatch('click')}
+		disabled={!termsAccepted}
+		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		on:click={() => login('google')}
+	>
 		<IconGoogle />
 	</Icon>
-	<Icon class="w-14" on:click={() => login('discord')}>
+	<Icon
+		on:click={() => dispatch('click')}
+		disabled={!termsAccepted}
+		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		on:click={() => login('discord')}
+	>
 		<IconDiscord />
 	</Icon>
-	<Icon class="w-14" on:click={() => login('github')}>
+	<Icon
+		on:click={() => dispatch('click')}
+		disabled={!termsAccepted}
+		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		on:click={() => login('github')}
+	>
 		<IconGithub />
 	</Icon>
-</div>
+</button>

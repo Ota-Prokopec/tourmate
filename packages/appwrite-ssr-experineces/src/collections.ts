@@ -10,9 +10,8 @@ import {
 } from '@app/ts-types'
 import appwriteSSR from '@app/appwrite-ssr'
 
-export const collections = (session: string) => {
-	const { Collection } = appwriteSSR.setSession(session)
-
+export const collections = (appwrite: ReturnType<typeof appwriteSSR.setCookie>) => {
+	const { Collection } = appwrite
 	return {
 		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('account', 'userInfo'),
 		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
