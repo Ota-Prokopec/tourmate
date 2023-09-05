@@ -1,0 +1,27 @@
+query getListOfExperience($input: ExperienceInput) {
+	getListOfExperience(input: $input) {
+		userId
+		updatedAt
+		permissions
+		location
+		imgSrc
+		id
+		databaseId
+		createdAt
+		collectionId
+	}
+}
+
+query getExperience($experienceId: String!) {
+	getExperience(id: $experienceId) {
+		userId
+		imgSrc
+		location
+		createdAt
+		updatedAt
+		collectionId
+		id
+		permissions
+		databaseId
+	}
+}

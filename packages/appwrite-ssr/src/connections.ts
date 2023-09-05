@@ -1,8 +1,9 @@
-import { Avatars, Client, Databases, Functions, Graphql, Locale, Teams } from 'appwrite'
+import { Avatars, Client, Databases, Functions, Graphql, Teams } from 'appwrite'
 import account_, { getSessionFromCookie } from './auth/account'
 import databse_ from './databases/Collection'
 import storage_ from './storage/storage'
 import type { Types } from './types/Types'
+import Locale from './locale/locale'
 
 let envs = {
 	projectId: process.env.APPWRITE_PROJECT_ID,

@@ -1,0 +1,50 @@
+query getListOfExperienceAndListOfMonumentsWithMonumentsAuthor($input: ExperienceInput) {
+	getListOfMonuments {
+		updatedAt
+		pictureURL
+		permissions
+		name
+		location
+		id
+		databaseId
+		creatorUserId
+		createdAt
+		collectionId
+		about
+		user {
+			username
+			userId
+			updatedAt
+			staus
+			profilePictureURL
+			phoneVerification
+			myId
+			emailVerification
+			createdAt
+			monuments {
+				updatedAt
+				pictureURL
+				permissions
+				name
+				location
+				id
+				databaseId
+				creatorUserId
+				createdAt
+				collectionId
+				about
+			}
+		}
+	}
+	getListOfExperience(input: $input) {
+		userId
+		updatedAt
+		permissions
+		location
+		imgSrc
+		id
+		databaseId
+		createdAt
+		collectionId
+	}
+}

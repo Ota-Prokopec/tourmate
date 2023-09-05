@@ -1,6 +1,8 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+	addTypename: false
+});
 
 export default new ApolloClient({
 	// Provide required constructor fields

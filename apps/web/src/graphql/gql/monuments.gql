@@ -1,0 +1,31 @@
+query getMonument($monumentId: String!) {
+	getMonument(id: $monumentId) {
+		location
+		creatorUserId
+		name
+		about
+		pictureURL
+		createdAt
+		updatedAt
+		collectionId
+		id
+		permissions
+		databaseId
+	}
+}
+
+query getListOfMonuments($input: MonumentInput) {
+	getListOfMonuments(input: $input) {
+		location
+		creatorUserId
+		name
+		about
+		pictureURL
+		createdAt
+		updatedAt
+		collectionId
+		id
+		permissions
+		databaseId
+	}
+}

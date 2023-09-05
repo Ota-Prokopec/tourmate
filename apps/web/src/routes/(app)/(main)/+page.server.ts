@@ -1,21 +1,22 @@
-import { trpc } from '$lib/trpc';
-import appwriteServer from '@app/appwrite-server';
 import type { PageServerLoad } from './$types';
 import { Preferences } from '@app/ts-types';
+import appwrite from '@app/appwrite-ssr-experiences';
+import { sdkssr } from '$src/graphql/sdkssr';
 
 export const load: PageServerLoad = async (event) => {
-	const { account, locale } = await appwriteServer.setCookie(event.cookies.getAll());
+	const { account, locale } = await appwrite.setCookie(event.cookies.getAll());
 
-	const location =
-		(await account.getPrefs<Preferences>()).location ?? (await locale.getLocation());
+	const location = (await account.getPrefs<Preferences>()).location ?? (await locale.getLocation());
 
-	const experiences = await trpc(event).experience.getListByLocation.query({
-		location: location,
-		zoom: 14
+	const res = await sdkssr(event).getListOfExperienceAndListOfMonumentsWithMonumentsAuthor({
+		input: {
+			location: location,
+			zoom: 14
+		}
 	});
-	const monuments = await trpc(event).experience.monument.getListByLocation.query({
-		location: location,
-		zoom: 14
-	});
+
+	const experiences = res.getListOfExperience;
+	const monuments = res.getListOfMonuments;
+
 	return { loadedExperiences: experiences, loadedMonuments: monuments };
 };
