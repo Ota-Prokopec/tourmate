@@ -15,6 +15,7 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
+		"@app/appwrite-ssr-experiences-graphql": "*",
 		"barrelsby": "^2.8.0",
 		"lodash": "^4.17.21",
 		"node-appwrite": "^9.0.0",

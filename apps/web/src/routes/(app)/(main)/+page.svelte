@@ -50,11 +50,11 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	{#if $mapOrTakePhoto === 'map' && false}
+	{#if $mapOrTakePhoto === 'map'}
 		<Map deg={45} bind:zoom={mapZoom} bind:location>
 			{#each data.loadedExperiences as experience, index}
 				<ExperienceMarker
-					bouncing={rightNowAddedExperience?.$id === experience.$id}
+					bouncing={rightNowAddedExperience?._id === experience.id}
 					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1}
 					on:almostProfile={(e) => {
 						almostProfile = true;

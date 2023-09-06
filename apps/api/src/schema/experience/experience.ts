@@ -5,15 +5,15 @@ import { objectType } from 'nexus'
 export default objectType({
 	name: 'Experience',
 	definition: (t) => {
+		t.string('_createdAt')
+		t.string('_updatedAt')
+		t.string('_collectionId')
+		t.string('_id')
+		t.list.string('_permissions')
+		t.string('_databaseId')
 		t.string('userId')
 		t.string('imgSrc')
 		t.list.float('location')
-		t.string('createdAt')
-		t.string('updatedAt')
-		t.string('collectionId')
-		t.string('id')
-		t.list.string('permissions')
-		t.string('databaseId')
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {

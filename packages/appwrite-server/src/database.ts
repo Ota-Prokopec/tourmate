@@ -1,7 +1,6 @@
+import { DatabaseValueTypes } from '@app/ts-types'
 import permissionslib from './permissions'
 import { Databases, ID, Models, Query } from 'node-appwrite'
-
-type DatabaseValueTypes = string | number | string[] | number[] | boolean
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
 	return permissions.every((permission) => typeof permission === 'string')

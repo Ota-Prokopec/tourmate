@@ -4,7 +4,7 @@ import { Query, ID } from 'appwrite'
 import type { Writable } from 'svelte/store'
 import type { Models, RealtimeResponseEvent, Databases } from 'appwrite'
 import { executeFunctionBeforeAndAfterClassMethod } from '@app/utils'
-type DatabaseValueTypes = string | number | string[] | number[] | boolean
+import { DatabaseValueTypes } from '@app/ts-types'
 
 const convertObjectInfoArray = (data: Record<string, string>): string[] => {
 	return Object.values(data)
@@ -20,11 +20,7 @@ export default (databases: Databases) => {
 			return databases.createDocument(this.databaseId, this.collectionId, id, data, permissions)
 		}
 
-		updateDocument(
-			documentId: string | Models.Document,
-			data: Partial<TDocumentCreate>,
-			permissions: string[] | undefined = undefined,
-		) {
+		updateDocument(documentId: string | Models.Document, data: Partial<TDocumentCreate>, permissions: string[] | undefined = undefined) {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
 			return databases.updateDocument(
 				this.databaseId,
@@ -185,13 +181,11 @@ export default (databases: Databases) => {
 			const dataStore = writable<TDocumentGet[]>([])
 			let lastId: string
 
-			databases
-				.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit)])
-				.then((firstData) => {
-					dataStore.set(firstData.documents)
-					firstData.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
-					lastId = firstData.documents[firstData.documents.length - 1].$id
-				})
+			databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit)]).then((firstData) => {
+				dataStore.set(firstData.documents)
+				firstData.documents.forEach((document) => this.subscribeCollectionUpdate(document, dataStore))
+				lastId = firstData.documents[firstData.documents.length - 1].$id
+			})
 
 			const observer = new IntersectionObserver((entries, me) => {
 				if (lastId === null) return
@@ -200,11 +194,7 @@ export default (databases: Databases) => {
 					if (!entry.isIntersecting) return
 
 					databases
-						.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [
-							...queries,
-							Query.limit(limit),
-							Query.cursorAfter(lastId),
-						])
+						.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, [...queries, Query.limit(limit), Query.cursorAfter(lastId)])
 						.then((data) => {
 							dataStore.update((current) => {
 								current.push(...data.documents)
@@ -241,11 +231,7 @@ export default (databases: Databases) => {
 			client.subscribe(
 				`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}`,
 				(response: RealtimeResponseEvent<any>) => {
-					if (
-						response.events.includes(
-							`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.delete`,
-						)
-					) {
+					if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.delete`)) {
 						//@ts-ignore
 						return store.update((current) => {
 							if (Array.isArray(current) === false) return null
@@ -255,11 +241,7 @@ export default (databases: Databases) => {
 						})
 					}
 
-					if (
-						response.events.includes(
-							`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.update`,
-						)
-					) {
+					if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}.update`)) {
 						return store.update((current) => {
 							if (Array.isArray(current) === false) return response.payload
 							//@ts-ignore

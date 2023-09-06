@@ -1,13 +1,13 @@
 import { ApolloError } from 'apollo-server-express'
 import { list, objectType } from 'nexus'
 import UsersPreferences from './usersPreferences'
-import { getListOfExperineceByUser, getListOfMonumentsByUser } from '@app/experience-database-server'
+import { getListOfExperineceByUser, getListOfMonumentsByUser } from '@app/experience-database-server-graphql'
 
 export default objectType({
 	name: 'Account',
 	definition: (t) => {
-		t.string('updatedAt')
-		t.string('createdAt')
+		t.string('_createdAt')
+		t.string('_updatedAt')
 		t.string('userId')
 		t.string('myId')
 		t.string('username')

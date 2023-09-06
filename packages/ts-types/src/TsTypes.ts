@@ -32,3 +32,9 @@ export type IPApiResponse = {
 }
 
 export type SocialPlatform = 'facebook' | 'google' | 'discord' | 'github'
+
+export type RequiredDeep<T> = {
+	[P in keyof T]-?: T[P] extends object ? RequiredDeep<T[P]> : T[P]
+}
+
+export type DatabaseValueTypes = string | number | string[] | number[] | boolean | URL | Base64

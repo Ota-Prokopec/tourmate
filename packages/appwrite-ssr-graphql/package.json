@@ -1,0 +1,20 @@
+{
+	"name": "@app/appwrite-ssr-graphql",
+	"version": "1.0.0",
+	"main": "src/index.ts",
+	"types": "src/index.ts",
+	"scripts": {
+		"build": "tsc --build"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.26.2",
+		"@types/node": "^18.15.11",
+		"@types/set-cookie-parser": "^2.4.3",
+		"typescript": "latest"
+	},
+	"dependencies": {
+		"appwrite": "^12.0.0",
+		"konva": "^9.2.0",
+		"zod": "^3.22.2"
+	}
+}

@@ -1,9 +1,8 @@
 import type { Location } from '@app/ts-types'
-import appwrite from '@app/appwrite-ssr-experiences'
+import appwrite from '@app/appwrite-ssr-experiences-graphql'
 import { numberTimingCoords } from '../settings'
 import { Query } from '@app/appwrite-server'
 import { transformExperienceDocumentsIntoExperience } from '../transformers'
-import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
 
 export const getListOfExperineceByLocation = async (
 	{ location, zoom, range = 10, limit = 100 }: { location: Location; zoom: number; range?: number; limit?: number },
@@ -21,9 +20,5 @@ export const getListOfExperineceByLocation = async (
 		Query.greaterThan('longitude', rangeLongitudeMin),
 		Query.limit(limit),
 	])
-	const experiencesGraphql = transformAppwriteDocumentsIntoGraphqlDocuments(
-		...transformExperienceDocumentsIntoExperience(...experienceDocuments.documents),
-	)
-
-	return experiencesGraphql
+	return transformExperienceDocumentsIntoExperience(...experienceDocuments.documents)
 }

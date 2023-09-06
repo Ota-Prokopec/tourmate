@@ -1,4 +1,4 @@
-import type { Databases } from 'appwrite'
+import type { Client, Databases } from 'appwrite'
 import type {
 	ExperienceDocument,
 	ExperienceDocumentCreate,
@@ -11,8 +11,8 @@ import type {
 } from '@app/ts-types'
 import database from './common/database'
 
-export default (databases: Databases) => {
-	const Collection = database(databases)
+export default (client: Client) => {
+	const Collection = database(client)
 
 	return {
 		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('account', 'userInfo'),

@@ -62,7 +62,7 @@
 		"@app/appwrite-server": "*",
 		"@app/appwrite-ssr": "*",
 		"@app/experience-database-client": "*",
-		"@app/experience-database-server": "*",
+		"@app/experience-database-server-graphql": "*",
 		"@app/firebase-client": "*",
 		"@app/firebase-server": "*",
 		"@app/mapTiler": "*",

@@ -1,5 +1,5 @@
 import { connections, setProject, set } from './connections'
-import permissions from '@app/appwrite-permissions'
+import permissions from './permissions/permissions'
 import { Types } from './types/Types'
 import { getSessionFromCookie } from './auth/account'
 import appwrite from 'appwrite'

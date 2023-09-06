@@ -1,4 +1,4 @@
-import appwrite from '@app/appwrite-ssr-experiences'
+import appwrite from '@app/appwrite-ssr-experiences-graphql'
 import { Query } from '@app/appwrite-server'
 import { transformMonumentsDocumentsIntoMonuments } from '../transformers'
 import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
@@ -9,9 +9,5 @@ export const getListOfMonumentsByUser = async (
 ) => {
 	const MonumentDocuments = await collections.monument.listDocuments([Query.limit(limit), Query.equal('creatorId', userId)])
 
-	const monumentsForGraphql = transformAppwriteDocumentsIntoGraphqlDocuments(
-		...transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents),
-	)
-
-	return monumentsForGraphql
+	return transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents)
 }

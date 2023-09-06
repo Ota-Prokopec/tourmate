@@ -14,6 +14,7 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
+		"@app/appwrite-permissions": "*",
 		"@types/tough-cookie": "^4.0.2",
 		"appwrite": "latest",
 		"axios-cookiejar-support": "^4.0.7",

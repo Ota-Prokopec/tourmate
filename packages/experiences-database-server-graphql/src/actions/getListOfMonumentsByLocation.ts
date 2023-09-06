@@ -1,5 +1,5 @@
 import type { Location } from '@app/ts-types'
-import appwrite from '@app/appwrite-ssr-experiences'
+import appwrite from '@app/appwrite-ssr-experiences-graphql'
 import { numberTimingCoords } from '../settings'
 import { Query } from '@app/appwrite-server'
 import { transformMonumentsDocumentsIntoMonuments } from '../transformers'
@@ -22,9 +22,5 @@ export const getListOfMonumentsByLocation = async (
 		Query.limit(limit),
 	])
 
-	const monumentsForGraphql = transformAppwriteDocumentsIntoGraphqlDocuments(
-		...transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents),
-	)
-
-	return monumentsForGraphql
+	return transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents)
 }

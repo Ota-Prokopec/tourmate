@@ -1,5 +1,5 @@
 {
-	"name": "@app/experience-database-server",
+	"name": "@app/experience-database-server-graphql",
 	"version": "1.0.0",
 	"main": "src/index.ts",
 	"types": "src/index.ts",
@@ -16,6 +16,8 @@
 	"dependencies": {
 		"@app/ts-types": "*",
 		"@app/appwrite-ssr-experiences": "*",
+		"@app/appwrite-ssr-experiences-graphql": "*",
+		"@app/appwrite-ssr-graphql": "*",
 		"@app/appwrite-nexus": "*",
 		"@app/user-database-server": "*",
 		"lodash": "^4.17.21",
