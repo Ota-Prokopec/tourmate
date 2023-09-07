@@ -1,4 +1,4 @@
-import { getListOfExperineceByLocation } from '@app/experience-database-server'
+import { getListOfExperineceByLocation } from '@app/experience-database-server-graphql'
 import { isLocation } from '@app/ts-types'
 import { getAccount } from '@app/user-database-server'
 import { ApolloError } from 'apollo-server-express'
@@ -12,7 +12,7 @@ export default objectType({
 		t.string('_collectionId')
 		t.string('_id')
 		t.list.string('_permissions')
-		t.list.string('_databaseId')
+		t.string('_databaseId')
 		t.list.float('location')
 		t.string('creatorUserId')
 		t.string('name')

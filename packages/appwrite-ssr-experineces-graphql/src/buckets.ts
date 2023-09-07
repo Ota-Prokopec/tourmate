@@ -1,4 +1,4 @@
-import appwriteSSR from '@app/appwrite-ssr'
+import appwriteSSR from '@app/appwrite-ssr-graphql'
 
 export const buckets = (appwrite: ReturnType<typeof appwriteSSR.setCookie>) => {
 	const { Bucket } = appwrite

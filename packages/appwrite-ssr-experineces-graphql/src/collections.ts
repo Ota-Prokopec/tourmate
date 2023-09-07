@@ -8,9 +8,9 @@ import {
 	UserInfoDocumentCreate,
 	UserInfoGraphqlDocument,
 } from '@app/ts-types'
-import appwriteSSR from '@app/appwrite-ssr-graphql'
+import { Types } from '@app/appwrite-ssr-graphql'
 
-export const collections = (appwrite: ReturnType<typeof appwriteSSR.setCookie>) => {
+export const collections = (appwrite: Types.AppwriteSSR) => {
 	const { Collection } = appwrite
 	return {
 		userInfo: new Collection<UserInfoGraphqlDocument, UserInfoDocumentCreate>('account', 'userInfo'),

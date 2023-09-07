@@ -1,5 +1,5 @@
 import { arg, list, nullable, queryField, stringArg } from 'nexus'
-import { getListOfExperinece, getListOfExperineceByLocation } from '@app/experience-database-server'
+import { getListOfExperinece, getListOfExperineceByLocation } from '@app/experience-database-server-graphql'
 import experienceInput from '../schema/experienceInput'
 import { isLocation } from '@app/ts-types'
 

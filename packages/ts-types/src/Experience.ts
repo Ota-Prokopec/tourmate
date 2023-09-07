@@ -1,32 +1,32 @@
 import { Document, GraphqlDocument } from './Document'
-import { Base64 } from './TsTypes'
+import { Base64, URLGraphql } from './TsTypes'
 
 export type Location = [number, number]
 export const isLocation = (arg: unknown[]): arg is Location => typeof arg[0] === 'number' && typeof arg[1] === 'number' && arg.length === 2
 
 export type Experience = {
 	userId: string
-	imgSrc: string | Base64
+	imgSrc: URLGraphql
 	location: Location
 }
 
 export type ExperienceDocument = Document<{
 	userId: string
-	imgSrc: string | Base64
+	imgSrc: URLGraphql
 	latitude: number
 	longitude: number
 }>
 
 export type ExperienceGraphqlDocument = GraphqlDocument<{
 	userId: string
-	imgSrc: string | Base64
+	imgSrc: URLGraphql
 	latitude: number
 	longitude: number
 }>
 
 export type ExperienceDocumentCreate = {
 	userId: string
-	imgSrc: string | Base64
+	imgSrc: URLGraphql
 	latitude: number
 	longitude: number
 }
@@ -36,7 +36,7 @@ export type Monument = {
 	creatorUserId: string
 	location: Location
 	name: string
-	pictureURL?: URL
+	pictureURL?: URLGraphql
 }
 
 export type MonumentDocument = Document<{
@@ -45,7 +45,7 @@ export type MonumentDocument = Document<{
 	latitude: number
 	longitude: number
 	name: string
-	pictureURL?: URL
+	pictureURL?: URLGraphql
 }>
 
 export type MonumentGraphqlDocument = GraphqlDocument<{
@@ -54,7 +54,7 @@ export type MonumentGraphqlDocument = GraphqlDocument<{
 	latitude: number
 	longitude: number
 	name: string
-	pictureURL?: URL
+	pictureURL?: URLGraphql
 }>
 
 export type MonumentDocumentCreate = {
@@ -63,5 +63,5 @@ export type MonumentDocumentCreate = {
 	latitude: number
 	longitude: number
 	name: string
-	pictureURL?: URL
+	pictureURL?: URLGraphql
 }
