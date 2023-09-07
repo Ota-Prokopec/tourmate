@@ -2,31 +2,32 @@ import { Document, GraphqlDocument } from './Document'
 import { Base64, URLGraphql } from './TsTypes'
 
 export type Location = [number, number]
-export const isLocation = (arg: unknown[]): arg is Location => typeof arg[0] === 'number' && typeof arg[1] === 'number' && arg.length === 2
+export const isLocation = (arg: unknown): arg is Location =>
+	Array.isArray(arg) && typeof arg[0] === 'number' && typeof arg[1] === 'number' && arg.length === 2
 
 export type Experience = {
 	userId: string
-	imgSrc: URLGraphql
+	imgSrc: URL
 	location: Location
 }
 
 export type ExperienceDocument = Document<{
 	userId: string
-	imgSrc: URLGraphql
+	imgSrc: URL
 	latitude: number
 	longitude: number
 }>
 
 export type ExperienceGraphqlDocument = GraphqlDocument<{
 	userId: string
-	imgSrc: URLGraphql
+	imgSrc: URL
 	latitude: number
 	longitude: number
 }>
 
 export type ExperienceDocumentCreate = {
 	userId: string
-	imgSrc: URLGraphql
+	imgSrc: URL
 	latitude: number
 	longitude: number
 }

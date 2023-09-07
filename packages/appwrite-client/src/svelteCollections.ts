@@ -1,6 +1,6 @@
 import { Databases } from 'appwrite'
 //import { Collection as Node } from './server/appwriteNode/appwrite_node';
-import { createCollectionDispatcher } from '../src/Ludvik/main'
+import { createCollectionDispatcher } from '../src/svelte/main'
 import type {
 	ExperienceDocument,
 	ExperienceDocumentCreate,

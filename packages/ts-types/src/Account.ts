@@ -6,7 +6,7 @@ export type UserInfo = {
 	userId: string
 	myId: string
 	username: string
-	profilePictureURL?: string | URL | Base64
+	profilePictureURL?: URL
 }
 
 export type Token = {

@@ -14,7 +14,7 @@ export default objectType({
 		t.boolean('staus')
 		t.boolean('emailVerification')
 		t.boolean('phoneVerification')
-		t.nullable.string('profilePictureURL', { description: 'This is URL of profile picture. Not its id.' })
+		t.nullable.field('profilePictureURL', { type: 'URL', description: 'This is URL of profile picture. Not its id.' })
 		t.nullable.field('prefs', {
 			type: UsersPreferences,
 			resolve: (s, args, ctx) => {

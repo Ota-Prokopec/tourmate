@@ -12,8 +12,8 @@ export default objectType({
 		t.list.string('_permissions')
 		t.string('_databaseId')
 		t.string('userId')
-		t.string('imgSrc')
-		t.list.float('location')
+		t.field('imgSrc', { type: 'URL' })
+		t.list.field('location', { type: 'Location' })
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
