@@ -1,10 +1,10 @@
-import { trpc } from '$lib/trpc';
-import { ServerLoad, redirect } from '@sveltejs/kit';
-import type { TGetAccountOutputData } from '$lib/server/routers/account/routes/get';
-import appwriteServer from '@app/appwrite-server';
+import { ServerLoad } from '@sveltejs/kit';
+import { sdkssr } from '$src/graphql/sdkssr';
 
-export const load: ServerLoad = async (event): Promise<{ user: TGetAccountOutputData }> => {
+export const load: ServerLoad = async (event) => {
+	const userRes = await sdkssr(event).getAccount();
+
 	return {
-		user: await trpc(event).account.get.query()
+		user: userRes.getAccount
 	};
 };

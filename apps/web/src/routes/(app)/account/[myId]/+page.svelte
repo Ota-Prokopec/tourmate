@@ -1,28 +1,23 @@
 <script lang="ts">
-	import { Avatar, Card } from 'flowbite-svelte';
+	import { Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import ImageInput from '$lib/components/Common/ImageInput.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { Gallery } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
-	import type { Location } from '@app/ts-types';
-	import { roundNumber } from '@app/utils';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
 
 	export let data: PageData;
 
-	const images = data.usersExperiences.map((exp) => ({
+	const images = data.userProfile.experiences.map((exp) => ({
 		src: exp.imgSrc
 	}));
 
 	let experiencesType: 'map' | 'gallery' = 'map';
 
-	let isMyAccount = data.user?.$id === data.userProfile.userId;
-
-	const experiencesLocations = data.usersExperiences.map((exp) =>
-		exp.location.map((xy) => roundNumber(xy, 4))
-	) as Location[];
+	let isMyAccount = data.user?.userId === data.userProfile.userId;
 
 	const categories = [
 		{ title: 'map', key: 'map' },
@@ -37,7 +32,7 @@
 				screenErrors
 				style="avatar"
 				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
-				imageSrc={data.userProfile.profilePictureURL}
+				imageURL={data.userProfile.profilePictureURL}
 				on:image={async ({ detail }) => {}}
 			/>
 		{:else}
@@ -66,16 +61,10 @@
 	</div>
 
 	{#if experiencesType === 'gallery'}
-		<Card class="w-full">
-			<Gallery
-				items={images}
-				imgClass="w-40 h-40 rounded-xl"
-				class="gap-2 flex flex-wrap flex-row"
-			/>
-		</Card>
+		<Card class="w-full" />
 	{:else}
 		<Map class="z-[999] h-[600px] w-full max-w-[1000px] ">
-			{#each data.usersExperiences as experience}
+			{#each data.userProfile.experiences as experience}
 				<MarkerImage
 					imgSrc={experience.imgSrc}
 					location={[experience.location[0], experience.location[1]]}

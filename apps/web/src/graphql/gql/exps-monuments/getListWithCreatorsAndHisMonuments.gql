@@ -1,0 +1,92 @@
+query getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments(
+	$input: MonumentInput
+	$getListOfExperienceInput2: ExperienceInput
+) {
+	getListOfExperience(input: $getListOfExperienceInput2) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		imgSrc
+		location
+		user {
+			_createdAt
+			_updatedAt
+			userId
+			myId
+			username
+			staus
+			emailVerification
+			phoneVerification
+			profilePictureURL
+			prefs {
+				location
+				termsAccepted
+			}
+		}
+	}
+	getListOfMonuments(input: $input) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		location
+		creatorUserId
+		name
+		about
+		placeDetailId
+		pictureURL
+		creator {
+			_createdAt
+			_updatedAt
+			userId
+			myId
+			username
+			staus
+			emailVerification
+			phoneVerification
+			profilePictureURL
+			monuments {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				location
+				creatorUserId
+				name
+				about
+				placeDetailId
+				pictureURL
+				details {
+					_createdAt
+					_updatedAt
+					_collectionId
+					_id
+					_permissions
+					_databaseId
+					name
+				}
+			}
+			prefs {
+				location
+				termsAccepted
+			}
+		}
+		details {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			name
+		}
+	}
+}

@@ -1,23 +1,29 @@
 import type { Location } from '@app/ts-types';
 import type { PageServerLoad } from './$types';
 import { getDetailsByLatAndLong } from '@app/utils';
-import { numberTimingCoords } from '@app/experience-database-server';
-import { trpc } from '$lib/trpc';
+import { numberTimingCoords } from '@app/experience-settings';
+import { sdkssr } from '$src/graphql/sdkssr';
 
 export const load: PageServerLoad = async (event) => {
 	const location = [event.params.lat, event.params.lng].map(
 		(p) => parseInt(p) / numberTimingCoords
 	) as Location;
 
-	const [{ name: placeName }, monuments] = await Promise.all([
-		getDetailsByLatAndLong(location[0], location[1]),
-		await trpc(event).experience.monument.getListByLocation.query({
+	const listOfMonumentsPromise = sdkssr(event).getListOfMonumentsWithCreatorAndNearestExperiences({
+		input: {
 			location: location,
 			zoom: 14
-		})
+		}
+	});
+
+	const getPlaceDetailsNoDatabasePromise = getDetailsByLatAndLong(location[0], location[1]);
+
+	const [{ name: placeName }, { getListOfMonuments: listOfMonuments }] = await Promise.all([
+		getPlaceDetailsNoDatabasePromise,
+		listOfMonumentsPromise
 	]);
 	return {
 		newMonument: { location, placeName },
-		monuments
+		monuments: listOfMonuments
 	};
 };

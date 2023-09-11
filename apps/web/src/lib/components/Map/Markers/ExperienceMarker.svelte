@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { twMerge } from 'tailwind-merge';
 	import MarkerImage from '../MarkerImage.svelte';
-	import type { Base64, Experience } from '@app/ts-types';
+	import type { Base64, Experience, GraphqlDocument } from '@app/ts-types';
 	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher<{ almostProfile: { imgSrc: string | Base64 } }>();
+	const dispatch = createEventDispatcher<{ almostProfile: { imgSrc: URL } }>();
 
-	export let experience: Experience;
+	export let experience: GraphqlDocument<Experience>;
 	let zoom: number = 14;
 	export let stacked = false;
 	export let bouncing = false;

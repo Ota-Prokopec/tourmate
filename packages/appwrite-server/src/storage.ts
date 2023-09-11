@@ -1,10 +1,10 @@
 import { Base64 } from '@app/ts-types'
-import { ID, InputFile, Storage } from 'node-appwrite'
-import { Readable } from 'stream'
-const exlududingPrefix = 'unchangeable-'
-import { encode } from 'node-base64-image'
+import { ID, Storage, Models } from 'node-appwrite'
+import { Client } from 'node-appwrite'
 
-export default (storage: Storage) => {
+export default (client: Client) => {
+	const storage = new Storage(client)
+
 	return class Bucket {
 		constructor(public bucketId: string) {
 			this.bucketId = bucketId
@@ -13,6 +13,13 @@ export default (storage: Storage) => {
 		getFile(fileId: string) {
 			return storage.getFile(this.bucketId, fileId)
 		}
+
+		getParamsFromURL(URL: string) {
+			const fileId = URL.split('/')[8]
+			const bucketId = URL.split('/')[6]
+			return { fileId, bucketId }
+		}
+
 		async createFile(
 			base64: Base64,
 			permissions: string[] | undefined = undefined,
@@ -20,25 +27,34 @@ export default (storage: Storage) => {
 			type = 'image/png',
 			fileId: string = ID.unique(),
 		) {
-			const options = {
-				headers: {
-					type: type,
-				},
-			}
-			const image = await encode(base64, options)
-			const inputFile = new InputFile(Readable.from(image), filename, Buffer.byteLength(image))
+			const file = new File([base64], filename, { type: type })
 
-			return await storage.createFile(this.bucketId, fileId, inputFile, permissions)
+			return await storage.createFile(this.bucketId, fileId, file, permissions)
+		}
+
+		deleteFile(file: string | Models.File) {
+			return storage.deleteFile(this.bucketId, typeof file === 'string' ? file : file.$id)
 		}
 		listFiles() {
 			return storage.listFiles(this.bucketId)
 		}
-		getFileView(fileId: string) {
-			return storage.getFileView(this.bucketId, fileId)
+
+		updateFile(id: string, name: string, permissions: string[] | undefined): Promise<Models.File>
+		updateFile(file: Models.File, name: string, permissions: string[] | undefined): Promise<Models.File>
+		updateFile(param: string | Models.File, name: string, permissions: string[] | undefined = []): Promise<Models.File> {
+			return storage.updateFile(this.bucketId, typeof param === 'string' ? param : param.$id, permissions)
 		}
-		updateFile(fileId: string, permissions: string[]) {
-			if (fileId.includes(exlududingPrefix)) throw new Error('Cannot update bucket with excluding prefix')
-			return storage.updateFile(this.bucketId, fileId, permissions)
+
+		getFilePreview(file: string | Models.File) {
+			return storage.getFilePreview(this.bucketId, typeof file === 'string' ? file : file.$id)
+		}
+
+		getFileDownload(file: string | Models.File) {
+			return storage.getFileDownload(this.bucketId, typeof file === 'string' ? file : file.$id)
+		}
+
+		getFileView(file: string | Models.File) {
+			return storage.getFileView(this.bucketId, typeof file === 'string' ? file : file.$id)
 		}
 		getFileURL(fileId: string) {
 			const url =
@@ -47,8 +63,6 @@ export default (storage: Storage) => {
 		}
 		getIdFromURL(URL: string) {
 			const id = URL.split('/')[6]
-			console.log(id)
-
 			return id
 		}
 	}

@@ -13,7 +13,7 @@ export default objectType({
 		t.string('_databaseId')
 		t.string('userId')
 		t.field('imgSrc', { type: 'URL' })
-		t.list.field('location', { type: 'Location' })
+		t.field('location', { type: 'Location' })
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {

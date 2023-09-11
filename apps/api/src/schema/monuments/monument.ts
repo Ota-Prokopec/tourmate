@@ -13,12 +13,13 @@ export default objectType({
 		t.string('_id')
 		t.list.string('_permissions')
 		t.string('_databaseId')
-		t.list.float('location')
+		t.field('location', { type: 'Location' })
 		t.string('creatorUserId')
 		t.string('name')
 		t.nullable.string('about')
-		t.nullable.string('pictureURL', { description: 'This it an URL not id of picture' })
-		t.field('user', {
+		t.string('placeDetailId')
+		t.nullable.field('pictureURL', { type: 'URL', description: 'This it an URL not id of picture' })
+		t.field('creator', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
 				let userId = source.creatorUserId
@@ -39,5 +40,13 @@ export default objectType({
 					return await getListOfExperineceByLocation({ location: source.location, zoom: 10, limit: 20, range: 5 }, collections)
 				},
 			})
+		t.field('details', {
+			type: 'PlaceDetail',
+			resolve: async (source, args, ctx) => {
+				const { collections } = ctx.appwrite
+				const detail = await collections.placeDetail.getDocument(source.placeDetailId)
+				return detail
+			},
+		})
 	},
 })

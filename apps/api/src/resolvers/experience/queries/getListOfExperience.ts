@@ -7,6 +7,8 @@ export default queryField('getListOfExperience', {
 	type: list('Experience'),
 	args: { input: nullable(arg({ type: experienceInput })) },
 	resolve: async (s, args, ctx, info) => {
+		args.input?.location
+
 		const { collections } = ctx.appwrite
 
 		if (args.input && isLocation(args.input.location)) {

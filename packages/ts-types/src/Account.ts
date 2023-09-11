@@ -1,17 +1,16 @@
 import { Document, GraphqlDocument } from './Document'
 import type { Location } from './Experience'
-import { Base64 } from './TsTypes'
 
 export type UserInfo = {
 	userId: string
 	myId: string
 	username: string
-	profilePictureURL?: URL
+	profilePictureURL?: URL | null | undefined
 }
 
 export type Token = {
 	userId: string
-	fcmFirebaseToken?: string
+	fcmFirebaseToken?: string | null | undefined
 }
 
 export type Preferences = { termsAccepted: boolean; location: Location }

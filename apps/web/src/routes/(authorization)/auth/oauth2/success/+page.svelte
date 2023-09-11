@@ -22,9 +22,9 @@
 
 				if (!userId) throw new Error('User is not Authed');
 
-				const myUserInfoAlreadyExists = await collections.userInfo.documentExists([
-					Query.equal('userId', userId)
-				]);
+				const myUserInfoAlreadyExists = (
+					await collections.userInfo.listDocuments([Query.equal('userId', userId)])
+				).total;
 
 				console.log(myUserInfoAlreadyExists);
 
@@ -40,6 +40,8 @@
 				}
 
 				// go to main page
+				console.log('to navigate');
+
 				goto('/');
 			} catch (error) {
 				console.log(error);

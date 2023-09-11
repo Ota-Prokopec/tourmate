@@ -1,7 +1,7 @@
 import type { Experience, ExperienceGraphqlDocument, GraphqlDocument, Monument, MonumentGraphqlDocument } from '@app/ts-types'
 import pkg from 'lodash'
 const { omit } = pkg
-import { numberTimingCoords } from './settings'
+import { numberTimingCoords } from '@app/experience-settings'
 
 export const transformExperienceDocumentsIntoExperience = (...expDocuments: ExperienceGraphqlDocument[]): GraphqlDocument<Experience>[] =>
 	expDocuments.map((exp) => ({

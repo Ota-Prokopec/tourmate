@@ -3,7 +3,6 @@
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import ExpMap from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { numberTimingCoords } from '@app/experience-database-client';
 	import type { Location } from '@app/ts-types';
 	import { Alert, Button, Img } from 'flowbite-svelte';
 	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
@@ -12,7 +11,7 @@
 	import { getDetailsByLatAndLong } from '@app/utils';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
-	import { avatars } from '@app/appwrite-client';
+	import { numberTimingCoords } from '@app/experience-settings';
 
 	export let data: PageData;
 	let map: Map;

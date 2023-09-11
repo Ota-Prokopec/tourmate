@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { Types } from '@app/appwrite-ssr'
+import { Types } from '@app/appwrite-ssr-experiences-graphql'
 import { Models } from 'appwrite'
 import type { Preferences } from '@app/ts-types'
 import appwriteConnections from '@app/appwrite-ssr-experiences-graphql'
@@ -10,8 +10,6 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 			name: key,
 			value: value,
 		}))
-
-		console.log(cookies)
 
 		let user: Models.User<Preferences> | null = null
 		let appwrite: ReturnType<typeof appwriteConnections.setCookie>

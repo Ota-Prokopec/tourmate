@@ -2,10 +2,8 @@
 	import { device } from '@app/utils';
 	import Icon from './Icon.svelte';
 	import Popover from './Popover.svelte';
-	import { Tooltip } from 'flowbite-svelte';
 	export let placement: 'bottom' | 'left' | 'right' | 'top' = 'bottom';
-	export let trigger: 'hover' | 'click' =
-		device.recognizeWidth() === 'mobile' ? 'click' : 'hover';
+	export let trigger: 'hover' | 'click' = device.recognizeWidth() === 'mobile' ? 'click' : 'hover';
 	export let color:
 		| 'gray'
 		| 'red'

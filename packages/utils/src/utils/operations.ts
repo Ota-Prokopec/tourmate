@@ -51,8 +51,7 @@ export const blobToBase64 = (blob: Blob): Promise<Base64> => {
 export const countSameItemsInArray = <InputArr extends Array<any>>(arr: InputArr): Record<string, number> =>
 	arr.reduce(
 		(cnt, cur) => (
-			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] = cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1),
-			cnt
+			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] = cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1), cnt
 		),
 		{},
 	)
@@ -70,4 +69,9 @@ export const fileToBase64 = (file: File): Promise<Base64> => {
 		reader.onload = () => resolve(reader.result as Base64)
 		reader.onerror = () => reject(reader.error)
 	})
+}
+
+export const base64ToFile = (base64: Base64, fileName: string) => {
+	const buffer = Buffer.from(base64, 'base64')
+	return new File([buffer], fileName)
 }

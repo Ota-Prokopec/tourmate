@@ -3,6 +3,8 @@ import {
 	ExperienceDocumentCreate,
 	MonumentDocument,
 	MonumentDocumentCreate,
+	PlaceDetailDocument,
+	PlaceDetailDocumentCreate,
 	TokenDocument,
 	TokenDocumentCreate,
 	UserInfoDocument,
@@ -17,5 +19,6 @@ export const collections = (appwrite: ReturnType<typeof appwriteSSR.setCookie>) 
 		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentDocument, MonumentDocumentCreate>('experiences', 'monuments'),
 		token: new Collection<TokenDocument, TokenDocumentCreate>('account', 'tokens'),
+		placeDetail: new Collection<PlaceDetailDocument, PlaceDetailDocumentCreate>('experiences', 'placeDetails'),
 	}
 }

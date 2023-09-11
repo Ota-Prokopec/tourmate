@@ -9,10 +9,12 @@
 	import Marker from '$lib/components/Map/Marker.svelte';
 
 	export let data: PageData;
+
+	const cardURL = data.monument.pictureURL as unknown as string;
 </script>
 
 <div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	<Card img={data.monument.pictureURL} class="w-full h-min m-4 sm:absolute sm:left-0 z-50">
+	<Card img={cardURL} class="w-full h-min m-4 sm:absolute sm:left-0 z-50">
 		<Icon icon="fas fa-map-marker-alt" class="text-3xl text-red-500" />
 		<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 			{data.monument.name}
@@ -31,11 +33,7 @@
 			>
 		</p>
 		<Popover>
-			<AlmostProfileWithMainImage
-				disableCloseButton
-				class=""
-				userInfo={data.monument.creator}
-			/>
+			<AlmostProfileWithMainImage disableCloseButton class="" userInfo={data.monument.creator} />
 		</Popover>
 	</Card>
 

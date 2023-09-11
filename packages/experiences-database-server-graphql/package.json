@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@app/ts-types": "*",
 		"@app/appwrite-ssr-experiences": "*",
+		"@app/experience-settings": "*",
 		"@app/appwrite-ssr-experiences-graphql": "*",
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/appwrite-nexus": "*",

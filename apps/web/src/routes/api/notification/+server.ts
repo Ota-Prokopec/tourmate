@@ -1,4 +1,3 @@
-import checkExperiencesAPIKey from '$lib/server/lib/checkExperiencesAPIKey';
 import appwriteServer, { Query } from '@app/appwrite-server';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
@@ -31,9 +30,7 @@ export const GET: RequestHandler = async ({ request }) => {
 	const docs = await collections.token.listDocuments([Query.limit(100)]);
 	console.log(`only ${docs.total} documents`);
 
-	const tokens = docs.documents
-		.map((d) => d.fcmFirebaseToken)
-		.filter((token) => token) as string[];
+	const tokens = docs.documents.map((d) => d.fcmFirebaseToken).filter((token) => token) as string[];
 
 	const notificationRes = await notifications.create(
 		{

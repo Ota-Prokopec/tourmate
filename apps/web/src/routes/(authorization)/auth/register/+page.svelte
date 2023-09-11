@@ -14,9 +14,8 @@
 
 	const redirect = async () => {
 		try {
-			const quiziIdTaken = await collections.userInfo.documentExists([
-				Query.equal('myId', myId)
-			]);
+			const quiziIdTaken = (await collections.userInfo.listDocuments([Query.equal('myId', myId)]))
+				.total;
 
 			if (quiziIdTaken) throw new Error('user with myId already exists');
 

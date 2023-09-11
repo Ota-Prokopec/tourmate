@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Popover from './Popover.svelte';
-	import { Avatar, Button, ButtonGroup, Dropzone } from 'flowbite-svelte';
+	import { Button, ButtonGroup, Dropzone } from 'flowbite-svelte';
 	import MyAlert from './MyAlert.svelte';
 	import { Button as FlowbiteButton } from 'flowbite-svelte';
 	import { clipboard, elementIdGenerator, fileToBase64 } from '@app/utils';
 	import IconUpload from '../Icons/IconUpload.svelte';
 	import type { Base64 } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
+	import Avatar from './Avatar.svelte';
 
 	//	import clipboard from '$lib/utils/clipboard'
 	const dispatch = createEventDispatcher<{
@@ -18,7 +19,7 @@
 		};
 	}>();
 
-	export let imageSrc: string | Base64 | null | undefined = null;
+	export let imageURL: URL | Base64 | null | undefined = undefined;
 	export let autoImagesrcCompleter = true;
 	export let disabled: boolean = false;
 	export let method: 'gallery' | 'copyPaste' | 'both' = 'gallery';
@@ -29,7 +30,7 @@
 	const change = async (file: File) => {
 		const base64 = await fileToBase64(file);
 		dispatch('image', { name: file.name, base64: base64, file: file });
-		if (autoImagesrcCompleter) imageSrc = base64;
+		if (autoImagesrcCompleter) imageURL = base64;
 	};
 
 	let className = '';
@@ -108,18 +109,16 @@
 	{#if style === 'basic'}
 		<div
 			class="w-full h-full z-50 flex justify-center items-center flex-wrap flex-col bg-no-repeat bg-center bg-cover"
-			style="background-image: url({imageSrc})"
+			style="background-image: url({imageURL})"
 		>
 			<IconUpload />
 			<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
 				<span class="font-semibold">Click to upload</span> or drag and drop
 			</p>
-			<p class="text-xs text-gray-500 dark:text-gray-400">
-				SVG, PNG, JPG or GIF (MAX. 800x400px)
-			</p>
+			<p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
 		</div>
 	{:else}
-		<Avatar class="w-full h-full object-cover absolute top-0" src={imageSrc ?? undefined} />
+		<Avatar class="w-full h-full object-cover absolute top-0" src={imageURL ?? undefined} />
 	{/if}
 </Dropzone>
 

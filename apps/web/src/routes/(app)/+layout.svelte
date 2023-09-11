@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
 	import IconHome from '$lib/components/Icons/IconHome.svelte';
 	import IconPlus from '$lib/components/Icons/IconPlus.svelte';
-	import { Avatar, BottomNav, BottomNavItem } from 'flowbite-svelte';
+	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { goto } from '$app/navigation';
@@ -26,10 +26,10 @@
 
 <script lang="ts">
 	import FirebaseNotification from '$lib/components/Common/FirebaseNotification.svelte';
-	import MyAlert from '$lib/components/Common/MyAlert.svelte';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
 	import { user } from '@app/appwrite-client';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
 
 	let foregroundNotification: MessagePayload | undefined;
 
@@ -39,7 +39,7 @@
 			type: 'classic',
 			scope: '/'
 		});
-		await notifications.initUser(data.user.$id, reg);
+		await notifications.initUser(data.user.userId, reg);
 		notifications.watchNotifications((payload) => (foregroundNotification = payload));
 	});
 

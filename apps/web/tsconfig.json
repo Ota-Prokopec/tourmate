@@ -15,7 +15,9 @@
 		"noEmitOnError": false,
 		"importsNotUsedAsValues": "remove",
 		"noImplicitReturns": true,
-		"importHelpers": true
+		"importHelpers": true,
+
+		"typeRoots": ["../../global.d.ts"]
 	},
 	"include": [
 		"src/**/*.d.ts",

@@ -2,11 +2,9 @@ import permissionslib from '../permissions/permissions'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
 import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
 import { Types } from '../types/Types'
-import { OmitDocument } from '@app/ts-types'
+import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
 
 type Document = Types.Document
-
-type DatabaseValueTypes = string | number | string[] | number[] | boolean | URL
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
 	return permissions.every((permission) => typeof permission === 'string')
@@ -143,7 +141,11 @@ export default (client: Client) => {
 		async getDocument(params: string | string[]): Promise<TDocumentGet> {
 			let data: TDocumentGet
 			if (typeof params === 'string') {
-				data = await this.atg(await databases.getDocument(this.databaseId, this.collectionId, params))[0]
+				const document = await databases.getDocument(this.databaseId, this.collectionId, params)
+				if (!document) throw new Error('document was not found')
+				console.log(document)
+
+				data = await this.atg(document)[0]
 			} else {
 				const list = await this.listDocuments(params)
 
@@ -153,8 +155,6 @@ export default (client: Client) => {
 						throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
 				data = list.documents[0]
 			}
-			if (typeof data?._permissions === 'object' && !Array.isArray(data?._permissions))
-				data._permissions = convertObjectInfoArray(data._permissions)
 
 			return data
 		}
@@ -180,6 +180,8 @@ export default (client: Client) => {
 			if (orderType !== null) queries.push(orderType === 'ASC' ? Query.orderAsc('') : Query.orderDesc(''))
 
 			const data = this.atgDocumentList(await databases.listDocuments(this.databaseId, this.collectionId, queries))
+
+			console.log(data.documents)
 
 			data.documents = data.documents.map((document) => ({
 				...document,

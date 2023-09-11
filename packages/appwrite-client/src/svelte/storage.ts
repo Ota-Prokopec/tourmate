@@ -24,8 +24,8 @@ export default (storage: Storage) => {
 			return storage.deleteFile(this.bucketId, typeof file === 'string' ? file : file.$id)
 		}
 
-		updateFile(file: string | Models.File, permissions: string[] = []) {
-			return storage.updateFile(this.bucketId, typeof file === 'string' ? file : file.$id, permissions)
+		updateFile(file: string | Models.File, name?: string, permissions: string[] = []) {
+			return storage.updateFile(this.bucketId, typeof file === 'string' ? file : file.$id, name, permissions)
 		}
 
 		getFilePreview(file: string | Models.File) {

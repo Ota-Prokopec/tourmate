@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { UserInfo } from '@app/ts-types';
-	import { Avatar } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
+	import Avatar from './Avatar.svelte';
 
 	export let data: UserInfo;
 

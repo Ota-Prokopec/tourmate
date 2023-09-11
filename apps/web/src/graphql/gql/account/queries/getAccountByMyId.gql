@@ -1,0 +1,17 @@
+query getAccountByMyId($myId: String!) {
+	getAccountByMyId(myId: $myId) {
+		_createdAt
+		_updatedAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		profilePictureURL
+		prefs {
+			location
+			termsAccepted
+		}
+	}
+}

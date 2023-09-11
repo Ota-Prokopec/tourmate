@@ -5,9 +5,11 @@
 	import { twMerge } from 'tailwind-merge';
 
 	export let location: Location;
-	export let imgSrc: string | Base64;
+	export let imgSrc: URL;
 	export let zoom: number = 14;
 	export let stacked = false;
+
+	const avatarURL = imgSrc as unknown as string;
 
 	let className = '';
 	export { className as class };
@@ -30,7 +32,7 @@
 				className
 			)}
 			rounded
-			src={imgSrc}
+			src={avatarURL}
 		>
 			<slot name="avatar" />
 		</Avatar>

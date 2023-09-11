@@ -1,7 +1,6 @@
-import permissionslib from '@app/appwrite-permissions'
+import * as permissionslib from '@app/appwrite-permissions'
+import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
-
-type DatabaseValueTypes = string | number | string[] | number[] | boolean
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
 	return permissions.every((permission) => typeof permission === 'string')
@@ -10,11 +9,6 @@ const isArrayString = (permissions: unknown[]): permissions is string[] => {
 const convertObjectInfoArray = (data: Record<string, string>): string[] => {
 	return Object.values(data)
 }
-
-type ExcludeAppwriteDocumentRequirements<T extends Models.Document> = Omit<
-	T,
-	'$id' | '$permissions' | '$documentId' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt'
->
 
 export default (client: Client) => {
 	const databases = new Databases(client)
@@ -56,7 +50,7 @@ export default (client: Client) => {
 		//update document with node-appwrite
 		updateDocument<TData extends TDocumentGet>(
 			documentId: string | Models.Document,
-			data: ExcludeAppwriteDocumentRequirements<TDocumentGet> | undefined | {},
+			data: OmitDocument<TDocumentGet> | undefined | {},
 			permissions: string[] | undefined = undefined,
 		) {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)

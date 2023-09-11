@@ -1,0 +1,47 @@
+query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
+	getMonument(id: $id) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		location
+		creatorUserId
+		name
+		about
+		placeDetailId
+		pictureURL
+		creator {
+			_createdAt
+			_updatedAt
+			userId
+			myId
+			username
+			staus
+			emailVerification
+			phoneVerification
+			profilePictureURL
+		}
+		nearExperiences {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			imgSrc
+			location
+		}
+		details {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			name
+		}
+	}
+}

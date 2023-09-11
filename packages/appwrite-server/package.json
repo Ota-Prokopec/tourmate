@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
-		"node-appwrite": "^9.0.0",
+		"node-appwrite": "^8.0.0",
 		"node-base64-image": "^2.0.5",
 		"zod": "^3.21.4"
 	}

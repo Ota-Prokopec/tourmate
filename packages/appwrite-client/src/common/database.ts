@@ -1,6 +1,6 @@
 import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
-import permissionslib from '@app/appwrite-permissions'
+import * as permissionslib from '@app/appwrite-permissions'
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
 	return permissions.every((permission) => typeof permission === 'string')

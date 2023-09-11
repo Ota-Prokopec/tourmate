@@ -7,35 +7,31 @@
 	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
-	import { trpc } from '$lib/trpc';
-	import { page } from '$app/stores';
 	import ImageInput from '$lib/components/Common/ImageInput.svelte';
-	import type { Base64, Monument } from '@app/ts-types';
+	import type { Base64, GraphqlDocument, Location, Monument } from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
-	import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-client/src/transformers';
-	import type { Models } from 'node-appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import { getDetailsByLatAndLong } from '@app/utils';
-	import Popover from '$lib/components/Common/Popover.svelte';
+	import { sdk } from '$src/graphql/sdk';
 
 	export let data: PageData;
 
 	let maxLettersCount = 500;
+
 	let name = '';
 	let about = '';
 	let image: Base64 | undefined;
-	let res: (Monument & Models.Document) | undefined;
+	let location: Location = data.newMonument.location;
+
+	let res: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
 
 	const create = async () => {
 		try {
-			res = await trpc($page).experience.createMonument.mutate({
-				location: data.newMonument.location,
-				name: name,
-				about: about,
-				pictureURL: image
-			});
+			res = (
+				await sdk.createMonument({
+					input: { about: about, location: location, name: name, picture: image }
+				})
+			).createMonument;
 		} catch (err) {
 			if (err instanceof AppwriteException) error = err;
 		}

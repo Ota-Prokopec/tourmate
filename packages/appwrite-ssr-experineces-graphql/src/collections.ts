@@ -3,6 +3,8 @@ import {
 	ExperienceGraphqlDocument,
 	MonumentDocumentCreate,
 	MonumentGraphqlDocument,
+	PlaceDetailDocumentCreate,
+	PlaceDetailGraphqlDocument,
 	TokenDocumentCreate,
 	TokenGraphqlDocument,
 	UserInfoDocumentCreate,
@@ -17,5 +19,6 @@ export const collections = (appwrite: Types.AppwriteSSR) => {
 		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>('experiences', 'monuments'),
 		token: new Collection<TokenGraphqlDocument, TokenDocumentCreate>('account', 'tokens'),
+		placeDetail: new Collection<PlaceDetailGraphqlDocument, PlaceDetailDocumentCreate>('experiences', 'placeDetails'),
 	}
 }

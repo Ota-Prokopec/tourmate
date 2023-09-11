@@ -1,8 +1,8 @@
 import type { Location } from '@app/ts-types'
 import appwrite from '@app/appwrite-ssr-experiences-graphql'
-import { numberTimingCoords } from '../settings'
 import { Query } from '@app/appwrite-server'
 import { transformExperienceDocumentsIntoExperience } from '../transformers'
+import { numberTimingCoords } from '@app/experience-settings'
 
 export const getListOfExperineceByLocation = async (
 	{ location, zoom, range = 10, limit = 100 }: { location: Location; zoom: number; range?: number; limit?: number },

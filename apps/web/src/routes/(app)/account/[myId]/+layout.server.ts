@@ -1,10 +1,10 @@
-import { trpc } from '$lib/trpc';
+import { sdkssr } from '$src/graphql/sdkssr';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async (event) => {
 	const { myId } = event.params;
+	const res = await sdkssr(event).getAccountByMyIdWithExperiencesAndMonuments({ myId: myId });
 	return {
-		userProfile: await trpc(event).profile.getProfileByMyId.query({ myId }),
-		usersExperiences: await trpc(event).experience.getListByUserByMyId.query({ myId })
+		userProfile: res.getAccountByMyId
 	};
 };

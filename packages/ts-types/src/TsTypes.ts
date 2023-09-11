@@ -1,7 +1,6 @@
 type Opaque<T, K extends string> = T & { __typename: K }
 
 export type Base64 = Opaque<string, 'base64'>
-export type URLGraphql = Opaque<string, 'URL'>
 
 export type IP = string
 
@@ -39,4 +38,8 @@ export type RequiredDeep<T> = {
 	[P in keyof T]-?: T[P] extends object ? RequiredDeep<T[P]> : T[P]
 }
 
-export type DatabaseValueTypes = string | number | string[] | number[] | boolean | URL | Base64
+export type DatabaseValueTypes = string | number | string[] | number[] | boolean | URL | Base64 | undefined | null
+
+export const urlToString = (url: URL | undefined | null): string | undefined => {
+	return url as unknown as string | undefined
+}

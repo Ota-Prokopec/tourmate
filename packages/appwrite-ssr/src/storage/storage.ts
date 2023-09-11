@@ -1,3 +1,4 @@
+import { Base64 } from '@app/ts-types'
 import { ID, Storage, Models } from 'appwrite'
 import { Client } from 'appwrite'
 
@@ -9,18 +10,33 @@ export default (client: Client) => {
 			this.bucketId = bucketId
 		}
 
+		getFile(fileId: string) {
+			return storage.getFile(this.bucketId, fileId)
+		}
+
 		getParamsFromURL(URL: string) {
 			const fileId = URL.split('/')[8]
 			const bucketId = URL.split('/')[6]
 			return { fileId, bucketId }
 		}
 
-		createFile(file: File, permissions: string[] = []) {
-			return storage.createFile(this.bucketId, ID.unique(), file, permissions)
+		async createFile(
+			base64: Base64,
+			permissions: string[] | undefined = undefined,
+			filename = 'file.png',
+			type = 'image/png',
+			fileId: string = ID.unique(),
+		) {
+			const file = new File([base64], filename, { type: type })
+
+			return await storage.createFile(this.bucketId, fileId, file, permissions)
 		}
 
 		deleteFile(file: string | Models.File) {
 			return storage.deleteFile(this.bucketId, typeof file === 'string' ? file : file.$id)
+		}
+		listFiles() {
+			return storage.listFiles(this.bucketId)
 		}
 
 		updateFile(id: string, name: string, permissions: string[] | undefined): Promise<Models.File>

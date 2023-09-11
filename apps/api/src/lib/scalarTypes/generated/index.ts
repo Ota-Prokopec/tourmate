@@ -1,4 +1,4 @@
-import { GraphQLURL } from 'graphql-scalars'
+import { GraphQLURL, URLResolver } from 'graphql-scalars'
 import { asNexusMethod } from 'nexus'
 
-export default [asNexusMethod(GraphQLURL, 'url')]
+export default [asNexusMethod(URLResolver, 'url', 'URL')]

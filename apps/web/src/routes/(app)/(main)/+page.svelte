@@ -54,7 +54,7 @@
 		<Map deg={45} bind:zoom={mapZoom} bind:location>
 			{#each data.loadedExperiences as experience, index}
 				<ExperienceMarker
-					bouncing={rightNowAddedExperience?._id === experience.id}
+					bouncing={rightNowAddedExperience?.$id === experience._id}
 					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1}
 					on:almostProfile={(e) => {
 						almostProfile = true;

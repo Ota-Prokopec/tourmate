@@ -1,21 +1,19 @@
 <script lang="ts">
-	import { avatars } from '@app/appwrite-client';
 	import type { Base64, UserInfo, UserInfoDocument } from '@app/ts-types';
-	import { Avatar, Card, Img } from 'flowbite-svelte';
+	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import Icon from '../Common/Icon.svelte';
 	import IconTimes from '../Icons/IconTimes.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
+	import Avatar from '../Common/Avatar.svelte';
 	const dispatch = createEventDispatcher<{ close: undefined }>();
 
 	export let imgSrc: string | Base64 | undefined = undefined;
 	export let userInfo: UserInfo;
 	export let disableCloseButton = false;
 
-	const userInitials = `${userInfo.username.split(' ')[0][0]}${
-		userInfo.username.split(' ')[1][0]
-	}`;
+	const userInitials = `${userInfo.username.split(' ')[0][0]}${userInfo.username.split(' ')[1][0]}`;
 
 	let className = '';
 	export { className as class };

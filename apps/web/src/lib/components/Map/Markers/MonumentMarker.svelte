@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { twMerge } from 'tailwind-merge';
-	import type { Document, Monument } from '@app/ts-types';
+	import { urlToString, type Document, type GraphqlDocument, type Monument } from '@app/ts-types';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { Button, Card } from 'flowbite-svelte';
 	import Popover from '$lib/components/Common/Popover.svelte';
 	import Marker from '../Marker.svelte';
 	import { goto } from '$app/navigation';
 
-	export let monument: Monument & Document;
+	export let monument: GraphqlDocument<Monument>;
 	export let bouncing = false;
 
 	let className = '';
@@ -20,7 +20,7 @@
 >
 	<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
 	<Popover class="w-max" placement="top" open={bouncing}>
-		<Card img={monument.pictureURL} class="mb-4">
+		<Card img={urlToString(monument.pictureURL)} class="mb-4">
 			<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 				{monument.name}
 			</h5>
