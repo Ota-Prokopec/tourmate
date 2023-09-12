@@ -16,6 +16,7 @@
 		"importsNotUsedAsValues": "remove",
 		"noImplicitReturns": true,
 		"importHelpers": true,
+		"allowUnusedLabels": true,
 
 		"typeRoots": ["../../global.d.ts"]
 	},

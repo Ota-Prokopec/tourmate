@@ -45,6 +45,12 @@ module.exports = {
 			// => @media (min-width: 1536px) { ... }
 		}
 	},
-	plugins: [require('flowbite/plugin')],
+	plugins: [
+		require('flowbite/plugin'),
+		function ({ addVariant }) {
+			addVariant('child', '& > *');
+			addVariant('child-hover', '& > *:hover');
+		}
+	],
 	darkMode: 'class'
 };

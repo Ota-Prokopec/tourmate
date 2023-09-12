@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { Types } from '@app/appwrite-ssr-experiences-graphql'
 import { Models } from 'appwrite'
 import type { Preferences } from '@app/ts-types'
 import appwriteConnections from '@app/appwrite-ssr-experiences-graphql'
+import { Types } from '@app/appwrite-ssr-graphql'
 
 export const context = async ({ req, res }: { res: Response; req: Request }) => {
 	try {

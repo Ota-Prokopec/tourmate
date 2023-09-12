@@ -28,7 +28,6 @@
 	import FirebaseNotification from '$lib/components/Common/FirebaseNotification.svelte';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
-	import { user } from '@app/appwrite-client';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 
 	let foregroundNotification: MessagePayload | undefined;
@@ -43,9 +42,11 @@
 		notifications.watchNotifications((payload) => (foregroundNotification = payload));
 	});
 
-	$: console.log(foregroundNotification);
-
 	export let data: LayoutData;
+
+	const usersInitials = `${data.user.username.split(' ')[0][0]} ${
+		data.user.username.split(' ')[1][0]
+	}`;
 </script>
 
 <FirebaseNotification message={foregroundNotification} />
@@ -79,7 +80,11 @@
 		</BottomNavItem>
 
 		<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">
-			<Avatar src={data.user.profilePictureURL} />
+			<Avatar src={data.user.profilePictureURL}>
+				{#if !data.user.profilePictureURL}
+					{usersInitials}
+				{/if}
+			</Avatar>
 		</BottomNavItem>
 	</BottomNav>
 </div>

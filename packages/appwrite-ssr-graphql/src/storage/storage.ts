@@ -1,9 +1,6 @@
 import { Base64 } from '@app/ts-types'
 import { ID, Storage, Models } from 'appwrite'
 import { Client } from 'appwrite'
-import { encode } from 'node-base64-image'
-import { InputFile } from 'node-appwrite'
-import { Readable } from 'stream'
 
 export default (client: Client) => {
 	const storage = new Storage(client)
@@ -30,15 +27,9 @@ export default (client: Client) => {
 			type = 'image/png',
 			fileId: string = ID.unique(),
 		) {
-			const options = {
-				headers: {
-					type: type,
-				},
-			}
-			const image = await encode(base64, options)
-			const inputFile = new InputFile(Readable.from(image), filename, Buffer.byteLength(image))
+			const file = new File([base64], filename, { type: type })
 
-			return await storage.createFile(this.bucketId, fileId, inputFile, permissions)
+			return await storage.createFile(this.bucketId, fileId, file, permissions)
 		}
 
 		deleteFile(file: string | Models.File) {

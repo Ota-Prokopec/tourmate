@@ -143,7 +143,6 @@ export default (client: Client) => {
 			if (typeof params === 'string') {
 				const document = await databases.getDocument(this.databaseId, this.collectionId, params)
 				if (!document) throw new Error('document was not found')
-				console.log(document)
 
 				data = await this.atg(document)[0]
 			} else {
@@ -180,8 +179,6 @@ export default (client: Client) => {
 			if (orderType !== null) queries.push(orderType === 'ASC' ? Query.orderAsc('') : Query.orderDesc(''))
 
 			const data = this.atgDocumentList(await databases.listDocuments(this.databaseId, this.collectionId, queries))
-
-			console.log(data.documents)
 
 			data.documents = data.documents.map((document) => ({
 				...document,

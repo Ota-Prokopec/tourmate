@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
-	import ImageInput from '$lib/components/Common/ImageInput.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import { Gallery } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
+	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 
 	export let data: PageData;
 
@@ -28,9 +27,8 @@
 <div class="w-full h-auto flex flex-wrap flex-col">
 	<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start p-4">
 		{#if isMyAccount}
-			<ImageInput
+			<AvatarImageInput
 				screenErrors
-				style="avatar"
 				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
 				imageURL={data.userProfile.profilePictureURL}
 				on:image={async ({ detail }) => {}}

@@ -16,7 +16,7 @@ export default queryField('createAccount', {
 		})
 
 		return {
-			createdAt: accountDocCreateRes.$createdAt,
+			_createdAt: accountDocCreateRes._createdAt,
 			emailVerification: ctx.user.emailVerification,
 			id: ctx.user.$id,
 			myId: accountDocCreateRes.myId,
@@ -24,7 +24,7 @@ export default queryField('createAccount', {
 			staus: ctx.user.status,
 			username: accountDocCreateRes.username,
 			phoneVerification: ctx.user.phoneVerification,
-			updatedAt: accountDocCreateRes.$updatedAt,
+			_updatedAt: accountDocCreateRes._updatedAt,
 			userId: ctx.user.$id,
 		}
 	},

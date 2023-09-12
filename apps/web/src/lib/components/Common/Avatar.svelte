@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Avatar } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
 
 	export let size: 'xs' | 'sm' | 'lg' | 'xl' | 'md' | undefined = undefined;
 	export let src: URL | string | undefined | null = undefined;
@@ -9,7 +10,7 @@
 	let className = '';
 	export { className as class };
 
-	let imageString = src as unknown as string | undefined;
+	$: imageString = src as unknown as string | undefined;
 </script>
 
-<Avatar class={className} {size} src={imageString} {stacked} {rounded}><slot /></Avatar>
+<Avatar class={twMerge('object-cover ', className)} {size} src={imageString} {stacked} {rounded} />

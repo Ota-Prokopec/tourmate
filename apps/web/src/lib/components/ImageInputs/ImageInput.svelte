@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import Popover from './Popover.svelte';
 	import { Button, ButtonGroup, Dropzone } from 'flowbite-svelte';
-	import MyAlert from './MyAlert.svelte';
 	import { Button as FlowbiteButton } from 'flowbite-svelte';
 	import { clipboard, elementIdGenerator, fileToBase64 } from '@app/utils';
-	import IconUpload from '../Icons/IconUpload.svelte';
 	import type { Base64 } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
-	import Avatar from './Avatar.svelte';
+	import MyAlert from '../Common/MyAlert.svelte';
+	import Popover from '../Common/Popover.svelte';
 
 	//	import clipboard from '$lib/utils/clipboard'
 	const dispatch = createEventDispatcher<{
@@ -23,9 +21,9 @@
 	export let autoImagesrcCompleter = true;
 	export let disabled: boolean = false;
 	export let method: 'gallery' | 'copyPaste' | 'both' = 'gallery';
-	let usePopup: boolean = method === 'copyPaste' || method === 'both' ? true : false;
 	export let screenErrors: boolean = false;
-	export let style: 'avatar' | 'basic' = 'basic';
+
+	let usePopup: boolean = method === 'copyPaste' || method === 'both' ? true : false;
 
 	const change = async (file: File) => {
 		const base64 = await fileToBase64(file);
@@ -35,7 +33,6 @@
 
 	let className = '';
 	export { className as class };
-	export let popoverClass = '';
 
 	const id = elementIdGenerator();
 
@@ -97,7 +94,7 @@
 <Dropzone
 	on:focus={() => (usePopup = true)}
 	on:mouseover={() => (usePopup = true)}
-	class={twMerge('object-cover', className)}
+	class={twMerge('object-cover ', className)}
 	{id}
 	on:drop={dropHandle}
 	on:dragover={(event) => {
@@ -106,20 +103,7 @@
 	on:change={handleChange}
 	{disabled}
 >
-	{#if style === 'basic'}
-		<div
-			class="w-full h-full z-50 flex justify-center items-center flex-wrap flex-col bg-no-repeat bg-center bg-cover"
-			style="background-image: url({imageURL})"
-		>
-			<IconUpload />
-			<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-				<span class="font-semibold">Click to upload</span> or drag and drop
-			</p>
-			<p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-		</div>
-	{:else}
-		<Avatar class="w-full h-full object-cover absolute top-0" src={imageURL ?? undefined} />
-	{/if}
+	<slot />
 </Dropzone>
 
 {#if usePopup}
@@ -130,6 +114,3 @@
 		</ButtonGroup>
 	</Popover>
 {/if}
-
-<style>
-</style>

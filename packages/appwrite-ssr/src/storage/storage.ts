@@ -59,7 +59,7 @@ export default (client: Client) => {
 		getFileURL(fileId: string) {
 			const url =
 				`${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}` as unknown
-			return url as string
+			return url as URL
 		}
 		getIdFromURL(URL: string) {
 			const id = URL.split('/')[6]
