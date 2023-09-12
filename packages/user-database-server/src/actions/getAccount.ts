@@ -10,6 +10,7 @@ export const getAccount = async (
 	const { users } = appwriteServer.setAdmin()
 
 	const { emailVerification, prefs, status, phoneVerification } = await users.get(userId)
+
 	const accountDocCreateRes = await collections.userInfo.getDocument([Query.equal('userId', userId)])
 
 	return {

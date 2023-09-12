@@ -1,4 +1,4 @@
-import { appwriteGraphqlDocumentKeys } from '@app/appwrite-ssr-experiences';
+import { appwriteGraphqlDocumentKeys } from '@app/experience-settings';
 import { GraphqlDocument } from '@app/ts-types';
 import lodash from 'lodash';
 const { omit } = lodash;

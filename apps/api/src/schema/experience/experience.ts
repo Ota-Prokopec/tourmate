@@ -23,6 +23,8 @@ export default objectType({
 				if (!userId) throw new ApolloError('user is not authorizated to create account', '403')
 
 				const { collections } = ctx.appwrite
+				console.log(userId)
+
 				return await getAccount(userId, userId === ctx.user.$id, collections)
 			},
 		})

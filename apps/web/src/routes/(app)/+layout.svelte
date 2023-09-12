@@ -18,7 +18,7 @@
 		watchUsersLocation(
 			async (location) => {
 				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
-				user.addPreferences({ location: location });
+				//user.addPreferences({ location: location });
 			},
 			{ enableHighAccuracy: false }
 		);

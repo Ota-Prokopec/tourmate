@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 
 const cache = new InMemoryCache({
 	addTypename: false

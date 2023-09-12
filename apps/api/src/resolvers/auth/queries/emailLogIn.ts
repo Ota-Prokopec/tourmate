@@ -10,22 +10,16 @@ export default queryField('logInViaEmail', {
 	resolve: async (source, args, ctx, info) => {
 		const { account } = ctx.appwrite
 
-		try {
-			const { sessionToken: cookie } = await account.loginViaEmail(args.email, args.password)
+		const { sessionToken: cookie } = await account.loginViaEmail(args.email, args.password)
 
-			ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, cookie.value, {
-				sameSite: 'lax',
-				domain: process.env.SERVER_HOSTNAME,
-				secure: true,
-				maxAge: 1000000000,
-				httpOnly: true,
-			})
+		ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, cookie.value, {
+			sameSite: 'lax',
+			domain: process.env.SERVER_HOSTNAME,
+			secure: true,
+			maxAge: 1000000000,
+			httpOnly: true,
+		})
 
-			return { session: cookie.value }
-		} catch (error) {
-			console.log(error)
-
-			throw new ApolloError('too many sessions were created, wait few minutes and try it again, or use login via social media.', '429')
-		}
+		return { session: cookie.value }
 	},
 })

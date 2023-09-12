@@ -29,6 +29,8 @@ export default (client: Client) => {
 		}
 
 		loginViaEmail(email: string, password: string) {
+			console.log(process.env.APPWRITE_PROJECT_ID)
+
 			const promise = fetch(`${process.env.APPWRITE_ENDPOINT}/account/sessions/email`, {
 				method: 'POST',
 				headers: {
@@ -47,9 +49,11 @@ export default (client: Client) => {
 			try {
 				const response = await callbackFetch()
 
-				const json = await response.json()
+				console.log(response)
 
-				if (json.code >= 400) throw new Error(`create session error, status: ${response.status}`)
+				const json = (await response.json()) as { code: number; message: string }
+
+				if (json.code >= 400) throw new Error(json.message)
 
 				const SSRHostName = process.env.HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`
 

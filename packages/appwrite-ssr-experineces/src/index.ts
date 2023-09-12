@@ -2,7 +2,6 @@ import { buckets as buckets_ } from './buckets'
 import { collections as collections_ } from './collections'
 import appwriteSSR from '@app/appwrite-ssr'
 import { Types } from '@app/appwrite-ssr'
-export * from './keys'
 
 const myAppwriteClient: ReturnType<typeof appwriteSSR.setProject> = appwriteSSR.setProject({
 	projectEndPoint: process.env.APPWRITE_ENDPOINT as string,

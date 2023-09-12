@@ -4,7 +4,9 @@
 	export let timeout: number | undefined = undefined;
 	export let message = '';
 
-	$: if (message && timeout) setTimeout(() => (message = ''), timeout);
+	let timer: ReturnType<typeof setTimeout>;
+
+	$: if (message && timeout) timer = setTimeout(() => (message = ''), timeout);
 </script>
 
 <Helper color="red">

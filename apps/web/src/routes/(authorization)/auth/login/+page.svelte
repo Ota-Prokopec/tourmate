@@ -14,10 +14,15 @@
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import lsStore from '$lib/utils/lsStore';
+	import { ApolloError } from '@apollo/client';
+	import { ApolloErrorMessageHandler } from '@apollo/client/utilities/globals/invariantWrappers';
+	import { GraphQLError } from 'graphql';
+	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
+	import { cacheApolloError } from '@app/utils';
 
 	let password = 'aaaaaaaa';
 	let email = 'otaprokopec@gmail.com';
-	let error = '';
+	let errorMessage = '';
 	let loading = false;
 
 	$: condition = email.length >= 1 && password.length >= 1;
@@ -33,12 +38,11 @@
 			const res = await sdk.loginViaEmail({ email, password });
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');
-		} catch (err) {
-			console.log(err);
+		} catch (error) {
+			const { message } = cacheApolloError(error);
 
 			loading = false;
-			error = 'email or password are wrong';
-			setTimeout(() => (error = ''), error.length * 100); //it deletes fail errors messages
+			errorMessage = message;
 		}
 	};
 </script>
@@ -59,9 +63,7 @@
 			<IconEye {active} />
 		</Input>
 
-		{#if error}
-			<Helper color="red">{error}</Helper>
-		{/if}
+		<ErrorHelper timeout={4000} bind:message={errorMessage} />
 	</div>
 
 	<Button

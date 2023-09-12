@@ -13,6 +13,8 @@ export default queryField('getAccount', {
 		if (!userId) throw new Error('user is not Authed')
 
 		const { collections } = ctx.appwrite
+		console.log(userId)
+
 		return await getAccount(userId, userId === ctx.user.$id, collections)
 	},
 })
