@@ -48,17 +48,27 @@ export default (client: Client) => {
 		}
 
 		//update document with node-appwrite
-		updateDocument<TData extends TDocumentGet>(
-			documentId: string | Models.Document,
-			data: OmitDocument<TDocumentGet> | undefined | {},
+		async updateDocument<TData extends TDocumentGet>(
+			documentId: string,
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			permissions?: string[] | undefined,
+		): Promise<TDocumentGet>
+		async updateDocument<TData extends TDocumentGet>(
+			document: Models.Document,
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			permissions?: string[] | undefined,
+		): Promise<TDocumentGet>
+		async updateDocument<TData extends TDocumentGet>(
+			param: string | Models.Document,
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined = undefined,
-		) {
+		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
-			return databases.updateDocument<TData>(
+			return databases.updateDocument(
 				this.databaseId,
 				this.collectionId,
-				typeof documentId === 'string' ? documentId : documentId.$id,
-				data ?? {},
+				typeof param === 'string' ? param : param.$id,
+				data || {},
 				permissions,
 			)
 		}

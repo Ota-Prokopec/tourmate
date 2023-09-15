@@ -1,23 +1,10 @@
-import {
-	Client,
-	Teams,
-	Functions,
-	Locale,
-	Avatars,
-	Graphql,
-	Account,
-	Databases,
-	Storage,
-	Role,
-	type Models,
-	Permission,
-	ID,
-} from 'appwrite'
+import { Client, Teams, Functions, Locale, Avatars, Graphql, Account, Databases, Role, type Models, Permission, ID } from 'appwrite'
 import { createAuthDispatcher, createBucketDispatcher, createCollectionDispatcher } from './svelte/main'
 import { Query } from 'appwrite'
 import createCollections from './collections'
-import createStorage from './common/storage'
+import storage from './common/storage'
 import createSvelteCollections from './svelteCollections'
+import myBuckets from './buckets'
 
 const client = new Client()
 client.setEndpoint('https://cloud.appwrite.io/v1').setProject('experiences')
@@ -29,19 +16,19 @@ const avatars = new Avatars(client)
 const graphql = new Graphql(client)
 const account = new Account(client)
 const databases = new Databases(client)
-//const storage = new Storage(client)
 const svelteCollections = createSvelteCollections(databases)
 
 //@ts-ignore
 const Auth = createAuthDispatcher(account)
 
 //@ts-ignore
-export const Bucket = createBucketDispatcher(new Storage(client))
+//export const Bucket = createBucketDispatcher(new Storage(client))
 //@ts-ignore
 const SvelteCollection = createCollectionDispatcher(databases)
 
-const buckets = createStorage(client)
+const Bucket = storage(client)
 const collections = createCollections(client)
+const buckets = myBuckets(client)
 
 const user = new Auth()
 const isLoading = user.isLoading
@@ -51,10 +38,11 @@ export {
 	client,
 	teams,
 	SvelteCollection,
-	buckets,
+	Bucket,
 	svelteCollections,
 	functions,
 	locale,
+	buckets,
 	avatars,
 	graphql,
 	account,

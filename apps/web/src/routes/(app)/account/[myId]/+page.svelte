@@ -7,6 +7,8 @@
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
+	import { buckets, collections, user } from '@app/appwrite-client';
+	import { permissions } from '@app/appwrite-server';
 
 	export let data: PageData;
 
@@ -22,6 +24,27 @@
 		{ title: 'map', key: 'map' },
 		{ title: 'gallery', key: 'gallery' }
 	] as const;
+
+	const updateProfilePicture = async (file: File) => {
+		try {
+			const currentPicture =
+				data.userProfile.profilePictureURL &&
+				(await buckets.profilePictures.getFile(
+					buckets.profilePictures.getParamsFromURL(data.userProfile.profilePictureURL).fileId
+				));
+			if (currentPicture && currentPicture.$id) {
+				// delete old picture
+				await buckets.profilePictures.deleteFile(currentPicture.$id);
+			}
+			const newPicture = await buckets.profilePictures.createFile(
+				file,
+				permissions.owner(data.user.userId)
+			);
+			collections.userInfo.updateDocument(data.userProfile._id, { profilePictureURL: newPicture });
+		} catch (error) {
+			console.log(error);
+		}
+	};
 </script>
 
 <div class="w-full h-auto flex flex-wrap flex-col">
@@ -31,7 +54,9 @@
 				screenErrors
 				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
 				imageURL={data.userProfile.profilePictureURL}
-				on:image={async ({ detail }) => {}}
+				on:image={async ({ detail: { file } }) => {
+					updateProfilePicture(file);
+				}}
 			/>
 		{:else}
 			<Avatar

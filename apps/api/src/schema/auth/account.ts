@@ -2,12 +2,28 @@ import { ApolloError } from 'apollo-server-express'
 import { list, objectType } from 'nexus'
 import UsersPreferences from './usersPreferences'
 import { getListOfExperineceByUser, getListOfMonumentsByUser } from '@app/experience-database-server-graphql'
+import { GraphqlDocument, Preferences } from '@app/ts-types'
+
+export type AccountGetOutput = GraphqlDocument<{
+	emailVerification: boolean
+	myId: string
+	prefs: Preferences | null
+	staus: boolean
+	username: string
+	phoneVerification: boolean
+	userId: string
+	profilePictureURL?: URL | null | undefined
+}>
 
 export default objectType({
 	name: 'Account',
 	definition: (t) => {
 		t.string('_createdAt')
 		t.string('_updatedAt')
+		t.string('_collectionId')
+		t.string('_id')
+		t.list.string('_permissions')
+		t.string('_databaseId')
 		t.string('userId')
 		t.string('myId')
 		t.string('username')

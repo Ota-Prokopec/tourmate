@@ -1,7 +1,11 @@
 query getAccountByMyIdWithExperiencesAndMonuments($myId: String!) {
 	getAccountByMyId(myId: $myId) {
-		_createdAt
+		_permissions
+		_databaseId
+		_id
+		_collectionId
 		_updatedAt
+		_createdAt
 		userId
 		myId
 		username

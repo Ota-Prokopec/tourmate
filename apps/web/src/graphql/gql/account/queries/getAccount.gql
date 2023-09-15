@@ -1,5 +1,9 @@
 query getAccount($userId: String) {
 	getAccount(userId: $userId) {
+		_permissions
+		_databaseId
+		_id
+		_collectionId
 		_updatedAt
 		_createdAt
 		userId

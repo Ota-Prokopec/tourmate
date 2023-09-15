@@ -9,9 +9,9 @@ export default (client: Client) => {
 			this.bucketId = bucketId
 		}
 
-		getParamsFromURL(URL: string) {
-			const fileId = URL.split('/')[8]
-			const bucketId = URL.split('/')[6]
+		getParamsFromURL(URL: URL) {
+			const fileId = URL.toString().split('/')[8]
+			const bucketId = URL.toString().split('/')[6]
 			return { fileId, bucketId }
 		}
 
@@ -21,6 +21,10 @@ export default (client: Client) => {
 
 		deleteFile(file: string | Models.File) {
 			return storage.deleteFile(this.bucketId, typeof file === 'string' ? file : file.$id)
+		}
+
+		getFile(fileId: string) {
+			return storage.getFile(this.bucketId, fileId)
 		}
 
 		updateFile(id: string, name: string, permissions: string[] | undefined): Promise<Models.File>

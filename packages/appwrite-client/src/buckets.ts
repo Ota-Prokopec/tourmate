@@ -1,8 +1,8 @@
-import { Client, Storage } from 'appwrite'
-import { createBucketDispatcher } from './svelte/main'
+import { Client } from 'appwrite'
+import storage from './common/storage'
 
 export default (client: Client) => {
-	const Bucket = createBucketDispatcher(new Storage(client))
+	const Bucket = storage(client)
 
 	const experiencesPictures = new Bucket('experiences-pictures')
 	const profilePictures = new Bucket('profile-pictures')

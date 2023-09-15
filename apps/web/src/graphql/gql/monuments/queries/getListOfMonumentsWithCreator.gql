@@ -13,8 +13,12 @@ query getListOfMonumentsWithCreator($input: MonumentInput) {
 		placeDetailId
 		pictureURL
 		creator {
-			_createdAt
+			_permissions
+			_databaseId
+			_id
+			_collectionId
 			_updatedAt
+			_createdAt
 			userId
 			myId
 			username

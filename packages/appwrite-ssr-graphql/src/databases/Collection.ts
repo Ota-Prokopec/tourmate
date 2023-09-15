@@ -70,17 +70,17 @@ export default (client: Client) => {
 		//update document with node-appwrite
 		async updateDocument<TData extends TDocumentGet>(
 			documentId: string,
-			data: OmitDocument<TDocumentGet> | undefined | {},
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			document: Document,
-			data: OmitDocument<TDocumentGet> | undefined | {},
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			param: string | Document,
-			data: OmitDocument<TDocumentGet> | undefined | {},
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined = undefined,
 		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
