@@ -77,6 +77,8 @@
 		on:click={createLocation}
 	>
 		<span>označit zde</span>
-		<IconNext class="w-10 text-white" />
+		<Icon class="w-4 fill-white">
+			<IconNext class="w-10 text-white" />
+		</Icon>
 	</Button>
 </div>

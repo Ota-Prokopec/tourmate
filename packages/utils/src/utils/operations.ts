@@ -12,7 +12,7 @@ export function removeItemsFromArray(array: any[], ...forDeletion: any) {
 	return array.filter((item) => !forDeletion.includes(item))
 }
 
-export const base64ToBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
+export const base64ToBlob = (base64: string, contentType: string, sliceSize = 512) => {
 	const byteCharacters = atob(b64Data)
 	const byteArrays: Uint8Array[] = []
 

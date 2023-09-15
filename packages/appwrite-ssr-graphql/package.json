@@ -13,8 +13,8 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"appwrite": "^12.0.0",
 		"@app/appwrite-permissions": "*",
+		"appwrite": "^13.0.0",
 		"konva": "^9.2.0",
 		"node-base64-image": "^2.0.5",
 		"zod": "^3.22.2"

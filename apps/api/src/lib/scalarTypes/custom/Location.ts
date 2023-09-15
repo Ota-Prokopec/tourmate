@@ -9,13 +9,15 @@ export default scalarType({
 	deprecation: '[number, number]',
 
 	serialize: (outputValue: unknown) => {
-		if (!isLocation(outputValue)) return null
-		return JSON.stringify(outputValue)
+		if (!isLocation(outputValue)) throw new TypeError('input has to be type Location')
+		return outputValue
 	},
 	parseValue: (inputValue: unknown) => {
-		if (typeof inputValue !== 'string') throw new TypeError('input has to be a string')
-		const potencialLocation: Location | any = JSON.parse(inputValue)
-		if (!isLocation(potencialLocation)) throw new TypeError('input has to be type Location')
-		return potencialLocation
+		if (!isLocation(inputValue)) throw new TypeError('input has to be type Location')
+		return inputValue
+	},
+	parseLiteral: (valueNode: unknown) => {
+		if (!isLocation(valueNode)) throw new TypeError('input has to be type Location')
+		return valueNode
 	},
 })

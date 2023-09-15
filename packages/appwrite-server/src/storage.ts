@@ -1,6 +1,9 @@
 import { Base64 } from '@app/ts-types'
-import { ID, Storage, Models } from 'node-appwrite'
+import { base64ToBlob, isURL } from '@app/utils'
+import { ID, Storage, Models, InputFile } from 'node-appwrite'
 import { Client } from 'node-appwrite'
+import { encode } from 'node-base64-image'
+import { Readable } from 'stream'
 
 export default (client: Client) => {
 	const storage = new Storage(client)
@@ -27,9 +30,15 @@ export default (client: Client) => {
 			type = 'image/png',
 			fileId: string = ID.unique(),
 		) {
-			const file = new File([base64], filename, { type: type })
+			const options: Parameters<typeof encode>['1'] = {
+				headers: {
+					type: type,
+				},
+			}
+			const image = await encode(base64, options)
+			const inputFile = InputFile.fromStream(Readable.from(image), filename, Buffer.byteLength(image))
 
-			return await storage.createFile(this.bucketId, fileId, file, permissions)
+			return await storage.createFile(this.bucketId, fileId, inputFile, permissions)
 		}
 
 		deleteFile(file: string | Models.File) {
@@ -57,9 +66,9 @@ export default (client: Client) => {
 			return storage.getFileView(this.bucketId, typeof file === 'string' ? file : file.$id)
 		}
 		getFileURL(fileId: string) {
-			const url =
-				`${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}` as unknown
-			return url as string
+			const url = `${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}`
+			if (!isURL(url)) throw new Error('type of url is not valid')
+			return url
 		}
 		getIdFromURL(URL: string) {
 			const id = URL.split('/')[6]

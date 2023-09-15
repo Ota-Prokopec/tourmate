@@ -11,9 +11,9 @@ import {
 	UserInfoGraphqlDocument,
 } from '@app/ts-types'
 import { Types } from '@app/appwrite-ssr-graphql'
+import appwriteSSR from '@app/appwrite-ssr-graphql'
 
-export const collections = (appwrite: Types.AppwriteSSR) => {
-	const { Collection } = appwrite
+export const collections = (Collection: Types.AppwriteSSR['Collection']) => {
 	return {
 		userInfo: new Collection<UserInfoGraphqlDocument, UserInfoDocumentCreate>('account', 'userInfo'),
 		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>('experiences', 'experiences'),

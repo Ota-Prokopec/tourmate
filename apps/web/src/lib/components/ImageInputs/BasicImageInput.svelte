@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Base64 } from '@app/ts-types';
+	import type { Base64 } from '@app/ts-types';
 	import IconUpload from '../Icons/IconUpload.svelte';
 	import ImageInput from './ImageInput.svelte';
+	import Avatar from '../Common/Avatar.svelte';
 
 	export let imageURL: URL | Base64 | null | undefined = undefined;
 	export let autoImagesrcCompleter = true;
@@ -26,14 +27,13 @@
 	on:image
 	on:image={onImage}
 >
-	<div
-		class="w-full h-full z-50 flex justify-center items-center flex-wrap flex-col bg-no-repeat bg-center bg-cover"
-		style="background-image: url({imageURL})"
-	>
+	{#if !imageURL}
 		<IconUpload />
 		<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
 			<span class="font-semibold">Click to upload</span> or drag and drop
 		</p>
 		<p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-	</div>
+	{:else}
+		<Avatar class="w-full h-full rounded-none" src={imageURL} />
+	{/if}
 </ImageInput>

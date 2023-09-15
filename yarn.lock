@@ -4868,6 +4868,14 @@ appwrite@^12.0.0, appwrite@latest:
     cross-fetch "3.1.5"
     isomorphic-form-data "2.0.0"
 
+appwrite@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/appwrite/-/appwrite-13.0.0.tgz#0c9c1ed816c5ff7f30cdae251d0c2b7f1c3c13e5"
+  integrity sha512-SRfHNj0y3WAKrCG1uZOrTOkemXQaWKSVPH0xcqa7UrJBZcOsTQC/cHU+3pxtQkUrt0wZzLxvEZBf9oTFyhI0mA==
+  dependencies:
+    cross-fetch "3.1.5"
+    isomorphic-form-data "2.0.0"
+
 "aproba@^1.0.3 || ^2.0.0", aproba@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-2.0.0.tgz#52520b8ae5b569215b354efc0caa3fe1e45a8adc"

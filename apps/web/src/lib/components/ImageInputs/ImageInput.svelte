@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { Button, ButtonGroup, Dropzone } from 'flowbite-svelte';
-	import { Button as FlowbiteButton } from 'flowbite-svelte';
 	import { clipboard, elementIdGenerator, fileToBase64 } from '@app/utils';
 	import type { Base64 } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
@@ -81,11 +80,11 @@
 		<span slot="title">Error: Nahrání fotografie</span>
 		{error.code === 404 ? 'Ve schránce nemáte žádnou fotografii, která by se uložila' : ''}
 		<span slot="buttons">
-			<FlowbiteButton
+			<Button
 				on:click={() => {
 					error = null;
 				}}
-				color="red">ok</FlowbiteButton
+				color="red">ok</Button
 			>
 		</span>
 	</MyAlert>
@@ -108,7 +107,7 @@
 </Dropzone>
 
 {#if usePopup}
-	<Popover class={`z-[9999]`} color="light">
+	<Popover class={`z-[9999] w-auto`} color="light">
 		<ButtonGroup>
 			<Button on:click={openGallery} class="bg-red-500">přes galerii</Button>
 			<Button on:click={clipBoardRead} class="bg-red-500">přes schránku</Button>

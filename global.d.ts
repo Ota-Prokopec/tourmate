@@ -13,5 +13,6 @@ declare namespace NodeJS {
 		readonly EXPERIENCES_API_KEY: string
 		readonly FIREBASE_PRIVATE_KEY: string
 		readonly FIREBASE_CLIENT_EMAIL: string
+		readonly CLOUDINARY_API_KEY: string
 	}
 }

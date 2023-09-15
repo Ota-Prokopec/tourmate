@@ -14,7 +14,7 @@ const setSession = (session: string) => set(myAppwriteClient.setSession(session)
 const setNone = () => set(myAppwriteClient.none())
 
 const set = (appwrite: Types.AppwriteSSR) => {
-	const collections = collections_(appwrite)
+	const collections = collections_(appwrite.Collection)
 	const buckets = buckets_(appwrite)
 
 	return { buckets, collections, ...appwrite }

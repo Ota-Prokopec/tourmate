@@ -7,11 +7,11 @@
 	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
-	import ImageInput from '$lib/components/Common/ImageInput.svelte';
 	import type { Base64, GraphqlDocument, Location, Monument } from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { sdk } from '$src/graphql/sdk';
+	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 
 	export let data: PageData;
 
@@ -64,7 +64,7 @@
 			/>
 
 			<P size="xl" weight="bold" class="w-full max-w-[400px] m-4">Přidat fotku</P>
-			<ImageInput on:image={(e) => (image = e.detail.base64)} />
+			<BasicImageInput class="bg-cover" on:image={(e) => (image = e.detail.base64)} />
 
 			<Button
 				class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
