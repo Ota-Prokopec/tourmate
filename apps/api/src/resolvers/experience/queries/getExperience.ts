@@ -6,6 +6,8 @@ export default queryField('getExperience', {
 	args: { id: stringArg() },
 	resolve: async (s_, args, ctx, info) => {
 		const { collections } = ctx.appwrite
-		return transformExperienceDocumentsIntoExperience(await collections.experience.getDocument(args.id))[0]
+		const expDoc = await collections.experience.getDocument(args.id)
+		if (!expDoc) throw new Error('exp not found')
+		return transformExperienceDocumentsIntoExperience(expDoc)[0]
 	},
 })

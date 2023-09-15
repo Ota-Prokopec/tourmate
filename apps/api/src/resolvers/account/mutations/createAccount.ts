@@ -8,7 +8,7 @@ export default queryField('createAccount', {
 		if (!ctx.isAuthed(ctx.user)) throw new ApolloError('user is not authorizated to create account', '403')
 
 		const { collections } = ctx.appwrite
-		const accountDocCreateRes = await collections.userInfo.createDocument({
+		const userInfo = await collections.userInfo.createDocument({
 			myId: args.myId,
 			username: args.username,
 			userId: ctx.user.$id,
@@ -16,15 +16,18 @@ export default queryField('createAccount', {
 		})
 
 		return {
-			_createdAt: accountDocCreateRes._createdAt,
+			_createdAt: userInfo._createdAt,
+			_updatedAt: userInfo._updatedAt,
+			_collectionId: userInfo._collectionId,
+			_id: userInfo._id,
+			_permissions: userInfo._permissions,
+			_databaseId: userInfo._databaseId,
 			emailVerification: ctx.user.emailVerification,
-			id: ctx.user.$id,
-			myId: accountDocCreateRes.myId,
+			myId: userInfo.myId,
 			prefs: ctx.user.prefs,
 			staus: ctx.user.status,
-			username: accountDocCreateRes.username,
+			username: userInfo.username,
 			phoneVerification: ctx.user.phoneVerification,
-			_updatedAt: accountDocCreateRes._updatedAt,
 			userId: ctx.user.$id,
 		}
 	},

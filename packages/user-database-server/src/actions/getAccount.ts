@@ -12,22 +12,23 @@ export const getAccount = async (
 
 	const { emailVerification, prefs, status, phoneVerification } = await users.get<Preferences>(userId)
 
-	const accountDocCreateRes = await collections.userInfo.getDocument([Query.equal('userId', userId)])
+	const userInfo = await collections.userInfo.getDocument([Query.equal('userId', userId)])
 
+	if (!userInfo) throw new Error('userInfo not found')
 	return {
-		_createdAt: accountDocCreateRes._createdAt,
-		_updatedAt: accountDocCreateRes._updatedAt,
-		_collectionId: accountDocCreateRes._collectionId,
-		_id: accountDocCreateRes._id,
-		_permissions: accountDocCreateRes._permissions,
-		_databaseId: accountDocCreateRes._databaseId,
+		_createdAt: userInfo._createdAt,
+		_updatedAt: userInfo._updatedAt,
+		_collectionId: userInfo._collectionId,
+		_id: userInfo._id,
+		_permissions: userInfo._permissions,
+		_databaseId: userInfo._databaseId,
 		emailVerification: emailVerification,
-		myId: accountDocCreateRes.myId,
+		myId: userInfo.myId,
 		prefs: withPrefs ? prefs : null,
 		staus: status,
-		username: accountDocCreateRes.username,
+		username: userInfo.username,
 		phoneVerification: phoneVerification,
-		userId: accountDocCreateRes.userId,
-		profilePictureURL: accountDocCreateRes.profilePictureURL,
+		userId: userInfo.userId,
+		profilePictureURL: userInfo.profilePictureURL,
 	}
 }

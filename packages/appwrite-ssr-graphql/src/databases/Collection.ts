@@ -137,15 +137,15 @@ export default (client: Client) => {
 		}
 
 		//get document with node-appwrite
-		async getDocument(documentId: string): Promise<TDocumentGet | undefined>
-		async getDocument(queries: string[]): Promise<TDocumentGet | undefined>
-		async getDocument(params: string | string[]): Promise<TDocumentGet | undefined> {
-			let data: TDocumentGet | undefined
+		async getDocument(documentId: string): Promise<TDocumentGet | null>
+		async getDocument(queries: string[]): Promise<TDocumentGet | null>
+		async getDocument(params: string | string[]): Promise<TDocumentGet | null> {
+			let data: TDocumentGet | null
 			if (typeof params === 'string') {
 				try {
 					data = await this.atg(await databases.getDocument(this.databaseId, this.collectionId, params))[0]
 				} catch (error) {
-					data = undefined
+					data = null
 				}
 			} else {
 				const list = await this.listDocuments(params)
@@ -154,7 +154,7 @@ export default (client: Client) => {
 					if (list.total > 1)
 						//throw new Error("Document that matches the query not found");
 						throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
-				data = list.documents[0]
+				data = list.documents[0] || null
 			}
 
 			return data
