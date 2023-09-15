@@ -96,6 +96,7 @@
 	on:mouseover={() => (usePopup = true)}
 	class={twMerge('object-cover ', className)}
 	{id}
+	accept="image/*"
 	on:drop={dropHandle}
 	on:dragover={(event) => {
 		event.preventDefault();

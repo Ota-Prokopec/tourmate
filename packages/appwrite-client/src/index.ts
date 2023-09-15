@@ -1,5 +1,5 @@
 import { Client, Teams, Functions, Locale, Avatars, Graphql, Account, Databases, Role, type Models, Permission, ID } from 'appwrite'
-import { createAuthDispatcher, createBucketDispatcher, createCollectionDispatcher } from './svelte/main'
+import { createAuthDispatcher, createCollectionDispatcher } from './svelte/main'
 import { Query } from 'appwrite'
 import createCollections from './collections'
 import storage from './common/storage'
@@ -18,12 +18,9 @@ const account = new Account(client)
 const databases = new Databases(client)
 const svelteCollections = createSvelteCollections(databases)
 
-//@ts-ignore
 const Auth = createAuthDispatcher(account)
 
-//@ts-ignore
 //export const Bucket = createBucketDispatcher(new Storage(client))
-//@ts-ignore
 const SvelteCollection = createCollectionDispatcher(databases)
 
 const Bucket = storage(client)
@@ -56,6 +53,5 @@ export {
 	Permission,
 	ID,
 	createAuthDispatcher,
-	createBucketDispatcher,
 	createCollectionDispatcher,
 }

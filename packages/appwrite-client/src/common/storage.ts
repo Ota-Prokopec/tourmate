@@ -1,3 +1,4 @@
+import { isURL } from '@app/utils'
 import { ID, Storage, Models } from 'appwrite'
 import { Client } from 'appwrite'
 
@@ -44,10 +45,11 @@ export default (client: Client) => {
 		getFileView(file: string | Models.File) {
 			return storage.getFileView(this.bucketId, typeof file === 'string' ? file : file.$id)
 		}
-		getFileURL(fileId: string) {
-			const url =
-				`${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}` as unknown
-			return url as string
+		getFileURL(fileId: string): URL {
+			const url = `${client.config.endpoint}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${client.config.project}`
+
+			if (!isURL(url)) throw new Error('Convertion to URL from fileId faild, format is not URL.')
+			return url
 		}
 		getIdFromURL(URL: string) {
 			const id = URL.split('/')[6]

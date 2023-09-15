@@ -2,13 +2,11 @@
 	import { Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import Map from '$lib/components/Map/Map.svelte';
-	import MarkerImage from '$lib/components/Map/MarkerImage.svelte';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import { buckets, collections, user } from '@app/appwrite-client';
-	import { permissions } from '@app/appwrite-server';
+	import * as permissions from '@app/appwrite-permissions';
 
 	export let data: PageData;
 
@@ -40,7 +38,9 @@
 				file,
 				permissions.owner(data.user.userId)
 			);
-			collections.userInfo.updateDocument(data.userProfile._id, { profilePictureURL: newPicture });
+			await collections.userInfo.updateDocument(data.userProfile._id, {
+				profilePictureURL: buckets.profilePictures.getFileURL(newPicture.$id)
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -83,16 +83,5 @@
 		/>
 	</div>
 
-	{#if experiencesType === 'gallery'}
-		<Card class="w-full" />
-	{:else}
-		<Map class="z-[999] h-[600px] w-full max-w-[1000px] ">
-			{#each data.userProfile.experiences as experience}
-				<MarkerImage
-					imgSrc={experience.imgSrc}
-					location={[experience.location[0], experience.location[1]]}
-				/>
-			{/each}
-		</Map>
-	{/if}
+	<Card class="w-full" />
 </div>

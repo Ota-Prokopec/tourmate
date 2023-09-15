@@ -7,6 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { MessagePayload } from 'firebase/messaging';
+	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 
@@ -29,6 +30,8 @@
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
+	import { Query, collections, svelteCollections } from '@app/appwrite-client';
+	import type { UserInfoGraphqlDocument } from '@app/ts-types';
 
 	let foregroundNotification: MessagePayload | undefined;
 
@@ -47,6 +50,15 @@
 	const usersInitials = `${data.user.username.split(' ')[0][0]} ${
 		data.user.username.split(' ')[1][0]
 	}`;
+
+	onMount(() => {
+		collections.userInfo.listenUpdate(data.user._id, (updatedUserInfo) => {
+			const userInfoGraphql = transformAppwriteDocumentsIntoGraphqlDocuments(
+				updatedUserInfo
+			)[0] as UserInfoGraphqlDocument;
+			data.user = Object.assign(data.user, userInfoGraphql);
+		});
+	});
 </script>
 
 <FirebaseNotification message={foregroundNotification} />

@@ -12,14 +12,6 @@ export function removeItemsFromArray(array: any[], ...forDeletion: any) {
 	return array.filter((item) => !forDeletion.includes(item))
 }
 
-export const isBase64 = (value: unknown): value is Base64 => {
-	if (typeof value !== 'string') return false
-	return value.startsWith('data:image/')
-}
-export const isFile = (value: unknown): value is File => {
-	if (value instanceof File) return true
-	return false
-}
 export const base64ToBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
 	const byteCharacters = atob(b64Data)
 	const byteArrays: Uint8Array[] = []

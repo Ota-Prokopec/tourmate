@@ -1,6 +1,6 @@
 import { FirebaseApp } from 'firebase/app'
 import * as messaging from 'firebase/messaging'
-import { collections } from '@app/appwrite-client'
+import { Query, collections } from '@app/appwrite-client'
 import * as permissions from '@app/appwrite-permissions'
 
 export default (firebase: FirebaseApp, vapidKey: string) => {
@@ -21,7 +21,8 @@ export default (firebase: FirebaseApp, vapidKey: string) => {
 
 	const initUser = async (userId: string, serviceWorkerRegistration: ServiceWorkerRegistration) => {
 		const token = await generateToken(serviceWorkerRegistration)
-		try {
+		return await collections.token.getDocument([Query.equal('userId', userId)]).then(async (d) => {
+			if (d) return
 			await collections.token.createDocument(
 				{
 					userId,
@@ -29,7 +30,7 @@ export default (firebase: FirebaseApp, vapidKey: string) => {
 				},
 				permissions.owner(userId),
 			)
-		} catch (error) {}
+		})
 	}
 
 	return { generateToken, initUser, watchNotifications }

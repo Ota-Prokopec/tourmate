@@ -1,4 +1,4 @@
-import permissionslib from '../permissions/permissions'
+import * as permissionslib from '@app/appwrite-permissions'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
 import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
 import { Types } from '../types/Types'
@@ -123,6 +123,7 @@ export default (client: Client) => {
 				return databases.deleteDocument(this.databaseId, this.collectionId, param)
 			} else if (Array.isArray(param) && isArrayString(param)) {
 				const document = await this.getDocument(param)
+				if (!document) throw new Error('document that is requeste was not found, check permissions first')
 				return await this.deleteDocument(document._id)
 			} //else if ((param as TDocumentGet) && !Array.isArray(param)) {
 			return databases.deleteDocument(this.databaseId, this.collectionId, param._id)
@@ -136,15 +137,16 @@ export default (client: Client) => {
 		}
 
 		//get document with node-appwrite
-		async getDocument(documentId: string): Promise<TDocumentGet>
-		async getDocument(queries: string[]): Promise<TDocumentGet>
-		async getDocument(params: string | string[]): Promise<TDocumentGet> {
-			let data: TDocumentGet
+		async getDocument(documentId: string): Promise<TDocumentGet | undefined>
+		async getDocument(queries: string[]): Promise<TDocumentGet | undefined>
+		async getDocument(params: string | string[]): Promise<TDocumentGet | undefined> {
+			let data: TDocumentGet | undefined
 			if (typeof params === 'string') {
-				const document = await databases.getDocument(this.databaseId, this.collectionId, params)
-				if (!document) throw new Error('document was not found')
-
-				data = await this.atg(document)[0]
+				try {
+					data = await this.atg(await databases.getDocument(this.databaseId, this.collectionId, params))[0]
+				} catch (error) {
+					data = undefined
+				}
 			} else {
 				const list = await this.listDocuments(params)
 

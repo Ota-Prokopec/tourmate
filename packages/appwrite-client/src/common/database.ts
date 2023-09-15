@@ -1,5 +1,5 @@
 import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
-import { Client, Databases, ID, Models, Query } from 'appwrite'
+import { Client, Databases, ID, Models, Query, RealtimeResponseEvent } from 'appwrite'
 import * as permissionslib from '@app/appwrite-permissions'
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
@@ -101,6 +101,7 @@ export default (client: Client) => {
 				return databases.deleteDocument(this.databaseId, this.collectionId, param)
 			} else if (Array.isArray(param) && isArrayString(param)) {
 				const document = await this.getDocument(param)
+				if (!document) throw new Error('document that is requeste was not found, check permissions first')
 				return await this.deleteDocument(document.$id)
 			} //else if ((param as TDocumentGet) && !Array.isArray(param)) {
 			return databases.deleteDocument(this.databaseId, this.collectionId, param.$id)
@@ -114,19 +115,20 @@ export default (client: Client) => {
 		}
 
 		//get document with node-appwrite
-		async getDocument(documentId: string): Promise<TDocumentGet>
-		async getDocument(queries: string[]): Promise<TDocumentGet>
-		async getDocument(params: string | string[]): Promise<TDocumentGet> {
-			let data: TDocumentGet
+		async getDocument(documentId: string): Promise<TDocumentGet | undefined>
+		async getDocument(queries: string[]): Promise<TDocumentGet | undefined>
+		async getDocument(params: string | string[]): Promise<TDocumentGet | undefined> {
+			let data: TDocumentGet | undefined
 			if (typeof params === 'string') {
-				data = await databases.getDocument<TDocumentGet>(this.databaseId, this.collectionId, params)
+				try {
+					data = await databases.getDocument<TDocumentGet>(this.databaseId, this.collectionId, params)
+				} catch (error) {
+					data = undefined
+				}
 			} else {
 				const list = await this.listDocuments<TDocumentGet>(params)
 
-				if (list.total < 1)
-					if (list.total > 1)
-						//throw new Error("Document that matches the query not found");
-						throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
+				if (list.total > 1) throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
 				data = list.documents[0]
 			}
 			if (typeof data?.$permissions === 'object' && !Array.isArray(data?.$permissions))
@@ -162,6 +164,23 @@ export default (client: Client) => {
 				$pemissions: Array.isArray(document.$permissions) ? document.$permissions : convertObjectInfoArray(document.$permissions),
 			}))
 			return data
+		}
+
+		subscribeDocument(documentId: string, callback: (data: RealtimeResponseEvent<TDocumentGet>) => void) {
+			client.subscribe(
+				`databases.${this.databaseId}.collections.${this.collectionId}.documents.${documentId}`,
+				(response: RealtimeResponseEvent<TDocumentGet>) => {
+					callback(response)
+				},
+			)
+		}
+
+		listenUpdate(documentId: string, callback: (data: TDocumentGet) => void) {
+			this.subscribeDocument(documentId, (response) => {
+				if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${documentId}.update`)) {
+					callback(response.payload)
+				}
+			})
 		}
 	}
 }

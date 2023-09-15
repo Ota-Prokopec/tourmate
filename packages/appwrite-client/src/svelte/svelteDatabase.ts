@@ -76,9 +76,9 @@ export default (databases: Databases) => {
 			return dataStore
 		}
 
-		getDocument(documentId: string): Readonly<[Writable<TDocumentGet | null>, Writable<boolean>]>
-		getDocument(filters: string[]): Readonly<[Writable<TDocumentGet | null>, Writable<boolean>]>
-		getDocument(documentId: string | string[]): Readonly<[Writable<TDocumentGet | null>, Writable<boolean>]> {
+		getDocument(documentId: string): Readonly<[Writable<TDocumentGet>, Writable<boolean>]>
+		getDocument(filters: string[]): Readonly<[Writable<TDocumentGet>, Writable<boolean>]>
+		getDocument(documentId: string | string[]): Readonly<[Writable<TDocumentGet>, Writable<boolean>]> {
 			const store = writable<TDocumentGet>()
 			const loading = writable(true)
 
@@ -87,13 +87,13 @@ export default (databases: Databases) => {
 					store.set(data)
 					loading.set(false)
 
-					if (!data) return undefined
+					if (!data) throw new Error('Document that matches the query not found')
 
 					this.subscribeCollectionUpdate(data, store)
 				})
 			} else {
 				databases.listDocuments<TDocumentGet>(this.databaseId, this.collectionId, documentId).then((data) => {
-					//if (data.total < 1) throw new Error('Document that matches the query not found')
+					if (data.total < 1) throw new Error('Document that matches the query not found')
 					if (data.total > 1)
 						throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
 

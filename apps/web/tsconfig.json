@@ -7,9 +7,10 @@
 
 		"strict": true,
 
-		"useUnknownInCatchVariables": true,
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true,
+
+		"useUnknownInCatchVariables": true,
 		"preserveValueImports": false,
 		"noImplicitAny": true,
 		"noEmitOnError": false,
