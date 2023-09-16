@@ -1,0 +1,13 @@
+mutation createExperience($input: CreateExperienceInput!) {
+	createExperience(input: $input) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		imgSrc
+		location
+	}
+}

@@ -2,7 +2,6 @@
 	"name": "@app/appwrite-server",
 	"version": "1.0.0",
 	"private": true,
-	"type": "module",
 	"main": "src/index.ts",
 	"types": "src/index.ts",
 	"scripts": {
@@ -15,7 +14,7 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
-		"node-appwrite": "^9.0.0",
+		"node-appwrite": "^8.0.0",
 		"node-base64-image": "^2.0.5",
 		"zod": "^3.21.4"
 	}

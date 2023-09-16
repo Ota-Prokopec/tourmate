@@ -1,30 +1,24 @@
-import { string, z, number, boolean } from 'zod'
-import { appWriteDocumentOptionalZod, appWriteDocumentZod, appwriteDocumentForOmit } from './Document'
+import { Document, GraphqlDocument } from './Document'
+import type { Location } from './Experience'
 
-//////// UserInfo ///////////
-export const userInfoZod = z.object({
-	userId: string(),
-	myId: string(),
-	username: string(),
-	profilePictureURL: string().url().optional(),
-})
+export type UserInfo = {
+	userId: string
+	myId: string
+	username: string
+	profilePictureURL?: URL | null | undefined
+}
 
-export const tokenZod = z.object({
-	userId: string(),
-	fcmFirebaseToken: string().optional(),
-})
-export const userInfoDocumentZod = userInfoZod.merge(appWriteDocumentZod)
-export const userInfoDocumentCreateZod = userInfoDocumentZod.omit({
-	...appwriteDocumentForOmit,
-})
+export type Token = {
+	userId: string
+	fcmFirebaseToken?: string | null | undefined
+}
 
-export type UserInfo = z.infer<typeof userInfoZod>
-export type UserInfoDocument = z.infer<typeof userInfoDocumentZod>
-export type UserInfoDocumentCreate = z.infer<typeof userInfoDocumentCreateZod>
+export type Preferences = { termsAccepted: boolean; location: Location }
 
-export const tokenDocumentZod = tokenZod.merge(appWriteDocumentZod)
-export const tokenDocumentCreateZod = tokenZod
+export type UserInfoDocument = Document<UserInfo>
+export type UserInfoGraphqlDocument = GraphqlDocument<UserInfo>
+export type UserInfoDocumentCreate = UserInfo
 
-export type Token = z.infer<typeof tokenZod>
-export type TokenDocument = z.infer<typeof tokenDocumentZod>
-export type TokenDocumentCreate = z.infer<typeof tokenDocumentCreateZod>
+export type TokenDocument = Document<Token>
+export type TokenGraphqlDocument = GraphqlDocument<Token>
+export type TokenDocumentCreate = Token

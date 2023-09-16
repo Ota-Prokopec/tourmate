@@ -3,6 +3,10 @@ import * as setCookie from 'set-cookie-parser'
 
 import { Client as ClientServer, Account as AccountServer } from 'node-appwrite'
 import { Client as ClientBrowser, Account as AccountBrowser } from 'appwrite'
+import appwriteServer from '@app/appwrite-server'
+import axios from 'axios'
+import { wrapper } from 'axios-cookiejar-support'
+import { CookieJar } from 'tough-cookie'
 
 export class Account extends AccountServer {
 	constructor(public client: ClientServer) {
@@ -59,21 +63,22 @@ export class Account extends AccountServer {
 
 	async createJwtWithSession(session: string) {
 		if (!process.env.APPWRITE_ENDPOINT || !process.env.APPWRITE_PROJECT_ID) throw TypeError('project id or peoject endpoint is not set')
-		const clientBrowser = new ClientBrowser().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
+		//const clientBrowser = new ClientBrowser().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
 		const authCookies: any = {}
-		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = `'${session}'`
-		clientBrowser.headers['X-Fallback-Cookies'] = authCookies
-		clientBrowser.headers['Cookie'] = `a_session_console=${session}; a_session_experiences=${session}`
+		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = `${session}`
 
-		const account = new AccountBrowser(clientBrowser)
+		const res = await fetch(`${process.env.APPWRITE_ENDPOINT}/account/jwt`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-appwrite-project': process.env.APPWRITE_PROJECT_ID,
+				'X-Fallback-Cookies': authCookies,
+				Cookie: `a_session_console=${session}; a_session_experiences=${session}`,
+			} as HeadersInit,
+		})
 
-		try {
-			const jwt = (await account.createJWT()).jwt
-			return { jwt }
-		} catch (error) {
-			console.log(error)
-			throw error
-		}
+		const { jwt } = await res.json()
+
+		return { jwt }
 	}
-	//async deleteSession(sessionId: string) {}
 }

@@ -1,0 +1,102 @@
+<script lang="ts" context="module">
+	import IconHome from '$lib/components/Icons/IconHome.svelte';
+	import IconPlus from '$lib/components/Icons/IconPlus.svelte';
+	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
+	import { writable } from 'svelte/store';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import type { MessagePayload } from 'firebase/messaging';
+	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus';
+
+	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
+
+	import lsSvelte from '$lib/utils/lsStore';
+	import { watchUsersLocation } from '@app/utils/src/utils/location';
+	import { browser } from '$app/environment';
+
+	browser &&
+		watchUsersLocation(
+			async (location) => {
+				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
+				//user.addPreferences({ location: location });
+			},
+			{ enableHighAccuracy: false }
+		);
+</script>
+
+<script lang="ts">
+	import FirebaseNotification from '$lib/components/Common/FirebaseNotification.svelte';
+	import type { LayoutData } from './$types';
+	import { onMount } from 'svelte';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
+	import { Query, collections, svelteCollections } from '@app/appwrite-client';
+	import type { UserInfoGraphqlDocument } from '@app/ts-types';
+
+	let foregroundNotification: MessagePayload | undefined;
+
+	onMount(async () => {
+		const { notifications } = await import('@app/firebase-client');
+		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+			type: 'classic',
+			scope: '/'
+		});
+		await notifications.initUser(data.user.userId, reg);
+		notifications.watchNotifications((payload) => (foregroundNotification = payload));
+	});
+
+	export let data: LayoutData;
+
+	const usersInitials = `${data.user.username.split(' ')[0][0]} ${
+		data.user.username.split(' ')[1][0]
+	}`;
+
+	onMount(() => {
+		collections.userInfo.listenUpdate(data.user._id, (updatedUserInfo) => {
+			const userInfoGraphql = transformAppwriteDocumentsIntoGraphqlDocuments(
+				updatedUserInfo
+			)[0] as UserInfoGraphqlDocument;
+			data.user = Object.assign(data.user, userInfoGraphql);
+		});
+	});
+</script>
+
+<FirebaseNotification message={foregroundNotification} />
+
+<div class="w-full h-full">
+	<wrap class="w-full h-auto">
+		<slot />
+	</wrap>
+
+	<BottomNav position="fixed" navType="application" classInner="grid-cols-3">
+		<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
+			<IconLocation />
+		</BottomNavItem>
+
+		<BottomNavItem
+			on:click={() => {
+				if ($mapOrTakePhoto === 'map' && $page.url.pathname === '/') {
+					$mapOrTakePhoto = 'takePhoto';
+				} else {
+					$mapOrTakePhoto = 'map';
+				}
+				goto('/');
+			}}
+			appBtnPosition="middle"
+		>
+			{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
+				<IconPlus />
+			{:else}
+				<IconHome />
+			{/if}
+		</BottomNavItem>
+
+		<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">
+			<Avatar src={data.user.profilePictureURL}>
+				{#if !data.user.profilePictureURL}
+					{usersInitials}
+				{/if}
+			</Avatar>
+		</BottomNavItem>
+	</BottomNav>
+</div>

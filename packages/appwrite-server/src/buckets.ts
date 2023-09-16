@@ -1,8 +1,8 @@
-import { Storage } from 'node-appwrite'
+import { Client } from 'node-appwrite'
 import storage_func from './storage'
 
-export default (storage: Storage) => {
-	const Bucket = storage_func(storage)
+export default (client: Client) => {
+	const Bucket = storage_func(client)
 
 	const experiencesPictures = new Bucket('experiences-pictures')
 	const profilePictures = new Bucket('profile-pictures')

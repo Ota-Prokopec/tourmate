@@ -56,7 +56,7 @@ const newClient = (callback?: (client: Client) => Client) => {
 	const users = new Users(client)
 	const Collection = database(databases)
 	const collections = Collections(databases)
-	const buckets = Buckets(new Storage(client))
+	const buckets = Buckets(client)
 	const account = new Account(client)
 
 	return {

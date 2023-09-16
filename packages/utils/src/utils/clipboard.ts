@@ -20,4 +20,4 @@ const readImage = async () => {
 	return clipboard ? file : null
 }
 
-export default { read, readImage }
+export const clipboard = { read, readImage }

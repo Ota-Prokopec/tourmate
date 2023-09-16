@@ -1,0 +1,33 @@
+{
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"module": "ES2022",
+		"allowJs": true,
+		"checkJs": true,
+
+		"strict": true,
+
+		"allowSyntheticDefaultImports": true,
+		"isolatedModules": true,
+
+		"useUnknownInCatchVariables": true,
+		"preserveValueImports": false,
+		"noImplicitAny": true,
+		"noEmitOnError": false,
+		"importsNotUsedAsValues": "remove",
+		"noImplicitReturns": true,
+		"importHelpers": true,
+		"allowUnusedLabels": true,
+
+		"typeRoots": ["../../global.d.ts"]
+	},
+	"include": [
+		"src/**/*.d.ts",
+		"src/**/*.ts",
+		"src/**/*.js",
+		"src/**/*.svelte",
+		"../../global.d.ts"
+		//"static/firebase-messaging-sw.js"
+	],
+	"exclude": ["node_modules", "dist"]
+}

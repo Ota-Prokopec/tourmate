@@ -1,9 +1,11 @@
-import type { Databases } from 'appwrite'
+import type { Client, Databases } from 'appwrite'
 import type {
 	ExperienceDocument,
 	ExperienceDocumentCreate,
 	MonumentDocument,
 	MonumentDocumentCreate,
+	PlaceDetailDocument,
+	PlaceDetailDocumentCreate,
 	TokenDocument,
 	TokenDocumentCreate,
 	UserInfoDocument,
@@ -11,13 +13,14 @@ import type {
 } from '@app/ts-types'
 import database from './common/database'
 
-export default (databases: Databases) => {
-	const Collection = database(databases)
+export default (client: Client) => {
+	const Collection = database(client)
 
 	return {
 		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('account', 'userInfo'),
 		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentDocument, MonumentDocumentCreate>('experiences', 'monuments'),
 		token: new Collection<TokenDocument, TokenDocumentCreate>('account', 'tokens'),
+		placeDetail: new Collection<PlaceDetailDocument, PlaceDetailDocumentCreate>('experiences', 'placeDetails'),
 	}
 }

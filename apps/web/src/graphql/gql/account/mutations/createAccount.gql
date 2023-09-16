@@ -1,0 +1,16 @@
+query createAccount($myId: String!, $username: String!) {
+	createAccount(myId: $myId, username: $username) {
+		_updatedAt
+		_createdAt
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		prefs {
+			location
+			termsAccepted
+		}
+	}
+}

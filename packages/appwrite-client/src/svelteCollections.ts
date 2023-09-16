@@ -1,11 +1,13 @@
 import { Databases } from 'appwrite'
 //import { Collection as Node } from './server/appwriteNode/appwrite_node';
-import { createCollectionDispatcher } from '../src/Ludvik/main'
+import { createCollectionDispatcher } from '../src/svelte/main'
 import type {
 	ExperienceDocument,
 	ExperienceDocumentCreate,
 	MonumentDocument,
 	MonumentDocumentCreate,
+	PlaceDetailDocument,
+	PlaceDetailDocumentCreate,
 	TokenDocument,
 	TokenDocumentCreate,
 	UserInfoDocument,
@@ -20,5 +22,6 @@ export default (databases: Databases) => {
 		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentDocument, MonumentDocumentCreate>('experiences', 'monuments'),
 		token: new Collection<TokenDocument, TokenDocumentCreate>('account', 'tokens'),
+		placeDetail: new Collection<PlaceDetailDocument, PlaceDetailDocumentCreate>('experiences', 'placeDetails'),
 	}
 }

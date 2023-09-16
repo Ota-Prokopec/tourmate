@@ -1,11 +1,10 @@
-import { Client, Teams, Functions, Locale, Avatars, Graphql, Account, Databases, Storage, Role, type Models, Permission, ID } from 'appwrite'
-import { createAuthDispatcher, createBucketDispatcher, createCollectionDispatcher } from './Ludvik/main'
+import { Client, Teams, Functions, Locale, Avatars, Graphql, Account, Databases, Role, type Models, Permission, ID } from 'appwrite'
+import { createAuthDispatcher, createCollectionDispatcher } from './svelte/main'
 import { Query } from 'appwrite'
-import permissions from './common/permissions'
 import createCollections from './collections'
-import createStorage from './common/storage'
+import storage from './common/storage'
 import createSvelteCollections from './svelteCollections'
-import { SSRAccount } from './common/SSRAccount'
+import myBuckets from './buckets'
 
 const client = new Client()
 client.setEndpoint('https://cloud.appwrite.io/v1').setProject('experiences')
@@ -17,35 +16,30 @@ const avatars = new Avatars(client)
 const graphql = new Graphql(client)
 const account = new Account(client)
 const databases = new Databases(client)
-//const storage = new Storage(client)
 const svelteCollections = createSvelteCollections(databases)
 
-//@ts-ignore
 const Auth = createAuthDispatcher(account)
 
-//@ts-ignore
-export const Bucket = createBucketDispatcher(new Storage(client))
-//@ts-ignore
+//export const Bucket = createBucketDispatcher(new Storage(client))
 const SvelteCollection = createCollectionDispatcher(databases)
 
-const buckets = createStorage(client)
-const collections = createCollections(databases)
+const Bucket = storage(client)
+const collections = createCollections(client)
+const buckets = myBuckets(client)
 
 const user = new Auth()
 const isLoading = user.isLoading
-
-export const ssrAccount = new SSRAccount(client, 'experiences')
 
 export default client
 export {
 	client,
 	teams,
 	SvelteCollection,
-	permissions,
-	buckets,
+	Bucket,
 	svelteCollections,
 	functions,
 	locale,
+	buckets,
 	avatars,
 	graphql,
 	account,
@@ -59,6 +53,5 @@ export {
 	Permission,
 	ID,
 	createAuthDispatcher,
-	createBucketDispatcher,
 	createCollectionDispatcher,
 }

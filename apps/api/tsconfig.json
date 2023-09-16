@@ -1,0 +1,14 @@
+{
+	"extends": "../../packages/tsconfig/base.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"rootDir": "src",
+		"target": "ES6",
+		"moduleResolution": "node",
+		"declaration": false,
+		"declarationMap": false
+	},
+
+	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
+	"exclude": ["node_modules", "dist"]
+}

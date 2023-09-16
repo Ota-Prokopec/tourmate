@@ -1,51 +1,81 @@
-import { z } from 'zod'
-import { appWriteDocumentZod, appwriteDocumentForOmit } from './Document'
-import { base64TypeZod } from './zodTypes'
-import { Base64 } from './TsTypes'
+import { Document, GraphqlDocument } from './Document'
 
-export const locationZod = z.tuple([z.number(), z.number()])
 export type Location = [number, number]
+export const isLocation = (arg: unknown): arg is Location =>
+	Array.isArray(arg) && typeof arg[0] === 'number' && typeof arg[1] === 'number' && arg.length === 2
 
-export const experienceZod = z.object({
-	userId: z.string(),
-	imgSrc: z.union([z.string(), z.string().url(), base64TypeZod]),
-	location: z.tuple([z.number(), z.number()]),
-})
-export const experienceDocumentZod = z
-	.object({
-		userId: z.string(),
-		imgSrc: z.union([z.string(), z.string().url(), base64TypeZod]),
-		latitude: z.number(),
-		longitude: z.number(),
-	})
-	.merge(appWriteDocumentZod)
-export const experienceDocumentCreateZod = experienceDocumentZod.omit(appwriteDocumentForOmit)
+export type Experience = {
+	userId: string
+	imgSrc: URL
+	location: Location
+}
 
-export const loadedExperienceZod = experienceZod.merge(appWriteDocumentZod)
+export type ExperienceDocument = Document<{
+	userId: string
+	imgSrc: URL
+	latitude: number
+	longitude: number
+}>
 
-export const monumentZod = z.object({
-	about: z.string().max(500).optional(),
-	creatorUserId: z.string().max(255),
-	location: locationZod,
-	name: z.string().max(255),
-	pictureURL: z.string().url().optional(),
-})
-export const monumentDocumentZod = z
-	.object({
-		about: z.string().max(500).optional(),
-		creatorUserId: z.string().max(255),
-		latitude: z.number(),
-		longitude: z.number(),
-		name: z.string().max(255),
-		pictureURL: z.string().url().optional(),
-	})
-	.merge(appWriteDocumentZod)
-export const monumentDocumentCreateZod = monumentDocumentZod.omit(appwriteDocumentForOmit)
+export type ExperienceGraphqlDocument = GraphqlDocument<{
+	userId: string
+	imgSrc: URL
+	latitude: number
+	longitude: number
+}>
 
-export type ExperienceDocument = z.infer<typeof experienceDocumentZod>
-export type Experience = z.infer<typeof experienceZod> & { imgSrc: string | Base64 }
-export type ExperienceDocumentCreate = z.infer<typeof experienceDocumentCreateZod>
-export type LoadedExperience = z.infer<typeof loadedExperienceZod>
-export type MonumentDocument = z.infer<typeof monumentDocumentZod>
-export type Monument = z.infer<typeof monumentZod>
-export type MonumentDocumentCreate = z.infer<typeof monumentDocumentCreateZod>
+export type ExperienceDocumentCreate = {
+	userId: string
+	imgSrc: URL
+	latitude: number
+	longitude: number
+}
+
+export type Monument = {
+	about?: string | null
+	creatorUserId: string
+	location: Location
+	name: string
+	pictureURL?: URL | undefined | null
+	placeDetailId: string
+}
+
+export type MonumentDocument = Document<{
+	about?: string
+	creatorUserId: string
+	latitude: number
+	longitude: number
+	name: string
+	pictureURL?: URL
+	placeDetailId: string
+}>
+
+export type MonumentGraphqlDocument = GraphqlDocument<{
+	about?: string
+	creatorUserId: string
+	latitude: number
+	longitude: number
+	name: string
+	pictureURL?: URL
+	placeDetailId: string
+}>
+
+export type MonumentDocumentCreate = {
+	about?: string
+	creatorUserId: string
+	latitude: number
+	longitude: number
+	name: string
+	pictureURL?: URL
+	placeDetailId: string
+}
+
+export type PlaceDetail = {
+	name: string
+}
+
+export type PlaceDetailDocument = Document<PlaceDetail>
+
+export type PlaceDetailGraphqlDocument = GraphqlDocument<PlaceDetail>
+
+export type PlaceDetailDocumentCreate = PlaceDetail

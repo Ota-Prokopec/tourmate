@@ -1,7 +1,6 @@
-import permissionslib from './permissions'
+import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
 import { Client, Databases, ID, Models, Query, RealtimeResponseEvent } from 'appwrite'
-
-type DatabaseValueTypes = string | number | string[] | number[] | boolean
+import * as permissionslib from '@app/appwrite-permissions'
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
 	return permissions.every((permission) => typeof permission === 'string')
@@ -11,68 +10,78 @@ const convertObjectInfoArray = (data: Record<string, string>): string[] => {
 	return Object.values(data)
 }
 
-type ExcludeAppwriteDocumentRequirements<T extends Models.Document> = Omit<
-	T,
-	'$id' | '$permissions' | '$documentId' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt'
->
+export default (client: Client) => {
+	const databases = new Databases(client)
 
-export default (databases: Databases) => {
-	return class Collection<
-		TDocumentGet extends Models.Document,
-		TDocumentCreate extends Omit<Record<string, DatabaseValueTypes>, keyof Models.Document>,
-	> {
-		client: Client
-
+	return class Collection<TDocumentGet extends Models.Document, TDocumentCreate extends Record<string, DatabaseValueTypes>> {
 		constructor(public databaseId: string, public collectionId: string) {
 			this.databaseId = databaseId
 			this.collectionId = collectionId
-			this.client = databases.client
 		}
 
 		//create document with node-appwrite
-		createDocument<TData extends TDocumentCreate>(
-			data: TDocumentCreate,
-			permissions?: Models.User<Models.Preferences>[],
-			id?: string,
-		): any
-		createDocument<TData extends TDocumentCreate>(data: TDocumentCreate, permissions?: string[], id?: string): any
-		createDocument<TData extends TDocumentCreate>(
+		createDocument(data: TDocumentCreate, permissions?: Models.User<Models.Preferences>[], id?: string): Promise<TDocumentGet>
+		createDocument(data: TDocumentCreate, permissions?: string[], id?: string): Promise<TDocumentGet>
+		createDocument(
 			data: TDocumentCreate,
 			permissions: string[] | undefined | Models.User<Models.Preferences>[] = undefined,
 			id: string = ID.unique(),
-		) {
-			if ((permissions && isArrayString(permissions)) || !permissions) {
-				return databases.createDocument(this.databaseId, this.collectionId, id, data, permissions)
-			} else
-				return databases.createDocument(
-					this.databaseId,
-					this.collectionId,
-					id,
-					data,
-					permissionslib.owner(...permissions.map((user) => user.$id)),
-				)
+		): Promise<TDocumentGet> {
+			try {
+				if ((permissions && isArrayString(permissions)) || !permissions) {
+					//@ts-ignore
+					return databases.createDocument(this.databaseId, this.collectionId, id, data, permissions)
+				} else
+					return databases.createDocument(
+						this.databaseId,
+						this.collectionId,
+						id,
+						//@ts-ignore
+
+						data,
+						permissionslib.owner(...permissions.map((user) => user.$id)),
+					)
+			} catch (error) {
+				console.log(`Error:${error} databaseId: ${this.databaseId} collectionId: ${this.collectionId}`)
+				throw error
+			}
 		}
 
 		//update document with node-appwrite
-		updateDocument<TData extends TDocumentGet>(
-			documentId: string | Models.Document,
-			data: ExcludeAppwriteDocumentRequirements<TDocumentGet> | undefined | {},
+		async updateDocument<TData extends TDocumentGet>(
+			documentId: string,
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			permissions?: string[] | undefined,
+		): Promise<TDocumentGet>
+		async updateDocument<TData extends TDocumentGet>(
+			document: Models.Document,
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			permissions?: string[] | undefined,
+		): Promise<TDocumentGet>
+		async updateDocument<TData extends TDocumentGet>(
+			param: string | Models.Document,
+			data: OmitDocument<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined = undefined,
-		) {
+		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
-			return databases.updateDocument<TData>(
+			return databases.updateDocument(
 				this.databaseId,
 				this.collectionId,
-				typeof documentId === 'string' ? documentId : documentId.$id,
-				data ?? {},
+				typeof param === 'string' ? param : param.$id,
+				data || {},
 				permissions,
 			)
 		}
 
 		//update document with node-appwrite
-		updatePermissions<TData extends TDocumentGet>(documentId: string | Models.Document, permissions: string[] | undefined = undefined) {
+		updatePermissions<TData extends TDocumentGet>(documentId: string, permissions: string[] | undefined): Promise<TDocumentGet>
+		updatePermissions<TData extends TDocumentGet>(document: Models.Document, permissions: string[] | undefined): Promise<TDocumentGet>
+		updatePermissions<TData extends TDocumentGet>(
+			documentId: string | Models.Document,
+			permissions: string[] | undefined = undefined,
+		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
-			return databases.updateDocument<TData>(
+			return databases.updateDocument(
 				this.databaseId,
 				this.collectionId,
 				typeof documentId === 'string' ? documentId : documentId.$id,
@@ -86,62 +95,45 @@ export default (databases: Databases) => {
 		async deleteDocument(document: TDocumentGet): Promise<string>
 		async deleteDocument(documentId: string): Promise<string>
 		async deleteDocument(param: string | TDocumentGet | string[]) {
+			//	console.log(Array.isArray(param) && isArrayString(param))
+
 			if (typeof param === 'string') {
 				return databases.deleteDocument(this.databaseId, this.collectionId, param)
 			} else if (Array.isArray(param) && isArrayString(param)) {
 				const document = await this.getDocument(param)
+				if (!document) throw new Error('document that is requeste was not found, check permissions first')
 				return await this.deleteDocument(document.$id)
 			} //else if ((param as TDocumentGet) && !Array.isArray(param)) {
 			return databases.deleteDocument(this.databaseId, this.collectionId, param.$id)
 		}
 
 		//delete documents with node-appwrite
-		async deleteDocuments(filters: string[]): Promise<string[]> {
+		async deleteDocuments(filters?: string[]): Promise<string[]> {
 			const { documents } = await this.listDocuments(filters)
 			if (documents.length === 0) throw new TypeError('No document found to delete')
 			return await Promise.all(documents.map((document) => this.deleteDocument(document.$id)))
 		}
 
 		//get document with node-appwrite
-		async getDocument<TData extends TDocumentGet>(documentId: string | string[]) {
-			let data: TData
-			if (typeof documentId === 'string') {
-				data = await databases.getDocument<TData>(this.databaseId, this.collectionId, documentId)
+		async getDocument(documentId: string): Promise<TDocumentGet | null>
+		async getDocument(queries: string[]): Promise<TDocumentGet | null>
+		async getDocument(params: string | string[]): Promise<TDocumentGet | null> {
+			let data: TDocumentGet | null
+			if (typeof params === 'string') {
+				try {
+					data = await databases.getDocument<TDocumentGet>(this.databaseId, this.collectionId, params)
+				} catch (error) {
+					data = null
+				}
 			} else {
-				const list = await databases.listDocuments<TData>(this.databaseId, this.collectionId, documentId)
-
-				if (list.total < 1) throw new Error('Document that matches the query not found')
-				if (list.total > 1)
-					throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
-				data = list.documents[0]
+				const list = await this.listDocuments<TDocumentGet>(params)
+				if (list.total > 1) throw new Error('Multiple documents found, use listDocuments instead or try to be more specific in your query')
+				data = list.documents[0] || null
 			}
 			if (typeof data?.$permissions === 'object' && !Array.isArray(data?.$permissions))
 				data.$permissions = convertObjectInfoArray(data.$permissions)
 
 			return data
-		}
-
-		listenInsert(callback: (document: TDocumentGet) => void): () => void {
-			return this.client.subscribe(
-				`databases.${this.databaseId}.collections.${this.collectionId}.documents`,
-				(response: RealtimeResponseEvent<TDocumentGet>) => {
-					if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.*.create`)) {
-						callback(response.payload)
-					}
-				},
-			)
-		}
-
-		async documentExists<TData extends TDocumentGet>(params: string | string[]) {
-			let count: number
-			if (typeof params === 'string') {
-				const data = await databases.getDocument<TData>(this.databaseId, this.collectionId, params)
-				count = data ? 1 : 0
-			} else {
-				const list = await databases.listDocuments<TData>(this.databaseId, this.collectionId, params)
-				count = list.total
-			}
-			return count
 		}
 
 		//list documents with node-appwrite
@@ -173,19 +165,21 @@ export default (databases: Databases) => {
 			return data
 		}
 
-		async subscribeDocument(queries: string[], callback: (document: TDocumentGet) => void): Promise<TDocumentGet>
-		async subscribeDocument(documentId: string, callback: (document: TDocumentGet) => void): Promise<TDocumentGet>
-		async subscribeDocument(params: string | string[], callback: (document: TDocumentGet) => void): Promise<TDocumentGet> {
-			if (typeof window === 'undefined') throw new TypeError('window is not defined')
-			let document = await this.getDocument(params)
-			callback(document)
-			this.client.subscribe(
-				`databases.${this.databaseId}.collections.${this.collectionId}.documents.${document.$id}`,
-				(res: RealtimeResponseEvent<TDocumentGet>) => {
-					return callback(res.payload)
+		subscribeDocument(documentId: string, callback: (data: RealtimeResponseEvent<TDocumentGet>) => void) {
+			client.subscribe(
+				`databases.${this.databaseId}.collections.${this.collectionId}.documents.${documentId}`,
+				(response: RealtimeResponseEvent<TDocumentGet>) => {
+					callback(response)
 				},
 			)
-			return document
+		}
+
+		listenUpdate(documentId: string, callback: (data: TDocumentGet) => void) {
+			this.subscribeDocument(documentId, (response) => {
+				if (response.events.includes(`databases.${this.databaseId}.collections.${this.collectionId}.documents.${documentId}.update`)) {
+					callback(response.payload)
+				}
+			})
 		}
 	}
 }

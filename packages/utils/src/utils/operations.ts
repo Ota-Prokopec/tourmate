@@ -12,15 +12,7 @@ export function removeItemsFromArray(array: any[], ...forDeletion: any) {
 	return array.filter((item) => !forDeletion.includes(item))
 }
 
-export const isBase64 = (value: unknown): value is Base64 => {
-	if (typeof value !== 'string') return false
-	return value.startsWith('data:image/')
-}
-export const isFile = (value: unknown): value is File => {
-	if (value instanceof File) return true
-	return false
-}
-export const base64ToBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
+export const base64ToBlob = (base64: string, contentType: string, sliceSize = 512) => {
 	const byteCharacters = atob(b64Data)
 	const byteArrays: Uint8Array[] = []
 
@@ -51,8 +43,7 @@ export const blobToBase64 = (blob: Blob): Promise<Base64> => {
 export const countSameItemsInArray = <InputArr extends Array<any>>(arr: InputArr): Record<string, number> =>
 	arr.reduce(
 		(cnt, cur) => (
-			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] = cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1),
-			cnt
+			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] = cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1), cnt
 		),
 		{},
 	)
@@ -70,4 +61,9 @@ export const fileToBase64 = (file: File): Promise<Base64> => {
 		reader.onload = () => resolve(reader.result as Base64)
 		reader.onerror = () => reject(reader.error)
 	})
+}
+
+export const base64ToFile = (base64: Base64, fileName: string) => {
+	const buffer = Buffer.from(base64, 'base64')
+	return new File([buffer], fileName)
 }

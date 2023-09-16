@@ -25,6 +25,8 @@ const browserStorage = new Proxy<Record<string | number | symbol, any>>(
 			return true
 		},
 		get(_target, key) {
+			console.log(key)
+
 			const item = window.localStorage.getItem(key.toString())
 			if (!item) return null
 
