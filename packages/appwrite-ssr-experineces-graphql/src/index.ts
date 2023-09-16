@@ -20,4 +20,5 @@ const set = (appwrite: Types.AppwriteSSR) => {
 	return { buckets, collections, ...appwrite }
 }
 
+//@ts-ignore
 export default { setCookie, setSession, setNone }
