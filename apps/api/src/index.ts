@@ -26,7 +26,7 @@ app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
 start()
 
-console.log('start')
+console.log('starft')
 
 app.listen(4444)
 
