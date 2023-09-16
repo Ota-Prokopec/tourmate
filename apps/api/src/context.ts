@@ -34,5 +34,6 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		throw error
 	}
 }
+console.log('context')
 
 export type Context = NonNullable<Awaited<ReturnType<typeof context>>>
