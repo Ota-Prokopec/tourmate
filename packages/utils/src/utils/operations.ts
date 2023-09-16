@@ -13,7 +13,7 @@ export function removeItemsFromArray(array: any[], ...forDeletion: any) {
 }
 
 export const base64ToBlob = (base64: string, contentType: string, sliceSize = 512) => {
-	const byteCharacters = atob(b64Data)
+	const byteCharacters = atob(base64)
 	const byteArrays: Uint8Array[] = []
 
 	for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
