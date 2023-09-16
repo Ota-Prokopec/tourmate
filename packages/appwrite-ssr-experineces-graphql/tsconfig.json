@@ -3,9 +3,11 @@
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "dist",
-		"isolatedModules": false
+
+		"moduleResolution": "NodeNext",
+		"module": "NodeNext"
 	},
 
 	"exclude": ["dist", "node_modules"],
-	"include": ["src/**/*"]
+	"include": ["src/**/*", "../../global.d.ts"]
 }
