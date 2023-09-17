@@ -6,14 +6,17 @@ import type { Types } from './types/Types'
 import Locale from './locale/locale'
 
 let envs = {
-	projectId: process.env.APPWRITE_PROJECT_ID,
-	projectEndPoint: process.env.APPWRITE_ENDPOINT,
+	projectId: process.env.APPWRITE_PROJECT_ID as string,
+	projectEndPoint: process.env.APPWRITE_ENDPOINT as string,
+} as {
+	projectId: string
+	projectEndPoint: string
 }
 
 export const set = (callback?: (c: Client) => Client) => {
 	let client = new Client()
 
-	if (!envs.projectEndPoint || !envs.projectId) throw new Error('project id or project end point is not set')
+	if (!envs.projectEndPoint || !envs.projectId) throw new Error('project ---')
 
 	client.setEndpoint(envs.projectEndPoint as string).setProject(envs.projectId as string)
 	if (callback) client = callback(client)

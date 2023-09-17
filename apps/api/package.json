@@ -1,7 +1,6 @@
 {
 	"name": "api",
 	"version": "1.0.0",
-	"type": "module",
 	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
