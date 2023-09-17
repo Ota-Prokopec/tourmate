@@ -1,4 +1,4 @@
-import lodash from 'lodash'
+import * as lodash from 'lodash'
 const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'

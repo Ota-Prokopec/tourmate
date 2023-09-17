@@ -1,6 +1,5 @@
 {
 	"name": "api",
-	"version": "1.0.0",
 	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
@@ -21,7 +20,7 @@
 		"@app/experience-settings": "*",
 		"@app/appwrite-ssr-experiences-graphql": "*",
 		"@app/experience-database-server-graphql": "*",
-		"@app/user-database-server": "*",
+		"@app/user-database-server-graphql": "*",
 		"@app/appwrite-permissions": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server": "^3.12.1",

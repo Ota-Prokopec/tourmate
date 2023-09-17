@@ -1,4 +1,4 @@
-import { getAccount } from '@app/user-database-server'
+import { getAccount } from '@app/user-database-server-graphql'
 import { ApolloError } from 'apollo-server-express'
 import { objectType } from 'nexus'
 

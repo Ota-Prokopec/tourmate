@@ -1,5 +1,5 @@
 import { Models } from 'node-appwrite'
-import lodash from 'lodash'
+import * as lodash from 'lodash'
 const { omit } = lodash
 import { appwriteDocumentKeys } from '@app/experience-settings'
 import { Document, GraphqlDocument, OmitDocument, UserInfoDocument } from '@app/ts-types'

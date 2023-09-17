@@ -1,7 +1,7 @@
 import { nullable, queryField, stringArg } from 'nexus'
 import { ApolloError } from 'apollo-server-express'
 import { AccountGetOutput } from '../../../schema/auth/account'
-import { getAccount } from '@app/user-database-server'
+import { getAccount } from '@app/user-database-server-graphql'
 
 export default queryField('getAccount', {
 	args: { userId: nullable(stringArg()) },

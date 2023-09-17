@@ -1,7 +1,7 @@
 import { type Models, Query } from 'appwrite'
 import { collections, user as userStore } from '@app/appwrite-client'
 
-let user: Models.Account<Models.Preferences>
+let user: Models.User<Models.Preferences>
 userStore.getUser().then((u) => {
 	if (u) user = u
 })
@@ -15,6 +15,21 @@ export const searchUsers = async (searchText: string, limit?: number) => {
 					: [Query.orderDesc('$updatedAt'), Query.limit(limit || 10), Query.notEqual('userId', user.$id)],
 			)
 		).documents
-	} else if (searchText) return (await collections.userInfo.listDocuments([Query.search('name', searchText), Query.orderDesc('$updatedAt'), Query.limit(limit || 10), Query.notEqual('userId', user.$id)])).documents
-	else return (await collections.userInfo.listDocuments([Query.orderDesc('$updatedAt'), Query.limit(limit || 10), Query.notEqual('userId', user.$id)])).documents
+	} else if (searchText)
+		return (
+			await collections.userInfo.listDocuments([
+				Query.search('name', searchText),
+				Query.orderDesc('$updatedAt'),
+				Query.limit(limit || 10),
+				Query.notEqual('userId', user.$id),
+			])
+		).documents
+	else
+		return (
+			await collections.userInfo.listDocuments([
+				Query.orderDesc('$updatedAt'),
+				Query.limit(limit || 10),
+				Query.notEqual('userId', user.$id),
+			])
+		).documents
 }

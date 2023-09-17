@@ -1,8 +1,6 @@
 {
-	"name": "@app/mapTiler",
-	"version": "1.0.0",
-	"private": true,
-	"type": "module",
+	"name": "@app/map-tiler",
+	"version": "1.0.1",
 	"main": "src/index.ts",
 	"types": "src/index.ts",
 	"scripts": {

@@ -1,5 +1,5 @@
 import * as permissionslib from '@app/appwrite-permissions'
-import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
+import { DatabaseValueTypes, OmitDocument, Preferences } from '@app/ts-types'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
 
 const isArrayString = (permissions: unknown[]): permissions is string[] => {
@@ -20,11 +20,11 @@ export default (client: Client) => {
 		}
 
 		//create document with node-appwrite
-		createDocument(data: TDocumentCreate, permissions?: Models.User<Models.Preferences>[], id?: string): Promise<TDocumentGet>
+		createDocument(data: TDocumentCreate, permissions?: Models.User<Preferences>[], id?: string): Promise<TDocumentGet>
 		createDocument(data: TDocumentCreate, permissions?: string[], id?: string): Promise<TDocumentGet>
 		createDocument(
 			data: TDocumentCreate,
-			permissions: string[] | undefined | Models.User<Models.Preferences>[] = undefined,
+			permissions: string[] | undefined | Models.User<Preferences>[] = undefined,
 			id: string = ID.unique(),
 		): Promise<TDocumentGet> {
 			try {

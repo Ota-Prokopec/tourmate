@@ -1,7 +1,6 @@
 {
 	"name": "@app/appwrite-ssr",
-	"version": "1.0.8",
-	"private": false,
+	"version": "1.0.1",
 	"license": "MIT",
 	"keywords": [
 		"appwrite"
@@ -18,7 +17,7 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"appwrite": "^12.0.0",
+		"appwrite": "^13.0.0",
 		"konva": "^9.2.0",
 		"zod": "^3.22.2"
 	}

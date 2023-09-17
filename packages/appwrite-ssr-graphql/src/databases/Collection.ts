@@ -2,7 +2,7 @@ import * as permissionslib from '@app/appwrite-permissions'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
 import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
 import { Types } from '../types/Types'
-import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
+import { DatabaseValueTypes, OmitDocument, Preferences } from '@app/ts-types'
 
 type Document = Types.Document
 
@@ -41,11 +41,11 @@ export default (client: Client) => {
 		}
 
 		//create document with node-appwrite
-		async createDocument(data: TDocumentCreate, permissions?: Models.User<Models.Preferences>[], id?: string): Promise<TDocumentGet>
+		async createDocument(data: TDocumentCreate, permissions?: Models.User<Preferences>[], id?: string): Promise<TDocumentGet>
 		async createDocument(data: TDocumentCreate, permissions?: string[], id?: string): Promise<TDocumentGet>
 		async createDocument(
 			data: TDocumentCreate,
-			permissions: string[] | undefined | Models.User<Models.Preferences>[] = undefined,
+			permissions: string[] | undefined | Models.User<Preferences>[] = undefined,
 			id: string = ID.unique(),
 		): Promise<TDocumentGet> {
 			try {

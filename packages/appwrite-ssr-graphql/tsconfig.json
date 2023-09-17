@@ -4,7 +4,12 @@
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "dist",
-		"declaration": true
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"declarationDir": "dist",
+		"declaration": true,
+		"declarationMap": true,
+		"baseUrl": "."
 	},
 
 	"exclude": ["dist", "node_modules"],

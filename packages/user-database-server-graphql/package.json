@@ -1,6 +1,6 @@
 {
-	"name": "@app/user-database-server",
-	"version": "1.0.0",
+	"name": "@app/user-database-server-graphql",
+	"version": "1.0.1",
 	"private": true,
 	"main": "src/index.ts",
 	"types": "src/index.ts",
