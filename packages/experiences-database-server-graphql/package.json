@@ -5,7 +5,6 @@
 	"types": "src/index.ts",
 	"scripts": {
 		"build": "tsc --build",
-		"prebuild": "yarn barelsby",
 		"barrelsby": "barrelsby --delete  --singleQuotes --directory ./src/actions/"
 	},
 	"devDependencies": {
@@ -14,13 +13,14 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"@app/ts-types": "*",
+		"@app/appwrite-nexus": "*",
 		"@app/appwrite-ssr-experiences": "*",
-		"@app/experience-settings": "*",
 		"@app/appwrite-ssr-experiences-graphql": "*",
 		"@app/appwrite-ssr-graphql": "*",
-		"@app/appwrite-nexus": "*",
+		"@app/experience-settings": "*",
+		"@app/ts-types": "*",
 		"@app/user-database-server-graphql": "*",
+		"barrelsby": "^2.8.1",
 		"lodash": "^4.17.21",
 		"node-appwrite": "^9.0.0",
 		"zod": "^3.21.4"

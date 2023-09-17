@@ -1,5 +1,7 @@
 {
 	"name": "api",
+	"version": "1.0.0",
+	"type": "module",
 	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
@@ -15,13 +17,13 @@
 	"dependencies": {
 		"@apollo/server": "^4.9.3",
 		"@app/appwrite-nexus": "*",
+		"@app/appwrite-permissions": "*",
 		"@app/appwrite-ssr": "*",
 		"@app/appwrite-ssr-experiences": "*",
-		"@app/experience-settings": "*",
 		"@app/appwrite-ssr-experiences-graphql": "*",
 		"@app/experience-database-server-graphql": "*",
+		"@app/experience-settings": "*",
 		"@app/user-database-server-graphql": "*",
-		"@app/appwrite-permissions": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server": "^3.12.1",
 		"apollo-server-express": "^3.12.1",
