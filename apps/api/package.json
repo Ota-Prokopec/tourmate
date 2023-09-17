@@ -4,6 +4,9 @@
 	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
+	"engines": {
+		"node": "18.x"
+	},
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn generate-scalarTypes-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-graphql-schema",
