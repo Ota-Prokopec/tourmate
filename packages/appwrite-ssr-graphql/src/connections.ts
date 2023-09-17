@@ -11,7 +11,7 @@ let envs = {
 }
 
 export const set = (callback?: (c: Client) => Client) => {
-	if (!process.env.APPWRITE_PROJECT_ID || !process.env.APPWRITE_ENDPOINT) throw new Error('project --')
+	if (!envs.projectId || !envs.projectEndPoint) throw new Error('project id or endpoint is not set')
 	let client = new Client().setProject(process.env.APPWRITE_PROJECT_ID).setEndpoint(process.env.APPWRITE_ENDPOINT)
 
 	if (callback) client = callback(client)
