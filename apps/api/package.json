@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"types": "src/index.ts",
 	"engines": {
-		"node": "18.x"
+		"node": "18.17.1"
 	},
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
