@@ -15,7 +15,6 @@
 		"vercel-build": "echo vercel-build"
 	},
 	"dependencies": {
-		"@apollo/server": "^4.9.3",
 		"@app/appwrite-nexus": "*",
 		"@app/appwrite-permissions": "*",
 		"@app/appwrite-ssr": "*",
@@ -25,7 +24,6 @@
 		"@app/experience-settings": "*",
 		"@app/user-database-server-graphql": "*",
 		"@types/cookie-parser": "^1.4.3",
-		"apollo-server": "^3.12.1",
 		"apollo-server-express": "^3.12.1",
 		"appwrite": "^12.0.0",
 		"cookie-parser": "^1.4.6",
