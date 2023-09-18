@@ -3,10 +3,10 @@
 	"compilerOptions": {
 		"module": "CommonJS",
 		"outDir": "dist",
-		"rootDirs": ["src", "api"],
+		"rootDir": "src",
 		"typeRoots": ["../../global.d.ts"]
 	},
 
-	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "api/**/*.ts", "../../global.d.ts"],
+	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
 	"exclude": ["node_modules", "dist"]
 }
