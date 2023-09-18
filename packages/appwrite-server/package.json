@@ -1,7 +1,7 @@
 {
 	"name": "@app/appwrite-server",
 	"version": "1.0.1",
-	"main": "dist/index.js",
+	"main": "index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "tsc --build"
