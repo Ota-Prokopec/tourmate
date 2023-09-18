@@ -13,6 +13,7 @@
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
 		"generate-scalarTypes-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/scalarTypes"
+		,"vercel-build": "echo ah"
 	},
 	"dependencies": {
 		"@app/users-database-server-graphql": "*",
