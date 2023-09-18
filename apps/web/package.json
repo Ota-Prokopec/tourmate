@@ -1,7 +1,7 @@
 {
 	"name": "web",
 	"version": "1.0.0",
-	"private": false,
+	"private": true,
 	"scripts": {
 		"dev": "vite dev --host",
 		"build": "vite build",
