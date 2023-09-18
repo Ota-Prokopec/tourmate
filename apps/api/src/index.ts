@@ -29,3 +29,4 @@ start()
 app.listen(4444)
 
 export default app
+export const viteNodeApp = app

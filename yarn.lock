@@ -3579,7 +3579,7 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@rollup/pluginutils@^4.0.0":
+"@rollup/pluginutils@^4.0.0", "@rollup/pluginutils@^4.1.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-4.2.1.tgz#e6c6c3aba0744edce3fb2074922d3776c0af2a6d"
   integrity sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==
@@ -14397,6 +14397,15 @@ vite-plugin-mkcert@^1.14.0:
     axios "^1.2.2"
     debug "^4.3.4"
     picocolors "^1.0.0"
+
+vite-plugin-node@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-node/-/vite-plugin-node-3.0.2.tgz#91e702dfe342d31c5abf501ad00edecf68b129f1"
+  integrity sha512-pA/QZDe4VRFUSChTrR64EfdsnwHbTnkXKx1Be8MP2oW43TPeQgtIfqiGOuXTPUKjwINtyEl8JMzRN0+dYyfTow==
+  dependencies:
+    "@rollup/pluginutils" "^4.1.1"
+    chalk "^4.1.2"
+    debug "^4.3.2"
 
 vite-plugin-pwa@^0.16.4:
   version "0.16.5"

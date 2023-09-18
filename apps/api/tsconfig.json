@@ -2,8 +2,9 @@
 	"extends": "../../packages/tsconfig/base.json",
 	"compilerOptions": {
 		"outDir": "dist",
-		"rootDir": "../../",
-		"typeRoots": ["../../global.d.ts"]
+		"rootDir": "src",
+		"typeRoots": ["../../global.d.ts"],
+		"module": "ESNext"
 	},
 
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
