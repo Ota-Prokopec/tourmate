@@ -2,7 +2,7 @@
 	"extends": "../../packages/tsconfig/base.json",
 	"compilerOptions": {
 		"outDir": "dist",
-		"rootDir": "src",
+		"rootDir": "../../",
 		"typeRoots": ["../../global.d.ts"]
 	},
 
