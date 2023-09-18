@@ -19,7 +19,7 @@
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/experience-settings": "*",
 		"@app/ts-types": "*",
-		"@app/user-database-server-graphql": "*",
+		"@app/users-database-server-graphql": "*",
 		"barrelsby": "^2.8.1",
 		"lodash": "^4.17.21",
 		"node-appwrite": "^9.0.0",

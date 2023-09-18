@@ -1,6 +1,6 @@
 import { getListOfExperineceByLocation } from '@app/experience-database-server-graphql'
 import { isLocation } from '@app/ts-types'
-import { getAccount } from '@app/user-database-server-graphql'
+import { getAccount } from '@app/users-database-server-graphql'
 import { ApolloError } from 'apollo-server-express'
 import { list, objectType } from 'nexus'
 

@@ -67,7 +67,7 @@
 		"@app/firebase-client": "*",
 		"@app/firebase-server": "*",
 		"@app/ts-types": "*",
-		"@app/user-database-server-graphql": "*",
+		"@app/users-database-server-graphql": "*",
 		"@app/utils": "*",
 		"@beyonk/svelte-mapbox": "^9.1.0",
 		"@maptiler/client": "^1.6.0",
