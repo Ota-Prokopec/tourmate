@@ -12,7 +12,7 @@
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
-	import { useQuery } from '@apollo/client';
+	import Loading from '$lib/components/Common/Loading.svelte';
 
 	export let data: PageData;
 
@@ -26,8 +26,10 @@
 
 	let res: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
+	let isLoading = false;
 
 	const create = async () => {
+		isLoading = true;
 		try {
 			res = (
 				await sdk.createMonument({
@@ -35,8 +37,10 @@
 				})
 			).createMonument;
 		} catch (err) {
+			isLoading = false;
 			if (err instanceof AppwriteException) error = err;
 		}
+		isLoading = false;
 	};
 </script>
 
@@ -80,7 +84,11 @@
 				color="blue"
 				on:click={create}
 			>
-				<span>Vytvořit</span>
+				{#if isLoading}
+					<Loading />
+				{:else}
+					<span>Vytvořit</span>
+				{/if}
 			</Button>
 		</Card>
 	{/if}
