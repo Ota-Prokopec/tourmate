@@ -19,8 +19,6 @@
 	const usersMonuments = data.userProfile.monuments;
 	const usersExperiences = data.userProfile.experiences;
 
-	console.log(usersExperiences);
-
 	let experiencesType: 'monuments' | 'experiences' = 'monuments';
 
 	let isMyAccount = data.user?.userId === data.userProfile.userId;

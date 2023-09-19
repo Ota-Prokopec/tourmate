@@ -38,6 +38,7 @@ export type Monument = {
 	name: string
 	pictureURL?: URL | undefined | null
 	placeDetailId: string
+	placeDetails: PlaceDetails
 }
 
 export type MonumentDocument = Document<{
@@ -70,12 +71,12 @@ export type MonumentDocumentCreate = {
 	placeDetailId: string
 }
 
-export type PlaceDetail = {
+export type PlaceDetails = {
 	name: string
 }
 
-export type PlaceDetailDocument = Document<PlaceDetail>
+export type PlaceDetailDocument = Document<PlaceDetails>
 
-export type PlaceDetailGraphqlDocument = GraphqlDocument<PlaceDetail>
+export type PlaceDetailGraphqlDocument = GraphqlDocument<PlaceDetails>
 
-export type PlaceDetailDocumentCreate = PlaceDetail
+export type PlaceDetailDocumentCreate = PlaceDetails

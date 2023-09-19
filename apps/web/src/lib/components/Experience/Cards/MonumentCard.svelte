@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import type { Monument } from '@app/ts-types';
+	import type { Monument, PlaceDetails } from '@app/ts-types';
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
@@ -18,7 +18,7 @@
 		{monument.name}
 	</h5>
 	<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 flex flex-wrap flex-col gap-2">
-		<span>lokace: [{monument.location}]</span>
+		<span>lokace: [{monument.placeDetails.name}]</span>
 	</p>
 	<Img class="rounded-lg object-cover " src={imgSrcAsString} />
 </Card>
