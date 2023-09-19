@@ -21,7 +21,7 @@
 
 	console.log(usersExperiences);
 
-	let experiencesType: 'monuments' | 'experiences' = 'experiences';
+	let experiencesType: 'monuments' | 'experiences' = 'monuments';
 
 	let isMyAccount = data.user?.userId === data.userProfile.userId;
 
@@ -88,14 +88,14 @@
 				experiencesType = e.detail;
 			}}
 		/>
-		<Gallery class="p-">
+		<Gallery class="">
 			{#if experiencesType === 'experiences'}
 				{#each usersExperiences as experience}
 					<ExperienceCard {experience} />
 				{/each}
 			{:else}
 				{#each usersMonuments as monument}
-					<MonumentCard {monument} />
+					<MonumentCard class="w-full" {monument} />
 				{/each}
 			{/if}
 		</Gallery>

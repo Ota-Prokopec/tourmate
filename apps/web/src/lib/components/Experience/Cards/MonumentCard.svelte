@@ -12,7 +12,7 @@
 	$: imgSrcAsString = monument.pictureURL as unknown as string | undefined;
 </script>
 
-<Card class={twMerge('max-w-[75%] justify-self-center', className)}>
+<Card class={twMerge(' justify-self-center', className)}>
 	<Icon icon="fas fa-map-marker-alt" class="text-3xl text-red-500" />
 	<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 		{monument.name}

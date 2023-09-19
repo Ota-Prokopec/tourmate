@@ -26,6 +26,7 @@ app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
 start()
 
-app.listen(4444)
+const port = process.env.PORT || 4444
+app.listen(port)
 
 export default app
