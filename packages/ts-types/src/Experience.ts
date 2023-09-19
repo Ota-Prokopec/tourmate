@@ -38,7 +38,6 @@ export type Monument = {
 	name: string
 	pictureURL?: URL | undefined | null
 	placeDetailId: string
-	placeDetails: PlaceDetails
 }
 
 export type MonumentDocument = Document<{

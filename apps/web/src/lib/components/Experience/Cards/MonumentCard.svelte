@@ -4,7 +4,7 @@
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let monument: Monument;
+	export let monument: Monument & { placeDetails: PlaceDetails };
 
 	let className = '';
 	export { className as class };

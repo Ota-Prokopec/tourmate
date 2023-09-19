@@ -12,6 +12,7 @@
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
+	import { useQuery } from '@apollo/client';
 
 	export let data: PageData;
 
@@ -21,6 +22,7 @@
 	let about = '';
 	let image: Base64 | undefined;
 	let location: Location = data.newMonument.location;
+	let placeName = data.newMonument.placeName;
 
 	let res: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
@@ -51,6 +53,13 @@
 			<Input
 				bind:value={name}
 				floatingLabel="name of monument"
+				class=" "
+				classWrap="w-full max-w-[400px]"
+			/>
+			<P size="xl" weight="bold" class="w-full max-w-[400px] m-4">Umístění</P>
+			<Input
+				bind:value={placeName}
+				floatingLabel="umístění"
 				class=" "
 				classWrap="w-full max-w-[400px]"
 			/>
