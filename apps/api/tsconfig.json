@@ -3,8 +3,7 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"rootDir": "src",
-		"typeRoots": ["../../global.d.ts"],
-		"module": "ESNext"
+		"typeRoots": ["../../global.d.ts"]
 	},
 
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],

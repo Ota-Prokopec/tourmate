@@ -4,12 +4,6 @@ import * as resolvers from './resolvers/index'
 import * as schema from './schema/index'
 import * as scalarTypes from './lib/scalarTypes/index'
 
-import url from 'url'
-import path from 'path'
-
-const __filename = url.fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
 export default makeSchema({
 	types: [scalarTypes, resolvers, schema],
 	outputs: {
