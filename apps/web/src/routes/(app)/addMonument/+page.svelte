@@ -42,13 +42,11 @@
 		);
 	};
 
+	$: console.log(markerLocation);
+
 	$: positionDetails = useQuery('positionDetails', async () => {
-		try {
-			if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-			return await getDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
-		} catch (error) {
-			return null;
-		}
+		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
+		return await getDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
 	});
 </script>
 
