@@ -24,6 +24,10 @@
 	export let dismissable: true | false = false;
 	export let visible: boolean = true;
 
+	export let timeout = 0;
+	let timer: ReturnType<typeof setTimeout>;
+	$: if (visible && timeout) timer = setTimeout(() => (visible = false), timeout);
+
 	let className = '';
 	export { className as class };
 </script>

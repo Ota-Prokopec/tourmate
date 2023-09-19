@@ -64,7 +64,7 @@
 <FirebaseNotification message={foregroundNotification} />
 
 <div class="w-full h-full">
-	<wrap class="w-full h-auto">
+	<wrap class="w-full h-auto flex justify-center">
 		<slot />
 	</wrap>
 

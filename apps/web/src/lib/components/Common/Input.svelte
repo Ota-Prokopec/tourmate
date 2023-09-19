@@ -2,6 +2,7 @@
 	import { elementIdGenerator } from '@app/utils';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
+	import Popover from './Popover.svelte';
 
 	const dispatch = createEventDispatcher();
 	export let value = '';
@@ -14,6 +15,7 @@
 	export let iconFunction: 'password' | null = null;
 	export let changedIconOnActive = icon;
 	export let iconPosition: 'right' | 'left' = 'left';
+	export let disabled = false;
 
 	export let autocomplete = '';
 	export let pattern: RegExp | null = null;
@@ -95,7 +97,7 @@
 	};
 </script>
 
-<div class={twMerge('relative ', classWrap)}>
+<button class={twMerge('relative ', className, classWrap)}>
 	{#if icon}
 		<button
 			class={`absolute inset-y-0 ${
@@ -118,6 +120,7 @@
 	{/if}
 
 	<input
+		{disabled}
 		use:retype
 		{id}
 		class="input rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
@@ -135,6 +138,7 @@
 		{...$$restProps}
 		{autocomplete}
 	/>
+
 	{#if floatingLabel}
 		<label
 			for={id}
@@ -142,7 +146,10 @@
 			>{floatingLabel}</label
 		>
 	{/if}
-</div>
+</button>
+{#if disabled}
+	<Popover color="red">you are not allowed to edit your {placeholder || floatingLabel}</Popover>
+{/if}
 
 <style>
 	.input::placeholder {

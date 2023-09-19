@@ -34,11 +34,15 @@
 							userId: data.monument.creatorUserId
 						}}
 					/>
+					<Popover>
+						<AlmostProfileWithMainImage
+							disableCloseButton
+							class=""
+							userInfo={data.monument.creator}
+						/>
+					</Popover>
 				</button>
 			</p>
-			<Popover>
-				<AlmostProfileWithMainImage disableCloseButton class="" userInfo={data.monument.creator} />
-			</Popover>
 		</div>
 	</Card>
 

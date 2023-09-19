@@ -9,6 +9,7 @@
 	import Gallery from '$lib/components/Common/Gallery.svelte';
 	import ExperienceCard from '$lib/components/Experience/Cards/ExperienceCard.svelte';
 	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
+	import { updateProfilePicture } from '$lib/utils/account/updateProfilePicture';
 
 	export let data: PageData;
 
@@ -28,27 +29,13 @@
 		{ title: 'památky', key: 'monuments' }
 	] as const;
 
-	const updateProfilePicture = async (file: File) => {
-		try {
-			const currentPicture =
-				data.userProfile.profilePictureURL &&
-				(await buckets.profilePictures.getFile(
-					buckets.profilePictures.getParamsFromURL(data.userProfile.profilePictureURL).fileId
-				));
-			if (currentPicture && currentPicture.$id) {
-				// delete old picture
-				await buckets.profilePictures.deleteFile(currentPicture.$id);
-			}
-			const newPicture = await buckets.profilePictures.createFile(
-				file,
-				permissions.owner(data.user.userId)
-			);
-			await collections.userInfo.updateDocument(data.userProfile._id, {
-				profilePictureURL: buckets.profilePictures.getFileURL(newPicture.$id)
-			});
-		} catch (error) {
-			console.log(error);
-		}
+	const changeProfilePic = async (file: File) => {
+		updateProfilePicture(
+			data.user.userId,
+			data.userProfile._id,
+			data.userProfile.profilePictureURL,
+			file
+		);
 	};
 </script>
 
@@ -60,7 +47,7 @@
 				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
 				imageURL={data.userProfile.profilePictureURL}
 				on:image={async ({ detail: { file } }) => {
-					updateProfilePicture(file);
+					changeProfilePic(file);
 				}}
 			/>
 		{:else}
