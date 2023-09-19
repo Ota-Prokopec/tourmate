@@ -7,7 +7,8 @@
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn generate-scalarTypes-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-graphql-schema",
-		"build": "tsc --build",
+		"build-": "tsc --build",
+		"build": "nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"preview": "nodemon dist/index.js",
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
