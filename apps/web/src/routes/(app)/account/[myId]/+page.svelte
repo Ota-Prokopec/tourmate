@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
@@ -7,6 +6,9 @@
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import { buckets, collections, user } from '@app/appwrite-client';
 	import * as permissions from '@app/appwrite-permissions';
+	import Gallery from '$lib/components/Common/Gallery.svelte';
+	import ExperienceCard from '$lib/components/Experience/Cards/ExperienceCard.svelte';
+	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
 
 	export let data: PageData;
 
@@ -14,13 +16,18 @@
 		src: exp.imgSrc
 	}));
 
-	let experiencesType: 'map' | 'gallery' = 'map';
+	const usersMonuments = data.userProfile.monuments;
+	const usersExperiences = data.userProfile.experiences;
+
+	console.log(usersExperiences);
+
+	let experiencesType: 'monuments' | 'experiences' = 'experiences';
 
 	let isMyAccount = data.user?.userId === data.userProfile.userId;
 
 	const categories = [
-		{ title: 'map', key: 'map' },
-		{ title: 'gallery', key: 'gallery' }
+		{ title: 'fotky', key: 'experiences' },
+		{ title: 'památky', key: 'monuments' }
 	] as const;
 
 	const updateProfilePicture = async (file: File) => {
@@ -74,14 +81,23 @@
 	</div>
 	<span class=" text-3xl p-4">{data.userProfile.username}</span>
 
-	<div class="w-full h-auto flex justify-center mb-2">
+	<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
 		<CategoryPicker
 			{categories}
 			on:change={(e) => {
 				experiencesType = e.detail;
 			}}
 		/>
+		<Gallery class="p-">
+			{#if experiencesType === 'experiences'}
+				{#each usersExperiences as experience}
+					<ExperienceCard {experience} />
+				{/each}
+			{:else}
+				{#each usersMonuments as monument}
+					<MonumentCard {monument} />
+				{/each}
+			{/if}
+		</Gallery>
 	</div>
-
-	<Card class="w-full" />
 </div>

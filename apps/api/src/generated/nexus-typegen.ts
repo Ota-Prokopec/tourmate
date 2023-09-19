@@ -113,7 +113,7 @@ export interface NexusGenObjects {
     placeDetailId: string; // String!
   }
   Mutation: {};
-  PlaceDetail: { // root type
+  PlaceDetails: { // root type
     _collectionId: string; // String!
     _createdAt: string; // String!
     _databaseId: string; // String!
@@ -183,18 +183,18 @@ export interface NexusGenFieldTypes {
     about: string | null; // String
     creator: NexusGenRootTypes['Account']; // Account!
     creatorUserId: string; // String!
-    details: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
     nearExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     pictureURL: NexusGenScalars['URL'] | null; // URL
     placeDetailId: string; // String!
+    placeDetails: NexusGenRootTypes['PlaceDetails']; // PlaceDetails!
   }
   Mutation: { // field return type
     createExperience: NexusGenRootTypes['Experience']; // Experience!
     createMonument: NexusGenRootTypes['Monument']; // Monument!
   }
-  PlaceDetail: { // field return type
+  PlaceDetails: { // field return type
     _collectionId: string; // String!
     _createdAt: string; // String!
     _databaseId: string; // String!
@@ -263,18 +263,18 @@ export interface NexusGenFieldTypeNames {
     about: 'String'
     creator: 'Account'
     creatorUserId: 'String'
-    details: 'PlaceDetail'
     location: 'Location'
     name: 'String'
     nearExperiences: 'Experience'
     pictureURL: 'URL'
     placeDetailId: 'String'
+    placeDetails: 'PlaceDetails'
   }
   Mutation: { // field return type name
     createExperience: 'Experience'
     createMonument: 'Monument'
   }
-  PlaceDetail: { // field return type name
+  PlaceDetails: { // field return type name
     _collectionId: 'String'
     _createdAt: 'String'
     _databaseId: 'String'

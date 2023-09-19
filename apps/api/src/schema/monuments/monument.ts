@@ -40,8 +40,8 @@ export default objectType({
 					return await getListOfExperineceByLocation({ location: source.location, zoom: 10, limit: 20, range: 5 }, collections)
 				},
 			})
-		t.field('details', {
-			type: 'PlaceDetail',
+		t.field('placeDetails', {
+			type: 'PlaceDetails',
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
 				const detail = await collections.placeDetail.getDocument(source.placeDetailId)

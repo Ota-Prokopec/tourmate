@@ -38,14 +38,14 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 			imgSrc
 			location
 		}
-		details {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
+		placeDetails {
 			name
+			_databaseId
+			_permissions
+			_id
+			_collectionId
+			_updatedAt
+			_createdAt
 		}
 	}
 }

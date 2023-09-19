@@ -40,6 +40,17 @@ query getAccountByMyIdWithExperiencesAndMonuments($myId: String!) {
 			name
 			about
 			pictureURL
+			placeDetailId
+
+			placeDetails {
+				name
+				_databaseId
+				_permissions
+				_id
+				_collectionId
+				_updatedAt
+				_createdAt
+			}
 		}
 	}
 }

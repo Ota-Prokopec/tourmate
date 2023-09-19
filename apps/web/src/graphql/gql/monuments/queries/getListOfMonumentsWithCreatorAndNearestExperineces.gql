@@ -19,14 +19,14 @@ query getListOfMonumentsWithCreatorAndNearestExperiences($input: MonumentInput) 
 				termsAccepted
 			}
 		}
-		details {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
+		placeDetails {
 			name
+			_databaseId
+			_permissions
+			_id
+			_collectionId
+			_updatedAt
+			_createdAt
 		}
 		nearExperiences {
 			_createdAt

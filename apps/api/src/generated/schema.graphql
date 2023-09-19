@@ -74,7 +74,6 @@ type Monument {
   about: String
   creator: Account!
   creatorUserId: String!
-  details: PlaceDetail!
   location: Location!
   name: String!
   nearExperiences: [Experience!]!
@@ -82,6 +81,7 @@ type Monument {
   """This it an URL not id of picture"""
   pictureURL: URL
   placeDetailId: String!
+  placeDetails: PlaceDetails!
 }
 
 input MonumentInput {
@@ -94,7 +94,7 @@ type Mutation {
   createMonument(input: CreateMonumentInput!): Monument!
 }
 
-type PlaceDetail {
+type PlaceDetails {
   _collectionId: String!
   _createdAt: String!
   _databaseId: String!
