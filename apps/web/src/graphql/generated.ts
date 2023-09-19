@@ -56,6 +56,7 @@ export type CreateMonumentInput = {
   location: Scalars['Location']['input'];
   name: Scalars['String']['input'];
   picture?: InputMaybe<Scalars['String']['input']>;
+  placeName: Scalars['String']['input'];
 };
 
 export type EmailLogin = {

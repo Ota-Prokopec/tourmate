@@ -33,7 +33,13 @@
 		try {
 			res = (
 				await sdk.createMonument({
-					input: { about: about, location: location, name: name, picture: image }
+					input: {
+						about: about,
+						location: location,
+						name: name,
+						picture: image,
+						placeName: placeName
+					}
 				})
 			).createMonument;
 		} catch (err) {

@@ -44,6 +44,7 @@ export interface NexusGenInputs {
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
     picture?: string | null; // String
+    placeName: string; // String!
   }
   ExperienceInput: { // input type
     location: NexusGenScalars['Location']; // Location!

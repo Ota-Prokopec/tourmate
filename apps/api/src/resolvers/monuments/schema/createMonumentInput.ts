@@ -7,5 +7,6 @@ export default inputObjectType({
 		t.string('name')
 		t.field('location', { type: 'Location' })
 		t.string('about')
+		t.string('placeName')
 	},
 })

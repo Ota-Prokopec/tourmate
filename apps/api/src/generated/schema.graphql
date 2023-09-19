@@ -38,6 +38,7 @@ input CreateMonumentInput {
   location: Location!
   name: String!
   picture: String
+  placeName: String!
 }
 
 type EmailLogin {

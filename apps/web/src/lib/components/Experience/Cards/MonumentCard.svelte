@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import type { Monument, PlaceDetails } from '@app/ts-types';
+	import type { GraphqlDocument, Monument, PlaceDetails } from '@app/ts-types';
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let monument: Monument & { placeDetails: PlaceDetails };
+	export let monument: GraphqlDocument<Monument> & { placeDetails: PlaceDetails };
 
 	let className = '';
 	export { className as class };
@@ -12,7 +13,10 @@
 	$: imgSrcAsString = monument.pictureURL as unknown as string | undefined;
 </script>
 
-<Card class={twMerge(' justify-self-center', className)}>
+<Card
+	on:click={() => goto(`/monument/${monument._id}`)}
+	class={twMerge(' justify-self-center', className)}
+>
 	<Icon icon="fas fa-map-marker-alt" class="text-3xl text-red-500" />
 	<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 		{monument.name}

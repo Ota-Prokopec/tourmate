@@ -18,7 +18,7 @@ export default mutationField('createMonument', {
 
 			const placeDetail = await collections.placeDetail.createDocument(
 				{
-					name: 'name of place',
+					name: args.input.placeName,
 				},
 				[ctx.user],
 			)
