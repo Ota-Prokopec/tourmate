@@ -7,4 +7,3 @@ console.log('j')
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
 export default app
-export const viteNodeApp = app

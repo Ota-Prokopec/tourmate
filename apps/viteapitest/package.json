@@ -5,10 +5,8 @@
 	"license": "MIT",
 	"types": "src/index.ts",
 	"scripts": {
-		"dev-ts": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
-		"build-ts": "tsc --build",
-		"build": "vite build",
-		"dev": "vite",
+		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
+		"build": "tsc --build",
 		"preview": "vite preview",
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
