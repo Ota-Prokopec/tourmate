@@ -22,12 +22,14 @@ app.use(
 	}),
 )
 
+console.log(import.meta.url)
+
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
 start()
 
 const port = process.env.PORT || 4444
-app.listen(port)
+//app.listen(port)
 
 export default app
 export const viteNodeApp = app
