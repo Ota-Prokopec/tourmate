@@ -1,4 +1,7 @@
 import express from 'express'
+import a from '@app/appwrite-ssr'
+
+a.none()
 
 const app = express()
 
