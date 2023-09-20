@@ -4,6 +4,7 @@
 	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
+	"type": "module",
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"build": "tsc --build",
