@@ -5,7 +5,7 @@ ssr.setProject({ projectEndPoint: 'dsaf', projectId: 'fdjsalů' })
 
 const app = express()
 
-console.log('fdfdssaj')
+console.log('fdfdafdssaj')
 
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
