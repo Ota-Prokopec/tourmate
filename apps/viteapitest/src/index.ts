@@ -2,7 +2,7 @@ import express from 'express'
 
 const app = express()
 
-console.log('j')
+console.log('fdsaj')
 
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
