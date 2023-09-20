@@ -1,4 +1,7 @@
 import express from 'express'
+import ssr from '@app/appwrite-ssr'
+
+ssr.setProject({ projectEndPoint: 'dsaf', projectId: 'fdjsalů' })
 
 const app = express()
 
