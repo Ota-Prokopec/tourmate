@@ -30,3 +30,4 @@ const port = process.env.PORT || 4444
 app.listen(port)
 
 export default app
+export const viteNodeApp = app
