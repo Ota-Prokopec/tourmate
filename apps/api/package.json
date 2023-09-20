@@ -5,11 +5,9 @@
 	"license": "MIT",
 	"types": "src/index.ts",
 	"scripts": {
-		"dev-ts": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
+		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn generate-scalarTypes-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-graphql-schema",
-		"build-ts": "tsc --build",
-		"build": "vite build",
-		"dev": "vite",
+		"build": "tsc --build",
 		"preview": "vite preview",
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",

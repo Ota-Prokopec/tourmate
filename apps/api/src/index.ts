@@ -22,8 +22,6 @@ app.use(
 	}),
 )
 
-console.log(import.meta.url)
-
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
 start()
