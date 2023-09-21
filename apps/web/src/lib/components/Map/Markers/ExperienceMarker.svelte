@@ -6,7 +6,7 @@
 	const dispatch = createEventDispatcher<{ almostProfile: { imgSrc: URL } }>();
 
 	export let experience: GraphqlDocument<Experience>;
-	let zoom: number = 14;
+	export let zoom: number = 14;
 	export let stacked = false;
 	export let bouncing = false;
 
@@ -16,7 +16,7 @@
 
 <MarkerImage
 	on:click={() => dispatch('almostProfile', { imgSrc: experience.imgSrc })}
-	class={twMerge(bouncing && 'animate-bounce', className)}
+	class={twMerge('rounded-full', bouncing && 'animate-bounce', className)}
 	{stacked}
 	on:almostProfile
 	{zoom}

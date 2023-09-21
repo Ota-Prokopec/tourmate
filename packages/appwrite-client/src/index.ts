@@ -4,7 +4,6 @@ import { Query } from 'appwrite'
 import createCollections from './collections'
 import storage from './common/storage'
 import createSvelteCollections from './svelteCollections'
-import myBuckets from './buckets'
 
 const client = new Client()
 client.setEndpoint('https://cloud.appwrite.io/v1').setProject('experiences')
@@ -25,7 +24,6 @@ const SvelteCollection = createCollectionDispatcher(databases)
 
 const Bucket = storage(client)
 const collections = createCollections(client)
-const buckets = myBuckets(client)
 
 const user = new Auth()
 const isLoading = user.isLoading
@@ -39,7 +37,6 @@ export {
 	svelteCollections,
 	functions,
 	locale,
-	buckets,
 	avatars,
 	graphql,
 	account,

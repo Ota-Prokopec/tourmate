@@ -18,8 +18,8 @@ export { default as createExperience } from './experience/mutations/createExperi
 export * from './experience/mutations/createExperience';
 export { default as getExperience } from './experience/queries/getExperience';
 export * from './experience/queries/getExperience';
-export { default as getListOfExperience } from './experience/queries/getListOfExperience';
-export * from './experience/queries/getListOfExperience';
+export { default as getListOfExperiences } from './experience/queries/getListOfExperiences';
+export * from './experience/queries/getListOfExperiences';
 export { default as createExperienceInput } from './experience/schema/createExperienceInput';
 export * from './experience/schema/createExperienceInput';
 export { default as experienceInput } from './experience/schema/experienceInput';
@@ -28,8 +28,8 @@ export { default as createMonument } from './monuments/mutations/createMonument'
 export * from './monuments/mutations/createMonument';
 export { default as getListOfMonuments } from './monuments/queries/getListOfMonuments';
 export * from './monuments/queries/getListOfMonuments';
-export { default as getMonuments } from './monuments/queries/getMonuments';
-export * from './monuments/queries/getMonuments';
+export { default as getMonument } from './monuments/queries/getMonument';
+export * from './monuments/queries/getMonument';
 export { default as createMonumentInput } from './monuments/schema/createMonumentInput';
 export * from './monuments/schema/createMonumentInput';
 export { default as monumentInput } from './monuments/schema/monumentInput';

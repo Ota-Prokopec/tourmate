@@ -20,13 +20,13 @@
 		"@app/appwrite-ssr": "*",
 		"@app/appwrite-ssr-experiences": "*",
 		"@app/appwrite-ssr-experiences-graphql": "*",
+		"@app/cloudinary-server": "*",
 		"@app/experience-database-server-graphql": "*",
 		"@app/experience-settings": "*",
 		"@app/users-database-server-graphql": "*",
-		"@app/cloudinary-server": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server-express": "^3.12.1",
-		"appwrite": "^12.0.0",
+		"appwrite": "^13.0.0",
 		"cloudinary": "^1.40.0",
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
@@ -35,6 +35,7 @@
 		"graphql-scalars": "^1.22.2",
 		"lodash": "^4.17.21",
 		"nexus": "^1.3.0",
+		"node-appwrite": "^11.0.0",
 		"vite-plugin-node": "^3.0.2"
 	},
 	"devDependencies": {

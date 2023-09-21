@@ -13,7 +13,8 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
-		"node-appwrite": "^8.0.0",
+		"appwrite": "13.0.0",
+		"node-appwrite": "11.0.0",
 		"node-base64-image": "^2.0.5",
 		"zod": "^3.21.4"
 	}

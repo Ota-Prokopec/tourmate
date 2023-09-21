@@ -4,7 +4,7 @@ import type { Location } from '@app/ts-types';
 
 export type Storage =
 	| {
-			location?: Location;
+			usersLocation?: Location;
 			user?: { username: string; myId: string };
 			cookieFallback?: Record<'a_session_experiences', string>;
 	  } & Record<string, any>;

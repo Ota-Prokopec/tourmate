@@ -11,7 +11,6 @@
 	import { getDetailsByLatAndLong } from '@app/utils';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
-	import { numberTimingCoords } from '@app/experience-settings';
 
 	export let data: PageData;
 	let map: Map;
@@ -35,11 +34,7 @@
 
 	const createLocation = () => {
 		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-		goto(
-			`/addMonument/detail/${markerLocation[0] * numberTimingCoords}-${
-				markerLocation[1] * numberTimingCoords
-			}`
-		);
+		goto(`/addMonument/detail/${markerLocation[0]}-${markerLocation[1]}`);
 	};
 
 	$: positionDetails = useQuery('positionDetails', async () => {

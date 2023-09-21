@@ -1,7 +1,6 @@
 import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-server-graphql'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
-import { numberTimingCoords } from '@app/experience-settings'
 import buckets from '@app/cloudinary-server'
 
 import { v2 as cloudinary } from 'cloudinary'
@@ -26,8 +25,8 @@ export default mutationField('createMonument', {
 			const document = await collections.monument.createDocument(
 				{
 					placeDetailId: placeDetail._id,
-					latitude: Math.floor(args.input.location[0] * numberTimingCoords),
-					longitude: Math.floor(args.input.location[1] * numberTimingCoords),
+					latitude: Math.floor(args.input.location[0]),
+					longitude: Math.floor(args.input.location[1]),
 					about: args.input.about,
 					name: args.input.name,
 					creatorUserId: ctx.user.$id,

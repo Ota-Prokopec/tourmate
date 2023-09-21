@@ -141,7 +141,7 @@ export type Query = {
   getAccount: Account;
   getAccountByMyId: Account;
   getExperience: Experience;
-  getListOfExperience: Array<Experience>;
+  getListOfExperiences: Array<Experience>;
   getListOfMonuments: Array<Monument>;
   getMonument: Monument;
   logInViaEmail: EmailLogin;
@@ -170,7 +170,7 @@ export type QueryGetExperienceArgs = {
 };
 
 
-export type QueryGetListOfExperienceArgs = {
+export type QueryGetListOfExperiencesArgs = {
   input?: InputMaybe<ExperienceInput>;
 };
 
@@ -280,20 +280,20 @@ export type GetExperienceQueryVariables = Exact<{
 
 export type GetExperienceQuery = { __typename?: 'Query', getExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] } };
 
-export type GetListOfExperienceQueryVariables = Exact<{
+export type GetListOfExperiencesQueryVariables = Exact<{
   input?: InputMaybe<ExperienceInput>;
 }>;
 
 
-export type GetListOfExperienceQuery = { __typename?: 'Query', getListOfExperience: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] }> };
+export type GetListOfExperiencesQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] }> };
 
-export type GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQueryVariables = Exact<{
+export type GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQueryVariables = Exact<{
   input?: InputMaybe<MonumentInput>;
   getListOfExperienceInput2?: InputMaybe<ExperienceInput>;
 }>;
 
 
-export type GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQuery = { __typename?: 'Query', getListOfExperience: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, userId: string, myId: string, username: string, staus: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL?: URL | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } }>, getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, staus: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL?: URL | null, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, placeDetails: { __typename?: 'PlaceDetails', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } }>, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null }, placeDetails: { __typename?: 'PlaceDetails', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } }> };
+export type GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, userId: string, myId: string, username: string, staus: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL?: URL | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } }>, getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, staus: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL?: URL | null, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, placeDetails: { __typename?: 'PlaceDetails', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } }>, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null }, placeDetails: { __typename?: 'PlaceDetails', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } }> };
 
 export type CreateMonumentMutationVariables = Exact<{
   input: CreateMonumentInput;
@@ -629,9 +629,9 @@ export const GetExperienceDocument = gql`
   }
 }
     `;
-export const GetListOfExperienceDocument = gql`
-    query getListOfExperience($input: ExperienceInput) {
-  getListOfExperience(input: $input) {
+export const GetListOfExperiencesDocument = gql`
+    query getListOfExperiences($input: ExperienceInput) {
+  getListOfExperiences(input: $input) {
     _createdAt
     _updatedAt
     _collectionId
@@ -644,9 +644,9 @@ export const GetListOfExperienceDocument = gql`
   }
 }
     `;
-export const GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsDocument = gql`
-    query getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments($input: MonumentInput, $getListOfExperienceInput2: ExperienceInput) {
-  getListOfExperience(input: $getListOfExperienceInput2) {
+export const GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsDocument = gql`
+    query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments($input: MonumentInput, $getListOfExperienceInput2: ExperienceInput) {
+  getListOfExperiences(input: $getListOfExperienceInput2) {
     _createdAt
     _updatedAt
     _collectionId
@@ -986,11 +986,11 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getExperience(variables: GetExperienceQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExperienceQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExperienceQuery>(GetExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExperience', 'query');
     },
-    getListOfExperience(variables?: GetListOfExperienceQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfExperienceQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfExperienceQuery>(GetListOfExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfExperience', 'query');
+    getListOfExperiences(variables?: GetListOfExperiencesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfExperiencesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfExperiencesQuery>(GetListOfExperiencesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfExperiences', 'query');
     },
-    getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments(variables?: GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQuery>(GetListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments', 'query');
+    getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments(variables?: GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQuery>(GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments', 'query');
     },
     createMonument(variables: CreateMonumentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateMonumentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMonumentMutation>(CreateMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createMonument', 'mutation');

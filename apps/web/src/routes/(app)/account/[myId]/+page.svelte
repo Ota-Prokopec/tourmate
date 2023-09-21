@@ -4,8 +4,6 @@
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import { buckets, collections, user } from '@app/appwrite-client';
-	import * as permissions from '@app/appwrite-permissions';
 	import Gallery from '$lib/components/Common/Gallery.svelte';
 	import ExperienceCard from '$lib/components/Experience/Cards/ExperienceCard.svelte';
 	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';

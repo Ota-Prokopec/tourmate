@@ -32,6 +32,8 @@
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import { Query, collections, svelteCollections } from '@app/appwrite-client';
 	import type { UserInfoGraphqlDocument } from '@app/ts-types';
+	import IconSquareSpace from '$lib/components/Icons/IconSquareSpace.svelte';
+	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
 
 	let foregroundNotification: MessagePayload | undefined;
 
@@ -66,9 +68,13 @@
 <div class="w-full h-full">
 	<slot />
 
-	<BottomNav position="fixed" navType="application" classInner="grid-cols-3">
+	<BottomNav position="fixed" navType="application" classInner="grid-cols-4">
 		<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
 			<IconLocation />
+		</BottomNavItem>
+
+		<BottomNavItem on:click={() => goto('/search')}>
+			<IconMagnifyingGlass />
 		</BottomNavItem>
 
 		<BottomNavItem
@@ -80,7 +86,6 @@
 				}
 				goto('/');
 			}}
-			appBtnPosition="middle"
 		>
 			{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
 				<IconPlus />

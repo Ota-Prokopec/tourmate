@@ -11,14 +11,14 @@ export const load: PageServerLoad = async (event) => {
 
 	const res = await sdkssr(
 		event
-	).getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments({
+	).getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments({
 		input: {
 			location: location,
 			zoom: 14
 		}
 	});
 
-	const experiences = res.getListOfExperience;
+	const experiences = res.getListOfExperiences;
 	const monuments = res.getListOfMonuments;
 
 	return { loadedExperiences: experiences, loadedMonuments: monuments };

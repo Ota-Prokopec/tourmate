@@ -110,7 +110,7 @@ type Query {
   getAccount(userId: String): Account!
   getAccountByMyId(myId: String!): Account!
   getExperience(id: String!): Experience!
-  getListOfExperience(input: ExperienceInput): [Experience!]!
+  getListOfExperiences(input: ExperienceInput): [Experience!]!
   getListOfMonuments(input: MonumentInput): [Monument!]!
   getMonument(id: String!): Monument!
   logInViaEmail(email: String!, password: String!): EmailLogin!

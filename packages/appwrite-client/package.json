@@ -13,10 +13,10 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"@app/ts-types": "*",
 		"@app/appwrite-permissions": "*",
+		"@app/ts-types": "*",
 		"@types/tough-cookie": "^4.0.2",
-		"appwrite": "latest",
+		"appwrite": "^13.0.0",
 		"axios-cookiejar-support": "^4.0.7",
 		"js-cookie": "^3.0.5",
 		"lodash": "^4.17.21",

@@ -1,5 +1,5 @@
-query getListOfExperience($input: ExperienceInput) {
-	getListOfExperience(input: $input) {
+query getListOfExperiences($input: ExperienceInput) {
+	getListOfExperiences(input: $input) {
 		_createdAt
 		_updatedAt
 		_collectionId

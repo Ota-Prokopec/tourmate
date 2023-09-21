@@ -1,8 +1,8 @@
-query getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments(
+query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments(
 	$input: MonumentInput
 	$getListOfExperienceInput2: ExperienceInput
 ) {
-	getListOfExperience(input: $getListOfExperienceInput2) {
+	getListOfExperiences(input: $getListOfExperienceInput2) {
 		_createdAt
 		_updatedAt
 		_collectionId

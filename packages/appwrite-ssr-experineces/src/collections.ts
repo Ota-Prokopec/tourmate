@@ -15,10 +15,10 @@ import appwriteSSR from '@app/appwrite-ssr'
 export const collections = (appwrite: ReturnType<typeof appwriteSSR.setCookie>) => {
 	const { Collection } = appwrite
 	return {
-		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('account', 'userInfo'),
+		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('experiences', 'userInfo'),
 		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentDocument, MonumentDocumentCreate>('experiences', 'monuments'),
-		token: new Collection<TokenDocument, TokenDocumentCreate>('account', 'tokens'),
+		token: new Collection<TokenDocument, TokenDocumentCreate>('experiences', 'tokens'),
 		placeDetail: new Collection<PlaceDetailDocument, PlaceDetailDocumentCreate>('experiences', 'placeDetails'),
 	}
 }

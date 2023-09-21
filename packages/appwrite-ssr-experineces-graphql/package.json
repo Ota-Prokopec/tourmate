@@ -12,6 +12,8 @@
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"@app/appwrite-ssr-graphql": "*"
+		"@app/appwrite-ssr-graphql": "*",
+		"appwrite": "13.0.0",
+		"node-appwrite": "11.0.0"
 	}
 }

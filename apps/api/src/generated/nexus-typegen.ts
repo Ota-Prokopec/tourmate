@@ -209,7 +209,7 @@ export interface NexusGenFieldTypes {
     getAccount: NexusGenRootTypes['Account']; // Account!
     getAccountByMyId: NexusGenRootTypes['Account']; // Account!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
-    getListOfExperience: NexusGenRootTypes['Experience'][]; // [Experience!]!
+    getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
@@ -290,7 +290,7 @@ export interface NexusGenFieldTypeNames {
     getAccount: 'Account'
     getAccountByMyId: 'Account'
     getExperience: 'Experience'
-    getListOfExperience: 'Experience'
+    getListOfExperiences: 'Experience'
     getListOfMonuments: 'Monument'
     getMonument: 'Monument'
     logInViaEmail: 'EmailLogin'
@@ -325,7 +325,7 @@ export interface NexusGenArgTypes {
     getExperience: { // args
       id: string; // String!
     }
-    getListOfExperience: { // args
+    getListOfExperiences: { // args
       input?: NexusGenInputs['ExperienceInput'] | null; // ExperienceInput
     }
     getListOfMonuments: { // args

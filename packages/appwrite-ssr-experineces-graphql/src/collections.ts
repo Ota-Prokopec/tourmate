@@ -15,10 +15,10 @@ import appwriteSSR from '@app/appwrite-ssr-graphql'
 
 export const collections = (Collection: Types.AppwriteSSR['Collection']) => {
 	return {
-		userInfo: new Collection<UserInfoGraphqlDocument, UserInfoDocumentCreate>('account', 'userInfo'),
+		userInfo: new Collection<UserInfoGraphqlDocument, UserInfoDocumentCreate>('experiences', 'userInfo'),
 		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>('experiences', 'monuments'),
-		token: new Collection<TokenGraphqlDocument, TokenDocumentCreate>('account', 'tokens'),
+		token: new Collection<TokenGraphqlDocument, TokenDocumentCreate>('experiences', 'tokens'),
 		placeDetail: new Collection<PlaceDetailGraphqlDocument, PlaceDetailDocumentCreate>('experiences', 'placeDetails'),
 	}
 }

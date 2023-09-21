@@ -8,14 +8,14 @@ export const load: LayoutServerLoad = async (event) => {
 
 	const monumentExperiencesWithCreators = await sdkssr(
 		event
-	).getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments({
+	).getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments({
 		input: {
 			location: location,
 			zoom: 14
 		}
 	});
 
-	const { getListOfMonuments: monuments, getListOfExperience: experiences } =
+	const { getListOfMonuments: monuments, getListOfExperiences: experiences } =
 		monumentExperiencesWithCreators;
 
 	return {

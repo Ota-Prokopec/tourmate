@@ -1,4 +1,3 @@
-import { buckets as buckets_ } from './buckets'
 import { collections as collections_ } from './collections'
 import appwriteSSR, { Types } from '@app/appwrite-ssr-graphql'
 
@@ -15,9 +14,8 @@ const setNone = () => set(myAppwriteClient.none())
 
 const set = (appwrite: Types.AppwriteSSR) => {
 	const collections = collections_(appwrite.Collection)
-	const buckets = buckets_(appwrite)
 
-	return { buckets, collections, ...appwrite }
+	return { collections, ...appwrite }
 }
 
 //@ts-ignore

@@ -97,7 +97,7 @@
 	};
 </script>
 
-<button class={twMerge('relative ', className, classWrap)}>
+<button class={twMerge('relative w-min ', className, classWrap)}>
 	{#if icon}
 		<button
 			class={`absolute inset-y-0 ${
@@ -123,7 +123,7 @@
 		{disabled}
 		use:retype
 		{id}
-		class="input rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
+		class="rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
 			? iconPosition === 'left'
 				? 'pl-12'
 				: 'pr-12'

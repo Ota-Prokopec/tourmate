@@ -15,9 +15,9 @@ export default (databases: Databases) => {
 	const Collection = database(databases)
 
 	return {
-		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('account', 'userInfo'),
+		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('experiences', 'userInfo'),
 		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>('experiences', 'experiences'),
 		monument: new Collection<MonumentDocument, MonumentDocumentCreate>('experiences', 'monuments'),
-		token: new Collection<TokenDocument, TokenDocumentCreate>('account', 'tokens'),
+		token: new Collection<TokenDocument, TokenDocumentCreate>('experiences', 'tokens'),
 	}
 }

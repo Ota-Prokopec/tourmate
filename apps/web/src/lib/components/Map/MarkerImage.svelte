@@ -9,33 +9,20 @@
 	export let zoom: number = 14;
 	export let stacked = false;
 
+	$: console.log(zoom);
+
 	const avatarURL = imgSrc as unknown as string;
 
 	let className = '';
 	export { className as class };
+
+	let size: string = 'w-12 h-12';
+	$: size = zoom > 18 ? 'w-20 h-20' : zoom > 10 ? 'w-12 h-12' : 'h-8 w-8';
 </script>
 
 <Marker {location}>
-	<button
-		on:click
-		class={twMerge(
-			'w-12 h-12 ',
-			zoom > 17 ? 'h-14 w-14 hover:z-[99999] hover:w-16 hover:h-16' : '',
-			zoom > 19 ? '' : ''
-		)}
-	>
-		<Avatar
-			{stacked}
-			class={twMerge(
-				'rounded-full object-cover w-full h-full group',
-				zoom > 17 ? '' : '',
-				className
-			)}
-			rounded
-			src={avatarURL}
-		>
-			<slot name="avatar" />
-		</Avatar>
+	<button on:click class={twMerge(size, className)}>
+		<img class={twMerge(size, className)} alt="" src={avatarURL} />
 	</button>
 	<slot />
 </Marker>

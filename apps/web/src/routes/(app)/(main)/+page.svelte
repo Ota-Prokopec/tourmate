@@ -37,16 +37,7 @@
 	) as Location[];
 
 	const sameLocation = countSameItemsInArray(experiencesLocations);
-
-	const howManyBeforeMe = (myLocation: Location, myIndex: number) => {
-		const res = experiencesLocations.filter(
-			(location, index) =>
-				lodash.isEqual([roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)], location) &&
-				myIndex > index
-		).length;
-
-		return res;
-	};
+	console.log(sameLocation);
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
@@ -54,8 +45,8 @@
 		<Map deg={45} bind:zoom={mapZoom} bind:location>
 			{#each data.loadedExperiences as experience, index}
 				<ExperienceMarker
+					zoom={mapZoom}
 					bouncing={rightNowAddedExperience?.$id === experience._id}
-					stacked={sameLocation[JSON.stringify(experiencesLocations[index])] > 1}
 					on:almostProfile={(e) => {
 						almostProfile = true;
 						almostProfileImageSrc = e.detail.imgSrc;

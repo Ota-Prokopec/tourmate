@@ -1,4 +1,3 @@
-import { buckets as buckets_ } from './buckets'
 import { collections as collections_ } from './collections'
 import appwriteSSR from '@app/appwrite-ssr'
 import { Types } from '@app/appwrite-ssr'
@@ -16,8 +15,7 @@ const setNone = () => set(myAppwriteClient.none())
 
 const set = (appwrite: Types.AppwriteSSR) => {
 	const collections = collections_(appwrite)
-	const buckets = buckets_(appwrite)
 
-	return { buckets, collections, ...appwrite }
+	return { collections, ...appwrite }
 }
 export default { setCookie, setSession, setNone }
