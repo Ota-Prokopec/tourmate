@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { Img } from 'flowbite-svelte';
 	import { myNewExperienceStore } from './newExperienceStore.js';
-
-	export let data;
+	import FilerobotImageEditor from 'filerobot-image-editor';
 
 	const { imgSrc, location } = $myNewExperienceStore;
 </script>

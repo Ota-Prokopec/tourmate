@@ -2,6 +2,7 @@
 	"name": "web",
 	"version": "1.0.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"dev": "vite dev --host",
 		"build": "vite build",
@@ -54,7 +55,6 @@
 		"vite-plugin-pwa": "^0.16.4",
 		"vitest": "^0.25.3"
 	},
-	"type": "module",
 	"dependencies": {
 		"@apollo/client": "^3.8.2",
 		"@app/appwrite-client": "*",
@@ -84,6 +84,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"filepond": "^4.30.4",
+		"filerobot-image-editor": "^4.5.2",
 		"firebase": "^10.2.0",
 		"flowbite": "^1.7.0",
 		"flowbite-svelte": "^0.40.1",
@@ -98,6 +99,7 @@
 		"npm": "^9.8.1",
 		"puppeteer": "^21.0.1",
 		"react": "^18.2.0",
+		"react-filerobot-image-editor": "^4.5.2",
 		"superjson": "^1.13.1",
 		"svelte-appwrite-client": "^0.2.3",
 		"svelte-carousel": "^1.0.25",
