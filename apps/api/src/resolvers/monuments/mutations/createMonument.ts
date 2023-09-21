@@ -1,9 +1,8 @@
-import { owner } from '@app/appwrite-permissions'
 import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-server-graphql'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
 import { numberTimingCoords } from '@app/experience-settings'
-import appwriteServer from '@app/appwrite-server'
+import cloudinary from '@app/cloudinary-server'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -12,9 +11,8 @@ export default mutationField('createMonument', {
 		try {
 			if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 			const { collections } = ctx.appwrite
-			const { buckets } = appwriteServer.setAdmin()
 
-			const file = isBase64(args.input.picture) ? await buckets.monumentsPictures.createFile(args.input.picture, owner(ctx.user.$id)) : null
+			const file = isBase64(args.input.picture) ? await cloudinary.monuments.uploadBase64(args.input.picture) : null
 
 			const placeDetail = await collections.placeDetail.createDocument(
 				{
@@ -31,7 +29,7 @@ export default mutationField('createMonument', {
 					about: args.input.about,
 					name: args.input.name,
 					creatorUserId: ctx.user.$id,
-					pictureURL: file ? buckets.monumentsPictures.getFileURL(file?.$id) : undefined,
+					pictureURL: file?.url,
 				},
 				[ctx.user],
 			)

@@ -114,6 +114,7 @@ type Query {
   getListOfMonuments(input: MonumentInput): [Monument!]!
   getMonument(id: String!): Monument!
   logInViaEmail(email: String!, password: String!): EmailLogin!
+  updateProfilePicture(picture: String!): Account!
 }
 
 """

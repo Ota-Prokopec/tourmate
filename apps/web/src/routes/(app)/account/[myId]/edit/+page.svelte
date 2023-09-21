@@ -2,11 +2,12 @@
 	import type { PageData } from './$types';
 	import Input from '$lib/components/Common/Input.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import { updateProfilePicture } from '$lib/utils/account/updateProfilePicture';
 	import { Button } from 'flowbite-svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import { collections } from '@app/appwrite-client';
 	import MyAlert from '$lib/components/Common/MyAlert.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import type { Base64 } from '@app/ts-types';
 
 	export let data: PageData;
 
@@ -15,13 +16,8 @@
 	let successAlert = false;
 	$: disabled = username === data.userProfile.username;
 
-	const changeProfilePic = async (file: File) => {
-		await updateProfilePicture(
-			data.user.userId,
-			data.userProfile._id,
-			data.userProfile.profilePictureURL,
-			file
-		);
+	const changeProfilePic = async (base64: Base64) => {
+		sdk.updateProfilePicture({ picture: base64 });
 	};
 
 	const saveChanges = async () => {
@@ -43,8 +39,8 @@
 		screenErrors
 		class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
 		imageURL={data.userProfile.profilePictureURL}
-		on:image={async ({ detail: { file } }) => {
-			changeProfilePic(file);
+		on:image={async ({ detail: { base64 } }) => {
+			changeProfilePic(base64);
 		}}
 	/>
 	<Input bind:value={username} class="w-full" floatingLabel="jméno" />

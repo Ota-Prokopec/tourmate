@@ -71,12 +71,12 @@ export default (client: Client) => {
 		async updateDocument<TData extends TDocumentGet>(
 			documentId: string,
 			data: OmitDocument<TDocumentCreate> | {} | undefined,
-			permissions: string[] | undefined,
+			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			document: Document,
 			data: OmitDocument<TDocumentCreate> | {} | undefined,
-			permissions: string[] | undefined,
+			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			param: string | Document,

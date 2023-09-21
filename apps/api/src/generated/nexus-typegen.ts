@@ -213,6 +213,7 @@ export interface NexusGenFieldTypes {
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
+    updateProfilePicture: NexusGenRootTypes['Account']; // Account!
   }
   UsersPreferences: { // field return type
     location: number[] | null; // [Float!]
@@ -293,6 +294,7 @@ export interface NexusGenFieldTypeNames {
     getListOfMonuments: 'Monument'
     getMonument: 'Monument'
     logInViaEmail: 'EmailLogin'
+    updateProfilePicture: 'Account'
   }
   UsersPreferences: { // field return type name
     location: 'Float'
@@ -335,6 +337,9 @@ export interface NexusGenArgTypes {
     logInViaEmail: { // args
       email: string; // String!
       password: string; // String!
+    }
+    updateProfilePicture: { // args
+      picture: string; // String!
     }
   }
 }

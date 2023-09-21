@@ -64,9 +64,7 @@
 <FirebaseNotification message={foregroundNotification} />
 
 <div class="w-full h-full">
-	<wrap class="w-full h-auto flex justify-center">
-		<slot />
-	</wrap>
+	<slot />
 
 	<BottomNav position="fixed" navType="application" classInner="grid-cols-3">
 		<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">

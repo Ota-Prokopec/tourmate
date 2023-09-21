@@ -1,0 +1,21 @@
+query updateProfilePicture($picture: String!) {
+	updateProfilePicture(picture: $picture) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		myId
+		username
+		staus
+		emailVerification
+		phoneVerification
+		profilePictureURL
+		prefs {
+			location
+			termsAccepted
+		}
+	}
+}

@@ -4,6 +4,8 @@
 
 export { default as createAccount } from './account/mutations/createAccount';
 export * from './account/mutations/createAccount';
+export { default as updateProfilePicture } from './account/mutations/updateProfilePicture';
+export * from './account/mutations/updateProfilePicture';
 export { default as getAccount } from './account/queries/getAccount';
 export * from './account/queries/getAccount';
 export { default as getAccountByMyId } from './account/queries/getAccountByMyId';

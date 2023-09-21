@@ -9,7 +9,8 @@
 	import Gallery from '$lib/components/Common/Gallery.svelte';
 	import ExperienceCard from '$lib/components/Experience/Cards/ExperienceCard.svelte';
 	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
-	import { updateProfilePicture } from '$lib/utils/account/updateProfilePicture';
+	import { sdk } from '$src/graphql/sdk';
+	import type { Base64 } from '@app/ts-types';
 
 	export let data: PageData;
 
@@ -29,13 +30,8 @@
 		{ title: 'památky', key: 'monuments' }
 	] as const;
 
-	const changeProfilePic = async (file: File) => {
-		updateProfilePicture(
-			data.user.userId,
-			data.userProfile._id,
-			data.userProfile.profilePictureURL,
-			file
-		);
+	const changeProfilePic = async (base64: Base64) => {
+		sdk.updateProfilePicture({ picture: base64 });
 	};
 </script>
 
@@ -46,8 +42,8 @@
 				screenErrors
 				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
 				imageURL={data.userProfile.profilePictureURL}
-				on:image={async ({ detail: { file } }) => {
-					changeProfilePic(file);
+				on:image={async ({ detail: { base64 } }) => {
+					changeProfilePic(base64);
 				}}
 			/>
 		{:else}
