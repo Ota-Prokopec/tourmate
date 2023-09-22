@@ -61,12 +61,7 @@
 	<span class=" text-3xl p-4">{data.userProfile.username}</span>
 
 	<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
-		<CategoryPicker
-			{categories}
-			on:change={(e) => {
-				experiencesType = e.detail;
-			}}
-		/>
+		<CategoryPicker {categories} bind:chosenCategory={experiencesType} />
 		<Gallery class="">
 			{#if experiencesType === 'experiences'}
 				{#each usersExperiences as experience}

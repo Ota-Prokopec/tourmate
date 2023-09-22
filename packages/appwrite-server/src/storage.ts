@@ -52,7 +52,7 @@ export default (client: Client) => {
 		updateFile(id: string, name: string, permissions: string[] | undefined): Promise<Models.File>
 		updateFile(file: Models.File, name: string, permissions: string[] | undefined): Promise<Models.File>
 		updateFile(param: string | Models.File, name: string, permissions: string[] | undefined = []): Promise<Models.File> {
-			return storage.updateFile(this.bucketId, typeof param === 'string' ? param : param.$id, permissions)
+			return storage.updateFile(this.bucketId, typeof param === 'string' ? param : param.$id, name, permissions)
 		}
 
 		getFilePreview(file: string | Models.File) {

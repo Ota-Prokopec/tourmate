@@ -34,6 +34,7 @@
 	import type { UserInfoGraphqlDocument } from '@app/ts-types';
 	import IconSquareSpace from '$lib/components/Icons/IconSquareSpace.svelte';
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
+	import IconMap from '$lib/components/Icons/IconMap.svelte';
 
 	let foregroundNotification: MessagePayload | undefined;
 
@@ -90,7 +91,7 @@
 			{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
 				<IconPlus />
 			{:else}
-				<IconHome />
+				<IconMap />
 			{/if}
 		</BottomNavItem>
 

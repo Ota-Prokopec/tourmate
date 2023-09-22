@@ -5,5 +5,6 @@ export default inputObjectType({
 	definition: (t) => {
 		t.string('picture')
 		t.field('location', { type: 'Location' })
+		t.string('placeName')
 	},
 })

@@ -1,10 +1,4 @@
 import { sdkssr } from '$src/graphql/sdkssr';
-import { PageServerLoad } from '../(main)/$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async (event) => {
-	const { getListOfExperiences: experiences } = await sdkssr(event).getListOfExperiences();
-
-	experiences.getListOfExperiences;
-
-	return { loadedExperiences: experiences };
-};
+export const load: PageServerLoad = async (event) => {};

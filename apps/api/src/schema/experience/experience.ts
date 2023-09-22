@@ -14,6 +14,7 @@ export default objectType({
 		t.string('userId')
 		t.field('imgSrc', { type: 'URL' })
 		t.field('location', { type: 'Location' })
+		t.string('placeDetailId')
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
@@ -26,6 +27,15 @@ export default objectType({
 				console.log(userId)
 
 				return await getAccount(userId, userId === ctx.user.$id, collections)
+			},
+		})
+		t.field('placeDetails', {
+			type: 'PlaceDetails',
+			resolve: async (source, args, ctx) => {
+				const { collections } = ctx.appwrite
+				const detail = await collections.placeDetail.getDocument(source.placeDetailId)
+				if (!detail) throw new Error('placeDetail not found')
+				return detail
 			},
 		})
 	},

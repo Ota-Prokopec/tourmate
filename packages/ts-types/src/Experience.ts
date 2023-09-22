@@ -8,6 +8,7 @@ export type Experience = {
 	userId: string
 	imgSrc: URL
 	location: Location
+	placeDetailId: string
 }
 
 export type ExperienceDocument = Document<{
@@ -15,6 +16,7 @@ export type ExperienceDocument = Document<{
 	imgSrc: URL
 	latitude: number
 	longitude: number
+	placeDetailId: string
 }>
 
 export type ExperienceGraphqlDocument = GraphqlDocument<{
@@ -22,6 +24,7 @@ export type ExperienceGraphqlDocument = GraphqlDocument<{
 	imgSrc: URL
 	latitude: number
 	longitude: number
+	placeDetailId: string
 }>
 
 export type ExperienceDocumentCreate = {
@@ -29,6 +32,7 @@ export type ExperienceDocumentCreate = {
 	imgSrc: URL
 	latitude: number
 	longitude: number
+	placeDetailId: string
 }
 
 export type Monument = {

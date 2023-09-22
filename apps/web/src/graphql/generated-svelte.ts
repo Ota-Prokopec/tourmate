@@ -53,6 +53,7 @@ export type CreateAccountInput = {
 export type CreateExperienceInput = {
   location: Scalars['Location']['input'];
   picture: Scalars['String']['input'];
+  placeName: Scalars['String']['input'];
 };
 
 export type CreateMonumentInput = {
@@ -78,6 +79,8 @@ export type Experience = {
   _updatedAt: Scalars['String']['output'];
   imgSrc: Scalars['URL']['output'];
   location: Scalars['Location']['output'];
+  placeDetailId: Scalars['String']['output'];
+  placeDetails: PlaceDetails;
   user: Account;
   userId: Scalars['String']['output'];
 };
@@ -284,12 +287,26 @@ export type GetExperienceQueryVariables = Exact<{
 
 export type GetExperienceQuery = { __typename?: 'Query', getExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] } };
 
+export type GetExperienceWithCreatorAndHisOtherExperiencesQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetExperienceWithCreatorAndHisOtherExperiencesQuery = { __typename?: 'Query', getExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null, experiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] }> } } };
+
 export type GetListOfExperiencesQueryVariables = Exact<{
   input?: InputMaybe<ExperienceInput>;
 }>;
 
 
 export type GetListOfExperiencesQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] }> };
+
+export type GetListOfExperiencesWithCreatorQueryVariables = Exact<{
+  input?: InputMaybe<ExperienceInput>;
+}>;
+
+
+export type GetListOfExperiencesWithCreatorQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], user: { __typename?: 'Account', userId: string, myId: string, username: string, profilePictureURL?: URL | null } }> };
 
 export type GetListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonumentsQueryVariables = Exact<{
   input?: InputMaybe<MonumentInput>;
@@ -633,6 +650,44 @@ export const GetExperienceDoc = gql`
   }
 }
     `;
+export const GetExperienceWithCreatorAndHisOtherExperiencesDoc = gql`
+    query getExperienceWithCreatorAndHisOtherExperiences($id: String!) {
+  getExperience(id: $id) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    imgSrc
+    location
+    user {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      profilePictureURL
+      experiences {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        imgSrc
+        location
+      }
+    }
+  }
+}
+    `;
 export const GetListOfExperiencesDoc = gql`
     query getListOfExperiences($input: ExperienceInput) {
   getListOfExperiences(input: $input) {
@@ -645,6 +700,27 @@ export const GetListOfExperiencesDoc = gql`
     userId
     imgSrc
     location
+  }
+}
+    `;
+export const GetListOfExperiencesWithCreatorDoc = gql`
+    query getListOfExperiencesWithCreator($input: ExperienceInput) {
+  getListOfExperiences(input: $input) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    imgSrc
+    location
+    user {
+      userId
+      myId
+      username
+      profilePictureURL
+    }
   }
 }
     `;
@@ -1311,6 +1387,41 @@ export const getExperience = (
             return result;
           }
         
+export const getExperienceWithCreatorAndHisOtherExperiences = (
+            options: Omit<
+              WatchQueryOptions<GetExperienceWithCreatorAndHisOtherExperiencesQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetExperienceWithCreatorAndHisOtherExperiencesQuery> & {
+              query: ObservableQuery<
+                GetExperienceWithCreatorAndHisOtherExperiencesQuery,
+                GetExperienceWithCreatorAndHisOtherExperiencesQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetExperienceWithCreatorAndHisOtherExperiencesDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetExperienceWithCreatorAndHisOtherExperiencesQuery> & {
+                query: ObservableQuery<
+                  GetExperienceWithCreatorAndHisOtherExperiencesQuery,
+                  GetExperienceWithCreatorAndHisOtherExperiencesQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
 export const getListOfExperiences = (
             options: Omit<
               WatchQueryOptions<GetListOfExperiencesQueryVariables>, 
@@ -1333,6 +1444,41 @@ export const getListOfExperiences = (
                 query: ObservableQuery<
                   GetListOfExperiencesQuery,
                   GetListOfExperiencesQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const getListOfExperiencesWithCreator = (
+            options: Omit<
+              WatchQueryOptions<GetListOfExperiencesWithCreatorQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetListOfExperiencesWithCreatorQuery> & {
+              query: ObservableQuery<
+                GetListOfExperiencesWithCreatorQuery,
+                GetListOfExperiencesWithCreatorQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetListOfExperiencesWithCreatorDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetListOfExperiencesWithCreatorQuery> & {
+                query: ObservableQuery<
+                  GetListOfExperiencesWithCreatorQuery,
+                  GetListOfExperiencesWithCreatorQueryVariables
                 >;
               }
             >(

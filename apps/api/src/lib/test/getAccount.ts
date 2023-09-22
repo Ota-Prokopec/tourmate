@@ -12,8 +12,6 @@ export const getAccount = async (
 
 	const { emailVerification, prefs, status, phoneVerification } = await users.get<Preferences>(userId)
 
-	console.log(userId)
-
 	const userInfo = await collections.userInfo.getDocument([Query.equal('userId', userId)])
 
 	if (!userInfo) throw new Error('userInfo not found')

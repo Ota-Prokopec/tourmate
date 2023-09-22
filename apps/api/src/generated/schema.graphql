@@ -31,6 +31,7 @@ input CreateAccountInput {
 input CreateExperienceInput {
   location: Location!
   picture: String!
+  placeName: String!
 }
 
 input CreateMonumentInput {
@@ -54,6 +55,8 @@ type Experience {
   _updatedAt: String!
   imgSrc: URL!
   location: Location!
+  placeDetailId: String!
+  placeDetails: PlaceDetails!
   user: Account!
   userId: String!
 }

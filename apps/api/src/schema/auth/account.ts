@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-express'
-import { list, objectType } from 'nexus'
+import { list, nullable, objectType } from 'nexus'
 import UsersPreferences from './usersPreferences'
 import { getListOfExperineceByUser, getListOfMonumentsByUser } from '@app/experience-database-server-graphql'
 import { GraphqlDocument, Preferences } from '@app/ts-types'
@@ -32,11 +32,7 @@ export default objectType({
 		t.boolean('phoneVerification')
 		t.nullable.field('profilePictureURL', { type: 'URL', description: 'This is URL of profile picture. Not its id.' })
 		t.nullable.field('prefs', {
-			type: UsersPreferences,
-			resolve: (s, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('Account Type')
-				return {}
-			},
+			type: nullable(UsersPreferences),
 		}),
 			t.field('experiences', {
 				type: list('Experience'),

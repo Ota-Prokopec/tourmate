@@ -38,6 +38,7 @@ export interface NexusGenInputs {
   CreateExperienceInput: { // input type
     location: NexusGenScalars['Location']; // Location!
     picture: string; // String!
+    placeName: string; // String!
   }
   CreateMonumentInput: { // input type
     about: string; // String!
@@ -80,6 +81,7 @@ export interface NexusGenObjects {
     emailVerification: boolean; // Boolean!
     myId: string; // String!
     phoneVerification: boolean; // Boolean!
+    prefs?: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
     profilePictureURL?: NexusGenScalars['URL'] | null; // URL
     staus: boolean; // Boolean!
     userId: string; // String!
@@ -97,6 +99,7 @@ export interface NexusGenObjects {
     _updatedAt: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
     location: NexusGenScalars['Location']; // Location!
+    placeDetailId: string; // String!
     userId: string; // String!
   }
   Monument: { // root type
@@ -171,6 +174,8 @@ export interface NexusGenFieldTypes {
     _updatedAt: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
     location: NexusGenScalars['Location']; // Location!
+    placeDetailId: string; // String!
+    placeDetails: NexusGenRootTypes['PlaceDetails']; // PlaceDetails!
     user: NexusGenRootTypes['Account']; // Account!
     userId: string; // String!
   }
@@ -252,6 +257,8 @@ export interface NexusGenFieldTypeNames {
     _updatedAt: 'String'
     imgSrc: 'URL'
     location: 'Location'
+    placeDetailId: 'String'
+    placeDetails: 'PlaceDetails'
     user: 'Account'
     userId: 'String'
   }
