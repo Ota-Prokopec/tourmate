@@ -6,13 +6,13 @@
 	"types": "src/index.ts",
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
-		"prebuild": "yarn generate-scalarTypes-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-graphql-schema",
+		"prebuild": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-graphql-schema",
 		"build": "tsc --build",
 		"preview": "vite preview",
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
-		"generate-scalarTypes-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/scalarTypes"
+		"generate-types-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/types/"
 	},
 	"dependencies": {
 		"@app/appwrite-nexus": "*",

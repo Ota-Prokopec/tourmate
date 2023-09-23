@@ -32,6 +32,7 @@ input CreateExperienceInput {
   location: Location!
   picture: String!
   placeName: String!
+  texts: [ImageTextInput!]!
 }
 
 input CreateMonumentInput {
@@ -64,6 +65,11 @@ type Experience {
 input ExperienceInput {
   location: Location!
   zoom: Int!
+}
+
+input ImageTextInput {
+  text: String!
+  textStyles: String!
 }
 
 scalar Location

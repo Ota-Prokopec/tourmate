@@ -9,6 +9,7 @@ export * from './utils/clipboard';
 export * from './utils/device';
 export * from './utils/elementIdGenerator';
 export * from './utils/fetching';
+export * from './utils/generateDarkAndLightColors';
 export * from './utils/localStorage';
 export * from './utils/location';
 export * from './utils/navigation';

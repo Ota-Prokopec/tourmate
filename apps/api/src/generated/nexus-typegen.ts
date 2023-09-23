@@ -39,6 +39,7 @@ export interface NexusGenInputs {
     location: NexusGenScalars['Location']; // Location!
     picture: string; // String!
     placeName: string; // String!
+    texts: NexusGenInputs['ImageTextInput'][]; // [ImageTextInput!]!
   }
   CreateMonumentInput: { // input type
     about: string; // String!
@@ -50,6 +51,10 @@ export interface NexusGenInputs {
   ExperienceInput: { // input type
     location: NexusGenScalars['Location']; // Location!
     zoom: number; // Int!
+  }
+  ImageTextInput: { // input type
+    text: string; // String!
+    textStyles: string; // String!
   }
   MonumentInput: { // input type
     location: number[]; // [Float!]!

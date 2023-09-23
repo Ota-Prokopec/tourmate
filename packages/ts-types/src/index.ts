@@ -5,4 +5,5 @@
 export * from './Account';
 export * from './Document';
 export * from './Experience';
+export * from './PictureEdit';
 export * from './TsTypes';

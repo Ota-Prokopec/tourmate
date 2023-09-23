@@ -54,6 +54,7 @@ export type CreateExperienceInput = {
   location: Scalars['Location']['input'];
   picture: Scalars['String']['input'];
   placeName: Scalars['String']['input'];
+  texts: Array<ImageTextInput>;
 };
 
 export type CreateMonumentInput = {
@@ -88,6 +89,11 @@ export type Experience = {
 export type ExperienceInput = {
   location: Scalars['Location']['input'];
   zoom: Scalars['Int']['input'];
+};
+
+export type ImageTextInput = {
+  text: Scalars['String']['input'];
+  textStyles: Scalars['String']['input'];
 };
 
 export type Monument = {

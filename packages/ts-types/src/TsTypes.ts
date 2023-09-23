@@ -38,7 +38,18 @@ export type RequiredDeep<T> = {
 	[P in keyof T]-?: T[P] extends object ? RequiredDeep<T[P]> : T[P]
 }
 
-export type DatabaseValueTypes = string | number | string[] | number[] | boolean | URL | Base64 | undefined | null
+export type DatabaseValueTypes =
+	| string
+	| number
+	| string[]
+	| number[]
+	| boolean
+	| URL
+	| Base64
+	| undefined
+	| null
+	| any[]
+	| Record<string, string | number | string[] | number[] | boolean | URL | Base64 | undefined | null>
 
 export const urlToString = (url: URL | undefined | null): string | undefined => {
 	return url as unknown as string | undefined
