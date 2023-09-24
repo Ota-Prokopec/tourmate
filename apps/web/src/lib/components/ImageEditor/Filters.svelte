@@ -4,9 +4,10 @@
 	import Icon from '../Common/Icon.svelte';
 	import { device } from '@app/utils';
 	import { createEventDispatcher } from 'svelte';
+	import type { Filter } from '@app/image-svelte/src/actions/filters';
 
 	const dispatch = createEventDispatcher<{
-		click: 'blur' | 'median' | 'sobel' | 'scharr' | 'gaussian';
+		click: Filter;
 	}>();
 </script>
 

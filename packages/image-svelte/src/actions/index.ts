@@ -3,15 +3,19 @@ import { addTextAction } from './addText'
 import { getCtxAction } from './getCtx'
 import { Writable } from 'svelte/store'
 import { addFilterAction } from './filters'
+import { rotateAction } from './rotate'
+import { Base64 } from '@app/ts-types'
 
-export default (image: ImageJs, store: Writable<ImageJs>) => {
-	const addText = addTextAction(image, store)
-	const getCtx = getCtxAction(image)
-	const addFilter = addFilterAction(image, store)
+export default (url: string | Base64, imageStore: Writable<ImageJs>, urlStore: Writable<string | Base64>) => {
+	const addText = addTextAction(url, imageStore, urlStore)
+	const getCtx = getCtxAction(url)
+	const addFilter = addFilterAction(url, imageStore, urlStore)
+	const rotate = rotateAction(url, imageStore, urlStore)
 
 	return {
 		addText,
 		getCtx,
 		addFilter,
+		rotate,
 	}
 }

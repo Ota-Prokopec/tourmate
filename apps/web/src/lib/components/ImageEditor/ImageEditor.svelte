@@ -21,7 +21,7 @@
 	let history: ImageJs[] = [];
 	let ableToUndo = false;
 
-	const [image, actions] = imageSvelte(image);
+	$: [urlStore, imageStore, actions] = imageSvelte(imgUrl);
 
 	const add = () => {
 		if (!image) throw new Error('Image is not available');
@@ -44,79 +44,6 @@
 		imgUrl = getBase64();
 	};
 
-	let image: ImageType | null;
-
-	onMount(async () => {
-		image = await ImageJs.load(imgUrl);
-		image = image.resize({ height: document.body.offsetHeight, width: document.body.offsetWidth });
-		add();
-
-		const centerX = document.body.offsetWidth / 2;
-
-		addText(texts[0], [centerX, 200]);
-	});
-
-	const getCtx = () => {
-		if (!image) throw new Error('Image is not available');
-		const canvas = image.getCanvas();
-		const ctx = canvas.getContext('2d');
-		return ctx;
-	};
-
-	const getBase64 = () => {
-		if (!image) throw new Error('Image is not available');
-		return image.toDataURL('image/png');
-	};
-
-	const rotate = () => {
-		if (!image) throw new Error('Image is not available');
-		image = image.rotate(90);
-		add();
-	};
-
-	const addText = async (text: string, position: [number, number], color?: string) => {
-		if (!image) throw new Error('Image is not available');
-		const ctx = getCtx();
-		if (!ctx) throw new Error('Ctx is not available');
-
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
-		ctx.font = '40px Arial';
-		ctx.fillStyle = 'red';
-		ctx.imageSmoothingEnabled = false;
-		ctx.fillText('ahoj', ...position);
-		image = await ImageJs.load(ctx.canvas.toDataURL('image/png'));
-		add();
-	};
-
-	const filters = {
-		blur: () => {
-			if (!image) throw new Error('Image is not available');
-			image = image.blurFilter({ radius: 1 });
-			add();
-		},
-		median: () => {
-			if (!image) throw new Error('Image is not available');
-			image = image.medianFilter();
-			add();
-		},
-		sobel: () => {
-			if (!image) throw new Error('Image is not available');
-			image = image.sobelFilter();
-			add();
-		},
-		scharr: () => {
-			if (!image) throw new Error('Image is not available');
-			image = image.scharrFilter();
-			add();
-		},
-		gaussian: () => {
-			if (!image) throw new Error('Image is not available');
-			image = image.gaussianFilter();
-			add();
-		}
-	};
-
 	const texts = [`Location: ${placeName}`] as const;
 	let indexOfText = 0;
 	let textColor = 'white';
@@ -127,9 +54,9 @@
 	<div
 		class="absolute bg-black !fill-white rounded-[20px] right-0 w-min h-auto mt-32 p-2 flex flex-wrap flex-col justify-center items-center gap-4"
 	>
-		<Icon on:click={rotate} class=" text-4xl"><IconRotate /></Icon>
+		<Icon on:click={() => actions.rotate(90)} class=" text-4xl"><IconRotate /></Icon>
 
-		<Filters on:click={(e) => filters[e.detail]()} />
+		<Filters on:click={(e) => actions.addFilter(e.detail)} />
 		<Icon
 			disabled={!ableToUndo}
 			on:click={undo}
@@ -141,7 +68,7 @@
 		on:click={(e) => (changingTextColor = false)}
 		class=" h-full object-contain"
 		id="image"
-		src={imgUrl}
+		src={$urlStore}
 	/>
 
 	{#if browser}
