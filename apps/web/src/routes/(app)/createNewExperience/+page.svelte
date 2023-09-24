@@ -1,16 +1,8 @@
 <script lang="ts">
-	import { myNewExperienceStore } from './newExperienceStore';
-	import * as marker from 'markerjs2';
-
-	import { onMount } from 'svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import lsStore from '$lib/utils/lsStore';
-	import { goto } from '$app/navigation';
-	import { useQuery } from '@apollo/client';
 	import { getDetailsByLatAndLong } from '@app/utils';
-	import Title from '$lib/components/Common/Title.svelte';
 	import ImageEditor from '$lib/components/ImageEditor/ImageEditor.svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
 

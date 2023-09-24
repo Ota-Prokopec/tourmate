@@ -5,9 +5,6 @@
 		"checkJs": true,
 
 		"strict": true,
-		"module": "NodeNext",
-		"target": "ES5",
-		"moduleResolution": "NodeNext",
 
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true,

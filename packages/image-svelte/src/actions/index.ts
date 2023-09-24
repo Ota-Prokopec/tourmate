@@ -9,7 +9,7 @@ import { Base64 } from '@app/ts-types'
 export default (url: string | Base64, imageStore: Writable<ImageJs>, urlStore: Writable<string | Base64>) => {
 	const addText = addTextAction(url, imageStore, urlStore)
 	const getCtx = getCtxAction(url)
-	const addFilter = addFilterAction(url, imageStore, urlStore)
+	const addFilter = addFilterAction()
 	const rotate = rotateAction(url, imageStore, urlStore)
 
 	return {
