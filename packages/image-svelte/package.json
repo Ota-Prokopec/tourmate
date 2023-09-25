@@ -15,6 +15,7 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
+		"@app/utils": "*",
 		"@sveltejs/kit": "^1.25.0",
 		"barrelsby": "^2.8.0",
 		"image-js": "^0.35.4",

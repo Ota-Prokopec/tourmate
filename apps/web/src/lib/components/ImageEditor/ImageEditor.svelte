@@ -15,34 +15,34 @@
 	import ColorPicker from '../Common/ColorPicker.svelte';
 	import imageSvelte from '@app/image-svelte';
 
-	export let imgUrl: Base64 | string = '';
+	export let url: Base64 | string = '';
 	export let placeName = '';
 
 	let history: ImageJs[] = [];
 	let ableToUndo = false;
 
-	$: [urlStore, imageStore, actions] = imageSvelte(imgUrl);
+	$: [imgUrl, actions] = imageSvelte();
 
-	const add = () => {
-		if (!image) throw new Error('Image is not available');
-		history = [...history, image];
-		ableToUndo = history.length > 1;
-		imgUrl = getBase64();
-	};
+	// const add = () => {
+	// 	if (!image) throw new Error('Image is not available');
+	// 	history = [...history, image];
+	// 	ableToUndo = history.length > 1;
+	// 	imgUrl = getBase64();
+	// };
 
-	const undo = () => {
-		if (!ableToUndo) throw new Error('not able to undo');
+	// const undo = () => {
+	// 	if (!ableToUndo) throw new Error('not able to undo');
 
-		history = history.splice(0, history.length - 1);
-		ableToUndo = history.length > 1;
+	// 	history = history.splice(0, history.length - 1);
+	// 	ableToUndo = history.length > 1;
 
-		const potencialUndidImage = history.at(-1);
+	// 	const potencialUndidImage = history.at(-1);
 
-		if (potencialUndidImage) image = potencialUndidImage;
-		else throw new Error('not able to undo');
+	// 	if (potencialUndidImage) image = potencialUndidImage;
+	// 	else throw new Error('not able to undo');
 
-		imgUrl = getBase64();
-	};
+	// 	imgUrl = getBase64();
+	// };
 
 	const texts = [`Location: ${placeName}`] as const;
 	let indexOfText = 0;
@@ -59,7 +59,6 @@
 		<Filters on:click={(e) => actions.addFilter(e.detail)} />
 		<Icon
 			disabled={!ableToUndo}
-			on:click={undo}
 			class={twMerge('text-4xl mt-4', !ableToUndo ? 'fill-gray-500' : '')}><IconUndo /></Icon
 		>
 		<ColorPicker />
@@ -68,7 +67,7 @@
 		on:click={(e) => (changingTextColor = false)}
 		class=" h-full object-contain"
 		id="image"
-		src={$urlStore}
+		src={$imgUrl}
 	/>
 
 	{#if browser}

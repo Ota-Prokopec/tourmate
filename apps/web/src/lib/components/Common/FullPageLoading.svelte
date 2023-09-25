@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Loading from '$lib/components/Common/Loading.svelte';
 </script>
 

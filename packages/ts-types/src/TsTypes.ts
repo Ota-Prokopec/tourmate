@@ -54,3 +54,7 @@ export type DatabaseValueTypes =
 export const urlToString = (url: URL | undefined | null): string | undefined => {
 	return url as unknown as string | undefined
 }
+
+export type GetTypesOfmethodsInClass<T> = {
+	[K in keyof T]: T[K] extends (...args: any[]) => infer R ? R : never
+}

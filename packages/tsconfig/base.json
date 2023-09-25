@@ -9,15 +9,12 @@
 		"forceConsistentCasingInFileNames": true,
 		"inlineSources": false,
 		"isolatedModules": true,
-
+		"moduleResolution": "node",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"preserveWatchOutput": true,
 		"skipLibCheck": true,
-		"strict": true,
-		"target": "ES2022",
-		"moduleResolution": "Node10",
-		"resolveJsonModule": true
+		"strict": true
 	},
 
 	"exclude": ["node_modules"]

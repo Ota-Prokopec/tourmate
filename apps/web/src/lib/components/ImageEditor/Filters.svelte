@@ -4,7 +4,7 @@
 	import Icon from '../Common/Icon.svelte';
 	import { device } from '@app/utils';
 	import { createEventDispatcher } from 'svelte';
-	import type { Filter } from '@app/image-svelte/src/actions/filters';
+	import type { Filter } from '@app/image-svelte';
 
 	const dispatch = createEventDispatcher<{
 		click: Filter;

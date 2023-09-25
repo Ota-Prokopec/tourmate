@@ -37,8 +37,7 @@
 
 <div class={twMerge('relative', classWrap)}>
 	{#if letterCount}
-		<span class="text-[11px] absolute right-0 top-[-14px] pr-1">{value.length}/{maxLength}</span
-		>
+		<span class="text-[11px] absolute right-0 top-[-14px] pr-1">{value.length}/{maxLength}</span>
 	{/if}
 	<Textarea
 		{id}
@@ -54,11 +53,7 @@
 			if (e.code == 'Enter' && disableEnterKey) e.preventDefault();
 		}}
 		{placeholder}
-		class={twMerge(
-			disableScroll && 'overflow-hidden',
-			disableResize && 'resize-none',
-			className
-		)}
+		class={twMerge(disableScroll && 'overflow-hidden', disableResize && 'resize-none', className)}
 		maxlength={maxLength}
 		bind:value
 	/>

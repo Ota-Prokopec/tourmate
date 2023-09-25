@@ -10,11 +10,7 @@
 	"devDependencies": {
 		"@types/node": "^18.15.11",
 		"ts-node": "^10.9.1",
-		"typescript": "latest"
-	},
-	"dependencies": {
-		"barrelsby": "^2.8.0",
-		"form-data": "^4.0.0",
-		"mailgun.js": "^8.2.1"
+		"typescript": "latest",
+		"barrelsby": "^2.8.0"
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"name": "@app/utils",
+	"name": "@app/utils-v2",
 	"version": "1.0.1",
 	"main": "./src/index.ts",
 	"scripts": {

@@ -4,6 +4,7 @@ import { context } from './context'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import { Base64 } from '@app/ts-types'
 
 export const server = new ApolloServer({ schema, context: context })
 

@@ -12,7 +12,7 @@
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 
 	import lsSvelte from '$lib/utils/lsStore';
-	import { watchUsersLocation } from '@app/utils/src/utils/location';
+	import { watchUsersLocation } from '@app/utils';
 	import { browser } from '$app/environment';
 
 	browser &&
