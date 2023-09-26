@@ -16,12 +16,9 @@
 	"dependencies": {
 		"@app/ts-types": "*",
 		"@app/utils": "*",
-		"@sveltejs/kit": "^1.25.0",
 		"barrelsby": "^2.8.0",
 		"image-js": "^0.35.4",
 		"lodash": "^4.17.21",
-		"node-appwrite": "^9.0.0",
-		"svelte": "^4.2.1",
-		"zod": "^3.21.4"
+		"node-appwrite": "^9.0.0"
 	}
 }

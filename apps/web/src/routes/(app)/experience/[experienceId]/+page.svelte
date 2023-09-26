@@ -19,36 +19,12 @@
 		<div class="w-full h-auto p-4">
 			<Icon icon="fas fa-map-marker-alt" class="text-3xl text-red-500" />
 			<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-				{data.experience.}
+				{data.experience._collectionId}
 			</h5>
 			<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 flex flex-wrap flex-col gap-2">
 				<span>lokace: [{data.experience.location}]</span>
-				<span>místo: {data.monument.placeDetails.name}</span>
-				<span> {data.monument.about}</span>
-				<button>
-					<UserItem
-						data={{
-							myId: data.monument.creator.myId,
-							username: data.monument.creator.username,
-							profilePictureURL: data.monument.creator.profilePictureURL,
-							userId: data.monument.creatorUserId
-						}}
-					/>
-					<Popover>
-						<AlmostProfileWithMainImage
-							disableCloseButton
-							class=""
-							userInfo={data.monument.creator}
-						/>
-					</Popover>
-				</button>
+				<button />
 			</p>
 		</div>
 	</Card>
-
-	<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
-		<Marker class="z-50" location={data.monument.location}>
-			<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
-		</Marker>
-	</Map>
 </div>

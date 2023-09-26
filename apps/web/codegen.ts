@@ -1,5 +1,4 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import { Location } from '@app/ts-types';
 
 const codegenConfigConfig: CodegenConfig['config'] = {
 	clientPath: './client',
