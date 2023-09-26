@@ -1,0 +1,23 @@
+// @ts-nocheck
+import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+const params = {
+	domain: process.env.SERVER_HOSTNAME,
+	secure: false,
+	path: '/',
+	httpOnly: true
+};
+
+export const load = (event: Parameters<PageServerLoad>[0]) => {
+	const urlParams = new URLSearchParams(event.url.searchParams);
+	const secret = urlParams.get('secret');
+	console.log(secret);
+	if (!secret) throw error(409);
+
+	event.cookies.set(`a_session_${'experiences'}`, secret, params);
+	event.cookies.set(`a_session_${'experiences'}_legacy`, secret, params);
+	return {
+		session: secret
+	};
+};
