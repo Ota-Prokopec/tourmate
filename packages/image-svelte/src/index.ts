@@ -28,6 +28,10 @@ class Functions {
 		return await ImageJs.load(url)
 	}
 
+	async getCtx() {
+		return getCtx(image)
+	}
+
 	async undo() {
 		if (history.length < this.howManyImagesBeforeUndoAvailable + 1) return
 		history = history.splice(0, history.length - 1)

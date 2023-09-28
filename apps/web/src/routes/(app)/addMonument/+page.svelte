@@ -8,7 +8,7 @@
 	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
 	import type { PageData } from './$types';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import { getDetailsByLatAndLong } from '@app/utils';
+	import { getPlaceDetailsByLatAndLong } from '@app/utils';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
 
@@ -39,7 +39,7 @@
 
 	$: positionDetails = useQuery('positionDetails', async () => {
 		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-		return await getDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
+		return await getPlaceDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
 	});
 </script>
 

@@ -37,7 +37,6 @@
 	) as Location[];
 
 	const sameLocation = countSameItemsInArray(experiencesLocations);
-	console.log(sameLocation);
 </script>
 
 <div class="w-full h-full flex justify-center items-center">

@@ -31,7 +31,7 @@ export const watchUsersLocation = (
 	)
 }
 
-export const getDetailsByLatAndLong = async (lat: number, long: number) => {
+export const getPlaceDetailsByLatAndLong = async (lat: number, long: number) => {
 	const res: {
 		display_name: string
 		address: {

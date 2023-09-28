@@ -1,5 +1,3 @@
-import { GetTypesOfmethodsInClass } from '@app/ts-types'
-
 class A {}
 
 export const executeFunctionBeforeAndAfterClassMethod = <Methods extends {}, TClass extends { new (): A }>(
@@ -25,7 +23,7 @@ export const executeFunctionBeforeAndAfterClassMethod = <Methods extends {}, TCl
 		// Next, we replace the original method with one
 		classs.prototype[propertyName] = async function () {
 			if (funs?.before) {
-				if (excludedMethods.after.includes(propertyName as keyof Methods)) return
+				if (excludedMethods && excludedMethods.before && excludedMethods.before.includes(propertyName as keyof Methods)) return
 				const beforeRes = await funs.before(classs)
 				if (!beforeRes) return
 				if (beforeRes !== true) classs = await beforeRes
@@ -36,7 +34,7 @@ export const executeFunctionBeforeAndAfterClassMethod = <Methods extends {}, TCl
 			let result = (await this['_' + propertyName](...arguments)) as Methods[keyof Methods]
 
 			if (funs?.after) {
-				if (excludedMethods.after.includes(propertyName as keyof Methods)) return
+				if (excludedMethods && excludedMethods.after && excludedMethods.after.includes(propertyName as keyof Methods)) return
 				const afterRes = await funs.after(result, classs)
 				if (afterRes) result = afterRes
 			}

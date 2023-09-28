@@ -6,6 +6,5 @@ export default inputObjectType({
 		t.string('picture')
 		t.field('location', { type: 'Location' })
 		t.string('placeName')
-		t.list.field('texts', { type: 'ImageTextInput' })
 	},
 })

@@ -17,6 +17,7 @@
 		"@app/ts-types": "*",
 		"@app/utils": "*",
 		"barrelsby": "^2.8.0",
+		"canvas-txt": "^4.1.1",
 		"image-js": "^0.35.4",
 		"lodash": "^4.17.21",
 		"node-appwrite": "^9.0.0"
