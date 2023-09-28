@@ -12,6 +12,7 @@ query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMon
 		userId
 		imgSrc
 		location
+		placeDetailId
 		user {
 			_createdAt
 			_updatedAt

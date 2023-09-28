@@ -24,10 +24,6 @@ export default mutationField('createExperience', {
 		const document = await buckets.experiences.uploadBase64(args.input.picture).then(async ({ url }) => {
 			if (!ctx.isAuthed(ctx.user?.$id)) throw new ApolloError('User is not Authed', '403')
 			return await collections.experience.createDocument({
-				pictureEdit: {
-					texts: args.input.texts.map((text) => text.text),
-					textStyles: args.input.texts.map((text) => text.textStyles),
-				},
 				userId: ctx.user.$id,
 				imgSrc: url,
 				latitude: Math.round(args.input.location[0]),

@@ -9,6 +9,7 @@ query getExperienceWithCreatorAndHisOtherExperiences($id: String!) {
 		userId
 		imgSrc
 		location
+		placeDetailId
 		user {
 			_createdAt
 			_updatedAt

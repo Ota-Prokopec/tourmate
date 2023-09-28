@@ -9,6 +9,7 @@ query getListOfExperiencesWithCreator($input: ExperienceInput) {
 		userId
 		imgSrc
 		location
+		placeDetailId
 		user {
 			userId
 			myId

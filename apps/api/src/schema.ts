@@ -5,7 +5,7 @@ import * as schema from './schema/index'
 import * as scalarTypes from './lib/types/index'
 
 export default makeSchema({
-	types: [scalarTypes, resolvers, schema],
+	types: [schema, scalarTypes, resolvers],
 	outputs: {
 		typegen: join(__dirname, 'generated/nexus-typegen.ts'), // 2
 		schema: join(__dirname, 'generated/schema.graphql'), // 3

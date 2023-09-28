@@ -38,6 +38,7 @@ query getListOfMonumentsWithCreatorAndNearestExperiences($input: MonumentInput) 
 			userId
 			imgSrc
 			location
+			placeDetailId
 		}
 		pictureURL
 		placeDetailId

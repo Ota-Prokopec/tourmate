@@ -9,5 +9,6 @@ query getListOfExperiences($input: ExperienceInput) {
 		userId
 		imgSrc
 		location
+		placeDetailId
 	}
 }
