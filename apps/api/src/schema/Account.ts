@@ -1,6 +1,5 @@
-import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
-import UsersPreferences from './usersPreferences'
+import UsersPreferences from './UsersPreferences'
 import { getListOfExperineceByUser, getListOfMonumentsByUser } from '@app/experience-database-server-graphql'
 import { GraphqlDocument, Preferences } from '@app/ts-types'
 

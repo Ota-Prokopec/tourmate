@@ -1,6 +1,6 @@
 import { getListOfExperineceByLocation } from '@app/experience-database-server-graphql'
 import { isLocation } from '@app/ts-types'
-import { getAccount } from '../../lib/test/getAccount'
+import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'
 import { list, objectType } from 'nexus'
 
@@ -40,13 +40,13 @@ export default objectType({
 					return await getListOfExperineceByLocation({ location: source.location, zoom: 10, limit: 20, range: 5 }, collections)
 				},
 			})
-		t.field('placeDetails', {
-			type: 'PlaceDetails',
+		t.field('placeDetail', {
+			type: 'PlaceDetail',
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
-				const detail = await collections.placeDetail.getDocument(source.placeDetailId)
-				if (!detail) throw new Error('placeDetail not found')
-				return detail
+				const placeDetail = await collections.placeDetail.getDocument(source.placeDetailId)
+				if (!placeDetail) throw new Error('placeDetail was not found')
+				return placeDetail
 			},
 		})
 	},

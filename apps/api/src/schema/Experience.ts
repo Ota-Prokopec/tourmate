@@ -1,4 +1,4 @@
-import { getAccount } from '../../lib/test/getAccount'
+import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'
 import { objectType } from 'nexus'
 
@@ -14,6 +14,7 @@ export default objectType({
 		t.string('userId')
 		t.field('imgSrc', { type: 'URL' })
 		t.field('location', { type: 'Location' })
+		t.string('placeDetailId')
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
@@ -23,18 +24,17 @@ export default objectType({
 				if (!userId) throw new ApolloError('user is not authorizated to create account', '403')
 
 				const { collections } = ctx.appwrite
-				console.log(userId)
 
 				return await getAccount(userId, userId === ctx.user.$id, collections)
 			},
 		})
-		t.field('placeDetails', {
-			type: 'PlaceDetails',
+		t.field('placeDetail', {
+			type: 'PlaceDetail',
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
-				const detail = await collections.placeDetail.getDocument(source.placeDetailId)
-				if (!detail) throw new Error('placeDetail not found')
-				return detail
+				const placeDetail = await collections.placeDetail.getDocument(source.placeDetailId)
+				if (!placeDetail) throw new Error('placeDetail was not found')
+				return placeDetail
 			},
 		})
 	},
