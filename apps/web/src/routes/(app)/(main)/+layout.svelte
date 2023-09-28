@@ -11,7 +11,7 @@
 
 	$: browser && watchUsersLocation((loc) => (location = loc));
 
-	$: newMonumentAdded = browser ? writable([]) : svelteCollections.monument.listenInsert();
+	//$: newMonumentAdded = !browser ? writable([]) : svelteCollections.monument.listenInsert();
 </script>
 
 <div class="w-full flex justify-center absolute p-4" />

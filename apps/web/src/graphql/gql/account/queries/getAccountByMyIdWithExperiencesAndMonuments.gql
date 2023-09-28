@@ -43,7 +43,7 @@ query getAccountByMyIdWithExperiencesAndMonuments($myId: String!) {
 			pictureURL
 			placeDetailId
 
-			placeDetails {
+			placeDetail {
 				name
 				_databaseId
 				_permissions

@@ -39,7 +39,7 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 			location
 			placeDetailId
 		}
-		placeDetails {
+		placeDetail {
 			name
 			_databaseId
 			_permissions

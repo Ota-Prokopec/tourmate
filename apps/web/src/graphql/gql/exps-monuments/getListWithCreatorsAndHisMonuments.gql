@@ -69,7 +69,7 @@ query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMon
 				about
 				placeDetailId
 				pictureURL
-				placeDetails {
+				placeDetail {
 					name
 					_databaseId
 					_permissions
@@ -84,7 +84,7 @@ query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMon
 				termsAccepted
 			}
 		}
-		placeDetails {
+		placeDetail {
 			name
 			_databaseId
 			_permissions

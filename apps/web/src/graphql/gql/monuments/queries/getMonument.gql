@@ -12,7 +12,7 @@ query getMonument($id: String!) {
 		about
 		placeDetailId
 		pictureURL
-		placeDetails {
+		placeDetail {
 			name
 			_databaseId
 			_permissions

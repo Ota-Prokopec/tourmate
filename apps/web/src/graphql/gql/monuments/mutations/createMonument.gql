@@ -12,7 +12,7 @@ mutation createMonument($input: CreateMonumentInput!) {
 		about
 		pictureURL
 		placeDetailId
-		placeDetails {
+		placeDetail {
 			name
 			_databaseId
 			_permissions

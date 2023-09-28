@@ -27,7 +27,7 @@ query getListOfMonumentsWithCreator($input: MonumentInput) {
 			phoneVerification
 			profilePictureURL
 		}
-		placeDetails {
+		placeDetail {
 			name
 			_databaseId
 			_permissions
