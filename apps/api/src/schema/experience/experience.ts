@@ -14,7 +14,6 @@ export default objectType({
 		t.string('userId')
 		t.field('imgSrc', { type: 'URL' })
 		t.field('location', { type: 'Location' })
-		t.string('placeDetailId')
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {

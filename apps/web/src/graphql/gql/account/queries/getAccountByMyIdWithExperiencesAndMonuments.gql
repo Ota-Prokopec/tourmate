@@ -27,6 +27,7 @@ query getAccountByMyIdWithExperiencesAndMonuments($myId: String!) {
 			userId
 			imgSrc
 			location
+			placeDetailId
 		}
 		monuments {
 			_createdAt

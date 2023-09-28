@@ -37,6 +37,7 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 			userId
 			imgSrc
 			location
+			placeDetailId
 		}
 		placeDetails {
 			name

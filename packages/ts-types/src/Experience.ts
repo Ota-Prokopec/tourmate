@@ -1,5 +1,5 @@
 import { Document, GraphqlDocument } from './Document'
-import type { PictureEdit, PictureEditDocument, PictureEditDocumentCreate, PictureEditGraphqlDocument } from './PictureEdit'
+import { PlaceDetailDocument, PlaceDetail, PlaceDetailGraphqlDocument, PlaceDetailDocumentCreate } from './PlaceDetails'
 
 export type Location = [number, number]
 export const isLocation = (arg: unknown): arg is Location =>
@@ -9,8 +9,7 @@ export type Experience = {
 	userId: string
 	imgSrc: URL
 	location: Location
-	placeDetailId: string
-	pictureEdit: PictureEdit
+	placeDetail: PlaceDetail
 }
 
 export type ExperienceDocument = Document<{
@@ -18,8 +17,7 @@ export type ExperienceDocument = Document<{
 	imgSrc: URL
 	latitude: number
 	longitude: number
-	placeDetailId: string
-	pictureEdit: PictureEditDocument
+	placeDetail: PlaceDetailDocument
 }>
 
 export type ExperienceGraphqlDocument = GraphqlDocument<{
@@ -27,8 +25,7 @@ export type ExperienceGraphqlDocument = GraphqlDocument<{
 	imgSrc: URL
 	latitude: number
 	longitude: number
-	placeDetailId: string
-	pictureEdit: PictureEditGraphqlDocument
+	placeDetail: PlaceDetailGraphqlDocument
 }>
 
 export type ExperienceDocumentCreate = {
@@ -36,8 +33,7 @@ export type ExperienceDocumentCreate = {
 	imgSrc: URL
 	latitude: number
 	longitude: number
-	placeDetailId: string
-	pictureEdit: PictureEditDocumentCreate
+	placeDetail: PlaceDetailDocumentCreate
 }
 
 export type Monument = {
@@ -78,13 +74,3 @@ export type MonumentDocumentCreate = {
 	pictureURL?: URL
 	placeDetailId: string
 }
-
-export type PlaceDetails = {
-	name: string
-}
-
-export type PlaceDetailDocument = Document<PlaceDetails>
-
-export type PlaceDetailGraphqlDocument = GraphqlDocument<PlaceDetails>
-
-export type PlaceDetailDocumentCreate = PlaceDetails

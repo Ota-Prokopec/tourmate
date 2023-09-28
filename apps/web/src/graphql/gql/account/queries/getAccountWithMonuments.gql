@@ -29,6 +29,7 @@ query getAccountWithMonuments($userId: String) {
 			name
 			about
 			pictureURL
+			placeDetailId
 		}
 	}
 }

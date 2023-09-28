@@ -6,7 +6,6 @@
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import type { PageData } from './$types';
 
 	$: experiencesGrapqhl = useQuery(
 		'experiences',

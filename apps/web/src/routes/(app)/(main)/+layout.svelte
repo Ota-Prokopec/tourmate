@@ -14,13 +14,6 @@
 	$: newMonumentAdded = browser ? writable([]) : svelteCollections.monument.listenInsert();
 </script>
 
-<div class="w-full flex justify-center absolute p-4">
-	{#if $newMonumentAdded?.length}
-		<MyAlert class="w-full relative" color="green">
-			<span slot="title">New monumet was added</span>
-			<span>{$newMonumentAdded?.at(-1)?.name}</span>
-		</MyAlert>
-	{/if}
-</div>
+<div class="w-full flex justify-center absolute p-4" />
 
 <slot />

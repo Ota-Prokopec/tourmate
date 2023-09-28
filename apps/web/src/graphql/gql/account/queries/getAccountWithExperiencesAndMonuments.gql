@@ -27,6 +27,7 @@ query getAccountWithExperiencesAndMonuments($userId: String) {
 			userId
 			imgSrc
 			location
+			placeDetailId
 		}
 		monuments {
 			_createdAt
@@ -40,6 +41,7 @@ query getAccountWithExperiencesAndMonuments($userId: String) {
 			name
 			about
 			pictureURL
+			placeDetailId
 		}
 	}
 }

@@ -27,6 +27,7 @@ query getAccountWithExperiences($userId: String) {
 			userId
 			imgSrc
 			location
+			placeDetailId
 		}
 	}
 }

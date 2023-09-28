@@ -3,7 +3,12 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"rootDir": "src",
-		"typeRoots": ["../../global.d.ts"]
+		"typeRoots": ["../../global.d.ts"],
+		"module": "Node16",
+		"moduleResolution": "Node16",
+		"target": "ES2022",
+		"declaration": false,
+		"declarationMap": false
 	},
 
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
