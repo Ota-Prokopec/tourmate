@@ -5,7 +5,7 @@
 	import ImageEditor from '$lib/components/ImageEditor/ImageEditor.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
-	import { Base64 } from '@app/ts-types';
+	import type { Base64 } from '@app/ts-types';
 
 	//const { imgSrc } = $myNewExperienceStore;
 	const location = $lsStore.usersLocation;
@@ -31,7 +31,6 @@
 	<FullPageLoading />
 {:then placeDetails}
 	<ImageEditor placeName={placeDetails?.name} url={imgSrc} />
-	<Button class="absolute top-0" on:click={save}>save</Button>
 {/await}
 
 <style>

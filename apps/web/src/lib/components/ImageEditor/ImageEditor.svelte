@@ -7,7 +7,7 @@
 	import IconRotate from '../Icons/IconRotate.svelte';
 	import Carousel from '../Carousel/Carousel.svelte';
 	import { browser } from '$app/environment';
-	import { getDetailsByLatAndLong } from '@app/utils';
+	import { elementIdGenerator, getDetailsByLatAndLong } from '@app/utils';
 	import IconDrop from '$lib/components/Icons/IconDrop.svelte';
 	import Filters from './Filters.svelte';
 	import IconUndo from '../Icons/IconUndo.svelte';
@@ -18,36 +18,31 @@
 	export let url: Base64 | string = '';
 	export let placeName = '';
 
-	let history: ImageJs[] = [];
-	let ableToUndo = false;
-
-	$: [imgUrl, actions] = imageSvelte();
-
-	// const add = () => {
-	// 	if (!image) throw new Error('Image is not available');
-	// 	history = [...history, image];
-	// 	ableToUndo = history.length > 1;
-	// 	imgUrl = getBase64();
-	// };
-
-	// const undo = () => {
-	// 	if (!ableToUndo) throw new Error('not able to undo');
-
-	// 	history = history.splice(0, history.length - 1);
-	// 	ableToUndo = history.length > 1;
-
-	// 	const potencialUndidImage = history.at(-1);
-
-	// 	if (potencialUndidImage) image = potencialUndidImage;
-	// 	else throw new Error('not able to undo');
-
-	// 	imgUrl = getBase64();
-	// };
+	const [imgUrl, Actions, ableToUndo] = imageSvelte();
+	const actions = new Actions();
+	actions.load(url);
 
 	const texts = [`Location: ${placeName}`] as const;
+	const labelElementId = elementIdGenerator();
+	let labelElement: HTMLElement | null = null;
+	onMount(() => (labelElement = document.getElementById(labelElementId)));
 	let indexOfText = 0;
 	let textColor = 'white';
 	let changingTextColor = false;
+
+	const locationLabel = () => {
+		if (!labelElement) throw new Error('imageEditor: html element for label is not defined');
+		const y = document.body.offsetHeight - 56;
+		const x = document.body.offsetWidth / 2;
+
+		actions.addText(texts[0], [x, y], {
+			textAlign: 'center',
+			textBaseline: 'bottom',
+			font: '48px Sans Serif',
+			color: 'white',
+			maxWidth: 547
+		});
+	};
 </script>
 
 <div class="w-full h-full">
@@ -55,11 +50,13 @@
 		class="absolute bg-black !fill-white rounded-[20px] right-0 w-min h-auto mt-32 p-2 flex flex-wrap flex-col justify-center items-center gap-4"
 	>
 		<Icon on:click={() => actions.rotate(90)} class=" text-4xl"><IconRotate /></Icon>
+		<Icon on:click={() => locationLabel()} class=" text-4xl"><IconRotate /></Icon>
 
 		<Filters on:click={(e) => actions.addFilter(e.detail)} />
 		<Icon
-			disabled={!ableToUndo}
-			class={twMerge('text-4xl mt-4', !ableToUndo ? 'fill-gray-500' : '')}><IconUndo /></Icon
+			on:click={() => actions.undo()}
+			disabled={!$ableToUndo}
+			class={twMerge('text-4xl mt-4', !$ableToUndo ? 'fill-gray-500' : '')}><IconUndo /></Icon
 		>
 		<ColorPicker />
 	</div>
@@ -75,14 +72,14 @@
 			{#if changingTextColor}
 				<ColorPicker bind:color={textColor} class="absolute z-50 top-0 left-0" />
 			{/if}
-			<Carousel bind:index={indexOfText} class=" w-full " swiping>
+			<Carousel bind:index={indexOfText} class="w-full" swiping>
 				{#each texts as text}
 					<button
 						on:click={() => {
 							changingTextColor = true;
 						}}
 						class="text-white text-5xl text-center pt-4 pb-4"
-						><span style={`color: ${textColor}`}>{text}</span></button
+						><span id={labelElementId} style={`color: ${textColor}`}>{text}</span></button
 					>
 				{/each}
 			</Carousel>

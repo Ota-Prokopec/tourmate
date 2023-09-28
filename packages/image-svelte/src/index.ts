@@ -2,62 +2,63 @@ import { Base64, GetTypesOfmethodsInClass } from '@app/ts-types'
 import { executeFunctionBeforeAndAfterClassMethod } from '@app/utils'
 import ImageJs from 'image-js'
 import { writable } from 'svelte/store'
+import rotate from './actions/rotate'
+import getCtx from './actions/getCtx'
+import addText from './actions/addText'
 
 export type Filter = 'blur' | 'median' | 'sobel' | 'scharr' | 'gaussian'
 
-export const imgUrl = writable<string>()
+export const imgUrl = writable<string>('')
+export const ableToUndo = writable<boolean>(false)
 let image = new ImageJs()
+let history: ImageJs[] = [] //this is for that you had in history your first picture that you passed
 
-class Actions {
-	constructor() {}
-	rotate(degree: number): ImageJs {
-		return image.rotate(degree)
+class Functions {
+	constructor(public howManyImagesBeforeUndoAvailable: number = 1) {}
+	async rotate(degree: number) {
+		return rotate(image, degree)
 	}
-	getCtx() {
-		const canvas = image.getCanvas()
-		const ctx = canvas.getContext('2d')
-		return ctx
+	async addText(...args: Parameters<typeof addText> extends [any, ...infer Rest] ? Rest : never) {
+		return await addText(image, ...args)
 	}
-	async addText(
-		text: string,
-		position: [number, number],
-		options: {
-			textAlign: CanvasTextAlign
-			textBaseline: CanvasTextBaseline
-			font: string
-			color: string | CanvasGradient | CanvasPattern
-		},
-	): Promise<ImageJs> {
-		const ctx = await this.getCtx()
-		if (!ctx) throw new Error('Ctx is not available')
-
-		ctx.textAlign = options.textAlign
-		ctx.textBaseline = options.textBaseline
-		ctx.font = options.font
-		ctx.fillStyle = options.color
-		ctx.imageSmoothingEnabled = false
-		ctx.fillText(text, ...position)
-
-		const newImage = await ImageJs.load(ctx.canvas.toDataURL('image/png'))
-		return newImage
-	}
-	addFilter(filter: Filter): ImageJs {
-		const newImage = image[`${filter}Filter`]() as ImageJs
-		return newImage
+	async addFilter(filter: Filter) {
+		return image[`${filter}Filter`]() as ImageJs
 	}
 	async load(url: string | Base64) {
-		await ImageJs.load(url)
+		return await ImageJs.load(url)
+	}
+
+	async undo() {
+		if (history.length < this.howManyImagesBeforeUndoAvailable + 1) return
+		history = history.splice(0, history.length - 1)
+
+		const Img = history.at(-1)
+		if (!Img) throw new Error('Image is not available')
+		image = Img
+
+		ableToUndo.set(history.length > this.howManyImagesBeforeUndoAvailable)
+		imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
 	}
 }
 
-type Methods = GetTypesOfmethodsInClass<Actions>
+type Methods = GetTypesOfmethodsInClass<Functions>
 
-const actions = executeFunctionBeforeAndAfterClassMethod<Actions, Methods>(new Actions(), {
-	after: async (res) => {
-		if (res instanceof ImageJs) {
-			image = res
-			imgUrl.set(await res.toBase64())
-		}
+const Actions = executeFunctionBeforeAndAfterClassMethod<Methods, typeof Functions>(
+	Functions,
+	{
+		after: async (res, MyClass) => {
+			if (res instanceof ImageJs) {
+				image = res
+				history.push(image) //add picture into history
+				ableToUndo.set(history.length > new MyClass().howManyImagesBeforeUndoAvailable)
+				imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
+			}
+		},
 	},
-})
-export default () => [imgUrl, actions] as const
+	{ after: ['undo'] },
+)
+
+// const actions = new Actions()
+// console.log(actions.getCtx())
+
+export default () => [imgUrl, Actions, ableToUndo] as const
