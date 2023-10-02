@@ -254,9 +254,5 @@ export default (databases: Databases) => {
 		}
 	}
 
-	executeFunctionBeforeAndAfterClassMethod(Collection, {
-		before: () => typeof window === 'object',
-	})
-
 	return Collection
 }

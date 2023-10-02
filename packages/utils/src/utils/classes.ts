@@ -1,6 +1,6 @@
 class A {}
 
-export const executeFunctionBeforeAndAfterClassMethod = <Methods extends {}, TClass extends { new (): A }>(
+export function executeFunctionBeforeAndAfterClassMethod<Methods extends {}, TClass extends { new (): A }>(
 	classs: TClass,
 	funs?: {
 		before?: (classs: TClass) => TClass | Promise<TClass> | Promise<boolean> | boolean
@@ -13,15 +13,15 @@ export const executeFunctionBeforeAndAfterClassMethod = <Methods extends {}, TCl
 		before?: (keyof Methods)[]
 		after?: (keyof Methods)[]
 	},
-) => {
-	Object.getOwnPropertyNames(classs.prototype).forEach((propertyName) => {
+) {
+	Object.getOwnPropertyNames(classs.prototype).forEach(function (propertyName) {
 		// First to do: we save the original method. Adding it to prototype
 		// is a good idea, we keep 'method1' as '_method1' and so on
 
 		classs.prototype[`_${propertyName}`] = classs.prototype[propertyName]
 
 		// Next, we replace the original method with one
-		classs.prototype[propertyName] = async function () {
+		classs.prototype[propertyName] = async function (...args: any[]) {
 			if (funs?.before) {
 				if (excludedMethods && excludedMethods.before && excludedMethods.before.includes(propertyName as keyof Methods)) return
 				const beforeRes = await funs.before(classs)
@@ -31,7 +31,7 @@ export const executeFunctionBeforeAndAfterClassMethod = <Methods extends {}, TCl
 
 			//call original method
 
-			let result = (await this['_' + propertyName](...arguments)) as Methods[keyof Methods]
+			let result = (await this['_' + propertyName](...args)) as Methods[keyof Methods]
 
 			if (funs?.after) {
 				if (excludedMethods && excludedMethods.after && excludedMethods.after.includes(propertyName as keyof Methods)) return

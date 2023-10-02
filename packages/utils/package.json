@@ -9,7 +9,7 @@
 	"devDependencies": {
 		"@types/node": "^18.15.11",
 		"barrelsby": "^2.8.0",
-		"typescript": "latest",
+		"typescript": "^5.2.2",
 		"ts-node": "^10.9.1"
 	},
 	"dependencies": {
