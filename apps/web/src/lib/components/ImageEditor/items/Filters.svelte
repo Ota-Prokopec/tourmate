@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Listgroup, ListgroupItem, SpeedDial, SpeedDialButton } from 'flowbite-svelte';
-	import IconDrop from '../Icons/IconDrop.svelte';
-	import Icon from '../Common/Icon.svelte';
+	import IconDrop from '../../Icons/IconDrop.svelte';
+	import Icon from '../../Common/Icon.svelte';
 	import { device } from '@app/utils';
 	import { createEventDispatcher } from 'svelte';
 	import type { Filter } from '@app/image-svelte';

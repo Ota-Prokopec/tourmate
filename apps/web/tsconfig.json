@@ -1,5 +1,7 @@
 {
+	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "./.svelte-kit/tsconfig.json",
+	"display": "Default",
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,
@@ -16,9 +18,7 @@
 		"importsNotUsedAsValues": "remove",
 		"noImplicitReturns": true,
 		"importHelpers": true,
-		"allowUnusedLabels": true,
-
-		"typeRoots": ["../../global.d.ts"]
+		"allowUnusedLabels": true
 	},
 	"include": [
 		"src/**/*.d.ts",

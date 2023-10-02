@@ -5,7 +5,9 @@
 	import { browser } from '$app/environment';
 	import Icon from '../Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
-	import { elementIdGenerator } from '@app/utils';
+	import { blobToBase64, elementIdGenerator } from '@app/utils';
+	import imageSvelte from '@app/image-svelte';
+	import DetectPinch from '../Common/DetectPinch.svelte';
 
 	let className = '';
 	export { className as class };
@@ -14,21 +16,26 @@
 		image: { base64: string };
 	}>();
 
-	const id = elementIdGenerator();
+	const videoElementId = elementIdGenerator();
 
-	$: videoElement = isLoading ? null : (document.getElementById(id) as HTMLVideoElement);
-	$: canvas = browser ? document.createElement('canvas') : null;
+	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+
+	$: videoElement = isLoading
+		? null
+		: (document.getElementById(videoElementId) as HTMLVideoElement);
+	$: canvas = browser ? document.createElement('canvas') : undefined;
 
 	let isLoading = true;
 	export let facingMode: 'user' | 'environment' = 'user';
+
 	$: mediaStreamConstraints = {
 		video: {
-			aspectRatio: 16 / 9,
+			aspectRatio: 9 / 16,
 			deviceId: cameraDeviceId,
 			frameRate: { min: 1, max: 120, ideal: 120 },
 			facingMode: facingMode,
-			width: browser ? document.body.offsetWidth : 1080,
-			height: browser ? document.body.offsetHeight : 720
+			width: { ideal: browser ? document.body.offsetWidth : 0 },
+			height: { ideal: browser ? document.body.offsetHeight : 0 }
 		},
 		audio: false
 	} as MediaStreamConstraints;
@@ -38,11 +45,18 @@
 		environment: MediaDeviceInfo;
 	};
 	let cameraDeviceId: string | undefined;
+	let imageCapture: ImageCapture | undefined;
+	let videoTrack: MediaStreamTrack | undefined;
 
-	$: if (!isLoading) startCamera(true);
+	//
+	$: if (!isLoading) startCamera();
 
-	const startCamera = async (setUp: boolean) => {
+	const startCamera = async () => {
+		if (!videoElement) throw new Error('videoElement is not defined');
 		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
+		videoTrack = stream.getVideoTracks()[0];
+		videoTrack.applyConstraints();
+		imageCapture = new ImageCapture(videoTrack);
 		if (videoElement) videoElement.srcObject = stream; //set video to video element
 	};
 
@@ -65,52 +79,84 @@
 		isLoading = false;
 	};
 
-	function takePicture() {
-		if (!canvas) throw new TypeError('canvas is null');
-		if (!videoElement) throw new TypeError('videoElement is not null');
+	const swapCameras = () => {
+		// 		function switchCameras(track, camera) {
+		//   const constraints = track.getConstraints();
+		//   constraints.facingMode = camera;
+		//   track.applyConstraints(constraints);
+		// }
+	};
 
-		var context = canvas.getContext('2d')!;
+	const takePicture = async () => {
+		if (!canvas) throw new Error('canvas is not defined');
+		if (!videoElement) throw new Error('videoElement is not defined');
+		if (!imageCapture) throw new Error('imageCapture is not defined');
 
-		canvas.width = videoElement.videoWidth;
-		canvas.height = videoElement.videoHeight;
+		const pictureBlob = await imageCapture.takePhoto();
+		const pictureBitmap = await createImageBitmap(pictureBlob);
+
+		drawCanvas(pictureBitmap);
+		zoomIn();
+	};
+
+	const drawCanvas = async (pictureBitmap: ImageBitmap) => {
+		if (!canvas) throw new Error('canvas is not defined');
+		if (!videoElement) throw new Error('videoElement is not defined');
+
+		const vHeight = videoElement.offsetHeight;
+		const vWidth = videoElement.offsetWidth;
+
+		canvas.height = vHeight;
+		canvas.width = vWidth;
+
+		canvas.getContext('2d')?.clearRect(0, 0, pictureBitmap.width, pictureBitmap.height);
+
+		canvas
+			.getContext('2d')
+			?.drawImage(
+				pictureBitmap,
+				(pictureBitmap.width - vWidth) / 2,
+				(pictureBitmap.height - vHeight) / 2,
+				vWidth,
+				vHeight,
+				0,
+				0,
+				vWidth,
+				vHeight
+			);
+
+		const base64 = await canvas.toDataURL('image/png');
 
 		if (facingMode === 'user') {
-			//rotate picture y-axis
-
-			let { width, height } = canvas;
-			Object.assign(context.canvas, { width, height });
-			context.save();
-			context.translate(width, 0);
-			context.scale(-1, 1);
+			await actions.load(base64);
+			actions.flipX();
 		}
 
-		context.drawImage(videoElement, 0, 0);
-		context.restore();
-		const base64 = canvas.toDataURL('image/png');
+		console.log('finally');
 
+		//send(base64);
+	};
+
+	const send = (base64: string) => {
 		dispatch('image', {
 			base64: base64
 		});
-	}
+	};
 
-	const swapCameras = () => {
-		facingMode = facingMode === 'user' ? 'environment' : 'user';
+	const zoomIn = () => {
+		const capabilities = videoTrack?.getCapabilities();
+		console.log(capabilities);
+		if (!capabilities || (capabilities && !('zoom' in capabilities))) {
+			console.log('your cam cant zoom');
 
-		if (!cameraDevices) return;
-		if (typeof mediaStreamConstraints.video !== 'object') return;
+			return;
+		} // i cant zoom in this browser
 
-		cameraDeviceId = cameraDevices[facingMode].deviceId;
-
-		console.log(cameraDeviceId);
-
-		mediaStreamConstraints.video.facingMode = facingMode;
-		mediaStreamConstraints.video.deviceId = cameraDeviceId;
-
-		startCamera(false);
+		videoTrack?.applyConstraints({ advanced: [{ zoom: 1 }] });
 	};
 </script>
 
-<div class="h-full w-full relative flex justify-center items-center">
+<DetectPinch on:zoomIn={zoomIn} class="h-full w-full relative flex justify-center items-center">
 	{#if isLoading}
 		<div class="z-50">
 			<SyncLoader color="black" size={60} />
@@ -118,7 +164,7 @@
 	{/if}
 	<video
 		autoplay
-		{id}
+		id={videoElementId}
 		use:onLoad
 		class={twMerge(
 			'h-full object-cover absolute',
@@ -140,7 +186,4 @@
 			/>
 		{/if}
 	</div>
-</div>
-
-<style>
-</style>
+</DetectPinch>

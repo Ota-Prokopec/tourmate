@@ -5,6 +5,7 @@ import { writable } from 'svelte/store'
 import rotate from './actions/rotate'
 import getCtx from './actions/getCtx'
 import addText from './actions/addText'
+import crop from './actions/crop'
 
 export type Filter = 'blur' | 'median' | 'sobel' | 'scharr' | 'gaussian'
 
@@ -43,6 +44,15 @@ class Functions {
 		ableToUndo.set(history.length > this.howManyImagesBeforeUndoAvailable)
 		imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
 	}
+	async crop(options: Parameters<typeof crop>[1]) {
+		return crop(image, options)
+	}
+	async flipY() {
+		return image.flipY()
+	}
+	async flipX() {
+		return image.flipX()
+	}
 }
 
 type Methods = GetTypesOfmethodsInClass<Functions>
@@ -62,7 +72,7 @@ const Actions = executeFunctionBeforeAndAfterClassMethod<Methods, typeof Functio
 	{ after: ['undo'] },
 )
 
-// const actions = new Actions()
-// console.log(actions.getCtx())
-
-export default () => [imgUrl, Actions, ableToUndo] as const
+export default ({ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeUndoAvailable: number }) => {
+	const actions = new Actions(howManyImagesBeforeUndoAvailable)
+	return [imgUrl, actions, ableToUndo] as const
+}

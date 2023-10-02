@@ -6,12 +6,15 @@
 	import IconRotate from '../Icons/IconRotate.svelte';
 	import Carousel from '../Carousel/Carousel.svelte';
 	import { browser } from '$app/environment';
-	import Filters from './Filters.svelte';
 	import IconUndo from '../Icons/IconUndo.svelte';
 	import { twMerge } from 'tailwind-merge';
 	import ColorPicker from '../Common/ColorPicker.svelte';
 	import imageSvelte from '@app/image-svelte';
 	import IconNext from '../Icons/IconNext.svelte';
+	import Bar from './items/Bar.svelte';
+	import LocationTextInput from './items/LocationTextInput.svelte';
+	import Edge from './items/Edge.svelte';
+
 	const dispatch = createEventDispatcher<{ next: string | Base64 }>();
 
 	export let url: Base64 | string = '';
@@ -21,8 +24,8 @@
 	const actions = new Actions();
 	actions.load(url);
 
-	const texts = [`Location: ${placeName}`, `I was here, ${placeName}`] as const;
-	const text = {
+	const texts = [`Location: ${placeName}`, `I was here, ${placeName}`];
+	const textOptions = {
 		index: 0,
 		color: 'white'
 	};
@@ -57,50 +60,38 @@
 		await locationLabel(); // add a location label into picture
 		dispatch('next', $imgUrl);
 	};
+	const crop = () => {
+		actions.flipX();
+	};
 </script>
 
-<div class="w-full h-full">
-	<div
-		class="absolute bg-black !fill-white rounded-[20px] right-0 w-min h-auto mt-32 p-2 flex flex-wrap flex-col justify-center items-center gap-4"
-	>
-		<Icon on:click={() => actions.rotate(90)} class=" text-4xl"><IconRotate /></Icon>
+<div class="w-full h-full flex justify-center">
+	<div class="w-auto h-full flex flex-wrap flex-row">
+		<Edge />
 
-		<Filters on:click={(e) => actions.addFilter(e.detail)} />
-		<Icon
-			on:click={() => actions.undo()}
-			disabled={!$ableToUndo}
-			class={twMerge('text-4xl mt-4', !$ableToUndo ? 'fill-gray-500' : '')}><IconUndo /></Icon
+		<Bar
+			on:rotate={() => actions.rotate(90)}
+			on:filter={(e) => actions.addFilter(e.detail)}
+			on:undo={() => actions.undo()}
+			ableToUndo={$ableToUndo}
+		/>
+
+		<button
+			on:click={(e) => (changingTextColor = false)}
+			class="relative appearance-none p-0 m-0 h-min"
 		>
-		<ColorPicker />
-	</div>
-	<img
-		on:click={(e) => (changingTextColor = false)}
-		class=" h-full object-contain"
-		id="image"
-		src={$imgUrl}
-	/>
-
-	{#if browser}
-		<div class="absolute bottom-0 w-full left-0 mb-14">
-			{#if changingTextColor}
-				<ColorPicker bind:color={text.color} class="absolute z-50 top-0 left-0" />
+			<img class="" alt="" id="image" src={$imgUrl} />
+			{#if browser}
+				<LocationTextInput {texts} options={textOptions} />
 			{/if}
-			<Carousel bind:index={text.index} class="w-full" swiping>
-				{#each texts as label}
-					<button
-						on:click={() => {
-							changingTextColor = true;
-						}}
-						class="text-white text-5xl text-center pt-4 pb-4"
-						><span style={`color: ${text.color}`}>{label}</span></button
-					>
-				{/each}
-			</Carousel>
-		</div>
-	{/if}
-	<Button
-		on:click={next}
-		class="absolute flex flex-wrap flex-row gap-2 top-0 m-4 right-0 text-2xl pr-6 pl-6 rounded-full fill-white"
-		color="blue">Next <Icon><IconNext /></Icon></Button
-	>
+		</button>
+
+		<Edge>
+			<Button
+				on:click={next}
+				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
+				color="blue">Next <Icon><IconNext /></Icon></Button
+			>
+		</Edge>
+	</div>
 </div>

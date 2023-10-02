@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import type { GraphqlDocument, Monument, PlaceDetails } from '@app/ts-types';
+	import type { GraphqlDocument, Monument, PlaceDetail } from '@app/ts-types';
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let monument: GraphqlDocument<Monument> & { placeDetails: PlaceDetails };
+	export let monument: GraphqlDocument<Monument> & { PlaceDetail: PlaceDetail };
 
 	let className = '';
 	export { className as class };

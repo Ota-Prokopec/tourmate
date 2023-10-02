@@ -102,4 +102,10 @@
 	:global(.mapboxgl-ctrl-bottom-right) {
 		display: none !important;
 	}
+	:global(.maplibregl-compact-show) {
+		display: none !important;
+	}
+	:global(.maplibregl-compact) {
+		display: none !important;
+	}
 </style>

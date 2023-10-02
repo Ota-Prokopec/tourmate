@@ -1,11 +1,8 @@
 <script lang="ts">
-	import { sdk } from '$src/graphql/sdk';
 	import lsStore from '$lib/utils/lsStore';
 	import { getPlaceDetailsByLatAndLong } from '@app/utils';
 	import ImageEditor from '$lib/components/ImageEditor/ImageEditor.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import Button from '$lib/components/Common/Button.svelte';
-	import type { Base64 } from '@app/ts-types';
 	import { myNewExperienceStore } from './newExperienceStore';
 	import { goto } from '$app/navigation';
 
