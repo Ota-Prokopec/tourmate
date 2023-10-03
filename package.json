@@ -5,6 +5,7 @@
 		"dev": "dotenv -e .env.development -- turbo run dev",
 		"api": "dotenv -e .env.development -- turbo run dev --filter=api",
 		"web": "dotenv -e .env.development -- turbo run dev --filter=web",
+		"sveltekitapi": "dotenv -e .env.development -- turbo run dev --filter=sveltekitapi",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\""
 	},

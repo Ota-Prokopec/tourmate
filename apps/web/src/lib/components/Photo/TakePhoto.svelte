@@ -96,7 +96,6 @@
 		const pictureBitmap = await createImageBitmap(pictureBlob);
 
 		drawCanvas(pictureBitmap);
-		zoomIn();
 	};
 
 	const drawCanvas = async (pictureBitmap: ImageBitmap) => {
@@ -129,12 +128,11 @@
 
 		if (facingMode === 'user') {
 			await actions.load(base64);
-			actions.flipX();
+			await actions.flipX();
+		} else {
+			await actions.load(base64);
 		}
-
-		console.log('finally');
-
-		//send(base64);
+		send($imgUrl);
 	};
 
 	const send = (base64: string) => {
@@ -144,19 +142,27 @@
 	};
 
 	const zoomIn = () => {
+		zoom(1);
+	};
+	const zoomOut = () => {
+		zoom(-1);
+	};
+
+	const zoom = (addZoom: number) => {
 		const capabilities = videoTrack?.getCapabilities();
-		console.log(capabilities);
 		if (!capabilities || (capabilities && !('zoom' in capabilities))) {
 			console.log('your cam cant zoom');
-
 			return;
-		} // i cant zoom in this browser
-
-		videoTrack?.applyConstraints({ advanced: [{ zoom: 1 }] });
+		}
+		videoTrack?.applyConstraints({ advanced: [{ zoom: capabilities.zoom.min + addZoom }] });
 	};
 </script>
 
-<DetectPinch on:zoomIn={zoomIn} class="h-full w-full relative flex justify-center items-center">
+<DetectPinch
+	on:zoomIn={zoomIn}
+	on:zoomOut={zoomOut}
+	class="h-full w-full relative flex justify-center items-center"
+>
 	{#if isLoading}
 		<div class="z-50">
 			<SyncLoader color="black" size={60} />

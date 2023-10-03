@@ -3,6 +3,7 @@ import { join } from 'path'
 import * as resolvers from './resolvers/index'
 import * as schema from './schema/index'
 import * as scalarTypes from './lib/types/index'
+import path from 'path'
 
 export default makeSchema({
 	types: [schema, scalarTypes, resolvers],

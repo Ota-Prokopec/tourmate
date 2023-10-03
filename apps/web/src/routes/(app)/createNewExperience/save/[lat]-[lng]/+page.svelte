@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Card } from 'flowbite-svelte';
+	import { Card, Img } from 'flowbite-svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Input from '$lib/components/Common/Input.svelte';
 	import { P, Button } from 'flowbite-svelte';
@@ -24,8 +24,8 @@
 	};
 </script>
 
-<div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	<Card class="w-full h-min m-4 sm:absolute sm:left-0 z-50">
+<div class="w-full h-auto flex items-center flex-wrap flex-col gap-4 p-4">
+	<Card class="w-full h-min sm:absolute sm:left-0 z-50">
 		<Icon icon="fas fa-map-marker-alt" class="text-3xl" />
 		<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 			{data.newExperience.placeName}
@@ -34,8 +34,10 @@
 			lokace: [{data.newExperience.location}]
 		</p>
 
+		<Img src={img} />
+
 		<Button
-			class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
+			class=" mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
 			color="blue"
 			on:click={save}
 		>

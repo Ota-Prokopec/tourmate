@@ -20,8 +20,8 @@
 	export let url: Base64 | string = '';
 	export let placeName = '';
 
-	const [imgUrl, Actions, ableToUndo] = imageSvelte();
-	const actions = new Actions();
+	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+
 	actions.load(url);
 
 	const texts = [`Location: ${placeName}`, `I was here, ${placeName}`];
@@ -41,7 +41,7 @@
 		const x = 2;
 		const y = ctx?.canvas.height - height;
 
-		actions.addText(texts[text.index], {
+		actions.addText(texts[textOptions.index], {
 			x: x,
 			y: y,
 			vAlign: 'middle',
@@ -49,7 +49,7 @@
 			fontSize: 54,
 			fontStyle: '',
 			debug: false,
-			color: text.color,
+			color: textOptions.color,
 			font: `'Poppins', sans-serif`,
 			width: width,
 			height: height
@@ -87,11 +87,7 @@
 		</button>
 
 		<Edge>
-			<Button
-				on:click={next}
-				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
-				color="blue">Next <Icon><IconNext /></Icon></Button
-			>
+			<slot name="button" />
 		</Edge>
 	</div>
 </div>
