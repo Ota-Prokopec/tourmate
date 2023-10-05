@@ -1,19 +1,14 @@
 <script lang="ts">
 	import type { Base64, Location } from '@app/ts-types';
-	import { Button, Img, PaginationItem } from 'flowbite-svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import Icon from '../Common/Icon.svelte';
-	import IconRotate from '../Icons/IconRotate.svelte';
-	import Carousel from '../Carousel/Carousel.svelte';
 	import { browser } from '$app/environment';
-	import IconUndo from '../Icons/IconUndo.svelte';
-	import { twMerge } from 'tailwind-merge';
-	import ColorPicker from '../Common/ColorPicker.svelte';
 	import imageSvelte from '@app/image-svelte';
-	import IconNext from '../Icons/IconNext.svelte';
 	import Bar from './items/Bar.svelte';
 	import LocationTextInput from './items/LocationTextInput.svelte';
 	import Edge from './items/Edge.svelte';
+	import Icon from '../Common/Icon.svelte';
+	import IconNext from '../Icons/IconNext.svelte';
+	import { Button } from 'flowbite-svelte';
 
 	const dispatch = createEventDispatcher<{ next: string | Base64 }>();
 
@@ -21,7 +16,6 @@
 	export let placeName = '';
 
 	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
-
 	actions.load(url);
 
 	const texts = [`Location: ${placeName}`, `I was here, ${placeName}`];
@@ -31,7 +25,7 @@
 	};
 	let changingTextColor = false;
 
-	const locationLabel = async () => {
+	const addLocationLabel = async () => {
 		const ctx = await actions.getCtx();
 		if (!ctx?.canvas.height) throw new Error('there is no height in canvas');
 
@@ -56,12 +50,13 @@
 		});
 	};
 
-	const next = async () => {
-		await locationLabel(); // add a location label into picture
-		dispatch('next', $imgUrl);
-	};
 	const crop = () => {
 		actions.flipX();
+	};
+
+	const next = async () => {
+		await addLocationLabel(); // add a location label into picture
+		dispatch('next', $imgUrl);
 	};
 </script>
 
@@ -87,7 +82,11 @@
 		</button>
 
 		<Edge>
-			<slot name="button" />
+			<Button
+				on:click={next}
+				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
+				color="blue">Create <Icon><IconNext /></Icon></Button
+			>
 		</Edge>
 	</div>
 </div>

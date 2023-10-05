@@ -9,6 +9,8 @@
 	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
+	import imageSvelte from '@app/image-svelte';
+	import Cropper from 'cropperjs';
 
 	export let data: PageData;
 
@@ -28,8 +30,11 @@
 		{ title: 'památky', key: 'monuments' }
 	] as const;
 
+	const [picture, actions] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+
 	const changeProfilePic = async (base64: Base64) => {
-		sdk.updateProfilePicture({ picture: base64 });
+		const cropper = new Cropper();
+		cropper.sdk.updateProfilePicture({ picture: $picture });
 	};
 </script>
 
@@ -67,11 +72,7 @@
 				{#each usersExperiences as experience}
 					<ExperienceCard {experience} />
 				{/each}
-			{:else}
-				{#each usersMonuments as monument}
-					<MonumentCard class="w-full" {monument} />
-				{/each}
-			{/if}
+			{:else}{/if}
 		</Gallery>
 	</div>
 </div>

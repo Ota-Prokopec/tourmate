@@ -34,14 +34,7 @@
 {#await placeDetailsPromise}
 	<FullPageLoading />
 {:then placeDetails}
-	<ImageEditor placeName={placeDetails?.name} url={$myNewExperienceStore.imgSrc}>
-		<Button
-			slot="button"
-			on:click={save}
-			class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
-			color="blue">Create <Icon><IconNext /></Icon></Button
-		>
-	</ImageEditor>
+	<ImageEditor placeName={placeDetails?.name} url={$myNewExperienceStore.imgSrc} />
 {/await}
 
 <style>

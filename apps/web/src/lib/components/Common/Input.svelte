@@ -12,16 +12,14 @@
 	export let readOnly = false;
 	export let maxLength = Infinity;
 	export let icon: string | null | boolean | undefined = null;
-	export let iconFunction: 'password' | null = null;
 	export let changedIconOnActive = icon;
 	export let iconPosition: 'right' | 'left' = 'left';
 	export let disabled = false;
-
 	export let autocomplete = '';
 	export let pattern: RegExp | null = null;
-
 	export let prefix: string = '';
 	export let invisiblePrefix = icon ? true : false;
+	export let ableClickIcon = true;
 
 	export let type:
 		| 'color'
@@ -79,18 +77,13 @@
 		inputElement = document.getElementById(id);
 	});
 
-	let iconActived = false;
+	let iconClicked = false;
 	let iconPushedCount = 0;
 
 	const iconClick = () => {
 		iconPushedCount++;
-		iconActived = iconPushedCount % 2 === 1;
+		iconClicked = iconPushedCount % 2 === 1;
 		dispatch('iconClick');
-		if (iconFunction === 'password') {
-			type = type === 'text' ? 'password' : 'text';
-			if (!inputElement) return;
-			retype(inputElement);
-		}
 	};
 	const retype = (e: HTMLElement) => {
 		e.setAttribute('type', type);
@@ -103,18 +96,18 @@
 			class={`absolute inset-y-0 ${
 				iconPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3'
 			} flex items-center  pointer-events-none ${
-				!iconFunction ? 'pointer-events-none' : 'pointer-events-auto z-50'
+				!ableClickIcon ? 'pointer-events-none' : 'pointer-events-auto z-50'
 			} z-50 `}
 			on:click={iconClick}
 		>
 			{#if typeof icon === 'string'}
-				{#if iconActived}
+				{#if iconClicked}
 					{changedIconOnActive}
 				{:else}
 					{icon}
 				{/if}
 			{:else}
-				<slot active={iconActived} />
+				<slot {iconClicked} />
 			{/if}
 		</button>
 	{/if}
@@ -123,13 +116,14 @@
 		{disabled}
 		use:retype
 		{id}
-		class="rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
-			? iconPosition === 'left'
-				? 'pl-12'
-				: 'pr-12'
-			: ''}  {readOnly ? 'cursor-pointer' : ''} {floatingLabel
-			? '  w-full text-gray-900 bg-transparent border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-			: ''} {className}"
+		class={twMerge(
+			'rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none w-full',
+			icon && (iconPosition === 'left' ? 'pl-12' : 'pr-12'),
+			readOnly && 'cursor-pointer',
+			floatingLabel &&
+				'w-full text-gray-900 bg-transparent border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
+			className
+		)}
 		{placeholder}
 		bind:value={inputValue}
 		on:input
