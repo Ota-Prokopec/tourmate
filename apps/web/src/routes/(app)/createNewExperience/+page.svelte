@@ -20,8 +20,6 @@
 	const location = $lsStore.usersLocation;
 	let result: string | Base64 = '';
 
-	$: placeDetailsPromise = location ? getPlaceDetailsByLatAndLong(location[0], location[1]) : null;
-
 	const save = async () => {
 		await addLocationLabel();
 		sdk.createExperience({
@@ -62,33 +60,40 @@
 		});
 	};
 
-	const textOptions: {
+	let textOptions: {
 		texts: string[];
 		index: number;
 		color: string;
 	} = {
-		texts: ['ahoj'],
+		texts: [''],
 		index: 0,
 		color: 'white'
 	};
 
+	$: if (location)
+		getPlaceDetailsByLatAndLong(location[0], location[1]).then(({ name }) => {
+			textOptions.texts = [name, `I was here, ${name}`];
+			isLoading = true;
+		});
+
 	const editorOptions: EditorOptions = {};
+
+	let isLoading = textOptions.texts.length === 0;
 </script>
 
-<ImageEditor options={editorOptions} bind:result url={$myNewExperienceStore.imgSrc}>
-	<span slot="inner">
-		{#if browser}
-			<LocationTextInput options={textOptions} />
-		{/if}
-	</span>
-	<span slot="bottom">
-		<Button
-			on:click={save}
-			class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
-			color="blue">Create <Icon><IconNext /></Icon></Button
-		>
-	</span>
-</ImageEditor>
-
-<style>
-</style>
+{#if isLoading}
+	<ImageEditor options={editorOptions} bind:result url={$myNewExperienceStore.imgSrc}>
+		<span slot="inner">
+			{#if browser}
+				<LocationTextInput options={textOptions} />
+			{/if}
+		</span>
+		<span slot="bottom">
+			<Button
+				on:click={save}
+				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
+				color="blue">Create <Icon><IconNext /></Icon></Button
+			>
+		</span>
+	</ImageEditor>
+{/if}

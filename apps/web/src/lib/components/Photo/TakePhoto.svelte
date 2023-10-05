@@ -8,21 +8,16 @@
 	import { blobToBase64, elementIdGenerator } from '@app/utils';
 	import imageSvelte from '@app/image-svelte';
 	import DetectPinch from '../Common/DetectPinch.svelte';
-
-	let className = '';
-	export { className as class };
-
 	const dispatch = createEventDispatcher<{
 		image: { base64: string };
 	}>();
 
-	const videoElementId = elementIdGenerator();
+	let className = '';
+	export { className as class };
 
 	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
 
-	$: videoElement = isLoading
-		? null
-		: (document.getElementById(videoElementId) as HTMLVideoElement);
+	let videoElement: HTMLVideoElement | undefined;
 	$: canvas = browser ? document.createElement('canvas') : undefined;
 
 	let isLoading = true;
@@ -62,6 +57,7 @@
 
 	// get camera devices
 	onMount(async () => {
+		onLoad();
 		const devs = await navigator.mediaDevices.enumerateDevices();
 		const vidDevs = devs.filter((device) => device.kind === 'videoinput');
 		cameraDevices = {
@@ -75,7 +71,7 @@
 		cameraDeviceId = cameraDevices[facingMode].deviceId;
 	});
 
-	const onLoad = (videoElement: HTMLVideoElement) => {
+	const onLoad = () => {
 		isLoading = false;
 	};
 
@@ -91,6 +87,8 @@
 		if (!canvas) throw new Error('canvas is not defined');
 		if (!videoElement) throw new Error('videoElement is not defined');
 		if (!imageCapture) throw new Error('imageCapture is not defined');
+
+		isLoading = true;
 
 		const pictureBlob = await imageCapture.takePhoto();
 		const pictureBitmap = await createImageBitmap(pictureBlob);
@@ -170,8 +168,7 @@
 	{/if}
 	<video
 		autoplay
-		id={videoElementId}
-		use:onLoad
+		bind:this={videoElement}
 		class={twMerge(
 			'h-full object-cover absolute',
 			isLoading && 'blur-sm',
