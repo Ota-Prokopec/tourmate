@@ -9,70 +9,70 @@ import crop from './actions/crop'
 
 export type Filter = 'blur' | 'median' | 'sobel' | 'scharr' | 'gaussian'
 
-export const imgUrl = writable<string>('')
-export const ableToUndo = writable<boolean>(false)
-let image = new ImageJs()
-let history: ImageJs[] = [] //this is for that you had in history your first picture that you passed
-
-class Functions {
-	constructor(public howManyImagesBeforeUndoAvailable: number = 1) {}
-	async rotate(degree: number) {
-		return rotate(image, degree)
-	}
-	async addText(...args: Parameters<typeof addText> extends [any, ...infer Rest] ? Rest : never) {
-		return await addText(image, ...args)
-	}
-	async addFilter(filter: Filter) {
-		return image[`${filter}Filter`]() as ImageJs
-	}
-	async load(url: string | Base64) {
-		return await ImageJs.load(url)
-	}
-
-	async getCtx() {
-		return getCtx(image)
-	}
-
-	async undo() {
-		if (history.length < this.howManyImagesBeforeUndoAvailable + 1) return
-		history = history.splice(0, history.length - 1)
-
-		const Img = history.at(-1)
-		if (!Img) throw new Error('Image is not available')
-		image = Img
-
-		ableToUndo.set(history.length > this.howManyImagesBeforeUndoAvailable)
-		imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
-	}
-	async crop(options: Parameters<typeof crop>[1]) {
-		return crop(image, options)
-	}
-	async flipY() {
-		return image.flipY()
-	}
-	async flipX() {
-		return image.flipX()
-	}
-}
-
-type Methods = GetTypesOfmethodsInClass<Functions>
-
-const Actions = executeFunctionBeforeAndAfterClassMethod<Methods, typeof Functions>(
-	Functions,
-	{
-		after: async (res, MyClass) => {
-			if (res instanceof ImageJs) {
-				image = res
-				history.push(image) //add picture into history
-				ableToUndo.set(history.length > new MyClass().howManyImagesBeforeUndoAvailable)
-				imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
-			}
-		},
-	},
-	{ after: ['undo'] },
-)
-
 export default ({ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeUndoAvailable: number }) => {
+	const imgUrl = writable<string>('')
+	const ableToUndo = writable<boolean>(false)
+	let image = new ImageJs()
+	let history: ImageJs[] = [] //this is for that you had in history your first picture that you passed
+
+	class Functions {
+		constructor(public howManyImagesBeforeUndoAvailable: number = 1) {}
+		async rotate(degree: number) {
+			return rotate(image, degree)
+		}
+		async addText(...args: Parameters<typeof addText> extends [any, ...infer Rest] ? Rest : never) {
+			return await addText(image, ...args)
+		}
+		async addFilter(filter: Filter) {
+			return image[`${filter}Filter`]() as ImageJs
+		}
+		async load(url: string | Base64) {
+			return await ImageJs.load(url)
+		}
+
+		async getCtx() {
+			return getCtx(image)
+		}
+
+		async undo() {
+			if (history.length < this.howManyImagesBeforeUndoAvailable + 1) return
+			history = history.splice(0, history.length - 1)
+
+			const Img = history.at(-1)
+			if (!Img) throw new Error('Image is not available')
+			image = Img
+
+			ableToUndo.set(history.length > this.howManyImagesBeforeUndoAvailable)
+			imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
+		}
+		async crop(options: Parameters<typeof crop>[1]) {
+			return crop(image, options)
+		}
+		async flipY() {
+			return image.flipY()
+		}
+		async flipX() {
+			return image.flipX()
+		}
+	}
+
+	type Methods = GetTypesOfmethodsInClass<Functions>
+
+	const Actions = executeFunctionBeforeAndAfterClassMethod<Methods, typeof Functions>(
+		Functions,
+		{
+			after: async (res, MyClass) => {
+				if (res instanceof ImageJs) {
+					image = res
+					history.push(image) //add picture into history
+					ableToUndo.set(history.length > new MyClass().howManyImagesBeforeUndoAvailable)
+					imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
+				}
+			},
+		},
+		{ after: ['undo'] },
+	)
+
 	const actions = new Actions(howManyImagesBeforeUndoAvailable)
 	return [imgUrl, actions, ableToUndo] as const
 }

@@ -12,3 +12,7 @@ export const isFile = (value: unknown): value is File => {
 export const isURL = (value: unknown): value is URL => {
 	return typeof value === 'string' && value.startsWith('http')
 }
+
+export const urlToString = (url: URL | undefined | null): string | undefined => {
+	return url as unknown as string | undefined
+}

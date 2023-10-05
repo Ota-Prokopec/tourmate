@@ -1,70 +1,86 @@
 <script lang="ts">
 	import type { Base64, Location } from '@app/ts-types';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { browser } from '$app/environment';
 	import imageSvelte from '@app/image-svelte';
 	import Bar from './items/Bar.svelte';
-	import LocationTextInput from './items/LocationTextInput.svelte';
 	import Edge from './items/Edge.svelte';
 	import Icon from '../Common/Icon.svelte';
-	import IconNext from '../Icons/IconNext.svelte';
-	import { Button } from 'flowbite-svelte';
+	import Cropperjs from 'cropperjs';
+	import 'cropperjs/dist/cropper.css';
+	import Row from '../Common/Row.svelte';
+	import IconTimes from '../Icons/IconTimes.svelte';
+	import IconCheck from '../Icons/IconCheck.svelte';
+	import type { EditorOptions } from './items/ImageEditorTypes';
+	import { twMerge } from 'tailwind-merge';
 
-	const dispatch = createEventDispatcher<{ next: string | Base64 }>();
+	export let url: Base64 | string | string | URL = '';
+	export let result: string | Base64 = '';
+	$: result = $imgUrl;
 
-	export let url: Base64 | string = '';
-	export let placeName = '';
-
-	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
-	actions.load(url);
-
-	const texts = [`Location: ${placeName}`, `I was here, ${placeName}`];
-	const textOptions = {
-		index: 0,
-		color: 'white'
+	const defaultOptions = {
+		allowCropping: true,
+		allowRotating: true,
+		allowFilters: true,
+		allowUndo: true,
+		cropping: {
+			minCanvasWidth: 1,
+			minCanvasHeight: 1,
+			aspectRatio: 1,
+			minContainerWidth: 1,
+			minContainerHeight: 1,
+			minCropBoxWidth: 1,
+			minCropBoxHeight: 1
+		}
 	};
-	let changingTextColor = false;
+	export let options: EditorOptions = defaultOptions;
+	Object.assign(options, defaultOptions, options); // mix your options into one where will be all of them
 
-	const addLocationLabel = async () => {
-		const ctx = await actions.getCtx();
-		if (!ctx?.canvas.height) throw new Error('there is no height in canvas');
+	let imageElement: HTMLImageElement | undefined;
+	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+	actions.load(url as string);
+	let cropper: Cropperjs | undefined;
 
-		const width = ctx?.canvas.width - 4;
-		const height = 180;
-
-		const x = 2;
-		const y = ctx?.canvas.height - height;
-
-		actions.addText(texts[textOptions.index], {
-			x: x,
-			y: y,
-			vAlign: 'middle',
-			justify: false,
-			fontSize: 54,
-			fontStyle: '',
-			debug: false,
-			color: textOptions.color,
-			font: `'Poppins', sans-serif`,
-			width: width,
-			height: height
+	let cropperScreened = false;
+	const screenCropper = () => {
+		cropperScreened = true;
+		if (!imageElement) throw new Error('imageElement is not defined');
+		cropper = new Cropperjs(imageElement, {
+			aspectRatio: options.cropping?.aspectRatio,
+			center: true,
+			minCanvasWidth: options.cropping?.minCanvasWidth,
+			minCanvasHeight: options.cropping?.minCanvasHeight
 		});
 	};
 
 	const crop = () => {
-		actions.flipX();
+		if (!cropper) throw new Error('cropper is not defined');
+		const canvas = cropper.crop().getCroppedCanvas();
+		actions.load(canvas.toDataURL('image/png'));
+		disableCropper();
 	};
 
-	const next = async () => {
-		await addLocationLabel(); // add a location label into picture
-		dispatch('next', $imgUrl);
+	const disableCropper = () => {
+		if (!cropper) throw new Error('cropper is not defined');
+		cropper.destroy();
+		cropperScreened = false;
 	};
+
+	let className = '';
+	export { className as class };
 </script>
 
-<div class="w-full h-full flex justify-center">
+<div class={twMerge('w-full h-full flex justify-center', className)}>
 	<div class="w-auto h-full flex flex-wrap flex-row">
 		<Edge />
 
+		{#if cropperScreened}
+			<Row class="gap-2 absolute right-0 top-0 mt-2 mr-20 z-50 fill-white text-3xl">
+				<Icon on:click={crop}><IconCheck /></Icon>
+				<Icon on:click={disableCropper}><IconTimes /></Icon>
+			</Row>
+		{/if}
+
 		<Bar
+			on:crop={screenCropper}
 			on:rotate={() => actions.rotate(90)}
 			on:filter={(e) => actions.addFilter(e.detail)}
 			on:undo={() => actions.undo()}
@@ -72,21 +88,14 @@
 		/>
 
 		<button
-			on:click={(e) => (changingTextColor = false)}
-			class="relative appearance-none p-0 m-0 h-min"
+			class="relative appearance-none p-0 m-0 h-min flex items-center justify-center w-full self-center"
 		>
-			<img class="" alt="" id="image" src={$imgUrl} />
-			{#if browser}
-				<LocationTextInput {texts} options={textOptions} />
-			{/if}
+			<img bind:this={imageElement} class="" alt="" id="image" src={$imgUrl} />
+			<slot name="inner" />
 		</button>
 
 		<Edge>
-			<Button
-				on:click={next}
-				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
-				color="blue">Create <Icon><IconNext /></Icon></Button
-			>
+			<slot name="bottom" />
 		</Edge>
 	</div>
 </div>

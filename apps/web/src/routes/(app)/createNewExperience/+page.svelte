@@ -9,33 +9,86 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import { sdk } from '$src/graphql/sdk';
+	import { browser } from '$app/environment';
+	import LocationTextInput from '$lib/components/ImageEditor/items/LocationTextInput.svelte';
+	import imageSvelte from '@app/image-svelte';
+	import { text } from '@sveltejs/kit';
+	import type { Base64 } from '@app/ts-types';
+	import type { EditorOptions } from '$lib/components/ImageEditor/items/ImageEditorTypes';
 
 	//const { imgSrc } = $myNewExperienceStore;
 	const location = $lsStore.usersLocation;
+	let result: string | Base64 = '';
 
 	$: placeDetailsPromise = location ? getPlaceDetailsByLatAndLong(location[0], location[1]) : null;
 
-	// const editingDone = () => {
-	// 	if (!location) throw new Error('location is not available');
-	// 	goto(`/createNewExperience/save/${location[0]}-${location[1]}`);
-	// };
-
-	const save = () => {
+	const save = async () => {
+		await addLocationLabel();
 		sdk.createExperience({
 			input: {
 				location: [0, 0],
-				picture: '',
+				picture: $imgUrl,
 				placeName: 'horni záhoří'
 			}
 		});
 	};
+
+	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+
+	const addLocationLabel = async () => {
+		actions.load(result);
+
+		const ctx = await actions.getCtx();
+		if (!ctx?.canvas.height) throw new Error('there is no height in canvas');
+
+		const width = ctx?.canvas.width - 4;
+		const height = 180;
+
+		const x = 2;
+		const y = ctx?.canvas.height - height;
+
+		actions.addText(textOptions.texts[textOptions.index], {
+			x: x,
+			y: y,
+			vAlign: 'middle',
+			justify: false,
+			fontSize: 54,
+			fontStyle: '',
+			debug: false,
+			color: textOptions.color,
+			font: `'Poppins', sans-serif`,
+			width: width,
+			height: height
+		});
+	};
+
+	const textOptions: {
+		texts: string[];
+		index: number;
+		color: string;
+	} = {
+		texts: ['ahoj'],
+		index: 0,
+		color: 'white'
+	};
+
+	const editorOptions: EditorOptions = {};
 </script>
 
-{#await placeDetailsPromise}
-	<FullPageLoading />
-{:then placeDetails}
-	<ImageEditor placeName={placeDetails?.name} url={$myNewExperienceStore.imgSrc} />
-{/await}
+<ImageEditor options={editorOptions} bind:result url={$myNewExperienceStore.imgSrc}>
+	<span slot="inner">
+		{#if browser}
+			<LocationTextInput options={textOptions} />
+		{/if}
+	</span>
+	<span slot="bottom">
+		<Button
+			on:click={save}
+			class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
+			color="blue">Create <Icon><IconNext /></Icon></Button
+		>
+	</span>
+</ImageEditor>
 
 <style>
 </style>

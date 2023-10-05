@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { twMerge } from 'tailwind-merge';
-	import { urlToString, type Document, type GraphqlDocument, type Monument } from '@app/ts-types';
+	import { type Document, type GraphqlDocument, type Monument } from '@app/ts-types';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { Button, Card } from 'flowbite-svelte';
 	import Popover from '$lib/components/Common/Popover.svelte';
 	import Marker from '../Marker.svelte';
 	import { goto } from '$app/navigation';
+	import { urlToString } from '@app/utils';
 
 	export let monument: GraphqlDocument<Monument>;
 	export let bouncing = false;

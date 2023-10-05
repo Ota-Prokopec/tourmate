@@ -9,8 +9,9 @@
 	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
-	import imageSvelte from '@app/image-svelte';
-	import Cropper from 'cropperjs';
+
+	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
+	import { base } from '$app/paths';
 
 	export let data: PageData;
 
@@ -30,49 +31,68 @@
 		{ title: 'památky', key: 'monuments' }
 	] as const;
 
-	const [picture, actions] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+	let screenProfilePicEditor = false;
+	let newProfilePicture: string | Base64 = '';
+	let uploadingProfilePictureIsLoading = false;
 
-	const changeProfilePic = async (base64: Base64) => {
-		const cropper = new Cropper();
-		cropper.sdk.updateProfilePicture({ picture: $picture });
+	const openProfilePicEditor = (base64: Base64) => {
+		screenProfilePicEditor = true;
+		newProfilePicture = base64;
+	};
+	const updateProfilePicture = async (base64: Base64) => {
+		uploadingProfilePictureIsLoading = true;
+		const {
+			updateProfilePicture: { profilePictureURL }
+		} = await sdk.updateProfilePicture({ picture: base64 });
+		data.userProfile.profilePictureURL = profilePictureURL;
+		uploadingProfilePictureIsLoading = false;
+		screenProfilePicEditor = false;
 	};
 </script>
 
-<div class="w-full h-auto flex flex-wrap flex-col">
-	<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start p-4">
-		{#if isMyAccount}
-			<AvatarImageInput
-				screenErrors
-				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
-				imageURL={data.userProfile.profilePictureURL}
-				on:image={async ({ detail: { base64 } }) => {
-					changeProfilePic(base64);
-				}}
-			/>
-		{:else}
-			<Avatar
-				size="xl"
-				class="h-40 w-40 overflow-hidden"
-				src={data.userProfile.profilePictureURL}
-			/>
-		{/if}
-		<div class="flex justify-start p-3 gap-4 mt-2 items-center text-2xl">
-			<div>{`${data.userProfile.myId}`}</div>
+{#if screenProfilePicEditor}
+	<ProfilePictureEditor
+		isLoading={uploadingProfilePictureIsLoading}
+		on:save={(e) => updateProfilePicture(e.detail.base64)}
+		profilePicture={newProfilePicture}
+	/>
+{:else}
+	<div class="w-full h-auto flex flex-wrap flex-col">
+		<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
 			{#if isMyAccount}
-				<Icon icon="fa fa-gear" />
+				<AvatarImageInput
+					screenErrors
+					class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
+					imageURL={data.userProfile.profilePictureURL}
+					on:image={async ({ detail: { base64 } }) => {
+						openProfilePicEditor(base64);
+					}}
+				/>
+			{:else}
+				<Avatar
+					size="xl"
+					class="h-40 w-40 overflow-hidden"
+					src={data.userProfile.profilePictureURL}
+				/>
 			{/if}
+			<div class="flex justify-start p-3 gap-4 mt-2 items-center text-2xl">
+				<div>{`${data.userProfile.myId}`}</div>
+				{#if isMyAccount}
+					<Icon icon="fa fa-gear" />
+				{/if}
+			</div>
+		</div>
+		<span class=" text-3xl p-4">{data.userProfile.username}</span>
+
+		<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
+			<CategoryPicker {categories} bind:chosenCategory={experiencesType} />
+			<Gallery class="">
+				{#if experiencesType === 'experiences'}
+					{#each usersExperiences as experience}
+						<ExperienceCard {experience} />
+					{/each}
+				{:else}{/if}
+			</Gallery>
 		</div>
 	</div>
-	<span class=" text-3xl p-4">{data.userProfile.username}</span>
-
-	<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
-		<CategoryPicker {categories} bind:chosenCategory={experiencesType} />
-		<Gallery class="">
-			{#if experiencesType === 'experiences'}
-				{#each usersExperiences as experience}
-					<ExperienceCard {experience} />
-				{/each}
-			{:else}{/if}
-		</Gallery>
-	</div>
-</div>
+{/if}

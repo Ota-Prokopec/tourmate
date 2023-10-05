@@ -7,7 +7,13 @@
 	import { twMerge } from 'tailwind-merge';
 	import ColorPicker from '../../Common/ColorPicker.svelte';
 	import Filters from './Filters.svelte';
-	const dispatch = createEventDispatcher<{ rotate: number; filter: Filter; undo: undefined }>();
+	import IconCrop from '$lib/components/Icons/IconCrop.svelte';
+	const dispatch = createEventDispatcher<{
+		rotate: number;
+		filter: Filter;
+		undo: undefined;
+		crop: undefined;
+	}>();
 
 	export let ableToUndo: boolean;
 
@@ -23,7 +29,12 @@
 >
 	<Icon on:click={() => dispatch('rotate', 90)} class=" text-4xl"><IconRotate /></Icon>
 
-	<Icon on:click={() => {}} class=" text-4xl"><IconRotate /></Icon>
+	<Icon
+		on:click={() => {
+			dispatch('crop');
+		}}
+		class="text-5x"><IconCrop /></Icon
+	>
 
 	<Filters on:click={(e) => dispatch('filter', e.detail)} />
 	<Icon

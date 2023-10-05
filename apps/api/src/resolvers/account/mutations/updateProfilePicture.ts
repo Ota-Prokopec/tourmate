@@ -40,7 +40,7 @@ export default queryField('updateProfilePicture', {
 			username: userInfo.username,
 			phoneVerification: ctx.user.phoneVerification,
 			userId: userInfo.userId,
-			profilePictureURL: userInfo.profilePictureURL,
+			profilePictureURL: file.url,
 		}
 	},
 })

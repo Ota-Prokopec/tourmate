@@ -6,9 +6,8 @@
 	export let options: {
 		color: string;
 		index: number;
+		texts: string[];
 	};
-
-	export let texts: string[];
 
 	let changeTextColor = false;
 </script>
@@ -19,7 +18,7 @@
 			<ColorPicker bind:color={options.color} class="absolute z-50 top-0 left-0" />
 		{/if}
 		<Carousel bind:index={options.index} class="w-full" swiping>
-			{#each texts as label}
+			{#each options.texts as label}
 				<button
 					on:click={() => {
 						changeTextColor = true;
