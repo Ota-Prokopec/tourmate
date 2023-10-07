@@ -8,7 +8,7 @@ const cache = new InMemoryCache({
 export default new ApolloClient({
 	// Provide required constructor fields
 	cache: cache,
-	uri: 'http://localhost:4444/graphql',
+	uri: 'https://d10bbhb5-4444.euw.devtunnels.ms/graphql',
 	credentials: 'same-origin',
 	queryDeduplication: false,
 	defaultOptions: {

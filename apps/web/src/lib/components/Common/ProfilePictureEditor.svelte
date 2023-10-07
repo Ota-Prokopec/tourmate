@@ -14,11 +14,12 @@
 	export let profilePicture: URL | string | Base64;
 	export let isLoading = false;
 
-	let profilePictureEditorOptions: EditorOptions = {
+	let editorOptions: EditorOptions = {
 		cropping: {
 			minCropBoxWidth: 160,
 			minCropBoxHeight: 160,
-			aspectRatio: 1
+			aspectRatio: 1,
+			cropOnStart: true
 		}
 	};
 
@@ -27,7 +28,7 @@
 	};
 </script>
 
-<ImageEditor class="w-[100vw] h-[100vh]" bind:result url={profilePicture}>
+<ImageEditor options={editorOptions} class="w-[100vw] h-[100vh]" bind:result url={profilePicture}>
 	<span slot="bottom">
 		<Button
 			on:click={save}

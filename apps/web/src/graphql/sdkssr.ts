@@ -4,7 +4,7 @@ import { Types } from '@app/appwrite-ssr';
 
 type Input = { cookies: { getAll: () => Types.Cookie[] } };
 
-const client = new GraphQLClient('http://localhost:4444/graphql', {
+const client = new GraphQLClient('https://d10bbhb5-4444.euw.devtunnels.ms/graphql', {
 	credentials: 'include'
 });
 

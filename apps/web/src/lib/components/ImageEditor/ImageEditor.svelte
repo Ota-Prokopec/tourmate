@@ -11,12 +11,13 @@
 	import IconCheck from '../Icons/IconCheck.svelte';
 	import type { EditorOptions } from './items/ImageEditorTypes';
 	import { twMerge } from 'tailwind-merge';
+	import myCropper from './utils/cropper';
 
 	export let url: Base64 | string | string | URL = '';
 	export let result: string | Base64 = '';
 	$: result = $imgUrl;
 
-	const defaultOptions = {
+	const defaultOptions: EditorOptions = {
 		allowCropping: true,
 		allowRotating: true,
 		allowFilters: true,
@@ -28,7 +29,8 @@
 			minContainerWidth: 1,
 			minContainerHeight: 1,
 			minCropBoxWidth: 1,
-			minCropBoxHeight: 1
+			minCropBoxHeight: 1,
+			cropOnStart: false
 		}
 	};
 	export let options: EditorOptions = defaultOptions;
@@ -37,24 +39,23 @@
 	let imageElement: HTMLImageElement | undefined;
 	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
 	actions.load(url as string);
-	let cropper: Cropperjs | undefined;
+
+	const cropper = myCropper({}, (img) => {
+		imgUrl.set(img.getCanvas().toDataURL('image/png'));
+	});
 
 	let cropperScreened = false;
-	const screenCropper = () => {
+	const screenCropper = async () => {
 		cropperScreened = true;
 		if (!imageElement) throw new Error('imageElement is not defined');
-		cropper = new Cropperjs(imageElement, {
-			aspectRatio: options.cropping?.aspectRatio,
-			center: true,
-			minCanvasWidth: options.cropping?.minCanvasWidth,
-			minCanvasHeight: options.cropping?.minCanvasHeight
-		});
+		await cropper.screen(imageElement);
 	};
+
+	//if (options.cropping?.cropOnStart) screenCropper();
 
 	const crop = () => {
 		if (!cropper) throw new Error('cropper is not defined');
-		const canvas = cropper.crop().getCroppedCanvas();
-		actions.load(canvas.toDataURL('image/png'));
+		cropper.crop();
 		disableCropper();
 	};
 
@@ -67,6 +68,8 @@
 	let className = '';
 	export { className as class };
 </script>
+
+<img class="w-44 h-44" src={$imgUrl} alt="" />
 
 <div class={twMerge('w-full h-full flex justify-center', className)}>
 	<div class="w-auto h-full flex flex-wrap flex-row">

@@ -9,9 +9,7 @@
 	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
-
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
-	import { base } from '$app/paths';
 
 	export let data: PageData;
 
