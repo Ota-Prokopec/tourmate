@@ -2,7 +2,7 @@ import { arg, mutationField } from 'nexus'
 import createExperienceInput from '../schema/createExperienceInput'
 import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
-import { transformExperienceDocumentsIntoExperience } from '@app/experience-database-server-graphql'
+import { transformExperienceDocumentsIntoExperience } from '../../../lib/database/experiences-monuments'
 import buckets from '@app/cloudinary-server'
 
 export default mutationField('createExperience', {

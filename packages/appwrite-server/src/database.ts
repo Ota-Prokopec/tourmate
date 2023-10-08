@@ -1,4 +1,4 @@
-import { DatabaseValueTypes } from '@app/ts-types'
+import { DatabaseValueTypes, OmitDocument } from '@app/ts-types'
 import permissionslib from './permissions'
 import { Databases, ID, Models, Query } from 'node-appwrite'
 
@@ -48,16 +48,26 @@ export default (databases: Databases) => {
 		}
 
 		//update document with node-appwrite
-		updateDocument<TData extends TDocumentGet>(
-			documentId: string | Models.Document,
-			data: ExcludeAppwriteDocumentRequirements<TDocumentGet> | undefined | {},
+		async updateDocument<TData extends TDocumentGet>(
+			documentId: string,
+			data: Partial<TDocumentCreate> | {} | undefined,
+			permissions?: string[] | undefined,
+		): Promise<TDocumentGet>
+		async updateDocument<TData extends TDocumentGet>(
+			document: { $id: string },
+			data: Partial<TDocumentCreate> | {} | undefined,
+			permissions?: string[] | undefined,
+		): Promise<TDocumentGet>
+		async updateDocument<TData extends TDocumentGet>(
+			param: string | { $id: string },
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined = undefined,
-		) {
+		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)
 			return databases.updateDocument<TData>(
 				this.databaseId,
 				this.collectionId,
-				typeof documentId === 'string' ? documentId : documentId.$id,
+				typeof param === 'string' ? param : param.$id,
 				data ?? {},
 				permissions,
 			)

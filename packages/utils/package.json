@@ -4,6 +4,7 @@
 	"main": "./src/index.ts",
 	"scripts": {
 		"build": "tsc --build",
+		"prebuild": "yarn barrelsby",
 		"barrelsby": "barrelsby --delete  --singleQuotes --directory ./src/"
 	},
 	"devDependencies": {

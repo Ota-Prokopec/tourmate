@@ -1,5 +1,4 @@
-import { arg, nonNull, queryField, stringArg } from 'nexus'
-import { ApolloError } from 'apollo-server-express'
+import { queryField, stringArg } from 'nexus'
 
 // ! dont check if user has created Account in userInfo because user logs in with this query in register for creating an acccount
 //	args: { email: stringArg(), password: stringArg(), posts: arg({ type: 'PostInput' }) },

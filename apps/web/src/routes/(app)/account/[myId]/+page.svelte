@@ -89,7 +89,9 @@
 					{#each usersExperiences as experience}
 						<ExperienceCard {experience} />
 					{/each}
-				{:else}{/if}
+				{:else}
+					monuments
+				{/if}
 			</Gallery>
 		</div>
 	</div>

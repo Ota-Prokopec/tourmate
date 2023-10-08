@@ -51,17 +51,17 @@ export default (client: Client) => {
 
 		async updateDocument<TData extends TDocumentGet>(
 			documentId: string,
-			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			document: Models.Document,
-			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			param: string | Models.Document,
-			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined = undefined,
 		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)

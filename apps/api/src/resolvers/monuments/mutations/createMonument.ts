@@ -1,4 +1,4 @@
-import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-server-graphql'
+import { transformMonumentsDocumentsIntoMonuments } from '../../../lib/database/experiences-monuments'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
 import buckets from '@app/cloudinary-server'

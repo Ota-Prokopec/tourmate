@@ -22,11 +22,11 @@
 		wrapper.onpointerleave = pointerupHandler;
 	}
 
-	function pointerdownHandler(ev) {
+	function pointerdownHandler(ev: any) {
 		evCache.push(ev);
 	}
 
-	function pointermoveHandler(ev) {
+	function pointermoveHandler(ev: any) {
 		// Find this event in the cache and update its record with this event
 		const index = evCache.findIndex((cachedEv) => cachedEv.pointerId === ev.pointerId);
 		evCache[index] = ev;
@@ -48,7 +48,7 @@
 		}
 	}
 
-	function pointerupHandler(ev) {
+	function pointerupHandler(ev: any) {
 		removeEvent(ev);
 
 		if (evCache.length < 2) {
@@ -56,7 +56,7 @@
 		}
 	}
 
-	function removeEvent(ev) {
+	function removeEvent(ev: any) {
 		const index = evCache.findIndex((cachedEv) => cachedEv.pointerId === ev.pointerId);
 		evCache.splice(index, 1);
 	}

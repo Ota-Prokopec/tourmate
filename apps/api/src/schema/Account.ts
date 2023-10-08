@@ -1,6 +1,6 @@
 import { list, nullable, objectType } from 'nexus'
 import UsersPreferences from './UsersPreferences'
-import { getListOfExperineceByUser, getListOfMonumentsByUser } from '@app/experience-database-server-graphql'
+import { getListOfExperineceByUser, getListOfMonumentsByUser } from '../lib/database/experiences-monuments'
 import { GraphqlDocument, Preferences } from '@app/ts-types'
 
 export type AccountGetOutput = GraphqlDocument<{

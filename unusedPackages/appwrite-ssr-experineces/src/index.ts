@@ -1,6 +1,6 @@
 import { collections as collections_ } from './collections'
-import appwriteSSR from '@app/appwrite-ssr'
-import { Types } from '@app/appwrite-ssr'
+import appwriteSSR from '@app/appwrite-ssr-graphql'
+import type { Types } from '@app/appwrite-ssr-graphql'
 
 const myAppwriteClient: ReturnType<typeof appwriteSSR.setProject> = appwriteSSR.setProject({
 	projectEndPoint: process.env.APPWRITE_ENDPOINT as string,

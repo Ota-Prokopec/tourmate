@@ -1,7 +1,6 @@
-import appwrite from '@app/appwrite-ssr-experiences-graphql'
+import appwrite from '../../../appwrite/appwrite'
 import { Query } from '@app/appwrite-server'
 import { transformMonumentsDocumentsIntoMonuments } from '../transformers'
-import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
 
 export const getListOfMonuments = async (
 	collections: ReturnType<typeof appwrite.setCookie>['collections'],

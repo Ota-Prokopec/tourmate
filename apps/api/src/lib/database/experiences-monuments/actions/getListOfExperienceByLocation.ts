@@ -1,5 +1,5 @@
 import type { Location } from '@app/ts-types'
-import appwrite from '@app/appwrite-ssr-experiences-graphql'
+import appwrite from '../../../appwrite/appwrite'
 import { Query } from '@app/appwrite-server'
 import { transformExperienceDocumentsIntoExperience } from '../transformers'
 

@@ -1,7 +1,6 @@
 import { Client, Storage } from 'node-appwrite'
 import { Avatars, Databases, Functions, Graphql, Locale, Teams, Users } from 'node-appwrite'
 import database from './database'
-import Collections from './collections'
 import { Account } from './account'
 import { getSessionFromCookie } from './authorizationUtils'
 import Localization from './localization'
@@ -54,7 +53,6 @@ const newClient = (callback?: (client: Client) => Client) => {
 	const databases = new Databases(client)
 	const users = new Users(client)
 	const Collection = database(databases)
-	const collections = Collections(databases)
 	const account = new Account(client)
 
 	return {
@@ -68,7 +66,6 @@ const newClient = (callback?: (client: Client) => Client) => {
 		databases,
 		Collection,
 		users,
-		collections,
 		Storage,
 	}
 }

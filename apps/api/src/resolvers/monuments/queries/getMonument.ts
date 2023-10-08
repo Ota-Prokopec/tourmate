@@ -1,5 +1,5 @@
 import { queryField, stringArg } from 'nexus'
-import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-server-graphql'
+import { transformMonumentsDocumentsIntoMonuments } from '../../../lib/database/experiences-monuments'
 
 export default queryField('getMonument', {
 	type: 'Monument',

@@ -57,11 +57,9 @@
 	"dependencies": {
 		"@apollo/client": "^3.8.2",
 		"@app/appwrite-client": "*",
-		"@app/appwrite-nexus": "*",
 		"@app/appwrite-permissions": "*",
 		"@app/appwrite-server": "*",
-		"@app/appwrite-ssr": "*",
-		"@app/experience-database-server-graphql": "*",
+		"@app/experiences-database-transformers": "*",
 		"@app/experience-settings": "*",
 		"@app/firebase-client": "*",
 		"@app/firebase-server": "*",

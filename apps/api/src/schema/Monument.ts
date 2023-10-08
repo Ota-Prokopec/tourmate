@@ -1,4 +1,4 @@
-import { getListOfExperineceByLocation } from '@app/experience-database-server-graphql'
+import { getListOfExperineceByLocation } from '../lib/database/experiences-monuments'
 import { isLocation } from '@app/ts-types'
 import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'

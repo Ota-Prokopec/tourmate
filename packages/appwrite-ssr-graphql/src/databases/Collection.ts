@@ -1,8 +1,8 @@
 import * as permissionslib from '@app/appwrite-permissions'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
-import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus'
 import { Types } from '../types/Types'
 import { DatabaseValueTypes, OmitDocument, Preferences } from '@app/ts-types'
+import { transformAppwriteDocumentsIntoGraphqlDocuments } from './transformer'
 
 type Document = Types.Document
 
@@ -70,17 +70,17 @@ export default (client: Client) => {
 		//update document with node-appwrite
 		async updateDocument<TData extends TDocumentGet>(
 			documentId: string,
-			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			document: Document,
-			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			param: string | Document,
-			data: OmitDocument<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | {} | undefined,
 			permissions: string[] | undefined = undefined,
 		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions) permissions = convertObjectInfoArray(permissions)

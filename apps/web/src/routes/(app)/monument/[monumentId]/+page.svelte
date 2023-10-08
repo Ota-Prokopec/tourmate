@@ -23,11 +23,11 @@
 			</h5>
 			<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 flex flex-wrap flex-col gap-2">
 				<span>lokace: [{data.monument.location}]</span>
-				<span>místo: {data.monument.placeDetails.name}</span>
+				<span>místo: {data.monument.placeDetail.name}</span>
 				<span> {data.monument.about}</span>
 				<button>
 					<UserItem
-						data={{
+						user={{
 							myId: data.monument.creator.myId,
 							username: data.monument.creator.username,
 							profilePictureURL: data.monument.creator.profilePictureURL,

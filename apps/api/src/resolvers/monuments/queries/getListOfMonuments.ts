@@ -1,5 +1,5 @@
 import { arg, list, nullable, queryField } from 'nexus'
-import { getListOfMonuments, getListOfMonumentsByLocation } from '@app/experience-database-server-graphql'
+import { getListOfMonuments, getListOfMonumentsByLocation } from '../../../lib/database/experiences-monuments'
 import { isLocation } from '@app/ts-types'
 import monumentInput from '../schema/monumentInput'
 

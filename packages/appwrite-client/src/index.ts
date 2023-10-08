@@ -3,7 +3,9 @@ import { createAuthDispatcher, createCollectionDispatcher } from './svelte/main'
 import { Query } from 'appwrite'
 import createCollections from './collections'
 import storage from './common/storage'
+
 import createSvelteCollections from './svelteCollections'
+import { appwriteKeys } from './common/appwriteKeys'
 
 const client = new Client()
 client.setEndpoint('https://cloud.appwrite.io/v1').setProject('experiences')
@@ -51,4 +53,5 @@ export {
 	ID,
 	createAuthDispatcher,
 	createCollectionDispatcher,
+	appwriteKeys,
 }

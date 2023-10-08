@@ -55,14 +55,14 @@
 			<IconEnvelope />
 		</Input>
 		<Input
-			let:active
+			let:iconClicked
 			iconFunction="password"
 			icon
 			class="w-full !rounded-3xl"
 			bind:value={password}
 			placeholder="Zadejte heslo"
 		>
-			<IconEye {active} />
+			<IconEye active={iconClicked} />
 		</Input>
 
 		<ErrorHelper timeout={4000} bind:message={errorMessage} />

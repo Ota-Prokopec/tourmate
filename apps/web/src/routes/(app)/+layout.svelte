@@ -7,7 +7,6 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { MessagePayload } from 'firebase/messaging';
-	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-nexus';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
 
@@ -30,11 +29,12 @@
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import { Query, collections, svelteCollections } from '@app/appwrite-client';
+	import { Query, appwriteKeys, collections, svelteCollections } from '@app/appwrite-client';
 	import type { UserInfoGraphqlDocument } from '@app/ts-types';
 	import IconSquareSpace from '$lib/components/Icons/IconSquareSpace.svelte';
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
 	import IconMap from '$lib/components/Icons/IconMap.svelte';
+	import { omit } from 'lodash';
 
 	let foregroundNotification: MessagePayload | undefined;
 
@@ -56,10 +56,11 @@
 
 	onMount(() => {
 		collections.userInfo.listenUpdate(data.user._id, (updatedUserInfo) => {
-			const userInfoGraphql = transformAppwriteDocumentsIntoGraphqlDocuments(
-				updatedUserInfo
-			)[0] as UserInfoGraphqlDocument;
-			data.user = Object.assign(data.user, userInfoGraphql);
+			data.user = Object.assign(data.user, {
+				...omit(updatedUserInfo, ...appwriteKeys),
+				_updatedAt: updatedUserInfo.$updatedAt,
+				_createdAt: updatedUserInfo.$createdAt
+			});
 		});
 	});
 </script>

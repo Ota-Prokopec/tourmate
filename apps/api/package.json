@@ -12,16 +12,15 @@
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
-		"generate-types-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/types/"
+		"generate-types-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/types/",
+		"generate-database-experiences-monuments-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/experiences-monuments/",
+		"generate-database-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/"
 	},
 	"dependencies": {
-		"@app/appwrite-nexus": "*",
 		"@app/appwrite-permissions": "*",
-		"@app/appwrite-ssr": "*",
-		"@app/appwrite-ssr-experiences": "*",
 		"@app/appwrite-ssr-experiences-graphql": "*",
 		"@app/cloudinary-server": "*",
-		"@app/experience-database-server-graphql": "*",
+		"@app/experiences-database-transformers": "*",
 		"@app/experience-settings": "*",
 		"@app/users-database-server-graphql": "*",
 		"@types/cookie-parser": "^1.4.3",
