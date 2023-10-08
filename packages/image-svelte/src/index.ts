@@ -9,8 +9,10 @@ import crop from './actions/crop'
 
 export type Filter = 'blur' | 'median' | 'sobel' | 'scharr' | 'gaussian'
 
-export default ({ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeUndoAvailable: number }) => {
-	const imgUrl = writable<string>('')
+export default (
+	{ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeUndoAvailable: number },
+	callbackUrl: (url: string | Base64) => void,
+) => {
 	const ableToUndo = writable<boolean>(false)
 	let image = new ImageJs()
 	let history: ImageJs[] = [] //this is for that you had in history your first picture that you passed
@@ -43,7 +45,7 @@ export default ({ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeU
 			image = Img
 
 			ableToUndo.set(history.length > this.howManyImagesBeforeUndoAvailable)
-			imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
+			callbackUrl(`data:image/png;base64,${await image.toBase64()}`)
 		}
 		async crop(options: Parameters<typeof crop>[1]) {
 			return crop(image, options)
@@ -61,12 +63,14 @@ export default ({ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeU
 	const Actions = executeFunctionBeforeAndAfterClassMethod<Methods, typeof Functions>(
 		Functions,
 		{
-			after: async (res, MyClass) => {
+			after: async (resPromise, MyClass) => {
+				const res = await resPromise
 				if (res instanceof ImageJs) {
 					image = res
 					history.push(image) //add picture into history
 					ableToUndo.set(history.length > new MyClass().howManyImagesBeforeUndoAvailable)
-					imgUrl.set(`data:image/png;base64,${await image.toBase64()}`)
+
+					callbackUrl(`data:image/png;base64,${await image.toBase64()}`)
 				}
 			},
 		},
@@ -74,5 +78,5 @@ export default ({ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeU
 	)
 
 	const actions = new Actions(howManyImagesBeforeUndoAvailable)
-	return [imgUrl, actions, ableToUndo] as const
+	return [actions, ableToUndo] as const
 }

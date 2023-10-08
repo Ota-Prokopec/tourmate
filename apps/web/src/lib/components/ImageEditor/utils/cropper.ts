@@ -1,7 +1,8 @@
 import Cropperjs from 'cropperjs';
 import ImageJs from 'image-js';
+import { EditorOptions } from '../items/ImageEditorTypes';
 
-export default (options: Cropperjs.Options<HTMLImageElement>, set: (image: ImageJs) => void) => {
+export default (options: EditorOptions['cropping'], set: (image: ImageJs) => void) => {
 	let cropper: Cropperjs | undefined;
 
 	return {

@@ -12,10 +12,13 @@
 	import type { EditorOptions } from './items/ImageEditorTypes';
 	import { twMerge } from 'tailwind-merge';
 	import myCropper from './utils/cropper';
+	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 
 	export let url: Base64 | string | string | URL = '';
 	export let result: string | Base64 = '';
-	$: result = $imgUrl;
+	const imgUrl = writable<string | Base64>(url as string);
+	imgUrl.subscribe((value) => (result = value));
 
 	const defaultOptions: EditorOptions = {
 		allowCropping: true,
@@ -30,28 +33,31 @@
 			minContainerHeight: 1,
 			minCropBoxWidth: 1,
 			minCropBoxHeight: 1,
-			cropOnStart: false
+			cropOnStart: { disableDisabling: false }
 		}
 	};
 	export let options: EditorOptions = defaultOptions;
-	Object.assign(options, defaultOptions, options); // mix your options into one where will be all of them
+
+	//options = { ...defaultOptions, ...options }; // mix your options into one where will be all of them
 
 	let imageElement: HTMLImageElement | undefined;
-	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
+	const [actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (url) => {
+		imgUrl.set(url);
+	});
 	actions.load(url as string);
 
-	const cropper = myCropper({}, (img) => {
-		imgUrl.set(img.getCanvas().toDataURL('image/png'));
+	const cropper = myCropper(options.cropping, (img) => {
+		actions.load(img.getCanvas().toDataURL('image/png'));
 	});
 
 	let cropperScreened = false;
-	const screenCropper = async () => {
-		cropperScreened = true;
+	const screenCropper = async (
+		options: { disableDisabling: boolean } | undefined = { disableDisabling: false }
+	) => {
+		if (!options?.disableDisabling) cropperScreened = true;
 		if (!imageElement) throw new Error('imageElement is not defined');
 		await cropper.screen(imageElement);
 	};
-
-	//if (options.cropping?.cropOnStart) screenCropper();
 
 	const crop = () => {
 		if (!cropper) throw new Error('cropper is not defined');
@@ -65,11 +71,13 @@
 		cropperScreened = false;
 	};
 
+	onMount(() => {
+		if (options.cropping?.cropOnStart) screenCropper({ disableDisabling: false });
+	});
+
 	let className = '';
 	export { className as class };
 </script>
-
-<img class="w-44 h-44" src={$imgUrl} alt="" />
 
 <div class={twMerge('w-full h-full flex justify-center', className)}>
 	<div class="w-auto h-full flex flex-wrap flex-row">
@@ -83,7 +91,7 @@
 		{/if}
 
 		<Bar
-			on:crop={screenCropper}
+			on:crop={() => screenCropper()}
 			on:rotate={() => actions.rotate(90)}
 			on:filter={(e) => actions.addFilter(e.detail)}
 			on:undo={() => actions.undo()}

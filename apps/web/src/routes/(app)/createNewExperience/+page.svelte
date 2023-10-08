@@ -12,7 +12,6 @@
 	import { browser } from '$app/environment';
 	import LocationTextInput from '$lib/components/ImageEditor/items/LocationTextInput.svelte';
 	import imageSvelte from '@app/image-svelte';
-	import { text } from '@sveltejs/kit';
 	import type { Base64 } from '@app/ts-types';
 	import type { EditorOptions } from '$lib/components/ImageEditor/items/ImageEditorTypes';
 
@@ -25,14 +24,15 @@
 		sdk.createExperience({
 			input: {
 				location: [0, 0],
-				picture: $imgUrl,
+				picture: result,
 				placeName: 'horni záhoří'
 			}
 		});
 	};
 
-	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
-
+	const [actions] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (url) => {
+		result = url;
+	});
 	const addLocationLabel = async () => {
 		actions.load(result);
 

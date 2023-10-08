@@ -3,7 +3,6 @@
 	import ImageEditor from '../ImageEditor/ImageEditor.svelte';
 	import type { EditorOptions } from '../ImageEditor/items/ImageEditorTypes';
 	import { createEventDispatcher } from 'svelte';
-	import AvatarImageInput from '../ImageInputs/AvatarImageInput.svelte';
 	import Icon from './Icon.svelte';
 	import IconNext from '../Icons/IconNext.svelte';
 	import { Button } from 'flowbite-svelte';
@@ -19,7 +18,9 @@
 			minCropBoxWidth: 160,
 			minCropBoxHeight: 160,
 			aspectRatio: 1,
-			cropOnStart: true
+			cropOnStart: {
+				disableDisabling: true
+			}
 		}
 	};
 

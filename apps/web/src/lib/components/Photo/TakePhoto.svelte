@@ -8,6 +8,8 @@
 	import { blobToBase64, elementIdGenerator } from '@app/utils';
 	import imageSvelte from '@app/image-svelte';
 	import DetectPinch from '../Common/DetectPinch.svelte';
+	import type { Base64 } from '@app/ts-types';
+
 	const dispatch = createEventDispatcher<{
 		image: { base64: string };
 	}>();
@@ -15,8 +17,10 @@
 	let className = '';
 	export { className as class };
 
-	const [imgUrl, actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 });
-
+	let result: Base64 | string = '';
+	const [actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (url) => {
+		result = url;
+	});
 	let videoElement: HTMLVideoElement | undefined;
 	$: canvas = browser ? document.createElement('canvas') : undefined;
 
@@ -130,10 +134,11 @@
 		} else {
 			await actions.load(base64);
 		}
-		send($imgUrl);
+
+		done(result);
 	};
 
-	const send = (base64: string) => {
+	const done = (base64: string) => {
 		dispatch('image', {
 			base64: base64
 		});
