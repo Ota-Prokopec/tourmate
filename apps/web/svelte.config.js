@@ -6,13 +6,9 @@ import path from 'path';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: vitePreprocess(),
-
 	kit: {
 		adapter: adapter(),
-		env: {
-			dir: '../../.env.development',
-			publicPrefix: 'VITE_'
-		},
+		env: { dir: './.env', publicPrefix: 'PUBLIC_' },
 		alias: {
 			$lib: path.resolve('src', 'lib'),
 			$root: path.resolve('/'),

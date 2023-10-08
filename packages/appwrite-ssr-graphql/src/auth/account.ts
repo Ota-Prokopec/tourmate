@@ -29,8 +29,6 @@ export default (client: Client) => {
 		}
 
 		loginViaEmail(email: string, password: string) {
-			console.log(process.env.APPWRITE_PROJECT_ID)
-
 			const promise = fetch(`${process.env.APPWRITE_ENDPOINT}/account/sessions/email`, {
 				method: 'POST',
 				headers: {
@@ -48,8 +46,6 @@ export default (client: Client) => {
 		async createSession(callbackFetch: () => Promise<Response>) {
 			try {
 				const response = await callbackFetch()
-
-				console.log(response)
 
 				const json = (await response.json()) as { code: number; message: string }
 

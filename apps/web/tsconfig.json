@@ -25,7 +25,8 @@
 		"src/**/*.ts",
 		"src/**/*.js",
 		"src/**/*.svelte",
-		"../../global.d.ts"
+		"../../global.d.ts",
+		".svelte-kit/ambient.d.ts"
 		//"static/firebase-messaging-sw.js"
 	],
 	"exclude": ["node_modules", "dist"]

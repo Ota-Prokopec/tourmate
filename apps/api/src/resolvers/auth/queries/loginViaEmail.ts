@@ -14,7 +14,7 @@ export default queryField('logInViaEmail', {
 
 		ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, cookie.value, {
 			sameSite: 'lax',
-			domain: process.env.SERVER_HOSTNAME,
+			domain: process.env.SERVER_HOSTNAME_COOKIES,
 			secure: true,
 			maxAge: 1000000000,
 			httpOnly: true,

@@ -1,7 +1,6 @@
 import { getSdk } from '$src/graphql/generated';
 import { GraphQLClient } from 'graphql-request';
+import clientOptions from './clientOptions';
 
-const client = new GraphQLClient('https://d10bbhb5-4444.euw.devtunnels.ms/graphql', {
-	credentials: 'include'
-});
+const client = new GraphQLClient(...clientOptions);
 export const sdk = getSdk(client);

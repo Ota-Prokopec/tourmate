@@ -35,6 +35,8 @@
 		} catch (error) {}
 
 		try {
+			console.log('login');
+
 			const res = await sdk.loginViaEmail({ email, password });
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');

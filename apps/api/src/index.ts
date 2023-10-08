@@ -14,10 +14,12 @@ const start = async () => {
 	server.applyMiddleware({ app, path: '/graphql', cors: false, bodyParserConfig: { limit: '50mb' } })
 }
 
+const clientHostName = process.env.DEV ? `${process.env.CLIENT_HOSTNAME}:5222` : `${process.env.CLIENT_HOSTNAME}/graphql`
+
 app.use(cookieParser())
 app.use(
 	cors({
-		origin: ['http://localhost:5222', 'https://studio.apollographql.com', 'https://experiences-api.vercel.app/'],
+		origin: [clientHostName, 'https://studio.apollographql.com'],
 		credentials: true,
 	}),
 )
