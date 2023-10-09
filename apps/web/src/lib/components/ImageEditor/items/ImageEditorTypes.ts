@@ -14,7 +14,7 @@ export type EditorOptions = PartialDeep<{
 		minCropBoxWidth: number;
 		minCropBoxHeight: number;
 		cropOnStart?: {
-			disableDisabling?: boolean;
+			disableUserToDisableCropping?: boolean;
 		};
 	};
 }>;

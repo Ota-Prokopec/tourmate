@@ -13,12 +13,19 @@
 	import { twMerge } from 'tailwind-merge';
 	import myCropper from './utils/cropper';
 	import { writable } from 'svelte/store';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { omit, pick } from 'lodash';
+	const dispatch = createEventDispatcher<{
+		change: { url: string | Base64; width: number; height: number };
+	}>();
 
 	export let url: Base64 | string | string | URL = '';
 	export let result: string | Base64 = '';
 	const imgUrl = writable<string | Base64>(url as string);
 	imgUrl.subscribe((value) => (result = value));
+
+	let isLoading = true;
+	onMount(() => (isLoading = false));
 
 	const defaultOptions: EditorOptions = {
 		allowCropping: true,
@@ -33,28 +40,54 @@
 			minContainerHeight: 1,
 			minCropBoxWidth: 1,
 			minCropBoxHeight: 1,
-			cropOnStart: { disableDisabling: false }
+			cropOnStart: { disableUserToDisableCropping: true }
 		}
 	};
 	export let options: EditorOptions = defaultOptions;
 
-	//options = { ...defaultOptions, ...options }; // mix your options into one where will be all of them
+	let imageParams:
+		| {
+				width: number;
+				height: number;
+		  }
+		| undefined;
+
+	$: if ($historyStore[0] && $historyStore[0]?.width && $historyStore[0]?.height) {
+		imageParams = pick($historyStore[0], 'width', 'height');
+	}
 
 	let imageElement: HTMLImageElement | undefined;
-	const [actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (url) => {
-		imgUrl.set(url);
-	});
+	const [actions, ableToUndo, historyStore] = imageSvelte(
+		{
+			howManyImagesBeforeUndoAvailable: options.cropping?.cropOnStart?.disableUserToDisableCropping
+				? 1
+				: 1
+		},
+		(url, options, action, history) => {
+			imgUrl.set(url);
+			if (history.length === 1) return; //! this is init load image, this number refers to howManyImagesBeforeUndoAvailable
+			dispatch('change', { url: $imgUrl, ...options });
+		},
+		(url, options, history) => {
+			//if (history.length === 1 && options.cropping?.cropOnStart) screenCropper(); // crop on start
+		}
+	);
 	actions.load(url as string);
 
 	const cropper = myCropper(options.cropping, (img) => {
-		actions.load(img.getCanvas().toDataURL('image/png'));
+		if (!imageParams?.width || !imageParams?.height)
+			throw new Error('width and height are not set');
+
+		const widthPass = document.body.offsetWidth - img.width;
+
+		actions.loadCanvas(
+			img.resize({ width: img.width + widthPass, height: img.height + widthPass }).getCanvas()
+		);
 	});
 
 	let cropperScreened = false;
-	const screenCropper = async (
-		options: { disableDisabling: boolean } | undefined = { disableDisabling: false }
-	) => {
-		if (!options?.disableDisabling) cropperScreened = true;
+	const screenCropper = async () => {
+		cropperScreened = true;
 		if (!imageElement) throw new Error('imageElement is not defined');
 		await cropper.screen(imageElement);
 	};
@@ -71,42 +104,38 @@
 		cropperScreened = false;
 	};
 
-	onMount(() => {
-		if (options.cropping?.cropOnStart) screenCropper({ disableDisabling: false });
-	});
+	$: if (!isLoading && options.cropping?.cropOnStart) screenCropper(); // crop on start
 
 	let className = '';
 	export { className as class };
 </script>
 
-<div class={twMerge('w-full h-full flex justify-center', className)}>
-	<div class="w-auto h-full flex flex-wrap flex-row">
-		<Edge />
+<Row class={twMerge('w-full h-full grid grid-rows-[auto_64px] overflow-auto', className)}>
+	{#if cropperScreened}
+		<Row class="gap-2 absolute right-0 top-0 mt-2 mr-20 z-50 fill-white text-3xl flex-1">
+			<Icon class="fill-black" on:click={crop}><IconCheck /></Icon>
+			{#if !($historyStore.length <= 1 && options.cropping?.cropOnStart?.disableUserToDisableCropping)}
+				<Icon class="fill-black" on:click={disableCropper}><IconTimes /></Icon>
+			{/if}
+		</Row>
+	{/if}
 
-		{#if cropperScreened}
-			<Row class="gap-2 absolute right-0 top-0 mt-2 mr-20 z-50 fill-white text-3xl">
-				<Icon on:click={crop}><IconCheck /></Icon>
-				<Icon on:click={disableCropper}><IconTimes /></Icon>
-			</Row>
-		{/if}
+	<Bar
+		on:crop={() => screenCropper()}
+		on:rotate={() => actions.rotate(90)}
+		on:filter={(e) => actions.addFilter(e.detail)}
+		on:undo={() => actions.undo()}
+		ableToUndo={$ableToUndo}
+	/>
 
-		<Bar
-			on:crop={() => screenCropper()}
-			on:rotate={() => actions.rotate(90)}
-			on:filter={(e) => actions.addFilter(e.detail)}
-			on:undo={() => actions.undo()}
-			ableToUndo={$ableToUndo}
-		/>
+	<button
+		class="relative appearance-none p-0 m-0 h-min flex items-center justify-center w-full self-center"
+	>
+		<img bind:this={imageElement} class="" alt="" id="image" src={$imgUrl} />
+		<slot name="inner" />
+	</button>
 
-		<button
-			class="relative appearance-none p-0 m-0 h-min flex items-center justify-center w-full self-center"
-		>
-			<img bind:this={imageElement} class="" alt="" id="image" src={$imgUrl} />
-			<slot name="inner" />
-		</button>
-
-		<Edge>
-			<slot name="bottom" />
-		</Edge>
-	</div>
-</div>
+	<Edge class="h-[64px] p-0 m-0">
+		<slot name="bottom" />
+	</Edge>
+</Row>

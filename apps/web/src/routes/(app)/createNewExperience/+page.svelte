@@ -76,7 +76,12 @@
 			isLoading = true;
 		});
 
-	const editorOptions: EditorOptions = {};
+	const editorOptions: EditorOptions = {
+		cropping: {
+			minCropBoxHeight: 600,
+			minCropBoxWidth: 300
+		}
+	};
 
 	let isLoading = textOptions.texts.length === 0;
 </script>
@@ -91,7 +96,7 @@
 		<span slot="bottom">
 			<Button
 				on:click={save}
-				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
+				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl mr-6 ml-6 p-0 py-0 !m-0 rounded-full fill-white"
 				color="blue">Create <Icon><IconNext /></Icon></Button
 			>
 		</span>

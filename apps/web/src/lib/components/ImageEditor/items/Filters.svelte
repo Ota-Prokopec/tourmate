@@ -25,6 +25,11 @@
 			><button on:click={() => dispatch('click', 'blur')} class="w-full h-full text-2xl"
 				>blur</button
 			></ListgroupItem
+		>
+		<ListgroupItem class="flex"
+			><button on:click={() => dispatch('click', 'grey')} class="w-full h-full text-2xl"
+				>grey</button
+			></ListgroupItem
 		><ListgroupItem class="flex"
 			><button on:click={() => dispatch('click', 'median')} class="w-full h-full text-2xl"
 				>share</button

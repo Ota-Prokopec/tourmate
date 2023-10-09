@@ -7,6 +7,7 @@
 	import IconNext from '../Icons/IconNext.svelte';
 	import { Button } from 'flowbite-svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
+	import Text from './Text.svelte';
 	const dispatch = createEventDispatcher<{ save: { base64: Base64 } }>();
 
 	let result: string | Base64 = '';
@@ -19,28 +20,46 @@
 			minCropBoxHeight: 160,
 			aspectRatio: 1,
 			cropOnStart: {
-				disableDisabling: true
+				disableUserToDisableCropping: true
 			}
 		}
 	};
 
+	let disableSave = editorOptions.cropping?.cropOnStart?.disableUserToDisableCropping;
+
 	const save = () => {
 		dispatch('save', { base64: result as Base64 });
 	};
+
+	const change = (e: CustomEvent<{ url: string | Base64; width: number; height: number }>) => {
+		if (e.detail.width === e.detail.height) {
+			disableSave = false;
+		}
+	};
 </script>
 
-<ImageEditor options={editorOptions} class="w-[100vw] h-[100vh]" bind:result url={profilePicture}>
+<ImageEditor
+	on:change={change}
+	options={editorOptions}
+	class="w-full h-full"
+	bind:result
+	url={profilePicture}
+>
 	<span slot="bottom">
-		<Button
-			on:click={save}
-			class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 m-2 rounded-full fill-white"
-			color="blue"
-		>
-			{#if isLoading}
-				<SyncLoader color="black" size={30} unit="px" />
-			{:else}
-				change picture <Icon><IconNext /></Icon>
-			{/if}
-		</Button>
+		{#if !disableSave}
+			<Button
+				on:click={save}
+				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 rounded-full fill-white"
+				color="blue"
+			>
+				{#if isLoading}
+					<SyncLoader color="black" size={30} unit="px" />
+				{:else}
+					change picture <Icon><IconNext /></Icon>
+				{/if}
+			</Button>
+		{:else}
+			<Text class="">you have to crop your picture to 1:1 first</Text>
+		{/if}
 	</span>
 </ImageEditor>
