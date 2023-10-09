@@ -11,7 +11,7 @@
 	import type { PageData } from './$types';
 	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { useQuery } from '@sveltestack/svelte-query/dist/query/useQuery';
+	import { useQuery } from '@sveltestack/svelte-query';
 	import { sdk } from '$src/graphql/sdk';
 
 	export let data: PageData;
@@ -54,8 +54,6 @@
 	$: experiencesLocations = experiences?.map((exp) =>
 		exp.location.map((xy) => roundNumber(xy, 4))
 	) as Location[];
-
-	const sameLocation = countSameItemsInArray(experiencesLocations);
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
