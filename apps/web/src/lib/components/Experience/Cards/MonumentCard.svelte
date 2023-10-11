@@ -1,29 +1,69 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import LikeSection from '$lib/components/Common/LikeSection.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import UserItem from '$lib/components/Common/UserItem.svelte';
-	import type { GraphqlDocument, Monument, PlaceDetail, UserInfo } from '@app/ts-types';
+	import { sdk } from '$src/graphql/sdk';
+	import { Query, collections, user } from '@app/appwrite-client';
+	import permissions from '@app/appwrite-server/src/permissions';
+	import type {
+		GraphqlDocument,
+		Monument,
+		MonumentCardData,
+		PlaceDetail,
+		UserInfo
+	} from '@app/ts-types';
+	import { Queries } from '@sveltestack/svelte-query';
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let monument: GraphqlDocument<Monument> & { placeDetail: PlaceDetail; creator: UserInfo };
+	export let monument: MonumentCardData;
 
 	let className = '';
 	export { className as class };
 
 	$: imgSrcAsString = monument.pictureURL as unknown as string | undefined;
+
+	const like = async () => {
+		if (!$user?.$id) throw new Error('user is not authed');
+		const doc = await collections.monumentLike.createDocument(
+			{ monumentId: monument._id, userId: $user.$id },
+			permissions.owner($user.$id)
+		);
+		monument.liked = doc;
+	};
+	const unlike = async () => {
+		if (!$user?.$id) throw new Error('user is not authed');
+		await collections.monumentLike.deleteDocument([
+			Query.equal('monumentId', monument._id),
+			Query.equal('userId', $user.$id)
+		]);
+		monument.liked = null;
+	};
 </script>
 
-<Card
-	on:click={() => goto(`/monument/${monument._id}`)}
-	class={twMerge(' justify-self-center gap-2', className)}
-	padding="sm"
->
-	<UserItem class="h-8" user={monument.creator} />
+<Card class={twMerge(' justify-self-center gap-2', className)} padding="sm">
+	<UserItem
+		on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+		avatarClass="w-10 h-10"
+		class="h-auto"
+		user={monument.creator}
+	/>
 
-	<Img class="rounded-lg object-cover " src={imgSrcAsString} />
+	<button on:click={() => goto(`/monument/${monument._id}`)}>
+		<Img class="rounded-lg object-cover " src={imgSrcAsString} />
+	</button>
+
+	<LikeSection
+		on:like={like}
+		on:unlike={unlike}
+		data={{
+			liked: monument.liked ? true : false,
+			otherUsersThatLiked: monument.likes.map((uLike) => uLike.user)
+		}}
+	/>
 
 	<Row class="justify-between">
 		<h5 class="mb-2 text-xl text-black">

@@ -1,4 +1,5 @@
 import { Document, GraphqlDocument } from './Document'
+import { MonumentLike } from './Likes'
 
 export type Location = [number, number]
 export const isLocation = (arg: unknown): arg is Location =>
@@ -42,6 +43,7 @@ export type Monument = {
 	name: string
 	pictureURL?: URL | undefined | null
 	placeDetailId: string
+	liked?: null | undefined | MonumentLike
 }
 
 export type MonumentDocument = Document<{

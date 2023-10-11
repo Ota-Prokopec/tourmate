@@ -1,5 +1,6 @@
 import { collections as collections_ } from './tools/collections'
 import appwriteSSR, { Types } from '@app/appwrite-ssr-graphql'
+import Queries from './tools/queries'
 
 const myAppwriteClient: ReturnType<typeof appwriteSSR.setProject> = appwriteSSR.setProject({
 	projectEndPoint: process.env.APPWRITE_ENDPOINT as string,
@@ -15,7 +16,8 @@ const setNone = () => set(myAppwriteClient.none())
 const set = (appwrite: Types.AppwriteSSR) => {
 	const collections = collections_(appwrite.Collection)
 
-	return { collections, ...appwrite }
+	return { collections, Queries, ...appwrite }
 }
 
 export default { setCookie, setSession, setNone }
+export { Queries }

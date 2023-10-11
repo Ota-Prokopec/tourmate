@@ -68,7 +68,7 @@
 <FirebaseNotification message={foregroundNotification} />
 
 <div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
-	<div class="w-full h-[calc(100%-64px)]">
+	<div class="w-full h-[calc(100%-64px)] top-0 absolute overflow-scroll">
 		<slot />
 	</div>
 

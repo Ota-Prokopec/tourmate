@@ -12,7 +12,7 @@
 	);
 	$: monumentsGraphql = useQuery(
 		'mutations',
-		async () => await sdk.getListOfMonumentsWithCreator()
+		async () => await sdk.getListOfMonumentsWithCreatorPlaceIdLikedLikes()
 	);
 
 	$: monuments = $monumentsGraphql.data?.getListOfMonuments;

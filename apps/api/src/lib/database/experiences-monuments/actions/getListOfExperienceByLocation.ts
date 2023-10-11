@@ -1,6 +1,5 @@
 import type { Location } from '@app/ts-types'
-import appwrite from '../../../appwrite/appwrite'
-import { Query } from '@app/appwrite-server'
+import appwrite, { Queries } from '../../../appwrite/appwrite'
 import { transformExperienceDocumentsIntoExperience } from '../transformers'
 
 export const getListOfExperineceByLocation = async (
@@ -13,11 +12,11 @@ export const getListOfExperineceByLocation = async (
 	const rangeLongitudeMin = Math.floor(location[1] - range / zoom)
 
 	const experienceDocuments = await collections.experience.listDocuments([
-		Query.lessThan('latitude', rangeLatitudeMax),
-		Query.greaterThan('latitude', rangeLatitudeMin),
-		Query.lessThan('longitude', rangeLongitudeMax),
-		Query.greaterThan('longitude', rangeLongitudeMin),
-		Query.limit(limit),
+		Queries.experience.lessThan('latitude', rangeLatitudeMax),
+		Queries.experience.greaterThan('latitude', rangeLatitudeMin),
+		Queries.experience.lessThan('longitude', rangeLongitudeMax),
+		Queries.experience.greaterThan('longitude', rangeLongitudeMin),
+		Queries.experience.limit(limit),
 	])
 	return transformExperienceDocumentsIntoExperience(...experienceDocuments.documents)
 }

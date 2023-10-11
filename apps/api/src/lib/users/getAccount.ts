@@ -1,5 +1,5 @@
 import { Query } from 'node-appwrite'
-import appwrite from '../appwrite/appwrite'
+import appwrite, { Queries } from '../appwrite/appwrite'
 import appwriteServer from '@app/appwrite-server'
 import { Preferences } from '@app/ts-types'
 
@@ -11,8 +11,9 @@ export const getAccount = async (
 	const { users } = appwriteServer.setAdmin()
 
 	const { emailVerification, prefs, status, phoneVerification } = await users.get<Preferences>(userId)
+	const query = Queries.userInfo.equal('userId', userId)
 
-	const userInfo = await collections.userInfo.getDocument([Query.equal('userId', userId)])
+	const userInfo = await collections.userInfo.getDocument([query])
 
 	if (!userInfo) throw new Error('userInfo not found')
 	return {

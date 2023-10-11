@@ -66,6 +66,17 @@ input ExperienceInput {
   zoom: Int!
 }
 
+type ExperienceLike {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  experienceId: String!
+  userId: String!
+}
+
 scalar Location
 
 type Monument {
@@ -78,6 +89,8 @@ type Monument {
   about: String
   creator: Account!
   creatorUserId: String!
+  liked: MonumentLike
+  likes: [MonumentLike!]!
   location: Location!
   name: String!
   nearExperiences: [Experience!]!
@@ -91,6 +104,18 @@ type Monument {
 input MonumentInput {
   location: [Float!]!
   zoom: Int!
+}
+
+type MonumentLike {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  monumentId: String!
+  user: Account!
+  userId: String!
 }
 
 type Mutation {
