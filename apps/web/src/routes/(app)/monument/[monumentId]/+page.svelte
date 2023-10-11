@@ -7,15 +7,29 @@
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import Popover from '$lib/components/Common/Popover.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
+	import { device } from '@app/utils';
 
 	export let data: PageData;
 
 	const cardURL = data.monument.pictureURL as unknown as string;
+
+	let userPopoverPlacement: 'bottom' | 'right' =
+		device.recognizeWidth() === 'mobile' ? 'bottom' : 'right';
 </script>
 
 <div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	<Card class="w-full h-min m-4 sm:absolute sm:left-0 z-50 gap-4 p-0 rounded-xl">
-		<Img class="w-full rounded-xl" src={cardURL} />
+	<Card img={cardURL} class="w-full h-min m-4 sm:absolute sm:left-0 z-50 gap-4 rounded-xl">
+		<UserItem
+			user={{
+				myId: data.monument.creator.myId,
+				username: data.monument.creator.username,
+				profilePictureURL: data.monument.creator.profilePictureURL,
+				userId: data.monument.creatorUserId
+			}}
+		/>
+		<Popover placement={userPopoverPlacement}>
+			<AlmostProfileWithMainImage disableCloseButton class="" userInfo={data.monument.creator} />
+		</Popover>
 		<div class="w-full h-auto p-4">
 			<Icon icon="fas fa-map-marker-alt" class="text-3xl text-red-500" />
 			<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -25,23 +39,6 @@
 				<span>lokace: [{data.monument.location}]</span>
 				<span>místo: {data.monument.placeDetail.name}</span>
 				<span> {data.monument.about}</span>
-				<button>
-					<UserItem
-						user={{
-							myId: data.monument.creator.myId,
-							username: data.monument.creator.username,
-							profilePictureURL: data.monument.creator.profilePictureURL,
-							userId: data.monument.creatorUserId
-						}}
-					/>
-					<Popover>
-						<AlmostProfileWithMainImage
-							disableCloseButton
-							class=""
-							userInfo={data.monument.creator}
-						/>
-					</Popover>
-				</button>
 			</p>
 		</div>
 	</Card>

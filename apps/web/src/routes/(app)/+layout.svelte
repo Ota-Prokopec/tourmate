@@ -67,47 +67,50 @@
 
 <FirebaseNotification message={foregroundNotification} />
 
-<div class="w-full h-full flex flex-wrap flex-col items-center">
+<div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
 	<div class="w-full h-[calc(100%-64px)]">
 		<slot />
 	</div>
 
-	<BottomNav
-		position="relative"
-		classInner="grid-cols-4 gap-4"
-		outerClass="mobile:w-full w-fit z-50 h-16"
-	>
-		<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
-			<IconLocation />
-		</BottomNavItem>
-
-		<BottomNavItem on:click={() => goto('/search')}>
-			<IconMagnifyingGlass />
-		</BottomNavItem>
-
-		<BottomNavItem
-			on:click={() => {
-				if ($mapOrTakePhoto === 'map' && $page.url.pathname === '/') {
-					$mapOrTakePhoto = 'takePhoto';
-				} else {
-					$mapOrTakePhoto = 'map';
-				}
-				goto('/');
-			}}
+	<div class="w-full h-auto fixed bottom-0 flex justify-center z-50">
+		<BottomNav
+			position="relative"
+			classInner="grid-cols-4 gap-4"
+			class="tran"
+			outerClass="mobile:w-full w-fit z-50 h-16 rounded-t-3xl"
 		>
-			{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
-				<IconPlus />
-			{:else}
-				<IconMap />
-			{/if}
-		</BottomNavItem>
+			<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
+				<IconLocation />
+			</BottomNavItem>
 
-		<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">
-			<Avatar src={data.user.profilePictureURL}>
-				{#if !data.user.profilePictureURL}
-					{usersInitials}
+			<BottomNavItem on:click={() => goto('/search')}>
+				<IconMagnifyingGlass />
+			</BottomNavItem>
+
+			<BottomNavItem
+				on:click={() => {
+					if ($mapOrTakePhoto === 'map' && $page.url.pathname === '/') {
+						$mapOrTakePhoto = 'takePhoto';
+					} else {
+						$mapOrTakePhoto = 'map';
+					}
+					goto('/');
+				}}
+			>
+				{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
+					<IconPlus />
+				{:else}
+					<IconMap />
 				{/if}
-			</Avatar>
-		</BottomNavItem>
-	</BottomNav>
+			</BottomNavItem>
+
+			<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">
+				<Avatar src={data.user.profilePictureURL}>
+					{#if !data.user.profilePictureURL}
+						{usersInitials}
+					{/if}
+				</Avatar>
+			</BottomNavItem>
+		</BottomNav>
+	</div>
 </div>

@@ -4,16 +4,14 @@ import databse_ from './databases/Collection'
 import storage_ from './storage/storage'
 import type { Types } from './types/Types'
 import Locale from './locale/locale'
-
-let envs = {
-	projectId: process.env.APPWRITE_PROJECT_ID,
-	projectEndPoint: process.env.APPWRITE_ENDPOINT,
-}
+import { envs } from './env'
 
 export const set = (callback?: (c: Client) => Client) => {
-	if (!envs.projectId || !envs.projectEndPoint) throw new Error('project id or endpoint is not set')
-	let client = new Client().setProject(process.env.APPWRITE_PROJECT_ID).setEndpoint(process.env.APPWRITE_ENDPOINT)
+	let client = new Client()
 
+	//if (!envs.projectEndPoint || !envs.projectId) throw new Error('project ---')
+
+	if (envs.projectEndPoint && envs.projectId) client.setEndpoint(envs.projectEndPoint as string).setProject(envs.projectId as string)
 	if (callback) client = callback(client)
 
 	const Auth = account_(client)
@@ -46,7 +44,7 @@ const connections = {
 	setSession: (session: string | undefined) => {
 		return set((client) => {
 			client.headers['X-Fallback-Cookies'] = JSON.stringify({
-				[`a_session_${process.env.APPWRITE_PROJECT_ID}`]: session,
+				[`a_session_${envs.projectId}`]: session,
 			})
 			return client
 		})
@@ -57,10 +55,8 @@ const connections = {
 }
 
 const setProject = ({ projectId, projectEndPoint }: { projectId: string; projectEndPoint: string }) => {
-	envs = {
-		projectId,
-		projectEndPoint,
-	}
+	envs.projectId = projectId
+	envs.projectEndPoint = projectEndPoint
 	return { ...connections, ...set() }
 }
 

@@ -1,16 +1,15 @@
 import { Account, Client, ID } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
 import { Types } from '../types/Types'
+import { envs } from '../env'
 
 const userHasCookies = (cookies: {}): cookies is Types.Cookie[] => Object.entries(cookies).length !== 0
 
 export const getSessionFromCookie = (cookies: Types.Cookie[] | {}[]): string | undefined => {
-	if (!userHasCookies(cookies)) throw new Error('User does not have any cookies')
+	if (!envs.projectEndPoint || !envs.projectId) throw new Error('Project or endpoint is not set')
+	if (!userHasCookies(cookies)) throw new Error('No cookies provided')
 
-	const sessionNames = [
-		'a_session_' + process.env.APPWRITE_PROJECT_ID?.toLowerCase(),
-		'a_session_' + process.env.APPWRITE_PROJECT_ID?.toLowerCase() + '_legacy',
-	]
+	const sessionNames = ['a_session_' + envs.projectId?.toLowerCase(), 'a_session_' + envs.projectId?.toLowerCase() + '_legacy']
 
 	const appwriteCookies: Types.Cookie[] | undefined[] = cookies
 		.filter((cookie) => sessionNames.includes(cookie.name))
@@ -29,11 +28,12 @@ export default (client: Client) => {
 		}
 
 		loginViaEmail(email: string, password: string) {
-			const promise = fetch(`${process.env.APPWRITE_ENDPOINT}/account/sessions/email`, {
+			if (!envs.projectEndPoint || !envs.projectId) throw new Error('Project or endpoint is not set')
+			const promise = fetch(`${envs.projectEndPoint}/account/sessions/email`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'x-appwrite-project': process.env.APPWRITE_PROJECT_ID,
+					'x-appwrite-project': envs.projectId,
 				} as HeadersInit,
 				body: JSON.stringify({
 					email,
@@ -51,7 +51,7 @@ export default (client: Client) => {
 
 				if (json.code >= 400) throw new Error(json.message)
 
-				const SSRHostName = process.env.HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`
+				const SSRHostName = envs.hostname === 'localhost' ? 'localhost' : `.${envs.hostname}`
 
 				const cookiesStr = (response.headers.get('set-cookie') ?? '').split(SSRHostName).join(SSRHostName)
 

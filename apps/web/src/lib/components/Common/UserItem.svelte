@@ -11,7 +11,7 @@
 </script>
 
 <button on:click class={twMerge('flex items-center space-x-4', className)}>
-	<Avatar src={user.profilePictureURL} class="rounded-full w-auto h-full" />
+	<Avatar src={user.profilePictureURL} class="rounded-full w-14 h-14" />
 	<div class="space-y-1 font-medium dark:text-white">
 		<div>
 			{user.username}

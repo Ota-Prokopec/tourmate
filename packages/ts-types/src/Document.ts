@@ -1,8 +1,15 @@
 import { Models } from 'appwrite'
 
-export type DocumentSkeleton = Models.Document
+export type DocumentSkeleton = {
+	$id: string
+	$collectionId: string
+	$databaseId: string
+	$createdAt: string
+	$updatedAt: string
+	$permissions: string[]
+}
 
-export type Document<T extends Partial<Models.Document> & object> = {
+export type Document<T extends Partial<DocumentSkeleton> & object> = {
 	[Key in keyof T]: T[Key] extends Record<string, unknown> ? Document<T[Key]> : T[Key]
 } & DocumentSkeleton
 
@@ -10,8 +17,6 @@ type S = {
 	name: string
 	location: [number, number]
 }
-
-type Test = Document<S>
 
 export type OmitDocument<T> = Omit<T, '$permissions' | '$id' | '$collectionId' | '$createdAt' | '$databaseId' | '$updatedAt'>
 export type OmitDocumentDeep<T> = OmitDocument<{
