@@ -3256,6 +3256,11 @@
   dependencies:
     "@types/geojson" "^7946.0.10"
 
+"@maptiler/geocoding-control@^0.0.99":
+  version "0.0.99"
+  resolved "https://registry.yarnpkg.com/@maptiler/geocoding-control/-/geocoding-control-0.0.99.tgz#65d05e6f734b2f076cccccd2341e7a629a159bc5"
+  integrity sha512-ehJD12JnUXzLbpISiAhj7hEQQObXecbqIXYVf265Un2TT9yJFbMDBiP2dGMROCYOGjrBMh4npaPoMt6v6v1D8g==
+
 "@next/eslint-plugin-next@13.5.3":
   version "13.5.3"
   resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-13.5.3.tgz#585fca48fb5f969825ad57f05c0a627fd4662dda"
@@ -5429,7 +5434,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-barrelsby@^2.8.0, barrelsby@^2.8.1:
+barrelsby@^2.8.0:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/barrelsby/-/barrelsby-2.8.1.tgz#ea25bd7c4e61a7dcec1a2117f01811196ce86586"
   integrity sha512-barN2MVKqUVwmjRy3JLSMYufrBDcdWUc2pjlR0V9P8S3aMvvJ4StFz1GJMzEi5GBoQlnBIWOcCxBDzI2xfaaGw==

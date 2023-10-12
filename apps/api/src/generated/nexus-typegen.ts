@@ -193,6 +193,8 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
+    liked: NexusGenRootTypes['MonumentLike'] | null; // MonumentLike
+    likes: NexusGenRootTypes['MonumentLike'][]; // [MonumentLike!]!
     location: NexusGenScalars['Location']; // Location!
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
@@ -299,6 +301,8 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     imgSrc: 'URL'
+    liked: 'MonumentLike'
+    likes: 'MonumentLike'
     location: 'Location'
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'

@@ -54,6 +54,8 @@ type Experience {
   _permissions: [String!]!
   _updatedAt: String!
   imgSrc: URL!
+  liked: MonumentLike
+  likes: [MonumentLike!]!
   location: Location!
   placeDetail: PlaceDetail!
   placeDetailId: String!

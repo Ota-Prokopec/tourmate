@@ -1,4 +1,4 @@
-query getListOfMonumentsWithCreatorPlaceIdLikedLikes {
+query getListOfMonumentCards {
 	getListOfMonuments {
 		_createdAt
 		_updatedAt

@@ -127,6 +127,8 @@
 		{placeholder}
 		bind:value={inputValue}
 		on:input
+		on:focus
+		on:blur
 		readonly={readOnly ? true : null}
 		maxlength={maxLength}
 		{...$$restProps}

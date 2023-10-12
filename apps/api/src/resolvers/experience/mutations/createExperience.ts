@@ -1,5 +1,5 @@
 import { arg, mutationField } from 'nexus'
-import createExperienceInput from '../schema/createExperienceInput'
+import createExperienceInput from '../schema/CreateExperienceInput'
 import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
 import { transformExperienceDocumentsIntoExperience } from '../../../lib/database/experiences-monuments'

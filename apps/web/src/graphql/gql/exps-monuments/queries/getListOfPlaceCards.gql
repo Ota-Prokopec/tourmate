@@ -1,0 +1,133 @@
+query getListOfPlaceCards {
+	getListOfMonuments {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		location
+		creatorUserId
+		name
+		about
+		placeDetailId
+		pictureURL
+		creator {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			myId
+			username
+			staus
+			emailVerification
+			phoneVerification
+			profilePictureURL
+		}
+		placeDetail {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			name
+		}
+		likes {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			monumentId
+			user {
+				_id
+				userId
+				myId
+				username
+				profilePictureURL
+			}
+		}
+		liked {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			monumentId
+		}
+	}
+	getListOfExperiences {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		imgSrc
+		location
+		placeDetailId
+		user {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			myId
+			username
+			profilePictureURL
+			userId
+		}
+		placeDetail {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			name
+		}
+		liked {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			monumentId
+		}
+		likes {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			monumentId
+			user {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				myId
+				username
+				staus
+				profilePictureURL
+			}
+		}
+	}
+}

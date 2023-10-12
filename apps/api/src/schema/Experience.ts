@@ -1,6 +1,6 @@
 import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'
-import { objectType } from 'nexus'
+import { list, nullable, objectType } from 'nexus'
 
 export default objectType({
 	name: 'Experience',
@@ -35,6 +35,33 @@ export default objectType({
 				const placeDetail = await collections.placeDetail.getDocument(source.placeDetailId)
 				if (!placeDetail) throw new Error('placeDetail was not found')
 				return placeDetail
+			},
+		})
+		t.field('likes', {
+			type: list('MonumentLike'),
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				const { collections, Queries } = ctx.appwrite
+
+				const queries = [
+					Queries.monumentLike.equal('monumentId', source._id), // get by monument id
+					Queries.monumentLike.limit(6), // only 6 of them
+					Queries.monumentLike.notEqual('userId', ctx.user.$id), // not pick me
+					//! userid is not working
+				]
+				const likes = await collections.monumentLike.listDocuments(queries)
+
+				return likes.documents
+			},
+		})
+		t.field('liked', {
+			type: nullable('MonumentLike'),
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				const { collections, Queries } = ctx.appwrite
+				const queries = [Queries.monumentLike.equal('monumentId', source._id), Queries.monumentLike.equal('userId', ctx.user.$id)]
+				const likeDoc = await collections.monumentLike.getDocument(queries)
+				return likeDoc
 			},
 		})
 	},

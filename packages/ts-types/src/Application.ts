@@ -1,9 +1,17 @@
-import { MonumentLike, PlaceDetail, UserInfo } from '.'
+import { UserInfo } from './Account'
 import { GraphqlDocument } from './Document'
-import { Monument } from './Experience'
+import { Experience, Monument } from './Experience'
+import { ExperienceLike, MonumentLike } from './Likes'
+import { PlaceDetail } from './PlaceDetails'
 
-export type MonumentCardData = GraphqlDocument<Monument> & {
+export type MonumentCard = GraphqlDocument<Monument> & {
 	placeDetail: PlaceDetail
 	creator: UserInfo
 	likes: (MonumentLike & { user: UserInfo })[]
+}
+
+export type ExperienceCard = GraphqlDocument<Experience> & {
+	placeDetail: PlaceDetail
+	user: UserInfo
+	likes: (ExperienceLike & { user: UserInfo })[]
 }
