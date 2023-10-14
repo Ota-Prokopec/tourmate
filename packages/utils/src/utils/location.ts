@@ -31,24 +31,6 @@ export const watchUsersLocation = (
 	)
 }
 
-export const getPlaceDetailsByLatAndLong = async (lat: number, long: number) => {
-	const res: {
-		display_name: string
-		address: {
-			suburb?: string
-			postcode?: string
-			country: string
-			city?: string
-			state: string
-		}
-	} = await get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${long}&format=json`)
-
-	return merge(pick(res?.address, 'country', 'postcode', 'suburb', 'city', 'state'), {
-		fullName: res.display_name,
-		name: res.address.suburb ?? res.address.city ?? res.address.state ?? res.address.country ?? res.display_name,
-	})
-}
-
 export const getUsersLocationDataByIP = async (ip: IP): Promise<IPApiResponse> => {
 	const res = await get(`https://ipapi.co/${ip}/json/`)
 	return res

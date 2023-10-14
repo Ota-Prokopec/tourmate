@@ -55,7 +55,7 @@
 		<Card class="w-full h-min m-4 sm:absolute sm:left-0 z-50">
 			<Icon icon="fas fa-map-marker-alt" class="text-3xl" />
 			<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-				{data.newMonument.placeName}
+				{placeName}
 			</h5>
 			<p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
 				lokace: [{data.newMonument.location}]

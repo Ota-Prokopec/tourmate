@@ -8,9 +8,9 @@
 	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
 	import type { PageData } from './$types';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import { getPlaceDetailsByLatAndLong } from '@app/utils';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
+	import mapTiler from '$lib/utils/mapTiler';
 
 	export let data: PageData;
 	let map: Map;
@@ -39,18 +39,18 @@
 
 	$: positionDetails = useQuery('positionDetails', async () => {
 		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-		return await getPlaceDetailsByLatAndLong(markerLocation[0], markerLocation[1]);
+		return (await mapTiler.reverseGeocoding(...markerLocation, { limit: 4 })).at(0);
 	});
 </script>
 
 <div class="w-[100dvw] h-[100dvh]">
 	<Alert class="absolute m-2 z-50 pl-5 pr-5 flex flex-wrap flex-col gap-0" color="dark">
-		{#if typeof $positionDetails.data?.name === 'undefined' || !markerLocation}
+		{#if $positionDetails.isLoading || !markerLocation}
 			<SyncLoader color="black" size={30} />
 		{:else}
 			<div class="flex flex-wrap flex-row gap-4 mb-2">
 				<Icon icon="fas fa-map-marker-alt" class="text-2xl text-red-500" />
-				{$positionDetails.data?.name}
+				{$positionDetails.data?.place_name}
 			</div>
 			<span>lat: {markerLocation[0]}</span>
 			<span> lng: {markerLocation[1]} </span>

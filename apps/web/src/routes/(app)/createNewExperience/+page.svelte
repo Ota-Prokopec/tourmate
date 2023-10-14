@@ -1,6 +1,5 @@
 <script lang="ts">
 	import lsStore from '$lib/utils/lsStore';
-	import { getPlaceDetailsByLatAndLong } from '@app/utils';
 	import ImageEditor from '$lib/components/ImageEditor/ImageEditor.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import { myNewExperienceStore } from './newExperienceStore';
@@ -14,6 +13,7 @@
 	import imageSvelte from '@app/image-svelte';
 	import type { Base64 } from '@app/ts-types';
 	import type { EditorOptions } from '$lib/components/ImageEditor/items/ImageEditorTypes';
+	import mapTiler from '$lib/utils/mapTiler';
 
 	//const { imgSrc } = $myNewExperienceStore;
 	const location = $lsStore.usersLocation;
@@ -71,8 +71,8 @@
 	};
 
 	$: if (location)
-		getPlaceDetailsByLatAndLong(location[0], location[1]).then(({ name }) => {
-			textOptions.texts = [name, `I was here, ${name}`];
+		mapTiler.getPlaceDetailsByLatAndLong(location[0], location[1]).then(({ place_name }) => {
+			textOptions.texts = [place_name, `I was here, ${place_name}`];
 			isLoading = true;
 		});
 

@@ -9,20 +9,10 @@
 	import SearchMonuments from './Components/SearchMonuments.svelte';
 	import SearchPlaces from './Components/SearchPlaces.svelte';
 	import Geocoding from '$lib/components/Map/Geocoding/Geocoding.svelte';
-	import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
-	import Loading from '$lib/components/Common/Loading.svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 
 	export let data: PageData;
 
 	let searchingText = data.search.searchingText === 'all' ? '' : data.search.searchingText;
-
-	$: resultSearchedByPlaceGraphqlPromise = sdk.getListOfPlaceCards();
-
-	$: resultSearchedByPlace = useQuery(
-		'resultSearchedByPlace',
-		async () => await resultSearchedByPlaceGraphqlPromise
-	);
 
 	let chosenCategory: Category = data.search.category; //data.search.category;
 
@@ -56,7 +46,6 @@
 			on:showResults={() => (showBottom = false)}
 			on:hideResults={() => (showBottom = true)}
 			on:select={(e) => {}}
-			apiKey={PUBLIC_MAP_TILER_API_KEY}
 		/>
 	{/if}
 
@@ -65,14 +54,11 @@
 
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 justify-start items-start">
 			{#if chosenCategory === 'experiences'}
-				<SearchExperiences {experiences} />
+				<SearchExperiences {searchingText} />
 			{:else if chosenCategory === 'monuments'}
 				<SearchMonuments {searchingText} />
 			{:else if chosenCategory === 'places'}
-				<SearchPlaces
-					monuments={$resultSearchedByPlace.data?.getListOfMonuments}
-					experiences={$resultSearchedByPlace.data?.getListOfExperiences}
-				/>
+				<SearchPlaces {searchingText} />
 			{/if}
 		</div>
 	{/if}
