@@ -1,1 +1,1 @@
-export type Category = 'places' | 'experiences' | 'monuments';
+export type Category = 'places' | 'users' | 'monuments';

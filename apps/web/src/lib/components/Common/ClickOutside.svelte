@@ -20,8 +20,11 @@
 			}
 		};
 	};
+
+	let className = '';
+	export { className as class };
 </script>
 
-<div use:clickOutside>
+<div class={className} use:clickOutside>
 	<slot />
 </div>

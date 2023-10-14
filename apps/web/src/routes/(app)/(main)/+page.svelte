@@ -23,7 +23,7 @@
 			{
 				input: {
 					location,
-					zoom: 14
+					range: 14
 				}
 			}
 		);

@@ -19,3 +19,4 @@ export * from './utils/object';
 export * from './utils/operations';
 export * from './utils/treasureUtils';
 export * from './utils/typeCheking';
+export * from './utils/url';

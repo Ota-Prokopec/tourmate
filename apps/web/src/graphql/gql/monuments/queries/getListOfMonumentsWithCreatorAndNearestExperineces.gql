@@ -10,7 +10,7 @@ query getListOfMonumentsWithCreatorAndNearestExperiences($input: MonumentInput) 
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL

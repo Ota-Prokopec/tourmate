@@ -1,5 +1,6 @@
 <script lang="ts">
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import UserItem from '$lib/components/Common/UserItem.svelte';
 	import MonumentCardComponent from '$lib/components/Experience/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { useQuery } from '@sveltestack/svelte-query';
@@ -7,24 +8,21 @@
 
 	export let searchingText: string;
 
-	$: monumentsGraphql = useQuery(
+	$: usersGraphql = useQuery(
 		'monuments',
-		async () =>
-			await sdk.getListOfMonumentCardsBySearchingName({ input: { limit: 10, name: searchingText } })
+		async () => await sdk.getListOfAccountsBySearching({ searchingText })
 	);
 
-	$: isLoading = $monumentsGraphql?.isLoading || typeof $monumentsGraphql.data === 'undefined';
+	$: isLoading = $usersGraphql?.isLoading;
 
-	$: monuments = $monumentsGraphql.data?.getListOfMonumentsSearchByName;
-
-	$: console.log(monuments);
+	$: users = $usersGraphql.data?.getAccounts;
 </script>
 
 {#if isLoading}
 	<FullPageLoading />
-{:else if monuments?.length}
-	{#each monuments as monument}
-		<MonumentCardComponent {monument} />
+{:else if users?.length}
+	{#each users as user}
+		<UserItem {user} />
 	{/each}
 {:else}
 	<Skeleton divClass="w-full" />

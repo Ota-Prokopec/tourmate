@@ -5,7 +5,7 @@ query createAccount($myId: String!, $username: String!) {
 		userId
 		myId
 		username
-		staus
+		status
 		emailVerification
 		phoneVerification
 		prefs {

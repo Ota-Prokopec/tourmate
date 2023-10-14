@@ -19,7 +19,7 @@ query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMon
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL
@@ -52,7 +52,7 @@ query getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMon
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL

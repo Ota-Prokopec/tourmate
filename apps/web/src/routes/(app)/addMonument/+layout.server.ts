@@ -11,7 +11,7 @@ export const load: LayoutServerLoad = async (event) => {
 	).getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments({
 		input: {
 			location: location,
-			zoom: 14
+			range: 14
 		}
 	});
 

@@ -3,9 +3,10 @@ import { PageServerLoad } from './$types';
 import { Location } from '@app/ts-types';
 
 export const load: PageServerLoad = async (event) => {
-	const placeDetail = await mapTiler.getPlaceDetailsByLatAndLong(
-		parseInt(event.params.lat),
-		parseInt(event.params.lng)
+	const [placeDetail] = await mapTiler.reverseGeocoding(
+		JSON.parse(event.params.lat),
+		JSON.parse(event.params.lng),
+		{}
 	);
 
 	return {

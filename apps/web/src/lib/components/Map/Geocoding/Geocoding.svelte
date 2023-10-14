@@ -9,6 +9,7 @@
 	import Item from './Item.svelte';
 	import mapTiler from '$lib/utils/mapTiler';
 	import type { GeocodingFeature } from '@maptiler/client';
+	import ClickOutside from '$lib/components/Common/ClickOutside.svelte';
 	const dispatch = createEventDispatcher<{
 		select: {
 			placeName: string;
@@ -18,10 +19,8 @@
 		hideResults: undefined;
 	}>();
 
-	const url = 'https://api.maptiler.com/geocoding';
-	export let autocomplete = false;
 	export let fuzzyMatch = true;
-	export let limit = 5;
+	export let limit = 10;
 	export let searchingText = '';
 	export let showResults = true;
 	export let isLoading = false;
@@ -29,8 +28,12 @@
 
 	$: if (showResults) dispatch('showResults');
 	$: if (!showResults) dispatch('hideResults');
+	$: if (searchingText.length === 0) places = [];
+	$: if (!places?.length) showResults = false;
 
 	const select = (location: Location, placeName: string) => {
+		searchingText = placeName;
+		showResults = false;
 		dispatch('select', {
 			location,
 			placeName
@@ -38,22 +41,30 @@
 	};
 
 	const search = async (value: string) => {
+		if (!searchingText) return;
+		showResults = true;
 		isLoading = true;
-		places = await mapTiler.fowardGeocoding(value, { limit: limit, fuzzyMatch });
+		places = await mapTiler.fowardGeocoding(value, {
+			limit: limit,
+			fuzzyMatch,
+			autocomplete: true
+		});
 		isLoading = false;
+	};
+
+	const onInput = () => {
+		showResults = searchingText.length === 0 ? false : true;
 	};
 </script>
 
-<div class="max-w-full w-[400px]">
+<ClickOutside on:clickOutside={() => (showResults = false)} class="max-w-full w-[400px]">
 	<Input
 		class="w-full"
 		ableClickIcon
 		icon
 		iconPosition="right"
 		bind:value={searchingText}
-		on:focus
-		on:focus={() => (showResults = true)}
-		on:blur={() => (showResults = false)}
+		on:input={onInput}
 		on:input={() => search(searchingText)}
 		on:iconClick={() => search(searchingText)}
 	>
@@ -71,11 +82,11 @@
 				<Item
 					on:click={() => {
 						if (!isLocation(place.center)) throw new Error('center is not type of location');
-						select(place.center, place.place_name);
+						select([place.center[1], place.center[0]], place.place_name);
 					}}
 					data={{ placeName: place.place_name }}
 				/>
 			{/each}
 		</Column>
 	{/if}
-</div>
+</ClickOutside>

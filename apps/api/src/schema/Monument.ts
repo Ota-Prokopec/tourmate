@@ -37,7 +37,7 @@ export default objectType({
 					const { collections } = ctx.appwrite
 					if (!isLocation(source.location)) throw new Error('location is not valid')
 
-					return await getListOfExperineceByLocation({ location: source.location, zoom: 10, limit: 20, range: 5 }, collections)
+					return await getListOfExperineceByLocation({ location: source.location, range: 10, limit: 20 }, collections)
 				},
 			})
 		t.field('placeDetail', {

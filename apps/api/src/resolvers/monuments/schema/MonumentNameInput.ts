@@ -1,8 +1,9 @@
 import { inputObjectType } from 'nexus'
 
 export default inputObjectType({
-	name: 'MonumentInput',
+	name: 'MonumentInputByName',
 	definition: (t) => {
-		t.list.float('location'), t.float('range')
+		t.string('name')
+		t.int('limit')
 	},
 })

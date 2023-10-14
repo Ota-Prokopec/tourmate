@@ -5,7 +5,7 @@ const defaultTypes: maptiler.ReverseGeocodingOptions['types'] = ['locality']
 export const mapTiler = (apiKey: string) => {
 	maptiler.config.apiKey = apiKey
 
-	const reverseGeocoding = async (lat: number, long: number, { language = 'cs', limit = 4, types = defaultTypes }) => {
+	const reverseGeocoding = async (lat: number, long: number, { language = 'cs', limit = 1, types = defaultTypes }) => {
 		const res = (
 			await maptiler.geocoding.reverse([long, lat], {
 				language,

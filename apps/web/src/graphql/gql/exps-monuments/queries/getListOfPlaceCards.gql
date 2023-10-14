@@ -22,7 +22,7 @@ query getListOfPlaceCards {
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL
@@ -125,7 +125,7 @@ query getListOfPlaceCards {
 				userId
 				myId
 				username
-				staus
+				status
 				profilePictureURL
 			}
 		}

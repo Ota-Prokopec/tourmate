@@ -10,7 +10,7 @@ export default queryField('getListOfExperiences', {
 		const { collections } = ctx.appwrite
 
 		if (args.input && isLocation(args.input.location)) {
-			return await getListOfExperineceByLocation({ location: args.input.location, zoom: args.input.zoom }, collections)
+			return await getListOfExperineceByLocation({ location: args.input.location, range: args.input.range }, collections)
 		} else {
 			return await getListOfExperineces(collections)
 		}

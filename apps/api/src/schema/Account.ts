@@ -7,7 +7,7 @@ export type AccountGetOutput = GraphqlDocument<{
 	emailVerification: boolean
 	myId: string
 	prefs: Preferences | null
-	staus: boolean
+	status: boolean
 	username: string
 	phoneVerification: boolean
 	userId: string
@@ -26,9 +26,9 @@ export default objectType({
 		t.string('userId')
 		t.string('myId')
 		t.string('username')
-		t.boolean('staus')
-		t.boolean('emailVerification')
-		t.boolean('phoneVerification')
+		t.nullable.boolean('status')
+		t.nullable.boolean('emailVerification')
+		t.nullable.boolean('phoneVerification')
 		t.nullable.field('profilePictureURL', { type: 'URL', description: 'This is URL of profile picture. Not its id.' })
 		t.nullable.field('prefs', {
 			type: nullable(UsersPreferences),

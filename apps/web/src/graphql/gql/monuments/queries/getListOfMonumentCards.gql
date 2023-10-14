@@ -1,5 +1,5 @@
-query getListOfMonumentCards {
-	getListOfMonuments {
+query getListOfMonumentCards($input: MonumentInput) {
+	getListOfMonuments(input: $input) {
 		_createdAt
 		_updatedAt
 		_collectionId
@@ -22,7 +22,7 @@ query getListOfMonumentCards {
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL

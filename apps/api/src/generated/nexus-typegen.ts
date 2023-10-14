@@ -49,11 +49,15 @@ export interface NexusGenInputs {
   }
   ExperienceInput: { // input type
     location: NexusGenScalars['Location']; // Location!
-    zoom: number; // Int!
+    range: number; // Int!
   }
   MonumentInput: { // input type
     location: number[]; // [Float!]!
-    zoom: number; // Int!
+    range: number; // Float!
+  }
+  MonumentInputByName: { // input type
+    limit: number; // Int!
+    name: string; // String!
   }
 }
 
@@ -78,12 +82,12 @@ export interface NexusGenObjects {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    emailVerification: boolean; // Boolean!
+    emailVerification?: boolean | null; // Boolean
     myId: string; // String!
-    phoneVerification: boolean; // Boolean!
+    phoneVerification?: boolean | null; // Boolean
     prefs?: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
     profilePictureURL?: NexusGenScalars['URL'] | null; // URL
-    staus: boolean; // Boolean!
+    status?: boolean | null; // Boolean
     userId: string; // String!
     username: string; // String!
   }
@@ -171,14 +175,14 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    emailVerification: boolean; // Boolean!
+    emailVerification: boolean | null; // Boolean
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     monuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     myId: string; // String!
-    phoneVerification: boolean; // Boolean!
+    phoneVerification: boolean | null; // Boolean
     prefs: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
     profilePictureURL: NexusGenScalars['URL'] | null; // URL
-    staus: boolean; // Boolean!
+    status: boolean | null; // Boolean
     userId: string; // String!
     username: string; // String!
   }
@@ -258,9 +262,11 @@ export interface NexusGenFieldTypes {
     createAccount: NexusGenRootTypes['Account']; // Account!
     getAccount: NexusGenRootTypes['Account']; // Account!
     getAccountByMyId: NexusGenRootTypes['Account']; // Account!
+    getAccounts: NexusGenRootTypes['Account'][]; // [Account!]!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
+    getListOfMonumentsSearchByName: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
@@ -286,7 +292,7 @@ export interface NexusGenFieldTypeNames {
     phoneVerification: 'Boolean'
     prefs: 'UsersPreferences'
     profilePictureURL: 'URL'
-    staus: 'Boolean'
+    status: 'Boolean'
     userId: 'String'
     username: 'String'
   }
@@ -366,9 +372,11 @@ export interface NexusGenFieldTypeNames {
     createAccount: 'Account'
     getAccount: 'Account'
     getAccountByMyId: 'Account'
+    getAccounts: 'Account'
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
     getListOfMonuments: 'Monument'
+    getListOfMonumentsSearchByName: 'Monument'
     getMonument: 'Monument'
     logInViaEmail: 'EmailLogin'
     updateProfilePicture: 'Account'
@@ -399,6 +407,9 @@ export interface NexusGenArgTypes {
     getAccountByMyId: { // args
       myId: string; // String!
     }
+    getAccounts: { // args
+      searchingText?: string | null; // String
+    }
     getExperience: { // args
       id: string; // String!
     }
@@ -407,6 +418,9 @@ export interface NexusGenArgTypes {
     }
     getListOfMonuments: { // args
       input?: NexusGenInputs['MonumentInput'] | null; // MonumentInput
+    }
+    getListOfMonumentsSearchByName: { // args
+      input: NexusGenInputs['MonumentInputByName']; // MonumentInputByName!
     }
     getMonument: { // args
       id: string; // String!

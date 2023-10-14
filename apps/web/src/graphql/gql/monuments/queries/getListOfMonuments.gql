@@ -1,0 +1,16 @@
+query getListOfMonuments($input: MonumentInput) {
+	getListOfMonuments(input: $input) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		location
+		creatorUserId
+		name
+		about
+		placeDetailId
+		pictureURL
+	}
+}

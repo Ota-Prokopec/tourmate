@@ -1,26 +1,31 @@
-query getListOfExperienceCards {
-	getListOfExperiences {
+query getListOfMonumentCardsBySearchingName($input: MonumentInputByName!) {
+	getListOfMonumentsSearchByName(input: $input) {
 		_createdAt
 		_updatedAt
 		_collectionId
 		_id
 		_permissions
 		_databaseId
-		userId
-		imgSrc
 		location
+		creatorUserId
+		name
+		about
 		placeDetailId
-		user {
+		pictureURL
+		creator {
 			_createdAt
 			_updatedAt
 			_collectionId
 			_id
 			_permissions
 			_databaseId
+			userId
 			myId
 			username
+			status
+			emailVerification
+			phoneVerification
 			profilePictureURL
-			userId
 		}
 		placeDetail {
 			_createdAt
@@ -30,16 +35,6 @@ query getListOfExperienceCards {
 			_permissions
 			_databaseId
 			name
-		}
-		liked {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			userId
-			monumentId
 		}
 		likes {
 			_createdAt
@@ -51,18 +46,22 @@ query getListOfExperienceCards {
 			userId
 			monumentId
 			user {
-				_createdAt
-				_updatedAt
-				_collectionId
 				_id
-				_permissions
-				_databaseId
 				userId
 				myId
 				username
-				status
 				profilePictureURL
 			}
+		}
+		liked {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			monumentId
 		}
 	}
 }

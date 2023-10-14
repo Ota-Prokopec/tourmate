@@ -59,12 +59,12 @@ export default (client: Client) => {
 		async updateDocument<TData extends TDocumentGet>(
 			documentId: string,
 			data: Partial<TDocumentCreate> | {} | undefined,
-			permissions: string[] | undefined,
+			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			document: Document,
 			data: Partial<TDocumentCreate> | {} | undefined,
-			permissions: string[] | undefined,
+			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			param: string | Document,

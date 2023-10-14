@@ -22,7 +22,7 @@ query getListOfMonumentsWithCreator($input: MonumentInput) {
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL

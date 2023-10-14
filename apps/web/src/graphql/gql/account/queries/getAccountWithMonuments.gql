@@ -9,7 +9,7 @@ query getAccountWithMonuments($userId: String) {
 		userId
 		myId
 		username
-		staus
+		status
 		emailVerification
 		phoneVerification
 		profilePictureURL

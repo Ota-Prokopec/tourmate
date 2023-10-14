@@ -26,7 +26,7 @@ export const getAccount = async (
 		emailVerification: emailVerification,
 		myId: userInfo.myId,
 		prefs: withPrefs ? prefs : null,
-		staus: status,
+		status: status,
 		username: userInfo.username,
 		phoneVerification: phoneVerification,
 		userId: userInfo.userId,

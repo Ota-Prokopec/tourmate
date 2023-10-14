@@ -22,7 +22,7 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL

@@ -9,16 +9,16 @@ type Account {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
-  emailVerification: Boolean!
+  emailVerification: Boolean
   experiences: [Experience!]!
   monuments: [Monument!]!
   myId: String!
-  phoneVerification: Boolean!
+  phoneVerification: Boolean
   prefs: UsersPreferences
 
   """This is URL of profile picture. Not its id."""
   profilePictureURL: URL
-  staus: Boolean!
+  status: Boolean
   userId: String!
   username: String!
 }
@@ -65,7 +65,7 @@ type Experience {
 
 input ExperienceInput {
   location: Location!
-  zoom: Int!
+  range: Int!
 }
 
 type ExperienceLike {
@@ -105,7 +105,12 @@ type Monument {
 
 input MonumentInput {
   location: [Float!]!
-  zoom: Int!
+  range: Float!
+}
+
+input MonumentInputByName {
+  limit: Int!
+  name: String!
 }
 
 type MonumentLike {
@@ -139,9 +144,11 @@ type Query {
   createAccount(myId: String!, username: String!): Account!
   getAccount(userId: String): Account!
   getAccountByMyId(myId: String!): Account!
+  getAccounts(searchingText: String): [Account!]!
   getExperience(id: String!): Experience!
   getListOfExperiences(input: ExperienceInput): [Experience!]!
   getListOfMonuments(input: MonumentInput): [Monument!]!
+  getListOfMonumentsSearchByName(input: MonumentInputByName!): [Monument!]!
   getMonument(id: String!): Monument!
   logInViaEmail(email: String!, password: String!): EmailLogin!
   updateProfilePicture(picture: String!): Account!

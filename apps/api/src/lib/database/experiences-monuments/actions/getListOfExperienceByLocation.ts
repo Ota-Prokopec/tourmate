@@ -3,13 +3,13 @@ import appwrite, { Queries } from '../../../appwrite/appwrite'
 import { transformExperienceDocumentsIntoExperience } from '../transformers'
 
 export const getListOfExperineceByLocation = async (
-	{ location, zoom, range = 10, limit = 100 }: { location: Location; zoom: number; range?: number; limit?: number },
+	{ location, range = 10, limit = 100 }: { location: Location; range: number; limit?: number },
 	collections: ReturnType<typeof appwrite.setCookie>['collections'],
 ) => {
-	const rangeLatitudeMax = Math.floor(location[0] + range / zoom)
-	const rangeLatitudeMin = Math.floor(location[0] - range / zoom)
-	const rangeLongitudeMax = Math.floor(location[1] + range / zoom)
-	const rangeLongitudeMin = Math.floor(location[1] - range / zoom)
+	const rangeLatitudeMax = Math.floor(location[0] + range)
+	const rangeLatitudeMin = Math.floor(location[0] - range)
+	const rangeLongitudeMax = Math.floor(location[1] + range)
+	const rangeLongitudeMin = Math.floor(location[1] - range)
 
 	const experienceDocuments = await collections.experience.listDocuments([
 		Queries.experience.lessThan('latitude', rangeLatitudeMax),

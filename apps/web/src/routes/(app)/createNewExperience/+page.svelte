@@ -71,7 +71,7 @@
 	};
 
 	$: if (location)
-		mapTiler.getPlaceDetailsByLatAndLong(location[0], location[1]).then(({ place_name }) => {
+		mapTiler.reverseGeocoding(location[0], location[1], { limit: 1 }).then(([{ place_name }]) => {
 			textOptions.texts = [place_name, `I was here, ${place_name}`];
 			isLoading = true;
 		});
