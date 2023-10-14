@@ -25,8 +25,8 @@ export default mutationField('createMonument', {
 			const document = await collections.monument.createDocument(
 				{
 					placeDetailId: placeDetail._id,
-					latitude: Math.floor(args.input.location[0]),
-					longitude: Math.floor(args.input.location[1]),
+					latitude: args.input.location[0],
+					longitude: args.input.location[1],
 					about: args.input.about,
 					name: args.input.name,
 					creatorUserId: ctx.user.$id,
