@@ -5,18 +5,19 @@
 	import Input from '$lib/components/Common/Input.svelte';
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
 	import type { Location } from '@app/ts-types';
-	import { get, post } from '@app/utils';
+	import { get } from '@app/utils';
 	import type { Feature } from '@maptiler/geocoding-control/types';
 	import type { Geometry } from 'geojson/index.d.ts';
 	import { createEventDispatcher } from 'svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
 	import Item from './Item.svelte';
-	import { goto } from '$app/navigation';
 	const dispatch = createEventDispatcher<{
 		select: {
 			placeName: string;
 			location: Location;
 		};
+		showResults: undefined;
+		hideResults: undefined;
 	}>();
 
 	const url = 'https://api.maptiler.com/geocoding';
@@ -24,10 +25,13 @@
 	export let fuzzyMatch = true;
 	export let apiKey: string;
 	export let limit = 5;
-	let searchingText = '';
+	export let searchingText = '';
 	export let showResults = true;
 	export let isLoading = false;
 	let places: Feature<Geometry>[] | undefined;
+
+	$: if (showResults) dispatch('showResults');
+	$: if (!showResults) dispatch('hideResults');
 
 	const select = (location: Location, placeName: string) => {
 		dispatch('select', {

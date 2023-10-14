@@ -1,5 +1,6 @@
 import { ID, Storage, type Models } from 'appwrite'
 import type { Client } from 'appwrite'
+import { envs } from '../env'
 
 export default (client: Client) => {
 	const storage = new Storage(client)
@@ -56,8 +57,7 @@ export default (client: Client) => {
 			return storage.getFileView(this.bucketId, typeof file === 'string' ? file : file.$id)
 		}
 		getFileURL(fileId: string) {
-			const url =
-				`${client.config.endpoint}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${client.config.project}` as unknown
+			const url = `${envs.projectEndPoint}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${envs.projectId}` as unknown
 			return url as URL
 		}
 		getIdFromURL(URL: string) {

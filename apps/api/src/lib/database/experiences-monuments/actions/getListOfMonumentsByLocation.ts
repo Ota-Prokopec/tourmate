@@ -1,10 +1,10 @@
 import type { Location } from '@app/ts-types'
 import appwrite from '../../../appwrite/appwrite'
-import { Query } from '@app/appwrite-server'
 import { transformMonumentsDocumentsIntoMonuments } from '../transformers'
+import query from '../../../appwrite/tools/query'
 
 export const getListOfMonumentsByLocation = async (
-	{ location, zoom, range = 10, limit = 100 }: { location: Location; zoom: number; range?: number; limit?: number },
+	{ location, zoom, limit = 100 }: { location: Location; zoom: number; range?: number; limit?: number },
 	collections: ReturnType<typeof appwrite.setCookie>['collections'],
 ) => {
 	const rangeLatitudeMax = Math.floor(location[0] + zoom * zoom)
@@ -12,13 +12,15 @@ export const getListOfMonumentsByLocation = async (
 	const rangeLongitudeMax = Math.floor(location[1] + zoom * zoom)
 	const rangeLongitudeMin = Math.floor(location[1] - zoom * zoom)
 
-	const MonumentDocuments = await collections.monument.listDocuments([
-		Query.lessThan('latitude', rangeLatitudeMax),
-		Query.greaterThan('latitude', rangeLatitudeMin),
-		Query.lessThan('longitude', rangeLongitudeMax),
-		Query.greaterThan('longitude', rangeLongitudeMin),
-		Query.limit(limit),
-	])
+	const queries = [
+		query.monument.lessThan('latitude', rangeLatitudeMax),
+		query.monument.greaterThan('latitude', rangeLatitudeMin),
+		query.monument.lessThan('longitude', rangeLongitudeMax),
+		query.monument.greaterThan('longitude', rangeLongitudeMin),
+		query.monument.limit(limit),
+	]
+
+	const MonumentDocuments = await collections.monument.listDocuments(queries)
 
 	return transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents)
 }

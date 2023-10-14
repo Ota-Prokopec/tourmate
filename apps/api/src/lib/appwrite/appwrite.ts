@@ -1,23 +1,27 @@
-import { collections as collections_ } from './tools/collections'
+import { collectionsClient, collectionsAdmin } from './tools/collections'
 import appwriteSSR, { Types } from '@app/appwrite-ssr-graphql'
-import Queries from './tools/queries'
+import Queries from './tools/query'
 
-const myAppwriteClient: ReturnType<typeof appwriteSSR.setProject> = appwriteSSR.setProject({
-	projectEndPoint: process.env.APPWRITE_ENDPOINT as string,
-	projectId: process.env.APPWRITE_PROJECT_ID as string,
+const client: ReturnType<typeof appwriteSSR.setProject> = appwriteSSR.setProject({
+	endpoint: process.env.APPWRITE_ENDPOINT || '',
+	projectId: process.env.APPWRITE_PROJECT_ID || '',
+	apiKey: process.env.APPWRITE_API_KEY,
+	hostname: process.env.SERVER_HOSTNAME || '',
 })
 
-const setCookie = (cookies: Types.Cookie[]) => set(myAppwriteClient.setCookie(cookies))
+const setCookie = (cookies: Types.Cookie[]) => setClient(client.setCookie(cookies))
+const setSession = (session: string) => setClient(client.setSession(session))
+const setNone = () => setClient(client.none())
+const setAdmin = () => setApiKey(client.setAdmin())
 
-const setSession = (session: string) => set(myAppwriteClient.setSession(session))
-
-const setNone = () => set(myAppwriteClient.none())
-
-const set = (appwrite: Types.AppwriteSSR) => {
-	const collections = collections_(appwrite.Collection)
-
+const setClient = (appwrite: ReturnType<Types.AppwriteSSR['none']>) => {
+	const collections = collectionsClient(appwrite.Collection)
+	return { collections, Queries, ...appwrite }
+}
+const setApiKey = (appwrite: ReturnType<Types.AppwriteSSR['setAdmin']>) => {
+	const collections = collectionsAdmin(appwrite.Collection)
 	return { collections, Queries, ...appwrite }
 }
 
-export default { setCookie, setSession, setNone }
+export default { setCookie, setSession, setNone, setAdmin }
 export { Queries }

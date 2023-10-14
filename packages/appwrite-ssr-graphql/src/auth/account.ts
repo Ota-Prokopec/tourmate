@@ -1,15 +1,13 @@
 import { Account, Client, ID } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
 import { Types } from '../types/Types'
-import { envs } from '../env'
 
 const userHasCookies = (cookies: {}): cookies is Types.Cookie[] => Object.entries(cookies).length !== 0
 
-export const getSessionFromCookie = (cookies: Types.Cookie[] | {}[]): string | undefined => {
-	if (!envs.projectEndPoint || !envs.projectId) throw new Error('Project or endpoint is not set')
+export const getSessionFromCookie = (projectId: string, cookies: Types.Cookie[] | {}[]): string | undefined => {
 	if (!userHasCookies(cookies)) throw new Error('No cookies provided')
 
-	const sessionNames = ['a_session_' + envs.projectId?.toLowerCase(), 'a_session_' + envs.projectId?.toLowerCase() + '_legacy']
+	const sessionNames = ['a_session_' + projectId.toLowerCase(), 'a_session_' + projectId.toLowerCase() + '_legacy']
 
 	const appwriteCookies: Types.Cookie[] | undefined[] = cookies
 		.filter((cookie) => sessionNames.includes(cookie.name))
@@ -17,29 +15,37 @@ export const getSessionFromCookie = (cookies: Types.Cookie[] | {}[]): string | u
 
 	const session = appwriteCookies[0] // [0] is a_session_...... and [1] is a_session_........_legacy, because of sorting
 
-	if (!session) throw new Error('User does not have session cookie')
+	if (!session) throw new Error('No cookies provided')
 	return session.value
 }
 
-export default (client: Client) => {
+export default (client: Client, hostname: string) => {
+	const sessionNames = [
+		'a_session_' + client.config.project.toLowerCase(),
+		'a_session_' + client.config.project.toLowerCase() + '_legacy',
+	] as const
+
+	const SSRHostName = hostname === 'localhost' ? 'localhost' : `.${hostname}`
+
 	return class Auth extends Account {
 		constructor() {
 			super(client)
 		}
 
 		loginViaEmail(email: string, password: string) {
-			if (!envs.projectEndPoint || !envs.projectId) throw new Error('Project or endpoint is not set')
-			const promise = fetch(`${envs.projectEndPoint}/account/sessions/email`, {
+			if (!client.config.endpoint || !client.config.project) throw new Error('Project or endpoint is not set')
+			const promise = fetch(`${client.config.endpoint}/account/sessions/email`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'x-appwrite-project': envs.projectId,
+					'x-appwrite-project': client.config.project,
 				} as HeadersInit,
 				body: JSON.stringify({
 					email,
 					password,
 				}),
 			})
+
 			return this.createSession(() => promise)
 		}
 
@@ -47,11 +53,9 @@ export default (client: Client) => {
 			try {
 				const response = await callbackFetch()
 
-				const json = (await response.json()) as { code: number; message: string }
+				const json = await response.json()
 
-				if (json.code >= 400) throw new Error(json.message)
-
-				const SSRHostName = envs.hostname === 'localhost' ? 'localhost' : `.${envs.hostname}`
+				if (json.code >= 400) throw new Error(`create session error, status: ${response.status}`)
 
 				const cookiesStr = (response.headers.get('set-cookie') ?? '').split(SSRHostName).join(SSRHostName)
 
@@ -65,17 +69,62 @@ export default (client: Client) => {
 				return {
 					sessionToken: {
 						...session,
+						name: sessionNames[0],
 						domain: SSRHostName,
 						path: '/',
 					},
 					sessionLegacyToken: {
 						...sessionLegacy,
+						name: sessionNames[1],
 						domain: SSRHostName,
 						path: '/',
 					},
 				}
 			} catch (error) {
 				throw error
+			}
+		}
+		logOut() {
+			return {
+				sessionToken: {
+					value: '',
+					name: sessionNames[0],
+					domain: SSRHostName,
+					path: '/',
+				},
+				sessionLegacyToken: {
+					value: '',
+					name: sessionNames[1],
+					domain: SSRHostName,
+					path: '/',
+				},
+				sessionNames: { token: sessionNames[0], legacyToken: sessionNames[1] },
+			} as const
+		}
+		oauth2Login(
+			url: URL,
+			params = {
+				domain: hostname,
+				secure: true,
+				path: '/',
+				httpOnly: true,
+			},
+		) {
+			// do this only on path: /auth/oauth2/success (strictly)
+			const urlParams = new URLSearchParams(url.searchParams)
+			const secret = urlParams.get('secret')
+			if (!secret) throw new Error(`Invalid secret`)
+			return {
+				sessionToken: {
+					name: sessionNames[0],
+					value: secret,
+					...params,
+				},
+				sessionLegacyToken: {
+					name: sessionNames[0],
+					value: secret,
+					...params,
+				},
 			}
 		}
 	}

@@ -11,7 +11,7 @@ import {
 	UserInfoGraphqlDocument,
 } from '@app/ts-types'
 
-const queries = {
+const query = {
 	userInfo: Query<UserInfoGraphqlDocument>(),
 	experience: Query<ExperienceGraphqlDocument>(),
 	monument: Query<MonumentGraphqlDocument>(),
@@ -21,4 +21,4 @@ const queries = {
 	experienceLike: Query<ExperienceLikeGraphqlDocument>(),
 } satisfies Record<CollectionName, any>
 
-export default queries
+export default query

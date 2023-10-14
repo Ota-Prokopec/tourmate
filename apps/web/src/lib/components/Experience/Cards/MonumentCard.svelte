@@ -5,21 +5,13 @@
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import UserItem from '$lib/components/Common/UserItem.svelte';
-	import { sdk } from '$src/graphql/sdk';
 	import { Query, collections, user } from '@app/appwrite-client';
 	import permissions from '@app/appwrite-server/src/permissions';
-	import type {
-		GraphqlDocument,
-		Monument,
-		MonumentCardData,
-		PlaceDetail,
-		UserInfo
-	} from '@app/ts-types';
-	import { Queries } from '@sveltestack/svelte-query';
+	import type { MonumentCard } from '@app/ts-types';
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let monument: MonumentCardData;
+	export let monument: MonumentCard;
 
 	let className = '';
 	export { className as class };
@@ -61,7 +53,7 @@
 		on:unlike={unlike}
 		data={{
 			liked: monument.liked ? true : false,
-			otherUsersThatLiked: monument.likes.map((uLike) => uLike.user)
+			otherUsersThatLiked: monument.likes.map((l) => l.user)
 		}}
 	/>
 
@@ -70,10 +62,12 @@
 			{monument.name}
 		</h5>
 		<Text class="text-right">
-			<Row class="gap-1">
-				<Icon icon="fas fa-map-marker-alt" class="text-xl " />
-				{monument.placeDetail.name}
-			</Row>
+			<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
+				<Row class="gap-1">
+					<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+					{monument.placeDetail.name}
+				</Row>
+			</button>
 		</Text>
 	</Row>
 </Card>
