@@ -3,7 +3,9 @@ const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'
 
-export const getUsersLocation = (options: PositionOptions = { enableHighAccuracy: true }): Promise<Location> => {
+export const getUsersLocation = (
+	options: PositionOptions = { enableHighAccuracy: true },
+): Promise<Location> => {
 	return new Promise((res) => {
 		if (typeof window === 'undefined') res([0, 0])
 		if (navigator.geolocation) {

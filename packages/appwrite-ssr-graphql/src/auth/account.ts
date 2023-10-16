@@ -2,12 +2,19 @@ import { Account, Client, ID } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
 import { Types } from '../types/Types'
 
-const userHasCookies = (cookies: {}): cookies is Types.Cookie[] => Object.entries(cookies).length !== 0
+const userHasCookies = (cookies: {}): cookies is Types.Cookie[] =>
+	Object.entries(cookies).length !== 0
 
-export const getSessionFromCookie = (projectId: string, cookies: Types.Cookie[] | {}[]): string | undefined => {
+export const getSessionFromCookie = (
+	projectId: string,
+	cookies: Types.Cookie[] | {}[],
+): string | undefined => {
 	if (!userHasCookies(cookies)) throw new Error('No cookies provided')
 
-	const sessionNames = ['a_session_' + projectId.toLowerCase(), 'a_session_' + projectId.toLowerCase() + '_legacy']
+	const sessionNames = [
+		'a_session_' + projectId.toLowerCase(),
+		'a_session_' + projectId.toLowerCase() + '_legacy',
+	]
 
 	const appwriteCookies: Types.Cookie[] | undefined[] = cookies
 		.filter((cookie) => sessionNames.includes(cookie.name))
@@ -33,7 +40,8 @@ export default (client: Client, hostname: string) => {
 		}
 
 		loginViaEmail(email: string, password: string) {
-			if (!client.config.endpoint || !client.config.project) throw new Error('Project or endpoint is not set')
+			if (!client.config.endpoint || !client.config.project)
+				throw new Error('Project or endpoint is not set')
 			const promise = fetch(`${client.config.endpoint}/account/sessions/email`, {
 				method: 'POST',
 				headers: {
@@ -55,9 +63,12 @@ export default (client: Client, hostname: string) => {
 
 				const json = await response.json()
 
-				if (json.code >= 400) throw new Error(`create session error, status: ${response.status}`)
+				if (json.code >= 400)
+					throw new Error(`create session error, status: ${response.status}`)
 
-				const cookiesStr = (response.headers.get('set-cookie') ?? '').split(SSRHostName).join(SSRHostName)
+				const cookiesStr = (response.headers.get('set-cookie') ?? '')
+					.split(SSRHostName)
+					.join(SSRHostName)
 
 				const cookiesArray = setCookie.splitCookiesString(cookiesStr)
 

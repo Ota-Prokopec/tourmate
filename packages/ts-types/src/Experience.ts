@@ -3,7 +3,10 @@ import { MonumentLike } from './Likes'
 
 export type Location = [number, number]
 export const isLocation = (arg: unknown): arg is Location =>
-	Array.isArray(arg) && typeof arg[0] === 'number' && typeof arg[1] === 'number' && arg.length === 2
+	Array.isArray(arg) &&
+	typeof arg[0] === 'number' &&
+	typeof arg[1] === 'number' &&
+	arg.length === 2
 
 export type Experience = {
 	userId: string
@@ -43,7 +46,6 @@ export type Monument = {
 	name: string
 	pictureURL?: URL | undefined | null
 	placeDetailId: string
-	liked?: null | undefined | MonumentLike
 }
 
 export type MonumentDocument = Document<{
