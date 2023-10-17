@@ -12,8 +12,12 @@
 	import type { MonumentCard, MonumentLikeDocument } from '@app/ts-types';
 	import { Card, Img } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
+	import TopicItem from '../topic/TopicItem.svelte';
+	import IconOptions from '$lib/components/Icons/IconOptions.svelte';
+	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
 
 	export let monument: MonumentCard;
+	let amIOwner = monument.creator.userId === $user?.$id;
 
 	let className = '';
 	export { className as class };
@@ -38,26 +42,35 @@
 	};
 </script>
 
-<Card class={twMerge(' justify-self-center gap-2', className)} padding="sm">
-	<UserItem
-		on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-		avatarClass="w-10 h-10"
-		class="h-auto"
-		user={monument.creator}
-	/>
+<Card class={twMerge('relative justify-self-center gap-2', className)} padding="sm">
+	<Row class="justify-between">
+		<UserItem
+			on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+			avatarClass="w-10 h-10"
+			class="h-auto"
+			user={monument.creator}
+		/>
+		<MonumentOwnerOptions />
+	</Row>
 
 	<button on:click={() => goto(`/monument/${monument._id}`)}>
 		<Img class="rounded-lg object-cover " src={imgSrcAsString} />
 	</button>
 
-	<LikeSection
-		on:like={like}
-		on:unlike={unlike}
-		data={{
-			liked: monument.liked ? true : false,
-			otherUsersThatLiked: monument.likes.map((l) => l.user)
-		}}
-	/>
+	<Row class="w-full justify-between">
+		<LikeSection
+			ableToLike={!amIOwner}
+			on:like={like}
+			on:unlike={unlike}
+			data={{
+				liked: monument.liked ? true : false,
+				otherUsersThatLiked: monument.likes.map((l) => l.user)
+			}}
+		/>
+		{#if monument.topic}
+			<TopicItem class="mr-4" topicKey={monument.topic} />
+		{/if}
+	</Row>
 
 	<Row class="justify-between">
 		<h5 class="mb-2 text-xl text-black">

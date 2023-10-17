@@ -1,7 +1,7 @@
 <script lang="ts">
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import ExperienceCardComponent from '$lib/components/Experience/Cards/ExperienceCard.svelte';
-	import MonumentCardComponent from '$lib/components/Experience/Cards/MonumentCard.svelte';
+	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/ExperienceCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { ExperienceCard, Location, MonumentCard } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';

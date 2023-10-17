@@ -104,7 +104,7 @@ query getListOfPlaceCards {
 			_permissions
 			_databaseId
 			userId
-			monumentId
+			experienceId
 		}
 		likes {
 			_createdAt
@@ -114,7 +114,7 @@ query getListOfPlaceCards {
 			_permissions
 			_databaseId
 			userId
-			monumentId
+			experienceId
 			user {
 				_createdAt
 				_updatedAt

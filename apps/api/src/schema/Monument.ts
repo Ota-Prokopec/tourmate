@@ -1,5 +1,5 @@
 import { getListOfExperineceByLocation } from '../lib/database/experiences-monuments'
-import { isLocation } from '@app/ts-types'
+import { isLocation } from '@app/utils'
 import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
@@ -17,15 +17,21 @@ export default objectType({
 		t.string('creatorUserId')
 		t.string('name')
 		t.nullable.string('about')
+		t.nullable.topic('topic')
 		t.string('placeDetailId')
-		t.nullable.field('pictureURL', { type: 'URL', description: 'This it an URL not id of picture' })
+		t.nullable.field('pictureURL', {
+			type: 'URL',
+			description: 'This it an URL not id of picture',
+		})
 		t.field('creator', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
 				let userId = source.creatorUserId
-				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('user is not authorizated to create account', '403')
+				if (!ctx.isAuthed(ctx.user))
+					throw new ApolloError('user is not authorizated to create account', '403')
 				if (!userId) userId = ctx.user.$id //if no input it will be the user that is logged in
-				if (!userId) throw new ApolloError('user is not authorizated to create account', '403')
+				if (!userId)
+					throw new ApolloError('user is not authorizated to create account', '403')
 
 				const { collections } = ctx.appwrite
 				return await getAccount(userId, userId === ctx.user.$id, collections)
@@ -37,14 +43,19 @@ export default objectType({
 					const { collections } = ctx.appwrite
 					if (!isLocation(source.location)) throw new Error('location is not valid')
 
-					return await getListOfExperineceByLocation({ location: source.location, range: 10, limit: 20 }, collections)
+					return await getListOfExperineceByLocation(
+						{ location: source.location, range: 10, limit: 20 },
+						collections,
+					)
 				},
 			})
 		t.field('placeDetail', {
 			type: 'PlaceDetail',
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
-				const placeDetail = await collections.placeDetail.getDocument(source.placeDetailId)
+				const placeDetail = await collections.placeDetail.getDocument(
+					source.placeDetailId,
+				)
 				if (!placeDetail) throw new Error('placeDetail was not found')
 				return placeDetail
 			},
@@ -71,7 +82,10 @@ export default objectType({
 			resolve: async (source, args, ctx) => {
 				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
-				const queries = [Queries.monumentLike.equal('monumentId', source._id), Queries.monumentLike.equal('userId', ctx.user.$id)]
+				const queries = [
+					Queries.monumentLike.equal('monumentId', source._id),
+					Queries.monumentLike.equal('userId', ctx.user.$id),
+				]
 				const likeDoc = await collections.monumentLike.getDocument(queries)
 				return likeDoc
 			},

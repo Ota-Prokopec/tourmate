@@ -5,8 +5,8 @@
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import Gallery from '$lib/components/Common/Gallery.svelte';
-	import ExperienceCard from '$lib/components/Experience/Cards/ExperienceCard.svelte';
-	import MonumentCard from '$lib/components/Experience/Cards/MonumentCard.svelte';
+	import ExperienceCard from '$lib/components/Experience-monument/Cards/ExperienceCard.svelte';
+	import MonumentCard from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
@@ -80,7 +80,7 @@
 				{/if}
 			</div>
 		</div>
-		<span class=" text-3xl p-4">{data.userProfile.username}</span>
+		<span class="text-3xl p-4">{data.userProfile.username}</span>
 
 		<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
 			<CategoryPicker {categories} bind:chosenCategory={experiencesType} />
@@ -90,7 +90,9 @@
 						<ExperienceCard {experience} />
 					{/each}
 				{:else}
-					monuments
+					{#each usersMonuments as monument}
+						<MonumentCard {monument} />
+					{/each}
 				{/if}
 			</Gallery>
 		</div>

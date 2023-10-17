@@ -19,9 +19,11 @@ export default objectType({
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
 				let userId = source.userId
-				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('user is not authorizated to create account', '403')
+				if (!ctx.isAuthed(ctx.user))
+					throw new ApolloError('user is not authorizated to create account', '403')
 				if (!userId) userId = ctx.user.$id //if no input it will be the user that is logged in
-				if (!userId) throw new ApolloError('user is not authorizated to create account', '403')
+				if (!userId)
+					throw new ApolloError('user is not authorizated to create account', '403')
 
 				const { collections } = ctx.appwrite
 
@@ -32,13 +34,15 @@ export default objectType({
 			type: 'PlaceDetail',
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
-				const placeDetail = await collections.placeDetail.getDocument(source.placeDetailId)
+				const placeDetail = await collections.placeDetail.getDocument(
+					source.placeDetailId,
+				)
 				if (!placeDetail) throw new Error('placeDetail was not found')
 				return placeDetail
 			},
 		})
 		t.field('likes', {
-			type: list('MonumentLike'),
+			type: list('ExperienceLike'),
 			resolve: async (source, args, ctx) => {
 				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
@@ -55,12 +59,15 @@ export default objectType({
 			},
 		})
 		t.field('liked', {
-			type: nullable('MonumentLike'),
+			type: nullable('ExperienceLike'),
 			resolve: async (source, args, ctx) => {
 				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
-				const queries = [Queries.monumentLike.equal('monumentId', source._id), Queries.monumentLike.equal('userId', ctx.user.$id)]
-				const likeDoc = await collections.monumentLike.getDocument(queries)
+				const queries = [
+					Queries.monumentLike.equal('monumentId', source._id),
+					Queries.monumentLike.equal('userId', ctx.user.$id),
+				]
+				const likeDoc = await collections.experienceLike.getDocument(queries)
 				return likeDoc
 			},
 		})

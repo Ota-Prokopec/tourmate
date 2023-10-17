@@ -40,6 +40,7 @@ input CreateMonumentInput {
   name: String!
   picture: String
   placeName: String!
+  topic: Topic
 }
 
 type EmailLogin {
@@ -54,8 +55,8 @@ type Experience {
   _permissions: [String!]!
   _updatedAt: String!
   imgSrc: URL!
-  liked: MonumentLike
-  likes: [MonumentLike!]!
+  liked: ExperienceLike
+  likes: [ExperienceLike!]!
   location: Location!
   placeDetail: PlaceDetail!
   placeDetailId: String!
@@ -76,6 +77,7 @@ type ExperienceLike {
   _permissions: [String!]!
   _updatedAt: String!
   experienceId: String!
+  user: Account!
   userId: String!
 }
 
@@ -101,6 +103,7 @@ type Monument {
   pictureURL: URL
   placeDetail: PlaceDetail!
   placeDetailId: String!
+  topic: Topic
 }
 
 input MonumentInput {
@@ -153,6 +156,8 @@ type Query {
   logInViaEmail(email: String!, password: String!): EmailLogin!
   updateProfilePicture(picture: String!): Account!
 }
+
+scalar Topic
 
 """
 A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.

@@ -46,6 +46,7 @@ query getListOfMonumentsWithCreatorAndNearestExperiences($input: MonumentInput) 
 		name
 		location
 		creatorUserId
+		topic
 		_databaseId
 		_permissions
 		_id

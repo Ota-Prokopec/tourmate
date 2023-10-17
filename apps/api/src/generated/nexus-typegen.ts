@@ -9,6 +9,7 @@ import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     location<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Location";
+    topic<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Topic";
     /**
      * A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
      */
@@ -18,6 +19,7 @@ declare global {
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
     location<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Location";
+    topic<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Topic";
     /**
      * A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
      */
@@ -46,6 +48,7 @@ export interface NexusGenInputs {
     name: string; // String!
     picture?: string | null; // String
     placeName: string; // String!
+    topic?: NexusGenScalars['Topic'] | null; // Topic
   }
   ExperienceInput: { // input type
     location: NexusGenScalars['Location']; // Location!
@@ -71,6 +74,7 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   Location: [number, number]
+  Topic: "castle" | "monument" | "person" | "animals" | "hiking"
   URL: URL
 }
 
@@ -129,6 +133,7 @@ export interface NexusGenObjects {
     name: string; // String!
     pictureURL?: NexusGenScalars['URL'] | null; // URL
     placeDetailId: string; // String!
+    topic?: NexusGenScalars['Topic'] | null; // Topic
   }
   MonumentLike: { // root type
     _collectionId: string; // String!
@@ -197,8 +202,8 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
-    liked: NexusGenRootTypes['MonumentLike'] | null; // MonumentLike
-    likes: NexusGenRootTypes['MonumentLike'][]; // [MonumentLike!]!
+    liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
+    likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
@@ -213,6 +218,7 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     experienceId: string; // String!
+    user: NexusGenRootTypes['Account']; // Account!
     userId: string; // String!
   }
   Monument: { // field return type
@@ -233,6 +239,7 @@ export interface NexusGenFieldTypes {
     pictureURL: NexusGenScalars['URL'] | null; // URL
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
+    topic: NexusGenScalars['Topic'] | null; // Topic
   }
   MonumentLike: { // field return type
     _collectionId: string; // String!
@@ -307,8 +314,8 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     imgSrc: 'URL'
-    liked: 'MonumentLike'
-    likes: 'MonumentLike'
+    liked: 'ExperienceLike'
+    likes: 'ExperienceLike'
     location: 'Location'
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'
@@ -323,6 +330,7 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     experienceId: 'String'
+    user: 'Account'
     userId: 'String'
   }
   Monument: { // field return type name
@@ -343,6 +351,7 @@ export interface NexusGenFieldTypeNames {
     pictureURL: 'URL'
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'
+    topic: 'Topic'
   }
   MonumentLike: { // field return type name
     _collectionId: 'String'

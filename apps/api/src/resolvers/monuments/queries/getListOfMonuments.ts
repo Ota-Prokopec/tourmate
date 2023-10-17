@@ -1,6 +1,9 @@
 import { arg, list, nullable, queryField } from 'nexus'
-import { getListOfMonuments, getListOfMonumentsByLocation } from '../../../lib/database/experiences-monuments'
-import { isLocation } from '@app/ts-types'
+import {
+	getListOfMonuments,
+	getListOfMonumentsByLocation,
+} from '../../../lib/database/experiences-monuments'
+import { isLocation } from '@app/utils'
 import monumentInput from '../schema/monumentInput'
 
 export default queryField('getListOfMonuments', {
@@ -10,7 +13,10 @@ export default queryField('getListOfMonuments', {
 		const { collections } = ctx.appwrite
 
 		if (args.input && isLocation(args.input.location)) {
-			return await getListOfMonumentsByLocation({ location: args.input.location, range: args.input.range }, collections)
+			return await getListOfMonumentsByLocation(
+				{ location: args.input.location, range: args.input.range },
+				collections,
+			)
 		} else {
 			return await getListOfMonuments(collections)
 		}

@@ -1,7 +1,10 @@
 import { arg, list, nullable, queryField, stringArg } from 'nexus'
-import { getListOfExperineces, getListOfExperineceByLocation } from '../../../lib/database/experiences-monuments'
+import {
+	getListOfExperineces,
+	getListOfExperineceByLocation,
+} from '../../../lib/database/experiences-monuments'
 import experienceInput from '../schema/ExperienceInput'
-import { isLocation } from '@app/ts-types'
+import { isLocation } from '@app/utils'
 
 export default queryField('getListOfExperiences', {
 	type: list('Experience'),
@@ -10,7 +13,10 @@ export default queryField('getListOfExperiences', {
 		const { collections } = ctx.appwrite
 
 		if (args.input && isLocation(args.input.location)) {
-			return await getListOfExperineceByLocation({ location: args.input.location, range: args.input.range }, collections)
+			return await getListOfExperineceByLocation(
+				{ location: args.input.location, range: args.input.range },
+				collections,
+			)
 		} else {
 			return await getListOfExperineces(collections)
 		}

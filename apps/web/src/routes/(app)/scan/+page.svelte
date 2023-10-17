@@ -4,7 +4,7 @@
 	import { getUsersLocation, watchUsersLocation } from '@app/utils';
 	import lsSvelte from '$lib/utils/lsStore';
 	import Row from '$lib/components/Common/Row.svelte';
-	import MonumentCardComponent from '$lib/components/Experience/Cards/MonumentCardMinimalized.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/MonumentCardMinimalized.svelte';
 
 	let monuments: MonumentCard[] | undefined;
 

@@ -7,12 +7,13 @@
 	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
-	import type { Base64, GraphqlDocument, Location, Monument } from '@app/ts-types';
+	import type { Base64, GraphqlDocument, Location, Monument, Topic } from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import TopicComponent from '$lib/components/Experience-monument/topic/TopicCreate.svelte';
 
 	export let data: PageData;
 
@@ -23,6 +24,7 @@
 	let image: Base64 | undefined;
 	let location: Location = data.newMonument.location;
 	let placeName = data.newMonument.placeName;
+	let topic: Topic | undefined;
 
 	let res: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
@@ -38,7 +40,8 @@
 						location: location,
 						name: name,
 						picture: image,
-						placeName: placeName
+						placeName: placeName,
+						topic: topic
 					}
 				})
 			).createMonument;
@@ -73,6 +76,7 @@
 				class=" "
 				classWrap="w-full max-w-[400px]"
 			/>
+			<TopicComponent on:choose={(e) => (topic = e.detail)} class="mt-2" />
 			<P size="xl" weight="bold" class="w-full max-w-[400px] m-4">Něco málo o místu</P>
 			<TextArea
 				bind:value={about}

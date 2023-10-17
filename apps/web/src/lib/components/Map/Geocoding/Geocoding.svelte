@@ -3,7 +3,8 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Input from '$lib/components/Common/Input.svelte';
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
-	import { isLocation, type Location } from '@app/ts-types';
+	import { type Location } from '@app/ts-types';
+	import { isLocation } from '@app/utils';
 	import { createEventDispatcher } from 'svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
 	import Item from './Item.svelte';

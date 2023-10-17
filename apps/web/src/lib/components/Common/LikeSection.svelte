@@ -14,6 +14,7 @@
 		liked: boolean;
 		otherUsersThatLiked: UserInfo[];
 	};
+	export let ableToLike = true;
 
 	const heartClick = () => {
 		if (data.liked) dispatch('unlike');
@@ -24,12 +25,14 @@
 
 <Row class="">
 	<Icon on:click={heartClick}>
-		{#if data.liked}
-			<Icon class="fill-red-500">
-				<IconHeart class="w-8 h-8" />
-			</Icon>
-		{:else}
-			<Icon class="fill-black"><IconHeartOutline class="w-8 h-8" /></Icon>
+		{#if ableToLike}
+			{#if data.liked}
+				<Icon class="fill-red-500">
+					<IconHeart class="w-8 h-8" />
+				</Icon>
+			{:else}
+				<Icon class="fill-black"><IconHeartOutline class="w-8 h-8" /></Icon>
+			{/if}
 		{/if}
 	</Icon>
 	<Row class="ml-6 gap-1">

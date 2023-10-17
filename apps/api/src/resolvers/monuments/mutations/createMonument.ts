@@ -3,8 +3,6 @@ import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
 import buckets from '@app/cloudinary-server'
 
-import { v2 as cloudinary } from 'cloudinary'
-
 export default mutationField('createMonument', {
 	type: 'Monument',
 	args: { input: arg({ type: 'CreateMonumentInput' }) },
@@ -13,7 +11,9 @@ export default mutationField('createMonument', {
 			if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 			const { collections } = ctx.appwrite
 
-			const file = isBase64(args.input.picture) ? await buckets.monuments.uploadBase64(args.input.picture) : null
+			const file = isBase64(args.input.picture)
+				? await buckets.monuments.uploadBase64(args.input.picture)
+				: null
 
 			const placeDetail = await collections.placeDetail.createDocument(
 				{
@@ -25,6 +25,7 @@ export default mutationField('createMonument', {
 			const document = await collections.monument.createDocument(
 				{
 					placeDetailId: placeDetail._id,
+					topic: args.input.topic,
 					latitude: args.input.location[0],
 					longitude: args.input.location[1],
 					about: args.input.about,

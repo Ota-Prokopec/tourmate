@@ -10,6 +10,7 @@ query getListOfMonuments($input: MonumentInput) {
 		creatorUserId
 		name
 		about
+		topic
 		placeDetailId
 		pictureURL
 	}

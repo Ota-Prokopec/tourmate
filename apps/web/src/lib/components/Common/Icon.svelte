@@ -6,6 +6,7 @@
 	export let icon: string | URL | null = null;
 	export let outlineOnly: boolean = false;
 	export let disabled = false;
+	export let slot: string | undefined = undefined;
 
 	let className: string = '';
 	export { className as class };

@@ -9,6 +9,7 @@ query getMonument($id: String!) {
 		location
 		creatorUserId
 		name
+		topic
 		about
 		placeDetailId
 		pictureURL

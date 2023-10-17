@@ -1,0 +1,114 @@
+query getProfile($myId: String!) {
+	getAccountByMyId(myId: $myId) {
+		_permissions
+		_databaseId
+		_id
+		_collectionId
+		_updatedAt
+		_createdAt
+		userId
+		myId
+		username
+		profilePictureURL
+		experiences {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			imgSrc
+			location
+			placeDetailId
+			likes {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				experienceId
+				user {
+					_createdAt
+					_updatedAt
+					_collectionId
+					_id
+					_permissions
+					_databaseId
+					userId
+					myId
+					username
+					profilePictureURL
+				}
+			}
+		}
+		monuments {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			location
+			creatorUserId
+			name
+			about
+			topic
+			placeDetailId
+			pictureURL
+			creator {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				myId
+				username
+				status
+				emailVerification
+				phoneVerification
+				profilePictureURL
+			}
+			placeDetail {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				name
+			}
+			likes {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				monumentId
+				user {
+					_id
+					userId
+					myId
+					username
+					profilePictureURL
+				}
+			}
+			liked {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				monumentId
+			}
+		}
+	}
+}

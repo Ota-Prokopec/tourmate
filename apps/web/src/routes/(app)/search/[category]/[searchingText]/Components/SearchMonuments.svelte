@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import MonumentCardComponent from '$lib/components/Experience/Cards/MonumentCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { Skeleton } from 'flowbite-svelte';

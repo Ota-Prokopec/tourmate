@@ -1,4 +1,4 @@
-import { isLocation } from '@app/ts-types'
+import { isLocation } from '@app/utils'
 import { scalarType } from 'nexus'
 import { Location } from '@app/ts-types'
 

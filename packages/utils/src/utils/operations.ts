@@ -8,8 +8,11 @@ export const uniqueArrayItems = (arr: Array<any>) => {
 		if (arr.indexOf(item) === i) return item
 	})
 }
-export function removeItemsFromArray(array: any[], ...forDeletion: any) {
-	return array.filter((item) => !forDeletion.includes(item))
+export function removeItemsFromArray<TArray extends unknown[]>(
+	array: TArray,
+	...forDeletion: TArray[number][]
+) {
+	return array.filter((item) => !forDeletion.includes(item)) as TArray
 }
 
 export const base64ToBlob = (base64: string, contentType: string, sliceSize = 512) => {
@@ -40,10 +43,14 @@ export const blobToBase64 = (blob: Blob): Promise<Base64> => {
 	})
 }
 
-export const countSameItemsInArray = <InputArr extends Array<any>>(arr: InputArr): Record<string, number> =>
+export const countSameItemsInArray = <InputArr extends Array<any>>(
+	arr: InputArr,
+): Record<string, number> =>
 	arr.reduce(
 		(cnt, cur) => (
-			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] = cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1), cnt
+			(cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] =
+				cnt[typeof cur === 'string' ? cur : JSON.stringify(cur)] + 1 || 1),
+			cnt
 		),
 		{},
 	)
@@ -52,7 +59,8 @@ export const roundNumber = (num: number, digits: number): number => {
 	return JSON.parse(num.toFixed(digits))
 }
 
-export const arrayBufferIntoBase64 = (arrBuff: ArrayBuffer): Base64 => Buffer.from(arrBuff).toString('base64') as Base64
+export const arrayBufferIntoBase64 = (arrBuff: ArrayBuffer): Base64 =>
+	Buffer.from(arrBuff).toString('base64') as Base64
 
 export const fileToBase64 = (file: File): Promise<Base64> => {
 	return new Promise((resolve, reject) => {

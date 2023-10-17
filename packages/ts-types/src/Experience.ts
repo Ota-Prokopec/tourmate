@@ -1,12 +1,7 @@
 import { Document, GraphqlDocument } from './Document'
-import { MonumentLike } from './Likes'
+import { Topic } from './Topic'
 
 export type Location = [number, number]
-export const isLocation = (arg: unknown): arg is Location =>
-	Array.isArray(arg) &&
-	typeof arg[0] === 'number' &&
-	typeof arg[1] === 'number' &&
-	arg.length === 2
 
 export type Experience = {
 	userId: string
@@ -46,34 +41,5 @@ export type Monument = {
 	name: string
 	pictureURL?: URL | undefined | null
 	placeDetailId: string
-}
-
-export type MonumentDocument = Document<{
-	about?: string
-	creatorUserId: string
-	latitude: number
-	longitude: number
-	name: string
-	pictureURL?: URL
-	placeDetailId: string
-}>
-
-export type MonumentGraphqlDocument = GraphqlDocument<{
-	about?: string
-	creatorUserId: string
-	latitude: number
-	longitude: number
-	name: string
-	pictureURL?: URL
-	placeDetailId: string
-}>
-
-export type MonumentDocumentCreate = {
-	about?: string
-	creatorUserId: string
-	latitude: number
-	longitude: number
-	name: string
-	pictureURL?: URL
-	placeDetailId: string
+	topic?: Topic
 }

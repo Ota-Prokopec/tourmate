@@ -2126,7 +2126,7 @@
   dependencies:
     "@floating-ui/core" "^1.2.6"
 
-"@floating-ui/dom@^1.4.5", "@floating-ui/dom@^1.5.1":
+"@floating-ui/dom@^1.4.5", "@floating-ui/dom@^1.5.3":
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.5.3.tgz#54e50efcb432c06c23cd33de2b575102005436fa"
   integrity sha512-ClAbQnEqJAKCJOEbbLo5IUlZHkNszqhuxS4fHAVxRPXPya6Ysf2G8KypnYcOTpx6I8xcgF9bbHb6g/2KpbV8qA==
@@ -3902,7 +3902,7 @@
     "@vercel/nft" "^0.23.0"
     esbuild "^0.18.11"
 
-"@sveltejs/kit@1.25.2":
+"@sveltejs/kit@^1.25.0":
   version "1.25.2"
   resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.25.2.tgz#ee96320de1573fcb9a7d8c6fae4965beced97a70"
   integrity sha512-USuuSpdAPFDiLi58N2Pwd/TG9bcUSPAlzE5iaAXaLyCTWa3l36HDKH6nV5NqBybwfeux1ZwgtIeITLZJDJ6HDg==
@@ -8033,12 +8033,17 @@ flatted@^3.2.7:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.9.tgz#7eb4c67ca1ba34232ca9d2d93e9886e611ad7daf"
   integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
 
-flowbite-svelte@0.44.15:
-  version "0.44.15"
-  resolved "https://registry.yarnpkg.com/flowbite-svelte/-/flowbite-svelte-0.44.15.tgz#b0b0787a572f2f6b543bfc8a509ee08cd2afedea"
-  integrity sha512-tUCWslwcTTsFhmz74dIPZbpnzzjuTpJ1tMlgMo75uqAOBQxIL52ZXSzOt6WA74ECCaU5ZTvc2jSMfxAH4BwHoQ==
+flowbite-svelte-icons@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/flowbite-svelte-icons/-/flowbite-svelte-icons-0.4.4.tgz#564c1f0740b21b8dccb66c59f018c93725cd92fc"
+  integrity sha512-fOZri6HYYyo13olXQzvoid19hlYR/HjzQobpzBPkj8QseCJ9R1uWR7bNlhPl5vFCElqcfm3UooYiwT4rKKiqzQ==
+
+flowbite-svelte@0.44.18:
+  version "0.44.18"
+  resolved "https://registry.yarnpkg.com/flowbite-svelte/-/flowbite-svelte-0.44.18.tgz#260224a2892d2524ab80435839cfdb359b443b33"
+  integrity sha512-vCRuzO4Ltz+8qyYP1b8yZPre4fWeRnVwg7C8uQ3a6UgLPruPAACCbqO+i/RkzD7CFU7ygziee9OfPgVoMr8aWA==
   dependencies:
-    "@floating-ui/dom" "^1.5.1"
+    "@floating-ui/dom" "^1.5.3"
     apexcharts "^3.42.0"
     flowbite "^1.8.1"
     tailwind-merge "^1.14.0"
