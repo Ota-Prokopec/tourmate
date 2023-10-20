@@ -1,7 +1,7 @@
 import { transformMonumentsDocumentsIntoMonuments } from '../../../lib/database/experiences-monuments'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
-import buckets from '@app/cloudinary-server'
+import cloudinary from '@app/cloudinary-server'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -11,17 +11,22 @@ export default mutationField('createMonument', {
 			if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 			const { collections } = ctx.appwrite
 
-			const file = isBase64(args.input.picture)
-				? await buckets.monuments.uploadBase64(args.input.picture)
+			// create image for monument
+			const filePromise = isBase64(args.input.picture)
+				? cloudinary.monuments.uploadBase64(args.input.picture)
 				: null
 
-			const placeDetail = await collections.placeDetail.createDocument(
+			//create place-detail for monument
+			const placeDetailPromise = collections.placeDetail.createDocument(
 				{
 					name: args.input.placeName,
 				},
 				[ctx.user],
 			)
 
+			const [file, placeDetail] = await Promise.all([filePromise, placeDetailPromise])
+
+			//create monument
 			const document = await collections.monument.createDocument(
 				{
 					placeDetailId: placeDetail._id,

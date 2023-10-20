@@ -1,0 +1,12 @@
+mutation likeMonument($monumentId: String!) {
+	likeMonument(monumentId: $monumentId) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		monumentId
+	}
+}

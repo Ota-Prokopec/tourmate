@@ -255,6 +255,8 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createExperience: NexusGenRootTypes['Experience']; // Experience!
     createMonument: NexusGenRootTypes['Monument']; // Monument!
+    deleteMonument: boolean; // Boolean!
+    likeMonument: NexusGenRootTypes['MonumentLike']; // MonumentLike!
   }
   PlaceDetail: { // field return type
     _collectionId: string; // String!
@@ -367,6 +369,8 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createExperience: 'Experience'
     createMonument: 'Monument'
+    deleteMonument: 'Boolean'
+    likeMonument: 'MonumentLike'
   }
   PlaceDetail: { // field return type name
     _collectionId: 'String'
@@ -403,6 +407,12 @@ export interface NexusGenArgTypes {
     }
     createMonument: { // args
       input: NexusGenInputs['CreateMonumentInput']; // CreateMonumentInput!
+    }
+    deleteMonument: { // args
+      monumentId: string; // String!
+    }
+    likeMonument: { // args
+      monumentId: string; // String!
     }
   }
   Query: {

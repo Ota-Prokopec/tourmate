@@ -7,17 +7,17 @@
 	import UserItem from '$lib/components/Common/UserItem.svelte';
 	import { Query, collections, user } from '@app/appwrite-client';
 	import permissions from '@app/appwrite-server/src/permissions';
-	import { transformAppwriteToGraphql } from '@app/appwrite-ssr-graphql/src/databases/transformAppwriteToGraphql';
-	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-ssr-graphql/src/databases/transformer';
 	import type { MonumentCard, MonumentLikeDocument } from '@app/ts-types';
-	import { Card, Img } from 'flowbite-svelte';
+	import { Button, Card, Img, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import TopicItem from '../topic/TopicItem.svelte';
-	import IconOptions from '$lib/components/Icons/IconOptions.svelte';
 	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
+	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-ssr-graphql';
+	import { sdk } from '$src/graphql/sdk';
 
 	export let monument: MonumentCard;
 	let amIOwner = monument.creator.userId === $user?.$id;
+	export let isCardVisible = true;
 
 	let className = '';
 	export { className as class };
@@ -26,11 +26,8 @@
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
-		const doc = await collections.monumentLike.createDocument(
-			{ monumentId: monument._id, userId: $user.$id },
-			permissions.owner($user.$id)
-		);
-		monument.liked = transformAppwriteDocumentsIntoGraphqlDocuments(doc)[0];
+		const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });
+		monument.liked = doc;
 	};
 	const unlike = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
@@ -40,49 +37,74 @@
 		]);
 		monument.liked = null;
 	};
+
+	let showModalDeleteDocument = false;
+
+	const deleteMonument = () => {
+		showModalDeleteDocument = true;
+	};
+	const reallyDeleteMonument = async () => {
+		await sdk.deleteMonument({ monumentId: monument._id });
+		showModalDeleteDocument = false;
+		isCardVisible = false;
+	};
+
+	const editMonument = async () => {};
 </script>
 
-<Card class={twMerge('relative justify-self-center gap-2', className)} padding="sm">
-	<Row class="justify-between">
-		<UserItem
-			on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-			avatarClass="w-10 h-10"
-			class="h-auto"
-			user={monument.creator}
-		/>
-		<MonumentOwnerOptions />
-	</Row>
+<Modal color="red" bind:open={showModalDeleteDocument}>
+	<Text>Do you really want to delete your monument, there is no way to get it back.</Text>
+	<svelte:fragment slot="footer">
+		<Button on:click={reallyDeleteMonument} color="red">Yes really</Button>
+		<Button on:click={() => (showModalDeleteDocument = false)} color="green"
+			>No i missed clicked</Button
+		>
+	</svelte:fragment>
+</Modal>
 
-	<button on:click={() => goto(`/monument/${monument._id}`)}>
-		<Img class="rounded-lg object-cover " src={imgSrcAsString} />
-	</button>
+{#if isCardVisible}
+	<Card class={twMerge('relative justify-self-center gap-2', className)} padding="sm">
+		<Row class="justify-between">
+			<UserItem
+				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+				avatarClass="w-10 h-10"
+				class="h-auto"
+				user={monument.creator}
+			/>
+			<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
+		</Row>
 
-	<Row class="w-full justify-between">
-		<LikeSection
-			ableToLike={!amIOwner}
-			on:like={like}
-			on:unlike={unlike}
-			data={{
-				liked: monument.liked ? true : false,
-				otherUsersThatLiked: monument.likes.map((l) => l.user)
-			}}
-		/>
-		{#if monument.topic}
-			<TopicItem class="mr-4" topicKey={monument.topic} />
-		{/if}
-	</Row>
+		<button on:click={() => goto(`/monument/${monument._id}`)}>
+			<Img class="rounded-lg object-cover " src={imgSrcAsString} />
+		</button>
 
-	<Row class="justify-between">
-		<h5 class="mb-2 text-xl text-black">
-			{monument.name}
-		</h5>
-		<Text class="text-right">
-			<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
-				<Row class="gap-1">
-					<Icon icon="fas fa-map-marker-alt" class="text-xl " />
-					{monument.placeDetail.name}
-				</Row>
-			</button>
-		</Text>
-	</Row>
-</Card>
+		<Row class="w-full justify-between">
+			<LikeSection
+				ableToLike={!amIOwner}
+				on:like={like}
+				on:unlike={unlike}
+				data={{
+					liked: monument.liked ? true : false,
+					otherUsersThatLiked: monument.likes.map((l) => l.user)
+				}}
+			/>
+			{#if monument.topic}
+				<TopicItem class="mr-4" topicKey={monument.topic} />
+			{/if}
+		</Row>
+
+		<Row class="justify-between">
+			<h5 class="mb-2 text-xl text-black">
+				{monument.name}
+			</h5>
+			<Text class="text-right">
+				<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
+					<Row class="gap-1">
+						<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+						{monument.placeDetail.name}
+					</Row>
+				</button>
+			</Text>
+		</Row>
+	</Card>
+{/if}

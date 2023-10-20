@@ -153,6 +153,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createExperience: Experience;
   createMonument: Monument;
+  deleteMonument: Scalars['Boolean']['output'];
+  likeMonument: MonumentLike;
 };
 
 
@@ -163,6 +165,16 @@ export type MutationCreateExperienceArgs = {
 
 export type MutationCreateMonumentArgs = {
   input: CreateMonumentInput;
+};
+
+
+export type MutationDeleteMonumentArgs = {
+  monumentId: Scalars['String']['input'];
+};
+
+
+export type MutationLikeMonumentArgs = {
+  monumentId: Scalars['String']['input'];
 };
 
 export type PlaceDetail = {
@@ -379,12 +391,26 @@ export type GetListOfPlaceCardsQueryVariables = Exact<{ [key: string]: never; }>
 
 export type GetListOfPlaceCardsQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }>, getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, myId: string, username: string, profilePictureURL?: URL | null, userId: string }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, profilePictureURL?: URL | null } }> }> };
 
+export type LikeMonumentMutationVariables = Exact<{
+  monumentId: Scalars['String']['input'];
+}>;
+
+
+export type LikeMonumentMutation = { __typename?: 'Mutation', likeMonument: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } };
+
 export type CreateMonumentMutationVariables = Exact<{
   input: CreateMonumentInput;
 }>;
 
 
 export type CreateMonumentMutation = { __typename?: 'Mutation', createMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, pictureURL?: URL | null, placeDetailId: string, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
+
+export type DeleteMonumentMutationVariables = Exact<{
+  monumentId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteMonumentMutation = { __typename?: 'Mutation', deleteMonument: boolean };
 
 export type GetListOfMonumentCardsQueryVariables = Exact<{
   input?: InputMaybe<MonumentInput>;
@@ -1200,6 +1226,20 @@ export const GetListOfPlaceCardsDocument = gql`
   }
 }
     `;
+export const LikeMonumentDocument = gql`
+    mutation likeMonument($monumentId: String!) {
+  likeMonument(monumentId: $monumentId) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    monumentId
+  }
+}
+    `;
 export const CreateMonumentDocument = gql`
     mutation createMonument($input: CreateMonumentInput!) {
   createMonument(input: $input) {
@@ -1225,6 +1265,11 @@ export const CreateMonumentDocument = gql`
       _createdAt
     }
   }
+}
+    `;
+export const DeleteMonumentDocument = gql`
+    mutation deleteMonument($monumentId: String!) {
+  deleteMonument(monumentId: $monumentId)
 }
     `;
 export const GetListOfMonumentCardsDocument = gql`
@@ -1703,8 +1748,14 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getListOfPlaceCards(variables?: GetListOfPlaceCardsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfPlaceCardsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetListOfPlaceCardsQuery>(GetListOfPlaceCardsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfPlaceCards', 'query');
     },
+    likeMonument(variables: LikeMonumentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LikeMonumentMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LikeMonumentMutation>(LikeMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'likeMonument', 'mutation');
+    },
     createMonument(variables: CreateMonumentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateMonumentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMonumentMutation>(CreateMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createMonument', 'mutation');
+    },
+    deleteMonument(variables: DeleteMonumentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteMonumentMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteMonumentMutation>(DeleteMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteMonument', 'mutation');
     },
     getListOfMonumentCards(variables?: GetListOfMonumentCardsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfMonumentCardsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetListOfMonumentCardsQuery>(GetListOfMonumentCardsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfMonumentCards', 'query');

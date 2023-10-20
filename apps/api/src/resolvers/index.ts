@@ -26,8 +26,12 @@ export { default as CreateExperienceInput } from './experience/schema/CreateExpe
 export * from './experience/schema/CreateExperienceInput';
 export { default as ExperienceInput } from './experience/schema/ExperienceInput';
 export * from './experience/schema/ExperienceInput';
+export { default as likeMonument } from './likes/monuments/mutations/likeMonument';
+export * from './likes/monuments/mutations/likeMonument';
 export { default as createMonument } from './monuments/mutations/createMonument';
 export * from './monuments/mutations/createMonument';
+export { default as deleteMonument } from './monuments/mutations/deleteMonument';
+export * from './monuments/mutations/deleteMonument';
 export { default as getListOfMonuments } from './monuments/queries/getListOfMonuments';
 export * from './monuments/queries/getListOfMonuments';
 export { default as getListOfMonumentsSearchByNameTs } from './monuments/queries/getListOfMonumentsSearchByName.ts';
