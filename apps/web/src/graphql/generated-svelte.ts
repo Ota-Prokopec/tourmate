@@ -133,6 +133,7 @@ export type Monument = {
 export type MonumentInput = {
   location: Array<Scalars['Float']['input']>;
   range: Scalars['Float']['input'];
+  topics?: InputMaybe<Array<Scalars['Topic']['input']>>;
 };
 
 export type MonumentInputByName = {

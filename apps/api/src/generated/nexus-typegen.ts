@@ -57,6 +57,7 @@ export interface NexusGenInputs {
   MonumentInput: { // input type
     location: number[]; // [Float!]!
     range: number; // Float!
+    topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
   }
   MonumentInputByName: { // input type
     limit: number; // Int!

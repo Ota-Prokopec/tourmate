@@ -38,9 +38,9 @@ export { default as getListOfMonumentsSearchByNameTs } from './monuments/queries
 export * from './monuments/queries/getListOfMonumentsSearchByName.ts';
 export { default as getMonument } from './monuments/queries/getMonument';
 export * from './monuments/queries/getMonument';
+export { default as CreateMonumentInput } from './monuments/schema/CreateMonumentInput';
+export * from './monuments/schema/CreateMonumentInput';
 export { default as MonumentNameInput } from './monuments/schema/MonumentNameInput';
 export * from './monuments/schema/MonumentNameInput';
-export { default as createMonumentInput } from './monuments/schema/createMonumentInput';
-export * from './monuments/schema/createMonumentInput';
 export { default as monumentInput } from './monuments/schema/monumentInput';
 export * from './monuments/schema/monumentInput';

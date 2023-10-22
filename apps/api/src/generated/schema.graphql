@@ -109,6 +109,7 @@ type Monument {
 input MonumentInput {
   location: [Float!]!
   range: Float!
+  topics: [Topic!]
 }
 
 input MonumentInputByName {
