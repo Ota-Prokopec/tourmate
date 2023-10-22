@@ -3,6 +3,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import Popover from './Popover.svelte';
+	import { Control } from 'svelte-maplibre';
 
 	const dispatch = createEventDispatcher();
 	export let value = '';
@@ -46,34 +47,33 @@
 	export { className as class };
 	export let classWrap = '';
 
-	$: inputValue = /*pattern ? value.replace(pattern, '') :*/ value; //this is here because we always want to equal input.value = value
+	let inputValue = value;
 
-	$: prefixControl(inputValue); //when inputValue changes => it will check prefix (so when we do $: inputValue = value this func will trigger every moment when inputValue will change and it will overwhite currect input.value thats will be {value})
-	$: patternControl(inputValue); //when inputValue changes => it will check prefix (so when we do $: inputValue = value this func will trigger every moment when inputValue will change and it will overwhite currect input.value thats will be {value})
+	$: control(inputValue);
 
-	const prefixControl = (_e: unknown) => {
-		if (prefix) {
-			if (!invisiblePrefix) {
-				if (inputValue?.indexOf(prefix) !== 0) inputValue = `${prefix}${inputValue}`;
-				value = inputValue;
-			} else if (inputValue?.indexOf(prefix) !== 0) {
-				value = `${prefix}${inputValue}`;
-				//inputValue = value.slice(prefix.length, value.length)
-			} else value = inputValue;
-		} else {
-			value = inputValue;
-		}
+	const control = (inputString: string) => {
+		if (pattern) inputValue = patternControl(inputString);
+		if (prefix) value = prefixControl(inputValue);
+		else value = inputValue;
 	};
 
-	const patternControl = (_e: unknown) => {
-		inputValue = pattern ? inputValue.replace(pattern, '') : inputValue;
+	const prefixControl = (v: string) => {
+		if (!invisiblePrefix) {
+			if (v?.indexOf(prefix) !== 0) v = `${prefix}${v}`;
+			return v;
+		} else if (v?.indexOf(prefix) !== 0) {
+			return `${prefix}${v}`;
+		} else return v;
+	};
+
+	const patternControl = (v: string) => {
+		if (!pattern) throw new Error('there is no pattern');
+		return v.replace(pattern, '');
 	};
 
 	let inputElement: HTMLElement | null = null;
 
 	onMount(() => {
-		prefixControl('');
-		patternControl('');
 		inputElement = document.getElementById(id);
 	});
 

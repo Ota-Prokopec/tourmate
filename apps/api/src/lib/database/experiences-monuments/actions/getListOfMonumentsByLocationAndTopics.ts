@@ -12,9 +12,12 @@ export default async (
 	}: { location: Location; range: number; limit?: number; topics: Topic[] },
 	collections: ReturnType<typeof appwrite.setCookie>['collections'],
 ) => {
-	let queries = getMonumentQueriesForSearchingByLocation(location, range, limit).concat(
-		topics.map((topic) => Queries.monument.search('topics', topic)),
-	)
+	let queries = [
+		...getMonumentQueriesForSearchingByLocation(location, range, limit),
+		...topics.map((topic) => Queries.monument.search('topics', topic)),
+	]
+
 	const MonumentDocuments = await collections.monument.listDocuments(queries)
+
 	return transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents)
 }

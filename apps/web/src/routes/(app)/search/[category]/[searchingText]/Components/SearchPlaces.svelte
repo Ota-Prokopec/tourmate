@@ -5,26 +5,35 @@
 	import type { Location, MonumentCard, Topic } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
+	import { getUsersLocation } from '@app/utils';
+	import { Skeleton } from 'flowbite-svelte';
 
 	export let searchingLocation: Location | undefined;
+	let isLoading = true;
+
+	$: console.log(searchingLocation);
 
 	$: resultSearchedByPlace = useQuery('resultSearchedByPlace', async () => {
-		let data: MonumentCard[] = [];
-		if (!searchingLocation) data = (await sdk.getListOfMonumentCards()).getListOfMonuments;
-		else {
-			data = (
+		let res: MonumentCard[];
+		isLoading = true;
+
+		if (!searchingLocation) {
+			res = (await sdk.getListOfMonumentCards()).getListOfMonuments;
+		} else {
+			res = (
 				await sdk.getListOfMonumentCardsByLocationAndTopics({
 					input: { range: 0.04, location: searchingLocation, topics: topics }
 				})
 			).getListOfMonumentsByLocationAndTopics;
 		}
-		return data;
+
+		isLoading = false;
+		return res;
 	});
 
 	let monuments: MonumentCard[] | undefined;
 	let topics: Topic[] = [];
 
-	$: isLoading = $resultSearchedByPlace?.isLoading;
 	$: monuments = $resultSearchedByPlace.data;
 </script>
 
@@ -33,9 +42,11 @@
 
 	{#if isLoading}
 		<FullPageLoading />
-	{:else if monuments}
+	{:else if monuments && monuments?.length > 0}
 		{#each monuments as monument}
 			<MonumentCardComponent {monument} />
 		{/each}
+	{:else}
+		<Skeleton divClass="w-full" />
 	{/if}
 </div>

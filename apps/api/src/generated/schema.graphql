@@ -134,6 +134,10 @@ input MonumentLocationInput {
   range: Float!
 }
 
+input MonumentTopicsInput {
+  topics: [Topic!]!
+}
+
 type Mutation {
   createExperience(input: CreateExperienceInput!): Experience!
   createMonument(input: CreateMonumentInput!): Monument!
@@ -162,6 +166,7 @@ type Query {
   getListOfMonuments: [Monument!]!
   getListOfMonumentsByLocation(input: MonumentLocationInput!): [Monument!]!
   getListOfMonumentsByLocationAndTopics(input: MonumentLocationAndTopicsInput!): [Monument!]!
+  getListOfMonumentsByTopics(input: MonumentTopicsInput!): [Monument!]!
   getListOfMonumentsSearchByName(input: MonumentInputByName!): [Monument!]!
   getMonument(id: String!): Monument!
   logInViaEmail(email: String!, password: String!): EmailLogin!

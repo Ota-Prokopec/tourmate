@@ -40,6 +40,8 @@ export { default as getListOfMonumentsByLocation } from './monuments/queries/get
 export * from './monuments/queries/getListOfMonumentsByLocation';
 export { default as getListOfMonumentsByLocationAndTopics } from './monuments/queries/getListOfMonumentsByLocationAndTopics';
 export * from './monuments/queries/getListOfMonumentsByLocationAndTopics';
+export { default as getListOfMonumentsByTopics } from './monuments/queries/getListOfMonumentsByTopics';
+export * from './monuments/queries/getListOfMonumentsByTopics';
 export { default as getListOfMonumentsSearchByNameTs } from './monuments/queries/getListOfMonumentsSearchByName.ts';
 export * from './monuments/queries/getListOfMonumentsSearchByName.ts';
 export { default as getMonument } from './monuments/queries/getMonument';
@@ -52,3 +54,5 @@ export { default as MonumentLocationTopicsInput } from './monuments/schema/Monum
 export * from './monuments/schema/MonumentLocationTopicsInput';
 export { default as MonumentNameInput } from './monuments/schema/MonumentNameInput';
 export * from './monuments/schema/MonumentNameInput';
+export { default as MonumentTopicsInput } from './monuments/schema/MonumentTopicsInput';
+export * from './monuments/schema/MonumentTopicsInput';

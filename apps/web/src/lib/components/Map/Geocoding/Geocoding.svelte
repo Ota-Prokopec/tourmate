@@ -18,6 +18,7 @@
 		};
 		showResults: undefined;
 		hideResults: undefined;
+		clear: undefined;
 	}>();
 
 	export let fuzzyMatch = true;
@@ -31,6 +32,7 @@
 	$: if (!showResults) dispatch('hideResults');
 	$: if (searchingText.length === 0) places = [];
 	$: if (!places?.length) showResults = false;
+	$: if (searchingText.length === 0) dispatch('clear');
 
 	const select = (location: Location, placeName: string) => {
 		searchingText = placeName;
@@ -60,6 +62,7 @@
 
 <ClickOutside on:clickOutside={() => (showResults = false)} class="max-w-full w-[400px]">
 	<Input
+		pattern={/^\s+/}
 		class="w-full"
 		ableClickIcon
 		icon

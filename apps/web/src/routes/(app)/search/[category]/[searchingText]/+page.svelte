@@ -53,6 +53,7 @@
 	{#if chosenCategory === 'places'}
 		<Geocoding
 			bind:searchingText
+			on:clear={() => (searchingLocation = undefined)}
 			on:showResults={() => (showBottom = false)}
 			on:hideResults={() => (showBottom = true)}
 			on:select={(e) => {
