@@ -106,12 +106,6 @@ type Monument {
   topics: [Topic!]!
 }
 
-input MonumentInput {
-  location: [Float!]!
-  range: Float!
-  topics: [Topic!]
-}
-
 input MonumentInputByName {
   limit: Int!
   name: String!
@@ -127,6 +121,17 @@ type MonumentLike {
   monumentId: String!
   user: Account!
   userId: String!
+}
+
+input MonumentLocationAndTopicsInput {
+  location: Location!
+  range: Float!
+  topics: [Topic!]!
+}
+
+input MonumentLocationInput {
+  location: Location!
+  range: Float!
 }
 
 type Mutation {
@@ -153,7 +158,9 @@ type Query {
   getAccounts(searchingText: String): [Account!]!
   getExperience(id: String!): Experience!
   getListOfExperiences(input: ExperienceInput): [Experience!]!
-  getListOfMonuments(input: MonumentInput): [Monument!]!
+  getListOfMonuments: [Monument!]!
+  getListOfMonumentsByLocation(input: MonumentLocationInput!): [Monument!]!
+  getListOfMonumentsByLocationAndTopics(input: MonumentLocationAndTopicsInput!): [Monument!]!
   getListOfMonumentsSearchByName(input: MonumentInputByName!): [Monument!]!
   getMonument(id: String!): Monument!
   logInViaEmail(email: String!, password: String!): EmailLogin!

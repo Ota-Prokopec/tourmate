@@ -1,4 +1,4 @@
-query getListOfMonumentsWithCreatorAndNearestExperiences($input: MonumentInput) {
+query getListOfMonumentsWithCreatorAndNearestExperiences($input: MonumentLocationInput) {
 	getListOfMonuments(input: $input) {
 		creator {
 			_permissions

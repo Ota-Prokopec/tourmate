@@ -14,9 +14,9 @@
 			await sdk.getListOfMonumentCards(
 				searchingLocation
 					? {
-							input: { range: 0.04, location: searchingLocation }
+							input: { range: 0.04, location: searchingLocation, topics: topics }
 					  }
-					: {}
+					: { topics: topics }
 			)
 	);
 

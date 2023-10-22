@@ -1,4 +1,4 @@
-query getListOfMonuments($input: MonumentInput) {
+query getListOfMonuments($input: MonumentLocationInput) {
 	getListOfMonuments(input: $input) {
 		_createdAt
 		_updatedAt

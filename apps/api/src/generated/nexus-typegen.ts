@@ -54,14 +54,18 @@ export interface NexusGenInputs {
     location: NexusGenScalars['Location']; // Location!
     range: number; // Int!
   }
-  MonumentInput: { // input type
-    location: number[]; // [Float!]!
-    range: number; // Float!
-    topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
-  }
   MonumentInputByName: { // input type
     limit: number; // Int!
     name: string; // String!
+  }
+  MonumentLocationAndTopicsInput: { // input type
+    location: NexusGenScalars['Location']; // Location!
+    range: number; // Float!
+    topics: NexusGenScalars['Topic'][]; // [Topic!]!
+  }
+  MonumentLocationInput: { // input type
+    location: NexusGenScalars['Location']; // Location!
+    range: number; // Float!
   }
 }
 
@@ -276,6 +280,8 @@ export interface NexusGenFieldTypes {
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
+    getListOfMonumentsByLocation: NexusGenRootTypes['Monument'][]; // [Monument!]!
+    getListOfMonumentsByLocationAndTopics: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getListOfMonumentsSearchByName: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
@@ -390,6 +396,8 @@ export interface NexusGenFieldTypeNames {
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
     getListOfMonuments: 'Monument'
+    getListOfMonumentsByLocation: 'Monument'
+    getListOfMonumentsByLocationAndTopics: 'Monument'
     getListOfMonumentsSearchByName: 'Monument'
     getMonument: 'Monument'
     logInViaEmail: 'EmailLogin'
@@ -436,8 +444,11 @@ export interface NexusGenArgTypes {
     getListOfExperiences: { // args
       input?: NexusGenInputs['ExperienceInput'] | null; // ExperienceInput
     }
-    getListOfMonuments: { // args
-      input?: NexusGenInputs['MonumentInput'] | null; // MonumentInput
+    getListOfMonumentsByLocation: { // args
+      input: NexusGenInputs['MonumentLocationInput']; // MonumentLocationInput!
+    }
+    getListOfMonumentsByLocationAndTopics: { // args
+      input: NexusGenInputs['MonumentLocationAndTopicsInput']; // MonumentLocationAndTopicsInput!
     }
     getListOfMonumentsSearchByName: { // args
       input: NexusGenInputs['MonumentInputByName']; // MonumentInputByName!
