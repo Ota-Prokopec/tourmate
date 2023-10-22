@@ -1,5 +1,8 @@
-query getListOfItemsForMap($monument: MonumentLocationInput!, $experience: ExperienceInput!) {
-	getListOfExperiences(input: $experience) {
+query getListOfItemsForMap(
+	$monument: MonumentLocationInput!
+	$experience: ExperienceLocationInput!
+) {
+	getListOfExperiencesByLocation(input: $experience) {
 		_createdAt
 		_updatedAt
 		_collectionId

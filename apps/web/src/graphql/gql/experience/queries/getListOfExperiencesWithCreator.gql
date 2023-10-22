@@ -1,5 +1,5 @@
-query getListOfExperiencesWithCreator($input: ExperienceInput) {
-	getListOfExperiences(input: $input) {
+query getListOfExperiencesWithCreator($input: ExperienceLocationInput!) {
+	getListOfExperiencesByLocation(input: $input) {
 		_createdAt
 		_updatedAt
 		_collectionId

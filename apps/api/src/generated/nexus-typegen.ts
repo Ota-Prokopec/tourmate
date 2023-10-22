@@ -50,9 +50,9 @@ export interface NexusGenInputs {
     placeName: string; // String!
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
   }
-  ExperienceInput: { // input type
+  ExperienceLocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
-    range: number; // Int!
+    range: number; // Float!
   }
   MonumentInputByName: { // input type
     limit: number; // Int!
@@ -279,6 +279,7 @@ export interface NexusGenFieldTypes {
     getAccounts: NexusGenRootTypes['Account'][]; // [Account!]!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
+    getListOfExperiencesByLocation: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getListOfMonumentsByLocation: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getListOfMonumentsByLocationAndTopics: NexusGenRootTypes['Monument'][]; // [Monument!]!
@@ -395,6 +396,7 @@ export interface NexusGenFieldTypeNames {
     getAccounts: 'Account'
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
+    getListOfExperiencesByLocation: 'Experience'
     getListOfMonuments: 'Monument'
     getListOfMonumentsByLocation: 'Monument'
     getListOfMonumentsByLocationAndTopics: 'Monument'
@@ -441,8 +443,8 @@ export interface NexusGenArgTypes {
     getExperience: { // args
       id: string; // String!
     }
-    getListOfExperiences: { // args
-      input?: NexusGenInputs['ExperienceInput'] | null; // ExperienceInput
+    getListOfExperiencesByLocation: { // args
+      input: NexusGenInputs['ExperienceLocationInput']; // ExperienceLocationInput!
     }
     getListOfMonumentsByLocation: { // args
       input: NexusGenInputs['MonumentLocationInput']; // MonumentLocationInput!

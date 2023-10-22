@@ -64,7 +64,7 @@ query getListOfPlaceCards {
 			monumentId
 		}
 	}
-	getListOfExperiences {
+	getListOfExperiencesByLocation {
 		_createdAt
 		_updatedAt
 		_collectionId

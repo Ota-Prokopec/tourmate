@@ -64,11 +64,6 @@ type Experience {
   userId: String!
 }
 
-input ExperienceInput {
-  location: Location!
-  range: Int!
-}
-
 type ExperienceLike {
   _collectionId: String!
   _createdAt: String!
@@ -79,6 +74,11 @@ type ExperienceLike {
   experienceId: String!
   user: Account!
   userId: String!
+}
+
+input ExperienceLocationInput {
+  location: Location!
+  range: Float!
 }
 
 scalar Location
@@ -157,7 +157,8 @@ type Query {
   getAccountByMyId(myId: String!): Account!
   getAccounts(searchingText: String): [Account!]!
   getExperience(id: String!): Experience!
-  getListOfExperiences(input: ExperienceInput): [Experience!]!
+  getListOfExperiences: [Experience!]!
+  getListOfExperiencesByLocation(input: ExperienceLocationInput!): [Experience!]!
   getListOfMonuments: [Monument!]!
   getListOfMonumentsByLocation(input: MonumentLocationInput!): [Monument!]!
   getListOfMonumentsByLocationAndTopics(input: MonumentLocationAndTopicsInput!): [Monument!]!

@@ -9,17 +9,23 @@
 	export let searchingLocation: Location | undefined;
 
 	$: resultSearchedByPlace = useQuery('resultSearchedByPlace', async () => {
-		if (!searchingLocation) throw new Error('Location is not available');
-		return await sdk.getListOfMonumentCardsByLocationAndTopics({
-			input: { range: 0.04, location: searchingLocation, topics: topics }
-		});
+		let data: MonumentCard[] = [];
+		if (!searchingLocation) data = (await sdk.getListOfMonumentCards()).getListOfMonuments;
+		else {
+			data = (
+				await sdk.getListOfMonumentCardsByLocationAndTopics({
+					input: { range: 0.04, location: searchingLocation, topics: topics }
+				})
+			).getListOfMonumentsByLocationAndTopics;
+		}
+		return data;
 	});
 
 	let monuments: MonumentCard[] | undefined;
 	let topics: Topic[] = [];
 
 	$: isLoading = $resultSearchedByPlace?.isLoading;
-	$: monuments = $resultSearchedByPlace.data?.getListOfMonumentsByLocationAndTopics;
+	$: monuments = $resultSearchedByPlace.data;
 </script>
 
 <div class="w-full h-full flex flex-wrap flex-col gap-4">

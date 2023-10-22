@@ -17,7 +17,7 @@ export const load: LayoutServerLoad = async (event) => {
 		}
 	});
 
-	const { getListOfMonumentsByLocation: monuments, getListOfExperiences: experiences } =
+	const { getListOfMonumentsByLocation: monuments, getListOfExperiencesByLocation: experiences } =
 		monumentExperiencesWithCreators;
 
 	return {

@@ -33,7 +33,7 @@
 
 	$: experiences = $experiencesMonuments.isLoading
 		? null
-		: $experiencesMonuments.data?.getListOfExperiences;
+		: $experiencesMonuments.data?.getListOfExperiencesByLocation;
 	$: monuments = $experiencesMonuments.isLoading
 		? null
 		: $experiencesMonuments.data?.getListOfMonumentsByLocation;
