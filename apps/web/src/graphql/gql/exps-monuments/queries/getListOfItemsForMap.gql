@@ -1,0 +1,29 @@
+query getListOfItemsForMap($monument: MonumentLocationInput!, $experience: ExperienceInput!) {
+	getListOfExperiences(input: $experience) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		imgSrc
+		location
+		placeDetailId
+	}
+	getListOfMonumentsByLocation(input: $monument) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		location
+		creatorUserId
+		name
+		about
+		topics
+		placeDetailId
+		pictureURL
+	}
+}

@@ -19,14 +19,16 @@
 
 	const experiencesMonuments = useQuery('experiences', async () => {
 		const location = await getUsersLocation({ enableHighAccuracy: false });
-		return await sdk.getListOfExperiencesWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments(
-			{
-				input: {
-					location,
-					range: 14
-				}
+		return await sdk.getListOfItemsForMap({
+			experience: {
+				location,
+				range: 14
+			},
+			monument: {
+				location,
+				range: 14
 			}
-		);
+		});
 	});
 
 	$: experiences = $experiencesMonuments.isLoading
@@ -34,7 +36,7 @@
 		: $experiencesMonuments.data?.getListOfExperiences;
 	$: monuments = $experiencesMonuments.isLoading
 		? null
-		: $experiencesMonuments.data?.getListOfMonuments;
+		: $experiencesMonuments.data?.getListOfMonumentsByLocation;
 
 	//remove old right now added experinece from store and load it into variable to screen it to user
 	const rightNowAddedExperience = $myNewExperienceStore.rightNowAddedExperience;

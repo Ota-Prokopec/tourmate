@@ -14,6 +14,7 @@
 	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
 	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-ssr-graphql';
 	import { sdk } from '$src/graphql/sdk';
+	import Topic from '../topic/Topic.svelte';
 
 	export let monument: MonumentCard;
 	let amIOwner = monument.creator.userId === $user?.$id;
@@ -88,8 +89,8 @@
 					otherUsersThatLiked: monument.likes.map((l) => l.user)
 				}}
 			/>
-			{#if monument.topic}
-				<TopicItem class="mr-4" topicKey={monument.topic} />
+			{#if monument.topics}
+				<Topic class="mr-4" chosenTopics={monument.topics} />
 			{/if}
 		</Row>
 

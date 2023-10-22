@@ -1,5 +1,5 @@
-query getListOfMonumentCardsByLocationAndTopics {
-	getListOfMonumentsByLocationAndTopics {
+query getListOfMonumentCardsByLocationAndTopics($input: MonumentLocationAndTopicsInput!) {
+	getListOfMonumentsByLocationAndTopics(input: $input) {
 		_createdAt
 		_updatedAt
 		_collectionId

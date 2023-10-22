@@ -1,4 +1,4 @@
-query getListOfMonumentCardsByLocation($input: MonumentLocationInput) {
+query getListOfMonumentCardsByLocation($input: MonumentLocationInput!) {
 	getListOfMonumentsByLocation(input: $input) {
 		_createdAt
 		_updatedAt

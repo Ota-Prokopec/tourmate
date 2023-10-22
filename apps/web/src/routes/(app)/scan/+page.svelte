@@ -27,7 +27,7 @@
 		const res = await sdk.getListOfMonumentCardsByLocation({
 			input: { location: usersLocation, range: 0.004 }
 		});
-		monuments = res.getListOfMonuments;
+		monuments = res.getListOfMonumentsByLocation;
 	};
 </script>
 
