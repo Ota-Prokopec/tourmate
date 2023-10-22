@@ -8,6 +8,6 @@ export default inputObjectType({
 		t.field('location', { type: 'Location' })
 		t.string('about')
 		t.string('placeName')
-		t.nullable.topic('topic')
+		t.list.field({ type: 'Topic', name: 'topics' })
 	},
 })

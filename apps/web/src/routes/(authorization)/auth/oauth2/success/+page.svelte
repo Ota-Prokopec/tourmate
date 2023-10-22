@@ -5,7 +5,7 @@
 	import lsStore from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk.js';
 	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
-	import { Query, collections, user } from '@app/appwrite-client';
+	import { Queries, collections, user } from '$lib/appwrite/appwrite';
 
 	const { user: userParams } = $lsStore;
 
@@ -23,7 +23,7 @@
 				if (!userId) throw new Error('User is not Authed');
 
 				const myUserInfoAlreadyExists = (
-					await collections.userInfo.listDocuments([Query.equal('userId', userId)])
+					await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)])
 				).total;
 
 				console.log(myUserInfoAlreadyExists);

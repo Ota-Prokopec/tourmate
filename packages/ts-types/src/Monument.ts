@@ -1,5 +1,16 @@
 import { Document, GraphqlDocument } from './Document'
+import { Location } from './Location'
 import { Topic } from './Topic'
+
+export type Monument = {
+	about?: string | null
+	creatorUserId: string
+	location: Location
+	name: string
+	pictureURL?: URL | undefined | null
+	placeDetailId: string
+	topics: Topic[]
+}
 
 export type MonumentDocument = Document<{
 	about?: string
@@ -9,7 +20,7 @@ export type MonumentDocument = Document<{
 	name: string
 	pictureURL?: URL
 	placeDetailId: string
-	topic?: Topic
+	topics: Topic[]
 }>
 
 export type MonumentGraphqlDocument = GraphqlDocument<{
@@ -20,7 +31,7 @@ export type MonumentGraphqlDocument = GraphqlDocument<{
 	name: string
 	pictureURL?: URL
 	placeDetailId: string
-	topic?: Topic
+	topics: Topic[]
 }>
 
 export type MonumentDocumentCreate = {
@@ -31,5 +42,5 @@ export type MonumentDocumentCreate = {
 	name: string
 	pictureURL?: URL
 	placeDetailId: string
-	topic?: Topic
+	topics?: Topic[]
 }

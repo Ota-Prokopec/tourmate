@@ -48,7 +48,7 @@ export interface NexusGenInputs {
     name: string; // String!
     picture?: string | null; // String
     placeName: string; // String!
-    topic?: NexusGenScalars['Topic'] | null; // Topic
+    topics: NexusGenScalars['Topic'][]; // [Topic!]!
   }
   ExperienceInput: { // input type
     location: NexusGenScalars['Location']; // Location!
@@ -133,7 +133,7 @@ export interface NexusGenObjects {
     name: string; // String!
     pictureURL?: NexusGenScalars['URL'] | null; // URL
     placeDetailId: string; // String!
-    topic?: NexusGenScalars['Topic'] | null; // Topic
+    topics: NexusGenScalars['Topic'][]; // [Topic!]!
   }
   MonumentLike: { // root type
     _collectionId: string; // String!
@@ -239,7 +239,7 @@ export interface NexusGenFieldTypes {
     pictureURL: NexusGenScalars['URL'] | null; // URL
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
-    topic: NexusGenScalars['Topic'] | null; // Topic
+    topics: NexusGenScalars['Topic'][]; // [Topic!]!
   }
   MonumentLike: { // field return type
     _collectionId: string; // String!
@@ -353,7 +353,7 @@ export interface NexusGenFieldTypeNames {
     pictureURL: 'URL'
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'
-    topic: 'Topic'
+    topics: 'Topic'
   }
   MonumentLike: { // field return type name
     _collectionId: 'String'

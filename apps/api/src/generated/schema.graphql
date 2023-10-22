@@ -40,7 +40,7 @@ input CreateMonumentInput {
   name: String!
   picture: String
   placeName: String!
-  topic: Topic
+  topics: [Topic!]!
 }
 
 type EmailLogin {
@@ -103,7 +103,7 @@ type Monument {
   pictureURL: URL
   placeDetail: PlaceDetail!
   placeDetailId: String!
-  topic: Topic
+  topics: [Topic!]!
 }
 
 input MonumentInput {

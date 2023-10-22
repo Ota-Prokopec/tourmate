@@ -1,17 +1,15 @@
-import { connections } from '../connection'
-import { Document } from '@app/ts-types'
+import connection from '../connection/connection'
 
 export namespace Types {
-	export type Cookie = Record<'name' | 'value', string>
-	export type AppwriteSSR = ReturnType<typeof connections>
+	export type Appwrite = ReturnType<typeof connection>
 	export type IndexTypes = 'Key' | 'Unique' | 'FullText'
 	export type DocumentSkeleton = {
-		_id: string
-		_collectionId: string
-		_databaseId: string
-		_createdAt: string
-		_updatedAt: string
-		_permissions: string[]
+		$id: string
+		$collectionId: string
+		$databaseId: string
+		$createdAt: string
+		$updatedAt: string
+		$permissions: string[]
 	}
 
 	export type Document<T extends Partial<DocumentSkeleton> & object> = {

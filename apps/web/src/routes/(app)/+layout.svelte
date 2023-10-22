@@ -29,12 +29,14 @@
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import { Query, appwriteKeys, collections, svelteCollections } from '@app/appwrite-client';
-	import type { UserInfoGraphqlDocument } from '@app/ts-types';
-	import IconSquareSpace from '$lib/components/Icons/IconSquareSpace.svelte';
+	import { collections } from '../../lib/appwrite/appwrite';
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
 	import IconMap from '$lib/components/Icons/IconMap.svelte';
 	import { omit } from 'lodash';
+	import { appwriteKeys } from '@app/appwrite-client';
+	import * as permissions from '@app/appwrite-permissions';
+
+	export let data: LayoutData;
 
 	let foregroundNotification: MessagePayload | undefined;
 
@@ -44,11 +46,19 @@
 			type: 'classic',
 			scope: '/'
 		});
-		await notifications.initUser(data.user.userId, reg);
+		const token = await notifications.initUser(data.user.userId, reg);
+		try {
+			await collections.token.createDocument(
+				{
+					userId: data.user.userId,
+					fcmFirebaseToken: token
+				},
+				permissions.owner(data.user.userId)
+			);
+		} catch (error) {}
+
 		notifications.watchNotifications((payload) => (foregroundNotification = payload));
 	});
-
-	export let data: LayoutData;
 
 	const usernameSplited = data.user.username.split(' ');
 

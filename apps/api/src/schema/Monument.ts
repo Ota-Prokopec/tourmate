@@ -17,7 +17,7 @@ export default objectType({
 		t.string('creatorUserId')
 		t.string('name')
 		t.nullable.string('about')
-		t.nullable.topic('topic')
+		t.list.field('topics', { type: 'Topic' })
 		t.string('placeDetailId')
 		t.nullable.field('pictureURL', {
 			type: 'URL',

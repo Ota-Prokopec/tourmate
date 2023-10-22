@@ -1,7 +1,5 @@
 import { Document, GraphqlDocument } from './Document'
-import { Topic } from './Topic'
-
-export type Location = [number, number]
+import { Location } from './Location'
 
 export type Experience = {
 	userId: string
@@ -32,14 +30,4 @@ export type ExperienceDocumentCreate = {
 	latitude: number
 	longitude: number
 	placeDetailId: string
-}
-
-export type Monument = {
-	about?: string | null
-	creatorUserId: string
-	location: Location
-	name: string
-	pictureURL?: URL | undefined | null
-	placeDetailId: string
-	topic?: Topic
 }

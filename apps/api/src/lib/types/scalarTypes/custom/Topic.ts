@@ -1,4 +1,4 @@
-import { isTopic } from '@app/utils'
+import { isTopics } from '@app/utils'
 import { scalarType } from 'nexus'
 
 export default scalarType({
@@ -8,15 +8,15 @@ export default scalarType({
 	deprecation: '"castle" | "monument" | "person" | "animals" | "hiking"',
 
 	serialize: (outputValue: unknown) => {
-		if (!isTopic(outputValue)) throw new TypeError('input has to be type Topic')
+		if (!isTopics(outputValue)) throw new TypeError('input has to be type Topic')
 		return outputValue
 	},
 	parseValue: (inputValue: unknown) => {
-		if (!isTopic(inputValue)) throw new TypeError('input has to be type Topic')
+		if (!isTopics(inputValue)) throw new TypeError('input has to be type Topic')
 		return inputValue
 	},
 	parseLiteral: (valueNode: unknown) => {
-		if (!isTopic(valueNode)) throw new TypeError('input has to be type Topic')
+		if (!isTopics(valueNode)) throw new TypeError('input has to be type Topic')
 		return valueNode
 	},
 })

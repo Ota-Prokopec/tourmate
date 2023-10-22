@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user } from '@app/appwrite-client';
+	import { user } from '$lib/appwrite/appwrite';
 	import EmailSent from '../Components/EmailSent.svelte';
 	import { Helper } from 'flowbite-svelte';
 	import { AppwriteException } from 'appwrite';

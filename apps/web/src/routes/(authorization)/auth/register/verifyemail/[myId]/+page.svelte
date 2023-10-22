@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { user } from '@app/appwrite-client';
+	import { user } from '$lib/appwrite/appwrite.js';
 	import { onMount } from 'svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import { sdk } from '$src/graphql/sdk.js';

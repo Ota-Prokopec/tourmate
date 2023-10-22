@@ -1,5 +1,5 @@
 import { Document, GraphqlDocument } from './Document'
-import type { Location } from './Experience'
+import type { Location } from './Location'
 
 export type UserInfo = {
 	userId: string

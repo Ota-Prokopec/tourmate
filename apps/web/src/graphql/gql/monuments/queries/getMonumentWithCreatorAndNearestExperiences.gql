@@ -7,7 +7,7 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 		_permissions
 		_databaseId
 		location
-		topic
+		topics
 		creatorUserId
 		name
 		about

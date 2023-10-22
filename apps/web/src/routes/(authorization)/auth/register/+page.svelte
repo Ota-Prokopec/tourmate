@@ -5,8 +5,7 @@
 	import Help from '$lib/components/Common/Help.svelte';
 	import Input from '$lib/components/Common/Input.svelte';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
-	import { Query } from '@app/appwrite-client';
-	import { collections } from '@app/appwrite-client';
+	import { collections, Queries } from '$lib/appwrite/appwrite';
 
 	let username = '';
 	let myId = '';
@@ -14,8 +13,9 @@
 
 	const redirect = async () => {
 		try {
-			const quiziIdTaken = (await collections.userInfo.listDocuments([Query.equal('myId', myId)]))
-				.total;
+			const quiziIdTaken = (
+				await collections.userInfo.listDocuments([Queries.userInfo.equal('myId', myId)])
+			).total;
 
 			if (quiziIdTaken) throw new Error('user with myId already exists');
 

@@ -10,6 +10,7 @@ mutation createMonument($input: CreateMonumentInput!) {
 		creatorUserId
 		name
 		about
+		topics
 		pictureURL
 		placeDetailId
 		placeDetail {

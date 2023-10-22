@@ -53,7 +53,7 @@ export default objectType({
 					Queries.monumentLike.notEqual('userId', ctx.user.$id), // not pick me
 					//! userid is not working
 				]
-				const likes = await collections.monumentLike.listDocuments(queries)
+				const likes = await collections.experienceLike.listDocuments(queries)
 
 				return likes.documents
 			},

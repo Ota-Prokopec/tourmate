@@ -55,7 +55,7 @@ query getProfile($myId: String!) {
 			creatorUserId
 			name
 			about
-			topic
+			topics
 			placeDetailId
 			pictureURL
 			creator {

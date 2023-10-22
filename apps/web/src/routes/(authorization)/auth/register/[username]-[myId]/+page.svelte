@@ -2,7 +2,7 @@
 	import Title from '$lib/components/Common/Title.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
-	import { ID, user } from '@app/appwrite-client';
+	import appwrite, { user } from '$lib/appwrite/appwrite';
 	import lsStore from '$lib/utils/lsStore';
 	import LoginViaSocilaMedia from '../../Components/LoginViaSocilaMedia.svelte';
 	import type { PageData } from './$types';
@@ -34,7 +34,7 @@
 		try {
 			state = 'loading';
 
-			await user.create(ID.unique(), email, password, data.params.username);
+			await user.create(appwrite.ID.unique(), email, password, data.params.username);
 
 			const {
 				logInViaEmail: { session }

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { user } from '@app/appwrite-client';
+	import { user } from '$lib/appwrite/appwrite';
+
 	import { Helper } from 'flowbite-svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import { AppwriteException } from 'appwrite';

@@ -10,7 +10,7 @@
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import UserItem from '$lib/components/Common/UserItem.svelte';
-	import { Query, collections, user } from '@app/appwrite-client';
+	import { Queries, collections, user } from '$lib/appwrite/appwrite';
 	import permissions from '@app/appwrite-server/src/permissions';
 	import { transformAppwriteToGraphql } from '@app/appwrite-ssr-graphql/src/databases/transformAppwriteToGraphql';
 	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-ssr-graphql/src/databases/transformer';
@@ -36,8 +36,8 @@
 	const unlike = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
 		await collections.monumentLike.deleteDocument([
-			Query.equal('monumentId', monument._id),
-			Query.equal('userId', $user.$id)
+			Queries.monumentLike.equal('monumentId', monument._id),
+			Queries.monumentLike.equal('userId', $user.$id)
 		]);
 		monument.liked = null;
 	};

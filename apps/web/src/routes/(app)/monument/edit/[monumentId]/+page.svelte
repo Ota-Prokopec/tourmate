@@ -10,13 +10,11 @@
 	import type { Base64, GraphqlDocument, Location, Monument, Topic } from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import TopicComponent from '$lib/components/Experience-monument/topic/TopicCreate.svelte';
+	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import Img from '$lib/components/Common/Img.svelte';
+	import { collections } from '$lib/appwrite/appwrite';
 
 	export let data: PageData;
 
@@ -25,20 +23,22 @@
 	let name = data.monument.name;
 	let about = data.monument.about ?? '';
 	let placeName = data.monument.placeDetail.name;
-	let topic = data.monument.topic;
+	let topics = data.monument.topics;
 	let picture = data.monument.pictureURL;
 
 	let res: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
 	let isLoading = false;
 
-	const create = async () => {
+	const update = async () => {
 		isLoading = true;
-		try {
-		} catch (err) {
-			isLoading = false;
-			if (err instanceof AppwriteException) error = err;
-		}
+
+		await collections.monument.updateDocument(data.monument._id, {
+			name: name,
+			topics: topics,
+			about: about
+		});
+
 		isLoading = false;
 	};
 </script>
@@ -63,7 +63,7 @@
 				classWrap="w-full max-w-[400px]"
 			/>
 
-			<TopicComponent chosenTopic={topic} on:choose={(e) => (topic = e.detail)} class="mt-2" />
+			<TopicComponent chosenTopics={topics} on:choose={(e) => (topics = e.detail)} class="mt-2" />
 			<P size="xl" weight="bold" class="w-full max-w-[400px] m-4">Něco málo o zážitku</P>
 			<TextArea
 				bind:value={about}
@@ -80,12 +80,12 @@
 			<Button
 				class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
 				color="blue"
-				on:click={create}
+				on:click={update}
 			>
 				{#if isLoading}
 					<Loading />
 				{:else}
-					<span>Vytvořit</span>
+					<span>Uložil změny</span>
 				{/if}
 			</Button>
 		</Card>

@@ -18,7 +18,7 @@
 		"importsNotUsedAsValues": "remove",
 		"noImplicitReturns": true,
 		"importHelpers": true,
-		"allowUnusedLabels": true
+		"allowUnusedLabels": false
 	},
 	"include": [
 		"src/**/*.d.ts",

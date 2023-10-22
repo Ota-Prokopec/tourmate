@@ -1,8 +1,6 @@
 <script lang="ts">
 	import LoginViaSocilaMedia from '../Components/LoginViaSocilaMedia.svelte';
-	import { user } from '@app/appwrite-client';
-	import { Alert, Helper } from 'flowbite-svelte';
-	import { AppwriteException } from 'appwrite';
+	import { user } from '$lib/appwrite/appwrite';
 	import IconEnvelope from '$lib/components/Icons/IconEnvelope.svelte';
 	import IconEye from '$lib/components/Icons/IconEye.svelte';
 	import { goto } from '$app/navigation';

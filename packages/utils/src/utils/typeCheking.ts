@@ -32,3 +32,7 @@ export const isTopic = (arg: unknown): arg is Topic => {
 		return false
 	}
 }
+
+export const isTopics = (topics: unknown): topics is Topic[] => {
+	return Array.isArray(topics) && topics.every((topic) => isTopic(topic))
+}

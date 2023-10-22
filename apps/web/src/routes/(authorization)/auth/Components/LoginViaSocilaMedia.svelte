@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user } from '@app/appwrite-client';
+	import { user } from '$lib/appwrite/appwrite';
 	import IconFacebook from '$lib/components/Icons/IconFacebook.svelte';
 	import IconGoogle from '$lib/components/Icons/IconGoogle.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';

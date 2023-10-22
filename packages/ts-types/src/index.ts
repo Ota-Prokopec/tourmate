@@ -7,6 +7,7 @@ export * from './Application';
 export * from './Document';
 export * from './Experience';
 export * from './Likes';
+export * from './Location';
 export * from './Monument';
 export * from './Others';
 export * from './PlaceDetails';

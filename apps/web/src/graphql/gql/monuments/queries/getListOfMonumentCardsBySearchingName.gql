@@ -8,7 +8,7 @@ query getListOfMonumentCardsBySearchingName($input: MonumentInputByName!) {
 		_databaseId
 		location
 		creatorUserId
-		topic
+		topics
 		name
 		about
 		placeDetailId

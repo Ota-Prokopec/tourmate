@@ -13,7 +13,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import TopicComponent from '$lib/components/Experience-monument/topic/TopicCreate.svelte';
+	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
 
 	export let data: PageData;
 
@@ -24,16 +24,16 @@
 	let image: Base64 | undefined;
 	let location: Location = data.newMonument.location;
 	let placeName = data.newMonument.placeName;
-	let topic: Topic | undefined;
+	let topics: Topic[] = [];
 
-	let res: GraphqlDocument<Monument> | undefined;
+	let serverResponse: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
 	let isLoading = false;
 
 	const create = async () => {
 		isLoading = true;
 		try {
-			res = (
+			serverResponse = (
 				await sdk.createMonument({
 					input: {
 						about: about,
@@ -41,7 +41,7 @@
 						name: name,
 						picture: image,
 						placeName: placeName,
-						topic: topic
+						topics: topics
 					}
 				})
 			).createMonument;
@@ -54,7 +54,7 @@
 </script>
 
 <div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	{#if !res || error}
+	{#if !serverResponse || error}
 		<Card class="w-full h-min m-4 sm:absolute sm:left-0 z-50">
 			<Icon icon="fas fa-map-marker-alt" class="text-3xl" />
 			<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -76,7 +76,7 @@
 				class=" "
 				classWrap="w-full max-w-[400px]"
 			/>
-			<TopicComponent on:choose={(e) => (topic = e.detail)} class="mt-2" />
+			<TopicComponent on:choose={(e) => (topics = e.detail)} class="mt-2" />
 			<P size="xl" weight="bold" class="w-full max-w-[400px] m-4">Něco málo o místu</P>
 			<TextArea
 				bind:value={about}
@@ -104,15 +104,12 @@
 	{/if}
 
 	<Map location={data.newMonument.location} class="h-[100dvh] fixed top-0">
-		{#if res}
-			<MonumentMarker bouncing monument={res} />
+		{#if serverResponse}
+			<MonumentMarker bouncing monument={serverResponse} />
 		{:else}
 			<Marker class="z-50" location={data.newMonument.location}>
 				<Icon icon="fas fa-map-marker-alt" class="text-4xl" />
 			</Marker>
 		{/if}
-		{#each data.monuments as monument}
-			<MonumentMarker {monument} />
-		{/each}
 	</Map>
 </div>

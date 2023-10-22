@@ -13,7 +13,7 @@ const codegenConfigConfig: CodegenConfig['config'] = {
 			input: '[number, number]', // this means our server can take CustomScalar as string
 			output: '[number, number]' // this means our server will return CustomScalar as number
 		},
-		Topic: '"castle" | "monument" | "person" | "animals" | "hiking" | null'
+		Topic: '"castle" | "monument" | "person" | "animals" | "hiking"'
 	}
 };
 

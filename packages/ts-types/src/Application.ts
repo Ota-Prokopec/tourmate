@@ -1,12 +1,13 @@
 import { UserInfo } from './Account'
 import { GraphqlDocument } from './Document'
-import { Experience, Monument } from './Experience'
+import { Experience } from './Experience'
 import {
 	ExperienceLike,
 	ExperienceLikeGraphqlDocument,
 	MonumentLike,
 	MonumentLikeGraphqlDocument,
 } from './Likes'
+import { Monument } from './Monument'
 import { PlaceDetail } from './PlaceDetails'
 
 export type MonumentCard = GraphqlDocument<Monument> & {
