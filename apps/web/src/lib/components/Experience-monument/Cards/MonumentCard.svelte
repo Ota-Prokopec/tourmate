@@ -6,15 +6,13 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import UserItem from '$lib/components/Common/UserItem.svelte';
 	import { Queries, collections, user } from '$lib/appwrite/appwrite';
-	import permissions from '@app/appwrite-server/src/permissions';
-	import type { MonumentCard, MonumentLikeDocument } from '@app/ts-types';
+	import type { MonumentCard } from '@app/ts-types';
 	import { Button, Card, Img, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import TopicItem from '../topic/TopicItem.svelte';
 	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
-	import { transformAppwriteDocumentsIntoGraphqlDocuments } from '@app/appwrite-ssr-graphql';
 	import { sdk } from '$src/graphql/sdk';
 	import Topic from '../topic/Topic.svelte';
+	import TopicItem from '../topic/TopicItem.svelte';
 
 	export let monument: MonumentCard;
 	let amIOwner = monument.creator.userId === $user?.$id;
@@ -50,7 +48,9 @@
 		isCardVisible = false;
 	};
 
-	const editMonument = async () => {};
+	const editMonument = async () => {
+		goto(`/monument/edit/${monument._id}`);
+	};
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>
@@ -90,7 +90,11 @@
 				}}
 			/>
 			{#if monument.topics}
-				<Topic class="mr-4" chosenTopics={monument.topics} />
+				<Row class="gap-2">
+					{#each monument.topics as topic}
+						<TopicItem topicKey={topic} />
+					{/each}
+				</Row>
 			{/if}
 		</Row>
 

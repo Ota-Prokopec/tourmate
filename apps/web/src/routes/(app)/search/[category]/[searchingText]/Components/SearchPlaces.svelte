@@ -5,36 +5,34 @@
 	import type { Location, MonumentCard, Topic } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
-	import { getUsersLocation } from '@app/utils';
 	import { Skeleton } from 'flowbite-svelte';
 
 	export let searchingLocation: Location | undefined;
 	let isLoading = true;
 
-	$: console.log(searchingLocation);
-
-	$: resultSearchedByPlace = useQuery('resultSearchedByPlace', async () => {
-		let res: MonumentCard[];
+	const reload = async (topics: Topic[], location: Location | undefined) => {
 		isLoading = true;
 
-		if (!searchingLocation) {
-			res = (await sdk.getListOfMonumentCards()).getListOfMonuments;
-		} else {
-			res = (
+		if (!location && !topics.length)
+			monuments = (await sdk.getListOfMonumentCards()).getListOfMonuments;
+		else if (topics.length)
+			monuments = (await sdk.getListOfMonumentCardsByTopics({ input: { topics: topics } }))
+				.getListOfMonumentsByTopics;
+		else if (location) {
+			monuments = (
 				await sdk.getListOfMonumentCardsByLocationAndTopics({
-					input: { range: 0.04, location: searchingLocation, topics: topics }
+					input: { range: 0.04, location: location, topics: topics }
 				})
 			).getListOfMonumentsByLocationAndTopics;
-		}
+		} else throw new Error('there is no more possible ways to get monument cards');
 
 		isLoading = false;
-		return res;
-	});
+	};
 
 	let monuments: MonumentCard[] | undefined;
 	let topics: Topic[] = [];
 
-	$: monuments = $resultSearchedByPlace.data;
+	$: reload(topics, searchingLocation);
 </script>
 
 <div class="w-full h-full flex flex-wrap flex-col gap-4">

@@ -15,7 +15,7 @@
 <Icon
 	on:click
 	class={twMerge(
-		'border border-gray-900 rounded-full p-2',
+		'border border-gray-900 rounded-full p-2 w-8 h-8',
 		chosen && 'fill-blue-300 border-blue-300',
 		className
 	)}

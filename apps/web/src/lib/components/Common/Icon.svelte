@@ -6,7 +6,6 @@
 	export let icon: string | URL | null = null;
 	export let outlineOnly: boolean = false;
 	export let disabled = false;
-	export let slot: string | undefined = undefined;
 
 	let className: string = '';
 	export { className as class };
@@ -25,7 +24,7 @@
 	{#if typeof icon === 'string' && icon.startsWith('http')}
 		<Avatar src={icon} size="md" />
 	{:else if typeof icon === 'string'}
-		<i class:outlineOnly class={icon + '  flex justify-self-start'} />
+		<i class:outlineOnly class={twMerge(icon, 'flex justify-self-start')} />
 	{/if}
 	<slot />
 </button>
