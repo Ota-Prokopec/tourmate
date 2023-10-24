@@ -17,19 +17,15 @@
 
 	let ableToCheck = true;
 	let timeOut: NodeJS.Timeout;
-	$: if (!ableToCheck) timeOut = setTimeout(() => (ableToCheck = true), 1000);
+	$: if (!ableToCheck) timeOut = setTimeout(() => (ableToCheck = true), 20000);
 
-	$: console.log(location, ableToCheck, range);
-
-	$: if (ableToCheck) {
+	$: checkMonuments(location, range).then(() => {
 		ableToCheck = false;
-		if (!location) throw new Error('there is no location');
-		checkMonuments(location, range);
-	}
+	});
 
-	const checkMonuments = async (location: Location, range: number) => {
-		const { usersLocation } = $lsSvelte;
-		if (!usersLocation) throw new Error("there is no user's location in lsStore");
+	const checkMonuments = async (location: Location | undefined, range: number) => {
+		if (!ableToCheck) throw new Error('you are not able to check monuments - wait 20s');
+		if (!location) throw new Error('there is no location');
 
 		const res = await sdk.getListOfMonumentCardsByLocation({
 			input: { location: location, range: metersToDegree(range * 40) }
