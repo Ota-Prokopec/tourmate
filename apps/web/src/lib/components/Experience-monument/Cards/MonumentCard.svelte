@@ -11,7 +11,6 @@
 	import { twMerge } from 'tailwind-merge';
 	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import Topic from '../topic/Topic.svelte';
 	import TopicItem from '../topic/TopicItem.svelte';
 
 	export let monument: MonumentCard;
@@ -25,11 +24,17 @@
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
-		const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });
-		monument.liked = doc;
+		monument.liked = true;
+		try {
+			const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });
+			monument.liked = doc;
+		} catch (error) {
+			throw new Error('like monument error happend');
+		}
 	};
 	const unlike = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
+		monument.liked = false;
 		await collections.monumentLike.deleteDocument([
 			Queries.monumentLike.equal('monumentId', monument._id),
 			Queries.monumentLike.equal('userId', $user.$id)
@@ -75,7 +80,11 @@
 			<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
 		</Row>
 
-		<button on:click={() => goto(`/monument/${monument._id}`)}>
+		<button
+			on:dblclick={() => {
+				if (!monument.liked) like();
+			}}
+		>
 			<Img class="rounded-lg object-cover " src={imgSrcAsString} />
 		</button>
 
@@ -98,7 +107,7 @@
 			{/if}
 		</Row>
 
-		<Row class="justify-between">
+		<Row class="justify-between gap-2">
 			<h5 class="mb-2 text-xl text-black">
 				{monument.name}
 			</h5>

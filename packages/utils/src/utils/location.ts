@@ -37,3 +37,14 @@ export const getUsersLocationDataByIP = async (ip: IP): Promise<IPApiResponse> =
 	const res = await get(`https://ipapi.co/${ip}/json/`)
 	return res
 }
+
+export const distanceBetweenTwoLocations = (location1: Location, location2: Location) => {
+	return Math.abs(location1[0] - location2[0]) + Math.abs(location1[1] - location2[1])
+}
+
+export const degreeToMeters = (degree: number) => {
+	return degree * 111_111
+}
+export const metersToDegree = (meters: number) => {
+	return meters / 111_111
+}

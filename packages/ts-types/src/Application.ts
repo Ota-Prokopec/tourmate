@@ -14,7 +14,7 @@ export type MonumentCard = GraphqlDocument<Monument> & {
 	placeDetail: PlaceDetail
 	creator: UserInfo
 	likes: (MonumentLike & { user: UserInfo })[]
-	liked?: MonumentLikeGraphqlDocument | null | undefined
+	liked?: MonumentLikeGraphqlDocument | boolean | null | undefined
 }
 
 export type ExperienceCard = GraphqlDocument<Experience> & {

@@ -69,9 +69,9 @@ export default objectType({
 				const queries = [
 					Queries.monumentLike.equal('monumentId', source._id), // get by monument id
 					Queries.monumentLike.limit(6), // only 6 of them
-					Queries.monumentLike.notEqual('userId', ctx.user.$id), // not pick me
-					//! userid is not working
+					Queries.monumentLike.notEqual('userId', ctx.user.$id), // dont pick me
 				]
+
 				const likes = await collections.monumentLike.listDocuments(queries)
 
 				return likes.documents

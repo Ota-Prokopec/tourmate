@@ -8,10 +8,10 @@ export const getMonumentQueriesForSearchingByLocation = (
 	range: number,
 	limit: number,
 ) => {
-	const rangeLatitudeMax = location[0] + range
-	const rangeLatitudeMin = location[0] - range
-	const rangeLongitudeMax = location[1] + range
-	const rangeLongitudeMin = location[1] - range
+	const rangeLatitudeMax = location[0] + range / 2
+	const rangeLatitudeMin = location[0] - range / 2
+	const rangeLongitudeMax = location[1] + range / 2
+	const rangeLongitudeMin = location[1] - range / 2
 
 	return [
 		query.monument.lessThan('latitude', rangeLatitudeMax),

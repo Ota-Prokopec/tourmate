@@ -43,41 +43,44 @@
 	};
 </script>
 
-<Card {dismissable} class={twMerge('justify-self-center gap-2 cursor-pointer', className)}>
-	<ColumnStrict>
-		<button on:click={() => goto(`/monument/${monument._id}`)}>
-			<Avatar size="xl" class="rounded-sm object-cover w-auto" src={imgSrcAsString} />
-		</button>
-		<Row class="justify-between">
-			<h5 class="mb-2 text-xl text-black">
-				{monument.name}
-			</h5>
-			<Text class="text-right">
-				<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
-					<Row class="gap-1">
-						<Icon icon="fas fa-map-marker-alt" class="text-xl " />
-						{monument.placeDetail.name}
-					</Row>
-				</button>
-			</Text>
+<Card {dismissable} class={twMerge('justify-self-center cursor-pointer', className)}>
+	<Row class="gap-2">
+		<ColumnStrict>
+			<button on:click={() => goto(`/monument/${monument._id}`)}>
+				<Avatar size="xl" class="rounded-lg object-cover w-auto" src={imgSrcAsString} />
+			</button>
+			<Row class="justify-between">
+				<h5 class="mb-2 text-xl text-black">
+					{monument.name}
+				</h5>
+				<Text class="text-right">
+					<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
+						<Row class="gap-1">
+							<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+							{monument.placeDetail.name}
+						</Row>
+					</button>
+				</Text>
+			</Row>
+		</ColumnStrict>
+
+		<Row class="gap-2">
+			<LikeSection
+				on:like={like}
+				on:unlike={unlike}
+				data={{
+					liked: monument.liked ? true : false,
+					otherUsersThatLiked: monument.likes.map((l) => l.user)
+				}}
+			/>
+
+			<UserItem
+				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+				avatarClass="w-10 h-10"
+				class="h-auto"
+				user={monument.creator}
+			/>
 		</Row>
-	</ColumnStrict>
-
-	<ColumnStrict>
-		<LikeSection
-			on:like={like}
-			on:unlike={unlike}
-			data={{
-				liked: monument.liked ? true : false,
-				otherUsersThatLiked: monument.likes.map((l) => l.user)
-			}}
-		/>
-
-		<UserItem
-			on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-			avatarClass="w-10 h-10"
-			class="h-auto"
-			user={monument.creator}
-		/>
-	</ColumnStrict>
+		<slot />
+	</Row>
 </Card>

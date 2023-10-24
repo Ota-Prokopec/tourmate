@@ -26,7 +26,7 @@ export default <DatabaseType extends Record<string, any>>() => {
 			Query.lessThanEqual(attribute.toString(), value),
 		limit: (limit: number) => Query.limit(limit),
 		notEqual: <TKey extends Key>(attribute: Key, value: DatabaseType[TKey]) =>
-			Query.equal(attribute.toString(), value),
+			Query.notEqual(attribute.toString(), value),
 		offset: (offset: number) => Query.offset(offset),
 		orderAsc: (attribute: Key) => Query.orderAsc(attribute.toString()),
 		orderDesc: (attribute: Key) => Query.orderDesc(attribute.toString()),
