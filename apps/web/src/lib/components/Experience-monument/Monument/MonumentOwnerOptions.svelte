@@ -8,8 +8,8 @@
 </script>
 
 <SpeedDial defaultClass="right-24 bottom-6" tooltip="none">
-	<Icon slot="icon">
-		<IconOptions class="h-7 w-7" />
+	<Icon class="p-0 m-0" slot="icon">
+		<IconOptions class="h-7 w-7 !p-0 !m-0" />
 	</Icon>
 
 	<Listgroup class="divide-none">

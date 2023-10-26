@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import LikeSection from '$lib/components/Common/LikeSection.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import UserItem from '$lib/components/Common/UserItem.svelte';
@@ -9,23 +8,26 @@
 	import type { MonumentCard } from '@app/ts-types';
 	import { Button, Img, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
+	import MonumentOwnerOptions from '../../Monument/MonumentOwnerOptions.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import TopicItem from '../topic/TopicItem.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import IconShare from '$lib/components/Icons/IconShare.svelte';
 	import Card from '$lib/components/Common/Card.svelte';
+	import Columns from '$lib/components/Common/Columns.svelte';
+	import CardImage from './CardImage.svelte';
+	import CardHeader from './CardHeader.svelte';
+	import CardFooter from './CardFooter.svelte';
 
 	export let monument: MonumentCard;
 	let amIOwner = monument.creator.userId === $user?.$id;
 	export let isCardVisible = true;
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
+	export let dismissable = false;
+	export let minimalized = false;
 
 	let className = '';
 	export { className as class };
-
-	$: imgSrcAsString = monument.pictureURL as unknown as string | undefined;
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
@@ -74,7 +76,7 @@
 </Modal>
 
 {#if isCardVisible}
-	<Card class={twMerge('relative justify-self-center gap-2', className)}>
+	<Card {dismissable} class={twMerge('relative justify-self-center gap-2', className)}>
 		<Row class="justify-between">
 			<UserItem
 				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
@@ -92,48 +94,20 @@
 			</Column>
 		</Row>
 
-		<button
-			on:dblclick={() => {
-				if (!monument.liked) like();
-			}}
-		>
-			<Img class="rounded-lg object-cover " src={imgSrcAsString} />
-		</button>
+		<svelte:component this={minimalized ? Columns : Row} columns="1fr 1fr">
+			<CardImage on:like={like} imgSrc={monument.pictureURL} liked={monument.liked} />
 
-		<Row class="w-full justify-between">
-			<LikeSection
-				ableToLike={!amIOwner}
-				on:like={like}
-				on:unlike={unlike}
-				data={{
-					liked: monument.liked ? true : false,
-					otherUsersThatLiked: monument.likes.map((l) => l.user)
-				}}
-			/>
-			{#if monument.topics}
-				<Row class="gap-2">
-					{#each monument.topics as topic}
-						<TopicItem topicKey={topic} />
-					{/each}
-				</Row>
-			{/if}
-		</Row>
+			<Column>
+				<CardHeader on:like={like} on:unlike={unlike} {amIOwner} {monument} />
 
-		<Row class="justify-between gap-2">
-			<h5 class="mb-2 text-xl text-black">
-				{monument.name}
-			</h5>
-			<Text class="text-right">
-				<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
-					<Row class="gap-1">
-						<Icon icon="fas fa-map-marker-alt" class="text-xl " />
-						{monument.placeDetail.name}
-					</Row>
-				</button>
-			</Text>
-		</Row>
+				<CardFooter {monument} />
+			</Column>
+		</svelte:component>
+
 		{#if !disableSeeMoreButton}
-			<Button on:click={() => goto(`/monument/${monument._id}`)} color="blue">see more....</Button>
+			<Button color="blue" class="m-2 w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
+				>see more....</Button
+			>
 		{/if}
 	</Card>
 {/if}

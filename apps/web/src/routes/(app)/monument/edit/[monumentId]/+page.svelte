@@ -63,7 +63,11 @@
 				classWrap="w-full max-w-[400px]"
 			/>
 
-			<TopicComponent chosenTopics={topics} on:choose={(e) => (topics = e.detail)} class="mt-2" />
+			<TopicComponent
+				bind:chosenTopics={topics}
+				on:choose={(e) => (topics = e.detail)}
+				class="mt-2"
+			/>
 			<P size="xl" weight="bold" class="w-full max-w-[400px] m-4">Něco málo o zážitku</P>
 			<TextArea
 				bind:value={about}

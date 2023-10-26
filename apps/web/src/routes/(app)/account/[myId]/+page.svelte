@@ -5,8 +5,8 @@
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import Gallery from '$lib/components/Common/Gallery.svelte';
-	import ExperienceCard from '$lib/components/Experience-monument/Cards/ExperienceCard.svelte';
-	import MonumentCard from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
+	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCard.svelte';
+	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';

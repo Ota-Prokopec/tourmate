@@ -3,7 +3,7 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import QrCode from '$lib/components/Common/QrCode.svelte';
 	import Share from '$lib/components/Common/Share.svelte';
-	import MonumentCard from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
+	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
 	import CopyInput from '$lib/components/Inputs/CopyInput.svelte';
 	import type { PageData } from './$types';
 

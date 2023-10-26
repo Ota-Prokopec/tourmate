@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard, Topic } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';

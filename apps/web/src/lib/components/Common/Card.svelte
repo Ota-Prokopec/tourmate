@@ -19,11 +19,13 @@
 </script>
 
 {#if !disable}
-	<Card class={twMerge('relative', className)}>
+	<Card class={twMerge('relative !gap-0', className)}>
 		{#if dismissable}
-			<Icon on:click={dismiss} class="absolute right-0 top-0 m-2 hover:bg-blue-300 rounded-lg">
-				<IconTimes class="w-8 h-8" />
-			</Icon>
+			<div class="w-full h-auto flex justify-end">
+				<Icon on:click={dismiss} class="relative right-0 top-0 m-1 hover:bg-blue-300 rounded-lg">
+					<IconTimes class="w-8 h-8" />
+				</Icon>
+			</div>
 		{/if}
 
 		<button on:click class="w-full h-full">

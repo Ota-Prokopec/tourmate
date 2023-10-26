@@ -7,7 +7,7 @@
 	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import Range from './Components/Range.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
 
 	let monuments: MonumentCard[] | undefined;
 
@@ -47,7 +47,7 @@
 	<Row class="w-full justify-center gap-2 mb-2">
 		{#if monuments && location}
 			{#each monuments as monument}
-				<MonumentCardComponent {monument}>
+				<MonumentCardComponent minimalized dismissable {monument}>
 					you are {Math.floor(
 						degreeToMeters(distanceBetweenTwoLocations(location, monument.location))
 					)} meters far from target
