@@ -450,6 +450,13 @@ export type GetMonumentQueryVariables = Exact<{
 
 export type GetMonumentQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, about?: string | null, placeDetailId: string, pictureURL?: URL | null, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
 
+export type GetMonumentCardQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetMonumentCardQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null } };
+
 export type GetMonumentWithCreatorAndNearestListOfExperienceQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1432,6 +1439,76 @@ export const GetMonumentDoc = gql`
   }
 }
     `;
+export const GetMonumentCardDoc = gql`
+    query getMonumentCard($id: String!) {
+  getMonument(id: $id) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    location
+    creatorUserId
+    name
+    about
+    topics
+    placeDetailId
+    pictureURL
+    creator {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      status
+      emailVerification
+      phoneVerification
+      profilePictureURL
+    }
+    placeDetail {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      name
+    }
+    likes {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
+      user {
+        _id
+        userId
+        myId
+        username
+        profilePictureURL
+      }
+    }
+    liked {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
+    }
+  }
+}
+    `;
 export const GetMonumentWithCreatorAndNearestListOfExperienceDoc = gql`
     query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
   getMonument(id: $id) {
@@ -2187,6 +2264,41 @@ export const getMonument = (
                 query: ObservableQuery<
                   GetMonumentQuery,
                   GetMonumentQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const getMonumentCard = (
+            options: Omit<
+              WatchQueryOptions<GetMonumentCardQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetMonumentCardQuery> & {
+              query: ObservableQuery<
+                GetMonumentCardQuery,
+                GetMonumentCardQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetMonumentCardDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetMonumentCardQuery> & {
+                query: ObservableQuery<
+                  GetMonumentCardQuery,
+                  GetMonumentCardQueryVariables
                 >;
               }
             >(

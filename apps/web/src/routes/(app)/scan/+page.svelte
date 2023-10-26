@@ -6,18 +6,19 @@
 	import Row from '$lib/components/Common/Row.svelte';
 	import MonumentCardMinimalized from '$lib/components/Experience-monument/Cards/MonumentCardMinimalized.svelte';
 	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
-	import Range from '$lib/components/Common/Range.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import Range from './Components/Range.svelte';
 
 	let monuments: MonumentCard[] | undefined;
 
+	let range = 10;
+
 	$: location = $lsSvelte.usersLocation;
 	const seconds20 = 20000;
-	let range = 200;
 
 	let ableToCheck = true;
 	let timeOut: NodeJS.Timeout;
-	$: if (!ableToCheck) timeOut = setTimeout(() => (ableToCheck = true), 20000);
+	$: if (!ableToCheck) timeOut = setTimeout(() => (ableToCheck = true), seconds20);
 
 	$: checkMonuments(location, range).then(() => {
 		ableToCheck = false;
@@ -28,7 +29,7 @@
 		if (!location) throw new Error('there is no location');
 
 		const res = await sdk.getListOfMonumentCardsByLocation({
-			input: { location: location, range: metersToDegree(range * 40) }
+			input: { location: location, range: metersToDegree(range) }
 		});
 		monuments = res.getListOfMonumentsByLocation;
 	};
@@ -36,11 +37,8 @@
 
 <Row class="w-full h-auto min-h-full gap-2 bg-slate-900 overflow-auto">
 	<div class="w-full h-[500px] min-h-[100%] flex justify-center items-center relative">
-		<LocationScanner />
-		<Range class="absolute right-0 m-4" bind:value={range} min={1} max={10000} />
-	</div>
-	<div class="flex justify-center w-full">
-		<Text class="text-white text-center">searching around {range * 40} meters area</Text>
+		<LocationScanner>{range}m</LocationScanner>
+		<Range bind:value={range} />
 	</div>
 	<Row class="w-full justify-center gap-2 mb-2">
 		{#if monuments && location}

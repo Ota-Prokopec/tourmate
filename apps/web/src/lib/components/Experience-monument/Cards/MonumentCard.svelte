@@ -12,10 +12,14 @@
 	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import TopicItem from '../topic/TopicItem.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import IconShare from '$lib/components/Icons/IconShare.svelte';
 
 	export let monument: MonumentCard;
 	let amIOwner = monument.creator.userId === $user?.$id;
 	export let isCardVisible = true;
+	export let disableSeeMoreButton = false;
+	export let disableSharing = false;
 
 	let className = '';
 	export { className as class };
@@ -77,7 +81,14 @@
 				class="h-auto"
 				user={monument.creator}
 			/>
-			<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
+			<Column class="gap-0 flex justify-center items-center">
+				<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
+				{#if !disableSharing}
+					<Icon on:click={() => goto(`/monument/${monument._id}/share`)}>
+						<IconShare />
+					</Icon>
+				{/if}
+			</Column>
 		</Row>
 
 		<button
@@ -120,5 +131,8 @@
 				</button>
 			</Text>
 		</Row>
+		{#if !disableSeeMoreButton}
+			<Button on:click={() => goto(`/monument/${monument._id}`)} color="blue">see more....</Button>
+		{/if}
 	</Card>
 {/if}

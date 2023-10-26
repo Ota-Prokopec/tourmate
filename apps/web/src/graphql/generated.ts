@@ -446,6 +446,13 @@ export type GetMonumentQueryVariables = Exact<{
 
 export type GetMonumentQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, about?: string | null, placeDetailId: string, pictureURL?: URL | null, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
 
+export type GetMonumentCardQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetMonumentCardQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null } };
+
 export type GetMonumentWithCreatorAndNearestListOfExperienceQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1428,6 +1435,76 @@ export const GetMonumentDocument = gql`
   }
 }
     `;
+export const GetMonumentCardDocument = gql`
+    query getMonumentCard($id: String!) {
+  getMonument(id: $id) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    location
+    creatorUserId
+    name
+    about
+    topics
+    placeDetailId
+    pictureURL
+    creator {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      status
+      emailVerification
+      phoneVerification
+      profilePictureURL
+    }
+    placeDetail {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      name
+    }
+    likes {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
+      user {
+        _id
+        userId
+        myId
+        username
+        profilePictureURL
+      }
+    }
+    liked {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
+    }
+  }
+}
+    `;
 export const GetMonumentWithCreatorAndNearestListOfExperienceDocument = gql`
     query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
   getMonument(id: $id) {
@@ -1559,6 +1636,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getMonument(variables: GetMonumentQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentQuery>(GetMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonument', 'query');
+    },
+    getMonumentCard(variables: GetMonumentCardQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentCardQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentCardQuery>(GetMonumentCardDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonumentCard', 'query');
     },
     getMonumentWithCreatorAndNearestListOfExperience(variables: GetMonumentWithCreatorAndNearestListOfExperienceQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentWithCreatorAndNearestListOfExperienceQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentWithCreatorAndNearestListOfExperienceQuery>(GetMonumentWithCreatorAndNearestListOfExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonumentWithCreatorAndNearestListOfExperience', 'query');

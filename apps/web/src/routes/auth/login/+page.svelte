@@ -4,17 +4,12 @@
 	import IconEnvelope from '$lib/components/Icons/IconEnvelope.svelte';
 	import IconEye from '$lib/components/Icons/IconEye.svelte';
 	import { goto } from '$app/navigation';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Input from '$lib/components/Common/Input.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
 	import Link from '$lib/components/Common/Link.svelte';
-	import { browser } from '$app/environment';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import lsStore from '$lib/utils/lsStore';
-	import { ApolloError } from '@apollo/client';
-	import { ApolloErrorMessageHandler } from '@apollo/client/utilities/globals/invariantWrappers';
-	import { GraphQLError } from 'graphql';
 	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
 	import { cacheApolloError } from '@app/utils';
 
@@ -26,15 +21,13 @@
 	$: condition = email.length >= 1 && password.length >= 1;
 
 	const login = async () => {
-		//loading = true;
+		loading = true;
 
 		try {
 			await user.deleteSessions(); //first things first, i will delete session, if some exists
 		} catch (error) {}
 
 		try {
-			console.log('login');
-
 			const res = await sdk.loginViaEmail({ email, password });
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');

@@ -13,8 +13,6 @@
 	export let userInfo: UserInfo;
 	export let disableCloseButton = false;
 
-	const userInitials = `${userInfo.username.split(' ')[0][0]}${userInfo.username.split(' ')[1][0]}`;
-
 	let className = '';
 	export { className as class };
 </script>
