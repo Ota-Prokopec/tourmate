@@ -35,6 +35,8 @@
 	import { omit } from 'lodash';
 	import { appwriteKeys } from '@app/appwrite-client';
 	import * as permissions from '@app/appwrite-permissions';
+	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
+	import Icon from 'svelte-icons-pack/Icon.svelte';
 
 	export let data: LayoutData;
 
@@ -87,7 +89,7 @@
 	<div class="w-full h-auto fixed bottom-0 flex justify-center z-50">
 		<BottomNav
 			position="relative"
-			classInner="grid-cols-4 gap-4"
+			classInner="grid-cols-5 gap-4"
 			class="tran"
 			outerClass="mobile:w-full w-fit z-50 h-16 rounded-t-3xl"
 		>
@@ -95,7 +97,11 @@
 				<IconLocation />
 			</BottomNavItem>
 
-			<BottomNavItem on:click={() => goto('/search')}>
+			<BottomNavItem on:click={() => goto('/scan')}>
+				<Icon src={RiDeviceScan2Line} />
+			</BottomNavItem>
+
+			<BottomNavItem on:click={() => goto('/search/places/*')}>
 				<IconMagnifyingGlass />
 			</BottomNavItem>
 
