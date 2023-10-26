@@ -4,10 +4,10 @@
 	import { degreeToMeters, distanceBetweenTwoLocations, metersToDegree } from '@app/utils';
 	import lsSvelte from '$lib/utils/lsStore';
 	import Row from '$lib/components/Common/Row.svelte';
-	import MonumentCardMinimalized from '$lib/components/Experience-monument/Cards/MonumentCardMinimalized.svelte';
 	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import Range from './Components/Range.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/MonumentCard.svelte';
 
 	let monuments: MonumentCard[] | undefined;
 
@@ -20,11 +20,15 @@
 	let timeOut: NodeJS.Timeout;
 	$: if (!ableToCheck) timeOut = setTimeout(() => (ableToCheck = true), seconds20);
 
-	$: checkMonuments(location, range).then(() => {
+	$: checkMonuments(location, range, ableToCheck).then(() => {
 		ableToCheck = false;
 	});
 
-	const checkMonuments = async (location: Location | undefined, range: number) => {
+	const checkMonuments = async (
+		location: Location | undefined,
+		range: number,
+		ableToCheck: boolean
+	) => {
 		if (!ableToCheck) throw new Error('you are not able to check monuments - wait 20s');
 		if (!location) throw new Error('there is no location');
 
@@ -43,11 +47,11 @@
 	<Row class="w-full justify-center gap-2 mb-2">
 		{#if monuments && location}
 			{#each monuments as monument}
-				<MonumentCardMinimalized dismissable {monument}>
+				<MonumentCardComponent {monument}>
 					you are {Math.floor(
 						degreeToMeters(distanceBetweenTwoLocations(location, monument.location))
 					)} meters far from target
-				</MonumentCardMinimalized>
+				</MonumentCardComponent>
 			{/each}
 		{/if}
 	</Row>

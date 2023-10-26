@@ -10,6 +10,11 @@
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
+	import { Skeleton } from 'flowbite-svelte';
+	import Button from '$lib/components/Common/Button.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -89,10 +94,18 @@
 					{#each usersExperiences as experience}
 						<ExperienceCard {experience} />
 					{/each}
-				{:else}
+				{:else if usersMonuments.length}
 					{#each usersMonuments as monument}
 						<MonumentCard {monument} />
 					{/each}
+				{:else}
+					<Skeleton divClass="w-full" />
+					<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400">
+						<Text class="!text-black">Create your first monument</Text>
+						<Icon class="fill-red-500 w-7 h-7">
+							<IconLocation />
+						</Icon>
+					</Button>
 				{/if}
 			</Gallery>
 		</div>

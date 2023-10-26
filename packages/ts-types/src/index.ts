@@ -4,6 +4,7 @@
 
 export * from './Account';
 export * from './Application';
+export * from './Checking';
 export * from './Document';
 export * from './Experience';
 export * from './Likes';

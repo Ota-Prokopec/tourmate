@@ -18,5 +18,6 @@ declare namespace NodeJS {
 		readonly CLOUDINARY_API_SECRET_KEY: string
 		readonly DEV: string
 		readonly SERVER_HOSTNAME_COOKIES: string
+		readonly SESSION: string
 	}
 }

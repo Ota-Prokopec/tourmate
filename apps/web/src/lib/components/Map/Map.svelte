@@ -27,7 +27,6 @@
 <div class={twMerge('w-full h-full relative', className)}>
 	{#if location}
 		<MapLibre
-			on:click
 			{style}
 			bind:map
 			center={[location[1], location[0]]}

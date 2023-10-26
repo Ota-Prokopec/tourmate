@@ -7,13 +7,14 @@
 	import UserItem from '$lib/components/Common/UserItem.svelte';
 	import { Queries, collections, user } from '$lib/appwrite/appwrite';
 	import type { MonumentCard } from '@app/ts-types';
-	import { Button, Card, Img, Modal } from 'flowbite-svelte';
+	import { Button, Img, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import MonumentOwnerOptions from '../Monument/MonumentOwnerOptions.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import TopicItem from '../topic/TopicItem.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import IconShare from '$lib/components/Icons/IconShare.svelte';
+	import Card from '$lib/components/Common/Card.svelte';
 
 	export let monument: MonumentCard;
 	let amIOwner = monument.creator.userId === $user?.$id;
@@ -73,7 +74,7 @@
 </Modal>
 
 {#if isCardVisible}
-	<Card class={twMerge('relative justify-self-center gap-2', className)} padding="sm">
+	<Card class={twMerge('relative justify-self-center gap-2', className)}>
 		<Row class="justify-between">
 			<UserItem
 				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
@@ -85,7 +86,7 @@
 				<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
 				{#if !disableSharing}
 					<Icon on:click={() => goto(`/monument/${monument._id}/share`)}>
-						<IconShare />
+						<IconShare class="w-5 h-5" />
 					</Icon>
 				{/if}
 			</Column>

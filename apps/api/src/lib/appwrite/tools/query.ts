@@ -2,6 +2,7 @@ import { Query } from '@app/appwrite-ssr-graphql'
 import { CollectionName } from './collections'
 
 import {
+	Check,
 	ExperienceDocument,
 	ExperienceLikeDocument,
 	MonumentDocument,
@@ -20,5 +21,7 @@ const query = {
 	monumentLike: Query<MonumentLikeDocument>(),
 	experienceLike: Query<ExperienceLikeDocument>(),
 } satisfies Record<CollectionName, any>
+
+export type QueryType = (typeof query)[keyof typeof query]
 
 export default query

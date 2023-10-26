@@ -14,8 +14,7 @@
 		"codegen": "graphql-codegen",
 		"test": "yarn vitest",
 		"vitest": "vitest",
-		"vitest-ui": "vitest --ui",
-		"vitest-auth": "npx vitest --root ./src/routes/auth/"
+		"vitest-ui": "vitest --ui"
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.4.5",
@@ -37,6 +36,7 @@
 		"@types/qrcode": "^1.5.4",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
+		"@vitest/browser": "^0.34.6",
 		"@vitest/ui": "^0.34.6",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.28.0",
@@ -56,7 +56,8 @@
 		"tslib": "^2.4.1",
 		"typescript": "^5.2.2",
 		"vite-plugin-pwa": "^0.16.4",
-		"vitest": "0.32.4"
+		"vitest": "0.32.4",
+		"webdriverio": "^8.20.4"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.8.2",

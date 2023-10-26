@@ -1,12 +1,17 @@
-import appwrite from '../../../appwrite/appwrite'
-import { Query } from '@app/appwrite-server'
+import appwrite, { Queries } from '../../../appwrite/appwrite'
 import { transformMonumentsDocumentsIntoMonuments } from '../transformers'
 
 export const getListOfMonuments = async (
 	collections: ReturnType<typeof appwrite.setCookie>['collections'],
-	{ limit }: { limit: number } = { limit: 100 },
+	{ limit, queries }: { limit: number; queries: string[] } = {
+		limit: 100,
+		queries: [],
+	},
 ) => {
-	const MonumentDocuments = await collections.monument.listDocuments([Query.limit(limit)])
+	const MonumentDocuments = await collections.monument.listDocuments([
+		Queries.monument.limit(limit),
+		...queries,
+	])
 
 	return transformMonumentsDocumentsIntoMonuments(...MonumentDocuments.documents)
 }
