@@ -124,6 +124,7 @@
 		"svelte-filepond": "^0.2.0",
 		"svelte-gestures": "^1.5.2",
 		"svelte-i18n": "^3.6.0",
+		"svelte-icons-pack": "^2.1.0",
 		"svelte-loading-spinners": "^0.3.4",
 		"svelte-maplibre": "^0.3.2",
 		"svelte-qrcode-image": "^1.0.0-rc.2",
