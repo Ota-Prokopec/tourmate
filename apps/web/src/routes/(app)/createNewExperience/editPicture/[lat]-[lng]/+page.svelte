@@ -6,7 +6,7 @@
 	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import { myNewExperienceStore } from '../../newExperienceStore';
+	import { myNewExperienceStore } from '../../editPicture/newExperienceStore';
 	import { sdk } from '$src/graphql/sdk';
 
 	export let data: PageData;

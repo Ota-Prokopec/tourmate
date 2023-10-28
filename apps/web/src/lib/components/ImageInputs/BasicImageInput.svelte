@@ -3,6 +3,7 @@
 	import IconUpload from '../Icons/IconUpload.svelte';
 	import ImageInput from './ImageInput.svelte';
 	import Avatar from '../Common/Avatar.svelte';
+	import { twMerge } from 'tailwind-merge';
 
 	export let imageURL: URL | Base64 | null | undefined = undefined;
 	export let autoImagesrcCompleter = true;
@@ -19,7 +20,7 @@
 </script>
 
 <ImageInput
-	class={className}
+	class={twMerge('h-auto w-auto', className)}
 	{autoImagesrcCompleter}
 	{disabled}
 	{method}

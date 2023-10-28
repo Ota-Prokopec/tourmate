@@ -11,7 +11,7 @@
 	import type { Base64 } from '@app/ts-types';
 
 	const dispatch = createEventDispatcher<{
-		image: { base64: string };
+		image: { base64: string | Base64 };
 	}>();
 
 	let className = '';

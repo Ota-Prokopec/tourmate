@@ -9,12 +9,32 @@ import crop from './actions/crop'
 
 export type Filter = 'blur' | 'median' | 'sobel' | 'scharr' | 'gaussian' | 'grey'
 
-export type Actions = 'rotate' | 'addText' | 'addFilter' | 'load' | 'getCtx' | 'undo' | 'crop' | 'flipY' | 'flipX'
+export type Actions =
+	| 'rotate'
+	| 'addText'
+	| 'addFilter'
+	| 'load'
+	| 'getCtx'
+	| 'undo'
+	| 'crop'
+	| 'flipY'
+	| 'flipX'
 
 export default (
 	{ howManyImagesBeforeUndoAvailable = 1 }: { howManyImagesBeforeUndoAvailable: number },
-	change?: (url: string | Base64, options: { width: number; height: number }, action: Actions, history: ImageJs[]) => void,
-	undo?: (url: string | Base64, options: { width: number; height: number }, history: ImageJs[]) => void,
+	change?: (
+		url: string | Base64,
+		options: { width: number; height: number },
+		action: Actions,
+		history: ImageJs[],
+		imageJs: ImageJs,
+	) => void,
+	undo?: (
+		url: string | Base64,
+		options: { width: number; height: number },
+		history: ImageJs[],
+		imageJs: ImageJs,
+	) => void,
 ) => {
 	const ableToUndo = writable<boolean>(false)
 	let image = new ImageJs()
@@ -30,7 +50,9 @@ export default (
 		async rotate(degree: number) {
 			return rotate(image, degree)
 		}
-		async addText(...args: Parameters<typeof addText> extends [any, ...infer Rest] ? Rest : never) {
+		async addText(
+			...args: Parameters<typeof addText> extends [any, ...infer Rest] ? Rest : never
+		) {
 			return await addText(image, ...args)
 		}
 		async addFilter(filter: Filter) {
@@ -65,8 +87,8 @@ export default (
 			ableToUndo.set(history.length > howManyImagesBeforeUndoAvailable)
 			const url = `data:image/png;base64,${await image.toBase64()}`
 
-			if (change) change(url, { ...image }, 'undo', history)
-			if (undo) undo(url, { ...image }, history)
+			if (change) change(url, { ...image }, 'undo', history, image)
+			if (undo) undo(url, { ...image }, history, image)
 		}
 		async crop(options: Parameters<typeof crop>[1]) {
 			return crop(image, options)
@@ -87,12 +109,12 @@ export default (
 			after: async (resPromise, MyClass, propertyName) => {
 				const res = await resPromise
 				if (res instanceof ImageJs) {
-					image = res
+					image = await res
 					historyStore.update((currentHistory) => [...currentHistory, image]) //add picture into history
 
 					ableToUndo.set(history.length > howManyImagesBeforeUndoAvailable)
 					const url = `data:image/png;base64,${await image.toBase64()}`
-					if (change) change(url, { ...image }, propertyName as Actions, history)
+					if (change) change(url, { ...image }, propertyName as Actions, history, image)
 				}
 			},
 		},

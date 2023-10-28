@@ -107,12 +107,11 @@
 
 			<BottomNavItem
 				on:click={() => {
-					if ($mapOrTakePhoto === 'map' && $page.url.pathname === '/') {
-						$mapOrTakePhoto = 'takePhoto';
+					if ($page.url.pathname === '/') {
+						goto('/createNewExperience');
 					} else {
-						$mapOrTakePhoto = 'map';
+						goto('/');
 					}
-					goto('/');
 				}}
 			>
 				{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}

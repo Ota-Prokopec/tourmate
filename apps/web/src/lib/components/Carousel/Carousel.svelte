@@ -11,12 +11,13 @@
 	export let timingFunction: string = 'ease-in-out';
 	export let autoplayDuration: number = 3000;
 	export let index: number = 0;
+	export let style = '';
 
 	let className = '';
 	export { className as class };
 </script>
 
-<div class={twMerge('h-auto w-full', className)}>
+<div {style} class={twMerge('h-auto w-full', className)}>
 	<Carousel
 		class="w-full h-full"
 		{arrows}

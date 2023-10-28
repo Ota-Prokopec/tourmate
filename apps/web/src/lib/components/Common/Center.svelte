@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<div class={twMerge('w-auto h-auto flex items-center justify-center', className)}>
+<div class={twMerge('w-full flex items-center justify-center', className)}>
 	<slot />
 </div>

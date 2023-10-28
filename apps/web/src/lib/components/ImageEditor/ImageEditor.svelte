@@ -19,10 +19,11 @@
 		change: { url: string | Base64; width: number; height: number };
 	}>();
 
+	let imageElement: HTMLImageElement | undefined;
 	export let url: Base64 | string | string | URL = '';
 	export let result: string | Base64 = '';
 	const imgUrl = writable<string | Base64>(url as string);
-	imgUrl.subscribe((value) => (result = value));
+	$: result = $imgUrl;
 
 	let isLoading = true;
 	onMount(() => (isLoading = false));
@@ -56,20 +57,30 @@
 		imageParams = pick($historyStore[0], 'width', 'height');
 	}
 
-	let imageElement: HTMLImageElement | undefined;
 	const [actions, ableToUndo, historyStore] = imageSvelte(
 		{
 			howManyImagesBeforeUndoAvailable: options.cropping?.cropOnStart?.disableUserToDisableCropping
 				? 1
 				: 1
 		},
-		(url, options, action, history) => {
+		(url_, options, action, history, imageJs) => {
+			if (!imageElement) throw new Error('imageElement is not defined');
+			const resizeH = document.body.clientHeight - imageElement?.clientHeight;
+			const resizeW = document.body.clientWidth - imageElement?.clientWidth;
+
+			const resize = imageJs.height > imageJs.width ? resizeW : resizeH;
+
+			// i do this because that i got on phone where, is height bigger that width, a width value to make both sides (x, y) larger by adding there a width value because if i added a height image would be full-height screen but too big to width....
+			// on computer where is height smaller that width i do an opposite
+
+			const url = imageJs
+				.resize({ width: imageJs.width + resize, height: imageJs.height + resize })
+				.getCanvas()
+				.toDataURL('image/png');
+			// always resize picture that it was full-screen
 			imgUrl.set(url);
 			if (history.length === 1) return; //! this is init load image, this number refers to howManyImagesBeforeUndoAvailable
 			dispatch('change', { url: $imgUrl, ...options });
-		},
-		(url, options, history) => {
-			//if (history.length === 1 && options.cropping?.cropOnStart) screenCropper(); // crop on start
 		}
 	);
 	actions.load(url as string);
@@ -78,11 +89,7 @@
 		if (!imageParams?.width || !imageParams?.height)
 			throw new Error('width and height are not set');
 
-		const widthPass = document.body.offsetWidth - img.width;
-
-		actions.loadCanvas(
-			img.resize({ width: img.width + widthPass, height: img.height + widthPass }).getCanvas()
-		);
+		actions.loadCanvas(img.getCanvas());
 	});
 
 	let cropperScreened = false;
@@ -110,7 +117,12 @@
 	export { className as class };
 </script>
 
-<Row class={twMerge('w-full h-full grid grid-rows-[auto_64px] overflow-auto', className)}>
+<Row
+	class={twMerge(
+		'w-full h-full grid grid-rows-[auto_64px] relative overflow-auto items-center justify-center',
+		className
+	)}
+>
 	{#if cropperScreened}
 		<Row class="gap-2 absolute right-0 top-0 mt-2 mr-20 z-50 fill-white text-3xl flex-1">
 			<Icon class="fill-black" on:click={crop}><IconCheck /></Icon>
@@ -129,13 +141,19 @@
 	/>
 
 	<button
-		class="relative appearance-none p-0 m-0 h-min flex items-center justify-center w-full self-center"
+		class="relative appearance-none p-0 m-0 h-min flex items-center justify-center self-center"
 	>
-		<img bind:this={imageElement} class="" alt="" id="image" src={$imgUrl} />
+		<img
+			bind:this={imageElement}
+			class="max-w-[100vw] max-h-[100vh]"
+			alt=""
+			id="image"
+			src={$imgUrl}
+		/>
 		<slot name="inner" />
 	</button>
 
-	<Edge class="h-[64px] p-0 m-0">
+	<div class="absolute bottom-0 right-0 h-[64px] p-0 m-0">
 		<slot name="bottom" />
-	</Edge>
+	</div>
 </Row>
