@@ -42,5 +42,5 @@
 		disabled={!ableToUndo}
 		class={twMerge('text-4xl mt-4', !ableToUndo ? 'fill-gray-500' : '')}><IconUndo /></Icon
 	>
-	<ColorPicker />
+	<slot />
 </div>

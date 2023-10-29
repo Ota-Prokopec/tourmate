@@ -12,11 +12,15 @@
 	export let data: PageData;
 	let isLoading = false;
 	const img = $myNewExperienceStore.imgSrc;
+	$myNewExperienceStore.imgSrc = ''; // delete the image src from store
+	const location = data.newExperience.location;
 
 	const save = () => {
+		if (!location) throw new Error('user has no location');
+
 		sdk.createExperience({
 			input: {
-				location: [0, 0],
+				location: location,
 				picture: '',
 				placeName: 'horni záhoří'
 			}
@@ -31,7 +35,7 @@
 			{data.newExperience.placeName}
 		</h5>
 		<p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
-			lokace: [{data.newExperience.location}]
+			lokace: [{location}]
 		</p>
 
 		<Img src={img} />

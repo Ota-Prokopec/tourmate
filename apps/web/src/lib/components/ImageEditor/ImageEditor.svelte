@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Base64, Location } from '@app/ts-types';
-	import imageSvelte from '@app/image-svelte';
-	import Bar from './items/Bar.svelte';
+	import imageSvelte, { type Actions } from '@app/image-svelte';
+	import Tools from './items/Tools.svelte';
 	import Edge from './items/Edge.svelte';
 	import Icon from '../Common/Icon.svelte';
 	import Cropperjs from 'cropperjs';
@@ -63,7 +63,7 @@
 				? 1
 				: 1
 		},
-		(url_, options, action, history, imageJs) => {
+		(url, options, action, history, imageJs) => {
 			if (!imageElement) throw new Error('imageElement is not defined');
 			const resizeH = document.body.clientHeight - imageElement?.clientHeight;
 			const resizeW = document.body.clientWidth - imageElement?.clientWidth;
@@ -72,18 +72,18 @@
 
 			// i do this because that i got on phone where, is height bigger that width, a width value to make both sides (x, y) larger by adding there a width value because if i added a height image would be full-height screen but too big to width....
 			// on computer where is height smaller that width i do an opposite
-
-			const url = imageJs
+			// always resize picture that it was full-screen
+			const croppedUrl = imageJs
 				.resize({ width: imageJs.width + resize, height: imageJs.height + resize })
 				.getCanvas()
 				.toDataURL('image/png');
-			// always resize picture that it was full-screen
-			imgUrl.set(url);
+			imgUrl.set(croppedUrl);
+
 			if (history.length === 1) return; //! this is init load image, this number refers to howManyImagesBeforeUndoAvailable
 			dispatch('change', { url: $imgUrl, ...options });
 		}
 	);
-	actions.load(url as string);
+	$: actions.load(url as string);
 
 	const cropper = myCropper(options.cropping, (img) => {
 		if (!imageParams?.width || !imageParams?.height)
@@ -132,13 +132,15 @@
 		</Row>
 	{/if}
 
-	<Bar
+	<Tools
 		on:crop={() => screenCropper()}
 		on:rotate={() => actions.rotate(90)}
 		on:filter={(e) => actions.addFilter(e.detail)}
 		on:undo={() => actions.undo()}
 		ableToUndo={$ableToUndo}
-	/>
+	>
+		<slot name="tools" />
+	</Tools>
 
 	<button
 		class="relative appearance-none p-0 m-0 h-min flex items-center justify-center self-center"
@@ -153,7 +155,7 @@
 		<slot name="inner" />
 	</button>
 
-	<div class="absolute bottom-0 right-0 h-[64px] p-0 m-0">
+	<div class="absolute bottom-0 right-0 p-0 m-0 w-full">
 		<slot name="bottom" />
 	</div>
 </Row>

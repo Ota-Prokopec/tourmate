@@ -7,21 +7,12 @@
 	export let value: number;
 	export let max: number;
 	export let min: number;
-	export let orientation: 'vertical' | 'horizontal' = 'vertical';
 
 	let className = '';
 	export { className as class };
 </script>
 
-<input
-	bind:this={input}
-	type="range"
-	class={twMerge('', className)}
-	style={`-webkit-appearance: slider-${orientation}`}
-	{min}
-	{max}
-	bind:value
-/>
+<input bind:this={input} type="range" class={twMerge('', className)} {min} {max} bind:value />
 
 <style>
 	input[type='range'] {

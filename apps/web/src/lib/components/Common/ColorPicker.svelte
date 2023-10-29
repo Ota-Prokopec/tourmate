@@ -1,19 +1,20 @@
 <script lang="ts">
-	import { getDarkAndLightColors } from '@app/utils';
-	import Range from './Range.svelte';
-
-	const colors = getDarkAndLightColors();
-
+	import { colors } from '@app/utils';
+	import HorizontalSlider from '../Inputs/Slider/HorizontalSlider.svelte';
+	import VerticalSlider from '../Inputs/Slider/VerticalSlider.svelte';
 	export let value = 0;
-	let style: 'light' | 'dark' = 'light';
-	export let color: string = colors[style][0];
-	let max = colors.light.length;
-	export let orientation: 'vertical' | 'horizontal' = 'vertical';
+	export let color: string = colors[0];
+	let max = colors.length;
+	export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
-	$: color = colors[style][value];
+	$: color = colors[value];
 
 	let className = '';
 	export { className as class };
 </script>
 
-<Range class={className} min={1} {orientation} {max} bind:value />
+{#if orientation === 'horizontal'}
+	<HorizontalSlider class={className} min={1} {max} bind:value />
+{:else}
+	<VerticalSlider class={className} min={1} {max} bind:value />
+{/if}
