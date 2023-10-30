@@ -9,8 +9,6 @@
 	export let zoom: number = 14;
 	export let stacked = false;
 
-	$: console.log(zoom);
-
 	const avatarURL = imgSrc as unknown as string;
 
 	let className = '';

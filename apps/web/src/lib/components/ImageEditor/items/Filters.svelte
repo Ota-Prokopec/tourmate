@@ -31,21 +31,8 @@
 				>grey</button
 			></ListgroupItem
 		><ListgroupItem class="flex"
-			><button on:click={() => dispatch('click', 'median')} class="w-full h-full text-2xl"
-				>share</button
-			></ListgroupItem
-		><ListgroupItem class="flex"
 			><button on:click={() => dispatch('click', 'sobel')} class="w-full h-full text-2xl"
-				>share</button
-			></ListgroupItem
-		><ListgroupItem class="flex"
-			><button on:click={() => dispatch('click', 'scharr')} class="w-full h-full text-2xl"
-				>share</button
-			>
-		</ListgroupItem>
-		<ListgroupItem class="flex"
-			><button on:click={() => dispatch('click', 'gaussian')} class="w-full h-full text-2xl"
-				>share</button
+				>invert colors</button
 			></ListgroupItem
 		>
 	</Listgroup>

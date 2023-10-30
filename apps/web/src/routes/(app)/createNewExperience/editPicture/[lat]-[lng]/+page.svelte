@@ -8,6 +8,7 @@
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import { myNewExperienceStore } from '../../editPicture/newExperienceStore';
 	import { sdk } from '$src/graphql/sdk';
+	import { navigate } from '$lib/utils/navigator';
 
 	export let data: PageData;
 	let isLoading = false;
@@ -15,16 +16,17 @@
 	$myNewExperienceStore.imgSrc = ''; // delete the image src from store
 	const location = data.newExperience.location;
 
-	const save = () => {
+	const save = async () => {
 		if (!location) throw new Error('user has no location');
 
-		sdk.createExperience({
+		await sdk.createExperience({
 			input: {
 				location: location,
-				picture: '',
+				picture: img,
 				placeName: 'horni záhoří'
 			}
 		});
+		navigate('/');
 	};
 </script>
 
@@ -48,7 +50,7 @@
 			{#if isLoading}
 				<Loading />
 			{:else}
-				<span>Vytvořit</span>
+				<span>Zveřejnit</span>
 			{/if}
 		</Button>
 	</Card>

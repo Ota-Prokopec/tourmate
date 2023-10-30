@@ -34,13 +34,6 @@
 		allowFilters: true,
 		allowUndo: true,
 		cropping: {
-			minCanvasWidth: 1,
-			minCanvasHeight: 1,
-			aspectRatio: 1,
-			minContainerWidth: 1,
-			minContainerHeight: 1,
-			minCropBoxWidth: 1,
-			minCropBoxHeight: 1,
 			cropOnStart: { disableUserToDisableCropping: true }
 		}
 	};
@@ -70,14 +63,18 @@
 
 			const resize = imageJs.height > imageJs.width ? resizeW : resizeH;
 
-			// i do this because that i got on phone where, is height bigger that width, a width value to make both sides (x, y) larger by adding there a width value because if i added a height image would be full-height screen but too big to width....
-			// on computer where is height smaller that width i do an opposite
-			// always resize picture that it was full-screen
-			const croppedUrl = imageJs
-				.resize({ width: imageJs.width + resize, height: imageJs.height + resize })
-				.getCanvas()
-				.toDataURL('image/png');
-			imgUrl.set(croppedUrl);
+			if (action !== 'rotate') {
+				imgUrl.set(url);
+			} else {
+				// i do this because that i got on phone where, is height bigger that width, a width value to make both sides (x, y) larger by adding there a width value because if i added a height image would be full-height screen but too big to width....
+				// on computer where is height smaller that width i do an opposite
+				// always resize picture that it was full-screen
+				const croppedUrl = imageJs
+					.resize({ width: imageJs.width + resize, height: imageJs.height + resize })
+					.getCanvas()
+					.toDataURL('image/png');
+				imgUrl.set(croppedUrl);
+			}
 
 			if (history.length === 1) return; //! this is init load image, this number refers to howManyImagesBeforeUndoAvailable
 			dispatch('change', { url: $imgUrl, ...options });

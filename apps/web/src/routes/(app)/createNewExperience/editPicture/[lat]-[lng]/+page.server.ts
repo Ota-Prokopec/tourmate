@@ -12,7 +12,7 @@ export const load: PageServerLoad = async (event) => {
 	return {
 		newExperience: {
 			placeName: placeDetail.place_name,
-			location: [parseInt(event.params.lat), parseInt(event.params.lng)] as Location
+			location: [JSON.parse(event.params.lat), JSON.parse(event.params.lng)] as Location
 		}
 	};
 };

@@ -30,6 +30,7 @@
 		"@sveltestack/svelte-query": "^1.6.0",
 		"@trpc/client": "^10.32.0",
 		"@trpc/server": "^10.32.0",
+		"@types/d3-geo": "^3.0.6",
 		"@types/lodash": "^4.14.195",
 		"@types/mapbox": "^1.6.42",
 		"@types/mapbox-gl": "^2.7.12",

@@ -28,10 +28,9 @@
 
 	const save = async () => {
 		if (!location) throw new Error('user has no location');
-		//isLoading = true;
+		isLoading = true;
 
-		//if (textOptions.texts[textOptions.index].length) await addLocationLabel();
-		//navigate(`/createNewExperience/editPicture/${location.at(0)}-${location.at(1)}`);
+		navigate(`/createNewExperience/editPicture/${location.at(0)}-${location.at(1)}`);
 	};
 
 	const [actions] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (newUrl, o, action) => {
@@ -62,7 +61,7 @@
 			x: x,
 			y: y,
 			vAlign: 'middle',
-			justify: false,
+			justify: true,
 			fontSize: fontSize,
 			fontStyle: '',
 			debug: false,
@@ -91,8 +90,8 @@
 
 	const editorOptions: EditorOptions = {
 		cropping: {
-			minCropBoxHeight: 600,
-			minCropBoxWidth: 300
+			minCropBoxHeight: 50,
+			minCropBoxWidth: 50
 		}
 	};
 </script>

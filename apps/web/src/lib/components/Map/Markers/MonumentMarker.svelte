@@ -7,19 +7,23 @@
 	import Marker from '../Marker.svelte';
 	import { goto } from '$app/navigation';
 	import { urlToString } from '@app/utils';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
 
 	export let monument: GraphqlDocument<Monument>;
 	export let bouncing = false;
+	export let zoom: number | undefined = undefined;
 
 	let className = '';
 	export { className as class };
+
+	$: zoomClass = zoom && zoom > 18 ? 'w-20 h-20' : 'w-14 h-14';
 </script>
 
 <Marker
 	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing'*/, className)}
 	location={monument.location}
 >
-	<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
+	<Avatar class={zoomClass} src={monument.pictureURL} />
 	<Popover class="w-max" placement="top" open={bouncing}>
 		<Card img={urlToString(monument.pictureURL)} class="mb-4">
 			<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

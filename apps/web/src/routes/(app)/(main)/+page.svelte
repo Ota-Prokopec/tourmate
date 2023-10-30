@@ -14,6 +14,7 @@
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { sdk } from '$src/graphql/sdk';
 	import TakePhotoFromPhone from '$lib/components/Photo/TakePhotoFromPhone.svelte';
+	import MultiMarkers from '$lib/components/Map/Markers/MultiMarkers.svelte';
 
 	export let data: PageData;
 	let location: Location;
@@ -70,8 +71,9 @@
 		{/if}
 
 		{#if monuments}
+			<MultiMarkers let:index locations={monuments.map((monument) => monument.location)} />
 			{#each monuments as monument, index}
-				<MonumentMarker {monument} />
+				<MonumentMarker zoom={mapZoom} {monument} />
 			{/each}
 		{/if}
 	</Map>

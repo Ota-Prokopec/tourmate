@@ -70,6 +70,12 @@ export default (
 		async loadImage(imagejs: ImageJs) {
 			return imagejs
 		}
+		async addImage(image: Image, coords: [number, number]) {
+			const ctx = await this.getCtx()
+			if (!ctx) throw new Error('Ctx is not available')
+			ctx.drawImage(image, ...coords)
+			return await this.load(ctx.canvas.toDataURL('image/png'))
+		}
 
 		async getCtx() {
 			return getCtx(image)

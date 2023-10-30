@@ -17,8 +17,7 @@
 
 	export let zoom: number = 16;
 	export let deg = 0;
-	let style =
-		'https://api.maptiler.com/maps/4f1c74c8-1b8c-4deb-b478-1f58653a6389/style.json?key=gplNC5uqgFO1autCCLdg';
+	let style = 'https://api.maptiler.com/maps/basic-v2/style.json?key=gplNC5uqgFO1autCCLdg';
 
 	let className = '';
 	export { className as class };
