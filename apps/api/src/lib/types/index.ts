@@ -6,5 +6,7 @@ export { default as Location } from './scalarTypes/custom/Location';
 export * from './scalarTypes/custom/Location';
 export { default as Topic } from './scalarTypes/custom/Topic';
 export * from './scalarTypes/custom/Topic';
+export { default as Transport } from './scalarTypes/custom/Transport';
+export * from './scalarTypes/custom/Transport';
 export { default as index } from './scalarTypes/generated/index';
 export * from './scalarTypes/generated/index';

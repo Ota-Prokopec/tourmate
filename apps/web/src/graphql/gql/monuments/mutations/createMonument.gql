@@ -13,6 +13,7 @@ mutation createMonument($input: CreateMonumentInput!) {
 		topics
 		pictureURL
 		placeDetailId
+		transports
 		placeDetail {
 			name
 			_databaseId

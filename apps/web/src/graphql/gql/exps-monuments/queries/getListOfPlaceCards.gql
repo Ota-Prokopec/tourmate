@@ -6,6 +6,7 @@ query getListOfPlaceCards {
 		_id
 		_permissions
 		_databaseId
+		transports
 		location
 		creatorUserId
 		name

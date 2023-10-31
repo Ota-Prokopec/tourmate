@@ -22,6 +22,7 @@ query getListOfItemsForMap(
 		_permissions
 		_databaseId
 		location
+		transports
 		creatorUserId
 		name
 		about

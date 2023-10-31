@@ -13,6 +13,7 @@ query getListOfMonumentCardsByTopics($input: MonumentTopicsInput!) {
 		topics
 		placeDetailId
 		pictureURL
+		transports
 		creator {
 			_createdAt
 			_updatedAt

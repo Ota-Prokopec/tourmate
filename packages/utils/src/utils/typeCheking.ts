@@ -1,4 +1,4 @@
-import { Base64, Location, Topic } from '@app/ts-types'
+import { Base64, Location, Topic, Transport, transportZod } from '@app/ts-types'
 import { topicZod } from '@app/ts-types/src/Topic'
 
 export const isBase64 = (value: unknown): value is Base64 => {
@@ -27,6 +27,15 @@ export const isLocation = (arg: unknown): arg is Location =>
 export const isTopic = (arg: unknown): arg is Topic => {
 	try {
 		topicZod.parse(arg)
+		return true
+	} catch (error) {
+		return false
+	}
+}
+
+export const isTransport = (arg: unknown): arg is Transport => {
+	try {
+		transportZod.parse(arg)
 		return true
 	} catch (error) {
 		return false

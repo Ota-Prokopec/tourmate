@@ -56,7 +56,9 @@ export const countSameItemsInArray = <InputArr extends Array<any>>(
 	)
 
 export const roundNumber = (num: number, digits: number): number => {
-	return JSON.parse(num.toFixed(digits))
+	const value = JSON.parse(num.toFixed(digits))
+	if (typeof value === 'number') return value
+	throw new Error('Input is not a number')
 }
 
 export const arrayBufferIntoBase64 = (arrBuff: ArrayBuffer): Base64 =>

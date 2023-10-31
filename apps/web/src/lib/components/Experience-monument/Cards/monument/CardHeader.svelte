@@ -1,9 +1,11 @@
 <script lang="ts">
+	import ChooseFromIconsItem from '$lib/components/ChooseFromIcons/ChooseFromIconsItem.svelte';
 	import LikeSection from '$lib/components/Common/LikeSection.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import type { MonumentCard } from '@app/ts-types';
 	import { createEventDispatcher } from 'svelte';
-	import TopicItem from '../../topic/TopicItem.svelte';
+	import { topics } from '../../topic/topics';
+	import { at } from 'lodash';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
@@ -23,7 +25,9 @@
 	{#if monument.topics}
 		<Row class="gap-2">
 			{#each monument.topics as topic}
-				<TopicItem topicKey={topic} />
+				<ChooseFromIconsItem>
+					<svelte:component this={topics.filter((t) => t.key === topic)[0].component} />
+				</ChooseFromIconsItem>
 			{/each}
 		</Row>
 	{/if}

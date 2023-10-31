@@ -10,6 +10,7 @@ declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     location<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Location";
     topic<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Topic";
+    transport<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Transport";
     /**
      * A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
      */
@@ -20,6 +21,7 @@ declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
     location<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Location";
     topic<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Topic";
+    transport<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Transport";
     /**
      * A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
      */
@@ -49,6 +51,7 @@ export interface NexusGenInputs {
     picture?: string | null; // String
     placeName: string; // String!
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
+    transports: NexusGenScalars['Transport'][]; // [Transport!]!
   }
   ExperienceLocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
@@ -83,6 +86,7 @@ export interface NexusGenScalars {
   ID: string
   Location: [number, number]
   Topic: "castle" | "monument" | "person" | "animals" | "hiking"
+  Transport: "train" | "bus" | "car" | "walk" | "bike"
   URL: URL
 }
 
@@ -142,6 +146,7 @@ export interface NexusGenObjects {
     pictureURL?: NexusGenScalars['URL'] | null; // URL
     placeDetailId: string; // String!
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
+    transports: NexusGenScalars['Transport'][]; // [Transport!]!
   }
   MonumentLike: { // root type
     _collectionId: string; // String!
@@ -248,6 +253,7 @@ export interface NexusGenFieldTypes {
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
+    transports: NexusGenScalars['Transport'][]; // [Transport!]!
   }
   MonumentLike: { // field return type
     _collectionId: string; // String!
@@ -366,6 +372,7 @@ export interface NexusGenFieldTypeNames {
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'
     topics: 'Topic'
+    transports: 'Transport'
   }
   MonumentLike: { // field return type name
     _collectionId: 'String'

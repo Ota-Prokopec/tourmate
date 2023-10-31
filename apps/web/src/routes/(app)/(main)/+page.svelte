@@ -71,10 +71,9 @@
 		{/if}
 
 		{#if monuments}
-			<MultiMarkers let:index locations={monuments.map((monument) => monument.location)} />
-			{#each monuments as monument, index}
-				<MonumentMarker zoom={mapZoom} {monument} />
-			{/each}
+			<MultiMarkers let:index locations={monuments.map((monument) => monument.location)}>
+				<MonumentMarker zoom={mapZoom} {monuments} monument={monuments[index]} />
+			</MultiMarkers>
 		{/if}
 	</Map>
 	{#if almostProfile}

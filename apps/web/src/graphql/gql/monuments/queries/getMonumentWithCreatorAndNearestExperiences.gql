@@ -13,6 +13,7 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 		about
 		placeDetailId
 		pictureURL
+		transports
 		creator {
 			_permissions
 			_databaseId

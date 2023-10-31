@@ -13,6 +13,7 @@ query getMonument($id: String!) {
 		about
 		placeDetailId
 		pictureURL
+		transports
 		placeDetail {
 			name
 			_databaseId

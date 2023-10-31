@@ -8,6 +8,7 @@
 	import Popover from '$lib/components/Common/Popover.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
 	import { device } from '@app/utils';
+	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
 
 	export let data: PageData;
 
@@ -18,6 +19,7 @@
 </script>
 
 <div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
+	<MonumentCard />
 	<Card img={cardURL} class="w-full h-min m-4 sm:absolute sm:left-0 z-50 gap-4 rounded-xl">
 		<UserItem
 			user={{

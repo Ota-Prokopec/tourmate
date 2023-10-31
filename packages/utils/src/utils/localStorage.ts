@@ -10,7 +10,9 @@ const browserStorage = new Proxy<Record<string | number | symbol, any>>(
 			if (!isTrivial(value)) {
 				window.localStorage.setItem(
 					key.toString(),
-					JSON.stringify(value, (_key, value) => (typeof value === 'string' ? `'${value}'` : value)),
+					JSON.stringify(value, (_key, value) =>
+						typeof value === 'string' ? `'${value}'` : value,
+					),
 				)
 				return true
 			}
@@ -31,7 +33,7 @@ const browserStorage = new Proxy<Record<string | number | symbol, any>>(
 			if (!item) return null
 
 			try {
-				const shalowObject = JSON.parse(item)
+				const shalowObject = JSON.parse(item) as Record<string, any>
 				return proxify(window.localStorage, shalowObject, key.toString(), shalowObject)
 			} catch (e) {
 				return item

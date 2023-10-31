@@ -36,7 +36,7 @@
 	import { appwriteKeys } from '@app/appwrite-client';
 	import * as permissions from '@app/appwrite-permissions';
 	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
-	import Icon from 'svelte-icons-pack/Icon.svelte';
+	import Icon from '$lib/components/Icons/IconPach.svelte';
 
 	export let data: LayoutData;
 

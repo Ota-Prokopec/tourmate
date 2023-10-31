@@ -1,4 +1,4 @@
-import * as permissionslib from '../permissions/permissions'
+import * as permissionslib from '@app/appwrite-permissions'
 import { Client, Databases, ID, Models, Query } from 'appwrite'
 import { Types } from '../types/Types'
 import {

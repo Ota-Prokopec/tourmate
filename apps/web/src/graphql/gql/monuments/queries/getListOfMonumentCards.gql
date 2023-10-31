@@ -13,6 +13,7 @@ query getListOfMonumentCards {
 		topics
 		placeDetailId
 		pictureURL
+		transports
 		creator {
 			_createdAt
 			_updatedAt

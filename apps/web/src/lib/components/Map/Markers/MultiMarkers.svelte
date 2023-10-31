@@ -8,7 +8,7 @@
 	const mapData: FeatureCollection<Point> = {
 		type: 'FeatureCollection',
 		features: locations.map((location, i) => ({
-			geometry: { type: 'Point', coordinates: location },
+			geometry: { type: 'Point', coordinates: [location[1], location[0]] },
 			properties: { index: i },
 			id: i,
 			type: 'Feature'
@@ -19,15 +19,14 @@
 <GeoJSON
 	cluster={{
 		radius: 500,
-		maxZoom: 14,
-		properties: {
-			total_mag: ['+', ['get', 'mag']]
-		}
+		properties: {}
 	}}
 	data={mapData}
 >
 	<MarkerLayer let:feature>
-		{@const index = feature.properties.point_count - 1 || feature.properties.index}
-		<slot {index} />
+		{#if feature.properties && typeof feature.properties.point_count === 'number'}
+			{@const index = feature.properties.index || feature.properties.point_count - 1}
+			<slot {index} />
+		{/if}
 	</MarkerLayer>
 </GeoJSON>

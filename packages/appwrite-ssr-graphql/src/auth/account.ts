@@ -1,6 +1,7 @@
 import { Account, Client, ID } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
 import { Types } from '../types/Types'
+import { z } from 'zod'
 
 const userHasCookies = (cookies: {}): cookies is Types.Cookie[] =>
 	Object.entries(cookies).length !== 0
@@ -63,8 +64,12 @@ export default (client: Client, hostname: string) => {
 
 				const json = await response.json()
 
-				if (json.code >= 400)
-					throw new Error(`create session error, status: ${response.status}`)
+				const { code } = z.object({ code: z.number() }).parse(json)
+
+				if (code >= 400)
+					throw new Error(
+						'wrong email or password at appwrite-server account/createSession',
+					)
 
 				const cookiesStr = (response.headers.get('set-cookie') ?? '')
 					.split(SSRHostName)

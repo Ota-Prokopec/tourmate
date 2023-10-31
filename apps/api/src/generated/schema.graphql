@@ -41,6 +41,7 @@ input CreateMonumentInput {
   picture: String
   placeName: String!
   topics: [Topic!]!
+  transports: [Transport!]!
 }
 
 type EmailLogin {
@@ -104,6 +105,7 @@ type Monument {
   placeDetail: PlaceDetail!
   placeDetailId: String!
   topics: [Topic!]!
+  transports: [Transport!]!
 }
 
 input MonumentInputByName {
@@ -174,6 +176,8 @@ type Query {
 }
 
 scalar Topic
+
+scalar Transport
 
 """
 A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.

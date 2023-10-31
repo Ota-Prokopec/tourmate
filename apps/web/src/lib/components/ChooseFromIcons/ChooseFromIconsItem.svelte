@@ -1,12 +1,8 @@
 <script lang="ts">
-	import Icon from '$lib/components/Common/Icon.svelte';
 	import { twMerge } from 'tailwind-merge';
-	import { topics } from './topics';
+	import Icon from '../Common/Icon.svelte';
 
-	export let topicKey: (typeof topics)[number]['key'];
-	export let chosen = false;
-
-	const topic = topics.filter((t) => t.key === topicKey)[0];
+	export let chosen: boolean = false;
 
 	let className = '';
 	export { className as class };
@@ -20,5 +16,5 @@
 		className
 	)}
 >
-	<svelte:component this={topic.icon} />
+	<slot />
 </Icon>
