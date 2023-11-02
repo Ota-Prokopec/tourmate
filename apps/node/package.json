@@ -5,6 +5,10 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts"
+		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
+		"build": "tsc -build"
+	},
+	"dependencies": {
+		"express": "^4.18.2"
 	}
 }
