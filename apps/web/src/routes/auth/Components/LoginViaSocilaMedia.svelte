@@ -10,7 +10,7 @@
 	import { twMerge } from 'tailwind-merge';
 	const dispatch = createEventDispatcher<{ click: undefined }>();
 
-	export let termsAccepted: boolean = true;
+	export let disabled: boolean = false;
 
 	const logout = async () => {
 		try {
@@ -33,32 +33,32 @@
 <button class="w-auto flex flex-wrap flex-row gap-10 items-center justify-center">
 	<Icon
 		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		{disabled}
+		class={twMerge('w-14', disabled && blurryClass)}
 		on:click={() => login('facebook')}
 	>
 		<IconFacebook />
 	</Icon>
 	<Icon
 		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		{disabled}
+		class={twMerge('w-14', disabled && blurryClass)}
 		on:click={() => login('google')}
 	>
 		<IconGoogle />
 	</Icon>
 	<Icon
 		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		{disabled}
+		class={twMerge('w-14', disabled && blurryClass)}
 		on:click={() => login('discord')}
 	>
 		<IconDiscord />
 	</Icon>
 	<Icon
 		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
+		{disabled}
+		class={twMerge('w-14', disabled && blurryClass)}
 		on:click={() => login('github')}
 	>
 		<IconGithub />

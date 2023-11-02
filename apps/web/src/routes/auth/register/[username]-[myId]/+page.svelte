@@ -9,12 +9,13 @@
 	import { sdk } from '$src/graphql/sdk';
 	import ErrorHelpler from '$lib/components/Common/ErrorHelper.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
-	import { Toggle } from 'flowbite-svelte';
+	import { Checkbox, Toggle } from 'flowbite-svelte';
 	import { ApolloError } from '@apollo/client';
 	import { SyncLoader } from 'svelte-loading-spinners';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import EmailSent from '../../Components/EmailSent.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import { AppwriteException } from 'appwrite';
 
 	export let data: PageData;
 
@@ -24,6 +25,8 @@
 	let state: 'loading' | 'email-sent' | null = null;
 	let error = '';
 	let termsAccepted = false;
+	$: ableToRegister =
+		termsAccepted && email.length > 7 && password.length > 6 && repeatPassword.length > 6;
 
 	//set username and myid into localstorage for being able to access this data when user registers via socila media
 	$lsStore.user = {
@@ -48,6 +51,7 @@
 			state = 'email-sent';
 		} catch (err) {
 			state = null;
+			if (err instanceof AppwriteException) error = err.message;
 			if (!(err instanceof ApolloError)) return;
 			error = err.message;
 		}
@@ -68,18 +72,18 @@
 			<ErrorHelpler bind:message={error} timeout={2000} />
 
 			<div class="w-full flex justify-center">
-				<Button disabled={!termsAccepted} on:click={registerViaEmail} class="w-40 ">
+				<Button disabled={!ableToRegister} on:click={registerViaEmail} class="w-40 ">
 					Zaregistrovat
 				</Button>
 			</div>
 		</div>
 
-		<Toggle bind:checked={termsAccepted}>accept terms and permissions</Toggle>
+		<Checkbox bind:checked={termsAccepted}>accept terms and permissions</Checkbox>
 
 		<div class="w-full flex flex-wrap flex-col gap-4 relative">
 			<Title class="text-xl">Zaregistrovat přes sociální sítě</Title>
 
-			<LoginViaSocilaMedia {termsAccepted} on:click={() => (state = 'loading')} />
+			<LoginViaSocilaMedia disabled={!ableToRegister} on:click={() => (state = 'loading')} />
 		</div>
 	</div>
 {/if}

@@ -1,6 +1,6 @@
 import express from 'express'
 
-import appwrite from '@app/appwrite-ssr-graphql'
+import appwrite from '@app/appwrite-ssr-graphql/dist/index'
 
 const app = express()
 

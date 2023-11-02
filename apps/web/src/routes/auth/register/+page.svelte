@@ -42,6 +42,7 @@
 		<Input
 			pattern={/[^a-zA-Z0-9]/}
 			maxLength={40}
+			class="w-full"
 			bind:value={myId}
 			icon="@"
 			prefix="@"
