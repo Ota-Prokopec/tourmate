@@ -1,3 +1,3 @@
-import app from '../../api/src/index';
+import app from '../../node/src/index';
 
 export default app;
