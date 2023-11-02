@@ -1,7 +1,8 @@
 import { list, nullable, objectType } from 'nexus'
 import UsersPreferences from './UsersPreferences'
-import { getListOfExperineceByUser, getListOfMonumentsByUser } from '../lib/database/experiences-monuments'
+import { fromLatLongIntoLocation } from '../lib/database/experiences-monuments'
 import { GraphqlDocument, Preferences } from '@app/ts-types'
+import { Queries } from '../lib/appwrite/appwrite'
 
 export type AccountGetOutput = GraphqlDocument<{
 	emailVerification: boolean
@@ -29,7 +30,10 @@ export default objectType({
 		t.nullable.boolean('status')
 		t.nullable.boolean('emailVerification')
 		t.nullable.boolean('phoneVerification')
-		t.nullable.field('profilePictureURL', { type: 'URL', description: 'This is URL of profile picture. Not its id.' })
+		t.nullable.field('profilePictureURL', {
+			type: 'URL',
+			description: 'This is URL of profile picture. Not its id.',
+		})
 		t.nullable.field('prefs', {
 			type: nullable(UsersPreferences),
 		}),
@@ -38,7 +42,10 @@ export default objectType({
 				resolve: async (source, args, ctx, info) => {
 					const { collections } = ctx.appwrite
 
-					return await getListOfExperineceByUser({ userId: source.userId }, collections)
+					const queries = [Queries.experience.equal('userId', source.userId)]
+					return fromLatLongIntoLocation(
+						...(await collections.experience.listDocuments(queries)).documents,
+					)
 				},
 			}),
 			t.field('monuments', {
@@ -46,7 +53,10 @@ export default objectType({
 				resolve: async (source, args, ctx, info) => {
 					const { collections } = ctx.appwrite
 
-					return getListOfMonumentsByUser({ userId: source.userId }, collections)
+					const queries = [Queries.monument.equal('creatorUserId', source.userId)]
+					return fromLatLongIntoLocation(
+						...(await collections.monument.listDocuments(queries)).documents,
+					)
 				},
 			})
 	},

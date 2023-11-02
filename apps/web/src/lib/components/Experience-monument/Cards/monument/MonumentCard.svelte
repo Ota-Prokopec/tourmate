@@ -99,10 +99,13 @@
 
 			<Column>
 				<CardHeader on:like={like} on:unlike={unlike} {amIOwner} {monument} />
-
 				<CardFooter {monument} />
 			</Column>
 		</svelte:component>
+
+		<div class="w-full h-auto flex justify-start">
+			<slot />
+		</div>
 
 		{#if !disableSeeMoreButton}
 			<Button color="blue" class="m-2 w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}

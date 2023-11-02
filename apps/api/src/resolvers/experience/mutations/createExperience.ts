@@ -2,7 +2,7 @@ import { arg, mutationField } from 'nexus'
 import createExperienceInput from '../schema/CreateExperienceInput'
 import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
-import { transformExperienceDocumentsIntoExperience } from '../../../lib/database/experiences-monuments'
+import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
 import buckets from '@app/cloudinary-server'
 
 export default mutationField('createExperience', {
@@ -37,6 +37,6 @@ export default mutationField('createExperience', {
 					placeDetailId: placeDetail._id,
 				})
 			})
-		return transformExperienceDocumentsIntoExperience(document)[0]
+		return fromLatLongIntoLocation(document)[0]
 	},
 })

@@ -151,15 +151,22 @@ export type MonumentLike = {
   userId: Scalars['String']['output'];
 };
 
-export type MonumentLocationAndTopicsInput = {
+export type MonumentLocationInput = {
+  location: Scalars['Location']['input'];
+  range: Scalars['Float']['input'];
+};
+
+export type MonumentLocationTopicsInput = {
   location: Scalars['Location']['input'];
   range: Scalars['Float']['input'];
   topics: Array<Scalars['Topic']['input']>;
 };
 
-export type MonumentLocationInput = {
+export type MonumentLocationTopicsTransportsInput = {
   location: Scalars['Location']['input'];
   range: Scalars['Float']['input'];
+  topics: Array<Scalars['Topic']['input']>;
+  transports: Array<Scalars['Transport']['input']>;
 };
 
 export type MonumentTopicsInput = {
@@ -217,6 +224,7 @@ export type Query = {
   getListOfMonuments: Array<Monument>;
   getListOfMonumentsByLocation: Array<Monument>;
   getListOfMonumentsByLocationAndTopics: Array<Monument>;
+  getListOfMonumentsByLocationAndTopicsAndTransport: Array<Monument>;
   getListOfMonumentsByTopics: Array<Monument>;
   getListOfMonumentsSearchByName: Array<Monument>;
   getMonument: Monument;
@@ -262,7 +270,12 @@ export type QueryGetListOfMonumentsByLocationArgs = {
 
 
 export type QueryGetListOfMonumentsByLocationAndTopicsArgs = {
-  input: MonumentLocationAndTopicsInput;
+  input: MonumentLocationTopicsInput;
+};
+
+
+export type QueryGetListOfMonumentsByLocationAndTopicsAndTransportArgs = {
+  input: MonumentLocationTopicsTransportsInput;
 };
 
 
@@ -426,11 +439,18 @@ export type GetListOfMonumentCardsByLocationQueryVariables = Exact<{
 export type GetListOfMonumentCardsByLocationQuery = { __typename?: 'Query', getListOfMonumentsByLocation: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> };
 
 export type GetListOfMonumentCardsByLocationAndTopicsQueryVariables = Exact<{
-  input: MonumentLocationAndTopicsInput;
+  input: MonumentLocationTopicsInput;
 }>;
 
 
 export type GetListOfMonumentCardsByLocationAndTopicsQuery = { __typename?: 'Query', getListOfMonumentsByLocationAndTopics: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> };
+
+export type GetListOfMonumentCardsByLocationAndTopicsAndTransportsQueryVariables = Exact<{
+  input: MonumentLocationTopicsTransportsInput;
+}>;
+
+
+export type GetListOfMonumentCardsByLocationAndTopicsAndTransportsQuery = { __typename?: 'Query', getListOfMonumentsByLocationAndTopicsAndTransport: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> };
 
 export type GetListOfMonumentCardsBySearchingNameQueryVariables = Exact<{
   input: MonumentInputByName;
@@ -1211,8 +1231,79 @@ export const GetListOfMonumentCardsByLocationDoc = gql`
 }
     `;
 export const GetListOfMonumentCardsByLocationAndTopicsDoc = gql`
-    query getListOfMonumentCardsByLocationAndTopics($input: MonumentLocationAndTopicsInput!) {
+    query getListOfMonumentCardsByLocationAndTopics($input: MonumentLocationTopicsInput!) {
   getListOfMonumentsByLocationAndTopics(input: $input) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    location
+    creatorUserId
+    name
+    about
+    topics
+    placeDetailId
+    pictureURL
+    transports
+    creator {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      status
+      emailVerification
+      phoneVerification
+      profilePictureURL
+    }
+    placeDetail {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      name
+    }
+    likes {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
+      user {
+        _id
+        userId
+        myId
+        username
+        profilePictureURL
+      }
+    }
+    liked {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
+    }
+  }
+}
+    `;
+export const GetListOfMonumentCardsByLocationAndTopicsAndTransportsDoc = gql`
+    query getListOfMonumentCardsByLocationAndTopicsAndTransports($input: MonumentLocationTopicsTransportsInput!) {
+  getListOfMonumentsByLocationAndTopicsAndTransport(input: $input) {
     _createdAt
     _updatedAt
     _collectionId
@@ -2174,6 +2265,41 @@ export const getListOfMonumentCardsByLocationAndTopics = (
                 query: ObservableQuery<
                   GetListOfMonumentCardsByLocationAndTopicsQuery,
                   GetListOfMonumentCardsByLocationAndTopicsQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const getListOfMonumentCardsByLocationAndTopicsAndTransports = (
+            options: Omit<
+              WatchQueryOptions<GetListOfMonumentCardsByLocationAndTopicsAndTransportsQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetListOfMonumentCardsByLocationAndTopicsAndTransportsQuery> & {
+              query: ObservableQuery<
+                GetListOfMonumentCardsByLocationAndTopicsAndTransportsQuery,
+                GetListOfMonumentCardsByLocationAndTopicsAndTransportsQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetListOfMonumentCardsByLocationAndTopicsAndTransportsDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetListOfMonumentCardsByLocationAndTopicsAndTransportsQuery> & {
+                query: ObservableQuery<
+                  GetListOfMonumentCardsByLocationAndTopicsAndTransportsQuery,
+                  GetListOfMonumentCardsByLocationAndTopicsAndTransportsQueryVariables
                 >;
               }
             >(

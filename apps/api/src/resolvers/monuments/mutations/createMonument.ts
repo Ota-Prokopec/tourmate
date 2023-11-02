@@ -1,4 +1,4 @@
-import { transformMonumentsDocumentsIntoMonuments } from '../../../lib/database/experiences-monuments'
+import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
 import cloudinary from '@app/cloudinary-server'
@@ -29,7 +29,7 @@ export default mutationField('createMonument', {
 			//create monument
 			const document = await collections.monument.createDocument(
 				{
-					transports: [],
+					transports: args.input.transports,
 					placeDetailId: placeDetail._id,
 					topics: args.input.topics,
 					latitude: args.input.location[0],
@@ -41,7 +41,7 @@ export default mutationField('createMonument', {
 				},
 				[ctx.user],
 			)
-			return transformMonumentsDocumentsIntoMonuments(document)[0]
+			return fromLatLongIntoLocation(document)[0]
 		} catch (error) {
 			console.log(error)
 			throw new Error('')

@@ -1,4 +1,7 @@
-import { getListOfExperineceByLocation } from '../lib/database/experiences-monuments'
+import {
+	fromLatLongIntoLocation,
+	locationQueries,
+} from '../lib/database/experiences-monuments'
 import { isLocation } from '@app/utils'
 import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'
@@ -44,9 +47,9 @@ export default objectType({
 					const { collections } = ctx.appwrite
 					if (!isLocation(source.location)) throw new Error('location is not valid')
 
-					return await getListOfExperineceByLocation(
-						{ location: source.location, range: 10, limit: 20 },
-						collections,
+					const queries = [...locationQueries(source.location)]
+					return fromLatLongIntoLocation(
+						...(await collections.experience.listDocuments(queries)).documents,
 					)
 				},
 			})

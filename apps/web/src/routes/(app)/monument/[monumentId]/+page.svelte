@@ -9,6 +9,7 @@
 	import Marker from '$lib/components/Map/Marker.svelte';
 	import { device } from '@app/utils';
 	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 
 	export let data: PageData;
 
@@ -18,32 +19,12 @@
 		device.recognizeWidth() === 'mobile' ? 'bottom' : 'right';
 </script>
 
-<div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	<MonumentCard />
-	<Card img={cardURL} class="w-full h-min m-4 sm:absolute sm:left-0 z-50 gap-4 rounded-xl">
-		<UserItem
-			user={{
-				myId: data.monument.creator.myId,
-				username: data.monument.creator.username,
-				profilePictureURL: data.monument.creator.profilePictureURL,
-				userId: data.monument.creatorUserId
-			}}
-		/>
-		<Popover placement={userPopoverPlacement}>
-			<AlmostProfileWithMainImage disableCloseButton class="" userInfo={data.monument.creator} />
-		</Popover>
-		<div class="w-full h-auto p-4">
-			<Icon icon="fas fa-map-marker-alt" class="text-3xl text-red-500" />
-			<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-				{data.monument.name}
-			</h5>
-			<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 flex flex-wrap flex-col gap-2">
-				<span>lokace: [{data.monument.location}]</span>
-				<span>místo: {data.monument.placeDetail.name}</span>
-				<span> {data.monument.about}</span>
-			</p>
-		</div>
-	</Card>
+<div class="w-full h-auto flex items-center relative flex-wrap flex-col gap-4">
+	<MonumentCard disableSeeMoreButton class="absolute top-0 left-0 z-50" monument={data.monument}>
+		<Text class="ml-2 mt-4">
+			{data.monument.about}
+		</Text>
+	</MonumentCard>
 
 	<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
 		<Marker class="z-50" location={data.monument.location}>

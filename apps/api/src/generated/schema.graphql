@@ -125,19 +125,9 @@ type MonumentLike {
   userId: String!
 }
 
-input MonumentLocationAndTopicsInput {
-  location: Location!
-  range: Float!
-  topics: [Topic!]!
-}
-
 input MonumentLocationInput {
   location: Location!
   range: Float!
-}
-
-input MonumentTopicsInput {
-  topics: [Topic!]!
 }
 
 type Mutation {
@@ -163,13 +153,8 @@ type Query {
   getAccountByMyId(myId: String!): Account!
   getAccounts(searchingText: String): [Account!]!
   getExperience(id: String!): Experience!
-  getListOfExperiences: [Experience!]!
-  getListOfExperiencesByLocation(input: ExperienceLocationInput!): [Experience!]!
-  getListOfMonuments: [Monument!]!
-  getListOfMonumentsByLocation(input: MonumentLocationInput!): [Monument!]!
-  getListOfMonumentsByLocationAndTopics(input: MonumentLocationAndTopicsInput!): [Monument!]!
-  getListOfMonumentsByTopics(input: MonumentTopicsInput!): [Monument!]!
-  getListOfMonumentsSearchByName(input: MonumentInputByName!): [Monument!]!
+  getListOfExperiences(location: ExperienceLocationInput): [Experience!]!
+  getListOfMonuments(limit: Int = 10, location: MonumentLocationInput, name: String, topics: [Topic!], transports: [Transport!]): [Monument!]!
   getMonument(id: String!): Monument!
   logInViaEmail(email: String!, password: String!): EmailLogin!
   updateProfilePicture(picture: String!): Account!

@@ -3,6 +3,7 @@
 	import Icon from '../Common/Icon.svelte';
 
 	export let chosen: boolean = false;
+	export let circuit = true;
 
 	let className = '';
 	export { className as class };
@@ -11,9 +12,10 @@
 <Icon
 	on:click
 	class={twMerge(
-		'border border-gray-900 rounded-full p-2 w-8 h-8',
+		'border-gray-900 rounded-full p-2 w-8 h-8',
 		chosen && 'fill-blue-300 border-blue-300',
-		className
+		className,
+		circuit && 'border'
 	)}
 >
 	<slot />

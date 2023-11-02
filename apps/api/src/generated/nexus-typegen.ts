@@ -61,17 +61,9 @@ export interface NexusGenInputs {
     limit: number; // Int!
     name: string; // String!
   }
-  MonumentLocationAndTopicsInput: { // input type
-    location: NexusGenScalars['Location']; // Location!
-    range: number; // Float!
-    topics: NexusGenScalars['Topic'][]; // [Topic!]!
-  }
   MonumentLocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
     range: number; // Float!
-  }
-  MonumentTopicsInput: { // input type
-    topics: NexusGenScalars['Topic'][]; // [Topic!]!
   }
 }
 
@@ -288,12 +280,7 @@ export interface NexusGenFieldTypes {
     getAccounts: NexusGenRootTypes['Account'][]; // [Account!]!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
-    getListOfExperiencesByLocation: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
-    getListOfMonumentsByLocation: NexusGenRootTypes['Monument'][]; // [Monument!]!
-    getListOfMonumentsByLocationAndTopics: NexusGenRootTypes['Monument'][]; // [Monument!]!
-    getListOfMonumentsByTopics: NexusGenRootTypes['Monument'][]; // [Monument!]!
-    getListOfMonumentsSearchByName: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
@@ -407,12 +394,7 @@ export interface NexusGenFieldTypeNames {
     getAccounts: 'Account'
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
-    getListOfExperiencesByLocation: 'Experience'
     getListOfMonuments: 'Monument'
-    getListOfMonumentsByLocation: 'Monument'
-    getListOfMonumentsByLocationAndTopics: 'Monument'
-    getListOfMonumentsByTopics: 'Monument'
-    getListOfMonumentsSearchByName: 'Monument'
     getMonument: 'Monument'
     logInViaEmail: 'EmailLogin'
     updateProfilePicture: 'Account'
@@ -455,20 +437,15 @@ export interface NexusGenArgTypes {
     getExperience: { // args
       id: string; // String!
     }
-    getListOfExperiencesByLocation: { // args
-      input: NexusGenInputs['ExperienceLocationInput']; // ExperienceLocationInput!
+    getListOfExperiences: { // args
+      location?: NexusGenInputs['ExperienceLocationInput'] | null; // ExperienceLocationInput
     }
-    getListOfMonumentsByLocation: { // args
-      input: NexusGenInputs['MonumentLocationInput']; // MonumentLocationInput!
-    }
-    getListOfMonumentsByLocationAndTopics: { // args
-      input: NexusGenInputs['MonumentLocationAndTopicsInput']; // MonumentLocationAndTopicsInput!
-    }
-    getListOfMonumentsByTopics: { // args
-      input: NexusGenInputs['MonumentTopicsInput']; // MonumentTopicsInput!
-    }
-    getListOfMonumentsSearchByName: { // args
-      input: NexusGenInputs['MonumentInputByName']; // MonumentInputByName!
+    getListOfMonuments: { // args
+      limit: number | null; // Int
+      location?: NexusGenInputs['MonumentLocationInput'] | null; // MonumentLocationInput
+      name?: string | null; // String
+      topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
+      transports?: NexusGenScalars['Transport'][] | null; // [Transport!]
     }
     getMonument: { // args
       id: string; // String!

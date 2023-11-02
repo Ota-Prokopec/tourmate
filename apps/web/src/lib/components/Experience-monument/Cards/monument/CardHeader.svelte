@@ -6,13 +6,15 @@
 	import { createEventDispatcher } from 'svelte';
 	import { topics } from '../../topic/topics';
 	import { at } from 'lodash';
+	import { transports } from '../../transportType/transports';
+	import Column from '$lib/components/Common/Column.svelte';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
 	export let amIOwner: boolean;
 </script>
 
-<Row class="w-full justify-between">
+<Row class="w-full justify-between m-2">
 	<LikeSection
 		ableToLike={!amIOwner}
 		on:like={() => dispatch('like')}
@@ -22,13 +24,20 @@
 			otherUsersThatLiked: monument.likes.map((l) => l.user)
 		}}
 	/>
-	{#if monument.topics}
-		<Row class="gap-2">
+	<Column class="gap-1">
+		<Row>
 			{#each monument.topics as topic}
-				<ChooseFromIconsItem>
+				<ChooseFromIconsItem circuit={false}>
 					<svelte:component this={topics.filter((t) => t.key === topic)[0].component} />
 				</ChooseFromIconsItem>
 			{/each}
 		</Row>
-	{/if}
+		<Row>
+			{#each monument.transports as transport}
+				<ChooseFromIconsItem circuit={false}>
+					<svelte:component this={transports.filter((t) => t.key === transport)[0].component} />
+				</ChooseFromIconsItem>
+			{/each}
+		</Row>
+	</Column>
 </Row>
