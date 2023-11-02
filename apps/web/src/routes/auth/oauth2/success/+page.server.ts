@@ -12,6 +12,8 @@ const params = {
 	httpOnly: true
 } as const;
 
+console.log(params);
+
 export const load: PageServerLoad = (event) => {
 	const urlParams = new URLSearchParams(event.url.searchParams);
 	const secret = urlParams.get('secret');
@@ -20,7 +22,7 @@ export const load: PageServerLoad = (event) => {
 
 	console.log('session');
 
-	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}`, secret);
+	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}`, secret, params);
 	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}_legacy`, secret, params);
 
 	console.log('session');
