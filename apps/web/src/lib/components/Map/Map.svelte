@@ -17,8 +17,7 @@
 
 	export let zoom: number = 16;
 	export let deg = 0;
-	let style =
-		'https://api.maptiler.com/maps/4f1c74c8-1b8c-4deb-b478-1f58653a6389/style.json?key=gplNC5uqgFO1autCCLdg';
+	let style = 'https://api.maptiler.com/maps/basic-v2/style.json?key=gplNC5uqgFO1autCCLdg';
 
 	let className = '';
 	export { className as class };
@@ -27,7 +26,6 @@
 <div class={twMerge('w-full h-full relative', className)}>
 	{#if location}
 		<MapLibre
-			on:click
 			{style}
 			bind:map
 			center={[location[1], location[0]]}
@@ -100,6 +98,12 @@
 		display: none !important;
 	}
 	:global(.mapboxgl-ctrl-bottom-right) {
+		display: none !important;
+	}
+	:global(.maplibregl-compact-show) {
+		display: none !important;
+	}
+	:global(.maplibregl-compact) {
 		display: none !important;
 	}
 </style>

@@ -1,33 +1,74 @@
-export const executeFunctionBeforeAndAfterClassMethod = <TClass extends Record<any, any>>(
+class A {}
+
+export function executeFunctionBeforeAndAfterClassMethod<
+	Methods extends {},
+	TClass extends { new (): any },
+>(
 	classs: TClass,
 	funs?: {
-		before?: () => any
-		after?: (result: any) => any
+		before?: (
+			classs: TClass,
+			propertyName: keyof Methods,
+		) => TClass | TClass | boolean | boolean
+		after?: (
+			result: Methods[keyof Methods],
+			classs: TClass,
+			propertyName: keyof Methods,
+		) =>
+			| Methods[keyof Methods]
+			| false
+			| undefined
+			| null
+			| void
+			| Methods[keyof Methods]
+			| false
+			| undefined
+			| null
+			| void
 	},
-) => {
-	Object.getOwnPropertyNames(classs.prototype).forEach((propertyName) => {
-		// First to do: we save the original method. Adding it to prototype
-		// is a good idea, we keep 'method1' as '_method1' and so on
-		classs.prototype[`_${propertyName}`] = classs.prototype[propertyName]
+	excludedMethods?: {
+		before?: (keyof Methods)[]
+		after?: (keyof Methods)[]
+	},
+) {
+	;(Object.getOwnPropertyNames(classs.prototype) as unknown as (keyof Methods)[]).forEach(
+		(propertyName) => {
+			classs.prototype[`_${propertyName.toString()}`] = classs.prototype[propertyName]
 
-		// Next, we replace the original method with one
-		classs.prototype[propertyName] = function () {
-			if (funs?.before) {
-				const beforeRes = funs.before()
-				if (!beforeRes) return //this means that call was ended when returned value was false
+			classs.prototype[propertyName] = async function (...args: any[]) {
+				if (funs?.before) {
+					if (
+						excludedMethods &&
+						excludedMethods.before &&
+						excludedMethods.before.includes(propertyName as keyof Methods)
+					)
+						return
+					const beforeRes = await funs.before(classs, propertyName)
+					if (!beforeRes) return
+					if (beforeRes !== true) classs = beforeRes
+				}
+
+				let result = this['_' + propertyName.toString()](
+					...args,
+				) as Methods[keyof Methods]
+
+				if (funs?.after) {
+					if (
+						!(
+							excludedMethods &&
+							excludedMethods.after &&
+							excludedMethods.after.includes(propertyName as keyof Methods)
+						)
+					) {
+						const afterRes = await funs.after(result, classs, propertyName)
+						if (afterRes) result = afterRes
+					}
+				}
+
+				return result
 			}
+		},
+	)
 
-			//call original method
-			//@ts-ignore
-			let result = this['_' + propertyName](...arguments)
-
-			if (funs?.after) {
-				const afterRes = funs.after(result)
-				if (afterRes) result = afterRes
-			}
-
-			// and we need to return the original result of the method
-			return result
-		}
-	})
+	return classs
 }

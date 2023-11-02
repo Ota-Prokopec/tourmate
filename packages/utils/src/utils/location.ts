@@ -1,9 +1,11 @@
-import lodash from 'lodash'
+import * as lodash from 'lodash'
 const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'
 
-export const getUsersLocation = (options: PositionOptions = { enableHighAccuracy: true }): Promise<Location> => {
+export const getUsersLocation = (
+	options: PositionOptions = { enableHighAccuracy: true },
+): Promise<Location> => {
 	return new Promise((res) => {
 		if (typeof window === 'undefined') res([0, 0])
 		if (navigator.geolocation) {
@@ -31,25 +33,18 @@ export const watchUsersLocation = (
 	)
 }
 
-export const getDetailsByLatAndLong = async (lat: number, long: number) => {
-	const res: {
-		display_name: string
-		address: {
-			suburb?: string
-			postcode?: string
-			country: string
-			city?: string
-			state: string
-		}
-	} = await get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${long}&format=json`)
-
-	return merge(pick(res?.address, 'country', 'postcode', 'suburb', 'city', 'state'), {
-		fullName: res.display_name,
-		name: res.address.suburb ?? res.address.city ?? res.address.state ?? res.address.country ?? res.display_name,
-	})
-}
-
 export const getUsersLocationDataByIP = async (ip: IP): Promise<IPApiResponse> => {
 	const res = await get(`https://ipapi.co/${ip}/json/`)
-	return res
+	return res as IPApiResponse
+}
+
+export const distanceBetweenTwoLocations = (location1: Location, location2: Location) => {
+	return Math.abs(location1[0] - location2[0]) + Math.abs(location1[1] - location2[1])
+}
+
+export const degreeToMeters = (degree: number) => {
+	return degree * 111_111
+}
+export const metersToDegree = (meters: number) => {
+	return meters / 111_111
 }

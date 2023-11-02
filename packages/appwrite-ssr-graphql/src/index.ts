@@ -1,7 +1,18 @@
-import { connections, setProject, set } from './connections'
-import { Types } from './types/Types'
+import { setProject } from './connection'
+import type { Types } from './types/Types'
 import { getSessionFromCookie } from './auth/account'
-import appwrite from 'appwrite'
-export default { ...connections, setProject, ...set() }
-export { getSessionFromCookie, appwrite }
+import * as appwrite from 'appwrite'
+
+import Query from './queries/query'
+import { transformAppwriteDocumentsIntoGraphqlDocuments } from './databases/transformer'
+import * as permissions from '@app/appwrite-permissions'
+export default { setProject }
+export {
+	permissions,
+	getSessionFromCookie,
+	appwrite,
+	Query,
+	transformAppwriteDocumentsIntoGraphqlDocuments,
+}
+
 export type { Types }

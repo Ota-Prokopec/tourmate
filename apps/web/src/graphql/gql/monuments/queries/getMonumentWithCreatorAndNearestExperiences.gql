@@ -7,11 +7,13 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 		_permissions
 		_databaseId
 		location
+		topics
 		creatorUserId
 		name
 		about
 		placeDetailId
 		pictureURL
+		transports
 		creator {
 			_permissions
 			_databaseId
@@ -22,7 +24,7 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 			userId
 			myId
 			username
-			staus
+			status
 			emailVerification
 			phoneVerification
 			profilePictureURL
@@ -37,15 +39,16 @@ query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
 			userId
 			imgSrc
 			location
+			placeDetailId
 		}
-		details {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
+		placeDetail {
 			name
+			_databaseId
+			_permissions
+			_id
+			_collectionId
+			_updatedAt
+			_createdAt
 		}
 	}
 }

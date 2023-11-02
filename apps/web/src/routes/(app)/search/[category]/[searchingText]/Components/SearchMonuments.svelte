@@ -1,0 +1,31 @@
+<script lang="ts">
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import { useQuery } from '@sveltestack/svelte-query';
+	import { Skeleton } from 'flowbite-svelte';
+
+	export let searchingText: string;
+
+	$: monumentsGraphql = useQuery(
+		'monuments',
+		async () =>
+			await sdk.getListOfMonumentCardsBySearchingName({ input: { limit: 10, name: searchingText } })
+	);
+
+	$: isLoading = $monumentsGraphql?.isLoading || typeof $monumentsGraphql.data === 'undefined';
+
+	$: monuments = $monumentsGraphql.data?.getListOfMonumentsSearchByName;
+
+	$: console.log(monuments);
+</script>
+
+{#if isLoading}
+	<FullPageLoading />
+{:else if monuments?.length}
+	{#each monuments as monument}
+		<MonumentCardComponent {monument} />
+	{/each}
+{:else}
+	<Skeleton divClass="w-full" />
+{/if}

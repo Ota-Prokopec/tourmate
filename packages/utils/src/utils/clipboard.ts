@@ -20,4 +20,8 @@ const readImage = async () => {
 	return clipboard ? file : null
 }
 
-export const clipboard = { read, readImage }
+const copy = (value: string) => {
+	return navigator.clipboard.writeText(value)
+}
+
+export const clipboard = { read, readImage, copy }

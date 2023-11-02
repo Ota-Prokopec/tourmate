@@ -6,7 +6,7 @@ export const load: ServerLoad = async (event) => {
 		const userRes = await sdkssr(event).getAccount();
 
 		return {
-			user: await userRes.getAccount
+			user: userRes.getAccount
 		};
 	} catch (error) {
 		if (event.url.href?.includes('auth')) {

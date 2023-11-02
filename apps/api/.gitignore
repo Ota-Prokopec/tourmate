@@ -1,3 +1,4 @@
-src/generated
-src/resolvers/index.ts
-src/schema/index.ts
+#src/generated
+#src/resolvers/index.ts
+#src/schema/index.ts
+.vercel

@@ -7,6 +7,7 @@ import appwriteServer from '@app/appwrite-server'
 import axios from 'axios'
 import { wrapper } from 'axios-cookiejar-support'
 import { CookieJar } from 'tough-cookie'
+import { z } from 'zod'
 
 export class Account extends AccountServer {
 	constructor(public client: ClientServer) {
@@ -16,15 +17,23 @@ export class Account extends AccountServer {
 		try {
 			const response = await callbackFetch()
 
-			console.log(response)
-
 			const json = await response.json()
 
-			if (json.code >= 400) throw new Error('wrong email or password at appwrite-server account/createSession')
+			const { code } = z.object({ code: z.number() }).parse(json)
 
-			const SSRHostName = process.env.HOSTNAME === 'localhost' ? 'localhost' : `.${process.env.SSR_HOSTNAME}`
+			if (code >= 400)
+				throw new Error(
+					'wrong email or password at appwrite-server account/createSession',
+				)
 
-			const cookiesStr = (response.headers.get('set-cookie') ?? '').split(SSRHostName).join(SSRHostName)
+			const SSRHostName =
+				process.env.HOSTNAME === 'localhost'
+					? 'localhost'
+					: `.${process.env.SSR_HOSTNAME}`
+
+			const cookiesStr = (response.headers.get('set-cookie') ?? '')
+				.split(SSRHostName)
+				.join(SSRHostName)
 
 			const cookiesArray = setCookie.splitCookiesString(cookiesStr)
 			//@ts-ignore
@@ -62,7 +71,8 @@ export class Account extends AccountServer {
 	}
 
 	async createJwtWithSession(session: string) {
-		if (!process.env.APPWRITE_ENDPOINT || !process.env.APPWRITE_PROJECT_ID) throw TypeError('project id or peoject endpoint is not set')
+		if (!process.env.APPWRITE_ENDPOINT || !process.env.APPWRITE_PROJECT_ID)
+			throw TypeError('project id or peoject endpoint is not set')
 		//const clientBrowser = new ClientBrowser().setEndpoint(process.env.APPWRITE_ENDPOINT).setProject(process.env.APPWRITE_PROJECT_ID)
 		const authCookies: any = {}
 		authCookies['a_session_' + process.env.APPWRITE_PROJECT_ID] = `${session}`
@@ -77,7 +87,9 @@ export class Account extends AccountServer {
 			} as HeadersInit,
 		})
 
-		const { jwt } = await res.json()
+		const response = await res.json()
+
+		const { jwt } = z.object({ jwt: z.string() }).parse(response)
 
 		return { jwt }
 	}

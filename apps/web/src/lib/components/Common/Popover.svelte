@@ -4,8 +4,7 @@
 	import { twMerge } from 'tailwind-merge';
 
 	export let placement: 'bottom' | 'left' | 'right' | 'top' = 'bottom';
-	export let trigger: 'hover' | 'click' =
-		device.recognizeWidth() === 'mobile' ? 'click' : 'hover';
+	export let trigger: 'hover' | 'click' = device.recognizeWidth() === 'mobile' ? 'click' : 'hover';
 	export let title: string = '';
 	export let open = false;
 	export let color:

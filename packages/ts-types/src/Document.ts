@@ -1,52 +1,29 @@
-import { z } from 'zod'
 import { Models } from 'appwrite'
 
-export const appWriteDocumentZod = z.object({
-	$id: z.string(),
-	$collectionId: z.string(),
-	$databaseId: z.string(),
-	$createdAt: z.string(),
-	$updatedAt: z.string(),
-	$permissions: z.string().array(),
-})
+export type DocumentSkeleton = {
+	$id: string
+	$collectionId: string
+	$databaseId: string
+	$createdAt: string
+	$updatedAt: string
+	$permissions: string[]
+}
 
-export const appWriteDocumentOptionalZod = z.object({
-	$id: z.string().optional(),
-	$collectionId: z.string().optional(),
-	$databaseId: z.string().optional(),
-	$createdAt: z.string().optional(),
-	$updatedAt: z.string().optional(),
-	$permissions: z.string().array().optional(),
-})
+export type Document<T extends Partial<DocumentSkeleton> & object> = {
+	[Key in keyof T]: T[Key] extends Record<string, unknown> ? Document<T[Key]> : T[Key]
+} & DocumentSkeleton
 
-export const appwriteDocumentForOmit = {
-	$id: true,
-	$collectionId: true,
-	$databaseId: true,
-	$createdAt: true,
-	$updatedAt: true,
-	$permissions: true,
-} as const
-
-export type DocumentSkeleton = Models.Document
-
-export type Document<T extends Partial<Models.Document> & object> = T & DocumentSkeleton
+type S = {
+	name: string
+	location: [number, number]
+}
 
 export type OmitDocument<T> = Omit<T, '$permissions' | '$id' | '$collectionId' | '$createdAt' | '$databaseId' | '$updatedAt'>
 export type OmitDocumentDeep<T> = OmitDocument<{
 	[Key in keyof T]: T extends object ? OmitDocumentDeep<T[Key]> : T[Key]
 }>
 
-const emptyObjectZod = z.object({})
-
-export const PartialDocumentDeepZod = (document: typeof emptyObjectZod) => {
-	return document
-}
-
-export const PartialDocumentDdeepZod = (document: typeof emptyObjectZod) => {
-	return document.deepPartial()
-}
-
+// Graphql
 export type GraphqlDocumentSkeleton = {
 	_id: string
 	_updatedAt: string
@@ -56,6 +33,8 @@ export type GraphqlDocumentSkeleton = {
 	_permissions: string[]
 }
 
-export type GraphqlDocument<T extends Partial<GraphqlDocumentSkeleton> & object> = T & GraphqlDocumentSkeleton
+export type GraphqlDocument<T extends Partial<GraphqlDocumentSkeleton> & object> = {
+	[Key in keyof T]: T[Key] extends Record<string, unknown> ? GraphqlDocument<T[Key]> : T[Key]
+} & GraphqlDocumentSkeleton
 
 export type AppwriteDocToGraphqlDoc<T extends Models.Document> = GraphqlDocument<OmitDocument<T>>

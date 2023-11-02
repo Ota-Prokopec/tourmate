@@ -2,7 +2,7 @@ import { Base64 } from '@app/ts-types'
 import { base64ToBlob, isURL } from '@app/utils'
 import { ID, Storage, Models, InputFile } from 'node-appwrite'
 import { Client } from 'node-appwrite'
-import { encode } from 'node-base64-image'
+import { EncodeOptions, encode } from 'node-base64-image'
 import { Readable } from 'stream'
 
 export default (client: Client) => {
@@ -35,6 +35,7 @@ export default (client: Client) => {
 					type: type,
 				},
 			}
+
 			const image = await encode(base64, options)
 			const inputFile = InputFile.fromStream(Readable.from(image), filename, Buffer.byteLength(image))
 
@@ -51,7 +52,7 @@ export default (client: Client) => {
 		updateFile(id: string, name: string, permissions: string[] | undefined): Promise<Models.File>
 		updateFile(file: Models.File, name: string, permissions: string[] | undefined): Promise<Models.File>
 		updateFile(param: string | Models.File, name: string, permissions: string[] | undefined = []): Promise<Models.File> {
-			return storage.updateFile(this.bucketId, typeof param === 'string' ? param : param.$id, permissions)
+			return storage.updateFile(this.bucketId, typeof param === 'string' ? param : param.$id, name, permissions)
 		}
 
 		getFilePreview(file: string | Models.File) {

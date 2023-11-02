@@ -2,6 +2,8 @@
 	import { elementIdGenerator } from '@app/utils';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
+	import Popover from './Popover.svelte';
+	import { Control } from 'svelte-maplibre';
 
 	const dispatch = createEventDispatcher();
 	export let value = '';
@@ -11,15 +13,14 @@
 	export let readOnly = false;
 	export let maxLength = Infinity;
 	export let icon: string | null | boolean | undefined = null;
-	export let iconFunction: 'password' | null = null;
 	export let changedIconOnActive = icon;
 	export let iconPosition: 'right' | 'left' = 'left';
-
+	export let disabled = false;
 	export let autocomplete = '';
 	export let pattern: RegExp | null = null;
-
 	export let prefix: string = '';
 	export let invisiblePrefix = icon ? true : false;
+	export let ableClickIcon = true;
 
 	export let type:
 		| 'color'
@@ -46,95 +47,94 @@
 	export { className as class };
 	export let classWrap = '';
 
-	$: inputValue = /*pattern ? value.replace(pattern, '') :*/ value; //this is here because we always want to equal input.value = value
+	let inputValue = value;
 
-	$: prefixControl(inputValue); //when inputValue changes => it will check prefix (so when we do $: inputValue = value this func will trigger every moment when inputValue will change and it will overwhite currect input.value thats will be {value})
-	$: patternControl(inputValue); //when inputValue changes => it will check prefix (so when we do $: inputValue = value this func will trigger every moment when inputValue will change and it will overwhite currect input.value thats will be {value})
+	$: control(inputValue);
 
-	const prefixControl = (_e: unknown) => {
-		if (prefix) {
-			if (!invisiblePrefix) {
-				if (inputValue?.indexOf(prefix) !== 0) inputValue = `${prefix}${inputValue}`;
-				value = inputValue;
-			} else if (inputValue?.indexOf(prefix) !== 0) {
-				value = `${prefix}${inputValue}`;
-				//inputValue = value.slice(prefix.length, value.length)
-			} else value = inputValue;
-		} else {
-			value = inputValue;
-		}
+	const control = (inputString: string) => {
+		if (pattern) inputValue = patternControl(inputString);
+		if (prefix) value = prefixControl(inputValue);
+		else value = inputValue;
 	};
 
-	const patternControl = (_e: unknown) => {
-		inputValue = pattern ? inputValue.replace(pattern, '') : inputValue;
+	const prefixControl = (v: string) => {
+		if (!invisiblePrefix) {
+			if (v?.indexOf(prefix) !== 0) v = `${prefix}${v}`;
+			return v;
+		} else if (v?.indexOf(prefix) !== 0) {
+			return `${prefix}${v}`;
+		} else return v;
+	};
+
+	const patternControl = (v: string) => {
+		if (!pattern) throw new Error('there is no pattern');
+		return v.replace(pattern, '');
 	};
 
 	let inputElement: HTMLElement | null = null;
 
 	onMount(() => {
-		prefixControl('');
-		patternControl('');
 		inputElement = document.getElementById(id);
 	});
 
-	let iconActived = false;
+	let iconClicked = false;
 	let iconPushedCount = 0;
 
 	const iconClick = () => {
 		iconPushedCount++;
-		iconActived = iconPushedCount % 2 === 1;
+		iconClicked = iconPushedCount % 2 === 1;
 		dispatch('iconClick');
-		if (iconFunction === 'password') {
-			type = type === 'text' ? 'password' : 'text';
-			if (!inputElement) return;
-			retype(inputElement);
-		}
 	};
 	const retype = (e: HTMLElement) => {
 		e.setAttribute('type', type);
 	};
 </script>
 
-<div class={twMerge('relative ', classWrap)}>
+<button class={twMerge('relative w-min ', className, classWrap)}>
 	{#if icon}
 		<button
 			class={`absolute inset-y-0 ${
 				iconPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3'
 			} flex items-center  pointer-events-none ${
-				!iconFunction ? 'pointer-events-none' : 'pointer-events-auto z-50'
+				!ableClickIcon ? 'pointer-events-none' : 'pointer-events-auto z-50'
 			} z-50 `}
 			on:click={iconClick}
 		>
 			{#if typeof icon === 'string'}
-				{#if iconActived}
+				{#if iconClicked}
 					{changedIconOnActive}
 				{:else}
 					{icon}
 				{/if}
 			{:else}
-				<slot active={iconActived} />
+				<slot {iconClicked} />
 			{/if}
 		</button>
 	{/if}
 
 	<input
+		{disabled}
 		use:retype
 		{id}
-		class="input rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none {icon
-			? iconPosition === 'left'
-				? 'pl-12'
-				: 'pr-12'
-			: ''}  {readOnly ? 'cursor-pointer' : ''} {floatingLabel
-			? '  w-full text-gray-900 bg-transparent border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-			: ''} {className}"
+		class={twMerge(
+			'rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none w-full',
+			icon && (iconPosition === 'left' ? 'pl-12' : 'pr-12'),
+			readOnly && 'cursor-pointer',
+			floatingLabel &&
+				'w-full text-gray-900 bg-transparent border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
+			className
+		)}
 		{placeholder}
 		bind:value={inputValue}
 		on:input
+		on:focus
+		on:blur
 		readonly={readOnly ? true : null}
 		maxlength={maxLength}
 		{...$$restProps}
 		{autocomplete}
 	/>
+
 	{#if floatingLabel}
 		<label
 			for={id}
@@ -142,7 +142,10 @@
 			>{floatingLabel}</label
 		>
 	{/if}
-</div>
+</button>
+{#if disabled}
+	<Popover color="red">you are not allowed to edit your {placeholder || floatingLabel}</Popover>
+{/if}
 
 <style>
 	.input::placeholder {

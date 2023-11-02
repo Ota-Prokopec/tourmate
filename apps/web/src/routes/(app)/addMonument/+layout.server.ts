@@ -6,16 +6,18 @@ export const load: LayoutServerLoad = async (event) => {
 	const { locale } = await appwriteServer.setCookie(event.cookies.getAll());
 	const location = await locale.getLocation();
 
-	const monumentExperiencesWithCreators = await sdkssr(
-		event
-	).getListOfExperienceWithCreatorAndListOfMonumentsWithCreatorAndHisOtherMonuments({
-		input: {
+	const monumentExperiencesWithCreators = await sdkssr(event).getListOfItemsForMap({
+		monument: {
 			location: location,
-			zoom: 14
+			range: 14
+		},
+		experience: {
+			location: location,
+			range: 14
 		}
 	});
 
-	const { getListOfMonuments: monuments, getListOfExperience: experiences } =
+	const { getListOfMonumentsByLocation: monuments, getListOfExperiencesByLocation: experiences } =
 		monumentExperiencesWithCreators;
 
 	return {

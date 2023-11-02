@@ -1,5 +1,4 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import { Location } from '@app/ts-types';
 
 const codegenConfigConfig: CodegenConfig['config'] = {
 	clientPath: './client',
@@ -13,7 +12,8 @@ const codegenConfigConfig: CodegenConfig['config'] = {
 		Location: {
 			input: '[number, number]', // this means our server can take CustomScalar as string
 			output: '[number, number]' // this means our server will return CustomScalar as number
-		}
+		},
+		Topic: '"castle" | "monument" | "person" | "animals" | "hiking"'
 	}
 };
 

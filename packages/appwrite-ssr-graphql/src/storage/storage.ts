@@ -1,6 +1,5 @@
-import { Base64 } from '@app/ts-types'
-import { ID, Storage, Models } from 'appwrite'
-import { Client } from 'appwrite'
+import { ID, Storage, type Models } from 'appwrite'
+import type { Client } from 'appwrite'
 
 export default (client: Client) => {
 	const storage = new Storage(client)
@@ -21,7 +20,7 @@ export default (client: Client) => {
 		}
 
 		async createFile(
-			base64: Base64,
+			base64: string,
 			permissions: string[] | undefined = undefined,
 			filename = 'file.png',
 			type = 'image/png',
@@ -58,7 +57,7 @@ export default (client: Client) => {
 		}
 		getFileURL(fileId: string) {
 			const url =
-				`${process.env.APPWRITE_ENDPOINT}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${process.env.APPWRITE_PROJECT_ID}` as unknown
+				`${client.config.endpoint}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${client.config.project}` as unknown
 			return url as URL
 		}
 		getIdFromURL(URL: string) {

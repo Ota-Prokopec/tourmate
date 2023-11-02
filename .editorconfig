@@ -12,3 +12,4 @@ quote_type = single
 [*.{yml, md}]
 indent_style = space
 indent_size = 2
+

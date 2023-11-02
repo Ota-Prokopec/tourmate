@@ -13,10 +13,8 @@ export const howManyExperiencesBefore = (
 
 	const res = experiencesLocations.filter(
 		(location, index) =>
-			lodash.isEqual(
-				[roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)],
-				location
-			) && myIndex > index
+			lodash.isEqual([roundNumber(myLocation[0], 4), roundNumber(myLocation[1], 4)], location) &&
+			myIndex > index
 	).length;
 
 	return res;

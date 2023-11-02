@@ -1,9 +1,7 @@
-import { owner } from '@app/appwrite-permissions'
-import { transformMonumentsDocumentsIntoMonuments } from '@app/experience-database-server-graphql'
+import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
-import { numberTimingCoords } from '@app/experience-settings'
-import appwriteServer from '@app/appwrite-server'
+import cloudinary from '@app/cloudinary-server'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -12,30 +10,38 @@ export default mutationField('createMonument', {
 		try {
 			if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 			const { collections } = ctx.appwrite
-			const { buckets } = appwriteServer.setAdmin()
 
-			const file = isBase64(args.input.picture) ? await buckets.monumentsPictures.createFile(args.input.picture, owner(ctx.user.$id)) : null
+			// create image for monument
+			const filePromise = isBase64(args.input.picture)
+				? cloudinary.monuments.uploadBase64(args.input.picture)
+				: null
 
-			const placeDetail = await collections.placeDetail.createDocument(
+			//create place-detail for monument
+			const placeDetailPromise = collections.placeDetail.createDocument(
 				{
-					name: 'name of place',
+					name: args.input.placeName,
 				},
 				[ctx.user],
 			)
 
+			const [file, placeDetail] = await Promise.all([filePromise, placeDetailPromise])
+
+			//create monument
 			const document = await collections.monument.createDocument(
 				{
+					transports: args.input.transports,
 					placeDetailId: placeDetail._id,
-					latitude: Math.floor(args.input.location[0] * numberTimingCoords),
-					longitude: Math.floor(args.input.location[1] * numberTimingCoords),
+					topics: args.input.topics,
+					latitude: args.input.location[0],
+					longitude: args.input.location[1],
 					about: args.input.about,
 					name: args.input.name,
 					creatorUserId: ctx.user.$id,
-					pictureURL: file ? buckets.monumentsPictures.getFileURL(file?.$id) : undefined,
+					pictureURL: file?.url,
 				},
 				[ctx.user],
 			)
-			return transformMonumentsDocumentsIntoMonuments(document)[0]
+			return fromLatLongIntoLocation(document)[0]
 		} catch (error) {
 			console.log(error)
 			throw new Error('')

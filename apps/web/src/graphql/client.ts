@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import clientOptions from './clientOptions';
 
 const cache = new InMemoryCache({
 	addTypename: false
@@ -8,7 +9,7 @@ const cache = new InMemoryCache({
 export default new ApolloClient({
 	// Provide required constructor fields
 	cache: cache,
-	uri: 'http://localhost:4444/graphql',
+	uri: clientOptions[0],
 	credentials: 'same-origin',
 	queryDeduplication: false,
 	defaultOptions: {

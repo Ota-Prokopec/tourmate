@@ -1,0 +1,27 @@
+{
+	"name": "@app/image-svelte",
+	"version": "1.0.1",
+	"private": true,
+	"main": "src/index.ts",
+	"types": "src/index.ts",
+	"scripts": {
+		"build": "tsc --build",
+		"prebuild": "yarn barrelsby",
+		"barrelsby": "barrelsby --delete  --singleQuotes --directory ./src/actions/"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.11",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.2.2"
+	},
+	"dependencies": {
+		"@app/ts-types": "*",
+		"@app/utils": "*",
+		"barrelsby": "^2.8.0",
+		"canvas-txt": "^4.1.1",
+		"cropperjs": "^1.6.1",
+		"image-js": "^0.35.4",
+		"lodash": "^4.17.21",
+		"node-appwrite": "^9.0.0"
+	}
+}

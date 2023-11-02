@@ -9,5 +9,6 @@ mutation createExperience($input: CreateExperienceInput!) {
 		userId
 		imgSrc
 		location
+		placeDetailId
 	}
 }

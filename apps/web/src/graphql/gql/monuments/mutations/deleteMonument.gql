@@ -1,0 +1,3 @@
+mutation deleteMonument($monumentId: String!) {
+	deleteMonument(monumentId: $monumentId)
+}

@@ -3,6 +3,15 @@
  */
 
 export * from './Account';
+export * from './Application';
+export * from './Checking';
 export * from './Document';
 export * from './Experience';
+export * from './Likes';
+export * from './Location';
+export * from './Monument';
+export * from './Others';
+export * from './PlaceDetails';
+export * from './Topic';
+export * from './Transport';
 export * from './TsTypes';

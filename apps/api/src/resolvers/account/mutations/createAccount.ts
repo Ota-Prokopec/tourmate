@@ -25,7 +25,7 @@ export default queryField('createAccount', {
 			emailVerification: ctx.user.emailVerification,
 			myId: userInfo.myId,
 			prefs: ctx.user.prefs,
-			staus: ctx.user.status,
+			status: ctx.user.status,
 			username: userInfo.username,
 			phoneVerification: ctx.user.phoneVerification,
 			userId: ctx.user.$id,

@@ -1,38 +1,32 @@
 <script lang="ts">
-	import { Img } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+
 	// @ts-ignore
 	import Carousel from 'svelte-carousel';
-	import type { CarouselImage } from './types';
 	import { twMerge } from 'tailwind-merge';
+	const dispatch = createEventDispatcher<{ change: { index: number } }>();
 
-	const dispatch = createEventDispatcher();
-
-	export let images: CarouselImage[];
-
-	export let autoplay: boolean = images.length > 1 ? true : false;
+	export let autoplay = false;
 	export let arrows: boolean = false;
 	export let pauseOnFocus: boolean = true;
-	export let dots: boolean = images.length > 1 ? true : false;
-	export let swiping: boolean = images.length > 1 ? true : false;
+	export let dots = false;
+	export let swiping = false;
 	export let timingFunction: string = 'ease-in-out';
 	export let autoplayDuration: number = 3000;
 	export let index: number = 0;
+	$: dispatch('change', { index });
+
+	const onChange = (e: { detail: number }) => {
+		index = e.detail;
+	};
 
 	let className = '';
 	export { className as class };
-
-	$: if (index > images?.length - 1 || index < 0) index = 0;
-
-	//change dispatch
-	$: dispatch('change', {
-		index: index,
-		image: images[index]
-	});
 </script>
 
 <div class={twMerge('h-auto w-full', className)}>
 	<Carousel
+		class="w-full h-full"
 		{arrows}
 		{pauseOnFocus}
 		{dots}
@@ -40,9 +34,10 @@
 		{timingFunction}
 		{autoplay}
 		{autoplayDuration}
+		bind:index
+		on:pageChange={onChange}
+		on:pageChange
 	>
-		{#each images as { imgurl }}
-			<Img class={`!min-h-[250px] rounded-xl object-cover`} src={imgurl} />
-		{/each}
+		<slot />
 	</Carousel>
 </div>

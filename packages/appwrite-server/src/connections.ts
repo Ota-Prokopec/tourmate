@@ -1,8 +1,6 @@
 import { Client, Storage } from 'node-appwrite'
 import { Avatars, Databases, Functions, Graphql, Locale, Teams, Users } from 'node-appwrite'
 import database from './database'
-import Collections from './collections'
-import Buckets from './buckets'
 import { Account } from './account'
 import { getSessionFromCookie } from './authorizationUtils'
 import Localization from './localization'
@@ -43,7 +41,7 @@ export default class Connection {
 
 const newClient = (callback?: (client: Client) => Client) => {
 	if (!process.env.APPWRITE_PROJECT_ID || !process.env.APPWRITE_ENDPOINT) throw new Error('project id or endpoint is not set')
-	let client = new Client().setProject(process.env.APPWRITE_PROJECT_ID ?? '').setEndpoint(process.env.APPWRITE_ENDPOINT ?? '')
+	let client = new Client().setProject(process.env.APPWRITE_PROJECT_ID).setEndpoint(process.env.APPWRITE_ENDPOINT)
 
 	if (callback) client = callback(client)
 
@@ -55,8 +53,6 @@ const newClient = (callback?: (client: Client) => Client) => {
 	const databases = new Databases(client)
 	const users = new Users(client)
 	const Collection = database(databases)
-	const collections = Collections(databases)
-	const buckets = Buckets(client)
 	const account = new Account(client)
 
 	return {
@@ -70,8 +66,6 @@ const newClient = (callback?: (client: Client) => Client) => {
 		databases,
 		Collection,
 		users,
-		collections,
 		Storage,
-		buckets,
 	}
 }

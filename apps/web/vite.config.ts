@@ -9,8 +9,11 @@ export default defineConfig({
 		port: 5222
 	},
 	plugins: [sveltekit()],
+
 	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		globals: true,
+		watch: false
 	},
 	resolve: {
 		alias: {

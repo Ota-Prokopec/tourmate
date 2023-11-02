@@ -14,5 +14,12 @@ declare namespace NodeJS {
 		readonly FIREBASE_PRIVATE_KEY: string
 		readonly FIREBASE_CLIENT_EMAIL: string
 		readonly CLOUDINARY_API_KEY: string
+		readonly CLOUDINARY_CLOUD_NAME: string
+		readonly CLOUDINARY_API_SECRET_KEY: string
+		readonly DEV: string
+		readonly SERVER_HOSTNAME_COOKIES: string
+		readonly SESSION: string
 	}
 }
+
+import '@total-typescript/ts-reset'

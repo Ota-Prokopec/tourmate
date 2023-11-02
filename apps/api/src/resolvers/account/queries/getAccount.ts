@@ -1,7 +1,7 @@
 import { nullable, queryField, stringArg } from 'nexus'
 import { ApolloError } from 'apollo-server-express'
-import { AccountGetOutput } from '../../../schema/auth/account'
-import { getAccount } from '@app/user-database-server'
+import { AccountGetOutput } from '../../../schema/Account'
+import { getAccount } from '../../../lib/test/getAccount'
 
 export default queryField('getAccount', {
 	args: { userId: nullable(stringArg()) },
@@ -13,7 +13,6 @@ export default queryField('getAccount', {
 		if (!userId) throw new Error('user is not Authed')
 
 		const { collections } = ctx.appwrite
-		console.log(userId)
 
 		return await getAccount(userId, userId === ctx.user.$id, collections)
 	},

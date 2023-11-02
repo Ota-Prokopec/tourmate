@@ -14,10 +14,12 @@ const start = async () => {
 	server.applyMiddleware({ app, path: '/graphql', cors: false, bodyParserConfig: { limit: '50mb' } })
 }
 
+const clientHostName = process.env.DEV ? `${process.env.CLIENT_HOSTNAME}:5222` : `${process.env.CLIENT_HOSTNAME}/graphql`
+
 app.use(cookieParser())
 app.use(
 	cors({
-		origin: ['http://localhost:5222', 'https://studio.apollographql.com'],
+		origin: [clientHostName, 'https://studio.apollographql.com'],
 		credentials: true,
 	}),
 )
@@ -26,4 +28,7 @@ app.get('/', (req, res) => res.send('This is experiences api graphql'))
 
 start()
 
-app.listen(4444)
+const port = process.env.PORT || 4444
+app.listen(port)
+
+export default app

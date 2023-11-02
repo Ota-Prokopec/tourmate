@@ -2,10 +2,11 @@ import { makeSchema } from 'nexus'
 import { join } from 'path'
 import * as resolvers from './resolvers/index'
 import * as schema from './schema/index'
-import * as scalarTypes from './lib/scalarTypes/index'
+import * as scalarTypes from './lib/types/index'
+import * as args from './arguments/index'
 
 export default makeSchema({
-	types: [scalarTypes, resolvers, schema],
+	types: [schema, scalarTypes, args, resolvers],
 	outputs: {
 		typegen: join(__dirname, 'generated/nexus-typegen.ts'), // 2
 		schema: join(__dirname, 'generated/schema.graphql'), // 3

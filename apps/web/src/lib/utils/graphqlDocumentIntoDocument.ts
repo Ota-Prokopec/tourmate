@@ -1,4 +1,4 @@
-import { appwriteGraphqlDocumentKeys } from '@app/experience-settings';
+import { appwriteKeys } from '@app/appwrite-client';
 import { GraphqlDocument } from '@app/ts-types';
 import lodash from 'lodash';
 const { omit } = lodash;
@@ -7,7 +7,7 @@ export const graphqlDocumentsIntoDocuments = <TInput extends GraphqlDocument<Rec
 	...graphqlDocs: TInput[]
 ) => {
 	return graphqlDocs.map((graphqlDoc) => ({
-		...omit(graphqlDoc, appwriteGraphqlDocumentKeys),
+		...omit(graphqlDoc, appwriteKeys),
 		...{
 			$id: graphqlDoc._id,
 			$createdAt: graphqlDoc._createdAt,

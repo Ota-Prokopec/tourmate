@@ -11,12 +11,12 @@
 </script>
 
 <Input
-	let:active
+	let:iconClicked
 	iconFunction="password"
 	icon
 	class={twMerge('w-full !rounded-3xl', className)}
 	bind:value
 	{placeholder}
 >
-	<IconEye {active} />
+	<IconEye active={iconClicked} />
 </Input>

@@ -1,12 +1,11 @@
 import { getSdk } from '$src/graphql/generated';
 import { GraphQLClient } from 'graphql-request';
-import { Types } from '@app/appwrite-ssr';
+import { Types } from '@app/appwrite-ssr-graphql';
+import clientOptions from './clientOptions';
 
 type Input = { cookies: { getAll: () => Types.Cookie[] } };
 
-const client = new GraphQLClient('http://localhost:4444/graphql', {
-	credentials: 'include'
-});
+const client = new GraphQLClient(...clientOptions);
 
 export const sdkssr = (event: Input) => {
 	const stringCookies = event.cookies

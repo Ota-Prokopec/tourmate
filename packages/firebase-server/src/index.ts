@@ -4,7 +4,7 @@ import admin from 'firebase-admin'
 import firebase from 'firebase-admin'
 import json from './firebasePrivateKey.json'
 
-const { privateKey } = JSON.parse(`{"privateKey":"${process.env.FIREBASE_PRIVATE_KEY}"}`)
+//const { privateKey } = JSON.parse(`{"privateKey":"${process.env.FIREBASE_PRIVATE_KEY}"}`)
 
 console.log(firebase.apps.length)
 

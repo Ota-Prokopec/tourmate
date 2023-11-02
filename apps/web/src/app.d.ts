@@ -1,7 +1,8 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 
-import { Client, Models } from 'node-appwrite';
+/// <reference types="svelte-gestures" />
+/// <reference types="@sveltejs/kit" />
 
 declare global {
 	namespace App {
