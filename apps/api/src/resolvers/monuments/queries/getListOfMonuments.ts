@@ -9,7 +9,7 @@ import { Topic, Transport } from '@app/ts-types'
 export default queryField('getListOfMonuments', {
 	type: list('Monument'),
 	args: {
-		location: nullable('MonumentLocationInput'),
+		location: nullable('LocationInput'),
 		topics: nullable(list('Topic')),
 		transports: nullable(list('Transport')),
 		name: nullable('String'),

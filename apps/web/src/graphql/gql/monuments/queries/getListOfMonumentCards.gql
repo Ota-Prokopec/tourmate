@@ -1,5 +1,17 @@
-query getListOfMonumentCards {
-	getListOfMonuments {
+query getListOfMonumentCards(
+	$location: LocationInput
+	$topics: [Topic!]
+	$transports: [Transport!]
+	$name: String
+	$limit: Int
+) {
+	getListOfMonuments(
+		location: $location
+		topics: $topics
+		transports: $transports
+		name: $name
+		limit: $limit
+	) {
 		_createdAt
 		_updatedAt
 		_collectionId

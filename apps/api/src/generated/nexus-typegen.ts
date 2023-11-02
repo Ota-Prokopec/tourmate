@@ -53,17 +53,13 @@ export interface NexusGenInputs {
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
   }
-  ExperienceLocationInput: { // input type
+  LocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
-    range: number; // Float!
+    range?: number | null; // Int
   }
   MonumentInputByName: { // input type
     limit: number; // Int!
     name: string; // String!
-  }
-  MonumentLocationInput: { // input type
-    location: NexusGenScalars['Location']; // Location!
-    range: number; // Float!
   }
 }
 
@@ -438,11 +434,11 @@ export interface NexusGenArgTypes {
       id: string; // String!
     }
     getListOfExperiences: { // args
-      location?: NexusGenInputs['ExperienceLocationInput'] | null; // ExperienceLocationInput
+      location?: NexusGenInputs['LocationInput'] | null; // LocationInput
     }
     getListOfMonuments: { // args
       limit: number | null; // Int
-      location?: NexusGenInputs['MonumentLocationInput'] | null; // MonumentLocationInput
+      location?: NexusGenInputs['LocationInput'] | null; // LocationInput
       name?: string | null; // String
       topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
       transports?: NexusGenScalars['Transport'][] | null; // [Transport!]

@@ -1,6 +1,5 @@
 import { isLocation } from '@app/utils'
 import { scalarType } from 'nexus'
-import { Location } from '@app/ts-types'
 
 export default scalarType({
 	name: 'Location',

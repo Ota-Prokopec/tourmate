@@ -1,8 +1,9 @@
 import { inputObjectType } from 'nexus'
 
 export default inputObjectType({
-	name: 'ExperienceLocationInput',
+	name: 'LocationInput',
 	definition: (t) => {
-		t.field('location', { type: 'Location' }), t.float('range')
+		t.field({ name: 'location', type: 'Location' })
+		t.nullable.int('range')
 	},
 })

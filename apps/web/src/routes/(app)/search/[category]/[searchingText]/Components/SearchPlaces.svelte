@@ -12,30 +12,23 @@
 	let isLoading = true;
 
 	const reload = async (
-		topics: Topic[],
-		transports: Transport[],
-		location: Location | undefined
+		topics?: Topic[],
+		transports?: Transport[],
+		location?: Location | undefined
 	) => {
 		isLoading = true;
 
-		if (!location && !topics.length)
-			monuments = (await sdk.getListOfMonumentCards()).getListOfMonuments;
-		else if (topics.length && transports.length && location) {
-			monuments = (
-				await sdk.getListOfMonumentCardsByLocationAndTopicsAndTransports({
-					input: { range: 0.04, location: location, topics: topics, transports }
-				})
-			).getListOfMonumentsByLocationAndTopicsAndTransport;
-		} else if (topics.length)
-			monuments = (await sdk.getListOfMonumentCardsByTopics({ input: { topics: topics } }))
-				.getListOfMonumentsByTopics;
-		else if (location) {
-			monuments = (
-				await sdk.getListOfMonumentCardsByLocationAndTopics({
-					input: { range: 0.04, location: location, topics: topics }
-				})
-			).getListOfMonumentsByLocationAndTopics;
-		} else throw new Error('there is no more possible ways to get monument cards');
+		monuments = (
+			await sdk.getListOfMonumentCards({
+				topics,
+				transports,
+				location: location
+					? {
+							location: location
+					  }
+					: undefined
+			})
+		).getListOfMonuments;
 
 		isLoading = false;
 	};

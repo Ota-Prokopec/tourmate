@@ -8,7 +8,7 @@ import { Queries } from '../../../lib/appwrite/appwrite'
 export default queryField('getListOfExperiences', {
 	type: list('Experience'),
 	args: {
-		location: nullable('ExperienceLocationInput'),
+		location: nullable('LocationInput'),
 	},
 	resolve: async (s, args, ctx, info) => {
 		const { collections } = ctx.appwrite
