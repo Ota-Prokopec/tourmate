@@ -9,6 +9,7 @@
 		"build": "tsc -build"
 	},
 	"dependencies": {
-		"express": "^4.18.2"
+		"express": "^4.18.2",
+		"@app/appwrite-ssr-graphql": "*"
 	}
 }

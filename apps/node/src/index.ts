@@ -1,6 +1,14 @@
 import express from 'express'
 
+import appwrite from '@app/appwrite-ssr-graphql'
+
 const app = express()
+
+const appwriteInstance = appwrite.setProject({
+	endpoint: 'http://localhost',
+	hostname: 'localhost',
+	projectId: 'ex',
+})
 
 app.get('*', (req, res) => res.send('experiences'))
 

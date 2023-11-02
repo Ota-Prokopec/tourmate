@@ -9,23 +9,18 @@ const params = {
 	domain: SERVER_HOSTNAME_COOKIES,
 	secure: true,
 	maxAge: 1000000000,
-	httpOnly: true
+	httpOnly: true,
+	path: '/'
 } as const;
-
-console.log(params);
 
 export const load: PageServerLoad = (event) => {
 	const urlParams = new URLSearchParams(event.url.searchParams);
 	const secret = urlParams.get('secret');
-	console.log(secret);
-	if (!secret) throw error(409);
 
-	console.log('session');
+	if (!secret) throw error(409);
 
 	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}`, secret, params);
 	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}_legacy`, secret, params);
-
-	console.log('session');
 
 	return {
 		session: secret

@@ -6,49 +6,46 @@
 	import { sdk } from '$src/graphql/sdk.js';
 	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
 	import { Queries, collections, user } from '$lib/appwrite/appwrite';
+	import { onMount } from 'svelte';
 
 	const { user: userParams } = $lsStore;
 
 	export let data;
 	let errMessage = '';
 
-	$: if (browser)
-		(async () => {
-			try {
-				$lsStore.cookieFallback = { a_session_experiences: data.session };
+	onMount(async () => {
+		try {
+			$lsStore.cookieFallback = { a_session_experiences: data.session };
 
-				const { $id: userId } = await user.get();
-				console.log(userId);
+			const { $id: userId } = await user.get();
+			console.log(userId);
 
-				if (!userId) throw new Error('User is not Authed');
+			if (!userId) throw new Error('User is not Authed');
 
-				const myUserInfoAlreadyExists = (
-					await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)])
-				).total;
+			const myUserInfoAlreadyExists = (
+				await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)])
+			).total;
 
-				console.log(myUserInfoAlreadyExists);
+			console.log(myUserInfoAlreadyExists);
 
-				//if your account is not created, create an account
-				if (myUserInfoAlreadyExists === 0) {
-					//create experience account
-					if (!userParams) throw new Error('Users params in localstorage are not complete');
-					const { createAccount: account } = await sdk.createAccount({
-						myId: userParams.myId,
-						username: userParams.username
-					});
-					if (!account) throw new Error('It was not successful to create your account');
-				}
-
-				// go to main page
-				console.log('to navigate');
-
-				goto('/');
-			} catch (error) {
-				console.log(error);
-
-				if (error instanceof Error) errMessage = error.message;
+			//if your account is not created, create an account
+			if (myUserInfoAlreadyExists === 0) {
+				//create experience account
+				if (!userParams) throw new Error('Users params in localstorage are not complete');
+				const { createAccount: account } = await sdk.createAccount({
+					myId: userParams.myId,
+					username: userParams.username
+				});
+				if (!account) throw new Error('It was not successful to create your account');
 			}
-		})();
+
+			// go to main page
+
+			goto('/');
+		} catch (error) {
+			if (error instanceof Error) errMessage = error.message;
+		}
+	});
 </script>
 
 <ErrorHelper bind:message={errMessage} />
