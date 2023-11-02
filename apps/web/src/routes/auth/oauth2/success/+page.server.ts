@@ -1,12 +1,16 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { SERVER_HOSTNAME_COOKIES, APPWRITE_PROJECT_ID } from '$env/static/private';
+
+console.log(SERVER_HOSTNAME_COOKIES);
 
 const params = {
-	domain: process.env.SERVER_HOSTNAME,
-	secure: false,
-	path: '/',
+	sameSite: 'lax',
+	domain: SERVER_HOSTNAME_COOKIES,
+	secure: true,
+	maxAge: 1000000000,
 	httpOnly: true
-};
+} as const;
 
 export const load: PageServerLoad = (event) => {
 	const urlParams = new URLSearchParams(event.url.searchParams);
@@ -14,8 +18,13 @@ export const load: PageServerLoad = (event) => {
 	console.log(secret);
 	if (!secret) throw error(409);
 
-	event.cookies.set(`a_session_${'experiences'}`, secret, params);
-	event.cookies.set(`a_session_${'experiences'}_legacy`, secret, params);
+	console.log('session');
+
+	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}`, secret);
+	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}_legacy`, secret, params);
+
+	console.log('session');
+
 	return {
 		session: secret
 	};

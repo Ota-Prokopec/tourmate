@@ -64,9 +64,9 @@ export default (client: Client, hostname: string) => {
 
 				const json = await response.json()
 
-				const { code } = z.object({ code: z.number() }).parse(json)
+				const { status } = z.object({ status: z.number() }).parse(response)
 
-				if (code >= 400)
+				if (status >= 400)
 					throw new Error(
 						'wrong email or password at appwrite-server account/createSession',
 					)

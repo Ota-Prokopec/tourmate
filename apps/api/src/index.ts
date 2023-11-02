@@ -11,10 +11,17 @@ const app = express()
 
 const start = async () => {
 	await server.start()
-	server.applyMiddleware({ app, path: '/graphql', cors: false, bodyParserConfig: { limit: '50mb' } })
+	server.applyMiddleware({
+		app,
+		path: '/graphql',
+		cors: false,
+		bodyParserConfig: { limit: '50mb' },
+	})
 }
 
-const clientHostName = process.env.DEV ? `${process.env.CLIENT_HOSTNAME}:5222` : `${process.env.CLIENT_HOSTNAME}/graphql`
+const clientHostName = process.env.DEV
+	? `${process.env.CLIENT_HOSTNAME}:5222`
+	: `${process.env.CLIENT_HOSTNAME}/graphql`
 
 app.use(cookieParser())
 app.use(
