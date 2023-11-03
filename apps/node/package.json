@@ -10,6 +10,6 @@
 	},
 	"dependencies": {
 		"express": "^4.18.2",
-		"@app/appwrite-ssr-graphql": "*"
+		"@app/test": "*"
 	}
 }

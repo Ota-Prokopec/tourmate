@@ -10,13 +10,6 @@
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 
 	export let monument: GraphqlDocument<Monument>;
-	export let monuments: GraphqlDocument<Monument>[] | undefined = undefined;
-
-	const monumentsWithSameLocation = monuments
-		?.map((m) => (Math.floor(m.location[0] * 1) === Math.floor(m.location[1] * 1) ? m : null))
-		.filter(Boolean);
-
-	console.log(monumentsWithSameLocation);
 
 	export let bouncing = false;
 	export let zoom: number | undefined = undefined;
