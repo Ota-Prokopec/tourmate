@@ -16,6 +16,18 @@ query getListOfItemsForMap(
 		imgSrc
 		location
 		placeDetailId
+		user {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			myId
+			username
+			profilePictureURL
+		}
 	}
 	getListOfMonuments(
 		transports: $transports
@@ -38,5 +50,17 @@ query getListOfItemsForMap(
 		topics
 		placeDetailId
 		pictureURL
+		creator {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			myId
+			username
+			profilePictureURL
+		}
 	}
 }

@@ -17,7 +17,7 @@ export default objectType({
 		t.list.string('_permissions')
 		t.string('_databaseId')
 		t.field('location', { type: 'Location' })
-		t.string('creatorUserId')
+		t.string('userId')
 		t.string('name')
 		t.nullable.string('about')
 		t.list.field('topics', { type: 'Topic' })
@@ -27,10 +27,10 @@ export default objectType({
 			type: 'URL',
 			description: 'This it an URL not id of picture',
 		})
-		t.field('creator', {
+		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {
-				let userId = source.creatorUserId
+				let userId = source.userId
 				if (!ctx.isAuthed(ctx.user))
 					throw new ApolloError('user is not authorizated to create account', '403')
 				if (!userId) userId = ctx.user.$id //if no input it will be the user that is logged in

@@ -1,3 +1,4 @@
+import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
 import { Location } from './Location'
 
@@ -31,3 +32,5 @@ export type ExperienceDocumentCreate = {
 	longitude: number
 	placeDetailId: string
 }
+
+export type ExperienceMarkerData = GraphqlDocument<Experience> & { user: UserInfo }

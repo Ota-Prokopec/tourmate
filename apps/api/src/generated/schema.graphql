@@ -92,8 +92,6 @@ type Monument {
   _permissions: [String!]!
   _updatedAt: String!
   about: String
-  creator: Account!
-  creatorUserId: String!
   liked: MonumentLike
   likes: [MonumentLike!]!
   location: Location!
@@ -106,6 +104,8 @@ type Monument {
   placeDetailId: String!
   topics: [Topic!]!
   transports: [Transport!]!
+  user: Account!
+  userId: String!
 }
 
 input MonumentInputByName {
