@@ -14,6 +14,7 @@ query getListOfItemsForMap(
 		_databaseId
 		userId
 		imgSrc
+		connectedMonumentId
 		location
 		placeDetailId
 		user {
@@ -44,13 +45,13 @@ query getListOfItemsForMap(
 		_databaseId
 		location
 		transports
-		creatorUserId
+		userId
 		name
 		about
 		topics
 		placeDetailId
 		pictureURL
-		creator {
+		user {
 			_createdAt
 			_updatedAt
 			_collectionId

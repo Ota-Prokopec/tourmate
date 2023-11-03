@@ -30,7 +30,7 @@ export default objectType({
 		t.nullable.boolean('status')
 		t.nullable.boolean('emailVerification')
 		t.nullable.boolean('phoneVerification')
-		t.nullable.field('profilePictureURL', {
+		t.field('profilePictureURL', {
 			type: 'URL',
 			description: 'This is URL of profile picture. Not its id.',
 		})
@@ -53,7 +53,8 @@ export default objectType({
 				resolve: async (source, args, ctx, info) => {
 					const { collections } = ctx.appwrite
 
-					const queries = [Queries.monument.equal('creatorUserId', source.userId)]
+					const queries = [Queries.monument.equal('userId', source.userId)]
+
 					return fromLatLongIntoLocation(
 						...(await collections.monument.listDocuments(queries)).documents,
 					)

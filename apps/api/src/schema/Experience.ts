@@ -15,6 +15,7 @@ export default objectType({
 		t.field('imgSrc', { type: 'URL' })
 		t.field('location', { type: 'Location' })
 		t.string('placeDetailId')
+		t.string('connectedMonumentId')
 		t.field('user', {
 			type: 'Account',
 			resolve: async (source, args, ctx, info) => {

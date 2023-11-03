@@ -17,35 +17,44 @@
 	import CardImage from './CardImage.svelte';
 	import CardHeader from './CardHeader.svelte';
 	import CardFooter from './CardFooter.svelte';
+	import { alert } from '$src/routes/alertStore';
 
 	export let monument: MonumentCard;
-	let amIOwner = monument.creator.userId === $user?.$id;
+	let amIOwner = monument.user.userId === $user?.$id;
 	export let isCardVisible = true;
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let dismissable = false;
 	export let minimalized = false;
+	let liked: boolean | 'pending' = monument.liked ? true : false;
 
 	let className = '';
 	export { className as class };
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
-		monument.liked = true;
+		liked = 'pending';
 		try {
 			const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });
 			monument.liked = doc;
+			liked = true;
 		} catch (error) {
+			liked = false;
+			alert('Error monument like', 'Your like was not recorded, please try it again.', {
+				color: 'red'
+			});
 			throw new Error('like monument error happend');
 		}
 	};
 	const unlike = async () => {
+		if (liked === 'pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
 		if (!$user?.$id) throw new Error('user is not authed');
-		monument.liked = false;
+		liked = 'pending';
 		await collections.monumentLike.deleteDocument([
 			Queries.monumentLike.equal('monumentId', monument._id),
 			Queries.monumentLike.equal('userId', $user.$id)
 		]);
+		liked = false;
 		monument.liked = null;
 	};
 
@@ -76,13 +85,13 @@
 </Modal>
 
 {#if isCardVisible}
-	<Card {dismissable} class={twMerge('relative justify-self-center gap-2', className)}>
+	<Card on:dismiss {dismissable} class={twMerge('relative justify-self-center gap-2', className)}>
 		<Row class="justify-between">
 			<UserItem
 				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
 				avatarClass="w-10 h-10"
 				class="h-auto"
-				user={monument.creator}
+				user={monument.user}
 			/>
 			<Column class="gap-0 flex justify-center items-center">
 				<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
@@ -98,7 +107,7 @@
 			<CardImage on:like={like} imgSrc={monument.pictureURL} liked={monument.liked} />
 
 			<Column>
-				<CardHeader on:like={like} on:unlike={unlike} {amIOwner} {monument} />
+				<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />
 				<CardFooter {monument} />
 			</Column>
 		</svelte:component>

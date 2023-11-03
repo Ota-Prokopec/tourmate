@@ -19,6 +19,7 @@ query getProfile($myId: String!) {
 			_databaseId
 			userId
 			imgSrc
+			connectedMonumentId
 			location
 			placeDetailId
 			likes {
@@ -52,14 +53,14 @@ query getProfile($myId: String!) {
 			_permissions
 			_databaseId
 			location
-			creatorUserId
+			userId
 			name
 			about
 			topics
 			transports
 			placeDetailId
 			pictureURL
-			creator {
+			user {
 				_createdAt
 				_updatedAt
 				_collectionId

@@ -32,10 +32,10 @@
 		if (!ableToCheck) throw new Error('you are not able to check monuments - wait 20s');
 		if (!location) throw new Error('there is no location');
 
-		const res = await sdk.getListOfMonumentCardsByLocation({
-			input: { location: location, range: metersToDegree(range) }
+		const res = await sdk.getListOfMonumentCards({
+			location: { location: location, range: metersToDegree(range) }
 		});
-		monuments = res.getListOfMonumentsByLocation;
+		monuments = res.getListOfMonuments;
 	};
 </script>
 

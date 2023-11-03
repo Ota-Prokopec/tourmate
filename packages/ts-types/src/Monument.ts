@@ -1,5 +1,6 @@
+import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
-import { Location } from './Location'
+import { Location, LocationForDocument } from './Location'
 import { Topic } from './Topic'
 import { Transport } from './Transport'
 
@@ -14,8 +15,13 @@ export type Monument = {
 	transports: Transport[]
 }
 
-export type MonumentDocument = Document<Monument>
+export type MonumentDocument = Document<Omit<Monument, 'location'> & LocationForDocument>
 
-export type MonumentGraphqlDocument = GraphqlDocument<Monument>
+export type MonumentGraphqlDocument = GraphqlDocument<
+	Omit<Monument, 'location'> & LocationForDocument
+>
 
-export type MonumentDocumentCreate = Omit<Monument, 'topics'> & { topics?: Topic[] }
+export type MonumentDocumentCreate = Omit<Monument, 'topics' | 'location'> &
+	LocationForDocument & { topics?: Topic[] }
+
+export type MonumentMarkerData = GraphqlDocument<Monument>

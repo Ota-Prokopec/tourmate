@@ -76,7 +76,7 @@
 		<AlmostProfileWithMainImage
 			on:close={() => (almostProfile = false)}
 			class="absolute sm:left-0 sm:top-0 sm:m-4 z-[60]"
-			userInfo={lodash.pick(data.user, 'myId', 'username', 'userId')}
+			userInfo={data.user}
 			imgSrc={almostProfileImageSrc}
 		/>
 	{/if}

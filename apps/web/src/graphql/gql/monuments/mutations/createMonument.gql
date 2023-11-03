@@ -7,7 +7,7 @@ mutation createMonument($input: CreateMonumentInput!) {
 		_permissions
 		_databaseId
 		location
-		creatorUserId
+		userId
 		name
 		about
 		topics

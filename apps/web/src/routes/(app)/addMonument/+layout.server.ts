@@ -7,17 +7,13 @@ export const load: LayoutServerLoad = async (event) => {
 	const location = await locale.getLocation();
 
 	const monumentExperiencesWithCreators = await sdkssr(event).getListOfItemsForMap({
-		monument: {
-			location: location,
-			range: 14
-		},
-		experience: {
+		location: {
 			location: location,
 			range: 14
 		}
 	});
 
-	const { getListOfMonumentsByLocation: monuments, getListOfExperiencesByLocation: experiences } =
+	const { getListOfMonuments: monuments, getListOfExperiences: experiences } =
 		monumentExperiencesWithCreators;
 
 	return {

@@ -3,14 +3,30 @@
 	import { navigating } from '$app/stores';
 	import { QueryClientProvider, QueryClient } from '@sveltestack/svelte-query';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import { string } from 'zod';
+	import Alert from '$lib/components/Alert/Alert.svelte';
+	import type { Color } from '$lib/components/Alert/Alert';
+	import Text from '$lib/components/Common/Text.svelte';
+	import { alertStore } from './alertStore';
+	import { Button } from 'flowbite-svelte';
 
 	const queryClient = new QueryClient();
-
-	//$: if (!$user && !$isLoading) goto('login'); //this is client-side Auth controll
-
-	//auto localization
-	//	$: browser && start();
 </script>
+
+<Alert
+	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"
+	on:close={() => ($alertStore.shown = false)}
+	visible={$alertStore.shown}
+	color={$alertStore.details?.color}
+>
+	<Text slot="title">{$alertStore.title}</Text>
+	<Text slot="message">{$alertStore.message}</Text>
+	<span slot="buttons">
+		<Button on:click={() => ($alertStore.shown = false)} color={$alertStore.details?.color}
+			>ok</Button
+		>
+	</span>
+</Alert>
 
 <QueryClientProvider client={queryClient}>
 	{#if $navigating}

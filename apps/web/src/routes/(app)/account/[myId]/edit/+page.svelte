@@ -5,7 +5,7 @@
 	import { Button } from 'flowbite-svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import { collections } from '$lib/appwrite/appwrite';
-	import MyAlert from '$lib/components/Common/MyAlert.svelte';
+	import MyAlert from '$lib/components/Alert/Alert.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64 } from '@app/ts-types';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';

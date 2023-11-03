@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
-	import MyAlert from '$lib/components/Common/MyAlert.svelte';
+	import MyAlert from '$lib/components/Alert/Alert.svelte';
 	import { Button as FlowbiteButton } from 'flowbite-svelte';
 
 	export let data;

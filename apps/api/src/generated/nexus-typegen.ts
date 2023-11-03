@@ -40,6 +40,7 @@ export interface NexusGenInputs {
     username: string; // String!
   }
   CreateExperienceInput: { // input type
+    connnectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
     picture: string; // String!
     placeName: string; // String!
@@ -55,7 +56,7 @@ export interface NexusGenInputs {
   }
   LocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
-    range?: number | null; // Int
+    range?: number | null; // Float
   }
   MonumentInputByName: { // input type
     limit: number; // Int!
@@ -90,7 +91,7 @@ export interface NexusGenObjects {
     myId: string; // String!
     phoneVerification?: boolean | null; // Boolean
     prefs?: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
-    profilePictureURL?: NexusGenScalars['URL'] | null; // URL
+    profilePictureURL: NexusGenScalars['URL']; // URL!
     status?: boolean | null; // Boolean
     userId: string; // String!
     username: string; // String!
@@ -105,6 +106,7 @@ export interface NexusGenObjects {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
+    connectedMonumentId: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
     location: NexusGenScalars['Location']; // Location!
     placeDetailId: string; // String!
@@ -187,7 +189,7 @@ export interface NexusGenFieldTypes {
     myId: string; // String!
     phoneVerification: boolean | null; // Boolean
     prefs: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
-    profilePictureURL: NexusGenScalars['URL'] | null; // URL
+    profilePictureURL: NexusGenScalars['URL']; // URL!
     status: boolean | null; // Boolean
     userId: string; // String!
     username: string; // String!
@@ -202,6 +204,7 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
+    connectedMonumentId: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
     liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
@@ -316,6 +319,7 @@ export interface NexusGenFieldTypeNames {
     _id: 'String'
     _permissions: 'String'
     _updatedAt: 'String'
+    connectedMonumentId: 'String'
     imgSrc: 'URL'
     liked: 'ExperienceLike'
     likes: 'ExperienceLike'

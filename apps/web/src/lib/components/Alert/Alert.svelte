@@ -1,27 +1,9 @@
 <script lang="ts">
 	import { Alert } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
+	import type { Color } from './Alert';
 
-	export let color:
-		| 'gray'
-		| 'red'
-		| 'yellow'
-		| 'green'
-		| 'indigo'
-		| 'purple'
-		| 'pink'
-		| 'blue'
-		| 'light'
-		| 'dark'
-		| 'default'
-		| 'dropdown'
-		| 'navbar'
-		| 'navbarUl'
-		| 'form'
-		| 'primary'
-		| 'orange'
-		| 'none'
-		| undefined = 'blue';
+	export let color: Color = 'blue';
 	export let dismissable: true | false = false;
 	export let visible: boolean = true;
 

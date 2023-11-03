@@ -4,7 +4,7 @@
 	import { clipboard, elementIdGenerator, fileToBase64 } from '@app/utils';
 	import type { Base64 } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
-	import MyAlert from '../Common/MyAlert.svelte';
+	import MyAlert from '../Alert/Alert.svelte';
 	import Popover from '../Common/Popover.svelte';
 
 	//	import clipboard from '$lib/utils/clipboard'

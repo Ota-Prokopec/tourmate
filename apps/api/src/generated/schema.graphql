@@ -17,7 +17,7 @@ type Account {
   prefs: UsersPreferences
 
   """This is URL of profile picture. Not its id."""
-  profilePictureURL: URL
+  profilePictureURL: URL!
   status: Boolean
   userId: String!
   username: String!
@@ -29,6 +29,7 @@ input CreateAccountInput {
 }
 
 input CreateExperienceInput {
+  connnectedMonumentId: String!
   location: Location!
   picture: String!
   placeName: String!
@@ -55,6 +56,7 @@ type Experience {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
+  connectedMonumentId: String!
   imgSrc: URL!
   liked: ExperienceLike
   likes: [ExperienceLike!]!
@@ -81,7 +83,7 @@ scalar Location
 
 input LocationInput {
   location: Location!
-  range: Int
+  range: Float
 }
 
 type Monument {

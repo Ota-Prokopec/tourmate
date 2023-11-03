@@ -30,6 +30,7 @@ export default mutationField('createExperience', {
 				if (!ctx.isAuthed(ctx.user?.$id))
 					throw new ApolloError('User is not Authed', '403')
 				return await collections.experience.createDocument({
+					connectedMonumentId: args.input.connnectedMonumentId,
 					userId: ctx.user.$id,
 					imgSrc: url,
 					latitude: Math.round(args.input.location[0]),

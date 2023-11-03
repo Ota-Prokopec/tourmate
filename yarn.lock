@@ -3174,6 +3174,18 @@
   resolved "https://registry.yarnpkg.com/@jspm/core/-/core-2.0.1.tgz#3f08c59c60a5f5e994523ed6b0b665ec80adc94e"
   integrity sha512-Lg3PnLp0QXpxwLIAuuJboLeRaIhrgJjeuh797QADg3xz8wGLugQOS5DpsE8A6i6Adgzf+bacllkKZG3J0tGfDw==
 
+"@lordicon/element@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@lordicon/element/-/element-1.2.0.tgz#bb148914cacdaef8e7139b17fd77711f701987a6"
+  integrity sha512-zsq5YvOJTsjbgBJ1VwwtSv2bsyqs3hIghb6qEL7Uf/5Z7dbkW4Oa7zIAzVOO0dhhX5OmVNrf9eVBWrXTnU8+Zg==
+  dependencies:
+    "@lordicon/helpers" "^1.0.2"
+
+"@lordicon/helpers@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@lordicon/helpers/-/helpers-1.0.2.tgz#49265cdd3b6943df26091529634617587fcd4fa8"
+  integrity sha512-qD9m9SsL9jSAV/gPjXXNAirtONEdzOaU1tSHh2B4nFz1yaXaa9Cmj9xN9ZGWqNsN1k2O+v+dO+uraty8xyD+hg==
+
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@manypkg/find-root/-/find-root-1.1.0.tgz#a62d8ed1cd7e7d4c11d9d52a8397460b5d4ad29f"
@@ -11030,6 +11042,11 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+lottie-web@^5.12.2:
+  version "5.12.2"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.12.2.tgz#579ca9fe6d3fd9e352571edd3c0be162492f68e5"
+  integrity sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==
 
 loupe@^2.3.6:
   version "2.3.7"

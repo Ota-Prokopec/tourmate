@@ -12,7 +12,7 @@ import { PlaceDetail } from './PlaceDetails'
 
 export type MonumentCard = GraphqlDocument<Monument> & {
 	placeDetail: PlaceDetail
-	creator: UserInfo
+	user: UserInfo
 	likes: (MonumentLike & { user: UserInfo })[]
 	liked?: MonumentLikeGraphqlDocument | boolean | null | undefined
 }

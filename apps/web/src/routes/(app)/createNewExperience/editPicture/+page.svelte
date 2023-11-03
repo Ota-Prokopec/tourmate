@@ -30,7 +30,7 @@
 		if (!location) throw new Error('user has no location');
 		isLoading = true;
 
-		navigate(`/createNewExperience/editPicture/${location.at(0)}-${location.at(1)}`);
+		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
 
 	const [actions] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (newUrl, o, action) => {

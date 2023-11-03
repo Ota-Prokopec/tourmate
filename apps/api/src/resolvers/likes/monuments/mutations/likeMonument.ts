@@ -12,7 +12,7 @@ export default mutationField('likeMonument', {
 		if (!monument) throw new Error('There is no monument below this id')
 		const monumentLike = await collections.monumentLike.createDocument(
 			{ monumentId: args.monumentId, userId: ctx.user?.$id },
-			permissions.owner(ctx.user?.$id, monument.creatorUserId),
+			permissions.owner(ctx.user?.$id, monument.userId),
 		)
 		return monumentLike
 	},

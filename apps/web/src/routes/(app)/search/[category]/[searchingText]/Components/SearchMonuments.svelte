@@ -9,13 +9,12 @@
 
 	$: monumentsGraphql = useQuery(
 		'monuments',
-		async () =>
-			await sdk.getListOfMonumentCardsBySearchingName({ input: { limit: 10, name: searchingText } })
+		async () => await sdk.getListOfMonumentCards({ limit: 10, name: searchingText })
 	);
 
 	$: isLoading = $monumentsGraphql?.isLoading || typeof $monumentsGraphql.data === 'undefined';
 
-	$: monuments = $monumentsGraphql.data?.getListOfMonumentsSearchByName;
+	$: monuments = $monumentsGraphql.data?.getListOfMonuments;
 
 	$: console.log(monuments);
 </script>

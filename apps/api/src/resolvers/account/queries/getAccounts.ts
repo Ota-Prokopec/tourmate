@@ -11,9 +11,12 @@ export default queryField('getAccounts', {
 
 		const { collections } = ctx.appwrite
 
-		const filters = [Queries.userInfo.startsWith('username', args.searchingText)]
+		const queries: string[] = []
 
-		const { documents: users } = await collections.userInfo.listDocuments(filters)
+		if (args.searchingText)
+			queries.push(Queries.userInfo.startsWith('username', args.searchingText))
+
+		const { documents: users } = await collections.userInfo.listDocuments(queries)
 
 		return users
 	},

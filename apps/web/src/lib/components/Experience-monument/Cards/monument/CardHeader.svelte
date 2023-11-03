@@ -11,6 +11,7 @@
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
+	export let liked: boolean | 'pending';
 	export let amIOwner: boolean;
 </script>
 
@@ -20,7 +21,7 @@
 		on:like={() => dispatch('like')}
 		on:unlike={() => dispatch('unlike')}
 		data={{
-			liked: monument.liked ? true : false,
+			liked: liked ? true : false,
 			otherUsersThatLiked: monument.likes.map((l) => l.user)
 		}}
 	/>

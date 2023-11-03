@@ -36,7 +36,7 @@ export default mutationField('createMonument', {
 					longitude: args.input.location[1],
 					about: args.input.about,
 					name: args.input.name,
-					creatorUserId: ctx.user.$id,
+					userId: ctx.user.$id,
 					pictureURL: file?.url,
 				},
 				[ctx.user],

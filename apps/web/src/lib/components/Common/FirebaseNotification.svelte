@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { MessagePayload } from 'firebase/messaging/sw';
-	import MyAlert from './MyAlert.svelte';
+	import MyAlert from '../Alert/Alert.svelte';
 	import { goto } from '$app/navigation';
 	import { Button } from 'flowbite-svelte';
 
