@@ -10,7 +10,7 @@
 	export let nearMonuments: MonumentMarkerData[];
 </script>
 
-<Drawer bind:hidden={hideDrawer} placement="right" width={400}>
+<Drawer bind:hidden={hideDrawer} placement="right" size={400}>
 	<Row class="gap-4 justify-center">
 		<Text class="text-2xl w-full flex justify-center">
 			{#if nearMonuments.length}

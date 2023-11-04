@@ -14,7 +14,7 @@
 	import IconShare from '$lib/components/Icons/IconShare.svelte';
 	import Card from '$lib/components/Common/Card.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
-	import CardImage from './CardImage.svelte';
+	import CardImage from '../CardImage.svelte';
 	import CardHeader from './CardHeader.svelte';
 	import CardFooter from './CardFooter.svelte';
 	import { alert } from '$src/routes/alertStore';
@@ -104,7 +104,7 @@
 		</Row>
 
 		<svelte:component this={minimalized ? Columns : Row} columns="1fr 1fr">
-			<CardImage on:like={like} imgSrc={monument.pictureURL} liked={monument.liked} />
+			<CardImage on:like={like} imgSrc={monument.pictureURL} />
 
 			<Column>
 				<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />

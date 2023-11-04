@@ -35,7 +35,6 @@
 				zoom = e.detail.map.getZoom();
 			}}
 		>
-			<NavigationControl position="top-right" />
 			<GeolocateControl
 				position="top-left"
 				positionOptions={{ enableHighAccuracy: true }}

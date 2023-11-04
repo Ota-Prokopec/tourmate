@@ -14,7 +14,6 @@ export default objectType({
 		t.string('userId')
 		t.field('imgSrc', { type: 'URL' })
 		t.field('location', { type: 'Location' })
-		t.string('placeDetailId')
 		t.string('connectedMonumentId')
 		t.field('user', {
 			type: 'Account',
@@ -31,17 +30,7 @@ export default objectType({
 				return await getAccount(userId, userId === ctx.user.$id, collections)
 			},
 		})
-		t.field('placeDetail', {
-			type: 'PlaceDetail',
-			resolve: async (source, args, ctx) => {
-				const { collections } = ctx.appwrite
-				const placeDetail = await collections.placeDetail.getDocument(
-					source.placeDetailId,
-				)
-				if (!placeDetail) throw new Error('placeDetail was not found')
-				return placeDetail
-			},
-		})
+
 		t.field('likes', {
 			type: list('ExperienceLike'),
 			resolve: async (source, args, ctx) => {
@@ -49,9 +38,9 @@ export default objectType({
 				const { collections, Queries } = ctx.appwrite
 
 				const queries = [
-					Queries.monumentLike.equal('monumentId', source._id), // get by monument id
-					Queries.monumentLike.limit(6), // only 6 of them
-					Queries.monumentLike.notEqual('userId', ctx.user.$id), // not pick me
+					Queries.experienceLike.equal('experienceId', source._id), // get by monument id
+					Queries.experienceLike.limit(6), // only 6 of them
+					Queries.experienceLike.notEqual('userId', ctx.user.$id), // not pick me
 					//! userid is not working
 				]
 				const likes = await collections.experienceLike.listDocuments(queries)
@@ -65,8 +54,8 @@ export default objectType({
 				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
 				const queries = [
-					Queries.monumentLike.equal('monumentId', source._id),
-					Queries.monumentLike.equal('userId', ctx.user.$id),
+					Queries.experienceLike.equal('experienceId', source._id),
+					Queries.experienceLike.equal('userId', ctx.user.$id),
 				]
 				const likeDoc = await collections.experienceLike.getDocument(queries)
 				return likeDoc

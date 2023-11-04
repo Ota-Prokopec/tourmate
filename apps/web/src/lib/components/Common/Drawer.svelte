@@ -3,15 +3,15 @@
 	import { sineIn } from 'svelte/easing';
 	import { twMerge } from 'tailwind-merge';
 	export let placement: 'right' | 'left' | 'top' | 'bottom';
-	export let width: number;
+	export let size: number;
 	export let hidden = true;
 
 	let className = '';
 	export { className as class };
 
 	const transitionParams = {
-		x: placement === 'right' ? width : placement === 'left' ? -width : undefined,
-		y: placement === 'top' ? width : placement === 'bottom' ? -width : undefined,
+		x: placement === 'right' ? size : placement === 'left' ? -size : undefined,
+		y: placement === 'top' ? -size : placement === 'bottom' ? size : undefined,
 		duration: 200,
 		easing: sineIn
 	};

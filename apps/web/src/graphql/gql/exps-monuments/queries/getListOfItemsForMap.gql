@@ -16,7 +16,6 @@ query getListOfItemsForMap(
 		imgSrc
 		connectedMonumentId
 		location
-		placeDetailId
 		user {
 			_createdAt
 			_updatedAt

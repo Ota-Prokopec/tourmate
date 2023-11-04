@@ -9,6 +9,5 @@ query getExperience($getExperienceId: String!) {
 		userId
 		imgSrc
 		location
-		placeDetailId
 	}
 }

@@ -94,5 +94,15 @@ export default objectType({
 				return likeDoc
 			},
 		})
+		t.field('connectedExperiences', {
+			type: list('Experience'),
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				const { collections, Queries } = ctx.appwrite
+				const queries = [Queries.experience.equal('connectedMonumentId', source._id)]
+				const expDocs = (await collections.experience.listDocuments(queries)).documents
+				return fromLatLongIntoLocation(...expDocs)
+			},
+		})
 	},
 })

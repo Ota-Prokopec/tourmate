@@ -88,7 +88,6 @@
 			<MonumentMarker
 				on:click={() => (cardShown = true)}
 				on:click={() => screenMonument(monument._id)}
-				popover={false}
 				{monument}
 			/>
 		{/each}

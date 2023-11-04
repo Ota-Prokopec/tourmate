@@ -1,18 +1,19 @@
-query getListOfPlaceCards {
-	getListOfMonuments {
+query getMonumentCardWithConnectedExperiences($id: String!) {
+	getMonument(id: $id) {
 		_createdAt
 		_updatedAt
 		_collectionId
 		_id
 		_permissions
 		_databaseId
-		transports
 		location
 		userId
 		name
 		about
+		topics
 		placeDetailId
 		pictureURL
+		transports
 		user {
 			_createdAt
 			_updatedAt
@@ -64,31 +65,7 @@ query getListOfPlaceCards {
 			userId
 			monumentId
 		}
-	}
-	getListOfExperiences {
-		_createdAt
-		_updatedAt
-		_collectionId
-		_id
-		_permissions
-		_databaseId
-		userId
-		imgSrc
-		location
-		user {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			myId
-			username
-			profilePictureURL
-			userId
-		}
-
-		liked {
+		connectedExperiences {
 			_createdAt
 			_updatedAt
 			_collectionId
@@ -96,17 +73,9 @@ query getListOfPlaceCards {
 			_permissions
 			_databaseId
 			userId
-			experienceId
-		}
-		likes {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			userId
-			experienceId
+			imgSrc
+			location
+			connectedMonumentId
 			user {
 				_createdAt
 				_updatedAt
@@ -117,8 +86,39 @@ query getListOfPlaceCards {
 				userId
 				myId
 				username
-				status
 				profilePictureURL
+			}
+			likes {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				experienceId
+				user {
+					_createdAt
+					_updatedAt
+					_collectionId
+					_id
+					_permissions
+					_databaseId
+					userId
+					myId
+					username
+					profilePictureURL
+				}
+			}
+			liked {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				experienceId
 			}
 		}
 	}

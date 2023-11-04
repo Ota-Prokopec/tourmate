@@ -109,7 +109,6 @@ export interface NexusGenObjects {
     connectedMonumentId: string; // String!
     imgSrc: NexusGenScalars['URL']; // URL!
     location: NexusGenScalars['Location']; // Location!
-    placeDetailId: string; // String!
     userId: string; // String!
   }
   ExperienceLike: { // root type
@@ -209,8 +208,6 @@ export interface NexusGenFieldTypes {
     liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
-    placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
-    placeDetailId: string; // String!
     user: NexusGenRootTypes['Account']; // Account!
     userId: string; // String!
   }
@@ -233,6 +230,7 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     about: string | null; // String
+    connectedExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     liked: NexusGenRootTypes['MonumentLike'] | null; // MonumentLike
     likes: NexusGenRootTypes['MonumentLike'][]; // [MonumentLike!]!
     location: NexusGenScalars['Location']; // Location!
@@ -324,8 +322,6 @@ export interface NexusGenFieldTypeNames {
     liked: 'ExperienceLike'
     likes: 'ExperienceLike'
     location: 'Location'
-    placeDetail: 'PlaceDetail'
-    placeDetailId: 'String'
     user: 'Account'
     userId: 'String'
   }
@@ -348,6 +344,7 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     about: 'String'
+    connectedExperiences: 'Experience'
     liked: 'MonumentLike'
     likes: 'MonumentLike'
     location: 'Location'

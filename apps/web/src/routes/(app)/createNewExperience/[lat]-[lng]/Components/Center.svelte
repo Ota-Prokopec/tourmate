@@ -23,10 +23,10 @@
 
 <ItemsLayout let:id items={[{ title: 'connect to your monument', id: 'connectMonument' }]}>
 	{#if id === 'connectMonument'}
-		{#await monumentToConnectPromise}
-			<Stretch color="black" />
-		{:then monumentToConnect}
-			<Row class="gap-2">
+		<Row class="gap-2">
+			{#await monumentToConnectPromise}
+				<Stretch color="black" />
+			{:then monumentToConnect}
 				{#if monumentToConnect}
 					<MonumentCardComponent
 						on:dismiss={() => dispatch('disconnect')}
@@ -56,8 +56,10 @@
 					<Button on:click={() => (hideDrawer = false)} color="blue">cant find any monument?</Button
 					>
 				{/if}
+			{/await}
+			{#if device.recognizeWidth() === 'mobile'}
 				<Button on:click={() => (cardShown = false)} color="blue">show the map</Button>
-			</Row>
-		{/await}
+			{/if}
+		</Row>
 	{/if}
 </ItemsLayout>

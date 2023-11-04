@@ -21,7 +21,6 @@ query getProfile($myId: String!) {
 			imgSrc
 			connectedMonumentId
 			location
-			placeDetailId
 			likes {
 				_createdAt
 				_updatedAt

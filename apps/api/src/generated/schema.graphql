@@ -61,8 +61,6 @@ type Experience {
   liked: ExperienceLike
   likes: [ExperienceLike!]!
   location: Location!
-  placeDetail: PlaceDetail!
-  placeDetailId: String!
   user: Account!
   userId: String!
 }
@@ -94,6 +92,7 @@ type Monument {
   _permissions: [String!]!
   _updatedAt: String!
   about: String
+  connectedExperiences: [Experience!]!
   liked: MonumentLike
   likes: [MonumentLike!]!
   location: Location!

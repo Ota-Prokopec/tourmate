@@ -9,6 +9,5 @@ query getListOfExperiences {
 		userId
 		imgSrc
 		location
-		placeDetailId
 	}
 }

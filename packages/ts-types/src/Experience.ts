@@ -6,7 +6,6 @@ export type Experience = {
 	userId: string
 	imgSrc: URL
 	location: Location
-	placeDetailId: string
 	connectedMonumentId: string
 }
 
