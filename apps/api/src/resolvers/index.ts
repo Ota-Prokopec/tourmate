@@ -18,12 +18,16 @@ export { default as createAccountInput } from './auth/schema/createAccountInput'
 export * from './auth/schema/createAccountInput';
 export { default as createExperience } from './experience/mutations/createExperience';
 export * from './experience/mutations/createExperience';
+export { default as deleteExperience } from './experience/mutations/deleteExperience';
+export * from './experience/mutations/deleteExperience';
 export { default as getExperience } from './experience/queries/getExperience';
 export * from './experience/queries/getExperience';
 export { default as getListOfExperiences } from './experience/queries/getListOfExperiences';
 export * from './experience/queries/getListOfExperiences';
 export { default as CreateExperienceInput } from './experience/schema/CreateExperienceInput';
 export * from './experience/schema/CreateExperienceInput';
+export { default as likeExperience } from './likes/experiences/mutations/likeExperience';
+export * from './likes/experiences/mutations/likeExperience';
 export { default as likeMonument } from './likes/monuments/mutations/likeMonument';
 export * from './likes/monuments/mutations/likeMonument';
 export { default as createMonument } from './monuments/mutations/createMonument';

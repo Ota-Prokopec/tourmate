@@ -10,6 +10,12 @@
 		"declarationMap": false
 	},
 
-	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
+	"include": [
+		"src/**/*.d.ts",
+		"src/**/*.ts",
+		"src/**/*.js",
+		"../../global.d.ts",
+		"../../tsReset.d.ts"
+	],
 	"exclude": ["node_modules", "dist"]
 }

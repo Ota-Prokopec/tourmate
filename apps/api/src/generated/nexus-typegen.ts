@@ -43,7 +43,6 @@ export interface NexusGenInputs {
     connnectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
     picture: string; // String!
-    placeName: string; // String!
   }
   CreateMonumentInput: { // input type
     about: string; // String!
@@ -258,7 +257,9 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createExperience: NexusGenRootTypes['Experience']; // Experience!
     createMonument: NexusGenRootTypes['Monument']; // Monument!
+    deleteExperience: boolean; // Boolean!
     deleteMonument: boolean; // Boolean!
+    likeExperience: NexusGenRootTypes['ExperienceLike']; // ExperienceLike!
     likeMonument: NexusGenRootTypes['MonumentLike']; // MonumentLike!
   }
   PlaceDetail: { // field return type
@@ -372,7 +373,9 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createExperience: 'Experience'
     createMonument: 'Monument'
+    deleteExperience: 'Boolean'
     deleteMonument: 'Boolean'
+    likeExperience: 'ExperienceLike'
     likeMonument: 'MonumentLike'
   }
   PlaceDetail: { // field return type name
@@ -410,8 +413,14 @@ export interface NexusGenArgTypes {
     createMonument: { // args
       input: NexusGenInputs['CreateMonumentInput']; // CreateMonumentInput!
     }
+    deleteExperience: { // args
+      experienceId: string; // String!
+    }
     deleteMonument: { // args
       monumentId: string; // String!
+    }
+    likeExperience: { // args
+      experienceId: string; // String!
     }
     likeMonument: { // args
       monumentId: string; // String!

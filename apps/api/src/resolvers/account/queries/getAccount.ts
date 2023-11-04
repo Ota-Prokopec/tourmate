@@ -1,14 +1,14 @@
 import { nullable, queryField, stringArg } from 'nexus'
 import { ApolloError } from 'apollo-server-express'
-import { AccountGetOutput } from '../../../schema/Account'
 import { getAccount } from '../../../lib/test/getAccount'
 
 export default queryField('getAccount', {
 	args: { userId: nullable(stringArg()) },
 	type: 'Account',
-	resolve: async (s_, args, ctx, info): Promise<AccountGetOutput> => {
+	resolve: async (s_, args, ctx, info) => {
 		let userId = args.userId
-		if (!ctx.isAuthed(ctx.user)) throw new ApolloError('user is not authorizated to create account', '403')
+		if (!ctx.isAuthed(ctx.user))
+			throw new ApolloError('user is not authorizated to create account', '403')
 		if (!userId) userId = ctx.user.$id //if no input it will be the user that is logged in
 		if (!userId) throw new Error('user is not Authed')
 

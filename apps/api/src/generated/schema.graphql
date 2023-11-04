@@ -32,7 +32,6 @@ input CreateExperienceInput {
   connnectedMonumentId: String!
   location: Location!
   picture: String!
-  placeName: String!
 }
 
 input CreateMonumentInput {
@@ -129,7 +128,9 @@ type MonumentLike {
 type Mutation {
   createExperience(input: CreateExperienceInput!): Experience!
   createMonument(input: CreateMonumentInput!): Monument!
+  deleteExperience(experienceId: String!): Boolean!
   deleteMonument(monumentId: String!): Boolean!
+  likeExperience(experienceId: String!): ExperienceLike!
   likeMonument(monumentId: String!): MonumentLike!
 }
 

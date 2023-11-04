@@ -52,7 +52,6 @@ export type CreateExperienceInput = {
   connnectedMonumentId: Scalars['String']['input'];
   location: Scalars['Location']['input'];
   picture: Scalars['String']['input'];
-  placeName: Scalars['String']['input'];
 };
 
 export type CreateMonumentInput = {
@@ -152,7 +151,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   createExperience: Experience;
   createMonument: Monument;
+  deleteExperience: Scalars['Boolean']['output'];
   deleteMonument: Scalars['Boolean']['output'];
+  likeExperience: ExperienceLike;
   likeMonument: MonumentLike;
 };
 
@@ -167,8 +168,18 @@ export type MutationCreateMonumentArgs = {
 };
 
 
+export type MutationDeleteExperienceArgs = {
+  experienceId: Scalars['String']['input'];
+};
+
+
 export type MutationDeleteMonumentArgs = {
   monumentId: Scalars['String']['input'];
+};
+
+
+export type MutationLikeExperienceArgs = {
+  experienceId: Scalars['String']['input'];
 };
 
 
@@ -321,6 +332,13 @@ export type CreateExperienceMutationVariables = Exact<{
 
 export type CreateExperienceMutation = { __typename?: 'Mutation', createExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] } };
 
+export type DeleteExperienceMutationVariables = Exact<{
+  experienceId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteExperienceMutation = { __typename?: 'Mutation', deleteExperience: boolean };
+
 export type GetExperienceQueryVariables = Exact<{
   getExperienceId: Scalars['String']['input'];
 }>;
@@ -353,6 +371,13 @@ export type GetListOfPlaceCardsQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type GetListOfPlaceCardsQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, transports: Array<any>, location: [number, number], userId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }>, getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, myId: string, username: string, profilePictureURL: URL, userId: string }, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, profilePictureURL: URL } }> }> };
+
+export type LikeExperienceMutationVariables = Exact<{
+  experienceId: Scalars['String']['input'];
+}>;
+
+
+export type LikeExperienceMutation = { __typename?: 'Mutation', likeExperience: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } };
 
 export type LikeMonumentMutationVariables = Exact<{
   monumentId: Scalars['String']['input'];
@@ -661,6 +686,11 @@ export const CreateExperienceDocument = gql`
   }
 }
     `;
+export const DeleteExperienceDocument = gql`
+    mutation deleteExperience($experienceId: String!) {
+  deleteExperience(experienceId: $experienceId)
+}
+    `;
 export const GetExperienceDocument = gql`
     query getExperience($getExperienceId: String!) {
   getExperience(id: $getExperienceId) {
@@ -936,6 +966,20 @@ export const GetListOfPlaceCardsDocument = gql`
         profilePictureURL
       }
     }
+  }
+}
+    `;
+export const LikeExperienceDocument = gql`
+    mutation likeExperience($experienceId: String!) {
+  likeExperience(experienceId: $experienceId) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    experienceId
   }
 }
     `;
@@ -1349,6 +1393,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     createExperience(variables: CreateExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateExperienceMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateExperienceMutation>(CreateExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createExperience', 'mutation');
     },
+    deleteExperience(variables: DeleteExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteExperienceMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteExperienceMutation>(DeleteExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteExperience', 'mutation');
+    },
     getExperience(variables: GetExperienceQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExperienceQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExperienceQuery>(GetExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExperience', 'query');
     },
@@ -1363,6 +1410,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getListOfPlaceCards(variables?: GetListOfPlaceCardsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfPlaceCardsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetListOfPlaceCardsQuery>(GetListOfPlaceCardsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfPlaceCards', 'query');
+    },
+    likeExperience(variables: LikeExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LikeExperienceMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LikeExperienceMutation>(LikeExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'likeExperience', 'mutation');
     },
     likeMonument(variables: LikeMonumentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LikeMonumentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<LikeMonumentMutation>(LikeMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'likeMonument', 'mutation');

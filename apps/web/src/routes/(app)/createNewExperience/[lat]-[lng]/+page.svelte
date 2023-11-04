@@ -32,8 +32,7 @@
 			input: {
 				connnectedMonumentId: connectedMonumentId,
 				location: location,
-				picture: img,
-				placeName: data.newExperience.placeName
+				picture: img
 			}
 		});
 		navigate('/');
@@ -86,6 +85,7 @@
 	<Map location={data.newExperience.location} class="h-[100dvh] w-full fixed top-0">
 		{#each data.newExperience.nearMonuments as monument}
 			<MonumentMarker
+				disableShowingDetails
 				on:click={() => (cardShown = true)}
 				on:click={() => screenMonument(monument._id)}
 				{monument}

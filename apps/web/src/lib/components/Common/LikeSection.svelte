@@ -14,6 +14,7 @@
 		liked: boolean;
 		otherUsersThatLiked: UserInfo[];
 	};
+
 	export let ableToLike = true;
 
 	const heartClick = () => {
@@ -23,7 +24,7 @@
 	const stacked = data.otherUsersThatLiked.length > 1;
 </script>
 
-<Row class="">
+<Row class="gap-1">
 	<Icon on:click={heartClick}>
 		{#if ableToLike}
 			{#if data.liked}
@@ -35,9 +36,8 @@
 			{/if}
 		{/if}
 	</Icon>
-	<Row class="ml-6 gap-1">
+	<Row class="">
 		{#if data.otherUsersThatLiked.length}
-			<Text class="text-sm flex justify-center items-center">liked:</Text>
 			{#each data.otherUsersThatLiked as user}
 				<Avatar {stacked} size="sm" src={user.profilePictureURL}>
 					{#if user.profilePictureURL}

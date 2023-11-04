@@ -15,7 +15,7 @@
 	export let amIOwner: boolean;
 </script>
 
-<Row class="w-full justify-between m-2">
+<Row class="w-full justify-between">
 	<LikeSection
 		ableToLike={!amIOwner}
 		on:like={() => dispatch('like')}

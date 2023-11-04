@@ -1,4 +1,6 @@
 <script lang="ts" generics="T extends string">
+	import Row from './Row.svelte';
+
 	import { twMerge } from 'tailwind-merge';
 
 	export let items: Array<{
@@ -12,18 +14,13 @@
 	export let itemsClass = '';
 </script>
 
-<div
-	class={twMerge(
-		`h-auto  flex flex-wrap flex-col gap-4 border-gray-500  rounded-xl w-full`,
-		className
-	)}
->
+<Row class={twMerge('gap-4', className)}>
 	{#each items as { title, id, remove }}
 		{#if !remove}
-			<div class="flex flex-wrap flex-col gap-1">
-				<span class="text-2xl">{title}</span>
+			<Row class="gap-1">
+				<span class="text-xl">{title}</span>
 				<span class={itemsClass}><slot {id} /></span>
-			</div>
+			</Row>
 		{/if}
 	{/each}
-</div>
+</Row>

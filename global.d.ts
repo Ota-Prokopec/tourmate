@@ -21,5 +21,3 @@ declare namespace NodeJS {
 		readonly SESSION: string
 	}
 }
-
-import '@total-typescript/ts-reset'

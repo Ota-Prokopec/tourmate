@@ -11,18 +11,9 @@ export default mutationField('createExperience', {
 	resolve: async (s, args, ctx) => {
 		const { collections } = ctx.appwrite
 
-		console.log(args.input.picture)
-
 		if (!isBase64(args.input.picture))
 			throw new Error('input.imgSrc musts be a valid base64 string')
 		if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
-
-		const placeDetail = await collections.placeDetail.createDocument(
-			{
-				name: args.input.placeName,
-			},
-			[ctx.user],
-		)
 
 		const document = await buckets.experiences
 			.uploadBase64(args.input.picture)
@@ -35,7 +26,6 @@ export default mutationField('createExperience', {
 					imgSrc: url,
 					latitude: Math.round(args.input.location[0]),
 					longitude: Math.round(args.input.location[1]),
-					placeDetailId: placeDetail._id,
 				})
 			})
 		return fromLatLongIntoLocation(document)[0]

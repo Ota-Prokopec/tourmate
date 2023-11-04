@@ -12,6 +12,6 @@
 			dispatch('like');
 		}}
 	>
-		<Img class="rounded-lg object-cover " src={imgSrc} />
+		<Img class="rounded-lg object-cover w-full" src={imgSrc} />
 	</button>
 {/if}

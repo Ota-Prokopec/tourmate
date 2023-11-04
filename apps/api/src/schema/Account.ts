@@ -4,17 +4,6 @@ import { fromLatLongIntoLocation } from '../lib/database/experiences-monuments'
 import { GraphqlDocument, Preferences } from '@app/ts-types'
 import { Queries } from '../lib/appwrite/appwrite'
 
-export type AccountGetOutput = GraphqlDocument<{
-	emailVerification: boolean
-	myId: string
-	prefs: Preferences | null
-	status: boolean
-	username: string
-	phoneVerification: boolean
-	userId: string
-	profilePictureURL?: URL | null | undefined
-}>
-
 export default objectType({
 	name: 'Account',
 	definition: (t) => {
