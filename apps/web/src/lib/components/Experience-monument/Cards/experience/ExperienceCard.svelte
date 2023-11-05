@@ -14,7 +14,8 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import ExperienceOwnerOptions from '../../Experience/ExperienceOwnerOptions.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
-	import CardHeader from './CardHeader.svelte';
+	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import MonumentCard from '../monument/MonumentCard.svelte';
 
 	export let experience: ExperienceCard;
 	export let disableReRouting = false;
@@ -87,45 +88,28 @@
 		on:dismiss
 		{dismissable}
 		class={twMerge(
-			'relative justify-self-center gap-0 h-min',
+			'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none',
 			minimalized && 'border-0',
 			className
 		)}
 	>
-		<Column>
+		<Column class="relative w-full gap-0">
+			<Row class="w-full absolute justify-between p-2">
+				<UserItem
+					on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+					avatarClass="w-10 h-10"
+					class={twMerge('h-auto')}
+					user={experience.user}
+				/>
+
+				{#if amIOwner}
+					<ExperienceOwnerOptions on:delete={deleteExperience} />
+				{/if}
+			</Row>
+
 			<CardImage on:like={like} imgSrc={experience.imgSrc} />
 
-			<CardHeader
-				class={twMerge(minimalized && 'absolute bottom-0 m-2')}
-				{liked}
-				on:like={like}
-				on:unlike={unlike}
-				{amIOwner}
-				{experience}
-			/>
-
-			<UserItem
-				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-				avatarClass="w-10 h-10"
-				class={twMerge('h-auto', minimalized && 'absolute m-1')}
-				user={experience.user}
-			/>
-
-			{#if !minimalized}
-				<ExperienceOwnerOptions on:delete={deleteExperience} />
-			{/if}
+			<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
 		</Column>
-
-		<div class="w-full h-auto flex justify-start">
-			<slot />
-		</div>
-
-		{#if !disableSeeMoreButton}
-			<Button
-				color="blue"
-				class=" w-full p-2"
-				on:click={() => goto(`/experience/${experience._id}`)}>see more about experience</Button
-			>
-		{/if}
 	</Card>
 {/if}

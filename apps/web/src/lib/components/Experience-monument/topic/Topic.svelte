@@ -13,4 +13,4 @@
 	export { className as class };
 </script>
 
-<ChooseFromIcons on:change={(e) => (chosenTopics = e.detail)} class={className} data={topics} />
+<ChooseFromIcons bind:chosen={chosenTopics} class={className} data={topics} />

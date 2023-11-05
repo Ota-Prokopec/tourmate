@@ -55,6 +55,7 @@ type Experience {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
+  connectedMonument: Monument!
   connectedMonumentId: String!
   imgSrc: URL!
   liked: ExperienceLike

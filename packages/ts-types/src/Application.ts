@@ -25,4 +25,5 @@ export type ExperienceCard = GraphqlDocument<Experience> & {
 	user: UserInfo
 	likes: (ExperienceLike & { user: UserInfo })[]
 	liked?: ExperienceLikeGraphqlDocument | null | undefined
+	connectedMonument: MonumentCard
 }

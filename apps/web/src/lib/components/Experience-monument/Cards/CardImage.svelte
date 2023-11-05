@@ -8,10 +8,12 @@
 
 {#if imgSrc}
 	<button
+		class="h-auto w-full"
 		on:dblclick={() => {
 			dispatch('like');
 		}}
 	>
 		<Img class="rounded-lg object-cover w-full" src={imgSrc} />
+		<slot />
 	</button>
 {/if}

@@ -1,5 +1,5 @@
 query getProfile($myId: String!) {
-	getAccountByMyId(myId: $myId) {
+	getAccount(myId: $myId) {
 		_permissions
 		_databaseId
 		_id
@@ -11,16 +11,16 @@ query getProfile($myId: String!) {
 		username
 		profilePictureURL
 		experiences {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			userId
-			imgSrc
-			connectedMonumentId
-			location
+			liked {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				experienceId
+			}
 			likes {
 				_createdAt
 				_updatedAt
@@ -43,22 +43,6 @@ query getProfile($myId: String!) {
 					profilePictureURL
 				}
 			}
-		}
-		monuments {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			location
-			userId
-			name
-			about
-			topics
-			transports
-			placeDetailId
-			pictureURL
 			user {
 				_createdAt
 				_updatedAt
@@ -69,46 +53,86 @@ query getProfile($myId: String!) {
 				userId
 				myId
 				username
-				status
-				emailVerification
-				phoneVerification
 				profilePictureURL
 			}
-			placeDetail {
+			connectedMonumentId
+			location
+			imgSrc
+			userId
+			_databaseId
+			_permissions
+			_id
+			_collectionId
+			_updatedAt
+			_createdAt
+			connectedMonument {
 				_createdAt
 				_updatedAt
 				_collectionId
 				_id
 				_permissions
 				_databaseId
-				name
-			}
-			likes {
-				_createdAt
-				_updatedAt
-				_collectionId
-				_id
-				_permissions
-				_databaseId
+				location
 				userId
-				monumentId
+				name
+				about
+				topics
+				placeDetailId
+				transports
+				pictureURL
 				user {
+					_createdAt
+					_updatedAt
+					_collectionId
 					_id
+					_permissions
+					_databaseId
 					userId
 					myId
 					username
 					profilePictureURL
 				}
-			}
-			liked {
-				_createdAt
-				_updatedAt
-				_collectionId
-				_id
-				_permissions
-				_databaseId
-				userId
-				monumentId
+				placeDetail {
+					_createdAt
+					_updatedAt
+					_collectionId
+					_id
+					_permissions
+					_databaseId
+					name
+				}
+				likes {
+					_createdAt
+					_updatedAt
+					_collectionId
+					_id
+					_permissions
+					_databaseId
+					userId
+					monumentId
+					user {
+						_createdAt
+						_updatedAt
+						_collectionId
+						_id
+						_permissions
+						_databaseId
+						userId
+						myId
+						username
+						profilePictureURL
+					}
+				}
+				liked {
+					_createdAt
+					_updatedAt
+					_collectionId
+					_id
+					_permissions
+					_databaseId
+					userId
+					monumentId
+				}
 			}
 		}
 	}

@@ -6,6 +6,6 @@ export const load: LayoutServerLoad = async (event) => {
 	const profilePromise = sdkssr(event).getProfile({ myId: myId });
 	const res = await profilePromise;
 	return {
-		userProfile: res.getAccountByMyId
+		userProfile: res.getAccount
 	};
 };

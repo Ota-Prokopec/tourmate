@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { string } from 'zod';
+
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
@@ -19,13 +21,16 @@
 	import CardFooter from './CardFooter.svelte';
 	import { alert } from '$src/routes/alertStore';
 
+	//type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked' | 'placeDetail'>;
+
+	export let size: 'normal' | 'small' | 'tiny' = 'normal';
+
 	export let monument: MonumentCard;
 	let amIOwner = monument.user.userId === $user?.$id;
 	export let isCardVisible = true;
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let dismissable = false;
-	export let minimalized = false;
 	let liked: boolean | 'pending' = monument.liked ? true : false;
 
 	let className = '';
@@ -85,41 +90,53 @@
 </Modal>
 
 {#if isCardVisible}
-	<Card on:dismiss {dismissable} class={twMerge('relative justify-self-center gap-2', className)}>
-		<Row class="justify-between">
-			<UserItem
-				on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-				avatarClass="w-10 h-10"
-				class="h-auto"
-				user={monument.user}
-			/>
-			<Column class="gap-0 flex justify-center items-center">
-				<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
-				{#if !disableSharing}
-					<Icon on:click={() => goto(`/monument/${monument._id}/share`)}>
-						<IconShare class="w-5 h-5" />
-					</Icon>
-				{/if}
-			</Column>
-		</Row>
+	<Card
+		on:dismiss
+		{dismissable}
+		class={twMerge('relative justify-self-center gap-2 p-2', className)}
+	>
+		{#if size !== 'tiny'}
+			<Row class="justify-between">
+				<UserItem
+					on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+					avatarClass="w-10 h-10"
+					class="h-auto"
+					user={monument.user}
+				/>
 
-		<svelte:component this={minimalized ? Columns : Row} columns="1fr 1fr">
+				<Column class="gap-0 flex justify-center items-center">
+					<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
+					{#if !disableSharing}
+						<Icon on:click={() => goto(`/monument/${monument._id}/share`)}>
+							<IconShare class="w-5 h-5" />
+						</Icon>
+					{/if}
+				</Column>
+			</Row>
+		{/if}
+
+		<svelte:component this={size === 'normal' ? Row : Columns} columns="1fr 1fr">
 			<CardImage on:like={like} imgSrc={monument.pictureURL} />
 
-			<Column>
-				<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />
-				<CardFooter {monument} />
-			</Column>
+			<CardFooter {monument} />
 		</svelte:component>
+
+		{#if size !== 'tiny'}
+			<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />
+		{/if}
 
 		<div class="w-full h-auto flex justify-start">
 			<slot />
 		</div>
 
-		{#if !disableSeeMoreButton}
-			<Button color="blue" class="m-2 w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
-				>see more....</Button
-			>
+		{#if size !== 'tiny'}
+			{#if !disableSeeMoreButton}
+				<Button
+					color="blue"
+					class="m-2 w-full p-2"
+					on:click={() => goto(`/monument/${monument._id}`)}>see more....</Button
+				>
+			{/if}
 		{/if}
 	</Card>
 {/if}

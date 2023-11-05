@@ -33,6 +33,7 @@
 		await collections.monument.updateDocument(data.monument._id, {
 			name: name,
 			topics: topics,
+			transports: transports,
 			about: about
 		});
 

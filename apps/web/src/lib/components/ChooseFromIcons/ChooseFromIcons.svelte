@@ -6,9 +6,6 @@
 	import { twMerge } from 'tailwind-merge';
 	import { removeItemsFromArray } from '@app/utils';
 	import Row from '../Common/Row.svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher<{ change: typeof chosen }>();
 
 	export let data: {
 		component: any;
@@ -16,8 +13,6 @@
 	}[];
 
 	export let chosen: Key[] = [];
-
-	$: dispatch('change', chosen);
 
 	const change = (key: Key) => {
 		if (chosen.includes(key)) remove(key);

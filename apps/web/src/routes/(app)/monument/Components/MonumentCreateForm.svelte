@@ -13,6 +13,7 @@
 	export let name: string;
 	export let about: string;
 	export let topics: Topic[];
+
 	export let transports: Transport[];
 	export let aboutLimit: number = 400;
 </script>
@@ -51,9 +52,9 @@
 				classWrap="w-full max-w-[400px]"
 			/>
 		{:else if id === 'type'}
-			<TopicComponent on:choose={(e) => (topics = e.detail)} class="mt-2" />
+			<TopicComponent bind:chosenTopics={topics} class="mt-2" />
 		{:else if id === 'transport'}
-			<TransportType on:choose={(e) => (transports = e.detail)} />
+			<TransportType bind:chosenTransports={transports} />
 		{:else if id === 'about'}
 			<TextArea
 				bind:value={about}

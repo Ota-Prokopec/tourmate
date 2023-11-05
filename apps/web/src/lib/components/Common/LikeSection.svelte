@@ -8,6 +8,7 @@
 	import Avatar from './Avatar.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import Text from './Text.svelte';
+	import { twMerge } from 'tailwind-merge';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let data: {
@@ -22,9 +23,12 @@
 		else dispatch('like');
 	};
 	const stacked = data.otherUsersThatLiked.length > 1;
+
+	let className = '';
+	export { className as class };
 </script>
 
-<Row class="gap-1">
+<Row class={twMerge('gap-1', className)}>
 	<Icon on:click={heartClick}>
 		{#if ableToLike}
 			{#if data.liked}
@@ -38,8 +42,8 @@
 	</Icon>
 	<Row class="">
 		{#if data.otherUsersThatLiked.length}
-			{#each data.otherUsersThatLiked as user}
-				<Avatar {stacked} size="sm" src={user.profilePictureURL}>
+			{#each data.otherUsersThatLiked as user, index}
+				<Avatar isAvatarFirstInStack={index === 0} {stacked} size="sm" src={user.profilePictureURL}>
 					{#if user.profilePictureURL}
 						{user.username.at(0)}
 					{/if}

@@ -1,6 +1,8 @@
 import { getAccount } from '../lib/test/getAccount'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
+import { Queries } from '../lib/appwrite/appwrite'
+import { fromLatLongIntoLocation } from '../lib/database/experiences-monuments'
 
 export default objectType({
 	name: 'Experience',
@@ -59,6 +61,22 @@ export default objectType({
 				]
 				const likeDoc = await collections.experienceLike.getDocument(queries)
 				return likeDoc
+			},
+		})
+		t.field('connectedMonument', {
+			type: 'Monument',
+			resolve: async (source, args, ctx) => {
+				const { collections } = ctx.appwrite
+				const monument = await collections.monument.getDocument([
+					Queries.monument.equal('$id', source.connectedMonumentId),
+				])
+
+				if (!monument)
+					throw new Error(
+						'could not find a monument that corespondes to connectedMonumentId',
+					)
+
+				return fromLatLongIntoLocation(monument)[0]
 			},
 		})
 	},
