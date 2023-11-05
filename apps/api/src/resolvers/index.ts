@@ -8,8 +8,6 @@ export { default as updateProfilePicture } from './account/mutations/updateProfi
 export * from './account/mutations/updateProfilePicture';
 export { default as getAccount } from './account/queries/getAccount';
 export * from './account/queries/getAccount';
-export { default as getAccountByMyId } from './account/queries/getAccountByMyId';
-export * from './account/queries/getAccountByMyId';
 export { default as getAccounts } from './account/queries/getAccounts';
 export * from './account/queries/getAccounts';
 export { default as loginViaEmail } from './auth/queries/loginViaEmail';

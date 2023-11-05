@@ -1,5 +1,5 @@
 query getAccountByMyId($myId: String!) {
-	getAccountByMyId(myId: $myId) {
+	getAccount(myId: $myId) {
 		_permissions
 		_databaseId
 		_id

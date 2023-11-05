@@ -146,8 +146,7 @@ type PlaceDetail {
 
 type Query {
   createAccount(myId: String!, username: String!): Account!
-  getAccount(userId: String): Account!
-  getAccountByMyId(myId: String!): Account!
+  getAccount(myId: String, userId: String): Account!
   getAccounts(searchingText: String): [Account!]!
   getExperience(id: String!): Experience!
   getListOfExperiences(location: LocationInput): [Experience!]!

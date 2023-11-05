@@ -87,7 +87,7 @@
 		on:dismiss
 		{dismissable}
 		class={twMerge(
-			'relative justify-self-center gap-0 h-min ',
+			'relative justify-self-center gap-0 h-min',
 			minimalized && 'border-0',
 			className
 		)}

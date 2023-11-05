@@ -274,7 +274,6 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     createAccount: NexusGenRootTypes['Account']; // Account!
     getAccount: NexusGenRootTypes['Account']; // Account!
-    getAccountByMyId: NexusGenRootTypes['Account']; // Account!
     getAccounts: NexusGenRootTypes['Account'][]; // [Account!]!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -390,7 +389,6 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     createAccount: 'Account'
     getAccount: 'Account'
-    getAccountByMyId: 'Account'
     getAccounts: 'Account'
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
@@ -432,10 +430,8 @@ export interface NexusGenArgTypes {
       username: string; // String!
     }
     getAccount: { // args
+      myId?: string | null; // String
       userId?: string | null; // String
-    }
-    getAccountByMyId: { // args
-      myId: string; // String!
     }
     getAccounts: { // args
       searchingText?: string | null; // String

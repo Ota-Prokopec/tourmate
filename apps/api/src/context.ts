@@ -6,7 +6,9 @@ import { Types } from '@app/appwrite-ssr-graphql'
 
 export const context = async ({ req, res }: { res: Response; req: Request }) => {
 	try {
-		const cookies: Types.Cookie[] = Object.entries(req.cookies as Record<string, string>).map(([key, value]) => ({
+		const cookies: Types.Cookie[] = Object.entries(
+			req.cookies as Record<string, string>,
+		).map(([key, value]) => ({
 			name: key,
 			value: value,
 		}))
@@ -18,6 +20,8 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 			appwrite = appwriteConnections.setCookie(cookies)
 			user = await appwrite.account.get<Preferences>()
 		} catch (error) {
+			console.log(error)
+
 			appwrite = appwriteConnections.setNone()
 			//user is equal to null
 		}
@@ -25,7 +29,8 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		return {
 			req,
 			res,
-			isAuthed: (ctxUser: unknown): ctxUser is NonNullable<typeof user> => ctxUser !== null,
+			isAuthed: (ctxUser: unknown): ctxUser is NonNullable<typeof user> =>
+				ctxUser !== null,
 			user: user,
 			appwrite: appwrite,
 		}

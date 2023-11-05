@@ -19,7 +19,7 @@
 
 <Drawer
 	bind:hidden
-	class={twMerge('rounded-xl z-50', className)}
+	class={twMerge('rounded-xl relative z-50', className)}
 	{placement}
 	transitionType="fly"
 	{transitionParams}><slot /></Drawer

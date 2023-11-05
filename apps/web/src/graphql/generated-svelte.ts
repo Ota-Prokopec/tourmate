@@ -224,6 +224,7 @@ export type QueryCreateAccountArgs = {
 
 
 export type QueryGetAccountArgs = {
+  myId?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -286,14 +287,6 @@ export type CreateAccountQueryVariables = Exact<{
 
 export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __typename?: 'Account', _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
 
-export type LoginViaEmailQueryVariables = Exact<{
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-}>;
-
-
-export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
-
 export type GetAccountQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -306,7 +299,7 @@ export type GetAccountByMyIdQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountByMyIdQuery = { __typename?: 'Query', getAccountByMyId: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL: URL, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
+export type GetAccountByMyIdQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL: URL, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
 
 export type GetListOfAccountsBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
@@ -321,6 +314,14 @@ export type GetProfileQueryVariables = Exact<{
 
 
 export type GetProfileQuery = { __typename?: 'Query', getAccountByMyId: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL, experiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, connectedMonumentId: string, location: [number, number], likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }> }>, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, transports: Array<any>, placeDetailId: string, pictureURL?: URL | null, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> } };
+
+export type LoginViaEmailQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
 
 export type UpdateProfilePictureQueryVariables = Exact<{
   picture: Scalars['String']['input'];
@@ -466,13 +467,6 @@ export const CreateAccountDoc = gql`
   }
 }
     `;
-export const LoginViaEmailDoc = gql`
-    query loginViaEmail($email: String!, $password: String!) {
-  logInViaEmail(email: $email, password: $password) {
-    session
-  }
-}
-    `;
 export const GetAccountDoc = gql`
     query getAccount($userId: String) {
   getAccount(userId: $userId) {
@@ -498,7 +492,7 @@ export const GetAccountDoc = gql`
     `;
 export const GetAccountByMyIdDoc = gql`
     query getAccountByMyId($myId: String!) {
-  getAccountByMyId(myId: $myId) {
+  getAccount(myId: $myId) {
     _permissions
     _databaseId
     _id
@@ -649,6 +643,13 @@ export const GetProfileDoc = gql`
         monumentId
       }
     }
+  }
+}
+    `;
+export const LoginViaEmailDoc = gql`
+    query loginViaEmail($email: String!, $password: String!) {
+  logInViaEmail(email: $email, password: $password) {
+    session
   }
 }
     `;
@@ -1400,41 +1401,6 @@ export const createAccount = (
             return result;
           }
         
-export const loginViaEmail = (
-            options: Omit<
-              WatchQueryOptions<LoginViaEmailQueryVariables>, 
-              "query"
-            >
-          ): Readable<
-            ApolloQueryResult<LoginViaEmailQuery> & {
-              query: ObservableQuery<
-                LoginViaEmailQuery,
-                LoginViaEmailQueryVariables
-              >;
-            }
-          > => {
-            const q = client.watchQuery({
-              query: LoginViaEmailDoc,
-              ...options,
-            });
-            var result = readable<
-              ApolloQueryResult<LoginViaEmailQuery> & {
-                query: ObservableQuery<
-                  LoginViaEmailQuery,
-                  LoginViaEmailQueryVariables
-                >;
-              }
-            >(
-              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
-              (set) => {
-                q.subscribe((v: any) => {
-                  set({ ...v, query: q });
-                });
-              }
-            );
-            return result;
-          }
-        
 export const getAccount = (
             options: Omit<
               WatchQueryOptions<GetAccountQueryVariables>, 
@@ -1562,6 +1528,41 @@ export const getProfile = (
                 query: ObservableQuery<
                   GetProfileQuery,
                   GetProfileQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const loginViaEmail = (
+            options: Omit<
+              WatchQueryOptions<LoginViaEmailQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<LoginViaEmailQuery> & {
+              query: ObservableQuery<
+                LoginViaEmailQuery,
+                LoginViaEmailQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: LoginViaEmailDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<LoginViaEmailQuery> & {
+                query: ObservableQuery<
+                  LoginViaEmailQuery,
+                  LoginViaEmailQueryVariables
                 >;
               }
             >(

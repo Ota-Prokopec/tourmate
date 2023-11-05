@@ -16,9 +16,7 @@
 		"generate-arguments": "barrelsby --delete  --singleQuotes --exportDefault --directory ./src/arguments",
 		"generate-database-experiences-monuments-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/experiences-monuments",
 		"generate-database-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/",
-		"barrelsby": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-database-experiences-monuments-barrels && yarn generate-arguments",
-		"codegen": "graphql-codegen",
-		"vitest": "vitest"
+		"barrelsby": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-database-experiences-monuments-barrels && yarn generate-arguments"
 	},
 	"dependencies": {
 		"@app/appwrite-permissions": "*",
@@ -40,13 +38,14 @@
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^25.0.4",
+		"@rollup/plugin-graphql": "^2.0.4",
 		"@types/express": "^4.17.17",
 		"@types/http-server": "^0.12.1",
 		"barrelsby": "^2.8.0",
 		"nodemon": "2.0.22",
 		"ts-node": "^10.9.1",
 		"ts-node-dev": "^2.0.0",
-		"tsup": "^7.2.0",
+		"type-fest": "^4.6.0",
 		"typescript": "^5.2.2",
 		"vitest": "^0.34.6"
 	}

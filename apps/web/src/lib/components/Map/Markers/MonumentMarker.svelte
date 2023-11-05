@@ -24,6 +24,7 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
+	import Center from '$lib/components/Common/Center.svelte';
 
 	export let monument: GraphqlDocument<Monument>;
 	export let disableShowingDetails = false;
@@ -45,25 +46,29 @@
 	};
 </script>
 
-<Drawer class="p-2" bind:hidden={detailHidden} placement="left" size={600}>
+<Drawer class="p-2 h-full" bind:hidden={detailHidden} placement="left" size={600}>
 	{#if monumentCardDataPromise}
 		{#await monumentCardDataPromise}
-			<Stretch color="black" />
+			<Center class="w-full h-full">
+				<Loading />
+			</Center>
 		{:then monumentCardData}
 			{@const monument = monumentCardData.getMonument}
 			<Column class="gap-4">
 				<MonumentCardComponent {monument} />
-				<Carousel swiping arrows>
-					{#each monument.connectedExperiences as experience}
-						<ExperienceCard
-							disableSeeMoreButton
-							minimalized
-							class="p-0"
-							disableReRouting
-							{experience}
-						/>
-					{/each}
-				</Carousel>
+				{#if monument.connectedExperiences.length}
+					<Carousel class="h-min" swiping arrows>
+						{#each monument.connectedExperiences as experience}
+							<ExperienceCard
+								disableSeeMoreButton
+								minimalized
+								class="p-0 self-center shadow-none"
+								disableReRouting
+								{experience}
+							/>
+						{/each}
+					</Carousel>
+				{/if}
 			</Column>
 		{/await}
 	{/if}
