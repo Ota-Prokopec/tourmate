@@ -3,7 +3,7 @@
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 	import type { MonumentCard } from '@app/ts-types';
 	import { device } from '@app/utils';
@@ -33,7 +33,7 @@
 						dismissable
 						disableSeeMoreButton
 						disableSharing
-						minimalized
+						size="small"
 						monument={monumentToConnect.getMonument}
 					>
 						{#if connectedMonumentId === monumentToConnect.getMonument._id}

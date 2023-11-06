@@ -16,15 +16,15 @@ export default objectType({
 		t.string('userId')
 		t.string('myId')
 		t.string('username')
-		t.nullable.boolean('status')
-		t.nullable.boolean('emailVerification')
-		t.nullable.boolean('phoneVerification')
+		t.boolean('status')
+		t.boolean('emailVerification')
+		t.boolean('phoneVerification')
 		t.field('profilePictureURL', {
 			type: 'URL',
 			description: 'This is URL of profile picture. Not its id.',
 		})
-		t.nullable.field('prefs', {
-			type: nullable(UsersPreferences),
+		t.field('prefs', {
+			type: UsersPreferences,
 		}),
 			t.field('experiences', {
 				type: list('Experience'),

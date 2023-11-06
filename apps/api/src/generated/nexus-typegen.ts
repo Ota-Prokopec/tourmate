@@ -86,12 +86,12 @@ export interface NexusGenObjects {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    emailVerification?: boolean | null; // Boolean
+    emailVerification: boolean; // Boolean!
     myId: string; // String!
-    phoneVerification?: boolean | null; // Boolean
-    prefs?: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
+    phoneVerification: boolean; // Boolean!
+    prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
     profilePictureURL: NexusGenScalars['URL']; // URL!
-    status?: boolean | null; // Boolean
+    status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
   }
@@ -158,8 +158,8 @@ export interface NexusGenObjects {
   }
   Query: {};
   UsersPreferences: { // root type
-    location?: number[] | null; // [Float!]
-    termsAccepted?: boolean | null; // Boolean
+    mapRange: number; // Int!
+    termsAccepted: boolean; // Boolean!
   }
 }
 
@@ -181,14 +181,14 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    emailVerification: boolean | null; // Boolean
+    emailVerification: boolean; // Boolean!
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     monuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     myId: string; // String!
-    phoneVerification: boolean | null; // Boolean
-    prefs: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
+    phoneVerification: boolean; // Boolean!
+    prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
     profilePictureURL: NexusGenScalars['URL']; // URL!
-    status: boolean | null; // Boolean
+    status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
   }
@@ -284,8 +284,8 @@ export interface NexusGenFieldTypes {
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
   }
   UsersPreferences: { // field return type
-    location: number[] | null; // [Float!]
-    termsAccepted: boolean | null; // Boolean
+    mapRange: number; // Int!
+    termsAccepted: boolean; // Boolean!
   }
 }
 
@@ -400,7 +400,7 @@ export interface NexusGenFieldTypeNames {
     updateProfilePicture: 'Account'
   }
   UsersPreferences: { // field return type name
-    location: 'Float'
+    mapRange: 'Int'
     termsAccepted: 'Boolean'
   }
 }
@@ -450,6 +450,7 @@ export interface NexusGenArgTypes {
       name?: string | null; // String
       topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
       transports?: NexusGenScalars['Transport'][] | null; // [Transport!]
+      userId?: string | null; // String
     }
     getMonument: { // args
       id: string; // String!

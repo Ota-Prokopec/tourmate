@@ -3,7 +3,7 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import QrCode from '$lib/components/Common/QrCode.svelte';
 	import Share from '$lib/components/Common/Share.svelte';
-	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import CopyInput from '$lib/components/Inputs/CopyInput.svelte';
 	import type { PageData } from './$types';
 
@@ -19,7 +19,7 @@
 
 <Center class="w-full h-full">
 	<Column class="justify-center items-center w-full">
-		<MonumentCard disableSharing disableSeeMoreButton monument={data.monument} />
+		<MonumentCard disableSharing size="normal" disableSeeMoreButton monument={data.monument} />
 		<QrCode class="w-40 h-40" data={url} />
 		<Share shareData={sharingData} />
 		<CopyInput class="w-[80%] max-w-[600px]" value={url} />

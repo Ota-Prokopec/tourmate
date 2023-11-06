@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { string } from 'zod';
+	import Rows from '$lib/components/Common/Rows.svelte';
 
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
@@ -21,23 +21,37 @@
 	import CardFooter from './CardFooter.svelte';
 	import { alert } from '$src/routes/alertStore';
 
-	//type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked' | 'placeDetail'>;
+	const isMonumentCard = (card: MonumentCard | TinyMonumentCard): card is MonumentCard => {
+		return 'liked' in monument;
+	};
+	const isTinyMonumentCard = (card: MonumentCard | TinyMonumentCard): card is TinyMonumentCard => {
+		return !('liked' in monument);
+	};
 
-	export let size: 'normal' | 'small' | 'tiny' = 'normal';
+	type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked'>;
 
-	export let monument: MonumentCard;
-	let amIOwner = monument.user.userId === $user?.$id;
+	type T = $$Generic<'normal' | 'small' | 'tiny'>;
+
+	export let size: T;
+
+	export let monument: typeof size extends 'normal' ? MonumentCard : TinyMonumentCard;
+
+	let amIOwner: boolean | undefined =
+		'user' in monument ? monument.user.userId === $user?.$id : undefined;
+
 	export let isCardVisible = true;
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let dismissable = false;
-	let liked: boolean | 'pending' = monument.liked ? true : false;
+	let liked: boolean | 'pending' | undefined =
+		'liked' in monument ? (monument.liked ? true : false) : undefined;
 
 	let className = '';
 	export { className as class };
 
 	const like = async () => {
-		if (!$user?.$id) throw new Error('user is not authed');
+		if (!isMonumentCard(monument)) throw new Error('monument is not type of monument card');
+		if (!'liked') if (!$user?.$id) throw new Error('user is not authed');
 		liked = 'pending';
 		try {
 			const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });
@@ -52,6 +66,7 @@
 		}
 	};
 	const unlike = async () => {
+		if (!isMonumentCard(monument)) throw new Error('monument is not type of monument card');
 		if (liked === 'pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
 		if (!$user?.$id) throw new Error('user is not authed');
 		liked = 'pending';
@@ -97,12 +112,14 @@
 	>
 		{#if size !== 'tiny'}
 			<Row class="justify-between">
-				<UserItem
-					on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-					avatarClass="w-10 h-10"
-					class="h-auto"
-					user={monument.user}
-				/>
+				{#if isMonumentCard(monument)}
+					<UserItem
+						on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+						avatarClass="w-10 h-10"
+						class="h-auto"
+						user={monument.user}
+					/>
+				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
 					<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
@@ -115,14 +132,19 @@
 			</Row>
 		{/if}
 
-		<svelte:component this={size === 'normal' ? Row : Columns} columns="1fr 1fr">
+		<svelte:component
+			this={size === 'tiny' || size === 'small' ? Columns : Column}
+			columns="1fr 1fr"
+		>
 			<CardImage on:like={like} imgSrc={monument.pictureURL} />
 
 			<CardFooter {monument} />
 		</svelte:component>
 
 		{#if size !== 'tiny'}
-			<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />
+			{#if isMonumentCard(monument) && typeof liked !== 'undefined' && typeof amIOwner !== 'undefined'}
+				<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />
+			{/if}
 		{/if}
 
 		<div class="w-full h-auto flex justify-start">
@@ -131,10 +153,8 @@
 
 		{#if size !== 'tiny'}
 			{#if !disableSeeMoreButton}
-				<Button
-					color="blue"
-					class="m-2 w-full p-2"
-					on:click={() => goto(`/monument/${monument._id}`)}>see more....</Button
+				<Button color="blue" class=" w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
+					>see more....</Button
 				>
 			{/if}
 		{/if}

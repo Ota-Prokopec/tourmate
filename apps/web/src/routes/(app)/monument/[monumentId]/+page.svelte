@@ -8,7 +8,7 @@
 	import Popover from '$lib/components/Common/Popover.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
 	import { device } from '@app/utils';
-	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 
 	export let data: PageData;
@@ -20,7 +20,12 @@
 </script>
 
 <div class="w-full h-auto flex items-center relative flex-wrap flex-col gap-4">
-	<MonumentCard disableSeeMoreButton class="absolute top-0 left-0 z-50" monument={data.monument}>
+	<MonumentCard
+		disableSeeMoreButton
+		size="normal"
+		class="absolute top-0 left-0 z-50"
+		monument={data.monument}
+	>
 		<Text class="ml-2 mt-4">
 			{data.monument.about}
 		</Text>

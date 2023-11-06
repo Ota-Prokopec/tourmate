@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Map from '$lib/components/Map/Map.svelte';
 	import { myNewExperienceStore } from '../createNewExperience/editPicture/newExperienceStore';
-	import type { Base64, Location } from '@app/ts-types';
-	import { getUsersLocation, roundNumber } from '@app/utils';
+	import type { Base64, Location, MonumentMarkerData } from '@app/ts-types';
+	import { getUsersLocation, metersToDegree, roundNumber } from '@app/utils';
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import type { PageData } from './$types';
 	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
@@ -12,16 +12,22 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconSettings from '$lib/components/Icons/IconSettings.svelte';
 	import MapSettings from '$lib/components/Map/settings/MapSettings.svelte';
-	import type { MapSetttings } from '$lib/components/Map/settings/mapSettings';
 	import lsStore from '$lib/utils/lsStore';
+	import { browser } from '$app/environment';
 
 	export let data: PageData;
 	$: location = $lsStore.usersLocation;
+	let monumentsPromise: undefined | Promise<{ getListOfMonuments: MonumentMarkerData[] }>;
 
-	$: monuments = useQuery('monuments', async () => {
-		if (!location) throw new Error('location is no available');
-		return (await sdk.getListOfMonumentsForMap({ location: { location } })).getListOfMonuments;
-	});
+	const getMonuments = (range: number) => {
+		if (!location) return;
+
+		monumentsPromise = sdk.getListOfMonumentsForMap({
+			location: { location, range: metersToDegree(range) }
+		});
+	};
+
+	$: if (location) getMonuments(data.user.prefs.mapRange);
 
 	let mapZoom: number;
 
@@ -29,13 +35,13 @@
 	let almostProfileImageSrc: string | Base64;
 
 	let settingsHidden = true;
-	let mapSettings: MapSetttings = {
-		seeExperiences: false,
-		seeMonuments: true
-	};
 </script>
 
-<MapSettings bind:settingsHidden bind:settings={mapSettings} />
+<MapSettings
+	on:change={(e) => getMonuments(e.detail.range)}
+	bind:settingsHidden
+	mapRangeValue={JSON.stringify(data.user.prefs.mapRange)}
+/>
 
 <Map deg={45} bind:zoom={mapZoom} bind:location>
 	<Icon
@@ -45,13 +51,13 @@
 		<IconSettings />
 	</Icon>
 
-	{#if mapSettings.seeMonuments}
-		{#if $monuments.data}
-			{#each $monuments.data as monument}
+	{#await monumentsPromise then monuments}
+		{#if monuments}
+			{#each monuments.getListOfMonuments as monument}
 				<MonumentMarker zoom={mapZoom} {monument} />
 			{/each}
 		{/if}
-	{/if}
+	{/await}
 </Map>
 {#if almostProfile}
 	<AlmostProfileWithMainImage

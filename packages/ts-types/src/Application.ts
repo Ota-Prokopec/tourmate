@@ -18,7 +18,7 @@ export type MonumentCard = GraphqlDocument<Monument> & {
 }
 
 export type MonumentCardWithConnectedExperiences = MonumentCard & {
-	connectedExperiences: GraphqlDocument<ExperienceCard>[]
+	connectedExperiences: GraphqlDocument<Omit<ExperienceCard, 'connectedMonument'>>[]
 }
 
 export type ExperienceCard = GraphqlDocument<Experience> & {

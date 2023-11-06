@@ -4,6 +4,7 @@ query getListOfMonumentCards(
 	$transports: [Transport!]
 	$name: String
 	$limit: Int
+	$userId: String
 ) {
 	getListOfMonuments(
 		location: $location
@@ -11,6 +12,7 @@ query getListOfMonumentCards(
 		transports: $transports
 		name: $name
 		limit: $limit
+		userId: $userId
 	) {
 		_createdAt
 		_updatedAt

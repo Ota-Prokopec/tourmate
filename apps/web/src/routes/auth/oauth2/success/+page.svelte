@@ -18,15 +18,12 @@
 			$lsStore.cookieFallback = { a_session_experiences: data.session };
 
 			const { $id: userId } = await user.get();
-			console.log(userId);
 
 			if (!userId) throw new Error('User is not Authed');
 
 			const myUserInfoAlreadyExists = (
 				await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)])
 			).total;
-
-			console.log(myUserInfoAlreadyExists);
 
 			//if your account is not created, create an account
 			if (myUserInfoAlreadyExists === 0) {

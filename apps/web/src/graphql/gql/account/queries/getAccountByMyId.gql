@@ -14,7 +14,7 @@ query getAccountByMyId($myId: String!) {
 		phoneVerification
 		profilePictureURL
 		prefs {
-			location
+			mapRange
 			termsAccepted
 		}
 	}

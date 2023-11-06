@@ -5,8 +5,8 @@
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import Gallery from '$lib/components/Common/Gallery.svelte';
-	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCard.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64, ExperienceCard, MonumentCard } from '@app/ts-types';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
@@ -16,15 +16,18 @@
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { goto } from '$app/navigation';
 	import Column from '$lib/components/Common/Column.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
+	import Center from '$lib/components/Common/Center.svelte';
 
 	export let data: PageData;
 
 	let usersMonuments: MonumentCard[] | undefined = undefined;
 	const usersExperiences: ExperienceCard[] = data.userProfile.experiences;
 
-	let experiencesType: 'monuments' | 'experiences' = 'experiences';
+	let category: 'monuments' | 'experiences' = 'experiences';
 
 	let isMyAccount = data.user?.userId === data.userProfile.userId;
+	let isLoading = false;
 
 	const categories = [
 		{ title: 'fotky', key: 'experiences' },
@@ -48,6 +51,18 @@
 		uploadingProfilePictureIsLoading = false;
 		screenProfilePicEditor = false;
 	};
+
+	$: if (category === 'monuments' && !usersMonuments) {
+		isLoading = true;
+		sdk
+			.getListOfMonumentCards({ userId: data.userProfile.userId })
+			.then(({ getListOfMonuments: monuments }) => {
+				usersMonuments = monuments;
+				isLoading = false;
+			});
+	}
+
+	$: console.log(usersMonuments?.length);
 </script>
 
 {#if screenProfilePicEditor}
@@ -85,22 +100,30 @@
 		<span class="text-3xl p-4">{data.userProfile.username}</span>
 
 		<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
-			<CategoryPicker {categories} bind:chosenCategory={experiencesType} />
-			<Column class="gap-10 justify-center items-center w-full">
-				{#if experiencesType === 'experiences'}
-					{#each usersExperiences as experience}
-						<ExperienceCardComponent {experience} />
-					{/each}
-				{:else if usersMonuments}{:else}
-					<Skeleton divClass="w-full" />
-					<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400">
-						<Text class="!text-black">Create your first monument</Text>
-						<Icon class="fill-red-500 w-7 h-7">
-							<IconLocation />
-						</Icon>
-					</Button>
-				{/if}
-			</Column>
+			<CategoryPicker {categories} bind:chosenCategory={category} />
+			{#if isLoading}
+				<Center class="h-full"><Loading /></Center>
+			{:else}
+				<Column class="gap-10 justify-center items-center w-full">
+					{#if category === 'experiences'}
+						{#each usersExperiences as experience}
+							<ExperienceCardComponent {experience} />
+						{/each}
+					{:else if usersMonuments?.length}
+						{#each usersMonuments as monument}
+							<MonumentCardComponent size="normal" {monument} />
+						{/each}
+					{:else}
+						<Skeleton divClass="w-full" />
+						<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400">
+							<Text class="!text-black">Create your first monument</Text>
+							<Icon class="fill-red-500 w-7 h-7">
+								<IconLocation />
+							</Icon>
+						</Button>
+					{/if}
+				</Column>
+			{/if}
 		</div>
 	</div>
 {/if}

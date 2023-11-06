@@ -13,23 +13,15 @@
 	import Row from '$lib/components/Common/Row.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import ExperienceOwnerOptions from '../../Experience/ExperienceOwnerOptions.svelte';
-	import Columns from '$lib/components/Common/Columns.svelte';
+	import MonumentCard from '../monument/MonumentCardComponent.svelte';
 	import LikeSection from '$lib/components/Common/LikeSection.svelte';
-	import MonumentCard from '../monument/MonumentCard.svelte';
 
 	export let experience: ExperienceCard;
-	export let disableReRouting = false;
+
 	export let dismissable = false;
 	let liked: boolean | 'pending' = experience.liked ? true : false;
 	let isCardVisible = true;
-	export let minimalized = false;
 	let amIOwner = experience.user.userId === $user?.$id;
-	export let disableSeeMoreButton = false;
-
-	const onClick = () => {
-		if (disableReRouting) return;
-		goto(`/experience/${experience._id}`);
-	};
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
@@ -88,8 +80,7 @@
 		on:dismiss
 		{dismissable}
 		class={twMerge(
-			'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none',
-			minimalized && 'border-0',
+			'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none p-2 border-0',
 			className
 		)}
 	>
@@ -107,7 +98,18 @@
 				{/if}
 			</Row>
 
-			<CardImage on:like={like} imgSrc={experience.imgSrc} />
+			<CardImage on:like={like} imgSrc={experience.imgSrc}>
+				<LikeSection
+					class="absolute bottom-0 left-0 m-6"
+					ableToLike={!amIOwner}
+					on:like={like}
+					on:unlike={unlike}
+					data={{
+						liked: experience.liked ? true : false,
+						otherUsersThatLiked: experience.likes.map((l) => l.user)
+					}}
+				/>
+			</CardImage>
 
 			<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
 		</Column>

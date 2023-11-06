@@ -4,10 +4,8 @@
 	import IconHeartOutline from '../Icons/IconHeartOutline.svelte';
 	import Icon from './Icon.svelte';
 	import Row from './Row.svelte';
-	import Column from './Column.svelte';
 	import Avatar from './Avatar.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import Text from './Text.svelte';
 	import { twMerge } from 'tailwind-merge';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 

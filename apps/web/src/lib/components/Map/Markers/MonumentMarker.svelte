@@ -1,32 +1,27 @@
 <script lang="ts">
 	import { twMerge } from 'tailwind-merge';
 	import type {
-		MonumentCard,
 		GraphqlDocument,
 		Monument,
-		MonumentCardWithConnectedExperiences
+		MonumentCardWithConnectedExperiences,
+		MonumentMarkerData
 	} from '@app/ts-types';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import { Button, Card } from 'flowbite-svelte';
-	import Popover from '$lib/components/Common/Popover.svelte';
 	import Marker from '../Marker.svelte';
-	import { goto } from '$app/navigation';
-	import { urlToString } from '@app/utils';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import { Stretch } from 'svelte-loading-spinners';
 	import Carousel from '$lib/components/Carousel/Carousel.svelte';
-	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCard.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
+	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
-	import Text from '$lib/components/Common/Text.svelte';
-	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
+	import MediaQueryMobile from '$lib/components/MediaQueries/MediaQueryMobile.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
 
-	export let monument: GraphqlDocument<Monument>;
+	export let monument: MonumentMarkerData;
 	export let disableShowingDetails = false;
 
 	export let zoom: number | undefined = undefined;
@@ -46,7 +41,17 @@
 	};
 </script>
 
-<Drawer class="p-2 h-full" bind:hidden={detailHidden} placement="left" size={600}>
+<Drawer
+	class="p-2 h-full w-full max-w-[400px]"
+	bind:hidden={detailHidden}
+	placement="left"
+	size={600}
+>
+	<MediaQueryMobile>
+		<Right>
+			<Icon on:click={() => (detailHidden = true)} class="child:w-7 child:h-7"><IconTimes /></Icon>
+		</Right>
+	</MediaQueryMobile>
 	{#if monumentCardDataPromise}
 		{#await monumentCardDataPromise}
 			<Center class="w-full h-full">
@@ -55,17 +60,15 @@
 		{:then monumentCardData}
 			{@const monument = monumentCardData.getMonument}
 			<Column class="gap-4">
-				<MonumentCardComponent {monument} />
+				<MonumentCardComponent size="normal" {monument} />
 				{#if monument.connectedExperiences.length}
 					<Carousel class="h-min" swiping arrows>
-						{#each monument.connectedExperiences as experience}
-							<ExperienceCard
-								disableSeeMoreButton
-								minimalized
-								class="p-0 self-center shadow-none"
-								disableReRouting
-								{experience}
-							/>
+						{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
+							{@const experience = {
+								...experienceWithoutConnectedMonument,
+								connectedMonument: monument
+							}}
+							<ExperienceCard class="p-0 self-center shadow-none" {experience} />
 						{/each}
 					</Carousel>
 				{/if}

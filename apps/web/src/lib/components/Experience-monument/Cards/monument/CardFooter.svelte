@@ -6,7 +6,7 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { goto } from '$app/navigation';
 
-	export let monument: MonumentCard;
+	export let monument: { name: string; placeDetail: { name: string } };
 </script>
 
 <Row class="justify-between gap-2">

@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<span class={twMerge('break-normal', className)}>
+<div class={twMerge('w-full flex items-center justify-end', className)}>
 	<slot />
-</span>
+</div>

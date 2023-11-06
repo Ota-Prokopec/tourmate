@@ -1,4 +1,4 @@
-import { arg, list, nullable, queryField } from 'nexus'
+import { arg, list, nullable, queryField, stringArg } from 'nexus'
 import {
 	locationQueries,
 	fromLatLongIntoLocation,
@@ -14,15 +14,22 @@ export default queryField('getListOfMonuments', {
 		transports: nullable(list('Transport')),
 		name: nullable('String'),
 		limit: nullable(arg({ type: 'Int', default: 10 })),
+		userId: nullable(stringArg()),
 	},
 	resolve: async (s, args, ctx, info) => {
 		const { collections } = ctx.appwrite
-		const { location: locationOptions, topics, transports, name, limit } = args
+		const { location: locationOptions, topics, transports, name, limit, userId } = args
 
 		let queries: string[] = []
 
-		if (locationOptions)
-			queries.push(...locationQueries(locationOptions.location, locationOptions.range))
+		if (locationOptions) {
+			queries.push(
+				...locationQueries(
+					locationOptions.location,
+					locationOptions.range ? locationOptions.range : ctx.user?.prefs.mapRange,
+				),
+			)
+		}
 
 		if (topics)
 			queries.push(
@@ -38,6 +45,7 @@ export default queryField('getListOfMonuments', {
 
 		if (name) queries.push(Queries.monument.search('name', name))
 		if (limit) queries.push(Queries.monument.limit(limit))
+		if (userId) queries.push(Queries.monument.equal('userId', userId))
 
 		return fromLatLongIntoLocation(
 			...(await collections.monument.listDocuments(queries)).documents,

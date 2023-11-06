@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { Skeleton } from 'flowbite-svelte';
@@ -23,7 +23,7 @@
 	<FullPageLoading />
 {:else if monuments?.length}
 	{#each monuments as monument}
-		<MonumentCardComponent {monument} />
+		<MonumentCardComponent size="normal" {monument} />
 	{/each}
 {:else}
 	<Skeleton divClass="w-full" />

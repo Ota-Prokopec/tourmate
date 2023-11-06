@@ -20,7 +20,7 @@
 	{#each items as { title, id, remove }}
 		{#if !remove}
 			<Column class="gap-1 w-full ">
-				<span class="text-xl w-min">{title}</span>
+				<span class="text-xl w-auto">{title}</span>
 				<span class={itemsClass}><slot {id} /></span>
 			</Column>
 		{/if}

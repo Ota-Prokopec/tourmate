@@ -8,7 +8,7 @@
 
 {#if imgSrc}
 	<button
-		class="h-auto w-full"
+		class="h-auto w-full relative"
 		on:dblclick={() => {
 			dispatch('like');
 		}}

@@ -14,7 +14,7 @@ query updateProfilePicture($picture: String!) {
 		phoneVerification
 		profilePictureURL
 		prefs {
-			location
+			mapRange
 			termsAccepted
 		}
 	}
