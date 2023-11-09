@@ -19,15 +19,13 @@
 	$: location = $lsStore.usersLocation;
 	let monumentsPromise: undefined | Promise<{ getListOfMonuments: MonumentMarkerData[] }>;
 
-	const getMonuments = (range: number) => {
-		if (!location) return;
-
+	const getMonuments = async (range: number) => {
 		monumentsPromise = sdk.getListOfMonumentsForMap({
-			location: { location, range: metersToDegree(range) }
+			location: { location: await getUsersLocation(), range: metersToDegree(range) }
 		});
 	};
 
-	$: if (location) getMonuments(data.user.prefs.mapRange);
+	getMonuments(data.user.prefs.mapRange);
 
 	let mapZoom: number;
 
@@ -37,11 +35,7 @@
 	let settingsHidden = true;
 </script>
 
-<MapSettings
-	on:change={(e) => getMonuments(e.detail.range)}
-	bind:settingsHidden
-	mapRangeValue={JSON.stringify(data.user.prefs.mapRange)}
-/>
+<MapSettings bind:settingsHidden mapRangeValue={JSON.stringify(data.user.prefs.mapRange)} />
 
 <Map deg={45} bind:zoom={mapZoom} bind:location>
 	<Icon

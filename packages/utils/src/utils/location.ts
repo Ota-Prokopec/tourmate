@@ -2,6 +2,7 @@ import * as lodash from 'lodash'
 const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'
+import { getPrettyNumber } from './prettier'
 
 export const getUsersLocation = (
 	options: PositionOptions = { enableHighAccuracy: true },
@@ -43,7 +44,7 @@ export const distanceBetweenTwoLocations = (location1: Location, location2: Loca
 }
 
 export const degreeToMeters = (degree: number) => {
-	return degree * 111_111
+	return getPrettyNumber(degree * 111_111)
 }
 export const metersToDegree = (meters: number) => {
 	return meters / 111_111

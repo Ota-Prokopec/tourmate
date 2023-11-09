@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard } from '@app/ts-types';
-	import { degreeToMeters, distanceBetweenTwoLocations, metersToDegree } from '@app/utils';
+	import {
+		degreeToMeters,
+		distanceBetweenTwoLocations,
+		getPrettyNumber,
+		metersToDegree
+	} from '@app/utils';
 	import lsSvelte from '$lib/utils/lsStore';
 	import Row from '$lib/components/Common/Row.svelte';
 	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
@@ -45,18 +50,15 @@
 
 <Row class="w-full h-auto min-h-full gap-2 bg-slate-900 overflow-auto">
 	<div class="w-full h-[500px] min-h-[100%] flex justify-center items-center relative">
-		<LocationScanner
-			>{Intl.NumberFormat('en', { notation: 'compact' }).format(range)}m</LocationScanner
-		>
+		<LocationScanner>{getPrettyNumber(range)}m</LocationScanner>
 		<Range max={metersLimit} bind:value={range} />
 	</div>
 	<Row class="w-full justify-center gap-2 mb-2">
 		{#if monuments && location}
 			{#each monuments as monument}
 				<MonumentCardComponent size="normal" dismissable {monument}>
-					you are {Intl.NumberFormat('en', { notation: 'compact' }).format(
-						degreeToMeters(distanceBetweenTwoLocations(location, monument.location))
-					)}m far from target
+					you are {degreeToMeters(distanceBetweenTwoLocations(location, monument.location))}m far
+					from target
 				</MonumentCardComponent>
 			{/each}
 		{/if}

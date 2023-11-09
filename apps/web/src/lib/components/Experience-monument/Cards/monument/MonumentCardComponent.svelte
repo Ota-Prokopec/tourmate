@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { degreeToMeters, distanceBetweenTwoLocations, getUsersLocation } from '@app/utils';
+
+	import { useQuery } from '@sveltestack/svelte-query';
+
 	import Rows from '$lib/components/Common/Rows.svelte';
 
 	import { goto } from '$app/navigation';
@@ -20,6 +24,8 @@
 	import CardHeader from './CardHeader.svelte';
 	import CardFooter from './CardFooter.svelte';
 	import { alert } from '$src/routes/alertStore';
+	import lsStore from '$lib/utils/lsStore';
+	import Left from '$lib/components/Common/Left.svelte';
 
 	const isMonumentCard = (card: MonumentCard | TinyMonumentCard): card is MonumentCard => {
 		return 'liked' in monument;
@@ -27,6 +33,8 @@
 	const isTinyMonumentCard = (card: MonumentCard | TinyMonumentCard): card is TinyMonumentCard => {
 		return !('liked' in monument);
 	};
+
+	const usersLocation = $lsStore.usersLocation;
 
 	type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked'>;
 
@@ -45,6 +53,10 @@
 	export let dismissable = false;
 	let liked: boolean | 'pending' | undefined =
 		'liked' in monument ? (monument.liked ? true : false) : undefined;
+
+	const distance = usersLocation
+		? degreeToMeters(distanceBetweenTwoLocations(usersLocation, monument.location))
+		: undefined;
 
 	let className = '';
 	export { className as class };
@@ -137,6 +149,9 @@
 			columns="1fr 1fr"
 		>
 			<CardImage on:like={like} imgSrc={monument.pictureURL} />
+			{#if size === 'normal'}
+				<Left class="pl-4"><Text>{distance}m</Text></Left>
+			{/if}
 
 			<CardFooter {monument} />
 		</svelte:component>

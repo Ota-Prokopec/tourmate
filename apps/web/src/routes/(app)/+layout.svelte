@@ -36,7 +36,7 @@
 	import { appwriteKeys } from '@app/appwrite-client';
 	import * as permissions from '@app/appwrite-permissions';
 	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
-	import Icon from '$lib/components/Icons/IconPach.svelte';
+	import IconPach from '$lib/components/Icons/IconPach.svelte';
 
 	export let data: LayoutData;
 
@@ -98,7 +98,7 @@
 			</BottomNavItem>
 
 			<BottomNavItem on:click={() => goto('/scan')}>
-				<Icon src={RiDeviceScan2Line} />
+				<IconPach src={RiDeviceScan2Line} />
 			</BottomNavItem>
 
 			<BottomNavItem on:click={() => goto('/search/places/*')}>

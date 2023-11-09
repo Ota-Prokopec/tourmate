@@ -18,7 +18,8 @@
 		"importsNotUsedAsValues": "remove",
 		"noImplicitReturns": true,
 		"importHelpers": true,
-		"allowUnusedLabels": false
+		"allowUnusedLabels": false,
+		"resolveJsonModule": true
 	},
 	"include": [
 		"src/**/*.d.ts",

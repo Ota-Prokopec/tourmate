@@ -4,7 +4,6 @@
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import Gallery from '$lib/components/Common/Gallery.svelte';
 	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import { sdk } from '$src/graphql/sdk';
@@ -18,6 +17,7 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let data: PageData;
 
@@ -30,8 +30,8 @@
 	let isLoading = false;
 
 	const categories = [
-		{ title: 'fotky', key: 'experiences' },
-		{ title: 'památky', key: 'monuments' }
+		{ title: $LL.pictures(), key: 'experiences' },
+		{ title: $LL.monuments(), key: 'monuments' }
 	] as const;
 
 	let screenProfilePicEditor = false;
@@ -61,8 +61,6 @@
 				isLoading = false;
 			});
 	}
-
-	$: console.log(usersMonuments?.length);
 </script>
 
 {#if screenProfilePicEditor}

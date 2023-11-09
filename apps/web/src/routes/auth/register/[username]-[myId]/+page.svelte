@@ -83,7 +83,7 @@
 		<div class="w-full flex flex-wrap flex-col gap-4 relative">
 			<Title class="text-xl">Zaregistrovat přes sociální sítě</Title>
 
-			<LoginViaSocilaMedia disabled={!ableToRegister} on:click={() => (state = 'loading')} />
+			<LoginViaSocilaMedia disabled={!termsAccepted} on:click={() => (state = 'loading')} />
 		</div>
 	</div>
 {/if}

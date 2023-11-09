@@ -9,7 +9,9 @@ export default defineConfig({
 		port: 5222
 	},
 	plugins: [sveltekit()],
-
+	ssr: {
+		noExternal: ['typesafe-i18n']
+	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}'],
 		globals: true,

@@ -10,6 +10,8 @@
 	import { alertStore } from './alertStore';
 	import { Button } from 'flowbite-svelte';
 
+	import LL from '$src/i18n/i18n-svelte';
+
 	const queryClient = new QueryClient();
 </script>
 

@@ -12,5 +12,5 @@
 	stroke-width="0"
 	class={className}
 	{...src.a}
-	xmlns="http://www.w3.org/2000/svg"
-/>
+	xmlns="http://www.w3.org/2000/svg">{@html src.c}</svg
+>
