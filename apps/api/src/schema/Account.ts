@@ -25,29 +25,6 @@ export default objectType({
 		})
 		t.field('prefs', {
 			type: UsersPreferences,
-		}),
-			t.field('experiences', {
-				type: list('Experience'),
-				resolve: async (source, args, ctx, info) => {
-					const { collections } = ctx.appwrite
-
-					const queries = [Queries.experience.equal('userId', source.userId)]
-					return fromLatLongIntoLocation(
-						...(await collections.experience.listDocuments(queries)).documents,
-					)
-				},
-			}),
-			t.field('monuments', {
-				type: list('Monument'),
-				resolve: async (source, args, ctx, info) => {
-					const { collections } = ctx.appwrite
-
-					const queries = [Queries.monument.equal('userId', source.userId)]
-
-					return fromLatLongIntoLocation(
-						...(await collections.monument.listDocuments(queries)).documents,
-					)
-				},
-			})
+		})
 	},
 })

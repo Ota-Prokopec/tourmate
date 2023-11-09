@@ -2,8 +2,8 @@ import { list, nullable, queryField, stringArg } from 'nexus'
 import { ApolloError } from 'apollo-server-express'
 import { Queries } from '../../../lib/appwrite/appwrite'
 
-export default queryField('getAccounts', {
-	type: list('Account'),
+export default queryField('getUsers', {
+	type: list('User'),
 	args: { searchingText: nullable(stringArg()) },
 	resolve: async (s, args, ctx, info) => {
 		if (!ctx.isAuthed(ctx.user))

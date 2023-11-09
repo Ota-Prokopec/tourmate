@@ -51,7 +51,6 @@ query getListOfExperienceCards {
 				userId
 				myId
 				username
-				status
 				profilePictureURL
 			}
 		}

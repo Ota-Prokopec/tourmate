@@ -24,9 +24,7 @@ query getMonumentCard($id: String!) {
 			userId
 			myId
 			username
-			status
-			emailVerification
-			phoneVerification
+
 			profilePictureURL
 		}
 		placeDetail {

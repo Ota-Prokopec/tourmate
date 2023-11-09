@@ -1,5 +1,5 @@
 query getProfile($myId: String!) {
-	getAccount(myId: $myId) {
+	getUser(myId: $myId) {
 		_permissions
 		_databaseId
 		_id

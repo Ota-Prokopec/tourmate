@@ -23,9 +23,7 @@ query getListOfPlaceCards {
 			userId
 			myId
 			username
-			status
-			emailVerification
-			phoneVerification
+
 			profilePictureURL
 		}
 		placeDetail {
@@ -117,7 +115,7 @@ query getListOfPlaceCards {
 				userId
 				myId
 				username
-				status
+
 				profilePictureURL
 			}
 		}

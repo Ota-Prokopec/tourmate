@@ -1,5 +1,5 @@
 query getListOfAccountsBySearching($searchingText: String) {
-	getAccounts(searchingText: $searchingText) {
+	getUsers(searchingText: $searchingText) {
 		_createdAt
 		_updatedAt
 		_collectionId

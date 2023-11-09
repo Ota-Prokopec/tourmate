@@ -12,12 +12,17 @@ export default queryField('updateProfilePicture', {
 		if (!isBase64(args.picture)) throw new TypeError('picture is not a base64 string')
 		const { collections } = ctx.appwrite
 
-		const userInfo = await collections.userInfo.getDocument([Query.equal('userId', ctx.user.$id)])
-		if (!userInfo) throw new ApolloError('userInfo is not defined for updateProfilePicture', '500')
+		const userInfo = await collections.userInfo.getDocument([
+			Query.equal('userId', ctx.user.$id),
+		])
+		if (!userInfo)
+			throw new ApolloError('userInfo is not defined for updateProfilePicture', '500')
 
 		if (userInfo?.profilePictureURL) {
 			// * delete his old picture
-			const file = cloudinary.profilePictures.getFileNameFromUrl(userInfo.profilePictureURL)
+			const file = cloudinary.profilePictures.getFileNameFromUrl(
+				userInfo.profilePictureURL,
+			)
 			await cloudinary.profilePictures.deleteFiles(file)
 		}
 

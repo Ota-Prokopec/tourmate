@@ -1,5 +1,5 @@
-query getAccountByMyId($myId: String!) {
-	getAccount(myId: $myId) {
+query getUserByMyId($myId: String!) {
+	getUser(myId: $myId) {
 		_permissions
 		_databaseId
 		_id
@@ -9,13 +9,7 @@ query getAccountByMyId($myId: String!) {
 		userId
 		myId
 		username
-		status
-		emailVerification
-		phoneVerification
+
 		profilePictureURL
-		prefs {
-			mapRange
-			termsAccepted
-		}
 	}
 }

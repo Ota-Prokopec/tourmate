@@ -38,9 +38,7 @@ query getListOfMonumentCards(
 			userId
 			myId
 			username
-			status
-			emailVerification
-			phoneVerification
+
 			profilePictureURL
 		}
 		placeDetail {
