@@ -71,7 +71,7 @@ query getMonumentCardWithConnectedExperiences($id: String!) {
 			_permissions
 			_databaseId
 			userId
-			imgSrc
+			pictureUrl
 			location
 			connectedMonumentId
 			user {

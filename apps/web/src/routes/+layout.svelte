@@ -10,8 +10,6 @@
 	import { alertStore } from './alertStore';
 	import { Button } from 'flowbite-svelte';
 
-	import LL from '$src/i18n/i18n-svelte';
-
 	const queryClient = new QueryClient();
 </script>
 
@@ -24,9 +22,15 @@
 	<Text slot="title">{$alertStore.title}</Text>
 	<Text slot="message">{$alertStore.message}</Text>
 	<span slot="buttons">
-		<Button on:click={() => ($alertStore.shown = false)} color={$alertStore.details?.color}
-			>ok</Button
-		>
+		{#if !$alertStore.details?.buttons}
+			<Button on:click={() => ($alertStore.shown = false)} color={$alertStore.details?.color}
+				>ok</Button
+			>
+		{:else}
+			{#each $alertStore.details.buttons as button}
+				<Button color={$alertStore.details?.color} on:click={button.onClick}>{button.title}</Button>
+			{/each}
+		{/if}
 	</span>
 </Alert>
 

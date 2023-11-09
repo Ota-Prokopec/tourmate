@@ -5,18 +5,23 @@ import type { IP, IPApiResponse, Location } from '@app/ts-types'
 import { getPrettyNumber } from './prettier'
 
 export const getUsersLocation = (
-	options: PositionOptions = { enableHighAccuracy: true },
+	options: PositionOptions = { enableHighAccuracy: false },
 ): Promise<Location> => {
 	return new Promise((res) => {
-		if (typeof window === 'undefined') res([0, 0])
+		if (typeof window === 'undefined') throw new Error('You called this on server side')
+
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				function (position) {
 					res([position.coords.latitude, position.coords.longitude])
 				},
-				() => {},
+				(err) => {
+					throw err
+				},
 				options,
 			)
+		} else {
+			throw new Error('Users location was not successfull')
 		}
 	})
 }

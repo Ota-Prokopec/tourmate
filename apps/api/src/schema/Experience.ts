@@ -1,4 +1,4 @@
-import { getAccount } from '../lib/test/getAccount'
+import { getUser } from '../lib/users/getUser'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
 import { Queries } from '../lib/appwrite/appwrite'
@@ -14,11 +14,11 @@ export default objectType({
 		t.list.string('_permissions')
 		t.string('_databaseId')
 		t.string('userId')
-		t.field('imgSrc', { type: 'URL' })
+		t.field('pictureUrl', { type: 'URL' })
 		t.field('location', { type: 'Location' })
 		t.string('connectedMonumentId')
 		t.field('user', {
-			type: 'Account',
+			type: 'User',
 			resolve: async (source, args, ctx, info) => {
 				let userId = source.userId
 				if (!ctx.isAuthed(ctx.user))
@@ -29,7 +29,7 @@ export default objectType({
 
 				const { collections } = ctx.appwrite
 
-				return await getAccount(userId, userId === ctx.user.$id, collections)
+				return await getUser(userId, collections)
 			},
 		})
 

@@ -98,7 +98,7 @@
 				{/if}
 			</Row>
 
-			<CardImage on:like={like} imgSrc={experience.imgSrc}>
+			<CardImage on:like={like} imgSrc={experience.pictureUrl}>
 				<LikeSection
 					class="absolute bottom-0 left-0 m-6"
 					ableToLike={!amIOwner}

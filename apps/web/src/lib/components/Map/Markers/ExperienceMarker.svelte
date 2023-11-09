@@ -15,7 +15,7 @@
 </script>
 
 <MarkerImage
-	on:click={() => dispatch('almostProfile', { imgSrc: experience.imgSrc })}
+	on:click={() => dispatch('almostProfile', { imgSrc: experience.pictureUrl })}
 	class={twMerge('rounded-full', bouncing && 'animate-bounce', className)}
 	{stacked}
 	on:almostProfile

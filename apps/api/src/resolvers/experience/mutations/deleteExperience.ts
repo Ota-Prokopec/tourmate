@@ -26,7 +26,7 @@ export default mutationField('deleteExperience', {
 		// delete monument picture from cloudinary
 		let pictureDeletePromise: Promise<any> | undefined
 
-		const pictureFile = cloudinary.experiences.getFileNameFromUrl(experience.imgSrc)
+		const pictureFile = cloudinary.experiences.getFileNameFromUrl(experience.pictureUrl)
 		pictureDeletePromise = cloudinary.experiences.deleteFiles(pictureFile)
 
 		// delete experience it self

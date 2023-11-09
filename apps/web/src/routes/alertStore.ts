@@ -7,6 +7,7 @@ export type AlertOpitions = {
 	title: string;
 	details?: {
 		color: Color;
+		buttons?: { title: string; onClick: () => any }[];
 	};
 };
 
@@ -16,7 +17,7 @@ export const alertStore = writable<AlertOpitions>({
 	title: ''
 });
 
-export const alert = (title: string, message: string, options?: { color: Color }) => {
+export const alert = (title: string, message: string, options?: AlertOpitions['details']) => {
 	alertStore.set({
 		shown: true,
 		title,

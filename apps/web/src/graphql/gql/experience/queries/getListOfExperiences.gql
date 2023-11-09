@@ -7,7 +7,7 @@ query getListOfExperiences {
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
 		location
 	}
 }

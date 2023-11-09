@@ -3,7 +3,7 @@ import {
 	locationQueries,
 } from '../lib/database/experiences-monuments'
 import { isLocation } from '@app/utils'
-import { getAccount } from '../lib/test/getAccount'
+import { getUser } from '../lib/users/getUser'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
 
@@ -28,7 +28,7 @@ export default objectType({
 			description: 'This it an URL not id of picture',
 		})
 		t.field('user', {
-			type: 'Account',
+			type: 'User',
 			resolve: async (source, args, ctx, info) => {
 				let userId = source.userId
 				if (!ctx.isAuthed(ctx.user))
@@ -38,7 +38,7 @@ export default objectType({
 					throw new ApolloError('user is not authorizated to create account', '403')
 
 				const { collections } = ctx.appwrite
-				return await getAccount(userId, userId === ctx.user.$id, collections)
+				return await getUser(userId, collections)
 			},
 		}),
 			t.field('nearExperiences', {

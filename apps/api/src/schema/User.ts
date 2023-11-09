@@ -23,9 +23,9 @@ export default objectType({
 			resolve: async (source, args, ctx, info) => {
 				const { collections } = ctx.appwrite
 
-				const queries = [Queries.picture.equal('userId', source.userId)]
+				const queries = [Queries.experience.equal('userId', source.userId)]
 				return fromLatLongIntoLocation(
-					...(await collections.picture.listDocuments(queries)).documents,
+					...(await collections.experience.listDocuments(queries)).documents,
 				)
 			},
 		}),

@@ -1,12 +1,11 @@
 import { arg, mutationField } from 'nexus'
-import createExperienceInput from '../schema/CreateExperienceInput'
 import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
 import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
 import buckets from '@app/cloudinary-server'
 
 export default mutationField('createExperience', {
-	args: { input: arg({ type: createExperienceInput }) },
+	args: { input: arg({ type: 'CreateExperienceInput' }) },
 	type: 'Experience',
 	resolve: async (s, args, ctx) => {
 		const { collections } = ctx.appwrite
@@ -23,7 +22,7 @@ export default mutationField('createExperience', {
 				return await collections.experience.createDocument({
 					connectedMonumentId: args.input.connnectedMonumentId,
 					userId: ctx.user.$id,
-					imgSrc: url,
+					pictureUrl: url,
 					latitude: Math.round(args.input.location[0]),
 					longitude: Math.round(args.input.location[1]),
 				})

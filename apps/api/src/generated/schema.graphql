@@ -10,8 +10,6 @@ type Account {
   _permissions: [String!]!
   _updatedAt: String!
   emailVerification: Boolean!
-  experiences: [Experience!]!
-  monuments: [Monument!]!
   myId: String!
   phoneVerification: Boolean!
   prefs: UsersPreferences!
@@ -57,11 +55,11 @@ type Experience {
   _updatedAt: String!
   connectedMonument: Monument!
   connectedMonumentId: String!
-  imgSrc: URL!
   liked: ExperienceLike
   likes: [ExperienceLike!]!
   location: Location!
-  user: Account!
+  pictureUrl: URL!
+  user: User!
   userId: String!
 }
 
@@ -73,7 +71,7 @@ type ExperienceLike {
   _permissions: [String!]!
   _updatedAt: String!
   experienceId: String!
-  user: Account!
+  user: User!
   userId: String!
 }
 
@@ -105,7 +103,7 @@ type Monument {
   placeDetailId: String!
   topics: [Topic!]!
   transports: [Transport!]!
-  user: Account!
+  user: User!
   userId: String!
 }
 
@@ -122,7 +120,7 @@ type MonumentLike {
   _permissions: [String!]!
   _updatedAt: String!
   monumentId: String!
-  user: Account!
+  user: User!
   userId: String!
 }
 
@@ -147,12 +145,13 @@ type PlaceDetail {
 
 type Query {
   createAccount(myId: String!, username: String!): Account!
-  getAccount(myId: String, userId: String): Account!
-  getAccounts(searchingText: String): [Account!]!
+  getAccount: Account!
   getExperience(id: String!): Experience!
   getListOfExperiences(location: LocationInput): [Experience!]!
   getListOfMonuments(limit: Int = 10, location: LocationInput, name: String, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
   getMonument(id: String!): Monument!
+  getUser(myId: String, userId: String): User!
+  getUsers(searchingText: String): [User!]!
   logInViaEmail(email: String!, password: String!): EmailLogin!
   updateProfilePicture(picture: String!): Account!
 }
@@ -165,6 +164,23 @@ scalar Transport
 A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
 """
 scalar URL
+
+type User {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  experiences: [Experience!]!
+  monuments: [Monument!]!
+  myId: String!
+
+  """This is URL of profile picture. Not its id."""
+  profilePictureURL: URL!
+  userId: String!
+  username: String!
+}
 
 type UsersPreferences {
   mapRange: Int!

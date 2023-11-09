@@ -8,8 +8,6 @@ export { default as updateProfilePicture } from './account/mutations/updateProfi
 export * from './account/mutations/updateProfilePicture';
 export { default as getAccount } from './account/queries/getAccount';
 export * from './account/queries/getAccount';
-export { default as getAccounts } from './account/queries/getAccounts';
-export * from './account/queries/getAccounts';
 export { default as loginViaEmail } from './auth/queries/loginViaEmail';
 export * from './auth/queries/loginViaEmail';
 export { default as createAccountInput } from './auth/schema/createAccountInput';
@@ -22,8 +20,8 @@ export { default as getExperience } from './experience/queries/getExperience';
 export * from './experience/queries/getExperience';
 export { default as getListOfExperiences } from './experience/queries/getListOfExperiences';
 export * from './experience/queries/getListOfExperiences';
-export { default as CreateExperienceInput } from './experience/schema/CreateExperienceInput';
-export * from './experience/schema/CreateExperienceInput';
+export { default as createExperienceInput } from './experience/schema/createExperienceInput';
+export * from './experience/schema/createExperienceInput';
 export { default as likeExperience } from './likes/experiences/mutations/likeExperience';
 export * from './likes/experiences/mutations/likeExperience';
 export { default as likeMonument } from './likes/monuments/mutations/likeMonument';
@@ -40,3 +38,7 @@ export { default as CreateMonumentInput } from './monuments/schema/CreateMonumen
 export * from './monuments/schema/CreateMonumentInput';
 export { default as MonumentNameInput } from './monuments/schema/MonumentNameInput';
 export * from './monuments/schema/MonumentNameInput';
+export { default as getAccounts } from './user/queries/getAccounts';
+export * from './user/queries/getAccounts';
+export { default as getUser } from './user/queries/getUser';
+export * from './user/queries/getUser';

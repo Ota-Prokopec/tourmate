@@ -7,7 +7,7 @@ mutation createExperience($input: CreateExperienceInput!) {
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
 		location
 	}
 }

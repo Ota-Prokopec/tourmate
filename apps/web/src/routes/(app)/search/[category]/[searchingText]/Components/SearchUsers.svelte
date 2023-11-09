@@ -15,7 +15,7 @@
 
 	$: isLoading = $usersGraphql?.isLoading;
 
-	$: users = $usersGraphql.data?.getAccounts;
+	$: users = $usersGraphql.data?.getUsers;
 </script>
 
 {#if isLoading}

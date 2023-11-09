@@ -57,7 +57,7 @@ query getProfile($myId: String!) {
 			}
 			connectedMonumentId
 			location
-			imgSrc
+			pictureUrl
 			userId
 			_databaseId
 			_permissions

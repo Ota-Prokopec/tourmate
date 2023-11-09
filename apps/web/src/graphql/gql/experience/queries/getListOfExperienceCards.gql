@@ -7,7 +7,7 @@ query getListOfExperienceCards {
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
 		location
 		user {
 			_createdAt

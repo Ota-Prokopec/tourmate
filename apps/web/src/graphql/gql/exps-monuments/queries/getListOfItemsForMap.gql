@@ -13,7 +13,7 @@ query getListOfItemsForMap(
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
 		connectedMonumentId
 		location
 		user {

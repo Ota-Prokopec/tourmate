@@ -18,11 +18,22 @@ type RootTranslation = {
 	 * m​o​n​u​m​e​n​t​s
 	 */
 	monuments: string
+	/**
+	 * p​i​c​t​u​r​e​s
+	 */
 	pictures: string
 	/**
 	 * m​í​s​t​a
 	 */
 	places: string
+	/**
+	 * M​o​n​u​m​e​n​t​s​ ​w​e​r​e​ ​n​o​t​ ​l​o​a​d​e​d
+	 */
+	monumentsLoadErrorTitle: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​l​o​a​d​i​n​g​ ​m​o​n​u​m​e​n​t​s​ ​o​n​ ​m​a​p​.​ ​T​r​y​ ​t​o​ ​r​e​s​e​t​ ​t​h​e​ ​p​a​g​e​.
+	 */
+	monumentsLoadErrorMessage: string
 }
 
 export type TranslationFunctions = {
@@ -30,11 +41,22 @@ export type TranslationFunctions = {
 	 * monuments
 	 */
 	monuments: () => LocalizedString
+	/**
+	 * pictures
+	 */
 	pictures: () => LocalizedString
 	/**
 	 * místa
 	 */
 	places: () => LocalizedString
+	/**
+	 * Monuments were not loaded
+	 */
+	monumentsLoadErrorTitle: () => LocalizedString
+	/**
+	 * We are sorry, but there was a problem in loading monuments on map. Try to reset the page.
+	 */
+	monumentsLoadErrorMessage: () => LocalizedString
 }
 
 export type Formatters = {}

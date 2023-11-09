@@ -37,9 +37,9 @@
 		>
 			<GeolocateControl
 				position="top-left"
-				positionOptions={{ enableHighAccuracy: true }}
+				positionOptions={{ enableHighAccuracy: false }}
 				trackUserLocation
-				showAccuracyCircle
+				showAccuracyCircle={false}
 				showUserLocation
 			/>
 			<FillExtrusionLayer

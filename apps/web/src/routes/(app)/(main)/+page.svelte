@@ -2,7 +2,7 @@
 	import Map from '$lib/components/Map/Map.svelte';
 	import { myNewExperienceStore } from '../createNewExperience/editPicture/newExperienceStore';
 	import type { Base64, Location, MonumentMarkerData } from '@app/ts-types';
-	import { getUsersLocation, metersToDegree, roundNumber } from '@app/utils';
+	import { getUsersLocation, metersToDegree, roundNumber, watchUsersLocation } from '@app/utils';
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import type { PageData } from './$types';
 	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
@@ -14,15 +14,25 @@
 	import MapSettings from '$lib/components/Map/settings/MapSettings.svelte';
 	import lsStore from '$lib/utils/lsStore';
 	import { browser } from '$app/environment';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
+	import Eval from '$lib/components/Common/Eval.svelte';
 
 	export let data: PageData;
 	$: location = $lsStore.usersLocation;
 	let monumentsPromise: undefined | Promise<{ getListOfMonuments: MonumentMarkerData[] }>;
 
 	const getMonuments = async (range: number) => {
-		monumentsPromise = sdk.getListOfMonumentsForMap({
-			location: { location: await getUsersLocation(), range: metersToDegree(range) }
-		});
+		try {
+			monumentsPromise = sdk.getListOfMonumentsForMap({
+				location: {
+					location: await getUsersLocation({ maximumAge: 1000, enableHighAccuracy: false }),
+					range: metersToDegree(range)
+				}
+			});
+		} catch (error) {
+			alert($LL.monumentsLoadErrorTitle(), $LL.monumentsLoadErrorMessage(), { color: 'red' });
+		}
 	};
 
 	getMonuments(data.user.prefs.mapRange);
@@ -51,6 +61,12 @@
 				<MonumentMarker zoom={mapZoom} {monument} />
 			{/each}
 		{/if}
+	{:catch}
+		<Eval
+			evaluate={alert($LL.monumentsLoadErrorTitle(), $LL.monumentsLoadErrorMessage(), {
+				color: 'red'
+			})}
+		/>
 	{/await}
 </Map>
 {#if almostProfile}

@@ -12,7 +12,6 @@
 	onMount(async () => {
 		if (!data.params.userId || !data.params.secret)
 			throw new Error('userId or secret token is not defined');
-		console.log(data.user);
 
 		if (!$user) throw new Error('user is not defiened, maybe try it again');
 
