@@ -12,10 +12,11 @@
 	import lsStore from '$lib/utils/lsStore';
 	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
 	import { cacheApolloError } from '@app/utils';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
 
 	let password = 'aaaaaaaa';
 	let email = 'otaprokopec@gmail.com';
-	let errorMessage = '';
 	let loading = false;
 
 	$: condition = email.length >= 1 && password.length >= 1;
@@ -31,11 +32,9 @@
 			const res = await sdk.loginViaEmail({ email, password });
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');
-		} catch (error) {
-			const { message } = cacheApolloError(error);
-
+		} catch (err) {
+			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
 			loading = false;
-			errorMessage = message;
 		}
 	};
 </script>
@@ -55,8 +54,6 @@
 		>
 			<IconEye active={iconClicked} />
 		</Input>
-
-		<ErrorHelper timeout={4000} bind:message={errorMessage} />
 	</div>
 
 	<Button
@@ -72,6 +69,6 @@
 		{/if}
 	</Button>
 	<LoginViaSocilaMedia />
-	<Link href="/auth/forgottonpassword">Zapoměl(a) jste heslo?</Link>
-	<Link href="/auth/register">registrovat se</Link>
+	<Link href="/auth/forgottonpassword">{$LL.forgotenPassword()}</Link>
+	<Link href="/auth/register">{$LL.signUp()}</Link>
 </div>

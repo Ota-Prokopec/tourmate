@@ -1,4 +1,7 @@
-export const load = async ({ params, url }) => {
+export const ssr = false;
+
+export const load = async (event) => {
+	const { params, url } = event;
 	const userId = url.searchParams.get('userId');
 	const secret = url.searchParams.get('secret');
 	const myId = params?.myId;

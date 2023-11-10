@@ -1,10 +1,5 @@
 <script lang="ts">
 	import { degreeToMeters, distanceBetweenTwoLocations, getUsersLocation } from '@app/utils';
-
-	import { useQuery } from '@sveltestack/svelte-query';
-
-	import Rows from '$lib/components/Common/Rows.svelte';
-
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Row from '$lib/components/Common/Row.svelte';

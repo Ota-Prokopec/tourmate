@@ -1,8 +1,9 @@
 <script lang="ts">
+	import Column from '$lib/components/Common/Column.svelte';
 	import { Avatar, Img } from 'flowbite-svelte';
 </script>
 
-<div class="w-full h-min grid justify-center items-start gap-0">
+<Column class="justify-start w-full items-center gap-0">
 	<Avatar
 		rounded
 		border
@@ -10,4 +11,4 @@
 		src="/icon.png"
 	/>
 	<slot />
-</div>
+</Column>

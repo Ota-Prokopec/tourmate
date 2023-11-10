@@ -10,30 +10,41 @@
 	import { device } from '@app/utils';
 	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import Carousel from '$lib/components/Carousel/Carousel.svelte';
+	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
 
 	export let data: PageData;
 
-	const cardURL = data.monument.pictureURL as unknown as string;
-
-	let userPopoverPlacement: 'bottom' | 'right' =
-		device.recognizeWidth() === 'mobile' ? 'bottom' : 'right';
+	const monument = data.monument;
+	const experiences = monument.connectedExperiences;
 </script>
 
-<div class="w-full h-auto flex items-center relative flex-wrap flex-col gap-4">
-	<MonumentCard
-		disableSeeMoreButton
-		size="normal"
-		class="absolute top-0 left-0 z-50"
-		monument={data.monument}
-	>
+<Row class="absolute top-0 left-0 z-50 gap-4 w-min h-min m-2">
+	<MonumentCard disableSeeMoreButton size="normal" monument={data.monument}>
 		<Text class="ml-2 mt-4">
 			{data.monument.about}
 		</Text>
 	</MonumentCard>
 
-	<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
-		<Marker class="z-50" location={data.monument.location}>
-			<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
-		</Marker>
-	</Map>
-</div>
+	<Card class="bg-transparent !p-0">
+		{#if experiences.length}
+			<Carousel class="h-min" swiping arrows>
+				{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
+					{@const experience = {
+						...experienceWithoutConnectedMonument,
+						connectedMonument: monument
+					}}
+					<ExperienceCardComponent class="p-0 self-center shadow-none" {experience} />
+				{/each}
+			</Carousel>
+		{/if}
+	</Card>
+</Row>
+
+<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
+	<Marker class="z-50" location={data.monument.location}>
+		<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
+	</Marker>
+</Map>

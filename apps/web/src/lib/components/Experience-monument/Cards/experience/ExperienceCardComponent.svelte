@@ -101,11 +101,11 @@
 			<CardImage on:like={like} imgSrc={experience.pictureUrl}>
 				<LikeSection
 					class="absolute bottom-0 left-0 m-6"
-					ableToLike={!amIOwner}
+					ableToLike={true}
 					on:like={like}
 					on:unlike={unlike}
 					data={{
-						liked: experience.liked ? true : false,
+						liked: liked ? true : false,
 						otherUsersThatLiked: experience.likes.map((l) => l.user)
 					}}
 				/>

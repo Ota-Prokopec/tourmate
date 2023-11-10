@@ -16,45 +16,23 @@
 	import EmailSent from '../../Components/EmailSent.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import { AppwriteException } from 'appwrite';
+	import LL from '$src/i18n/i18n-svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconAt from '$lib/components/Icons/IconAt.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import { twMerge } from 'tailwind-merge';
+	import { goto } from '$app/navigation';
+	import { navigate } from '$lib/utils/navigator';
 
 	export let data: PageData;
 
-	let email = 'otaprokopec@gmail.com';
-	let password = 'aaaaaaaa';
-	let repeatPassword = 'aaaaaaaa';
 	let state: 'loading' | 'email-sent' | null = null;
 	let error = '';
 	let termsAccepted = false;
-	$: ableToRegister =
-		termsAccepted && email.length > 7 && password.length > 6 && repeatPassword.length > 6;
 
 	//set username and myid into localstorage for being able to access this data when user registers via socila media
 	$lsStore.user = {
 		...data.params
-	};
-
-	const registerViaEmail = async () => {
-		try {
-			state = 'loading';
-
-			await user.create(appwrite.ID.unique(), email, password, data.params.username);
-
-			const {
-				logInViaEmail: { session }
-			} = await sdk.loginViaEmail({ email, password });
-			$lsStore.cookieFallback = { a_session_experiences: session };
-
-			await user.createVerification(
-				`${location.origin}/auth/register/verifyemail/${data.params.myId}`
-			);
-
-			state = 'email-sent';
-		} catch (err) {
-			state = null;
-			if (err instanceof AppwriteException) error = err.message;
-			if (!(err instanceof ApolloError)) return;
-			error = err.message;
-		}
 	};
 </script>
 
@@ -64,25 +42,19 @@
 	<FullPageLoading />
 {:else}
 	<div class="w-full h-auto flex flex-wrap flex-col items-center justify-start p-5 mt-4 gap-14">
-		<div class="w-full max-w-[400px] flex flex-wrap flex-col gap-4 relative">
-			<Title class="text-xl">Zaregistrovat přes e-mail</Title>
-			<EmailInput bind:value={email} />
-			<PasswordInput bind:value={password} />
-			<PasswordInput bind:value={repeatPassword} />
-			<ErrorHelpler bind:message={error} timeout={2000} />
+		<Checkbox bind:checked={termsAccepted}>{$LL.acceptTerms()}</Checkbox>
 
-			<div class="w-full flex justify-center">
-				<Button disabled={!ableToRegister} on:click={registerViaEmail} class="w-40 ">
-					Zaregistrovat
-				</Button>
-			</div>
-		</div>
+		<Icon
+			on:click={() => navigate(`email`)}
+			disabled={!termsAccepted}
+			class={twMerge('child:w-10 child:h-10', !termsAccepted && 'fill-gray-400 opacity-[0.8')}
+		>
+			<IconAt />
+		</Icon>
 
-		<Checkbox bind:checked={termsAccepted}>accept terms and permissions</Checkbox>
+		<Text>{$LL.or()}</Text>
 
 		<div class="w-full flex flex-wrap flex-col gap-4 relative">
-			<Title class="text-xl">Zaregistrovat přes sociální sítě</Title>
-
 			<LoginViaSocilaMedia disabled={!termsAccepted} on:click={() => (state = 'loading')} />
 		</div>
 	</div>

@@ -70,7 +70,7 @@
 		profilePicture={newProfilePicture}
 	/>
 {:else}
-	<div class="w-full h-auto flex flex-wrap flex-col">
+	<div class="w-full h-auto flex flex-wrap flex-col p-2">
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
 			{#if isMyAccount}
 				<AvatarImageInput
@@ -89,9 +89,9 @@
 				/>
 			{/if}
 			<div class="flex justify-start p-3 gap-4 mt-2 items-center text-2xl">
-				<div>{`${data.userProfile.myId}`}</div>
+				<Text>{`${data.userProfile.myId}`}</Text>
 				{#if isMyAccount}
-					<Icon icon="fa fa-gear" />
+					<Icon on:click={() => goto(`${data.userProfile.myId}/edit`)} icon="fa fa-gear" />
 				{/if}
 			</div>
 		</div>
@@ -104,17 +104,27 @@
 			{:else}
 				<Column class="gap-10 justify-center items-center w-full">
 					{#if category === 'experiences'}
-						{#each usersExperiences as experience}
-							<ExperienceCardComponent {experience} />
-						{/each}
+						{#if usersExperiences.length}
+							{#each usersExperiences as experience}
+								<ExperienceCardComponent {experience} />
+							{/each}
+						{:else}
+							<Skeleton divClass="w-full" />
+							<Button on:click={() => goto(`/`)} class="bg-white border border-gray-400 ">
+								<Text class="!text-black">{$LL.takeYourFirstPicture()}</Text>
+								<Icon class="fill-red-500 w-7 h-7">
+									<IconLocation />
+								</Icon>
+							</Button>
+						{/if}
 					{:else if usersMonuments?.length}
 						{#each usersMonuments as monument}
 							<MonumentCardComponent size="normal" {monument} />
 						{/each}
 					{:else}
 						<Skeleton divClass="w-full" />
-						<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400">
-							<Text class="!text-black">Create your first monument</Text>
+						<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400 ">
+							<Text class="!text-black">{$LL.createYourFirstMonument()}</Text>
 							<Icon class="fill-red-500 w-7 h-7">
 								<IconLocation />
 							</Icon>

@@ -13,6 +13,7 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import Range from './Components/Range.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 
 	let monuments: MonumentCard[] | undefined;
 
@@ -48,12 +49,14 @@
 	};
 </script>
 
-<Row class="w-full h-auto min-h-full gap-2 bg-slate-900 overflow-auto">
+<Column
+	class="w-full h-auto min-h-full gap-2 bg-slate-900 overflow-auto flex justify-center items-center"
+>
 	<div class="w-full h-[500px] min-h-[100%] flex justify-center items-center relative">
 		<LocationScanner>{getPrettyNumber(range)}m</LocationScanner>
 		<Range max={metersLimit} bind:value={range} />
 	</div>
-	<Row class="w-full justify-center gap-2 mb-2">
+	<Column class="w-full justify-center gap-2 mb-2 items-center">
 		{#if monuments && location}
 			{#each monuments as monument}
 				<MonumentCardComponent size="normal" dismissable {monument}>
@@ -62,5 +65,5 @@
 				</MonumentCardComponent>
 			{/each}
 		{/if}
-	</Row>
-</Row>
+	</Column>
+</Column>

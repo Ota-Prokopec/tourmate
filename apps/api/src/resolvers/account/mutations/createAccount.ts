@@ -10,6 +10,13 @@ export default queryField('createAccount', {
 			throw new ApolloError('user is not authorizated to create account', '403')
 
 		const { collections, account } = ctx.appwrite
+
+		//! Preferences
+		const updatePrefs = await account.updatePrefs<Preferences>({
+			mapRange: 6000,
+			termsAccepted: true,
+		})
+
 		const userInfoPromise = collections.userInfo.createDocument({
 			myId: args.myId,
 			username: args.username,
@@ -17,13 +24,7 @@ export default queryField('createAccount', {
 			profilePictureURL: undefined,
 		})
 
-		//@ts-ignore
-		const updatePrefsPromise = account.updatePrefs<Preferences>({
-			mapRange: 6000,
-			termsAccepted: true,
-		})
-
-		const [userInfo] = await Promise.all([userInfoPromise, updatePrefsPromise])
+		const [userInfo] = await Promise.all([userInfoPromise])
 
 		return {
 			_createdAt: userInfo._createdAt,
@@ -34,7 +35,7 @@ export default queryField('createAccount', {
 			_databaseId: userInfo._databaseId,
 			emailVerification: ctx.user.emailVerification,
 			myId: userInfo.myId,
-			prefs: ctx.user.prefs,
+			prefs: updatePrefs.prefs,
 			status: ctx.user.status,
 			username: userInfo.username,
 			phoneVerification: ctx.user.phoneVerification,

@@ -6,6 +6,13 @@
 	import Input from '$lib/components/Common/Input.svelte';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import { collections, Queries } from '$lib/appwrite/appwrite';
+	import Text from '$lib/components/Common/Text.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import ButtonNext from '$lib/components/Buttons/ButtonNext.svelte';
+	import LL from '$src/i18n/i18n-svelte';
+	import Right from '$lib/components/Common/Right.svelte';
+	import Center from '$lib/components/Common/Center.svelte';
 
 	let username = '';
 	let myId = '';
@@ -27,37 +34,25 @@
 	};
 </script>
 
-<div class="w-full h-auto flex flex-wrap flex-col items-center justify-start p-5 gap-10 mt-4">
-	<div>
-		<p>Welcome into experinece app, we are happy to see you here.</p>
-		<p>Begin with registration</p>
-	</div>
+<Column class="w-full items-center max-w-[400px]">
+	<Text class="text-xl">{$LL.regitrationPageTitle()}</Text>
 
-	<div class="flex w-full max-w-[400px] pl-2 pr-2 flex-wrap flex-col gap-5 h-auto">
-		<div class="w-full flex justify-end">
-			<Help placement="left">Please username and user id has contain at least 4 letters</Help>
-		</div>
-		<ErrorHelpler bind:message={error} timeout={2000} />
-		<Input class="w-full" icon bind:value={username} floatingLabel="uživatelské jméno" />
-		<Input
-			pattern={/[^a-zA-Z0-9]/}
-			maxLength={40}
-			class="w-full"
-			bind:value={myId}
-			icon="@"
-			prefix="@"
-			floatingLabel="uživatelské ID"
-		/>
-	</div>
+	<Right>
+		<Help placement="left">{$LL.registrationPageUsernameUserIdConditions()}</Help>
+	</Right>
+	<ErrorHelpler bind:message={error} timeout={2000} />
+	<Input class="w-full " bind:value={username} floatingLabel="uživatelské jméno" />
+	<Input
+		pattern={/[^a-zA-Z0-9_-]/}
+		maxLength={40}
+		class="w-full "
+		bind:value={myId}
+		icon="@"
+		prefix="@"
+		floatingLabel="uživatelské ID"
+	/>
+</Column>
 
-	<div class="w-full h-auto flex justify-end fixed bottom-0 p-10">
-		<Button
-			disabled={!(myId.length >= 5 && username.length >= 4)}
-			on:click={redirect}
-			class="bg-blue-500 flex flex-wrap flex-row gap-2 "
-		>
-			další
-			<IconNext class="w-8 h-8 fill-white" />
-		</Button>
-	</div>
-</div>
+<Right class="fixed bottom-0 p-10">
+	<ButtonNext disabled={!(myId.length >= 5 && username.length >= 4)} on:click={redirect} />
+</Right>

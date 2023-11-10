@@ -1,32 +1,29 @@
 <script lang="ts">
 	import Map from '$lib/components/Map/Map.svelte';
-	import { myNewExperienceStore } from '../createNewExperience/editPicture/newExperienceStore';
 	import type { Base64, Location, MonumentMarkerData } from '@app/ts-types';
 	import { getUsersLocation, metersToDegree, roundNumber, watchUsersLocation } from '@app/utils';
 	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import type { PageData } from './$types';
-	import ExperienceMarker from '$lib/components/Map/Markers/ExperienceMarker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { useQuery } from '@sveltestack/svelte-query';
 	import { sdk } from '$src/graphql/sdk';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconSettings from '$lib/components/Icons/IconSettings.svelte';
 	import MapSettings from '$lib/components/Map/settings/MapSettings.svelte';
 	import lsStore from '$lib/utils/lsStore';
-	import { browser } from '$app/environment';
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
 	import Eval from '$lib/components/Common/Eval.svelte';
 
 	export let data: PageData;
-	$: location = $lsStore.usersLocation;
+	let location = $lsStore.usersLocation;
 	let monumentsPromise: undefined | Promise<{ getListOfMonuments: MonumentMarkerData[] }>;
 
 	const getMonuments = async (range: number) => {
 		try {
 			monumentsPromise = sdk.getListOfMonumentsForMap({
 				location: {
-					location: await getUsersLocation({ maximumAge: 1000, enableHighAccuracy: false }),
+					location:
+						location ?? (await getUsersLocation({ maximumAge: 1000, enableHighAccuracy: false })),
 					range: metersToDegree(range)
 				}
 			});
@@ -45,7 +42,11 @@
 	let settingsHidden = true;
 </script>
 
-<MapSettings bind:settingsHidden mapRangeValue={JSON.stringify(data.user.prefs.mapRange)} />
+<MapSettings
+	on:change={(e) => getMonuments(e.detail.range)}
+	bind:settingsHidden
+	mapRangeValue={JSON.stringify(data.user.prefs.mapRange)}
+/>
 
 <Map deg={45} bind:zoom={mapZoom} bind:location>
 	<Icon
