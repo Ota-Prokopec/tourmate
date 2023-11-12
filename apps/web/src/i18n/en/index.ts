@@ -27,7 +27,10 @@ const en = {
 	passwordsDontMatch: 'Your passwords dont match',
 	userAlreadyExists: 'user already exists',
 	takeYourFirstPicture: 'take your first picture',
-	createYourFirstMonument: 'create your first monument'
+	createYourFirstMonument: 'create your first monument',
+	and: 'and',
+	seeOnGoogleMaps: 'See on Google Maps',
+	seeMore: 'see more'
 } satisfies BaseTranslation;
 
 export default en;

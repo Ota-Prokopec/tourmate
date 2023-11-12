@@ -107,6 +107,18 @@ type RootTranslation = {
 	 * c​r​e​a​t​e​ ​y​o​u​r​ ​f​i​r​s​t​ ​m​o​n​u​m​e​n​t
 	 */
 	createYourFirstMonument: string
+	/**
+	 * a​n​d
+	 */
+	and: string
+	/**
+	 * S​e​e​ ​o​n​ ​G​o​o​g​l​e​ ​M​a​p​s
+	 */
+	seeOnGoogleMaps: string
+	/**
+	 * s​e​e​ ​m​o​r​e
+	 */
+	seeMore: string
 }
 
 export type TranslationFunctions = {
@@ -202,6 +214,18 @@ export type TranslationFunctions = {
 	 * create your first monument
 	 */
 	createYourFirstMonument: () => LocalizedString
+	/**
+	 * and
+	 */
+	and: () => LocalizedString
+	/**
+	 * See on Google Maps
+	 */
+	seeOnGoogleMaps: () => LocalizedString
+	/**
+	 * see more
+	 */
+	seeMore: () => LocalizedString
 }
 
 export type Formatters = {}

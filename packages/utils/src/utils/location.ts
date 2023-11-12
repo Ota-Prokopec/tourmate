@@ -2,7 +2,9 @@ import * as lodash from 'lodash'
 const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'
-import { getPrettyNumber } from './prettier'
+import { distanceTo } from 'geolocation-utils'
+
+export const metersOfOneDegree = 111000
 
 export const getUsersLocation = (
 	options: PositionOptions = { enableHighAccuracy: false },
@@ -44,13 +46,29 @@ export const getUsersLocationDataByIP = async (ip: IP): Promise<IPApiResponse> =
 	return res as IPApiResponse
 }
 
-export const distanceBetweenTwoLocations = (location1: Location, location2: Location) => {
-	return Math.abs(location1[0] - location2[0]) + Math.abs(location1[1] - location2[1])
+export const degreeToMeters = (degree: number) => {
+	return degree * metersOfOneDegree
 }
 
-export const degreeToMeters = (degree: number) => {
-	return getPrettyNumber(degree * 111_111)
-}
 export const metersToDegree = (meters: number) => {
-	return meters / 111_111
+	return meters / metersOfOneDegree
+}
+
+/**
+ * @returns time in seconds
+ */
+export const getTimeFromAToB = (
+	location1: Location,
+	location2: Location,
+	speed: number,
+) => {
+	const distance = distanceTo(
+		{ lat: location1[0], lng: location1[1] },
+		{ lat: location2[0], lng: location2[1] },
+	)
+	return distance / speed
+}
+
+export const getLocationUrlOfGoogleMaps = (location: Location) => {
+	return `https://www.google.com/maps/dir/?api=1&destination=${location[0]},${location[1]}`
 }

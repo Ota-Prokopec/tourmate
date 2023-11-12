@@ -79,7 +79,7 @@ scalar Location
 
 input LocationInput {
   location: Location!
-  range: Float
+  rangeMeters: Float = 700
 }
 
 type Monument {

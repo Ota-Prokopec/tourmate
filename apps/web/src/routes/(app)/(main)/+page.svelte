@@ -1,18 +1,18 @@
 <script lang="ts">
-	import Map from '$lib/components/Map/Map.svelte';
-	import type { Base64, Location, MonumentMarkerData } from '@app/ts-types';
-	import { getUsersLocation, metersToDegree, roundNumber, watchUsersLocation } from '@app/utils';
-	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
-	import type { PageData } from './$types';
-	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { sdk } from '$src/graphql/sdk';
+	import Eval from '$lib/components/Common/Eval.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconSettings from '$lib/components/Icons/IconSettings.svelte';
+	import Map from '$lib/components/Map/Map.svelte';
+	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import MapSettings from '$lib/components/Map/settings/MapSettings.svelte';
+	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import lsStore from '$lib/utils/lsStore';
-	import { alert } from '$src/routes/alertStore';
+	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
-	import Eval from '$lib/components/Common/Eval.svelte';
+	import { alert } from '$src/routes/alertStore';
+	import type { Base64, MonumentMarkerData } from '@app/ts-types';
+	import { getUsersLocation, metersToDegree } from '@app/utils';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 	let location = $lsStore.usersLocation;
@@ -24,7 +24,7 @@
 				location: {
 					location:
 						location ?? (await getUsersLocation({ maximumAge: 1000, enableHighAccuracy: false })),
-					range: metersToDegree(range)
+					rangeMeters: range
 				}
 			});
 		} catch (error) {

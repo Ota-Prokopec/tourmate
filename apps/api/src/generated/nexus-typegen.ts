@@ -55,7 +55,7 @@ export interface NexusGenInputs {
   }
   LocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
-    range?: number | null; // Float
+    rangeMeters: number | null; // Float
   }
   MonumentInputByName: { // input type
     limit: number; // Int!

@@ -1,44 +1,24 @@
 <script lang="ts">
-	import ChooseFromIconsItem from '$lib/components/ChooseFromIcons/ChooseFromIconsItem.svelte';
-	import LikeSection from '$lib/components/Common/LikeSection.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import type { MonumentCard } from '@app/ts-types';
 	import { createEventDispatcher } from 'svelte';
-	import { topics } from '../../topic/topics';
-	import { at } from 'lodash';
-	import { transports } from '../../transportType/transports';
-	import Column from '$lib/components/Common/Column.svelte';
-	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
+	import Text from '$lib/components/Common/Text.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import { goto } from '$app/navigation';
 
-	export let monument: MonumentCard;
-	export let liked: boolean | 'pending';
-	export let amIOwner: boolean;
+	export let monument: { name: string; placeDetail: { name: string } };
 </script>
 
-<Row class="w-full justify-between">
-	<LikeSection
-		ableToLike={!amIOwner}
-		on:like={() => dispatch('like')}
-		on:unlike={() => dispatch('unlike')}
-		data={{
-			liked: liked ? true : false,
-			otherUsersThatLiked: monument.likes.map((l) => l.user)
-		}}
-	/>
-	<Column class="gap-1">
-		<Row>
-			{#each monument.topics as topic}
-				<ChooseFromIconsItem circuit={false}>
-					<svelte:component this={topics.filter((t) => t.key === topic)[0].component} />
-				</ChooseFromIconsItem>
-			{/each}
-		</Row>
-		<Row>
-			{#each monument.transports as transport}
-				<ChooseFromIconsItem circuit={false}>
-					<svelte:component this={transports.filter((t) => t.key === transport)[0].component} />
-				</ChooseFromIconsItem>
-			{/each}
-		</Row>
-	</Column>
+<Row class="justify-between gap-2">
+	<h5 class="mb-2 text-xl text-black">
+		{monument.name}
+	</h5>
+	<Text class="text-right">
+		<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
+			<Row class="gap-1">
+				<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+				{monument.placeDetail.name}
+			</Row>
+		</button>
+	</Text>
 </Row>

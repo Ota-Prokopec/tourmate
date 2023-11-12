@@ -27,7 +27,10 @@ const cz = {
 	passwordsDontMatch: 'Vaše hesla se neshodují',
 	userAlreadyExists: 'uživatel již existuje',
 	takeYourFirstPicture: 'vyfoťte si vaši první fotku',
-	createYourFirstMonument: 'vytvořte si váš první zážitek'
+	createYourFirstMonument: 'vytvořte si váš první zážitek',
+	and: 'a',
+	seeOnGoogleMaps: 'Vidět na Google mapách',
+	seeMore: 'zjistit více'
 } satisfies BaseTranslation;
 
 export default cz;

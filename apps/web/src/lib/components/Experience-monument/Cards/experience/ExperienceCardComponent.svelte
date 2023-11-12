@@ -101,7 +101,7 @@
 			<CardImage on:like={like} imgSrc={experience.pictureUrl}>
 				<LikeSection
 					class="absolute bottom-0 left-0 m-6"
-					ableToLike={true}
+					ableToLike={!amIOwner}
 					on:like={like}
 					on:unlike={unlike}
 					data={{

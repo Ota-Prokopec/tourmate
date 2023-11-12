@@ -5,6 +5,7 @@ import {
 } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
 import { Topic, Transport } from '@app/ts-types'
+import { defaultRangeMeters } from '../../../arguments'
 
 export default queryField('getListOfMonuments', {
 	type: list('Monument'),
@@ -26,7 +27,9 @@ export default queryField('getListOfMonuments', {
 			queries.push(
 				...locationQueries(
 					locationOptions.location,
-					locationOptions.range ? locationOptions.range : ctx.user?.prefs.mapRange,
+					locationOptions.rangeMeters
+						? locationOptions.rangeMeters
+						: ctx.user?.prefs.mapRange ?? defaultRangeMeters,
 				),
 			)
 		}

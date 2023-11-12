@@ -104,7 +104,7 @@ export type ExperienceLike = {
 
 export type LocationInput = {
   location: Scalars['Location']['input'];
-  range?: InputMaybe<Scalars['Float']['input']>;
+  rangeMeters?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Monument = {
@@ -304,13 +304,6 @@ export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
-export type GetUserByMyIdQueryVariables = Exact<{
-  myId: Scalars['String']['input'];
-}>;
-
-
-export type GetUserByMyIdQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL } };
-
 export type GetListOfAccountsBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -324,6 +317,13 @@ export type GetProfileQueryVariables = Exact<{
 
 
 export type GetProfileQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL, experiences: Array<{ __typename?: 'Experience', connectedMonumentId: string, location: [number, number], pictureUrl: URL, userId: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, connectedMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, transports: Array<any>, pictureURL?: URL | null, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null } }> } };
+
+export type GetUserByMyIdQueryVariables = Exact<{
+  myId: Scalars['String']['input'];
+}>;
+
+
+export type GetUserByMyIdQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL } };
 
 export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
@@ -501,22 +501,6 @@ export const GetAccountDoc = gql`
   }
 }
     `;
-export const GetUserByMyIdDoc = gql`
-    query getUserByMyId($myId: String!) {
-  getUser(myId: $myId) {
-    _permissions
-    _databaseId
-    _id
-    _collectionId
-    _updatedAt
-    _createdAt
-    userId
-    myId
-    username
-    profilePictureURL
-  }
-}
-    `;
 export const GetListOfAccountsBySearchingDoc = gql`
     query getListOfAccountsBySearching($searchingText: String) {
   getUsers(searchingText: $searchingText) {
@@ -671,6 +655,22 @@ export const GetProfileDoc = gql`
         }
       }
     }
+  }
+}
+    `;
+export const GetUserByMyIdDoc = gql`
+    query getUserByMyId($myId: String!) {
+  getUser(myId: $myId) {
+    _permissions
+    _databaseId
+    _id
+    _collectionId
+    _updatedAt
+    _createdAt
+    userId
+    myId
+    username
+    profilePictureURL
   }
 }
     `;
@@ -1451,41 +1451,6 @@ export const getAccount = (
             return result;
           }
         
-export const getUserByMyId = (
-            options: Omit<
-              WatchQueryOptions<GetUserByMyIdQueryVariables>, 
-              "query"
-            >
-          ): Readable<
-            ApolloQueryResult<GetUserByMyIdQuery> & {
-              query: ObservableQuery<
-                GetUserByMyIdQuery,
-                GetUserByMyIdQueryVariables
-              >;
-            }
-          > => {
-            const q = client.watchQuery({
-              query: GetUserByMyIdDoc,
-              ...options,
-            });
-            var result = readable<
-              ApolloQueryResult<GetUserByMyIdQuery> & {
-                query: ObservableQuery<
-                  GetUserByMyIdQuery,
-                  GetUserByMyIdQueryVariables
-                >;
-              }
-            >(
-              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
-              (set) => {
-                q.subscribe((v: any) => {
-                  set({ ...v, query: q });
-                });
-              }
-            );
-            return result;
-          }
-        
 export const getListOfAccountsBySearching = (
             options: Omit<
               WatchQueryOptions<GetListOfAccountsBySearchingQueryVariables>, 
@@ -1543,6 +1508,41 @@ export const getProfile = (
                 query: ObservableQuery<
                   GetProfileQuery,
                   GetProfileQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const getUserByMyId = (
+            options: Omit<
+              WatchQueryOptions<GetUserByMyIdQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetUserByMyIdQuery> & {
+              query: ObservableQuery<
+                GetUserByMyIdQuery,
+                GetUserByMyIdQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetUserByMyIdDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetUserByMyIdQuery> & {
+                query: ObservableQuery<
+                  GetUserByMyIdQuery,
+                  GetUserByMyIdQueryVariables
                 >;
               }
             >(

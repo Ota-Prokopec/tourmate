@@ -13,6 +13,7 @@ export * from './utils/elementIdGenerator';
 export * from './utils/fetching';
 export * from './utils/localStorage';
 export * from './utils/location';
+export * from './utils/normalizators';
 export * from './utils/notification';
 export * from './utils/object';
 export * from './utils/operations';

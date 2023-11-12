@@ -14,6 +14,7 @@
 	import Range from './Components/Range.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
+	import { headingDistanceTo } from 'geolocation-utils';
 
 	let monuments: MonumentCard[] | undefined;
 

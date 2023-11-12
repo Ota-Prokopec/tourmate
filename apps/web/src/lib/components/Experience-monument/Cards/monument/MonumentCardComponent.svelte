@@ -1,26 +1,33 @@
 <script lang="ts">
-	import { degreeToMeters, distanceBetweenTwoLocations, getUsersLocation } from '@app/utils';
+	import { distanceTo, headingDistanceTo } from 'geolocation-utils';
+
+	import LL from '$src/i18n/i18n-svelte';
+
+	import { navigate } from '$lib/utils/navigator';
+
 	import { goto } from '$app/navigation';
+	import { Queries, collections, user } from '$lib/appwrite/appwrite';
+	import Card from '$lib/components/Common/Card.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Columns from '$lib/components/Common/Columns.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import Left from '$lib/components/Common/Left.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import UserItem from '$lib/components/Common/UserItem.svelte';
-	import { Queries, collections, user } from '$lib/appwrite/appwrite';
+	import IconShare from '$lib/components/Icons/IconShare.svelte';
+	import lsStore from '$lib/utils/lsStore';
+	import { sdk } from '$src/graphql/sdk';
+	import { alert } from '$src/routes/alertStore';
 	import type { MonumentCard } from '@app/ts-types';
-	import { Button, Img, Modal } from 'flowbite-svelte';
+	import { getLocationUrlOfGoogleMaps, normalizeMeters } from '@app/utils';
+	import { Button, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import MonumentOwnerOptions from '../../Monument/MonumentOwnerOptions.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import Column from '$lib/components/Common/Column.svelte';
-	import IconShare from '$lib/components/Icons/IconShare.svelte';
-	import Card from '$lib/components/Common/Card.svelte';
-	import Columns from '$lib/components/Common/Columns.svelte';
 	import CardImage from '../CardImage.svelte';
-	import CardHeader from './CardHeader.svelte';
 	import CardFooter from './CardFooter.svelte';
-	import { alert } from '$src/routes/alertStore';
-	import lsStore from '$lib/utils/lsStore';
-	import Left from '$lib/components/Common/Left.svelte';
+	import CardHeader from './CardHeader.svelte';
 
 	const isMonumentCard = (card: MonumentCard | TinyMonumentCard): card is MonumentCard => {
 		return 'liked' in monument;
@@ -50,7 +57,12 @@
 		'liked' in monument ? (monument.liked ? true : false) : undefined;
 
 	const distance = usersLocation
-		? degreeToMeters(distanceBetweenTwoLocations(usersLocation, monument.location))
+		? normalizeMeters(
+				distanceTo(
+					{ lat: usersLocation[0], lng: usersLocation[1] },
+					{ lat: monument.location[0], lng: monument.location[1] }
+				)
+		  )
 		: undefined;
 
 	let className = '';
@@ -98,6 +110,10 @@
 
 	const editMonument = async () => {
 		goto(`/monument/edit/${monument._id}`);
+	};
+
+	const seeOnGoogleMaps = () => {
+		navigate(getLocationUrlOfGoogleMaps(monument.location));
 	};
 </script>
 
@@ -148,12 +164,19 @@
 				<Left class="pl-4"><Text>{distance}m</Text></Left>
 			{/if}
 
-			<CardFooter {monument} />
+			<CardHeader {monument} />
 		</svelte:component>
 
 		{#if size !== 'tiny'}
 			{#if isMonumentCard(monument) && typeof liked !== 'undefined' && typeof amIOwner !== 'undefined'}
-				<CardHeader {liked} on:like={like} on:unlike={unlike} {amIOwner} {monument} />
+				<CardFooter
+					{usersLocation}
+					{liked}
+					on:like={like}
+					on:unlike={unlike}
+					{amIOwner}
+					{monument}
+				/>
 			{/if}
 		{/if}
 
@@ -162,11 +185,18 @@
 		</div>
 
 		{#if size !== 'tiny'}
-			{#if !disableSeeMoreButton}
-				<Button color="blue" class=" w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
-					>see more....</Button
-				>
-			{/if}
+			<Column class="gap-2">
+				<Right>
+					<Button on:click={seeOnGoogleMaps} color="green">{$LL.seeOnGoogleMaps()}</Button>
+				</Right>
+				{#if !disableSeeMoreButton}
+					<Button
+						color="blue"
+						class=" w-full p-2"
+						on:click={() => goto(`/monument/${monument._id}`)}>{$LL.seeMore()}</Button
+					>
+				{/if}
+			</Column>
 		{/if}
 	</Card>
 {/if}
