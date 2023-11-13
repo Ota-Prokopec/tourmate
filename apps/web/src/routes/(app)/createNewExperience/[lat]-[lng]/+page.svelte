@@ -3,7 +3,7 @@
 	import { Card, Img, Skeleton } from 'flowbite-svelte';
 	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
-	import { myNewExperienceStore } from '../editPicture/newExperienceStore';
+	import { picture } from '../editPicture/pictureStore';
 	import { sdk } from '$src/graphql/sdk';
 	import { navigate } from '$lib/utils/navigator';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
@@ -16,8 +16,7 @@
 
 	export let data: PageData;
 	let isLoading = false;
-	const img = $myNewExperienceStore.imgSrc;
-	$myNewExperienceStore.imgSrc = ''; // delete the image src from store
+
 	const location = data.newExperience.location;
 	let hideDrawer = true;
 	let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
@@ -32,7 +31,7 @@
 			input: {
 				connnectedMonumentId: connectedMonumentId,
 				location: location,
-				picture: img
+				picture: $picture
 			}
 		});
 		navigate('/');
@@ -61,7 +60,7 @@
 		<Card class="w-full h-min sm:absolute sm:left-0 z-10">
 			<Header {location} placeName={data.newExperience.placeName} />
 
-			<Img src={img} />
+			<Img src={$picture} />
 
 			<Center
 				on:disconnect={disconnectMonument}

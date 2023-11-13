@@ -5,10 +5,10 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import { navigate } from '$lib/utils/navigator';
-	import { myNewExperienceStore } from '../editPicture/newExperienceStore';
+	import { picture } from '../editPicture/pictureStore';
 
 	const imageHandler = (base64: string) => {
-		$myNewExperienceStore.imgSrc = base64;
+		$picture = base64;
 		goto(`/createNewExperience/editPicture`);
 	};
 </script>

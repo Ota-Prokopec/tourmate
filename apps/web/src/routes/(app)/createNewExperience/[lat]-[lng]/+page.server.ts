@@ -1,7 +1,6 @@
 import mapTiler from '$lib/utils/mapTiler';
 import { isLocation, metersToDegree } from '@app/utils';
 import { PageServerLoad } from './$types';
-import { Location } from '@app/ts-types';
 import { sdkssr } from '$src/graphql/sdkssr';
 
 export const load: PageServerLoad = async (event) => {
@@ -11,8 +10,7 @@ export const load: PageServerLoad = async (event) => {
 
 	const nearMonumentsPromise = sdkssr(event).getListOfMonumentsForMap({
 		location: {
-			location: location,
-			range: metersToDegree(200)
+			location: location
 		}
 	});
 
@@ -27,7 +25,7 @@ export const load: PageServerLoad = async (event) => {
 	return {
 		newExperience: {
 			placeName: placeDetail.place_name,
-			location: [JSON.parse(event.params.lat), JSON.parse(event.params.lng)] as Location,
+			location: location,
 			nearMonuments
 		}
 	};

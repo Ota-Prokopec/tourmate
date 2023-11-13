@@ -6,7 +6,7 @@ export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
 export type Locales =
-	| 'cz'
+	| 'cs'
 	| 'en'
 
 export type Translation = RootTranslation
@@ -119,6 +119,34 @@ type RootTranslation = {
 	 * s​e​e​ ​m​o​r​e
 	 */
 	seeMore: string
+	/**
+	 * n​e​x​t
+	 */
+	'continue': string
+	/**
+	 * t​o​ ​e​d​i​t​o​r
+	 */
+	toEditor: string
+	/**
+	 * s​k​i​p​ ​e​d​i​t​o​r
+	 */
+	skipEditor: string
+	/**
+	 * L​o​c​a​t​i​o​n​ ​n​o​t​ ​f​o​u​n​d
+	 */
+	locationNowFoundErrorTitle: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​ ​b​u​t​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​c​o​u​l​d​ ​n​o​t​ ​b​e​ ​l​o​a​d​e​d​.​ ​P​l​e​a​s​e​ ​r​e​t​u​r​n​ ​b​a​c​k​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+	 */
+	locationNowFoundErrorMessage: string
+	/**
+	 * b​a​c​k
+	 */
+	back: string
+	/**
+	 * a​d​d​ ​t​h​i​s​ ​l​a​b​e​l
+	 */
+	addThisLabel: string
 }
 
 export type TranslationFunctions = {
@@ -226,6 +254,34 @@ export type TranslationFunctions = {
 	 * see more
 	 */
 	seeMore: () => LocalizedString
+	/**
+	 * next
+	 */
+	'continue': () => LocalizedString
+	/**
+	 * to editor
+	 */
+	toEditor: () => LocalizedString
+	/**
+	 * skip editor
+	 */
+	skipEditor: () => LocalizedString
+	/**
+	 * Location not found
+	 */
+	locationNowFoundErrorTitle: () => LocalizedString
+	/**
+	 * We are sorry but your location could not be loaded. Please return back and try it again.
+	 */
+	locationNowFoundErrorMessage: () => LocalizedString
+	/**
+	 * back
+	 */
+	back: () => LocalizedString
+	/**
+	 * add this label
+	 */
+	addThisLabel: () => LocalizedString
 }
 
 export type Formatters = {}

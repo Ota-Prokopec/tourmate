@@ -1,6 +1,6 @@
 import { sdkssr } from '$src/graphql/sdkssr';
-import type { LayoutServerLoad } from './$types';
 import appwriteServer from '@app/appwrite-server';
+import { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async (event) => {
 	const { locale } = await appwriteServer.setCookie(event.cookies.getAll());

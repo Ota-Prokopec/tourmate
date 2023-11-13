@@ -30,7 +30,15 @@ const en = {
 	createYourFirstMonument: 'create your first monument',
 	and: 'and',
 	seeOnGoogleMaps: 'See on Google Maps',
-	seeMore: 'see more'
+	seeMore: 'see more',
+	continue: 'next',
+	toEditor: 'to editor',
+	skipEditor: 'skip editor',
+	locationNowFoundErrorTitle: 'Location not found',
+	locationNowFoundErrorMessage:
+		'We are sorry but your location could not be loaded. Please return back and try it again.',
+	back: 'back',
+	addThisLabel: 'add this label'
 } satisfies BaseTranslation;
 
 export default en;

@@ -1,7 +1,7 @@
 import { getPrettyNumber } from './prettier'
 import * as date from 'date-fns'
 export const normalizeMeters = (meters: number) => {
-	return getPrettyNumber(meters)
+	return `${getPrettyNumber(meters)}m`
 }
 
 export const normalizeTime = (seconds: number, delimeter?: string) => {

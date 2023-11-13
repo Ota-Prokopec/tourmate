@@ -1,20 +1,18 @@
 <script lang="ts">
+	import Column from '$lib/components/Common/Column.svelte';
+	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import lsSvelte from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard } from '@app/ts-types';
 	import {
 		degreeToMeters,
-		distanceBetweenTwoLocations,
+		distanceTo,
 		getPrettyNumber,
-		metersToDegree
+		metersToDegree,
+		normalizeMeters
 	} from '@app/utils';
-	import lsSvelte from '$lib/utils/lsStore';
-	import Row from '$lib/components/Common/Row.svelte';
-	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
-	import Text from '$lib/components/Common/Text.svelte';
 	import Range from './Components/Range.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import Column from '$lib/components/Common/Column.svelte';
-	import { headingDistanceTo } from 'geolocation-utils';
 
 	let monuments: MonumentCard[] | undefined;
 
@@ -44,7 +42,7 @@
 
 		callback();
 		const res = await sdk.getListOfMonumentCards({
-			location: { location: location, range: metersToDegree(range) }
+			location: { location: location, rangeMeters: range }
 		});
 		monuments = res.getListOfMonuments;
 	};
@@ -61,8 +59,7 @@
 		{#if monuments && location}
 			{#each monuments as monument}
 				<MonumentCardComponent size="normal" dismissable {monument}>
-					you are {degreeToMeters(distanceBetweenTwoLocations(location, monument.location))}m far
-					from target
+					you are {normalizeMeters(distanceTo(location, monument.location))} far from target
 				</MonumentCardComponent>
 			{/each}
 		{/if}

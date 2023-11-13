@@ -1,8 +1,7 @@
 import * as lodash from 'lodash'
-const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'
-import { distanceTo } from 'geolocation-utils'
+import * as geolocationUtils from 'geolocation-utils'
 
 export const metersOfOneDegree = 111000
 
@@ -62,7 +61,7 @@ export const getTimeFromAToB = (
 	location2: Location,
 	speed: number,
 ) => {
-	const distance = distanceTo(
+	const distance = geolocationUtils.distanceTo(
 		{ lat: location1[0], lng: location1[1] },
 		{ lat: location2[0], lng: location2[1] },
 	)
@@ -72,3 +71,12 @@ export const getTimeFromAToB = (
 export const getLocationUrlOfGoogleMaps = (location: Location) => {
 	return `https://www.google.com/maps/dir/?api=1&destination=${location[0]},${location[1]}`
 }
+
+/**
+ * @returns meters
+ */
+export const distanceTo = (location1: Location, location2: Location) =>
+	geolocationUtils.distanceTo(
+		{ lat: location1[0], lng: location1[0] },
+		{ lat: location2[0], lng: location2[1] },
+	)

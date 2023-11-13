@@ -13,15 +13,6 @@
 	import lsSvelte from '$lib/utils/lsStore';
 	import { watchUsersLocation } from '@app/utils';
 	import { browser } from '$app/environment';
-
-	browser &&
-		watchUsersLocation(
-			async (location) => {
-				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
-				//user.addPreferences({ location: location });
-			},
-			{ enableHighAccuracy: false }
-		);
 </script>
 
 <script lang="ts">
@@ -41,6 +32,17 @@
 	export let data: LayoutData;
 
 	let foregroundNotification: MessagePayload | undefined;
+
+	$: console.log(browser);
+
+	$: browser &&
+		watchUsersLocation(
+			async (location) => {
+				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
+				//user.addPreferences({ location: location });
+			},
+			{ enableHighAccuracy: false }
+		);
 
 	onMount(async () => {
 		const { notifications } = await import('@app/firebase-client');

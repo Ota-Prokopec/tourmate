@@ -30,7 +30,15 @@ const cz = {
 	createYourFirstMonument: 'vytvořte si váš první zážitek',
 	and: 'a',
 	seeOnGoogleMaps: 'Vidět na Google mapách',
-	seeMore: 'zjistit více'
+	seeMore: 'zjistit více',
+	continue: 'pokračovat',
+	toEditor: 'do editoru',
+	skipEditor: 'pokračovat bez editace',
+	locationNowFoundErrorTitle: 'Lokace nebyla nalezena',
+	locationNowFoundErrorMessage:
+		'Je nám líto, ale nepodařilo se nám načíst vaše lokace. Prosíme vraťte se zpět a zkuste to znovu.',
+	back: 'zpět',
+	addThisLabel: 'přidat tento text'
 } satisfies BaseTranslation;
 
 export default cz;
