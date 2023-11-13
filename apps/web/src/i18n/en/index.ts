@@ -3,6 +3,8 @@ import type { BaseTranslation } from '../i18n-types';
 const en = {
 	monuments: 'monuments',
 	pictures: 'pictures',
+	monument: 'monument',
+	experience: 'picture',
 	places: 'místa',
 	monumentsLoadErrorTitle: 'Monuments were not loaded',
 	monumentsLoadErrorMessage:
@@ -38,7 +40,18 @@ const en = {
 	locationNowFoundErrorMessage:
 		'We are sorry but your location could not be loaded. Please return back and try it again.',
 	back: 'back',
-	addThisLabel: 'add this label'
+	addThisLabel: 'add this label',
+	deleteMonumentErrorTitle: 'Removing monument was not successful',
+	deleteMonumentErrorMessage:
+		'We are sorry, but there was an error in deleting your monument. Please try it again or contact us.',
+	reallyDeleteYour_Question:
+		'Do you really want to delete {what: string}, there is no way to get it back.',
+	likeErrorTitle: 'Your like was not recorded',
+	likeErrorMessage:
+		'We are sorry, but there was a problem with liking. Please try to reload aplication.',
+	removeLikeErrorTitle: 'Your like was not deleted',
+	removeLikeErrorMessage:
+		'We are sorry, but there was a problem with deleting your like. Please try to reload aplication.'
 } satisfies BaseTranslation;
 
 export default en;

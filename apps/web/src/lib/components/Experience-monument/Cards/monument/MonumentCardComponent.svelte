@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { distanceTo, headingDistanceTo } from 'geolocation-utils';
-
+	import OwnerOptions from '../OwnerOptions.svelte';
+	import { distanceTo } from 'geolocation-utils';
 	import LL from '$src/i18n/i18n-svelte';
-
 	import { navigate } from '$lib/utils/navigator';
-
 	import { goto } from '$app/navigation';
 	import { Queries, collections, user } from '$lib/appwrite/appwrite';
 	import Card from '$lib/components/Common/Card.svelte';
@@ -24,7 +22,6 @@
 	import { getLocationUrlOfGoogleMaps, normalizeMeters } from '@app/utils';
 	import { Button, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import MonumentOwnerOptions from '../../Monument/MonumentOwnerOptions.svelte';
 	import CardImage from '../CardImage.svelte';
 	import CardFooter from './CardFooter.svelte';
 	import CardHeader from './CardHeader.svelte';
@@ -145,7 +142,7 @@
 				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
-					<MonumentOwnerOptions on:edit={editMonument} on:delete={deleteMonument} />
+					<OwnerOptions type="monument" on:edit={editMonument} on:delete={deleteMonument} />
 					{#if !disableSharing}
 						<Icon on:click={() => goto(`/monument/${monument._id}/share`)}>
 							<IconShare class="w-5 h-5" />

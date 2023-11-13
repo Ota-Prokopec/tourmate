@@ -23,6 +23,14 @@ type RootTranslation = {
 	 */
 	pictures: string
 	/**
+	 * m​o​n​u​m​e​n​t
+	 */
+	monument: string
+	/**
+	 * p​i​c​t​u​r​e
+	 */
+	experience: string
+	/**
 	 * m​í​s​t​a
 	 */
 	places: string
@@ -147,6 +155,35 @@ type RootTranslation = {
 	 * a​d​d​ ​t​h​i​s​ ​l​a​b​e​l
 	 */
 	addThisLabel: string
+	/**
+	 * R​e​m​o​v​i​n​g​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l
+	 */
+	deleteMonumentErrorTitle: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​n​ ​e​r​r​o​r​ ​i​n​ ​d​e​l​e​t​i​n​g​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​ ​o​r​ ​c​o​n​t​a​c​t​ ​u​s​.
+	 */
+	deleteMonumentErrorMessage: string
+	/**
+	 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​{​w​h​a​t​}​,​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
+	 * @param {string} what
+	 */
+	reallyDeleteYour_Question: RequiredParams<'what'>
+	/**
+	 * Y​o​u​r​ ​l​i​k​e​ ​w​a​s​ ​n​o​t​ ​r​e​c​o​r​d​e​d
+	 */
+	likeErrorTitle: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​l​i​k​i​n​g​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​t​o​ ​r​e​l​o​a​d​ ​a​p​l​i​c​a​t​i​o​n​.
+	 */
+	likeErrorMessage: string
+	/**
+	 * Y​o​u​r​ ​l​i​k​e​ ​w​a​s​ ​n​o​t​ ​d​e​l​e​t​e​d
+	 */
+	removeLikeErrorTitle: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​d​e​l​e​t​i​n​g​ ​y​o​u​r​ ​l​i​k​e​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​t​o​ ​r​e​l​o​a​d​ ​a​p​l​i​c​a​t​i​o​n​.
+	 */
+	removeLikeErrorMessage: string
 }
 
 export type TranslationFunctions = {
@@ -158,6 +195,14 @@ export type TranslationFunctions = {
 	 * pictures
 	 */
 	pictures: () => LocalizedString
+	/**
+	 * monument
+	 */
+	monument: () => LocalizedString
+	/**
+	 * picture
+	 */
+	experience: () => LocalizedString
 	/**
 	 * místa
 	 */
@@ -282,6 +327,34 @@ export type TranslationFunctions = {
 	 * add this label
 	 */
 	addThisLabel: () => LocalizedString
+	/**
+	 * Removing monument was not successful
+	 */
+	deleteMonumentErrorTitle: () => LocalizedString
+	/**
+	 * We are sorry, but there was an error in deleting your monument. Please try it again or contact us.
+	 */
+	deleteMonumentErrorMessage: () => LocalizedString
+	/**
+	 * Do you really want to delete {what}, there is no way to get it back.
+	 */
+	reallyDeleteYour_Question: (arg: { what: string }) => LocalizedString
+	/**
+	 * Your like was not recorded
+	 */
+	likeErrorTitle: () => LocalizedString
+	/**
+	 * We are sorry, but there was a problem with liking. Please try to reload aplication.
+	 */
+	likeErrorMessage: () => LocalizedString
+	/**
+	 * Your like was not deleted
+	 */
+	removeLikeErrorTitle: () => LocalizedString
+	/**
+	 * We are sorry, but there was a problem with deleting your like. Please try to reload aplication.
+	 */
+	removeLikeErrorMessage: () => LocalizedString
 }
 
 export type Formatters = {}

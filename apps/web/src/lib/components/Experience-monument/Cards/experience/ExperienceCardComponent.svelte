@@ -12,16 +12,18 @@
 	import { alert } from '$src/routes/alertStore';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
-	import ExperienceOwnerOptions from '../../Experience/ExperienceOwnerOptions.svelte';
+	import OwnerOptions from '../OwnerOptions.svelte';
 	import MonumentCard from '../monument/MonumentCardComponent.svelte';
 	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let experience: ExperienceCard;
 
 	export let dismissable = false;
 	let liked: boolean | 'pending' = experience.liked ? true : false;
 	let isCardVisible = true;
-	let amIOwner = experience.user.userId === $user?.$id;
+	let amIOwner: boolean | 'pending' =
+		$user === null ? 'pending' : experience.user.userId === $user.$id;
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
@@ -32,22 +34,26 @@
 			liked = true;
 		} catch (error) {
 			liked = false;
-			alert('Error experience like', 'Your like was not recorded, please try it again.', {
+			alert($LL.likeErrorTitle(), $LL.likeErrorMessage(), {
 				color: 'red'
 			});
 			throw new Error('like monument error happend');
 		}
 	};
 	const unlike = async () => {
-		if (liked === 'pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
-		if (!$user?.$id) throw new Error('user is not authed');
-		liked = 'pending';
-		await collections.experienceLike.deleteDocument([
-			Queries.experienceLike.equal('experienceId', experience._id),
-			Queries.experienceLike.equal('userId', $user.$id)
-		]);
-		liked = false;
-		experience.liked = null;
+		try {
+			if (liked === 'pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
+			if (!$user?.$id) throw new Error('user is not authed');
+			liked = 'pending';
+			await collections.experienceLike.deleteDocument([
+				Queries.experienceLike.equal('experienceId', experience._id),
+				Queries.experienceLike.equal('userId', $user.$id)
+			]);
+			liked = false;
+			experience.liked = null;
+		} catch (error) {
+			alert($LL.removeLikeErrorTitle(), $LL.removeLikeErrorMessage(), { color: 'red' });
+		}
 	};
 
 	let showModalDeleteDocument = false;
@@ -56,9 +62,13 @@
 		showModalDeleteDocument = true;
 	};
 	const reallyDeleteMonument = async () => {
-		await sdk.deleteExperience({ experienceId: experience._id });
-		showModalDeleteDocument = false;
-		isCardVisible = false;
+		try {
+			await sdk.deleteExperience({ experienceId: experience._id });
+			showModalDeleteDocument = false;
+			isCardVisible = false;
+		} catch (error) {
+			alert($LL.deleteMonumentErrorTitle(), $LL.deleteMonumentErrorMessage());
+		}
 	};
 
 	let className = '';
@@ -66,7 +76,7 @@
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>
-	<Text>Do you really want to delete your monument, there is no way to get it back.</Text>
+	<Text>{$LL.reallyDeleteYour_Question({ what: $LL.monument() })}</Text>
 	<svelte:fragment slot="footer">
 		<Button on:click={reallyDeleteMonument} color="red">Yes really</Button>
 		<Button on:click={() => (showModalDeleteDocument = false)} color="green"
@@ -94,7 +104,7 @@
 				/>
 
 				{#if amIOwner}
-					<ExperienceOwnerOptions on:delete={deleteExperience} />
+					<OwnerOptions type="experience" on:delete={deleteExperience} />
 				{/if}
 			</Row>
 
