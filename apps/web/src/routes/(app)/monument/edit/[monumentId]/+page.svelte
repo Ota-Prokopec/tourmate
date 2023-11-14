@@ -11,6 +11,9 @@
 	import Img from '$lib/components/Common/Img.svelte';
 	import { collections } from '$lib/appwrite/appwrite';
 	import MonumentCreateForm from '../../Components/MonumentCreateForm.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let data: PageData;
 
@@ -28,57 +31,62 @@
 	let isLoading = false;
 
 	const update = async () => {
-		isLoading = true;
+		try {
+			isLoading = true;
 
-		await collections.monument.updateDocument(data.monument._id, {
-			name: name,
-			topics: topics,
-			transports: transports,
-			about: about
-		});
+			await collections.monument.updateDocument(data.monument._id, {
+				name: name,
+				topics: topics,
+				transports: transports,
+				about: about
+			});
 
-		isLoading = false;
+			isLoading = false;
+		} catch (error) {
+			alert(
+				$LL.updateErrorTitle({ what: $LL.monument() }),
+				$LL.updateErrorMessage({ what: $LL.monument() }),
+				{ color: 'red' }
+			);
+		}
 	};
 </script>
 
-<div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	{#if !res || error}
-		<MonumentCreateForm
-			{placeName}
-			location={data.monument.location}
-			bind:name
-			bind:about
-			bind:topics
-			bind:transports
-			{aboutLimit}
-		>
-			<svelte:fragment slot="image">
-				{#if picture}
-					<Img class="rounded-2xl" src={picture} />
-				{/if}
-			</svelte:fragment>
+{#if !res || error}
+	<MonumentCreateForm
+		class="p-2"
+		{placeName}
+		location={data.monument.location}
+		bind:name
+		bind:about
+		bind:topics
+		bind:transports
+		{aboutLimit}
+	>
+		<svelte:fragment slot="image">
+			{#if picture}
+				<Img class="rounded-2xl" src={picture} />
+			{/if}
+		</svelte:fragment>
 
-			<Button
-				class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
-				color="blue"
-				on:click={update}
-			>
+		<Right class="mt-4">
+			<Button color="green" on:click={update}>
 				{#if isLoading}
 					<Loading />
 				{:else}
-					<span>Uložil změny</span>
+					Uložil změny
 				{/if}
 			</Button>
-		</MonumentCreateForm>
-	{/if}
+		</Right>
+	</MonumentCreateForm>
+{/if}
 
-	<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
-		{#if res}
-			<MonumentMarker monument={res} />
-		{:else}
-			<Marker class="z-50" location={data.monument.location}>
-				<Icon icon="fas fa-map-marker-alt" class="text-4xl" />
-			</Marker>
-		{/if}
-	</Map>
-</div>
+<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
+	{#if res}
+		<MonumentMarker monument={res} />
+	{:else}
+		<Marker class="z-50" location={data.monument.location}>
+			<Icon icon="fas fa-map-marker-alt" class="text-4xl" />
+		</Marker>
+	{/if}
+</Map>

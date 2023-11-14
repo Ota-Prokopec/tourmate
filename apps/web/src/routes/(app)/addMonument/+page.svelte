@@ -11,11 +11,27 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
 	import mapTiler from '$lib/utils/mapTiler';
+	import { sdk } from '$src/graphql/sdk';
+	import lsStore from '$lib/utils/lsStore';
 
 	export let data: PageData;
 	let map: Map;
 	let location: Location | undefined;
 	$: markerLocation = location;
+
+	$: usersLocation = $lsStore.usersLocation;
+
+	const monuments = useQuery('monuments', async () => {
+		if (!usersLocation) throw new Error('users location is not available');
+		return await sdk.getListOfMonumentsForMap({
+			location: {
+				location: usersLocation
+				// TODO: add here rangeMeters from lsStore.usersRangeMeters or sth else
+			}
+		});
+	});
+
+	$: monumentsLoaded = $monuments.data && !$monuments.isLoading && !$monuments.isError;
 
 	$: marker =
 		map && location
@@ -57,9 +73,11 @@
 		{/if}
 	</Alert>
 	<ExpMap on:click={() => console.log('click')} bind:location bind:map class="w-full h-full">
-		{#each data.monuments as monument}
-			<MonumentMarker {monument} />
-		{/each}
+		{#if monumentsLoaded && $monuments.data?.getListOfMonuments}
+			{#each $monuments.data?.getListOfMonuments as monument}
+				<MonumentMarker {monument} />
+			{/each}
+		{/if}
 	</ExpMap>
 
 	<Button

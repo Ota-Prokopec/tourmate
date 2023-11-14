@@ -7,6 +7,7 @@
 	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
 	import TextArea from '$lib/components/Common/TextArea.svelte';
 	import Card from '$lib/components/Common/Card.svelte';
+	import { twMerge } from 'tailwind-merge';
 
 	export let placeName: string;
 	export let location: Location;
@@ -16,9 +17,12 @@
 
 	export let transports: Transport[];
 	export let aboutLimit: number = 400;
+
+	let className = '';
+	export { className as class };
 </script>
 
-<Card class="w-full h-min m-4 sm:absolute sm:left-0 z-50">
+<Card class={twMerge('w-full h-min m-4 sm:absolute sm:left-0 z-50', className)}>
 	<Icon icon="fas fa-map-marker-alt" class="text-3xl" />
 	<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 		{placeName}

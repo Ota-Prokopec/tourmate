@@ -15,6 +15,14 @@ const cz = {
 	updateProfileErrorTitle: 'Profile was not updated',
 	updateProfileErrorMessage:
 		'We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.',
+
+	saveErrorTitle: '{what: string} - neuloženo',
+	saveErrorMessage: '{what: string} - nepovedlo se uložit, prosíme zkuste to znovu.',
+	updateErrorTitle: '{what: string} - neaktualizováno',
+	updateErrorMessage: '{what: string} - nepovedlo se aktualizovat, prosíme zkuste to znovu.',
+	deleteErrorTitle: '{what: string} - nebylo odstraněno',
+	deleteErrorMessage: '{what: string} - nebylo odstraněno, prosíme zkuste to znovu.',
+
 	userName: 'uživatelské jméno',
 	forgotenPassword: 'zapomenuté heslo',
 	signUp: 'zaregistrovat se',
@@ -50,7 +58,8 @@ const cz = {
 	likeErrorMessage:
 		'Je nám líto, ale vyskytl se problém při liking. Prosíme zkuste obnovit aplikaci.',
 	removeLikeErrorTitle: 'Váš like se neodstranil',
-	removeLikeErrorMessage: 'Omlouváme se, ale nebylo možné odstranit váš like.'
+	removeLikeErrorMessage: 'Omlouváme se, ale nebylo možné odstranit váš like.',
+	seeOnMap: 'vidět na mapě'
 } satisfies BaseTranslation;
 
 export default cz;

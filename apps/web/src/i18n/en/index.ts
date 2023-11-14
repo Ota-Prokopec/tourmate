@@ -15,6 +15,15 @@ const en = {
 	updateProfileErrorTitle: 'Profile was not updated',
 	updateProfileErrorMessage:
 		'We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.',
+
+	saveErrorTitle: '{what: string} was not saved',
+	saveErrorMessage:
+		'We are sorry, but there was a problem with saving your {type: string}. Please try it again.',
+	updateErrorTitle: '{what: string} was not updated',
+	updateErrorMessage: '{what: string} was not updated, please try it again',
+	deleteErrorTitle: '{what: string} was not deleted',
+	deleteErrorMessage: '{what: string} was not deleted, please try it again',
+
 	userName: 'user name',
 	forgotenPassword: 'forgotten password',
 	signUp: 'sign up',
@@ -51,7 +60,8 @@ const en = {
 		'We are sorry, but there was a problem with liking. Please try to reload aplication.',
 	removeLikeErrorTitle: 'Your like was not deleted',
 	removeLikeErrorMessage:
-		'We are sorry, but there was a problem with deleting your like. Please try to reload aplication.'
+		'We are sorry, but there was a problem with deleting your like. Please try to reload aplication.',
+	seeOnMap: 'see on map'
 } satisfies BaseTranslation;
 
 export default en;

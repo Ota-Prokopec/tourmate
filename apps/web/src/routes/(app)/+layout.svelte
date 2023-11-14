@@ -38,6 +38,7 @@
 	$: browser &&
 		watchUsersLocation(
 			async (location) => {
+				//TODO: also set users mapRange from $user watching from users prefs
 				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
 				//user.addPreferences({ location: location });
 			},
@@ -91,9 +92,9 @@
 	<div class="w-full h-auto fixed bottom-0 flex justify-center z-50">
 		<BottomNav
 			position="relative"
-			classInner="grid-cols-5 gap-4"
-			class="tran"
-			outerClass="mobile:w-full w-fit z-50 h-16 rounded-t-3xl"
+			classInner="flex flex-wrap flex-row justify-between"
+			class=""
+			outerClass="mobile:w-full w-[500px] z-50 h-16"
 		>
 			<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
 				<IconLocation />
@@ -124,7 +125,7 @@
 			</BottomNavItem>
 
 			<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">
-				<Avatar src={data.user.profilePictureURL}>
+				<Avatar class="w-10 h-10" src={data.user.profilePictureURL}>
 					{#if !data.user.profilePictureURL}
 						{usersInitials}
 					{/if}

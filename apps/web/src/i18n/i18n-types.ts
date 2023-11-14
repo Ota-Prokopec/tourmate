@@ -59,6 +59,36 @@ type RootTranslation = {
 	 */
 	updateProfileErrorMessage: string
 	/**
+	 * {​w​h​a​t​}​ ​w​a​s​ ​n​o​t​ ​s​a​v​e​d
+	 * @param {string} what
+	 */
+	saveErrorTitle: RequiredParams<'what'>
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​s​a​v​i​n​g​ ​y​o​u​r​ ​{​t​y​p​e​}​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+	 * @param {string} type
+	 */
+	saveErrorMessage: RequiredParams<'type'>
+	/**
+	 * {​w​h​a​t​}​ ​w​a​s​ ​n​o​t​ ​u​p​d​a​t​e​d
+	 * @param {string} what
+	 */
+	updateErrorTitle: RequiredParams<'what'>
+	/**
+	 * {​w​h​a​t​}​ ​w​a​s​ ​n​o​t​ ​u​p​d​a​t​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
+	 * @param {string} what
+	 */
+	updateErrorMessage: RequiredParams<'what'>
+	/**
+	 * {​w​h​a​t​}​ ​w​a​s​ ​n​o​t​ ​d​e​l​e​t​e​d
+	 * @param {string} what
+	 */
+	deleteErrorTitle: RequiredParams<'what'>
+	/**
+	 * {​w​h​a​t​}​ ​w​a​s​ ​n​o​t​ ​d​e​l​e​t​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
+	 * @param {string} what
+	 */
+	deleteErrorMessage: RequiredParams<'what'>
+	/**
 	 * u​s​e​r​ ​n​a​m​e
 	 */
 	userName: string
@@ -184,6 +214,10 @@ type RootTranslation = {
 	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​d​e​l​e​t​i​n​g​ ​y​o​u​r​ ​l​i​k​e​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​t​o​ ​r​e​l​o​a​d​ ​a​p​l​i​c​a​t​i​o​n​.
 	 */
 	removeLikeErrorMessage: string
+	/**
+	 * s​e​e​ ​o​n​ ​m​a​p
+	 */
+	seeOnMap: string
 }
 
 export type TranslationFunctions = {
@@ -231,6 +265,30 @@ export type TranslationFunctions = {
 	 * We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.
 	 */
 	updateProfileErrorMessage: () => LocalizedString
+	/**
+	 * {what} was not saved
+	 */
+	saveErrorTitle: (arg: { what: string }) => LocalizedString
+	/**
+	 * We are sorry, but there was a problem with saving your {type}. Please try it again.
+	 */
+	saveErrorMessage: (arg: { type: string }) => LocalizedString
+	/**
+	 * {what} was not updated
+	 */
+	updateErrorTitle: (arg: { what: string }) => LocalizedString
+	/**
+	 * {what} was not updated, please try it again
+	 */
+	updateErrorMessage: (arg: { what: string }) => LocalizedString
+	/**
+	 * {what} was not deleted
+	 */
+	deleteErrorTitle: (arg: { what: string }) => LocalizedString
+	/**
+	 * {what} was not deleted, please try it again
+	 */
+	deleteErrorMessage: (arg: { what: string }) => LocalizedString
 	/**
 	 * user name
 	 */
@@ -355,6 +413,10 @@ export type TranslationFunctions = {
 	 * We are sorry, but there was a problem with deleting your like. Please try to reload aplication.
 	 */
 	removeLikeErrorMessage: () => LocalizedString
+	/**
+	 * see on map
+	 */
+	seeOnMap: () => LocalizedString
 }
 
 export type Formatters = {}

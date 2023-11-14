@@ -1,25 +1,20 @@
 <script lang="ts">
-	import { twMerge } from 'tailwind-merge';
-	import type {
-		GraphqlDocument,
-		Monument,
-		MonumentCardWithConnectedExperiences,
-		MonumentMarkerData
-	} from '@app/ts-types';
-	import Marker from '../Marker.svelte';
-	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import Drawer from '$lib/components/Common/Drawer.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
 	import Carousel from '$lib/components/Carousel/Carousel.svelte';
-	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
-	import Column from '$lib/components/Common/Column.svelte';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
-	import MediaQueryMobile from '$lib/components/MediaQueries/MediaQueryMobile.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
+	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import type { MonumentCardWithConnectedExperiences, MonumentMarkerData } from '@app/ts-types';
+	import { twMerge } from 'tailwind-merge';
+	import Marker from '../Marker.svelte';
+	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 
 	export let monument: MonumentMarkerData;
 	export let disableShowingDetails = false;
@@ -47,11 +42,11 @@
 	placement="left"
 	size={600}
 >
-	<MediaQueryMobile>
+	<MediaQuery size="mobile">
 		<Right>
 			<Icon on:click={() => (detailHidden = true)} class="child:w-7 child:h-7"><IconTimes /></Icon>
 		</Right>
-	</MediaQueryMobile>
+	</MediaQuery>
 	{#if monumentCardDataPromise}
 		{#await monumentCardDataPromise}
 			<Center class="w-full h-full">

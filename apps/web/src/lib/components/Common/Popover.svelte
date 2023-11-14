@@ -29,13 +29,6 @@
 	export { className as class };
 </script>
 
-<Popover
-	{open}
-	{title}
-	class={twMerge('break-words w-96 z-50', className)}
-	{color}
-	{trigger}
-	{placement}
->
+<Popover {open} {title} class={twMerge('z-50 w-auto', className)} {color} {trigger} {placement}>
 	<slot />
 </Popover>

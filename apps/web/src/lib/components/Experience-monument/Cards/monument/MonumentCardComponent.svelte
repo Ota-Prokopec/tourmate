@@ -100,9 +100,17 @@
 		showModalDeleteDocument = true;
 	};
 	const reallyDeleteMonument = async () => {
-		await sdk.deleteMonument({ monumentId: monument._id });
-		showModalDeleteDocument = false;
-		isCardVisible = false;
+		try {
+			await sdk.deleteMonument({ monumentId: monument._id });
+			showModalDeleteDocument = false;
+			isCardVisible = false;
+		} catch (error) {
+			alert(
+				$LL.deleteErrorTitle({ what: $LL.monument() }),
+				$LL.deleteErrorMessage({ what: $LL.monument() }),
+				{ color: 'red' }
+			);
+		}
 	};
 
 	const editMonument = async () => {
@@ -182,7 +190,7 @@
 		</div>
 
 		{#if size !== 'tiny'}
-			<Column class="gap-2">
+			<Column class="gap-2 mt-2">
 				<Right>
 					<Button on:click={seeOnGoogleMaps} color="green">{$LL.seeOnGoogleMaps()}</Button>
 				</Right>
@@ -195,5 +203,8 @@
 				{/if}
 			</Column>
 		{/if}
+		<div class="w-full h-auto mt-2">
+			<slot name="bottom" />
+		</div>
 	</Card>
 {/if}

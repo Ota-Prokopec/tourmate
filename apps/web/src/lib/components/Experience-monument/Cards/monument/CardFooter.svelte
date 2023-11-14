@@ -12,6 +12,7 @@
 	import { getTimeFromAToB, normalizeTime } from '@app/utils';
 	import { DateTime } from 'luxon';
 	import LL from '$src/i18n/i18n-svelte';
+	import TypeWriter from '$lib/components/Common/TypeWriter.svelte';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
@@ -50,8 +51,10 @@
 					)}
 
 					{#if seconds !== 0}
-						<Popover placement="bottom">
-							{normalizeTime(seconds, $LL.and())}
+						<Popover class="w-[300px]" placement="bottom">
+							<TypeWriter speed={10}>
+								{normalizeTime(seconds, $LL.and())}
+							</TypeWriter>
 						</Popover>
 					{/if}
 				{/if}

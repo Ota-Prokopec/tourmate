@@ -110,12 +110,14 @@
 							{/each}
 						{:else}
 							<Skeleton divClass="w-full" />
-							<Button on:click={() => goto(`/`)} class="bg-white border border-gray-400 ">
-								<Text class="!text-black">{$LL.takeYourFirstPicture()}</Text>
-								<Icon class="fill-red-500 w-7 h-7">
-									<IconLocation />
-								</Icon>
-							</Button>
+							{#if isMyAccount}
+								<Button on:click={() => goto(`/`)} class="bg-white border border-gray-400 ">
+									<Text class="!text-black">{$LL.takeYourFirstPicture()}</Text>
+									<Icon class="fill-red-500 w-7 h-7">
+										<IconLocation />
+									</Icon>
+								</Button>
+							{/if}
 						{/if}
 					{:else if usersMonuments?.length}
 						{#each usersMonuments as monument}
@@ -123,12 +125,17 @@
 						{/each}
 					{:else}
 						<Skeleton divClass="w-full" />
-						<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400 ">
-							<Text class="!text-black">{$LL.createYourFirstMonument()}</Text>
-							<Icon class="fill-red-500 w-7 h-7">
-								<IconLocation />
-							</Icon>
-						</Button>
+						{#if isMyAccount}
+							<Button
+								on:click={() => goto(`/addMonument`)}
+								class="bg-white border border-gray-400 "
+							>
+								<Text class="!text-black">{$LL.createYourFirstMonument()}</Text>
+								<Icon class="fill-red-500 w-7 h-7">
+									<IconLocation />
+								</Icon>
+							</Button>
+						{/if}
 					{/if}
 				</Column>
 			{/if}
