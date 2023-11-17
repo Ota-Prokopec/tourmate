@@ -4,6 +4,7 @@ import {
 	locationQueries,
 } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
+import { defaultRangeMeters } from '../../../arguments'
 
 export default queryField('getListOfExperiences', {
 	type: list('Experience'),
@@ -17,7 +18,12 @@ export default queryField('getListOfExperiences', {
 		const queries: string[] = []
 
 		if (locationOptions)
-			queries.push(...locationQueries(locationOptions.location, locationOptions.range))
+			queries.push(
+				...locationQueries(
+					locationOptions.location,
+					locationOptions.rangeMeters ?? defaultRangeMeters,
+				),
+			)
 
 		return fromLatLongIntoLocation(
 			...(await collections.experience.listDocuments(queries)).documents,

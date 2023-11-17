@@ -1,20 +1,18 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import ExpMap from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import type { Location } from '@app/ts-types';
-	import { Alert, Button, Img } from 'flowbite-svelte';
-	import maplibregl, { type LngLatLike, type Map } from 'maplibre-gl';
-	import type { PageData } from './$types';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import { SyncLoader } from 'svelte-loading-spinners';
+	import lsStore from '$lib/utils/lsStore';
 	import mapTiler from '$lib/utils/mapTiler';
 	import { sdk } from '$src/graphql/sdk';
-	import lsStore from '$lib/utils/lsStore';
+	import type { Location } from '@app/ts-types';
+	import { useQuery } from '@sveltestack/svelte-query';
+	import { Alert, Button } from 'flowbite-svelte';
+	import maplibregl, { type Map } from 'maplibre-gl';
+	import { SyncLoader } from 'svelte-loading-spinners';
 
-	export let data: PageData;
 	let map: Map;
 	let location: Location | undefined;
 	$: markerLocation = location;
@@ -26,7 +24,6 @@
 		return await sdk.getListOfMonumentsForMap({
 			location: {
 				location: usersLocation
-				// TODO: add here rangeMeters from lsStore.usersRangeMeters or sth else
 			}
 		});
 	});

@@ -218,6 +218,26 @@ type RootTranslation = {
 	 * s​e​e​ ​o​n​ ​m​a​p
 	 */
 	seeOnMap: string
+	/**
+	 * N​o​t​ ​a​b​l​e​ ​t​o​ ​c​o​n​n​e​c​t​ ​m​o​n​u​m​e​n​t​ ​t​o​ ​y​o​u​r​ ​p​i​c​t​u​r​e
+	 */
+	notAbleToConnectMonumentBecauseOfDistanceErrorTitle: string
+	/**
+	 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​c​o​n​n​e​c​t​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t​ ​t​o​ ​y​o​u​r​ ​p​i​c​t​u​r​e​,​ ​b​u​c​a​u​s​e​ ​y​o​u​ ​a​r​e​ ​t​o​o​ ​f​a​r​ ​f​r​o​m​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t​.​ ​Y​o​u​ ​c​a​s​ ​e​i​t​h​e​r​ ​c​h​o​o​s​e​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​m​o​n​u​m​e​n​t​ ​t​h​a​t​ ​f​i​t​s​ ​y​o​u​r​ ​o​r​ ​y​o​u​ ​c​a​n​ ​a​p​p​r​o​a​c​h​ ​t​o​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t​.
+	 */
+	notAbleToConnectMonumentBecauseOfDistanceErrorMessage: string
+	/**
+	 * s​h​o​w​ ​t​h​e​ ​m​a​p
+	 */
+	showMap: string
+	/**
+	 * c​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
+	 */
+	cantFindAnyMonumentQuestion: string
+	/**
+	 * c​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
+	 */
+	connectExperienceToMonument: string
 }
 
 export type TranslationFunctions = {
@@ -417,6 +437,26 @@ export type TranslationFunctions = {
 	 * see on map
 	 */
 	seeOnMap: () => LocalizedString
+	/**
+	 * Not able to connect monument to your picture
+	 */
+	notAbleToConnectMonumentBecauseOfDistanceErrorTitle: () => LocalizedString
+	/**
+	 * You are not able to connect this monument to your picture, bucause you are too far from this monument. You cas either choose a different monument that fits your or you can approach to this monument.
+	 */
+	notAbleToConnectMonumentBecauseOfDistanceErrorMessage: () => LocalizedString
+	/**
+	 * show the map
+	 */
+	showMap: () => LocalizedString
+	/**
+	 * can't find any monument?
+	 */
+	cantFindAnyMonumentQuestion: () => LocalizedString
+	/**
+	 * connect experience to the monument
+	 */
+	connectExperienceToMonument: () => LocalizedString
 }
 
 export type Formatters = {}

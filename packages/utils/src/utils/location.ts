@@ -77,6 +77,6 @@ export const getLocationUrlOfGoogleMaps = (location: Location) => {
  */
 export const distanceTo = (location1: Location, location2: Location) =>
 	geolocationUtils.distanceTo(
-		{ lat: location1[0], lng: location1[0] },
+		{ lat: location1[0], lng: location1[1] },
 		{ lat: location2[0], lng: location2[1] },
 	)

@@ -37,6 +37,7 @@
 
 	const clipBoardRead = async () => {
 		const file = await clipboard.readImage();
+
 		if (!file)
 			err({
 				message: 'No file is supported',

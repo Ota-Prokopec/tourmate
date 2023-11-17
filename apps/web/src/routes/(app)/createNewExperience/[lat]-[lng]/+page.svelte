@@ -13,6 +13,10 @@
 	import Center from './Components/Center.svelte';
 	import Footer from './Components/Footer.svelte';
 	import Drawer from './Components/Drawer.svelte';
+	import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
+	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 
 	export let data: PageData;
 	let isLoading = false;
@@ -21,7 +25,7 @@
 	let hideDrawer = true;
 	let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
 	let connectedMonumentId: string | undefined = undefined;
-	$: ableToSave = connectedMonumentId ? (connectedMonumentId.length ? true : false) : false;
+	let ableToSave = false;
 
 	const save = async () => {
 		if (!location) throw new Error('user has no location');
@@ -41,12 +45,21 @@
 		monumentToConnectPromise = sdk.getMonumentCard({ id: monumentId });
 	};
 
-	const connectToMonument = async (monumentId: string) => {
+	const connectToMonument = async (monumentId: string, distanceInMeters: number) => {
+		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
+			alert(
+				$LL['notAbleToConnectMonumentBecauseOfDistanceErrorTitle'](),
+				$LL['notAbleToConnectMonumentBecauseOfDistanceErrorMessage'](),
+				{ color: 'yellow' }
+			);
+		}
 		connectedMonumentId = monumentId;
+		ableToSave = distanceInMeters <= maximalRangeInMetersToConnectMonumentToPicture;
 	};
 
 	const disconnectMonument = () => {
 		connectedMonumentId = undefined;
+		ableToSave = false;
 		monumentToConnectPromise = undefined;
 	};
 
@@ -55,40 +68,39 @@
 
 <Drawer bind:hideDrawer nearMonuments={data.newExperience.nearMonuments} />
 
-<div class="w-full h-auto flex items-center flex-wrap flex-col gap-4 p-4">
-	{#if cardShown}
-		<Card class="w-full h-min sm:absolute sm:left-0 z-10">
-			<Header {location} placeName={data.newExperience.placeName} />
+{#if cardShown}
+	<Card class="w-full h-auto absolute left-0 !z-20 mobile:w-full mobile:max-w-none">
+		<Header {location} placeName={data.newExperience.placeName} />
 
-			<Img src={$picture} />
+		<Img src={$picture} />
 
-			<Center
-				on:disconnect={disconnectMonument}
-				on:connect={(e) => connectToMonument(e.detail.monumentId)}
-				{monumentToConnectPromise}
-				{connectedMonumentId}
-				bind:cardShown
-				bind:hideDrawer
-			/>
+		<Center
+			on:disconnect={disconnectMonument}
+			on:connect={(e) => connectToMonument(e.detail.monumentId, e.detail.distanceInMeters)}
+			{monumentToConnectPromise}
+			bind:cardShown
+			bind:hideDrawer
+		/>
 
-			<Footer {ableToSave} {isLoading} on:save={save} />
-		</Card>
-	{/if}
+		<Footer {ableToSave} {isLoading} on:save={save} />
+	</Card>
+{/if}
 
-	{#if device.recognizeWidth() === 'mobile' && !cardShown}
+<MediaQuery size="mobile">
+	{#if !cardShown}
 		<Button on:click={() => (cardShown = true)} color="blue" class="absolute bottom-0 m-2 z-20"
 			>back to card</Button
 		>
 	{/if}
+</MediaQuery>
 
-	<Map location={data.newExperience.location} class="h-[100dvh] w-full fixed top-0">
-		{#each data.newExperience.nearMonuments as monument}
-			<MonumentMarker
-				disableShowingDetails
-				on:click={() => (cardShown = true)}
-				on:click={() => screenMonument(monument._id)}
-				{monument}
-			/>
-		{/each}
-	</Map>
-</div>
+<Map location={data.newExperience.location} class="h-full w-full fixed top-0">
+	{#each data.newExperience.nearMonuments as monument}
+		<MonumentMarker
+			disableShowingDetails
+			on:click={() => (cardShown = true)}
+			on:click={() => screenMonument(monument._id)}
+			{monument}
+		/>
+	{/each}
+</Map>

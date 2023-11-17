@@ -53,13 +53,15 @@
 	let liked: boolean | 'pending' | undefined =
 		'liked' in monument ? (monument.liked ? true : false) : undefined;
 
-	const distance = usersLocation
-		? normalizeMeters(
-				distanceTo(
-					{ lat: usersLocation[0], lng: usersLocation[1] },
-					{ lat: monument.location[0], lng: monument.location[1] }
-				)
+	export const distanceInMeters = usersLocation
+		? distanceTo(
+				{ lat: usersLocation[0], lng: usersLocation[1] },
+				{ lat: monument.location[0], lng: monument.location[1] }
 		  )
+		: undefined;
+
+	const distanceInMetersNormalized = distanceInMeters
+		? normalizeMeters(distanceInMeters)
 		: undefined;
 
 	let className = '';
@@ -164,10 +166,12 @@
 			this={size === 'tiny' || size === 'small' ? Columns : Column}
 			columns="1fr 1fr"
 		>
-			<CardImage on:like={like} imgSrc={monument.pictureURL} />
-			{#if size === 'normal'}
-				<Left class="pl-4"><Text>{distance}m</Text></Left>
-			{/if}
+			<Column>
+				<CardImage on:like={like} imgSrc={monument.pictureURL} />
+				{#if size !== 'tiny'}
+					<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
+				{/if}
+			</Column>
 
 			<CardHeader {monument} />
 		</svelte:component>

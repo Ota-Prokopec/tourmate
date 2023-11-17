@@ -54,7 +54,6 @@
 
 {#if !res || error}
 	<MonumentCreateForm
-		class="p-2"
 		{placeName}
 		location={data.monument.location}
 		bind:name

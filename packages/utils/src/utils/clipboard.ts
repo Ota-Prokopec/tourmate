@@ -1,7 +1,7 @@
 const read = async (typeStartsWith: string) => {
-	let items = await navigator.clipboard.read()
+	const items = await navigator.clipboard.read()
 
-	items = items.filter((item) => {
+	return items.filter((item) => {
 		const types = item.types
 		let ok = false
 		types.forEach((type) => {
@@ -9,11 +9,11 @@ const read = async (typeStartsWith: string) => {
 		})
 		return ok
 	})
-	return items
 }
 
 const readImage = async () => {
-	const clipboard = (await read('image'))[0]
+	const clipboard = (await read('image'))[0] ?? (await read('text'))[0]
+
 	const blob = await clipboard?.getType('image/png')
 	const file = new File([blob], 'image.png', { type: 'image/png' })
 

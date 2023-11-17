@@ -2,6 +2,7 @@ import mapTiler from '$lib/utils/mapTiler';
 import { isLocation, metersToDegree } from '@app/utils';
 import { PageServerLoad } from './$types';
 import { sdkssr } from '$src/graphql/sdkssr';
+import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
 
 export const load: PageServerLoad = async (event) => {
 	const location = [JSON.parse(event.params.lat), JSON.parse(event.params.lng)];
@@ -10,7 +11,8 @@ export const load: PageServerLoad = async (event) => {
 
 	const nearMonumentsPromise = sdkssr(event).getListOfMonumentsForMap({
 		location: {
-			location: location
+			location: location,
+			rangeMeters: maximalRangeInMetersToConnectMonumentToPicture * 10
 		}
 	});
 

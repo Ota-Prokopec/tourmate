@@ -33,14 +33,10 @@
 
 	let foregroundNotification: MessagePayload | undefined;
 
-	$: console.log(browser);
-
 	$: browser &&
 		watchUsersLocation(
 			async (location) => {
-				//TODO: also set users mapRange from $user watching from users prefs
 				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
-				//user.addPreferences({ location: location });
 			},
 			{ enableHighAccuracy: false }
 		);

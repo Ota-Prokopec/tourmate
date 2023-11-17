@@ -1,29 +1,51 @@
 <script lang="ts">
+	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import lsStore from '$lib/utils/lsStore';
+	import LL from '$src/i18n/i18n-svelte';
 	import type { MonumentCard } from '@app/ts-types';
-	import { device } from '@app/utils';
+	import { device, distanceTo } from '@app/utils';
 	import { Button, Skeleton } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { Stretch } from 'svelte-loading-spinners';
+
 	const dispatch = createEventDispatcher<{
 		disconnect: undefined;
-		connect: { monumentId: string };
+		connect: { monumentId: string; distanceInMeters: number };
 	}>();
 
 	export let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
-	export let connectedMonumentId: string | undefined;
 	export let cardShown: boolean;
 	export let hideDrawer: boolean;
+	$: usersLocation = $lsStore.usersLocation;
+
+	$: monumentToConnectPromise?.then((monument) => {
+		if (!usersLocation) throw new Error('usersLocation is not defined in ls store');
+
+		const distanceInMeters = distanceTo(usersLocation, monument.getMonument.location);
+
+		dispatch('connect', {
+			monumentId: monument.getMonument._id,
+			distanceInMeters: distanceInMeters
+		});
+	});
+
+	//TODO: create translation for connection the picture to the monument
 </script>
 
-<ItemsLayout let:id items={[{ title: 'connect to your monument', id: 'connectMonument' }]}>
+<ItemsLayout
+	let:id
+	items={[{ title: $LL['connectExperienceToMonument'](), id: 'connectMonument' }]}
+>
 	{#if id === 'connectMonument'}
-		<Row class="gap-2">
+		<Column class="gap-2">
 			{#await monumentToConnectPromise}
 				<Stretch color="black" />
 			{:then monumentToConnect}
@@ -35,31 +57,33 @@
 						disableSharing
 						size="small"
 						monument={monumentToConnect.getMonument}
-					>
-						{#if connectedMonumentId === monumentToConnect.getMonument._id}
-							<Button color="red" on:click={() => dispatch('disconnect')}>disconnect</Button>
-							<Row class="absolute right-0 bottom-0 m-3 gap-2 justify-center items-center">
-								<Text>connected</Text>
-								<Icon class="child:fill-green-500"><IconCheck /></Icon>
-							</Row>
-						{:else}
-							<Button
-								color="blue"
-								on:click={() =>
-									dispatch('connect', { monumentId: monumentToConnect.getMonument._id })}
-								>connect</Button
-							>
-						{/if}
-					</MonumentCardComponent>
+					/>
 				{:else}
 					<Skeleton class="w-full h-40" />
-					<Button on:click={() => (hideDrawer = false)} color="blue">cant find any monument?</Button
-					>
+					<Right>
+						<Button on:click={() => (hideDrawer = false)} color="blue"
+							>{$LL.cantFindAnyMonumentQuestion()}</Button
+						>
+					</Right>
 				{/if}
 			{/await}
-			{#if device.recognizeWidth() === 'mobile'}
-				<Button on:click={() => (cardShown = false)} color="blue">show the map</Button>
-			{/if}
-		</Row>
+
+			<MediaQuery size="mobile">
+				<Right>
+					<Button
+						class="flex justify-center items-center"
+						on:click={() => (cardShown = false)}
+						color="yellow"
+					>
+						<Row class="gap-2">
+							<Text>{$LL.showMap()}</Text>
+							<Icon class="child:h-5 child:w-5 child:fill-red-500">
+								<IconLocation />
+							</Icon>
+						</Row>
+					</Button>
+				</Right>
+			</MediaQuery>
+		</Column>
 	{/if}
 </ItemsLayout>

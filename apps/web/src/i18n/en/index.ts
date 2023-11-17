@@ -61,7 +61,14 @@ const en = {
 	removeLikeErrorTitle: 'Your like was not deleted',
 	removeLikeErrorMessage:
 		'We are sorry, but there was a problem with deleting your like. Please try to reload aplication.',
-	seeOnMap: 'see on map'
+	seeOnMap: 'see on map',
+	notAbleToConnectMonumentBecauseOfDistanceErrorTitle:
+		'Not able to connect monument to your picture',
+	notAbleToConnectMonumentBecauseOfDistanceErrorMessage:
+		'You are not able to connect this monument to your picture, bucause you are too far from this monument. You cas either choose a different monument that fits your or you can approach to this monument.',
+	showMap: 'show the map',
+	cantFindAnyMonumentQuestion: "can't find any monument?",
+	connectExperienceToMonument: 'connect experience to the monument'
 } satisfies BaseTranslation;
 
 export default en;

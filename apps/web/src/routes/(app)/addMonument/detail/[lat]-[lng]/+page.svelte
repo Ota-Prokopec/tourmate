@@ -1,9 +1,12 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import { P, Button } from 'flowbite-svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
+	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
+	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import MonumentCreateForm from '$src/routes/(app)/monument/Components/MonumentCreateForm.svelte';
 	import type {
 		Base64,
 		GraphqlDocument,
@@ -13,11 +16,8 @@
 		Transport
 	} from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
-	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
-	import MonumentCreateForm from '$src/routes/(app)/monument/Components/MonumentCreateForm.svelte';
+	import { Button } from 'flowbite-svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
@@ -59,45 +59,43 @@
 	};
 </script>
 
-<div class="w-full h-auto flex items-center flex-wrap flex-col gap-4">
-	{#if !serverResponse || error}
-		<MonumentCreateForm
-			{placeName}
-			{location}
-			bind:name
-			bind:about
-			bind:topics
-			bind:transports
-			{aboutLimit}
+{#if !serverResponse || error}
+	<MonumentCreateForm
+		{placeName}
+		{location}
+		bind:name
+		bind:about
+		bind:topics
+		bind:transports
+		{aboutLimit}
+	>
+		<svelte:fragment slot="image">
+			<BasicImageInput
+				class="bg-cover w-full min-h-[300px]"
+				on:image={(e) => (image = e.detail.base64)}
+			/>
+		</svelte:fragment>
+
+		<Button
+			class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
+			color="blue"
+			on:click={create}
 		>
-			<svelte:fragment slot="image">
-				<BasicImageInput
-					class="bg-cover w-full min-h-[300px]"
-					on:image={(e) => (image = e.detail.base64)}
-				/>
-			</svelte:fragment>
+			{#if isLoading}
+				<Loading />
+			{:else}
+				<span>Vytvořit</span>
+			{/if}
+		</Button>
+	</MonumentCreateForm>
+{/if}
 
-			<Button
-				class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"
-				color="blue"
-				on:click={create}
-			>
-				{#if isLoading}
-					<Loading />
-				{:else}
-					<span>Vytvořit</span>
-				{/if}
-			</Button>
-		</MonumentCreateForm>
+<Map location={data.newMonument.location} class="h-[100dvh] fixed top-0">
+	{#if serverResponse}
+		<MonumentMarker monument={serverResponse} />
+	{:else}
+		<Marker class="z-50" location={data.newMonument.location}>
+			<Icon icon="fas fa-map-marker-alt" class="text-4xl" />
+		</Marker>
 	{/if}
-
-	<Map location={data.newMonument.location} class="h-[100dvh] fixed top-0">
-		{#if serverResponse}
-			<MonumentMarker monument={serverResponse} />
-		{:else}
-			<Marker class="z-50" location={data.newMonument.location}>
-				<Icon icon="fas fa-map-marker-alt" class="text-4xl" />
-			</Marker>
-		{/if}
-	</Map>
-</div>
+</Map>

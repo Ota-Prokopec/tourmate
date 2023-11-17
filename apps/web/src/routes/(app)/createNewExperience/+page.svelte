@@ -1,13 +1,10 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Center from '$lib/components/Common/Center.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import IconCamera from '$lib/components/Icons/IconCamera.svelte';
 	import IconPicture from '$lib/components/Icons/IconPicture.svelte';
-	import { picture } from './editPicture/pictureStore';
-	import lsStore from '$lib/utils/lsStore';
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 </script>
 
 <Center class="w-full h-full">

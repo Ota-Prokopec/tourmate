@@ -12,6 +12,7 @@ export default queryField('createAccount', {
 		const { collections, account } = ctx.appwrite
 
 		//! Preferences
+		//@ts-ignore
 		const updatePrefs = await account.updatePrefs<Preferences>({
 			mapRange: 6000,
 			termsAccepted: true,

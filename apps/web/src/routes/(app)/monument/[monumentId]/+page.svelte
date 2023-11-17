@@ -1,18 +1,20 @@
 <script lang="ts">
 	import Carousel from '$lib/components/Carousel/Carousel.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
+	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 	import { Button, Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
-	import LL from '$src/i18n/i18n-svelte';
-	import Right from '$lib/components/Common/Right.svelte';
-	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
-	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
+	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
+	import { alert } from '$src/routes/alertStore';
 
 	export let data: PageData;
 
@@ -20,11 +22,25 @@
 	const experiences = monument.connectedExperiences;
 
 	let onlyMap = false;
+	let distanceInMeters: number = 0;
+
+	const takePicture = () => {
+		if (!distanceInMeters) throw new Error('distance is not defined');
+		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
+			alert(
+				$LL.notAbleToConnectMonumentBecauseOfDistanceErrorTitle(),
+				$LL.notAbleToConnectMonumentBecauseOfDistanceErrorMessage(),
+				{ color: 'yellow' }
+			);
+			throw new Error('Your distanceInMeters from monument is bigger that maximal distance.');
+		}
+	};
 </script>
 
 {#if !onlyMap}
 	<Row class="absolute top-0 left-0 z-50 gap-4 mobile:w-full">
 		<MonumentCard
+			bind:distanceInMeters
 			class="mobile:w-full mobile:max-w-none"
 			disableSeeMoreButton
 			size="normal"
@@ -35,11 +51,12 @@
 			</Text>
 
 			<svelte:fragment slot="bottom">
-				<MediaQuery size="mobile">
-					<Right class="">
+				<Right>
+					<MediaQuery size="mobile">
 						<Button on:click={() => (onlyMap = true)} color="blue">{$LL.seeOnMap()}</Button>
-					</Right>
-				</MediaQuery>
+					</MediaQuery>
+					<Button on:click={takePicture} color="blue">Take a picture here</Button>
+				</Right>
 			</svelte:fragment>
 		</MonumentCard>
 

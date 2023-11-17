@@ -59,7 +59,14 @@ const cz = {
 		'Je nám líto, ale vyskytl se problém při liking. Prosíme zkuste obnovit aplikaci.',
 	removeLikeErrorTitle: 'Váš like se neodstranil',
 	removeLikeErrorMessage: 'Omlouváme se, ale nebylo možné odstranit váš like.',
-	seeOnMap: 'vidět na mapě'
+	seeOnMap: 'vidět na mapě',
+	notAbleToConnectMonumentBecauseOfDistanceErrorTitle:
+		'Není možno připojit tento zážitek k vaší fotce',
+	notAbleToConnectMonumentBecauseOfDistanceErrorMessage:
+		'Není možno připojit tento zážitek k vaší fotce neboť jste od ní příliš vzdáleni, můžete zkusit se přiblížit k tomuto zážitku nebo si můžete vybrat jiný zážitek ke kterému byste fotku připojili.',
+	showMap: 'ukázat mapu',
+	cantFindAnyMonumentQuestion: 'nemůžete najít žádný zážitek?',
+	connectExperienceToMonument: 'připojit fotku k zážitku'
 } satisfies BaseTranslation;
 
 export default cz;

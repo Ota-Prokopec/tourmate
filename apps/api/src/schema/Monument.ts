@@ -6,6 +6,7 @@ import { isLocation } from '@app/utils'
 import { getUser } from '../lib/users/getUser'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
+import { defaultRangeMeters } from '../arguments/LocationInput'
 
 export default objectType({
 	name: 'Monument',
@@ -47,7 +48,12 @@ export default objectType({
 					const { collections } = ctx.appwrite
 					if (!isLocation(source.location)) throw new Error('location is not valid')
 
-					const queries = [...locationQueries(source.location)]
+					const queries = [
+						...locationQueries(
+							source.location,
+							ctx.user?.prefs.mapRange ?? defaultRangeMeters,
+						),
+					]
 					return fromLatLongIntoLocation(
 						...(await collections.experience.listDocuments(queries)).documents,
 					)
