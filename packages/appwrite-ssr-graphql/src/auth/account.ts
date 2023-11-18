@@ -66,10 +66,8 @@ export default (client: Client, hostname: string) => {
 
 				const { status } = z.object({ status: z.number() }).parse(response)
 
-				if (status >= 400)
-					throw new Error(
-						'wrong email or password at appwrite-server account/createSession',
-					)
+				if (status === 429) throw new Error('429')
+				else if (status >= 401) throw new Error('400')
 
 				const cookiesStr = (response.headers.get('set-cookie') ?? '')
 					.split(SSRHostName)

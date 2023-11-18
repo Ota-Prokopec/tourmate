@@ -66,7 +66,9 @@ const cz = {
 		'Není možno připojit tento zážitek k vaší fotce neboť jste od ní příliš vzdáleni, můžete zkusit se přiblížit k tomuto zážitku nebo si můžete vybrat jiný zážitek ke kterému byste fotku připojili.',
 	showMap: 'ukázat mapu',
 	cantFindAnyMonumentQuestion: 'nemůžete najít žádný zážitek?',
-	connectExperienceToMonument: 'připojit fotku k zážitku'
+	connectExperienceToMonument: 'připojit fotku k zážitku',
+	enterEmail: 'zadejte e-mail',
+	enterPassword: 'zadejte heslo'
 } satisfies BaseTranslation;
 
 export default cz;

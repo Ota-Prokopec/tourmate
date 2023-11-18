@@ -11,9 +11,13 @@
 	import { sdk } from '$src/graphql/sdk';
 	import lsStore from '$lib/utils/lsStore';
 	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
-	import { cacheApolloError } from '@app/utils';
+	import { parseApolloError } from '@app/utils';
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
+	import { ApolloError } from '@apollo/client';
+	import { ApolloErrorMessageHandler } from '@apollo/client/utilities/globals/invariantWrappers';
+	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
+	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 
 	let password = 'aaaaaaaa';
 	let email = 'otaprokopec@gmail.com';
@@ -33,6 +37,10 @@
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');
 		} catch (err) {
+			console.log(err);
+
+			const apolloError = parseApolloError(err);
+
 			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
 			loading = false;
 		}
@@ -41,19 +49,8 @@
 
 <div class="w-full h-auto flex flex-wrap flex-col items-center p-5 gap-6">
 	<div class="flex w-full pl-2 pr-2 flex-wrap flex-col gap-1 max-w-[400px]">
-		<Input icon class="w-full !rounded-3xl" bind:value={email} placeholder="Zadejte email">
-			<IconEnvelope />
-		</Input>
-		<Input
-			let:iconClicked
-			iconFunction="password"
-			icon
-			class="w-full !rounded-3xl"
-			bind:value={password}
-			placeholder="Zadejte heslo"
-		>
-			<IconEye active={iconClicked} />
-		</Input>
+		<EmailInput class="w-full !rounded-3xl" bind:value={email} />
+		<PasswordInput class="w-full !rounded-3xl" bind:value={password} />
 	</div>
 
 	<Button

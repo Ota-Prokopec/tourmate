@@ -68,7 +68,9 @@ const en = {
 		'You are not able to connect this monument to your picture, bucause you are too far from this monument. You cas either choose a different monument that fits your or you can approach to this monument.',
 	showMap: 'show the map',
 	cantFindAnyMonumentQuestion: "can't find any monument?",
-	connectExperienceToMonument: 'connect experience to the monument'
+	connectExperienceToMonument: 'connect experience to the monument',
+	enterEmail: 'enter email',
+	enterPassword: 'enter password'
 } satisfies BaseTranslation;
 
 export default en;

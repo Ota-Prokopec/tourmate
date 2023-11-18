@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Icon from '../Common/Icon.svelte';
 	import Input from '../Common/Input.svelte';
 	import IconEnvelope from '../Icons/IconEnvelope.svelte';
 	import { twMerge } from 'tailwind-merge';
@@ -14,5 +15,7 @@
 	bind:value
 	placeholder="Zadejte email"
 >
-	<IconEnvelope />
+	<Icon class="child:fill-gray-500">
+		<IconEnvelope />
+	</Icon>
 </Input>

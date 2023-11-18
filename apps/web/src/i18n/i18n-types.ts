@@ -238,6 +238,14 @@ type RootTranslation = {
 	 * c​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
 	 */
 	connectExperienceToMonument: string
+	/**
+	 * e​n​t​e​r​ ​e​m​a​i​l
+	 */
+	enterEmail: string
+	/**
+	 * e​n​t​e​r​ ​p​a​s​s​w​o​r​d
+	 */
+	enterPassword: string
 }
 
 export type TranslationFunctions = {
@@ -457,6 +465,14 @@ export type TranslationFunctions = {
 	 * connect experience to the monument
 	 */
 	connectExperienceToMonument: () => LocalizedString
+	/**
+	 * enter email
+	 */
+	enterEmail: () => LocalizedString
+	/**
+	 * enter password
+	 */
+	enterPassword: () => LocalizedString
 }
 
 export type Formatters = {}

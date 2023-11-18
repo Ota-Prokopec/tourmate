@@ -20,13 +20,17 @@ const start = async () => {
 }
 
 const clientHostName = process.env.DEV
-	? `${process.env.CLIENT_HOSTNAME}:5222`
+	? `${process.env.CLIENT_HOSTNAME}`
 	: `${process.env.CLIENT_HOSTNAME}/graphql`
 
 app.use(cookieParser())
 app.use(
 	cors({
-		origin: [clientHostName, 'https://studio.apollographql.com'],
+		origin: [
+			clientHostName,
+			'https://studio.apollographql.com',
+			'https://sdz3jzhr-4444.euw.devtunnels.ms',
+		],
 		credentials: true,
 	}),
 )
