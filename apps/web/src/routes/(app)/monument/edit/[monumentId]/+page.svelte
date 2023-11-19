@@ -15,6 +15,8 @@
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
 
+	//TODO: dont update question because user has already answered your old one or it was without any question and know there would be a problem => and it will be much easier to dont update or create a new question to already made monument
+
 	export let data: PageData;
 
 	let aboutLimit = 500;

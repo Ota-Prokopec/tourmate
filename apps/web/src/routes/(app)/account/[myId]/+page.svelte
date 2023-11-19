@@ -9,8 +9,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64, ExperienceCard, MonumentCard } from '@app/ts-types';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
-	import { Skeleton } from 'flowbite-svelte';
-	import Button from '$lib/components/Common/Button.svelte';
+	import { Button, Skeleton } from 'flowbite-svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { goto } from '$app/navigation';
@@ -18,6 +17,7 @@
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
 	import LL from '$src/i18n/i18n-svelte';
+	import Left from '$lib/components/Common/Left.svelte';
 
 	export let data: PageData;
 
@@ -91,11 +91,19 @@
 			<div class="flex justify-start p-3 gap-4 mt-2 items-center text-2xl">
 				<Text>{`${data.userProfile.myId}`}</Text>
 				{#if isMyAccount}
-					<Icon on:click={() => goto(`${data.userProfile.myId}/edit`)} icon="fa fa-gear" />
+					<Icon on:click={() => goto(`${data.userProfile.myId}/settings`)} icon="fa fa-gear" />
 				{/if}
 			</div>
 		</div>
 		<span class="text-3xl p-4">{data.userProfile.username}</span>
+
+		{#if isMyAccount}
+			<Left>
+				<Button on:click={() => goto(`${data.userProfile.myId}/edit`)} color="green">
+					{$LL.editProfile()}
+				</Button>
+			</Left>
+		{/if}
 
 		<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
 			<CategoryPicker {categories} bind:chosenCategory={category} />

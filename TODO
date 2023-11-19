@@ -5,9 +5,11 @@ translates
 errors
 
 
-1) login too many times errors
+
+1) login too many times errors                                          - done
 2) question in monument to be able to take a pictue
-3) log out
+3) add +error.svelte for global use
+4) dark mode
 
 
 

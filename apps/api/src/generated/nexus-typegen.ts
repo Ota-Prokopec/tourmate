@@ -292,6 +292,7 @@ export interface NexusGenFieldTypes {
     getUser: NexusGenRootTypes['User']; // User!
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
+    logout: boolean; // Boolean!
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
   }
   User: { // field return type
@@ -421,6 +422,7 @@ export interface NexusGenFieldTypeNames {
     getUser: 'User'
     getUsers: 'User'
     logInViaEmail: 'EmailLogin'
+    logout: 'Boolean'
     updateProfilePicture: 'Account'
   }
   User: { // field return type name

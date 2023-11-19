@@ -37,10 +37,6 @@
 			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
 			goto('/');
 		} catch (err) {
-			console.log(err);
-
-			const apolloError = parseApolloError(err);
-
 			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
 			loading = false;
 		}

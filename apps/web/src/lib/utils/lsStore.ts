@@ -29,6 +29,8 @@ store.subscribe((storeValue) => {
 	}
 });
 
+export const lsStore = store;
+
 export default store;
 export const typedStore = <Type>() => {
 	return writable<Type>(storage as Type);

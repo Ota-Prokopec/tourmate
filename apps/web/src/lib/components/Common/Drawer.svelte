@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { device } from '@app/utils';
 	import { Drawer } from 'flowbite-svelte';
 	import { sineIn } from 'svelte/easing';
 	import { twMerge } from 'tailwind-merge';
-	export let placement: 'right' | 'left' | 'top' | 'bottom';
+	export let placement: 'right' | 'left' | 'top' | 'bottom' | 'auto';
+	if (placement === 'auto') placement = device.recognizeWidth() === 'mobile' ? 'bottom' : 'right';
 	export let size: number;
 	export let hidden = true;
 

@@ -208,6 +208,7 @@ export type Query = {
   getUser: User;
   getUsers: Array<User>;
   logInViaEmail: EmailLogin;
+  logout: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
 };
 
@@ -328,6 +329,11 @@ export type LoginViaEmailQueryVariables = Exact<{
 
 
 export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
+
+export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutQuery = { __typename?: 'Query', logout: boolean };
 
 export type UpdateProfilePictureQueryVariables = Exact<{
   picture: Scalars['String']['input'];
@@ -675,6 +681,11 @@ export const LoginViaEmailDocument = gql`
   logInViaEmail(email: $email, password: $password) {
     session
   }
+}
+    `;
+export const LogoutDocument = gql`
+    query logout {
+  logout
 }
     `;
 export const UpdateProfilePictureDocument = gql`
@@ -1402,6 +1413,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     loginViaEmail(variables: LoginViaEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginViaEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LoginViaEmailQuery>(LoginViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'loginViaEmail', 'query');
+    },
+    logout(variables?: LogoutQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LogoutQuery>(LogoutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'logout', 'query');
     },
     updateProfilePicture(variables: UpdateProfilePictureQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateProfilePictureQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateProfilePictureQuery>(UpdateProfilePictureDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateProfilePicture', 'query');

@@ -166,12 +166,10 @@
 			this={size === 'tiny' || size === 'small' ? Columns : Column}
 			columns="1fr 1fr"
 		>
-			<Column>
-				<CardImage on:like={like} imgSrc={monument.pictureURL} />
-				{#if size !== 'tiny'}
-					<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
-				{/if}
-			</Column>
+			<CardImage on:like={like} imgSrc={monument.pictureURL} />
+			{#if size !== 'tiny'}
+				<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
+			{/if}
 
 			<CardHeader {monument} />
 		</svelte:component>

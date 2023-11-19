@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
@@ -12,11 +13,13 @@
 		GraphqlDocument,
 		Location,
 		Monument,
+		Question,
 		Topic,
 		Transport
 	} from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
 	import { Button } from 'flowbite-svelte';
+	import AddQuestionDrawer from '../Components/AddQuestionDrawer.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -30,6 +33,9 @@
 	let placeName = data.newMonument.placeName;
 	let topics: Topic[] = [];
 	let transports: Transport[] = [];
+	let question: Question | undefined = undefined;
+
+	$: console.log(question);
 
 	let serverResponse: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
@@ -75,6 +81,10 @@
 				on:image={(e) => (image = e.detail.base64)}
 			/>
 		</svelte:fragment>
+
+		<Right class="p-4">
+			<AddQuestionDrawer on:save={(e) => (question = e.detail)} />
+		</Right>
 
 		<Button
 			class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"

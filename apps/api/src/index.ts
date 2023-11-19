@@ -19,15 +19,14 @@ const start = async () => {
 	})
 }
 
-const clientHostName = process.env.DEV
-	? `${process.env.CLIENT_HOSTNAME}`
-	: `${process.env.CLIENT_HOSTNAME}/graphql`
+const clientHostName = process.env.CLIENT_HOSTNAME
 
 app.use(cookieParser())
 app.use(
 	cors({
 		origin: [
 			clientHostName,
+			'https://experiences-web-lovat.vercel.app',
 			'https://studio.apollographql.com',
 			'https://sdz3jzhr-4444.euw.devtunnels.ms',
 		],

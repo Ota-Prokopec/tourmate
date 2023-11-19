@@ -5,13 +5,7 @@
 	import lsSvelte from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard } from '@app/ts-types';
-	import {
-		degreeToMeters,
-		distanceTo,
-		getPrettyNumber,
-		metersToDegree,
-		normalizeMeters
-	} from '@app/utils';
+	import { distanceTo, getPrettyNumber, normalizeMeters } from '@app/utils';
 	import Range from './Components/Range.svelte';
 
 	let monuments: MonumentCard[] | undefined;
@@ -52,7 +46,7 @@
 	class="w-full h-auto min-h-full gap-2 bg-slate-900 overflow-auto flex justify-center items-center"
 >
 	<div class="w-full h-[500px] min-h-[100%] flex justify-center items-center relative">
-		<LocationScanner>{getPrettyNumber(range)}m</LocationScanner>
+		<LocationScanner>{normalizeMeters(range)}</LocationScanner>
 		<Range max={metersLimit} bind:value={range} />
 	</div>
 	<Column class="w-full justify-center gap-2 mb-2 items-center">

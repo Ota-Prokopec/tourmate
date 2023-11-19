@@ -10,6 +10,8 @@ export { default as getAccount } from './account/queries/getAccount';
 export * from './account/queries/getAccount';
 export { default as loginViaEmail } from './auth/queries/loginViaEmail';
 export * from './auth/queries/loginViaEmail';
+export { default as logout } from './auth/queries/logout';
+export * from './auth/queries/logout';
 export { default as createAccountInput } from './auth/schema/createAccountInput';
 export * from './auth/schema/createAccountInput';
 export { default as createExperience } from './experience/mutations/createExperience';

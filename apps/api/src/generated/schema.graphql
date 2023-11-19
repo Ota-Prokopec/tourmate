@@ -153,6 +153,7 @@ type Query {
   getUser(myId: String, userId: String): User!
   getUsers(searchingText: String): [User!]!
   logInViaEmail(email: String!, password: String!): EmailLogin!
+  logout: Boolean!
   updateProfilePicture(picture: String!): Account!
 }
 

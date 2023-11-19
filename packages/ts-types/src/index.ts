@@ -12,6 +12,7 @@ export * from './Location';
 export * from './Monument';
 export * from './Others';
 export * from './PlaceDetails';
+export * from './Question';
 export * from './Topic';
 export * from './Transport';
 export * from './TsTypes';

@@ -70,7 +70,10 @@ const en = {
 	cantFindAnyMonumentQuestion: "can't find any monument?",
 	connectExperienceToMonument: 'connect experience to the monument',
 	enterEmail: 'enter email',
-	enterPassword: 'enter password'
+	enterPassword: 'enter password',
+	editProfile: 'edit profile',
+	logOut: 'log out',
+	logOutError: 'logout was not successful'
 } satisfies BaseTranslation;
 
 export default en;

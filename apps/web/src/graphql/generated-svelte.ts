@@ -212,6 +212,7 @@ export type Query = {
   getUser: User;
   getUsers: Array<User>;
   logInViaEmail: EmailLogin;
+  logout: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
 };
 
@@ -332,6 +333,11 @@ export type LoginViaEmailQueryVariables = Exact<{
 
 
 export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
+
+export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutQuery = { __typename?: 'Query', logout: boolean };
 
 export type UpdateProfilePictureQueryVariables = Exact<{
   picture: Scalars['String']['input'];
@@ -679,6 +685,11 @@ export const LoginViaEmailDoc = gql`
   logInViaEmail(email: $email, password: $password) {
     session
   }
+}
+    `;
+export const LogoutDoc = gql`
+    query logout {
+  logout
 }
     `;
 export const UpdateProfilePictureDoc = gql`
@@ -1578,6 +1589,41 @@ export const loginViaEmail = (
                 query: ObservableQuery<
                   LoginViaEmailQuery,
                   LoginViaEmailQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const logout = (
+            options: Omit<
+              WatchQueryOptions<LogoutQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<LogoutQuery> & {
+              query: ObservableQuery<
+                LogoutQuery,
+                LogoutQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: LogoutDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<LogoutQuery> & {
+                query: ObservableQuery<
+                  LogoutQuery,
+                  LogoutQueryVariables
                 >;
               }
             >(

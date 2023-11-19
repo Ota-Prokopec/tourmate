@@ -246,6 +246,18 @@ type RootTranslation = {
 	 * e​n​t​e​r​ ​p​a​s​s​w​o​r​d
 	 */
 	enterPassword: string
+	/**
+	 * e​d​i​t​ ​p​r​o​f​i​l​e
+	 */
+	editProfile: string
+	/**
+	 * l​o​g​ ​o​u​t
+	 */
+	logOut: string
+	/**
+	 * l​o​g​o​u​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l
+	 */
+	logOutError: string
 }
 
 export type TranslationFunctions = {
@@ -473,6 +485,18 @@ export type TranslationFunctions = {
 	 * enter password
 	 */
 	enterPassword: () => LocalizedString
+	/**
+	 * edit profile
+	 */
+	editProfile: () => LocalizedString
+	/**
+	 * log out
+	 */
+	logOut: () => LocalizedString
+	/**
+	 * logout was not successful
+	 */
+	logOutError: () => LocalizedString
 }
 
 export type Formatters = {}

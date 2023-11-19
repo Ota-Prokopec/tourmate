@@ -11,13 +11,14 @@
 		NavigationControl
 	} from 'svelte-maplibre';
 	import type { Map } from 'maplibre-gl';
+	import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
 
 	export let map: Map | undefined = undefined;
 	export let location: Location | undefined = $lsSvelte.usersLocation;
 
 	export let zoom: number = 16;
 	export let deg = 0;
-	let style = 'https://api.maptiler.com/maps/basic-v2/style.json?key=gplNC5uqgFO1autCCLdg';
+	let style = `https://api.maptiler.com/maps/basic-v2/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
 
 	let className = '';
 	export { className as class };

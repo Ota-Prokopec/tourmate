@@ -68,7 +68,10 @@ const cz = {
 	cantFindAnyMonumentQuestion: 'nemůžete najít žádný zážitek?',
 	connectExperienceToMonument: 'připojit fotku k zážitku',
 	enterEmail: 'zadejte e-mail',
-	enterPassword: 'zadejte heslo'
+	enterPassword: 'zadejte heslo',
+	editProfile: 'upravit účet',
+	logOut: 'odhlásit se',
+	logOutError: 'logout was not successful'
 } satisfies BaseTranslation;
 
 export default cz;
