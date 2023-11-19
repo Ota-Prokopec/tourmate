@@ -17,92 +17,109 @@
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { z } from 'zod';
+	import { getQuestionType, type Question, type QuestionType } from '@app/ts-types';
+	import { alert } from '$src/routes/alertStore';
+	import Alert from '$lib/components/Alert/Alert.svelte';
+
 	const dispatch = createEventDispatcher<{
-		save: {
-			type: Key;
-			answer: string | number;
-			pickingAnswers: string[] | undefined;
-		};
+		save: Question<QuestionType>;
 	}>();
 
-	let hidden = false;
-	let carousel: CarouselFunctions;
+	let hidden = true;
+	let carousel: CarouselFunctions | undefined;
 
-	let pickingAnswers: string[] = ['', ''];
-	let chosenStringAnswer: string = '';
-	let chosenNumberAnswer: number = 0;
+	let question: Question<'number'> = {
+		answer: 0,
+		question: 'my question',
+		type: 'number',
+		pickingAnswers: undefined
+	};
 
-	const categories = [
+	const categories: { title: string; key: QuestionType }[] = [
 		{ title: 'radio', key: 'radio' },
 		{ title: 'text', key: 'text' },
 		{ title: 'number', key: 'number' }
-	] as const;
+	];
+
+	let carouselIndex = categories.findIndex((item) => item.key === question.type);
 
 	type Key = (typeof categories)[number]['key'];
 
-	let chosenCategory: Key = categories[0].key;
+	let chosenCategory: Key = question.type; // ?? categories[0].key;
 
-	const changeFormTypeByCarousel = (index: number) => {
-		chosenCategory = categories[index].key;
-	};
+	$: chosenCategory = categories[carouselIndex].key;
+
 	const changeFormTypeByPicker = (key: Key) => {
-		chosenCategory = key;
+		if (!carousel) throw new Error('carousel has not been loaded yet');
+
 		const index = categories.findIndex((item) => item.key === key);
+
 		carousel.goTo(index);
 	};
 
-	const answerZodSchema = z.union([z.string().nonempty(), z.number()]);
-	const pickingAnswersZodSchema = z.string().array();
+	$: if (carousel) changeFormTypeByPicker(chosenCategory); // this call is because i want to change it when it loads => it means it will change with current data and the type will be correct in carousel
+
+	let error: string | null = null;
 
 	const save = () => {
-		dispatch('save', {
-			answer: answerZodSchema.parse(
-				chosenCategory === 'number' ? chosenNumberAnswer : chosenStringAnswer
-			),
-			pickingAnswers:
-				chosenCategory === 'radio' ? pickingAnswersZodSchema.parse(pickingAnswers) : undefined,
-			type: chosenCategory
-		});
+		try {
+			if (!question) throw new Error('Question does not exist');
+			const [type, checkedQuestion] = getQuestionType(question);
+
+			dispatch('save', checkedQuestion);
+			hidden = true;
+		} catch (err) {
+			error = 'there is no question';
+		}
 	};
+
+	let pickingAnswersHelper: string[] = question.pickingAnswers ?? ['', ''];
+	let stringAnswer = typeof question.answer === 'string' ? question.answer : '';
+	let numberAnswer = typeof question.answer === 'number' ? question.answer : 0;
 </script>
 
-<AddQuestionButton on:click={() => (hidden = false)} />
-<Drawer
-	bind:hidden
-	placement="auto"
-	size={400}
-	class="z-50 fixed top-0 right-0 w-[500px] mobile:w-full mobile:h-[calc(100% - 20px)] top-[20px]"
->
-	<MediaQuery size="mobile">
+<AddQuestionButton {question} on:click={() => (hidden = false)} />
+
+{#if !hidden}
+	<Drawer
+		bind:hidden
+		placement="auto"
+		size={400}
+		class="z-50 fixed top-0 right-0 w-[500px] mobile:w-full mobile:h-[calc(100% - 20px)] top-[20px]"
+	>
+		{#if error}
+			<Alert on:close={() => (error = null)} class="w-full relative" dismissable color="red"
+				>{error}</Alert
+			>
+		{/if}
+		<MediaQuery size="mobile">
+			<Right>
+				<Icon on:click={() => (hidden = true)} class="child:h-10 child:w-10">
+					<IconTimes />
+				</Icon>
+			</Right>
+		</MediaQuery>
+
+		<Column>
+			<Title>Your question</Title>
+
+			<Input bind:value={question.question} floatingLabel="your question" class="w-full" />
+
+			<CategoryPicker bind:chosenCategory {categories} />
+
+			<Carousel bind:index={carouselIndex} bind:carousel swiping>
+				<RadioForm
+					class="min-h-[200px] p-4"
+					answers={pickingAnswersHelper}
+					bind:chosenAnswer={stringAnswer}
+				/>
+				<TextForm class="min-h-[200px] p-4" bind:answer={stringAnswer} />
+				<NumberForm class="min-h-[200px] p-4" bind:answer={numberAnswer} />
+			</Carousel>
+		</Column>
+
 		<Right>
-			<Icon on:click={() => (hidden = true)} class="child:h-10 child:w-10">
-				<IconTimes />
-			</Icon>
+			<Button on:click={save} color="green">save</Button>
 		</Right>
-	</MediaQuery>
-
-	<Column>
-		<Title>Your question</Title>
-		<Input floatingLabel="your question" class="w-full" />
-
-		<CategoryPicker
-			on:change={(e) => changeFormTypeByPicker(e.detail)}
-			{chosenCategory}
-			{categories}
-		/>
-
-		<Carousel bind:carousel on:change={(e) => changeFormTypeByCarousel(e.detail.index)} swiping>
-			<RadioForm
-				class="min-h-[200px] p-4"
-				answers={pickingAnswers}
-				bind:chosenAnswer={chosenStringAnswer}
-			/>
-			<TextForm class="min-h-[200px] p-4" bind:answer={chosenStringAnswer} />
-			<NumberForm class="min-h-[200px] p-4" bind:answer={chosenNumberAnswer} />
-		</Carousel>
-	</Column>
-
-	<Right>
-		<Button on:click={save} color="green">save</Button>
-	</Right>
-</Drawer>
+	</Drawer>
+{/if}

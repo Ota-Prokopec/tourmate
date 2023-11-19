@@ -35,8 +35,6 @@
 	let transports: Transport[] = [];
 	let question: Question | undefined = undefined;
 
-	$: console.log(question);
-
 	let serverResponse: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
 	let isLoading = false;

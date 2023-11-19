@@ -5,10 +5,13 @@
 
 	export let answer: number = 0;
 
+	let value: string = '';
+	$: answer = parseInt(value);
+
 	let className = '';
 	export { className as class };
 </script>
 
 <Center class={twMerge('', className)}>
-	<Input type="number" class="h-[50px] w-full" bind:value={answer} />
+	<Input type="number" class="h-[50px] w-full" bind:value />
 </Center>

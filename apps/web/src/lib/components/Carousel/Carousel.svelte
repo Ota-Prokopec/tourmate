@@ -15,6 +15,7 @@
 	export let timingFunction: string = 'ease-in-out';
 	export let autoplayDuration: number = 3000;
 	export let index: number = 0;
+
 	export let carousel: CarouselFunctions | undefined = undefined;
 
 	$: dispatch('change', { index });
@@ -37,7 +38,6 @@
 		{timingFunction}
 		{autoplay}
 		{autoplayDuration}
-		bind:index
 		bind:this={carousel}
 		on:pageChange={onChange}
 		on:pageChange

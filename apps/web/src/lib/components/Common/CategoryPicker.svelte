@@ -14,7 +14,7 @@
 	export { className as class };
 
 	export let categories: ReadonlyArray<Category>;
-	export let chosenCategory = categories[0].key;
+	export let chosenCategory: CategoryKey = categories[0].key;
 	$: dispatch('change', chosenCategory);
 </script>
 
