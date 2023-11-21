@@ -45,16 +45,8 @@
 <div class="w-full h-min flex flex-wrap flex-col items-center justify-center p-5 gap-6">
 	<div class="w-full text-center">Obnovte si vaše heslo</div>
 	<div class="flex w-full pl-2 pr-2 flex-wrap flex-row gap-1 justify-center">
-		<PasswordInput
-			class="w-full max-w-[400px]"
-			bind:value={newPassword}
-			placeholder="Zadejte nové heslo"
-		/>
-		<PasswordInput
-			class="w-full max-w-[400px]"
-			bind:value={repeatPassword}
-			placeholder="Zopakujte heslo"
-		/>
+		<PasswordInput class="w-full max-w-[400px]" bind:value={newPassword} />
+		<PasswordInput class="w-full max-w-[400px]" bind:value={repeatPassword} />
 		<Helper color="red">{error}</Helper>
 	</div>
 

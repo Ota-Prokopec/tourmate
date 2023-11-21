@@ -1,6 +1,7 @@
 import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
 import { Location, LocationForDocument } from './Location'
+import { AnswerType, Question } from './Question'
 import { Topic } from './Topic'
 import { Transport } from './Transport'
 
@@ -13,6 +14,8 @@ export type Monument = {
 	placeDetailId: string
 	topics: Topic[]
 	transports: Transport[]
+	questionId?: string | null | undefined
+	question?: undefined | Question<AnswerType> | null
 }
 
 export type MonumentDocument = Document<Omit<Monument, 'location'> & LocationForDocument>

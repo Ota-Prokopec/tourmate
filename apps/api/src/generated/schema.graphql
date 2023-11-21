@@ -21,6 +21,8 @@ type Account {
   username: String!
 }
 
+scalar AnswerType
+
 input CreateAccountInput {
   myId: String!
   username: String!
@@ -38,6 +40,7 @@ input CreateMonumentInput {
   name: String!
   picture: String
   placeName: String!
+  question: QuestionInput
   topics: [Topic!]!
   transports: [Transport!]!
 }
@@ -101,6 +104,8 @@ type Monument {
   pictureURL: URL
   placeDetail: PlaceDetail!
   placeDetailId: String!
+  question: Question
+  questionId: String
   topics: [Topic!]!
   transports: [Transport!]!
   user: User!
@@ -156,6 +161,28 @@ type Query {
   logout: Boolean!
   updateProfilePicture(picture: String!): Account!
 }
+
+type Question {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  correctAnswer: StringOrNumber!
+  pickingAnswers: [String!]
+  question: String!
+  type: AnswerType!
+}
+
+input QuestionInput {
+  correctAnswer: StringOrNumber!
+  pickingAnswers: [String!]
+  question: String!
+  type: AnswerType!
+}
+
+scalar StringOrNumber
 
 scalar Topic
 

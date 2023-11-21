@@ -2,6 +2,8 @@ import { mutationField, stringArg } from 'nexus'
 import { Queries } from '../../../lib/appwrite/appwrite'
 import cloudinary from '@app/cloudinary-server'
 
+//TODO: delete the question and answer
+
 export default mutationField('deleteMonument', {
 	type: 'Boolean',
 	args: { monumentId: stringArg() },

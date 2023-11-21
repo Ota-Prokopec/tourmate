@@ -1,10 +1,17 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
-	import type { Base64, GraphqlDocument, Location, Monument, Topic } from '@app/ts-types';
+	import type {
+		AnswerType,
+		Base64,
+		GraphqlDocument,
+		Location,
+		Monument,
+		Question,
+		Topic
+	} from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
@@ -14,6 +21,8 @@
 	import Right from '$lib/components/Common/Right.svelte';
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
+	import type { PageData } from './$types';
+	import AddQuestionButton from '$src/routes/(app)/addMonument/detail/Components/AddQuestionButton.svelte';
 
 	//TODO: dont update question because user has already answered your old one or it was without any question and know there would be a problem => and it will be much easier to dont update or create a new question to already made monument
 
@@ -27,6 +36,8 @@
 	let topics = data.monument.topics;
 	let picture = data.monument.pictureURL;
 	let transports = data.monument.transports;
+	const question: Question<AnswerType> | undefined = data.monument.question ?? undefined;
+	let questionDrawerHidden = true;
 
 	let res: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
@@ -69,6 +80,8 @@
 				<Img class="rounded-2xl" src={picture} />
 			{/if}
 		</svelte:fragment>
+
+		<AddQuestionButton disabled {question} on:click={() => (questionDrawerHidden = false)} />
 
 		<Right class="mt-4">
 			<Button color="green" on:click={update}>

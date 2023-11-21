@@ -69,7 +69,7 @@
 			<span> lng: {markerLocation[1]} </span>
 		{/if}
 	</Alert>
-	<ExpMap on:click={() => console.log('click')} bind:location bind:map class="w-full h-full">
+	<ExpMap bind:location bind:map class="w-full h-full">
 		{#if monumentsLoaded && $monuments.data?.getListOfMonuments}
 			{#each $monuments.data?.getListOfMonuments as monument}
 				<MonumentMarker {monument} />

@@ -16,6 +16,8 @@ export { default as MonumentLike } from './MonumentLike';
 export * from './MonumentLike';
 export { default as PlaceDetail } from './PlaceDetail';
 export * from './PlaceDetail';
+export { default as Question } from './Question';
+export * from './Question';
 export { default as User } from './User';
 export * from './User';
 export { default as UsersPreferences } from './UsersPreferences';

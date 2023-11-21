@@ -1,7 +1,9 @@
 <script lang="ts">
+	import Alert from '$lib/components/Alert/Alert.svelte';
 	import Carousel from '$lib/components/Carousel/Carousel.svelte';
 	import type { CarouselFunctions } from '$lib/components/Carousel/types';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
+	import Center from '$lib/components/Common/Center.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
@@ -10,42 +12,48 @@
 	import Title from '$lib/components/Common/Title.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
-	import AddQuestionButton from './AddQuestionButton.svelte';
-	import RadioForm from './Forms/RadioForm.svelte';
-	import TextForm from './Forms/TextForm.svelte';
-	import NumberForm from './Forms/NumberForm.svelte';
+	import { alert } from '$src/routes/alertStore';
+	import {
+		getQuestionType,
+		isQuestionTypeNumber,
+		isQuestionTypeRadio,
+		isQuestionTypeText,
+		type AnswerType,
+		type Question
+	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
-	import { z } from 'zod';
-	import { getQuestionType, type Question, type QuestionType } from '@app/ts-types';
-	import { alert } from '$src/routes/alertStore';
-	import Alert from '$lib/components/Alert/Alert.svelte';
+	import AddQuestionButton from './AddQuestionButton.svelte';
+	import NumberForm from './Forms/NumberForm.svelte';
+	import RadioForm from './Forms/RadioForm.svelte';
+	import TextForm from './Forms/TextForm.svelte';
+	import Circle from '$lib/components/Common/Circle.svelte';
 
 	const dispatch = createEventDispatcher<{
-		save: Question<QuestionType>;
+		save: Question<AnswerType>;
 	}>();
 
-	let hidden = true;
+	export let hidden = true;
+
 	let carousel: CarouselFunctions | undefined;
 
-	let question: Question<'number'> = {
-		answer: 0,
-		question: 'my question',
-		type: 'number',
-		pickingAnswers: undefined
-	};
+	export let question: Question<AnswerType> | undefined;
 
-	const categories: { title: string; key: QuestionType }[] = [
+	const categories: { title: string; key: AnswerType }[] = [
 		{ title: 'radio', key: 'radio' },
 		{ title: 'text', key: 'text' },
 		{ title: 'number', key: 'number' }
 	];
 
-	let carouselIndex = categories.findIndex((item) => item.key === question.type);
+	let carouselIndex = question
+		? categories.findIndex((item) => {
+				question ? item.key === question.type : false;
+		  })
+		: 0;
 
 	type Key = (typeof categories)[number]['key'];
 
-	let chosenCategory: Key = question.type; // ?? categories[0].key;
+	let chosenCategory: Key = question ? question.type : 'text'; // ?? categories[0].key;
 
 	$: chosenCategory = categories[carouselIndex].key;
 
@@ -57,69 +65,108 @@
 		carousel.goTo(index);
 	};
 
-	$: if (carousel) changeFormTypeByPicker(chosenCategory); // this call is because i want to change it when it loads => it means it will change with current data and the type will be correct in carousel
-
 	let error: string | null = null;
 
 	const save = () => {
 		try {
+			question = {
+				type: chosenCategory,
+				question: questionHelper,
+				correctAnswer:
+					chosenCategory === 'number'
+						? numberAnswerHelper
+						: chosenCategory === 'text'
+						? TextAnswerHelper
+						: pickingAnswerHelper,
+				pickingAnswers: chosenCategory === 'radio' ? pickingAnswersHelper : undefined
+			};
+			clearOthers();
+
 			if (!question) throw new Error('Question does not exist');
 			const [type, checkedQuestion] = getQuestionType(question);
 
 			dispatch('save', checkedQuestion);
 			hidden = true;
 		} catch (err) {
-			error = 'there is no question';
+			console.log(err);
+
+			error = 'error';
 		}
 	};
 
-	let pickingAnswersHelper: string[] = question.pickingAnswers ?? ['', ''];
-	let stringAnswer = typeof question.answer === 'string' ? question.answer : '';
-	let numberAnswer = typeof question.answer === 'number' ? question.answer : 0;
+	const clearOthers = () => {
+		if (isQuestionTypeNumber(question)) {
+			clearTextInput();
+			clearPickingInput();
+		} else if (isQuestionTypeText(question)) {
+			clearNumberInput();
+			clearPickingInput();
+		} else if (isQuestionTypeRadio(question)) {
+			clearNumberInput();
+			clearTextInput();
+		}
+	};
+
+	const clearTextInput = () => (TextAnswerHelper = '');
+	const clearNumberInput = () => (numberAnswerHelper = 0);
+	const clearPickingInput = () => {
+		pickingAnswersHelper = ['', ''];
+		pickingAnswerHelper = '';
+	};
+
+	let pickingAnswersHelper: string[] = isQuestionTypeRadio(question)
+		? question.pickingAnswers
+		: ['', ''];
+	let TextAnswerHelper = isQuestionTypeText(question) ? question.correctAnswer : '';
+	let numberAnswerHelper = isQuestionTypeNumber(question) ? question.correctAnswer : 0;
+	let questionHelper: string = question ? question.question : '';
+	let pickingAnswerHelper: string = isQuestionTypeRadio(question) ? question.correctAnswer : '';
 </script>
 
-<AddQuestionButton {question} on:click={() => (hidden = false)} />
-
-{#if !hidden}
-	<Drawer
-		bind:hidden
-		placement="auto"
-		size={400}
-		class="z-50 fixed top-0 right-0 w-[500px] mobile:w-full mobile:h-[calc(100% - 20px)] top-[20px]"
-	>
-		{#if error}
-			<Alert on:close={() => (error = null)} class="w-full relative" dismissable color="red"
-				>{error}</Alert
-			>
-		{/if}
-		<MediaQuery size="mobile">
-			<Right>
-				<Icon on:click={() => (hidden = true)} class="child:h-10 child:w-10">
-					<IconTimes />
-				</Icon>
-			</Right>
-		</MediaQuery>
-
-		<Column>
-			<Title>Your question</Title>
-
-			<Input bind:value={question.question} floatingLabel="your question" class="w-full" />
-
-			<CategoryPicker bind:chosenCategory {categories} />
-
-			<Carousel bind:index={carouselIndex} bind:carousel swiping>
-				<RadioForm
-					class="min-h-[200px] p-4"
-					answers={pickingAnswersHelper}
-					bind:chosenAnswer={stringAnswer}
-				/>
-				<TextForm class="min-h-[200px] p-4" bind:answer={stringAnswer} />
-				<NumberForm class="min-h-[200px] p-4" bind:answer={numberAnswer} />
-			</Carousel>
-		</Column>
-
+<Drawer
+	bind:hidden
+	placement="auto"
+	size={400}
+	class="z-50 fixed top-0 right-0 w-[500px] mobile:w-full mobile:h-[calc(100% - 20px)] top-[20px]"
+>
+	{#if error}
+		<Center class="relative">
+			<Alert on:close={() => (error = null)} class="w-full relative top-0" dismissable color="red">
+				{error}
+			</Alert>
+		</Center>
+	{/if}
+	<MediaQuery size="mobile">
 		<Right>
-			<Button on:click={save} color="green">save</Button>
+			<Icon on:click={() => (hidden = true)} class="child:h-10 child:w-10">
+				<IconTimes />
+			</Icon>
 		</Right>
-	</Drawer>
-{/if}
+	</MediaQuery>
+
+	<Column>
+		<Title>Your question</Title>
+
+		<Input bind:value={questionHelper} floatingLabel="your question" class="w-full" />
+
+		<CategoryPicker
+			{chosenCategory}
+			on:change={(e) => changeFormTypeByPicker(e.detail)}
+			{categories}
+		/>
+
+		<Carousel bind:index={carouselIndex} bind:carousel swiping>
+			<RadioForm
+				class="min-h-[200px] p-4"
+				bind:answers={pickingAnswersHelper}
+				bind:chosenAnswer={pickingAnswerHelper}
+			/>
+			<TextForm class="min-h-[200px] p-4" bind:answer={TextAnswerHelper} />
+			<NumberForm class="min-h-[200px] p-4" bind:answer={numberAnswerHelper} />
+		</Carousel>
+	</Column>
+
+	<Right>
+		<Button on:click={save} color="green">save</Button>
+	</Right>
+</Drawer>

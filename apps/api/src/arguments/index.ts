@@ -4,3 +4,5 @@
 
 export { default as LocationInput } from './LocationInput';
 export * from './LocationInput';
+export { default as QuestionInput } from './QuestionInput';
+export * from './QuestionInput';

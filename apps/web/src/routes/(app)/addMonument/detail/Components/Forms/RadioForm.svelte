@@ -7,6 +7,8 @@
 	export let answers: string[] = ['', ''];
 	export let chosenAnswer: string = '';
 
+	//FIXME: this does not show that it is checked
+
 	export let disableCounter = false;
 
 	let className = '';

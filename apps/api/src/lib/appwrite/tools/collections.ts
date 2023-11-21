@@ -7,14 +7,19 @@ import {
 	MonumentGraphqlDocument,
 	MonumentLikeDocumentCreate,
 	MonumentLikeGraphqlDocument,
+	NumberTypeAnswerDocument,
+	NumberTypeAnswerDocumentCreate,
+	NumberTypeAnswerGraphqlDocument,
 	PlaceDetailDocumentCreate,
 	PlaceDetailGraphqlDocument,
-	QuestionNumberFormDocumentCreate,
-	QuestionNumberFormGraphqlDocument,
-	QuestionRadioFormDocumentCreate,
-	QuestionRadioFormGraphqlDocument,
-	QuestionTextFormDocumentCreate,
-	QuestionTextFormGraphqlDocument,
+	QuestionDocumentCreate,
+	QuestionGraphqlDocument,
+	RadioTypeAnswerDocument,
+	RadioTypeAnswerDocumentCreate,
+	RadioTypeAnswerGraphqlDocument,
+	TextTypeAnswerDocument,
+	TextTypeAnswerDocumentCreate,
+	TextTypeAnswerGraphqlDocument,
 	TokenDocumentCreate,
 	TokenGraphqlDocument,
 	UserInfoDocumentCreate,
@@ -60,18 +65,23 @@ export const collectionsClient = (
 			ExperienceLikeGraphqlDocument,
 			ExperienceLikeDocumentCreate
 		>('experiences', 'experience-likes'),
-		questionTextForm: new Collection<
-			QuestionTextFormGraphqlDocument,
-			QuestionTextFormDocumentCreate
-		>('experiences', 'questionTextForm'),
-		questionNumberForm: new Collection<
-			QuestionNumberFormGraphqlDocument,
-			QuestionNumberFormDocumentCreate
-		>('experiences', 'questionNumberForm'),
-		questionRadioForm: new Collection<
-			QuestionRadioFormGraphqlDocument,
-			QuestionRadioFormDocumentCreate
-		>('experiences', 'questionRadioForm'),
+		answerTypeText: new Collection<
+			TextTypeAnswerGraphqlDocument,
+			TextTypeAnswerDocumentCreate
+		>('experiences', 'textAnswers'),
+		answerTypeNumber: new Collection<
+			NumberTypeAnswerGraphqlDocument,
+			NumberTypeAnswerDocumentCreate
+		>('experiences', 'numberAnswers'),
+		answerTypeRadio: new Collection<
+			RadioTypeAnswerGraphqlDocument,
+			RadioTypeAnswerDocumentCreate
+		>('experiences', 'radioAnswers'),
+
+		question: new Collection<QuestionGraphqlDocument, QuestionDocumentCreate>(
+			'experiences',
+			'question',
+		),
 	}
 }
 
@@ -107,17 +117,21 @@ export const collectionsAdmin = (
 			ExperienceLikeGraphqlDocument,
 			ExperienceLikeDocumentCreate
 		>('experiences', 'experience-likes'),
-		questionTextForm: new Collection<
-			QuestionTextFormGraphqlDocument,
-			QuestionTextFormDocumentCreate
-		>('experiences', 'questionTextForm'),
-		questionNumberForm: new Collection<
-			QuestionNumberFormGraphqlDocument,
-			QuestionNumberFormDocumentCreate
-		>('experiences', 'questionNumberForm'),
-		questionRadioForm: new Collection<
-			QuestionRadioFormGraphqlDocument,
-			QuestionRadioFormDocumentCreate
-		>('experiences', 'questionRadioForm'),
+		answerTypeText: new Collection<
+			TextTypeAnswerGraphqlDocument,
+			TextTypeAnswerDocumentCreate
+		>('experiences', 'textAnswers'),
+		answerTypeNumber: new Collection<
+			NumberTypeAnswerGraphqlDocument,
+			NumberTypeAnswerDocumentCreate
+		>('experiences', 'numberAnswers'),
+		answerTypeRadio: new Collection<
+			RadioTypeAnswerGraphqlDocument,
+			RadioTypeAnswerDocumentCreate
+		>('experiences', 'radioAnswers'),
+		question: new Collection<QuestionGraphqlDocument, QuestionDocumentCreate>(
+			'experiences',
+			'question',
+		),
 	}
 }

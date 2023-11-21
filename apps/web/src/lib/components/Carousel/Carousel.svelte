@@ -38,6 +38,7 @@
 		{timingFunction}
 		{autoplay}
 		{autoplayDuration}
+		initialPageIndex={index}
 		bind:this={carousel}
 		on:pageChange={onChange}
 		on:pageChange

@@ -9,6 +9,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import MonumentCreateForm from '$src/routes/(app)/monument/Components/MonumentCreateForm.svelte';
 	import type {
+		AnswerType,
 		Base64,
 		GraphqlDocument,
 		Location,
@@ -21,6 +22,7 @@
 	import { Button } from 'flowbite-svelte';
 	import AddQuestionDrawer from '../Components/AddQuestionDrawer.svelte';
 	import type { PageData } from './$types';
+	import AddQuestionButton from '../Components/AddQuestionButton.svelte';
 
 	export let data: PageData;
 
@@ -33,11 +35,13 @@
 	let placeName = data.newMonument.placeName;
 	let topics: Topic[] = [];
 	let transports: Transport[] = [];
-	let question: Question | undefined = undefined;
+
+	let question: Question<AnswerType> | undefined;
 
 	let serverResponse: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;
 	let isLoading = false;
+	let questionDrawerHidden = true;
 
 	const create = async () => {
 		isLoading = true;
@@ -51,7 +55,8 @@
 						name: name,
 						picture: image,
 						placeName: placeName,
-						topics: topics
+						topics: topics,
+						question: question
 					}
 				})
 			).createMonument;
@@ -62,6 +67,12 @@
 		isLoading = false;
 	};
 </script>
+
+<AddQuestionDrawer
+	bind:hidden={questionDrawerHidden}
+	bind:question
+	on:save={(e) => (question = e.detail)}
+/>
 
 {#if !serverResponse || error}
 	<MonumentCreateForm
@@ -80,9 +91,7 @@
 			/>
 		</svelte:fragment>
 
-		<Right class="p-4">
-			<AddQuestionDrawer on:save={(e) => (question = e.detail)} />
-		</Right>
+		<AddQuestionButton {question} on:click={() => (questionDrawerHidden = false)} />
 
 		<Button
 			class="mb-24 mt-4 flex flex-wrap flex-row gap-2 w-min self-end h-min"

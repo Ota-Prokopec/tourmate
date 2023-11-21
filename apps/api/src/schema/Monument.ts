@@ -7,6 +7,17 @@ import { getUser } from '../lib/users/getUser'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
 import { defaultRangeMeters } from '../arguments/LocationInput'
+import { pick } from 'lodash'
+import {
+	Answer,
+	NumberTypeAnswerDocument,
+	NumberTypeAnswerGraphqlDocument,
+	RadioTypeAnswerDocument,
+	RadioTypeAnswerGraphqlDocument,
+	TextTypeAnswerDocument,
+	TextTypeAnswerGraphqlDocument,
+} from '@app/ts-types'
+import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql/src/databases/appwriteKeys'
 
 export default objectType({
 	name: 'Monument',
@@ -20,6 +31,7 @@ export default objectType({
 		t.field('location', { type: 'Location' })
 		t.string('userId')
 		t.string('name')
+		t.nullable.string('questionId')
 		t.nullable.string('about')
 		t.list.field('topics', { type: 'Topic' })
 		t.string('placeDetailId')
@@ -108,6 +120,41 @@ export default objectType({
 				const queries = [Queries.experience.equal('connectedMonumentId', source._id)]
 				const expDocs = (await collections.experience.listDocuments(queries)).documents
 				return fromLatLongIntoLocation(...expDocs)
+			},
+		})
+
+		t.field('question', {
+			type: nullable('Question'),
+			resolve: async (source, args, ctx) => {
+				if (!source.questionId) return null
+				const { collections } = ctx.appwrite
+
+				const questionDocument = await collections.question.getDocument(source.questionId)
+
+				if (!questionDocument) throw new Error('There is no question bellow this id')
+				let answer: Answer | null
+
+				if (questionDocument.answerType === 'text') {
+					answer = await collections.answerTypeText.getDocument(questionDocument.answerId)
+				} else if (questionDocument.answerType === 'number') {
+					answer = await collections.answerTypeNumber.getDocument(
+						questionDocument.answerId,
+					)
+				} else {
+					answer = await collections.answerTypeRadio.getDocument(
+						questionDocument.answerId,
+					)
+				}
+
+				if (!answer) throw new Error('Answer bellow the id was not found')
+
+				return {
+					...pick(questionDocument, ...appwriteGraphqlKeys),
+					type: questionDocument.answerType,
+					correctAnswer: answer.correctAnswer,
+					question: questionDocument.question,
+					pickingAnswers: answer.pickingAnswers,
+				}
 			},
 		})
 	},

@@ -1,7 +1,12 @@
 import { Document, GraphqlDocument } from './Document'
 import { z } from 'zod'
 
-export type QuestionType = 'radio' | 'text' | 'number'
+export const answerTypeZod = z.union([
+	z.literal('radio'),
+	z.literal('text'),
+	z.literal('number'),
+])
+export type AnswerType = z.infer<typeof answerTypeZod>
 
 export const isQuestionTypeRadio = (input: unknown): input is Question<'radio'> => {
 	try {
@@ -28,64 +33,87 @@ export const isQuestionTypeText = (input: unknown): input is Question<'text'> =>
 	}
 }
 
-export const getQuestionType = (question: Question<QuestionType>) => {
+export const getQuestionType = (question: unknown) => {
 	if (isQuestionTypeText(question)) return ['text', question] as const
 	if (isQuestionTypeNumber(question)) return ['number', question] as const
 	if (isQuestionTypeRadio(question)) return ['radio', question] as const
 	else throw new Error('Unknown type')
 }
 
+export const isQuestion = (value: unknown) => {
+	try {
+		getQuestionType(value)
+		return true
+	} catch (error) {
+		return false
+	}
+}
+
 const questionTypeRadioZod = z.object({
 	question: z.string().nonempty(),
 	type: z.literal('radio'),
-	answer: z.string().nonempty(),
+	correctAnswer: z.string().nonempty(),
 	pickingAnswers: z.string().array(),
 })
 const questionTypeNumberZod = z.object({
 	question: z.string().nonempty(),
 	type: z.literal('number'),
-	answer: z.number(),
+	correctAnswer: z.number(),
 })
 const questionTypeTextZod = z.object({
 	question: z.string().nonempty(),
 	type: z.literal('text'),
-	answer: z.string().nonempty(),
+	correctAnswer: z.string().nonempty(),
 })
 
-type Skeleton<T extends QuestionType> = {
+type Skeleton<T extends AnswerType> = {
 	question: string
 	type: T
-	answer: T extends 'number' ? number : string
+	correctAnswer: T extends 'number' ? number : string
+	pickingAnswers?: string[] | undefined | null
 }
 
-export type Question<T extends QuestionType> = {
-	question: string
-	type: T
-	answer: T extends 'number' ? number : string
-	pickingAnswers: T extends 'radio' ? string[] : undefined
-}
+export type Question<T extends AnswerType> = Skeleton<T> &
+	(T extends 'radio'
+		? {
+				pickingAnswers: string[]
+		  }
+		: Skeleton<T>)
 
-export type QuestionTextForm = {
+export type QuestionDocumentCreate = {
 	question: string
+	answerType: AnswerType
+	answerId: string
+}
+export type QuestionDocument = Document<QuestionDocumentCreate>
+export type QuestionGraphqlDocument = GraphqlDocument<QuestionDocumentCreate>
+
+//answer types
+
+export type TextTypeAnswer = {
 	correctAnswer: string
 }
-export type QuestionTextFormDocument = Document<QuestionTextForm>
-export type QuestionTextFormGraphqlDocument = GraphqlDocument<QuestionTextForm>
-export type QuestionTextFormDocumentCreate = QuestionTextForm
+export type TextTypeAnswerDocument = Document<TextTypeAnswer>
+export type TextTypeAnswerGraphqlDocument = GraphqlDocument<TextTypeAnswer>
+export type TextTypeAnswerDocumentCreate = TextTypeAnswer
 
-export type QuestionNumberForm = {
-	question: string
+export type NumberTypeAnswer = {
 	correctAnswer: number
 }
-export type QuestionNumberFormDocument = Document<QuestionNumberForm>
-export type QuestionNumberFormGraphqlDocument = GraphqlDocument<QuestionNumberForm>
-export type QuestionNumberFormDocumentCreate = QuestionNumberForm
+export type NumberTypeAnswerDocument = Document<NumberTypeAnswer>
+export type NumberTypeAnswerGraphqlDocument = GraphqlDocument<NumberTypeAnswer>
+export type NumberTypeAnswerDocumentCreate = NumberTypeAnswer
 
-export type QuestionRadioForm = {
-	question: string
-	answers: string[]
+export type RadioTypeAnswer = {
 	correctAnswer: string
+	pickingAnswers: string[]
 }
-export type QuestionRadioFormDocument = Document<QuestionRadioForm>
-export type QuestionRadioFormGraphqlDocument = GraphqlDocument<QuestionRadioForm>
-export type QuestionRadioFormDocumentCreate = QuestionRadioForm
+export type RadioTypeAnswerDocument = Document<RadioTypeAnswer>
+export type RadioTypeAnswerGraphqlDocument = GraphqlDocument<RadioTypeAnswer>
+export type RadioTypeAnswerDocumentCreate = RadioTypeAnswer
+
+export type Answer = (
+	| TextTypeAnswerGraphqlDocument
+	| NumberTypeAnswerGraphqlDocument
+	| RadioTypeAnswerGraphqlDocument
+) & { pickingAnswers?: string[] | undefined }

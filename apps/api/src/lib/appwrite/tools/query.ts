@@ -7,7 +7,11 @@ import {
 	ExperienceLikeDocument,
 	MonumentDocument,
 	MonumentLikeDocument,
+	NumberTypeAnswerDocument,
 	PlaceDetailDocument,
+	QuestionDocument,
+	RadioTypeAnswerDocument,
+	TextTypeAnswerDocument,
 	TokenDocument,
 	UserInfoDocument,
 } from '@app/ts-types'
@@ -20,6 +24,10 @@ const query = {
 	token: Query<TokenDocument>(),
 	monumentLike: Query<MonumentLikeDocument>(),
 	experienceLike: Query<ExperienceLikeDocument>(),
+	answerTypeNumber: Query<NumberTypeAnswerDocument>(),
+	answerTypeText: Query<TextTypeAnswerDocument>(),
+	answerTypeRadio: Query<RadioTypeAnswerDocument>(),
+	question: Query<QuestionDocument>(),
 } satisfies Record<CollectionName, any>
 
 export type QueryType = (typeof query)[keyof typeof query]

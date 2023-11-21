@@ -116,7 +116,7 @@
 	};
 
 	const editMonument = async () => {
-		goto(`/monument/edit/${monument._id}`);
+		goto(`/monument/${monument._id}/edit`);
 	};
 
 	const seeOnGoogleMaps = () => {

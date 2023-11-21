@@ -10,5 +10,6 @@ export default inputObjectType({
 		t.string('placeName')
 		t.list.field({ type: 'Topic', name: 'topics' })
 		t.list.field({ type: 'Transport', name: 'transports' })
+		t.nullable.field({ type: 'QuestionInput', name: 'question' })
 	},
 })

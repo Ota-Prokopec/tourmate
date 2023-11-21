@@ -1,25 +1,29 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
+	import Popover from '$lib/components/Common/Popover.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import IconPlus from '$lib/components/Icons/IconPlus.svelte';
-	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
+	import { locale } from '$src/i18n/i18n-svelte';
 	import {
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
 		isQuestionTypeText,
-		type Question,
-		type QuestionType
+		type AnswerType,
+		type Question
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
-	import TextForm from './Forms/TextForm.svelte';
-	import RadioForm from './Forms/RadioForm.svelte';
 	import NumberForm from './Forms/NumberForm.svelte';
+	import RadioForm from './Forms/RadioForm.svelte';
+	import TextForm from './Forms/TextForm.svelte';
 
-	export let question: Question<QuestionType> | undefined;
+	export let question: Question<AnswerType> | undefined;
+	export let disabled = false;
 </script>
 
-<Button on:click class="shadow-[0px_0px_2px_2px_gray] w-full h-40 rounded-2xl z-20">
+<Button
+	{disabled}
+	on:click
+	class="shadow-[0px_0px_2px_2px_gray] p-2 w-full h-auto min-h-40 rounded-2xl z-20"
+>
 	{#if typeof question === 'undefined'}
 		<Text>Add a question</Text>
 	{:else}
@@ -30,13 +34,24 @@
 					class="pointer-events-none w-full"
 					disableCounter
 					answers={question.pickingAnswers}
-					chosenAnswer={question.answer}
+					chosenAnswer={question.correctAnswer}
 				/>
 			{:else if isQuestionTypeNumber(question)}
-				<NumberForm class="pointer-events-none w-full" answer={question.answer} />
+				<NumberForm class="pointer-events-none w-full" answer={question.correctAnswer} />
 			{:else if isQuestionTypeText(question)}
-				<TextForm class="pointer-events-none w-full" answer={question.answer} />
+				<TextForm class="pointer-events-none w-full" answer={question.correctAnswer} />
 			{/if}
 		</Column>
 	{/if}
 </Button>
+{#if disabled}
+	<Popover color="red">
+		{#if $locale === 'en'}
+			We are sorry, you cant edit your question in monument, because some people could already
+			answerTypeZod.
+		{:else}
+			Omlouváme set, ale nemůžete upravovat vaší otázku v zážitku, neboť je možné, že už na vaši
+			otázku někdo odpověděl.
+		{/if}
+	</Popover>
+{/if}
