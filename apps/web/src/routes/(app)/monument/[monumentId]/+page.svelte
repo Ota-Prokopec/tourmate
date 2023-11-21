@@ -15,6 +15,7 @@
 	import type { PageData } from './$types';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
 	import { alert } from '$src/routes/alertStore';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -34,6 +35,7 @@
 			);
 			throw new Error('Your distanceInMeters from monument is bigger that maximal distance.');
 		}
+		goto('/createNewExperience');
 	};
 </script>
 

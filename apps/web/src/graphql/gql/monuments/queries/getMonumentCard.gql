@@ -63,5 +63,18 @@ query getMonumentCard($id: String!) {
 			userId
 			monumentId
 		}
+		questionId
+		question {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			question
+			correctAnswer
+			pickingAnswers
+			type
+		}
 	}
 }

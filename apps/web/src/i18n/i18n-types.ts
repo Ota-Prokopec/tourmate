@@ -258,6 +258,10 @@ type RootTranslation = {
 	 * l​o​g​o​u​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l
 	 */
 	logOutError: string
+	/**
+	 * m​o​n​u​m​e​n​t​ ​i​n​c​l​u​d​e​s​ ​a​ ​q​u​e​s​t​i​o​n
+	 */
+	monumentIncludesQuestion: string
 }
 
 export type TranslationFunctions = {
@@ -497,6 +501,10 @@ export type TranslationFunctions = {
 	 * logout was not successful
 	 */
 	logOutError: () => LocalizedString
+	/**
+	 * monument includes a question
+	 */
+	monumentIncludesQuestion: () => LocalizedString
 }
 
 export type Formatters = {}

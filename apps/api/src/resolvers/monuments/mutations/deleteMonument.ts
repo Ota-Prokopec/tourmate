@@ -1,8 +1,9 @@
 import { mutationField, stringArg } from 'nexus'
 import { Queries } from '../../../lib/appwrite/appwrite'
 import cloudinary from '@app/cloudinary-server'
+import { NumberTypeAnswer } from '../../../../../../packages/ts-types/src/Question'
 
-//TODO: delete the question and answer
+//TODO: delete the users answers on question
 
 export default mutationField('deleteMonument', {
 	type: 'Boolean',
@@ -13,6 +14,9 @@ export default mutationField('deleteMonument', {
 		const monument = await collections.monument.getDocument([
 			Queries.monument.equal('$id', args.monumentId),
 		])
+		const question = monument?.questionId
+			? await collections.question.getDocument(monument.questionId)
+			: null
 
 		if (!monument) throw new Error('This monument does not exist')
 
@@ -24,6 +28,18 @@ export default mutationField('deleteMonument', {
 		const deleteLikesPromise = collections.monumentLike.deleteDocuments([
 			monumentLikesDeleteQueries,
 		])
+
+		const deleteQuestionAnswerPromise = question
+			? question.answerType === 'text'
+				? collections.answerTypeText.deleteDocument(question.answerId)
+				: question.answerType === 'number'
+				? collections.answerTypeNumber.deleteDocument(question.answerId)
+				: collections.answerTypeRadio.deleteDocument(question.answerId)
+			: null
+
+		const deleteQuestionPromise = question
+			? collections.question.deleteDocument(question?._id)
+			: null
 
 		// delete monument picture from cloudinary
 		let pictureDeletePromise: Promise<any> | undefined
@@ -46,6 +62,8 @@ export default mutationField('deleteMonument', {
 			pictureDeletePromise,
 			monumentDeletePromise,
 			placeDetailDeletePromise,
+			deleteQuestionAnswerPromise,
+			deleteQuestionPromise,
 		])
 
 		return true

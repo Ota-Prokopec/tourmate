@@ -71,7 +71,8 @@ const cz = {
 	enterPassword: 'zadejte heslo',
 	editProfile: 'upravit účet',
 	logOut: 'odhlásit se',
-	logOutError: 'logout was not successful'
+	logOutError: 'logout was not successful',
+	monumentIncludesQuestion: 'zážitek obsahuje otázku'
 } satisfies BaseTranslation;
 
 export default cz;

@@ -12,7 +12,7 @@
 	import Header from './Components/Header.svelte';
 	import Center from './Components/Center.svelte';
 	import Footer from './Components/Footer.svelte';
-	import Drawer from './Components/Drawer.svelte';
+	import Drawer from './Components/MonumentNotFoundDrawer.svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
@@ -24,6 +24,11 @@
 	const location = data.newExperience.location;
 	let hideDrawer = true;
 	let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
+	let monumentToConnect: MonumentCard | undefined;
+	$: monumentToConnectPromise?.then((data) => {
+		monumentToConnect = data.getMonument;
+	});
+
 	let connectedMonumentId: string | undefined = undefined;
 	let ableToSave = false;
 
@@ -82,7 +87,7 @@
 			bind:hideDrawer
 		/>
 
-		<Footer {ableToSave} {isLoading} on:save={save} />
+		<Footer monument={monumentToConnect} {ableToSave} {isLoading} on:save={save} />
 	</Card>
 {/if}
 

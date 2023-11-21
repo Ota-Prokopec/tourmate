@@ -17,7 +17,7 @@
 
 <Drawer
 	bind:hidden={hideDrawer}
-	placement="right"
+	placement="auto"
 	class="!z-50 w-auto max-w-[400px] h-[calc(100%-100px)] fixed top-[100px]"
 	size={400}
 >

@@ -55,7 +55,7 @@
 						dismissable
 						disableSeeMoreButton
 						disableSharing
-						size="small"
+						size="normal"
 						monument={monumentToConnect.getMonument}
 					/>
 				{:else}

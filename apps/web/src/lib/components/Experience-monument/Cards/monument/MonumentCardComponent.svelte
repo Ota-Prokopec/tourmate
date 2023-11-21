@@ -35,7 +35,7 @@
 
 	const usersLocation = $lsStore.usersLocation;
 
-	type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked'>;
+	type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked' | 'question'>;
 
 	type T = $$Generic<'normal' | 'small' | 'tiny'>;
 
@@ -122,6 +122,8 @@
 	const seeOnGoogleMaps = () => {
 		navigate(getLocationUrlOfGoogleMaps(monument.location));
 	};
+
+	$: console.log(monument.questionId);
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>

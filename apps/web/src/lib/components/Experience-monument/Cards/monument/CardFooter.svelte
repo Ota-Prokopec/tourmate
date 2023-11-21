@@ -13,6 +13,9 @@
 	import { DateTime } from 'luxon';
 	import LL from '$src/i18n/i18n-svelte';
 	import TypeWriter from '$lib/components/Common/TypeWriter.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
+	import QuestionIcon from '../../question/QuestionIcon.svelte';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
@@ -60,5 +63,8 @@
 				{/if}
 			{/each}
 		</Row>
+		{#if monument.question}
+			<QuestionIcon popover={$LL.monumentIncludesQuestion()} />
+		{/if}
 	</Column>
 </Row>

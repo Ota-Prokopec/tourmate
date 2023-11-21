@@ -13,12 +13,12 @@
 	<h5 class="mb-2 text-xl text-black">
 		{monument.name}
 	</h5>
-	<Text class="text-right">
-		<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
-			<Row class="gap-1">
-				<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+	<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
+		<Row class="gap-1">
+			<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+			<Text class="text-right">
 				{monument.placeDetail.name}
-			</Row>
-		</button>
-	</Text>
+			</Text>
+		</Row>
+	</button>
 </Row>

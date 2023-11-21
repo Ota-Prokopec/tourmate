@@ -73,7 +73,8 @@ const en = {
 	enterPassword: 'enter password',
 	editProfile: 'edit profile',
 	logOut: 'log out',
-	logOutError: 'logout was not successful'
+	logOutError: 'logout was not successful',
+	monumentIncludesQuestion: 'monument includes a question'
 } satisfies BaseTranslation;
 
 export default en;

@@ -9,12 +9,14 @@ import {
 } from './Likes'
 import { Monument } from './Monument'
 import { PlaceDetail } from './PlaceDetails'
+import { AnswerType, Question } from './Question'
 
 export type MonumentCard = GraphqlDocument<Monument> & {
 	placeDetail: PlaceDetail
 	user: UserInfo
 	likes: (MonumentLike & { user: UserInfo })[]
 	liked?: MonumentLikeGraphqlDocument | boolean | null | undefined
+	question?: undefined | Question<AnswerType> | null
 }
 
 export type MonumentCardWithConnectedExperiences = MonumentCard & {

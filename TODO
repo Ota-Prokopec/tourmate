@@ -11,6 +11,8 @@ errors
 3) add +error.svelte for global use
 4) dark mode
 
+!!image for experience instead of having store, i should store it into localstorage
+
 
 
 

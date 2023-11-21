@@ -15,7 +15,6 @@ export type Monument = {
 	topics: Topic[]
 	transports: Transport[]
 	questionId?: string | null | undefined
-	question?: undefined | Question<AnswerType> | null
 }
 
 export type MonumentDocument = Document<Omit<Monument, 'location'> & LocationForDocument>
