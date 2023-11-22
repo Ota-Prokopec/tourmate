@@ -10,15 +10,20 @@
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import AnswerQuestionDrawer from './AnswerQuestionDrawer.svelte';
+	import Popover from '$lib/components/Common/Popover.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 	const dispatch = createEventDispatcher<{ save: undefined }>();
 
-	export let ableToSave: boolean;
+	export let isUserCloseEnoughToMonument: boolean;
 	export let isLoading: boolean;
 	export let monument: MonumentCard | undefined;
 	$: question = monument?.question;
-	let answeredCorrectly = monument?.question ? false : null;
 
-	$: questionAbleToSave = (monument?.question && answeredCorrectly) || !monument?.question;
+	$: usersAnswer = monument?.usersAnswerToQuestion;
+
+	$: ableToSave =
+		(isUserCloseEnoughToMonument && monument && !monument.question) ||
+		(isUserCloseEnoughToMonument && monument?.question && usersAnswer?.answeredCorrectly);
 
 	const anwerQuestion = async (param: {
 		textAnswer: string | undefined;
@@ -38,12 +43,12 @@
 				answer = param.radioAnswer;
 			else throw new Error('There is no answer from user');
 
-			answeredCorrectly = (
+			usersAnswer = (
 				await sdk.answerQuestion({
 					answer: answer,
 					monumentId: monument?._id
 				})
-			).answerQuestion.answeredCorrectly;
+			).answerQuestion;
 		} catch (error) {
 			alert('', $LL.answerQuestionError(), { color: 'red' });
 		}
@@ -63,9 +68,9 @@
 {/if}
 
 <Column class="w-full gap-4 p-4">
-	{#if monument?.question}
+	{#if monument?.question && !ableToSave}
 		<Button
-			disabled={!ableToSave}
+			disabled={!(usersAnswer?.answeredCorrectly || !usersAnswer)}
 			color="green"
 			on:click={() => (answerQuestionDrawerHidden = false)}
 		>
@@ -76,13 +81,16 @@
 				</Icon>
 			</Column>
 		</Button>
+		{#if usersAnswer?.answeredCorrectly === false}
+			<Popover placement="top" color="red">
+				{$LL.cantAnswerTheQuestionTwice()}
+			</Popover>
+		{/if}
+	{:else if monument?.question && ableToSave}
+		<Text>{$LL.answeredCorrectly()}</Text>
 	{/if}
 
-	<Button
-		color="green"
-		on:click={() => dispatch('save')}
-		disabled={!ableToSave || !questionAbleToSave}
-	>
+	<Button color="green" on:click={() => dispatch('save')} disabled={!ableToSave}>
 		{#if isLoading}
 			<Loading />
 		{:else}

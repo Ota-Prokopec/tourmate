@@ -1,22 +1,20 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { Card, Img, Skeleton } from 'flowbite-svelte';
-	import { P, Button } from 'flowbite-svelte';
 	import Map from '$lib/components/Map/Map.svelte';
-	import { picture } from '../editPicture/pictureStore';
-	import { sdk } from '$src/graphql/sdk';
-	import { navigate } from '$lib/utils/navigator';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
+	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import { navigate } from '$lib/utils/navigator';
+	import { sdk } from '$src/graphql/sdk';
+	import LL from '$src/i18n/i18n-svelte';
+	import { alert } from '$src/routes/alertStore';
 	import type { MonumentCard } from '@app/ts-types';
-	import { device } from '@app/utils';
-	import Header from './Components/Header.svelte';
+	import { Button, Card, Img } from 'flowbite-svelte';
+	import { picture } from '../editPicture/pictureStore';
+	import type { PageData } from './$types';
 	import Center from './Components/Center.svelte';
 	import Footer from './Components/Footer.svelte';
+	import Header from './Components/Header.svelte';
 	import Drawer from './Components/MonumentNotFoundDrawer.svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
-	import { alert } from '$src/routes/alertStore';
-	import LL from '$src/i18n/i18n-svelte';
-	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 
 	export let data: PageData;
 	let isLoading = false;
@@ -30,7 +28,8 @@
 	});
 
 	let connectedMonumentId: string | undefined = undefined;
-	let ableToSave = false;
+
+	let isUserCloseEnoughToMonument: boolean = false;
 
 	const save = async () => {
 		if (!location) throw new Error('user has no location');
@@ -59,12 +58,13 @@
 			);
 		}
 		connectedMonumentId = monumentId;
-		ableToSave = distanceInMeters <= maximalRangeInMetersToConnectMonumentToPicture;
+		isUserCloseEnoughToMonument =
+			distanceInMeters <= maximalRangeInMetersToConnectMonumentToPicture;
 	};
 
 	const disconnectMonument = () => {
 		connectedMonumentId = undefined;
-		ableToSave = false;
+		monumentToConnect = undefined;
 		monumentToConnectPromise = undefined;
 	};
 
@@ -83,11 +83,12 @@
 			on:disconnect={disconnectMonument}
 			on:connect={(e) => connectToMonument(e.detail.monumentId, e.detail.distanceInMeters)}
 			{monumentToConnectPromise}
+			{monumentToConnect}
 			bind:cardShown
 			bind:hideDrawer
 		/>
 
-		<Footer monument={monumentToConnect} {ableToSave} {isLoading} on:save={save} />
+		<Footer {isUserCloseEnoughToMonument} monument={monumentToConnect} {isLoading} on:save={save} />
 	</Card>
 {/if}
 

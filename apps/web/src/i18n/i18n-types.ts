@@ -270,6 +270,18 @@ type RootTranslation = {
 	 * a​n​w​e​r​i​n​g​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
 	 */
 	answerQuestionError: string
+	/**
+	 * a​n​s​w​e​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n
+	 */
+	answerTheQuestion: string
+	/**
+	 * I​t​ ​s​e​e​m​s​ ​y​o​u​ ​h​a​v​e​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​r​o​n​g​,​ ​y​o​u​ ​c​a​n​'​t​ ​a​n​s​w​e​r​ ​t​w​i​c​e​.
+	 */
+	cantAnswerTheQuestionTwice: string
+	/**
+	 * Y​o​u​ ​h​a​v​e​ ​a​n​s​w​e​r​e​d​ ​c​o​r​r​e​c​t​l​y
+	 */
+	answeredCorrectly: string
 }
 
 export type TranslationFunctions = {
@@ -521,6 +533,18 @@ export type TranslationFunctions = {
 	 * anwering the question was not successful, please try it again
 	 */
 	answerQuestionError: () => LocalizedString
+	/**
+	 * answer the question
+	 */
+	answerTheQuestion: () => LocalizedString
+	/**
+	 * It seems you have already answered the question wrong, you can't answer twice.
+	 */
+	cantAnswerTheQuestionTwice: () => LocalizedString
+	/**
+	 * You have answered correctly
+	 */
+	answeredCorrectly: () => LocalizedString
 }
 
 export type Formatters = {}

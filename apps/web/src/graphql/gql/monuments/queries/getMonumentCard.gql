@@ -76,5 +76,8 @@ query getMonumentCard($id: String!) {
 			pickingAnswers
 			type
 		}
+		usersAnswerToQuestion {
+			answeredCorrectly
+		}
 	}
 }

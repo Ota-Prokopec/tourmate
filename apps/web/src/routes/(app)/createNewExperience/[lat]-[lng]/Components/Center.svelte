@@ -22,6 +22,7 @@
 	}>();
 
 	export let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
+	export let monumentToConnect: MonumentCard | undefined;
 	export let cardShown: boolean;
 	export let hideDrawer: boolean;
 	$: usersLocation = $lsStore.usersLocation;

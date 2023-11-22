@@ -76,7 +76,11 @@ const en = {
 	logOutError: 'logout was not successful',
 	monumentIncludesQuestion: 'monument includes a question',
 	thereIsNoQuestionInMonument: 'there is no question in monument',
-	answerQuestionError: 'anwering the question was not successful, please try it again'
+	answerQuestionError: 'anwering the question was not successful, please try it again',
+	answerTheQuestion: 'answer the question',
+	cantAnswerTheQuestionTwice:
+		"It seems you have already answered the question wrong, you can't answer twice.",
+	answeredCorrectly: 'You have answered correctly'
 } satisfies BaseTranslation;
 
 export default en;

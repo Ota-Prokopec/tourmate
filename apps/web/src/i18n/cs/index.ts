@@ -74,7 +74,11 @@ const cz = {
 	logOutError: 'logout was not successful',
 	monumentIncludesQuestion: 'zážitek obsahuje otázku',
 	thereIsNoQuestionInMonument: 'v zážitku není žádná otázka',
-	answerQuestionError: 'anwering the question was not successful, please try it again'
+	answerQuestionError: 'anwering the question was not successful, please try it again',
+	answerTheQuestion: 'answer the question',
+	cantAnswerTheQuestionTwice:
+		"It seems you have already answered the question wrong, you can't answer twice.",
+	answeredCorrectly: 'You have answered correctly'
 } satisfies BaseTranslation;
 
 export default cz;
