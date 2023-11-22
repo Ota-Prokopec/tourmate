@@ -262,6 +262,14 @@ type RootTranslation = {
 	 * m​o​n​u​m​e​n​t​ ​i​n​c​l​u​d​e​s​ ​a​ ​q​u​e​s​t​i​o​n
 	 */
 	monumentIncludesQuestion: string
+	/**
+	 * t​h​e​r​e​ ​i​s​ ​n​o​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​m​o​n​u​m​e​n​t
+	 */
+	thereIsNoQuestionInMonument: string
+	/**
+	 * a​n​w​e​r​i​n​g​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
+	 */
+	answerQuestionError: string
 }
 
 export type TranslationFunctions = {
@@ -505,6 +513,14 @@ export type TranslationFunctions = {
 	 * monument includes a question
 	 */
 	monumentIncludesQuestion: () => LocalizedString
+	/**
+	 * there is no question in monument
+	 */
+	thereIsNoQuestionInMonument: () => LocalizedString
+	/**
+	 * anwering the question was not successful, please try it again
+	 */
+	answerQuestionError: () => LocalizedString
 }
 
 export type Formatters = {}

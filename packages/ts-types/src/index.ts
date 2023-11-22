@@ -3,6 +3,7 @@
  */
 
 export * from './Account';
+export * from './Answer';
 export * from './Application';
 export * from './Checking';
 export * from './Document';

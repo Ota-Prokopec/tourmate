@@ -14,6 +14,7 @@ import {
 	TextTypeAnswerDocument,
 	TokenDocument,
 	UserInfoDocument,
+	UsersAnswerDocument,
 } from '@app/ts-types'
 
 const query = {
@@ -28,6 +29,7 @@ const query = {
 	answerTypeText: Query<TextTypeAnswerDocument>(),
 	answerTypeRadio: Query<RadioTypeAnswerDocument>(),
 	question: Query<QuestionDocument>(),
+	usersAnswer: Query<UsersAnswerDocument>(),
 } satisfies Record<CollectionName, any>
 
 export type QueryType = (typeof query)[keyof typeof query]

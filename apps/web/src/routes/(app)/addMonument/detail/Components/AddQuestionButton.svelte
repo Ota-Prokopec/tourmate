@@ -8,14 +8,17 @@
 		isQuestionTypeRadio,
 		isQuestionTypeText,
 		type AnswerType,
-		type Question
+		type Question,
+		Answer
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
-	import NumberForm from './Forms/NumberForm.svelte';
-	import RadioForm from './Forms/RadioForm.svelte';
-	import TextForm from './Forms/TextForm.svelte';
+	import NumberForm from '../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';
+	import RadioForm from '../../../../../lib/components/Experience-monument/question/Forms/RadioForm.svelte';
+	import TextForm from '../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
 
-	export let question: Question<AnswerType> | undefined;
+	export let question:
+		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
+		| undefined;
 	export let disabled = false;
 </script>
 

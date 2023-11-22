@@ -72,7 +72,9 @@ const cz = {
 	editProfile: 'upravit účet',
 	logOut: 'odhlásit se',
 	logOutError: 'logout was not successful',
-	monumentIncludesQuestion: 'zážitek obsahuje otázku'
+	monumentIncludesQuestion: 'zážitek obsahuje otázku',
+	thereIsNoQuestionInMonument: 'v zážitku není žádná otázka',
+	answerQuestionError: 'anwering the question was not successful, please try it again'
 } satisfies BaseTranslation;
 
 export default cz;

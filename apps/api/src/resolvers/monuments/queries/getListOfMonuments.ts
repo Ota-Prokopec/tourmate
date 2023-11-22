@@ -14,7 +14,7 @@ export default queryField('getListOfMonuments', {
 		topics: nullable(list('Topic')),
 		transports: nullable(list('Transport')),
 		name: nullable('String'),
-		limit: nullable(arg({ type: 'Int', default: 10 })),
+		limit: nullable(arg({ type: 'Int', default: 50 })),
 		userId: nullable(stringArg()),
 	},
 	resolve: async (s, args, ctx, info) => {

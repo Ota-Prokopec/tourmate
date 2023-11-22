@@ -18,6 +18,7 @@ import {
 	TextTypeAnswerGraphqlDocument,
 } from '@app/ts-types'
 import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql/src/databases/appwriteKeys'
+import { Queries } from '../lib/appwrite/appwrite'
 
 export default objectType({
 	name: 'Monument',
@@ -155,6 +156,20 @@ export default objectType({
 					question: questionDocument.question,
 					pickingAnswers: answer.pickingAnswers,
 				}
+			},
+		})
+		t.field('usersAnswerToQuestion', {
+			type: nullable('UsersAnswerToQuestion'),
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authed', '401')
+				const { collections } = ctx.appwrite
+				const answerDocument = await collections.usersAnswer.getDocument([
+					Queries.usersAnswer.equal('userId', ctx.user.$id),
+				])
+
+				if (!answerDocument) return null
+
+				return { answeredCorrectly: answerDocument.answeredCorrectly }
 			},
 		})
 	},

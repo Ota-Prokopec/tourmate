@@ -46,7 +46,7 @@
 		navigate('/');
 	};
 
-	const screenMonument = async (monumentId: string) => {
+	const chooseMonument = async (monumentId: string) => {
 		monumentToConnectPromise = sdk.getMonumentCard({ id: monumentId });
 	};
 
@@ -104,7 +104,7 @@
 		<MonumentMarker
 			disableShowingDetails
 			on:click={() => (cardShown = true)}
-			on:click={() => screenMonument(monument._id)}
+			on:click={() => chooseMonument(monument._id)}
 			{monument}
 		/>
 	{/each}

@@ -9,6 +9,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import MonumentCreateForm from '$src/routes/(app)/monument/Components/MonumentCreateForm.svelte';
 	import type {
+		Answer,
 		AnswerType,
 		Base64,
 		GraphqlDocument,
@@ -36,7 +37,9 @@
 	let topics: Topic[] = [];
 	let transports: Transport[] = [];
 
-	let question: Question<AnswerType> | undefined;
+	let question:
+		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
+		| undefined;
 
 	let serverResponse: GraphqlDocument<Monument> | undefined;
 	let error: AppwriteException;

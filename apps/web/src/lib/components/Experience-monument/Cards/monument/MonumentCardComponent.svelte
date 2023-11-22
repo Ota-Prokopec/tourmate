@@ -53,16 +53,15 @@
 	let liked: boolean | 'pending' | undefined =
 		'liked' in monument ? (monument.liked ? true : false) : undefined;
 
-	export const distanceInMeters = usersLocation
+	export let distanceInMeters = usersLocation
 		? distanceTo(
 				{ lat: usersLocation[0], lng: usersLocation[1] },
 				{ lat: monument.location[0], lng: monument.location[1] }
 		  )
 		: undefined;
 
-	const distanceInMetersNormalized = distanceInMeters
-		? normalizeMeters(distanceInMeters)
-		: undefined;
+	const distanceInMetersNormalized =
+		typeof distanceInMeters === 'number' ? normalizeMeters(distanceInMeters) : undefined;
 
 	let className = '';
 	export { className as class };
@@ -122,8 +121,6 @@
 	const seeOnGoogleMaps = () => {
 		navigate(getLocationUrlOfGoogleMaps(monument.location));
 	};
-
-	$: console.log(monument.questionId);
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>

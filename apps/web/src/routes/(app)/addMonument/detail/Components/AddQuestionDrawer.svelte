@@ -12,8 +12,8 @@
 	import Title from '$lib/components/Common/Title.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
-	import { alert } from '$src/routes/alertStore';
 	import {
+		Answer,
 		getQuestionType,
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
@@ -23,21 +23,23 @@
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
-	import AddQuestionButton from './AddQuestionButton.svelte';
-	import NumberForm from './Forms/NumberForm.svelte';
-	import RadioForm from './Forms/RadioForm.svelte';
-	import TextForm from './Forms/TextForm.svelte';
-	import Circle from '$lib/components/Common/Circle.svelte';
+	import NumberForm from '../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';
+	import RadioForm from '../../../../../lib/components/Experience-monument/question/Forms/RadioForm.svelte';
+	import TextForm from '../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
 
 	const dispatch = createEventDispatcher<{
-		save: Question<AnswerType>;
+		save: Omit<Question<AnswerType>, 'pickingAnswers'> & {
+			pickingAnswers?: Answer['pickingAnswers'];
+		};
 	}>();
 
 	export let hidden = true;
 
 	let carousel: CarouselFunctions | undefined;
 
-	export let question: Question<AnswerType> | undefined;
+	export let question:
+		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
+		| undefined;
 
 	const categories: { title: string; key: AnswerType }[] = [
 		{ title: 'radio', key: 'radio' },

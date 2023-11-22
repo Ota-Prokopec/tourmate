@@ -17,6 +17,7 @@ export type MonumentCard = GraphqlDocument<Monument> & {
 	likes: (MonumentLike & { user: UserInfo })[]
 	liked?: MonumentLikeGraphqlDocument | boolean | null | undefined
 	question?: undefined | Question<AnswerType> | null
+	usersAnswerToQuestion?: { answeredCorrectly: boolean }
 }
 
 export type MonumentCardWithConnectedExperiences = MonumentCard & {

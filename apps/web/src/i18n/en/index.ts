@@ -74,7 +74,9 @@ const en = {
 	editProfile: 'edit profile',
 	logOut: 'log out',
 	logOutError: 'logout was not successful',
-	monumentIncludesQuestion: 'monument includes a question'
+	monumentIncludesQuestion: 'monument includes a question',
+	thereIsNoQuestionInMonument: 'there is no question in monument',
+	answerQuestionError: 'anwering the question was not successful, please try it again'
 } satisfies BaseTranslation;
 
 export default en;

@@ -47,6 +47,11 @@ export type Account = {
   username: Scalars['String']['output'];
 };
 
+export type AnswerQuestion = {
+  __typename?: 'AnswerQuestion';
+  answeredCorrectly: Scalars['Boolean']['output'];
+};
+
 export type CreateAccountInput = {
   myId: Scalars['String']['input'];
   username: Scalars['String']['input'];
@@ -157,12 +162,19 @@ export type MonumentLike = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  answerQuestion: AnswerQuestion;
   createExperience: Experience;
   createMonument: Monument;
   deleteExperience: Scalars['Boolean']['output'];
   deleteMonument: Scalars['Boolean']['output'];
   likeExperience: ExperienceLike;
   likeMonument: MonumentLike;
+};
+
+
+export type MutationAnswerQuestionArgs = {
+  answer: Scalars['StringOrNumber']['input'];
+  monumentId: Scalars['String']['input'];
 };
 
 
@@ -490,6 +502,14 @@ export type GetMonumentCardWithConnectedExperiencesQueryVariables = Exact<{
 
 
 export type GetMonumentCardWithConnectedExperiencesQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, questionId?: string | null, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null, connectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null }>, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer: any, pickingAnswers?: Array<string> | null, type: any } | null } };
+
+export type AnswerQuestionMutationVariables = Exact<{
+  monumentId: Scalars['String']['input'];
+  answer: Scalars['StringOrNumber']['input'];
+}>;
+
+
+export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'AnswerQuestion', answeredCorrectly: boolean } };
 
 
 export const CreateAccountDoc = gql`
@@ -1444,6 +1464,13 @@ export const GetMonumentCardWithConnectedExperiencesDoc = gql`
   }
 }
     `;
+export const AnswerQuestionDoc = gql`
+    mutation answerQuestion($monumentId: String!, $answer: StringOrNumber!) {
+  answerQuestion(monumentId: $monumentId, answer: $answer) {
+    answeredCorrectly
+  }
+}
+    `;
 export const createAccount = (
             options: Omit<
               WatchQueryOptions<CreateAccountQueryVariables>, 
@@ -2146,3 +2173,15 @@ export const getMonumentCardWithConnectedExperiences = (
             return result;
           }
         
+export const answerQuestion = (
+            options: Omit<
+              MutationOptions<any, AnswerQuestionMutationVariables>, 
+              "mutation"
+            >
+          ) => {
+            const m = client.mutate<AnswerQuestionMutation, AnswerQuestionMutationVariables>({
+              mutation: AnswerQuestionDoc,
+              ...options,
+            });
+            return m;
+          }

@@ -20,5 +20,7 @@ export { default as Question } from './Question';
 export * from './Question';
 export { default as User } from './User';
 export * from './User';
+export { default as UsersAnswerToQuestion } from './UsersAnswerToQuestion';
+export * from './UsersAnswerToQuestion';
 export { default as UsersPreferences } from './UsersPreferences';
 export * from './UsersPreferences';

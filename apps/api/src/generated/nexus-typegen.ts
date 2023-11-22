@@ -195,6 +195,9 @@ export interface NexusGenObjects {
     userId: string; // String!
     username: string; // String!
   }
+  UsersAnswerToQuestion: { // root type
+    answeredCorrectly: boolean; // Boolean!
+  }
   UsersPreferences: { // root type
     mapRange: number; // Int!
     termsAccepted: boolean; // Boolean!
@@ -281,6 +284,7 @@ export interface NexusGenFieldTypes {
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
+    usersAnswerToQuestion: NexusGenRootTypes['UsersAnswerToQuestion'] | null; // UsersAnswerToQuestion
   }
   MonumentLike: { // field return type
     _collectionId: string; // String!
@@ -294,6 +298,7 @@ export interface NexusGenFieldTypes {
     userId: string; // String!
   }
   Mutation: { // field return type
+    answerQuestion: NexusGenRootTypes['UsersAnswerToQuestion']; // UsersAnswerToQuestion!
     createExperience: NexusGenRootTypes['Experience']; // Experience!
     createMonument: NexusGenRootTypes['Monument']; // Monument!
     deleteExperience: boolean; // Boolean!
@@ -348,6 +353,9 @@ export interface NexusGenFieldTypes {
     profilePictureURL: NexusGenScalars['URL']; // URL!
     userId: string; // String!
     username: string; // String!
+  }
+  UsersAnswerToQuestion: { // field return type
+    answeredCorrectly: boolean; // Boolean!
   }
   UsersPreferences: { // field return type
     mapRange: number; // Int!
@@ -425,6 +433,7 @@ export interface NexusGenFieldTypeNames {
     transports: 'Transport'
     user: 'User'
     userId: 'String'
+    usersAnswerToQuestion: 'UsersAnswerToQuestion'
   }
   MonumentLike: { // field return type name
     _collectionId: 'String'
@@ -438,6 +447,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Mutation: { // field return type name
+    answerQuestion: 'UsersAnswerToQuestion'
     createExperience: 'Experience'
     createMonument: 'Monument'
     deleteExperience: 'Boolean'
@@ -493,6 +503,9 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
     username: 'String'
   }
+  UsersAnswerToQuestion: { // field return type name
+    answeredCorrectly: 'Boolean'
+  }
   UsersPreferences: { // field return type name
     mapRange: 'Int'
     termsAccepted: 'Boolean'
@@ -501,6 +514,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    answerQuestion: { // args
+      answer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+      monumentId: string; // String!
+    }
     createExperience: { // args
       input: NexusGenInputs['CreateExperienceInput']; // CreateExperienceInput!
     }

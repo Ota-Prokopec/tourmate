@@ -24,6 +24,8 @@ import {
 	TokenGraphqlDocument,
 	UserInfoDocumentCreate,
 	UserInfoGraphqlDocument,
+	UsersAnswerDocumentCreate,
+	UsersAnswerGraphqlDocument,
 } from '@app/ts-types'
 import { Types } from '@app/appwrite-ssr-graphql'
 
@@ -82,6 +84,10 @@ export const collectionsClient = (
 			'experiences',
 			'question',
 		),
+		usersAnswer: new Collection<UsersAnswerGraphqlDocument, UsersAnswerDocumentCreate>(
+			'experiences',
+			'usersAnswers',
+		),
 	}
 }
 
@@ -132,6 +138,10 @@ export const collectionsAdmin = (
 		question: new Collection<QuestionGraphqlDocument, QuestionDocumentCreate>(
 			'experiences',
 			'question',
+		),
+		usersAnswer: new Collection<UsersAnswerGraphqlDocument, UsersAnswerDocumentCreate>(
+			'experiences',
+			'usersAnswers',
 		),
 	}
 }

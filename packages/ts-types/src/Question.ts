@@ -87,33 +87,3 @@ export type QuestionDocumentCreate = {
 }
 export type QuestionDocument = Document<QuestionDocumentCreate>
 export type QuestionGraphqlDocument = GraphqlDocument<QuestionDocumentCreate>
-
-//answer types
-
-export type TextTypeAnswer = {
-	correctAnswer: string
-}
-export type TextTypeAnswerDocument = Document<TextTypeAnswer>
-export type TextTypeAnswerGraphqlDocument = GraphqlDocument<TextTypeAnswer>
-export type TextTypeAnswerDocumentCreate = TextTypeAnswer
-
-export type NumberTypeAnswer = {
-	correctAnswer: number
-}
-export type NumberTypeAnswerDocument = Document<NumberTypeAnswer>
-export type NumberTypeAnswerGraphqlDocument = GraphqlDocument<NumberTypeAnswer>
-export type NumberTypeAnswerDocumentCreate = NumberTypeAnswer
-
-export type RadioTypeAnswer = {
-	correctAnswer: string
-	pickingAnswers: string[]
-}
-export type RadioTypeAnswerDocument = Document<RadioTypeAnswer>
-export type RadioTypeAnswerGraphqlDocument = GraphqlDocument<RadioTypeAnswer>
-export type RadioTypeAnswerDocumentCreate = RadioTypeAnswer
-
-export type Answer = (
-	| TextTypeAnswerGraphqlDocument
-	| NumberTypeAnswerGraphqlDocument
-	| RadioTypeAnswerGraphqlDocument
-) & { pickingAnswers?: string[] | undefined }

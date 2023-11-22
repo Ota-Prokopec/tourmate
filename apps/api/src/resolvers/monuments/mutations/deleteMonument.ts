@@ -1,7 +1,6 @@
 import { mutationField, stringArg } from 'nexus'
 import { Queries } from '../../../lib/appwrite/appwrite'
 import cloudinary from '@app/cloudinary-server'
-import { NumberTypeAnswer } from '../../../../../../packages/ts-types/src/Question'
 
 //TODO: delete the users answers on question
 
