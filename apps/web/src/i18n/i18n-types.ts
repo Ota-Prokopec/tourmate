@@ -282,6 +282,18 @@ type RootTranslation = {
 	 * Y​o​u​ ​h​a​v​e​ ​a​n​s​w​e​r​e​d​ ​c​o​r​r​e​c​t​l​y
 	 */
 	answeredCorrectly: string
+	/**
+	 * a​n​s​w​e​r
+	 */
+	answer: string
+	/**
+	 * c​o​n​g​r​a​t​u​l​a​t​i​o​n​ ​f​o​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​a​n​s​w​e​r​i​n​g​ ​c​o​r​r​e​c​t​l​y
+	 */
+	congratulationForAnsweringTheQuestionCorrectly: string
+	/**
+	 * Y​o​u​ ​a​n​s​w​e​r​e​d​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​r​o​n​g
+	 */
+	answeredTheQuestionWrong: string
 }
 
 export type TranslationFunctions = {
@@ -545,6 +557,18 @@ export type TranslationFunctions = {
 	 * You have answered correctly
 	 */
 	answeredCorrectly: () => LocalizedString
+	/**
+	 * answer
+	 */
+	answer: () => LocalizedString
+	/**
+	 * congratulation for the question answering correctly
+	 */
+	congratulationForAnsweringTheQuestionCorrectly: () => LocalizedString
+	/**
+	 * You answered the question wrong
+	 */
+	answeredTheQuestionWrong: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -28,6 +28,7 @@ export type PartialDeep<Obj> = {
 	[Key in keyof Obj]?: Obj[Key] extends object ? PartialDeep<Obj[Key]> : Obj[Key]
 }
 
+export type Nullable<T extends any> = T | null | undefined
 // export type inferAppleProperty<T> = T extends (
 // 	param0: any,
 // 	param1: infer Param0,

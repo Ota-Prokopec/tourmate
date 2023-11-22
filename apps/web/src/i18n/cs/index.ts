@@ -78,7 +78,11 @@ const cz = {
 	answerTheQuestion: 'answer the question',
 	cantAnswerTheQuestionTwice:
 		"It seems you have already answered the question wrong, you can't answer twice.",
-	answeredCorrectly: 'You have answered correctly'
+	answeredCorrectly: 'You have answered correctly',
+	answer: 'answer',
+	congratulationForAnsweringTheQuestionCorrectly:
+		'congratulation for the question answering correctly',
+	answeredTheQuestionWrong: 'You answered the question wrong'
 } satisfies BaseTranslation;
 
 export default cz;

@@ -18,6 +18,7 @@
 	export let isLoading: boolean;
 	export let monument: MonumentCard | undefined;
 	$: question = monument?.question;
+	let isAnsweringLoading = false;
 
 	$: usersAnswer = monument?.usersAnswerToQuestion;
 
@@ -31,6 +32,7 @@
 		radioAnswer: string | undefined;
 	}) => {
 		try {
+			isAnsweringLoading = true;
 			if (!question) throw new Error('There is no question in monument');
 			if (!monument) throw new Error('Monument is not defined');
 			let answer: number | string;
@@ -52,6 +54,7 @@
 		} catch (error) {
 			alert('', $LL.answerQuestionError(), { color: 'red' });
 		}
+		isAnsweringLoading = false;
 	};
 
 	let answerQuestionDrawerHidden = true;
@@ -59,9 +62,11 @@
 
 {#if monument?.question}
 	<AnswerQuestionDrawer
+		isLoading={isAnsweringLoading}
 		on:answer={(e) => {
 			anwerQuestion(e.detail);
 		}}
+		{usersAnswer}
 		question={monument?.question}
 		bind:hidden={answerQuestionDrawerHidden}
 	/>

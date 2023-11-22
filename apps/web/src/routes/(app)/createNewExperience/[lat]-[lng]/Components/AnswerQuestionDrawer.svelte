@@ -2,6 +2,7 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import NumberForm from '$lib/components/Experience-monument/question/Forms/NumberForm.svelte';
@@ -9,13 +10,16 @@
 	import TextForm from '$lib/components/Experience-monument/question/Forms/TextForm.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 	import {
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
 		isQuestionTypeText,
 		type Answer,
 		type AnswerType,
-		type Question
+		type Question,
+		type UsersAnswer,
+		type Nullable
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -28,7 +32,10 @@
 		};
 	}>();
 
+	export let isLoading: boolean;
 	export let hidden = true;
+	export let usersAnswer: Nullable<Pick<UsersAnswer, 'answeredCorrectly'>>;
+
 	export let question: Omit<Question<AnswerType>, 'pickingAnswers'> & {
 		pickingAnswers?: Answer['pickingAnswers'];
 	};
@@ -60,16 +67,28 @@
 		</Right>
 	</MediaQuery>
 
-	<Column class="justify-center items-center">
-		<Text>{question.question}</Text>
-		{#if isQuestionTypeText(question)}
-			<TextForm bind:answer={textAnswer} />
-		{:else if isQuestionTypeNumber(question)}
-			<NumberForm bind:answer={numberAnswer} />
-		{:else if isQuestionTypeRadio(question)}
-			<RadioForm answers={question.pickingAnswers} bind:chosenAnswer={radioAnswer} />
-		{/if}
+	{#if usersAnswer?.answeredCorrectly}
+		{$LL.congratulationForAnsweringTheQuestionCorrectly()}
+	{:else if usersAnswer && !usersAnswer.answeredCorrectly}
+		{$LL.answeredTheQuestionWrong()}
+	{:else}
+		<Column class="justify-center items-center">
+			<Text>{question.question}</Text>
+			{#if isQuestionTypeText(question)}
+				<TextForm bind:answer={textAnswer} />
+			{:else if isQuestionTypeNumber(question)}
+				<NumberForm bind:answer={numberAnswer} />
+			{:else if isQuestionTypeRadio(question)}
+				<RadioForm answers={question.pickingAnswers} bind:chosenAnswer={radioAnswer} />
+			{/if}
 
-		<Button on:click={answer} color="green">answer</Button>
-	</Column>
+			<Button on:click={answer} color="green">
+				{#if isLoading}
+					<Loading />
+				{:else}
+					{$LL.answer()}
+				{/if}
+			</Button>
+		</Column>
+	{/if}
 </Drawer>
