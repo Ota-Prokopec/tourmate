@@ -4,6 +4,8 @@ import { PageServerLoad } from './$types';
 import { sdkssr } from '$src/graphql/sdkssr';
 import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
 
+export const ssr = false;
+
 export const load: PageServerLoad = async (event) => {
 	const location = [JSON.parse(event.params.lat), JSON.parse(event.params.lng)];
 
@@ -12,7 +14,7 @@ export const load: PageServerLoad = async (event) => {
 	const nearMonumentsPromise = sdkssr(event).getListOfMonumentsForMap({
 		location: {
 			location: location,
-			rangeMeters: maximalRangeInMetersToConnectMonumentToPicture * 10
+			rangeMeters: maximalRangeInMetersToConnectMonumentToPicture * 40 //TODO: change this 40 number to only 10
 		}
 	});
 

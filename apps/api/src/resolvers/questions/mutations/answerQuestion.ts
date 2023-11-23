@@ -35,6 +35,7 @@ export default mutationField('answerQuestion', {
 		// 	answeredCorrectly: result,
 		// 	userId: ctx.user.$id,
 		// })
+		//FIXME: record the answer into appwrite database
 
 		return {
 			answeredCorrectly: result,

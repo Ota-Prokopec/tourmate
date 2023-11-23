@@ -1,13 +1,14 @@
 <script lang="ts">
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import Right from '$lib/components/Common/Right.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { sdk } from '$src/graphql/sdk';
+	import LL from '$src/i18n/i18n-svelte';
 	import MonumentCreateForm from '$src/routes/(app)/monument/Components/MonumentCreateForm.svelte';
+	import { alert } from '$src/routes/alertStore';
 	import type {
 		Answer,
 		AnswerType,
@@ -19,11 +20,10 @@
 		Topic,
 		Transport
 	} from '@app/ts-types';
-	import { AppwriteException } from 'appwrite';
 	import { Button } from 'flowbite-svelte';
+	import AddQuestionButton from '../Components/AddQuestionButton.svelte';
 	import AddQuestionDrawer from '../Components/AddQuestionDrawer.svelte';
 	import type { PageData } from './$types';
-	import AddQuestionButton from '../Components/AddQuestionButton.svelte';
 
 	export let data: PageData;
 
@@ -42,7 +42,7 @@
 		| undefined;
 
 	let serverResponse: GraphqlDocument<Monument> | undefined;
-	let error: AppwriteException;
+
 	let isLoading = false;
 	let questionDrawerHidden = true;
 
@@ -63,9 +63,10 @@
 					}
 				})
 			).createMonument;
+			//goto('/');
 		} catch (err) {
 			isLoading = false;
-			if (err instanceof AppwriteException) error = err;
+			alert('', $LL.monumentCreateError());
 		}
 		isLoading = false;
 	};
@@ -77,7 +78,7 @@
 	on:save={(e) => (question = e.detail)}
 />
 
-{#if !serverResponse || error}
+{#if !serverResponse}
 	<MonumentCreateForm
 		{placeName}
 		{location}

@@ -9,7 +9,7 @@
 		isQuestionTypeText,
 		type AnswerType,
 		type Question,
-		Answer
+		type Answer
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import NumberForm from '../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';

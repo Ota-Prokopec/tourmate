@@ -1,12 +1,13 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { Location } from '@app/ts-types';
+import type { Base64, Location } from '@app/ts-types';
 
 export type Storage =
 	| {
 			usersLocation?: Location;
 			user?: { username: string; myId: string };
 			cookieFallback?: Record<'a_session_experiences', string>;
+			newExperiencePicture?: string | Base64;
 	  } & Record<string, any>;
 
 const storage: Storage = !browser

@@ -13,7 +13,7 @@
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import {
-		Answer,
+		type Answer,
 		getQuestionType,
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,

@@ -14,7 +14,7 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	const dispatch = createEventDispatcher<{ save: undefined }>();
 
-	export let isUserCloseEnoughToMonument: boolean;
+	export let isUserCloseEnoughToMonument: boolean | null;
 	export let isLoading: boolean;
 	export let monument: MonumentCard | undefined;
 	$: question = monument?.question;
@@ -104,4 +104,10 @@
 			<span>Zveřejnit</span>
 		{/if}
 	</Button>
+
+	{#if !isUserCloseEnoughToMonument && monument}
+		<Popover color="red">
+			{$LL.notAbleToConnectMonumentBecauseOfDistanceErrorMessage()}
+		</Popover>
+	{/if}
 </Column>

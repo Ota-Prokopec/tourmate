@@ -306,6 +306,10 @@ type RootTranslation = {
 	 * m​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
 	 */
 	monumentThatWasConnectedToTheExperienceWasDeleted: string
+	/**
+	 * i​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​s​a​v​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
+	 */
+	monumentCreateError: string
 }
 
 export type TranslationFunctions = {
@@ -593,6 +597,10 @@ export type TranslationFunctions = {
 	 * monument that was connected to the experience was deleted
 	 */
 	monumentThatWasConnectedToTheExperienceWasDeleted: () => LocalizedString
+	/**
+	 * it was not successful to save your monument, please try it again
+	 */
+	monumentCreateError: () => LocalizedString
 }
 
 export type Formatters = {}

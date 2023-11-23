@@ -14,16 +14,15 @@
 	import { navigate } from '$lib/utils/navigator';
 	import imageSvelte from '@app/image-svelte';
 	import { Button, Modal } from 'flowbite-svelte';
-	import { picture } from './pictureStore';
 	import LL, { locale } from '$src/i18n/i18n-svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import ClickOutside from '$lib/components/Common/ClickOutside.svelte';
 
-	if (!picture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
+	if (!$lsStore.newExperiencePicture) navigate('/createNewExperience'); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
 	const location = $lsStore.usersLocation;
 	let isLoading = true;
-	let url = $picture;
+	$: url = $lsStore.newExperiencePicture;
 	let locationTextMenuOpened = false;
 
 	const save = async () => {
@@ -39,6 +38,7 @@
 		}
 	});
 	const addLocationLabel = async () => {
+		if (!url) throw new Error('there is no experience picture in lsStore');
 		await actions.load(url);
 		const ctx = await actions.getCtx();
 		const canvas = ctx?.canvas;
@@ -122,7 +122,7 @@
 </Modal>
 
 {#if !isLoading}
-	<ImageEditor options={editorOptions} bind:result={$picture} {url}>
+	<ImageEditor options={editorOptions} bind:result={$lsStore.newExperiencePicture} {url}>
 		<span slot="tools">
 			<Icon on:click={() => (locationTextMenuOpened = true)} class=" text-4xl"><IconText /></Icon>
 		</span>

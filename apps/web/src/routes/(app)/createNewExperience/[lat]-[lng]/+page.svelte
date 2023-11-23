@@ -8,17 +8,20 @@
 	import { alert } from '$src/routes/alertStore';
 	import type { MonumentCard } from '@app/ts-types';
 	import { Button, Card, Img } from 'flowbite-svelte';
-	import { picture } from '../editPicture/pictureStore';
 	import type { PageData } from './$types';
 	import Center from './Components/Center.svelte';
 	import Footer from './Components/Footer.svelte';
 	import Header from './Components/Header.svelte';
 	import Drawer from './Components/MonumentNotFoundDrawer.svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
+	import { lsStore } from '$lib/utils/lsStore';
+
+	if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
 	export let data: PageData;
 	let isLoading = false;
 
+	const picture = $lsStore.newExperiencePicture;
 	const location = data.newExperience.location;
 	let hideDrawer = true;
 	let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
@@ -29,17 +32,18 @@
 
 	let connectedMonumentId: string | undefined = undefined;
 
-	let isUserCloseEnoughToMonument: boolean = false;
+	let isUserCloseEnoughToMonument: boolean | null = null;
 
 	const save = async () => {
 		if (!location) throw new Error('user has no location');
 		if (!connectedMonumentId) throw new Error('no monument is connected');
+		if (!picture) throw new Error('no picture found in lsStore');
 
 		await sdk.createExperience({
 			input: {
 				connnectedMonumentId: connectedMonumentId,
 				location: location,
-				picture: $picture
+				picture: picture
 			}
 		});
 		navigate('/');
@@ -77,7 +81,7 @@
 	<Card class="w-full h-auto absolute left-0 !z-20 mobile:w-full mobile:max-w-none">
 		<Header {location} placeName={data.newExperience.placeName} />
 
-		<Img src={$picture} />
+		<Img src={picture} />
 
 		<Center
 			on:disconnect={disconnectMonument}

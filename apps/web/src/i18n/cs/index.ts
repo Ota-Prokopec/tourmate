@@ -86,7 +86,8 @@ const cz = {
 	notAbleToTakeAPictureWithTheMonument: 'You are not able to take a picture with this monument',
 	nowYouCanTakeAPictureWithTheMonument: 'Now you can take a picture with this monument',
 	monumentThatWasConnectedToTheExperienceWasDeleted:
-		'monument that was connected to the experience was deleted'
+		'monument that was connected to the experience was deleted',
+	monumentCreateError: 'it was not successful to save your monument, please try it again'
 } satisfies BaseTranslation;
 
 export default cz;
