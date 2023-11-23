@@ -7,11 +7,10 @@ errors
 
 
 1) login too many times errors                                          - done
-2) question in monument to be able to take a pictue
-3) add +error.svelte for global use
+2) question in monument to be able to take a pictue                     - done
+3) add +error.svelte for global use                                     - done
 4) dark mode
 
-!!image for experience instead of having store, i should store it into localstorage
 !! when i delete a monument that has pictures connected, pictures will then be without a monument so i have to do that when i load exps the {monumnet: nullable(monument)}
 
 

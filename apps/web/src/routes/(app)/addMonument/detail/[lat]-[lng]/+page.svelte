@@ -49,6 +49,7 @@
 	const create = async () => {
 		isLoading = true;
 		try {
+			if (!image) throw new Error('image is required');
 			serverResponse = (
 				await sdk.createMonument({
 					input: {

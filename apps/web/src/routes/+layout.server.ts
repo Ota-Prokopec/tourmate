@@ -1,4 +1,4 @@
-import { ServerLoad, redirect } from '@sveltejs/kit';
+import { ServerLoad, error, redirect } from '@sveltejs/kit';
 import { sdkssr } from '$src/graphql/sdkssr';
 
 export const load: ServerLoad = async (event) => {

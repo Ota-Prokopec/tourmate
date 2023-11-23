@@ -1,23 +1,19 @@
-import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
-import { isBase64 } from '@app/utils'
-import { arg, mutationField } from 'nexus'
 import cloudinary from '@app/cloudinary-server'
 import {
-	Question,
-	AnswerType,
-	TextTypeAnswerGraphqlDocument,
-	RadioTypeAnswerGraphqlDocument,
-	NumberTypeAnswerGraphqlDocument,
-	isQuestionTypeNumber,
-	isQuestionTypeText,
-	isQuestionTypeRadio,
-	GraphqlDocument,
 	Answer,
+	AnswerType,
+	GraphqlDocument,
+	Question,
+	isQuestionTypeNumber,
+	isQuestionTypeRadio,
+	isQuestionTypeText,
 } from '@app/ts-types'
+import { isBase64 } from '@app/utils'
+import { arg, mutationField } from 'nexus'
+import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
 
-import { ApolloError } from 'apollo-server-express'
-import appwrite from '../../../lib/appwrite/appwrite'
 import { permissions } from '@app/appwrite-ssr-graphql'
+import appwrite from '../../../lib/appwrite/appwrite'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -28,9 +24,7 @@ export default mutationField('createMonument', {
 			const { collections } = ctx.appwrite
 
 			// create image for monument
-			const filePromise = isBase64(args.input.picture)
-				? cloudinary.monuments.uploadBase64(args.input.picture)
-				: null
+			const filePromise = cloudinary.monuments.uploadBase64(args.input.picture)
 
 			//create place-detail for monument
 			const placeDetailPromise = collections.placeDetail.createDocument(
@@ -60,7 +54,7 @@ export default mutationField('createMonument', {
 					about: args.input.about,
 					name: args.input.name,
 					userId: ctx.user.$id,
-					pictureURL: file?.url,
+					pictureURL: file.url,
 					questionId: question?._id,
 				},
 				[ctx.user],

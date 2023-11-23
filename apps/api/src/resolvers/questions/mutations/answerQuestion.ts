@@ -1,3 +1,4 @@
+import { permissions } from '@app/appwrite-ssr-graphql'
 import { Answer } from '@app/ts-types'
 import { ApolloError } from 'apollo-server-express'
 import { mutationField, stringArg } from 'nexus'
@@ -30,12 +31,14 @@ export default mutationField('answerQuestion', {
 		const result: boolean =
 			answerDoc.correctAnswer.toString().localeCompare(args.answer.toString()) === 0
 
-		// const usersAnswerDocument = await collections.usersAnswer.createDocument({
-		// 	monumentId: monument._id,
-		// 	answeredCorrectly: result,
-		// 	userId: ctx.user.$id,
-		// })
-		//FIXME: record the answer into appwrite database
+		const usersAnswerDocument = await collections.usersAnswer.createDocument(
+			{
+				monumentId: monument._id,
+				answeredCorrectly: result,
+				userId: ctx.user.$id,
+			},
+			permissions.owner(ctx.user.$id, monument.userId), //you set permission to yourself but also to the creator that he could delete it when he deletes the entire monument
+		)
 
 		return {
 			answeredCorrectly: result,

@@ -52,7 +52,7 @@ export interface NexusGenInputs {
     about: string; // String!
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
-    picture?: string | null; // String
+    picture: string; // String!
     placeName: string; // String!
     question?: NexusGenInputs['QuestionInput'] | null; // QuestionInput
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
@@ -143,7 +143,7 @@ export interface NexusGenObjects {
     about?: string | null; // String
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
-    pictureURL?: NexusGenScalars['URL'] | null; // URL
+    pictureURL: NexusGenScalars['URL']; // URL!
     placeDetailId: string; // String!
     questionId?: string | null; // String
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
@@ -275,7 +275,7 @@ export interface NexusGenFieldTypes {
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
     nearExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
-    pictureURL: NexusGenScalars['URL'] | null; // URL
+    pictureURL: NexusGenScalars['URL']; // URL!
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
     question: NexusGenRootTypes['Question'] | null; // Question

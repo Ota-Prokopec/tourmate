@@ -73,6 +73,8 @@
 
 	let className = '';
 	export { className as class };
+
+	//TODO: when experience does not have any monument => because monument was deleted => create a card or something that says the monument was deleted at this experience
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>

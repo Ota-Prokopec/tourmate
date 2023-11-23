@@ -37,7 +37,7 @@ export default objectType({
 		t.list.field('topics', { type: 'Topic' })
 		t.string('placeDetailId')
 		t.list.field('transports', { type: 'Transport' })
-		t.nullable.field('pictureURL', {
+		t.field('pictureURL', {
 			type: 'URL',
 			description: 'This it an URL not id of picture',
 		})

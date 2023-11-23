@@ -29,6 +29,12 @@ export default mutationField('deleteMonument', {
 			monumentLikesDeleteQueries,
 		])
 
+		//delete users-answers that users answered to this monument
+		const deleteUsersAnswersPromise = collections.usersAnswer.deleteAllDocuments([
+			Queries.usersAnswer.equal('monumentId', monument._id),
+		])
+
+		//question
 		const deleteQuestionAnswerPromise = question
 			? question.answerType === 'text'
 				? collections.answerTypeText.deleteDocument(question.answerId)
@@ -64,6 +70,7 @@ export default mutationField('deleteMonument', {
 			placeDetailDeletePromise,
 			deleteQuestionAnswerPromise,
 			deleteQuestionPromise,
+			deleteUsersAnswersPromise,
 		])
 
 		return true

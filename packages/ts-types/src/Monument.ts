@@ -10,7 +10,7 @@ export type Monument = {
 	userId: string
 	location: Location
 	name: string
-	pictureURL?: URL | undefined | null
+	pictureURL: URL
 	placeDetailId: string
 	topics: Topic[]
 	transports: Transport[]

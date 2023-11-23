@@ -1,17 +1,11 @@
 <script lang="ts">
-	import type { Location } from '@app/ts-types';
-	import { getUsersLocation } from '@app/utils';
-	import FullPageLoading from '../Common/FullPageLoading.svelte';
-	import { twMerge } from 'tailwind-merge';
-	import lsSvelte from '$lib/utils/lsStore';
-	import {
-		FillExtrusionLayer,
-		GeolocateControl,
-		MapLibre,
-		NavigationControl
-	} from 'svelte-maplibre';
-	import type { Map } from 'maplibre-gl';
 	import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
+	import lsSvelte from '$lib/utils/lsStore';
+	import type { Location } from '@app/ts-types';
+	import type { Map } from 'maplibre-gl';
+	import { FillExtrusionLayer, GeolocateControl, MapLibre } from 'svelte-maplibre';
+	import { twMerge } from 'tailwind-merge';
+	import FullPageLoading from '../Common/FullPageLoading.svelte';
 
 	export let map: Map | undefined = undefined;
 	export let location: Location | undefined = $lsSvelte.usersLocation;

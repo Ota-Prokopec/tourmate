@@ -89,7 +89,9 @@ const en = {
 	nowYouCanTakeAPictureWithTheMonument: 'Now you can take a picture with this monument',
 	monumentThatWasConnectedToTheExperienceWasDeleted:
 		'monument that was connected to the experience was deleted',
-	monumentCreateError: 'it was not successful to save your monument, please try it again'
+	monumentCreateError: 'it was not successful to save your monument, please try it again',
+	errorMessage: 'We are sorry, there was unpredictable error',
+	tryItAgain: 'try it again'
 } satisfies BaseTranslation;
 
 export default en;

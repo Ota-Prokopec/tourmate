@@ -38,7 +38,7 @@ input CreateMonumentInput {
   about: String!
   location: Location!
   name: String!
-  picture: String
+  picture: String!
   placeName: String!
   question: QuestionInput
   topics: [Topic!]!
@@ -101,7 +101,7 @@ type Monument {
   nearExperiences: [Experience!]!
 
   """This it an URL not id of picture"""
-  pictureURL: URL
+  pictureURL: URL!
   placeDetail: PlaceDetail!
   placeDetailId: String!
   question: Question

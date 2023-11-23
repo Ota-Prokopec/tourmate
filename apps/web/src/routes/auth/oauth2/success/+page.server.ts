@@ -1,12 +1,9 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { SERVER_HOSTNAME_COOKIES, APPWRITE_PROJECT_ID } from '$env/static/private';
-
-console.log(SERVER_HOSTNAME_COOKIES);
 
 const params = {
 	sameSite: 'lax',
-	domain: SERVER_HOSTNAME_COOKIES,
+	domain: process.env.SERVER_HOSTNAME_COOKIES,
 	secure: true,
 	maxAge: 1000000000,
 	httpOnly: true,
@@ -19,8 +16,8 @@ export const load: PageServerLoad = (event) => {
 
 	if (!secret) throw error(409);
 
-	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}`, secret, params);
-	event.cookies.set(`a_session_${APPWRITE_PROJECT_ID}_legacy`, secret, params);
+	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, params);
+	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}_legacy`, secret, params);
 
 	return {
 		session: secret

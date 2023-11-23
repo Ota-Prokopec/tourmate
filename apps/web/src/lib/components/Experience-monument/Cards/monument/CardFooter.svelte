@@ -15,7 +15,7 @@
 	import TypeWriter from '$lib/components/Common/TypeWriter.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
-	import QuestionIcon from '../../question/QuestionIcon.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
@@ -64,7 +64,14 @@
 			{/each}
 		</Row>
 		{#if monument.question}
-			<QuestionIcon popover={$LL.monumentIncludesQuestion()} />
+			<Icon>
+				<IconQuestion />
+			</Icon>
+			<Popover placement="right" class="min-w-[200px]" color="blue">
+				<Text>
+					{monument.question.question}
+				</Text>
+			</Popover>
 		{/if}
 	</Column>
 </Row>

@@ -310,6 +310,14 @@ type RootTranslation = {
 	 * i​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​s​a​v​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
 	 */
 	monumentCreateError: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​t​h​e​r​e​ ​w​a​s​ ​u​n​p​r​e​d​i​c​t​a​b​l​e​ ​e​r​r​o​r
+	 */
+	errorMessage: string
+	/**
+	 * t​r​y​ ​i​t​ ​a​g​a​i​n
+	 */
+	tryItAgain: string
 }
 
 export type TranslationFunctions = {
@@ -601,6 +609,14 @@ export type TranslationFunctions = {
 	 * it was not successful to save your monument, please try it again
 	 */
 	monumentCreateError: () => LocalizedString
+	/**
+	 * We are sorry, there was unpredictable error
+	 */
+	errorMessage: () => LocalizedString
+	/**
+	 * try it again
+	 */
+	tryItAgain: () => LocalizedString
 }
 
 export type Formatters = {}

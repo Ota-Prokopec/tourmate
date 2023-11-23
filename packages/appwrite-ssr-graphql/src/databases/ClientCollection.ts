@@ -163,6 +163,16 @@ export default (client: Client) => {
 			)
 		}
 
+		//delete all documents with node-appwrite
+		async deleteAllDocuments(filters: string[] = []): Promise<string[]> {
+			const { total } = await this.listDocuments([...filters, Query.limit(1)])
+			if (total === 0) return []
+			const { documents } = await this.listDocuments([...filters, Query.limit(total)])
+			return await Promise.all(
+				documents.map((document) => this.deleteDocument(document._id)),
+			)
+		}
+
 		//get document with node-appwrite
 		async getDocument(documentId: string): Promise<TDocumentGet | null>
 		async getDocument(queries: string[]): Promise<TDocumentGet | null>
