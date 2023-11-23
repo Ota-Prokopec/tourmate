@@ -1,19 +1,40 @@
 <script lang="ts">
+	import type { Location } from '@app/ts-types';
 	import MapComponent from './Map.svelte';
 	import type { Map } from 'maplibre-gl';
+	import { lineDistance } from '@turf/turf';
+	import type { Feature, LineString } from 'geojson';
+	import { isLocation } from '@app/utils';
 
 	export let map: Map | undefined = undefined;
 
-	const distanceContainer = document.getElementById('distance');
+	export let points: Location[] = [];
+
+	/**
+	 * @param distance is in meters
+	 */
+	export let distance: number = 0;
+	export let lines: Feature<LineString>[] | undefined;
+
+	let distanceContainer: HTMLElement | null;
 
 	// GeoJSON object to hold our measurement features
-	const geojson = {
+	const geojson: {
+		type: string;
+		features: any[];
+	} = {
 		type: 'FeatureCollection',
 		features: []
 	};
 
 	// Used to draw a line between points
-	const linestring = {
+	const linestring: {
+		type: string;
+		geometry: {
+			type: string;
+			coordinates: any[];
+		};
+	} = {
 		type: 'Feature',
 		geometry: {
 			type: 'LineString',
@@ -55,6 +76,7 @@
 		});
 
 		map.on('click', (e) => {
+			if (!map) throw new Error('map is not defined');
 			const features = map.queryRenderedFeatures(e.point, {
 				layers: ['measure-points']
 			});
@@ -64,6 +86,7 @@
 			if (geojson.features.length > 1) geojson.features.pop();
 
 			// Clear the Distance container to populate it with a new value
+			if (!distanceContainer) throw new Error('distanceContainer is not defined');
 			distanceContainer.innerHTML = '';
 
 			// If a feature was clicked, remove it from the map
@@ -85,36 +108,46 @@
 				};
 
 				geojson.features.push(point);
+
+				const location = [point.geometry.coordinates[0], point.geometry.coordinates[1]];
+				if (!isLocation(location)) throw new Error('the output is not type of Location');
+				points = [...points, location];
 			}
 
 			if (geojson.features.length > 1) {
 				linestring.geometry.coordinates = geojson.features.map((point) => {
+					if (!point.geometry) throw new Error('point.geometry is not defined');
 					return point.geometry.coordinates;
 				});
 
 				geojson.features.push(linestring);
-
-				// Populate the distanceContainer with total distance
-				const value = document.createElement('pre');
-				value.textContent = `Total distance: ${turf.length(linestring).toLocaleString()}km`;
-				distanceContainer.appendChild(value);
+				distance = lineDistance(linestring, 'kilometers') * 1000;
+				lines.push(linestring);
 			}
 
-			map.getSource('geojson').setData(geojson);
+			if (!map) throw new Error('map is not defined');
+			const source = map.getSource('geojson');
+			if (!source) throw new Error('source is not defined');
+			source.setData(geojson);
 		});
 	});
 
-	map?.on('mousemove', (e) => {
+	$: map?.on('mousemove', (e) => {
+		if (!map) throw new Error('map is not defined');
+
 		const features = map.queryRenderedFeatures(e.point, {
 			layers: ['measure-points']
 		});
 		// UI indicator for clicking/hovering a point on the map
 		map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair';
 	});
+
+	let className = '';
+	export { className as class };
 </script>
 
-<MapComponent bind:map />
-<div id="distance" class="distance-container" />
+<MapComponent class={className} bind:map />
+<div bind:this={distanceContainer} id="distance" class="distance-container" />
 
 <style>
 	.distance-container {
