@@ -294,6 +294,18 @@ type RootTranslation = {
 	 * Y​o​u​ ​a​n​s​w​e​r​e​d​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​r​o​n​g
 	 */
 	answeredTheQuestionWrong: string
+	/**
+	 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+	 */
+	notAbleToTakeAPictureWithTheMonument: string
+	/**
+	 * N​o​w​ ​y​o​u​ ​c​a​n​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+	 */
+	nowYouCanTakeAPictureWithTheMonument: string
+	/**
+	 * m​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
+	 */
+	monumentThatWasConnectedToTheExperienceWasDeleted: string
 }
 
 export type TranslationFunctions = {
@@ -569,6 +581,18 @@ export type TranslationFunctions = {
 	 * You answered the question wrong
 	 */
 	answeredTheQuestionWrong: () => LocalizedString
+	/**
+	 * You are not able to take a picture with this monument
+	 */
+	notAbleToTakeAPictureWithTheMonument: () => LocalizedString
+	/**
+	 * Now you can take a picture with this monument
+	 */
+	nowYouCanTakeAPictureWithTheMonument: () => LocalizedString
+	/**
+	 * monument that was connected to the experience was deleted
+	 */
+	monumentThatWasConnectedToTheExperienceWasDeleted: () => LocalizedString
 }
 
 export type Formatters = {}

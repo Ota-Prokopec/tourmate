@@ -3,6 +3,7 @@ import { Queries } from '../../../lib/appwrite/appwrite'
 import cloudinary from '@app/cloudinary-server'
 
 //TODO: delete the users answers on question
+//FIXME: when i delete a monument where experiences are, experiences will become free-experiences
 
 export default mutationField('deleteMonument', {
 	type: 'Boolean',

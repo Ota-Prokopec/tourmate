@@ -121,7 +121,13 @@
 				/>
 			</CardImage>
 
-			<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
+			{#if experience.connectedMonument}
+				<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
+			{:else}
+				<Text>
+					{$LL.monumentThatWasConnectedToTheExperienceWasDeleted()}
+				</Text>
+			{/if}
 		</Column>
 	</Card>
 {/if}

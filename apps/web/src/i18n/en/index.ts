@@ -84,7 +84,11 @@ const en = {
 	answer: 'answer',
 	congratulationForAnsweringTheQuestionCorrectly:
 		'congratulation for the question answering correctly',
-	answeredTheQuestionWrong: 'You answered the question wrong'
+	answeredTheQuestionWrong: 'You answered the question wrong',
+	notAbleToTakeAPictureWithTheMonument: 'You are not able to take a picture with this monument',
+	nowYouCanTakeAPictureWithTheMonument: 'Now you can take a picture with this monument',
+	monumentThatWasConnectedToTheExperienceWasDeleted:
+		'monument that was connected to the experience was deleted'
 } satisfies BaseTranslation;
 
 export default en;

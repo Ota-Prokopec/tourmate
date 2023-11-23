@@ -241,7 +241,7 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    connectedMonument: NexusGenRootTypes['Monument']; // Monument!
+    connectedMonument: NexusGenRootTypes['Monument'] | null; // Monument
     connectedMonumentId: string; // String!
     liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!

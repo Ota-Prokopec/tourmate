@@ -22,6 +22,8 @@
 
 	$: usersAnswer = monument?.usersAnswerToQuestion;
 
+	$: ableToAnswer = monument?.question && !usersAnswer && isUserCloseEnoughToMonument;
+
 	$: ableToSave =
 		(isUserCloseEnoughToMonument && monument && !monument.question) ||
 		(isUserCloseEnoughToMonument && monument?.question && usersAnswer?.answeredCorrectly);
@@ -75,7 +77,7 @@
 <Column class="w-full gap-4 p-4">
 	{#if monument?.question && !ableToSave}
 		<Button
-			disabled={!(usersAnswer?.answeredCorrectly || !usersAnswer)}
+			disabled={!ableToAnswer}
 			color="green"
 			on:click={() => (answerQuestionDrawerHidden = false)}
 		>

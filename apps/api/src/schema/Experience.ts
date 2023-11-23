@@ -64,17 +64,14 @@ export default objectType({
 			},
 		})
 		t.field('connectedMonument', {
-			type: 'Monument',
+			type: nullable('Monument'),
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
 				const monument = await collections.monument.getDocument([
 					Queries.monument.equal('$id', source.connectedMonumentId),
 				])
 
-				if (!monument)
-					throw new Error(
-						'could not find a monument that corespondes to connectedMonumentId',
-					)
+				if (!monument) return null
 
 				return fromLatLongIntoLocation(monument)[0]
 			},

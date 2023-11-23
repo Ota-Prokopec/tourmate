@@ -30,11 +30,11 @@ export default mutationField('answerQuestion', {
 		const result: boolean =
 			answerDoc.correctAnswer.toString().localeCompare(args.answer.toString()) === 0
 
-		const usersAnswerDocument = await collections.usersAnswer.createDocument({
-			monumentId: monument._id,
-			answeredCorrectly: result,
-			userId: ctx.user.$id,
-		})
+		// const usersAnswerDocument = await collections.usersAnswer.createDocument({
+		// 	monumentId: monument._id,
+		// 	answeredCorrectly: result,
+		// 	userId: ctx.user.$id,
+		// })
 
 		return {
 			answeredCorrectly: result,
