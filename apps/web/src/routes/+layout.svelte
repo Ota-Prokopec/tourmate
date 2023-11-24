@@ -1,17 +1,17 @@
 <script lang="ts">
-	import '../app.css';
 	import { navigating } from '$app/stores';
-	import { QueryClientProvider, QueryClient } from '@sveltestack/svelte-query';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import { string } from 'zod';
 	import Alert from '$lib/components/Alert/Alert.svelte';
-	import type { Color } from '$lib/components/Alert/Alert';
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import { alertStore } from './alertStore';
+	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
 	import { Button } from 'flowbite-svelte';
+	import '../app.css';
+	import { alertStore } from './alertStore';
 
 	const queryClient = new QueryClient();
 </script>
+
+<svelte:body class="dark" />
 
 <Alert
 	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"

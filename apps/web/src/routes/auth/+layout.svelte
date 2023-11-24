@@ -3,7 +3,7 @@
 	import { Avatar, Img } from 'flowbite-svelte';
 </script>
 
-<Column class="justify-start w-full items-center gap-0">
+<Column class="justify-start w-full items-center gap-0 dark:bg-black">
 	<Avatar
 		rounded
 		border

@@ -19,8 +19,6 @@ const parseLocalStorageValue = (value: string) => {
 	}
 };
 
-console.log(parseLocalStorageValue('ahohj'));
-
 const storage: Storage = !browser
 	? {}
 	: Object.entries<string>(localStorage)
