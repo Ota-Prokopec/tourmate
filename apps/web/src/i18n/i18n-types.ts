@@ -318,6 +318,10 @@ type RootTranslation = {
 	 * t​r​y​ ​i​t​ ​a​g​a​i​n
 	 */
 	tryItAgain: string
+	/**
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​s​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​d​u​r​i​n​g​ ​y​o​u​r​ ​w​i​s​h​e​d​ ​p​a​t​h
+	 */
+	planningMapError: string
 }
 
 export type TranslationFunctions = {
@@ -617,6 +621,10 @@ export type TranslationFunctions = {
 	 * try it again
 	 */
 	tryItAgain: () => LocalizedString
+	/**
+	 * We are sorry, something went wrong during your wished path
+	 */
+	planningMapError: () => LocalizedString
 }
 
 export type Formatters = {}

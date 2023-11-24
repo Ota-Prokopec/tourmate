@@ -89,7 +89,8 @@ const cz = {
 		'monument that was connected to the experience was deleted',
 	monumentCreateError: 'it was not successful to save your monument, please try it again',
 	errorMessage: 'We are sorry, there was unpredictable error',
-	tryItAgain: 'try it again'
+	tryItAgain: 'try it again',
+	planningMapError: 'We are sorry, something went wrong during your wished path'
 } satisfies BaseTranslation;
 
 export default cz;

@@ -5,16 +5,21 @@
 	import { lineDistance } from '@turf/turf';
 	import type { Feature, LineString } from 'geojson';
 	import { isLocation } from '@app/utils';
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher<{
+		newPoint: { location: Location };
+	}>();
 
 	export let map: Map | undefined = undefined;
 
-	export let points: Location[] = [];
+	export let maxZoom: number | undefined = undefined;
+	export let minZoom: number | undefined = undefined;
 
 	/**
-	 * @param distance is in meters
+	 * @param wholeDistanceInMeters is in meters
 	 */
-	export let distance: number = 0;
-	export let lines: Feature<LineString>[] | undefined;
+	export let wholeDistanceInMeters: number = 0;
+	export let lines: Feature<LineString>[] = [];
 
 	let distanceContainer: HTMLElement | null;
 
@@ -28,14 +33,10 @@
 	};
 
 	// Used to draw a line between points
-	const linestring: {
-		type: string;
-		geometry: {
-			type: string;
-			coordinates: any[];
-		};
-	} = {
+	const linestring: Feature<LineString> = {
 		type: 'Feature',
+		id: 'id',
+		properties: {},
 		geometry: {
 			type: 'LineString',
 			coordinates: []
@@ -111,7 +112,8 @@
 
 				const location = [point.geometry.coordinates[0], point.geometry.coordinates[1]];
 				if (!isLocation(location)) throw new Error('the output is not type of Location');
-				points = [...points, location];
+
+				dispatch('newPoint', { location: location });
 			}
 
 			if (geojson.features.length > 1) {
@@ -121,8 +123,8 @@
 				});
 
 				geojson.features.push(linestring);
-				distance = lineDistance(linestring, 'kilometers') * 1000;
-				lines.push(linestring);
+				wholeDistanceInMeters = lineDistance(linestring, 'kilometers') * 1000;
+				lines = [...lines, linestring];
 			}
 
 			if (!map) throw new Error('map is not defined');
@@ -146,7 +148,9 @@
 	export { className as class };
 </script>
 
-<MapComponent class={className} bind:map />
+<MapComponent {maxZoom} {minZoom} class={className} bind:map>
+	<slot />
+</MapComponent>
 <div bind:this={distanceContainer} id="distance" class="distance-container" />
 
 <style>

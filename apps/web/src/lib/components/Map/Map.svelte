@@ -11,6 +11,8 @@
 	export let location: Location | undefined = $lsSvelte.usersLocation;
 
 	export let zoom: number = 16;
+	export let maxZoom: number | undefined = undefined;
+	export let minZoom: number | undefined = undefined;
 	export let deg = 0;
 	let style = `https://api.maptiler.com/maps/basic-v2/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
 
@@ -22,6 +24,8 @@
 	{#if location}
 		<MapLibre
 			{style}
+			{maxZoom}
+			{minZoom}
 			bind:map
 			center={[location[1], location[0]]}
 			zoom={14}

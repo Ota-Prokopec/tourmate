@@ -8,6 +8,7 @@
 	import { user } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import { DarkMode } from 'flowbite-svelte';
 
 	let isLoading = false;
 
@@ -29,6 +30,7 @@
 	<FullPageLoading />
 {:else}
 	<Column class="w-full justify-center items-center h-full">
+		<DarkMode />
 		<LogOutButton on:click={logOut} />
 	</Column>
 {/if}
