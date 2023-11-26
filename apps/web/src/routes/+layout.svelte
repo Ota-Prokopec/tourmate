@@ -7,11 +7,18 @@
 	import { Button } from 'flowbite-svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
+	import { onMount } from 'svelte';
+	import { lsStore } from '$lib/utils/lsStore';
+
+	let mounted = false;
+	onMount(() => (mounted = true));
 
 	const queryClient = new QueryClient();
-</script>
 
-<svelte:body class="dark" />
+	$: theme = $lsStore['color-theme'];
+
+	$: if (mounted && typeof theme === 'string') document.body.classList.add(theme);
+</script>
 
 <Alert
 	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"

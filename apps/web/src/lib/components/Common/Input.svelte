@@ -4,6 +4,7 @@
 	import { twMerge } from 'tailwind-merge';
 	import Popover from './Popover.svelte';
 	import { Control } from 'svelte-maplibre';
+	import { Input } from 'flowbite-svelte';
 
 	const dispatch = createEventDispatcher();
 	export let value = '';
@@ -122,6 +123,7 @@
 			readOnly && 'cursor-pointer',
 			floatingLabel &&
 				'w-full text-gray-900 bg-transparent border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
+			'bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400',
 			className
 		)}
 		{placeholder}
@@ -138,7 +140,7 @@
 	{#if floatingLabel}
 		<label
 			for={id}
-			class="absolute ml-4 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+			class="absolute ml-4 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-700 rounded-full px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
 			>{floatingLabel}</label
 		>
 	{/if}

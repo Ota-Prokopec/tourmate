@@ -30,7 +30,9 @@
 	const blurryClass = 'opacity-[0.7]  ';
 </script>
 
-<button class="w-auto flex flex-wrap flex-row gap-10 items-center justify-center">
+<button
+	class="w-auto flex flex-wrap flex-row gap-10 items-center justify-center dark:bg-white rounded-full"
+>
 	<Icon
 		on:click={() => dispatch('click')}
 		{disabled}
