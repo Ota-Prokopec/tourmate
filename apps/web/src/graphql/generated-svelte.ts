@@ -344,12 +344,12 @@ export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
-export type GetListOfAccountsBySearchingQueryVariables = Exact<{
+export type GetListOfUsersBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetListOfAccountsBySearchingQuery = { __typename?: 'Query', getUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
+export type GetListOfUsersBySearchingQuery = { __typename?: 'Query', getUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
 
 export type GetProfileQueryVariables = Exact<{
   myId: Scalars['String']['input'];
@@ -554,8 +554,8 @@ export const GetAccountDoc = gql`
   }
 }
     `;
-export const GetListOfAccountsBySearchingDoc = gql`
-    query getListOfAccountsBySearching($searchingText: String) {
+export const GetListOfUsersBySearchingDoc = gql`
+    query getListOfUsersBySearching($searchingText: String) {
   getUsers(searchingText: $searchingText) {
     _createdAt
     _updatedAt
@@ -1545,28 +1545,28 @@ export const getAccount = (
             return result;
           }
         
-export const getListOfAccountsBySearching = (
+export const getListOfUsersBySearching = (
             options: Omit<
-              WatchQueryOptions<GetListOfAccountsBySearchingQueryVariables>, 
+              WatchQueryOptions<GetListOfUsersBySearchingQueryVariables>, 
               "query"
             >
           ): Readable<
-            ApolloQueryResult<GetListOfAccountsBySearchingQuery> & {
+            ApolloQueryResult<GetListOfUsersBySearchingQuery> & {
               query: ObservableQuery<
-                GetListOfAccountsBySearchingQuery,
-                GetListOfAccountsBySearchingQueryVariables
+                GetListOfUsersBySearchingQuery,
+                GetListOfUsersBySearchingQueryVariables
               >;
             }
           > => {
             const q = client.watchQuery({
-              query: GetListOfAccountsBySearchingDoc,
+              query: GetListOfUsersBySearchingDoc,
               ...options,
             });
             var result = readable<
-              ApolloQueryResult<GetListOfAccountsBySearchingQuery> & {
+              ApolloQueryResult<GetListOfUsersBySearchingQuery> & {
                 query: ObservableQuery<
-                  GetListOfAccountsBySearchingQuery,
-                  GetListOfAccountsBySearchingQueryVariables
+                  GetListOfUsersBySearchingQuery,
+                  GetListOfUsersBySearchingQueryVariables
                 >;
               }
             >(

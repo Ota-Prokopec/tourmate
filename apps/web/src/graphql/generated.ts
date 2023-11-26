@@ -340,12 +340,12 @@ export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
-export type GetListOfAccountsBySearchingQueryVariables = Exact<{
+export type GetListOfUsersBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetListOfAccountsBySearchingQuery = { __typename?: 'Query', getUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
+export type GetListOfUsersBySearchingQuery = { __typename?: 'Query', getUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
 
 export type GetProfileQueryVariables = Exact<{
   myId: Scalars['String']['input'];
@@ -550,8 +550,8 @@ export const GetAccountDocument = gql`
   }
 }
     `;
-export const GetListOfAccountsBySearchingDocument = gql`
-    query getListOfAccountsBySearching($searchingText: String) {
+export const GetListOfUsersBySearchingDocument = gql`
+    query getListOfUsersBySearching($searchingText: String) {
   getUsers(searchingText: $searchingText) {
     _createdAt
     _updatedAt
@@ -1485,8 +1485,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getAccount(variables?: GetAccountQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAccountQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAccountQuery>(GetAccountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAccount', 'query');
     },
-    getListOfAccountsBySearching(variables?: GetListOfAccountsBySearchingQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfAccountsBySearchingQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfAccountsBySearchingQuery>(GetListOfAccountsBySearchingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfAccountsBySearching', 'query');
+    getListOfUsersBySearching(variables?: GetListOfUsersBySearchingQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfUsersBySearchingQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfUsersBySearchingQuery>(GetListOfUsersBySearchingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfUsersBySearching', 'query');
     },
     getProfile(variables: GetProfileQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProfileQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProfileQuery>(GetProfileDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getProfile', 'query');

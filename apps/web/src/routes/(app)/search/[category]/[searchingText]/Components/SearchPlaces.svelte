@@ -1,12 +1,12 @@
 <script lang="ts">
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
+	import TransportType from '$lib/components/Experience-monument/transportType/TransportType.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard, Topic, Transport } from '@app/ts-types';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
 	import { Skeleton } from 'flowbite-svelte';
-	import TransportType from '$lib/components/Experience-monument/transportType/TransportType.svelte';
 
 	export let searchingLocation: Location | undefined;
 	let isLoading = true;
@@ -47,9 +47,11 @@
 	{#if isLoading}
 		<FullPageLoading />
 	{:else if monuments && monuments?.length > 0}
-		{#each monuments as monument}
-			<MonumentCardComponent size="normal" {monument} />
-		{/each}
+		<Row class="gap-4">
+			{#each monuments as monument}
+				<MonumentCardComponent size="normal" {monument} />
+			{/each}
+		</Row>
 	{:else}
 		<Skeleton divClass="w-full" />
 	{/if}

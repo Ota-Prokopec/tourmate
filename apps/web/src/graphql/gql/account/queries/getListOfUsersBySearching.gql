@@ -1,4 +1,4 @@
-query getListOfAccountsBySearching($searchingText: String) {
+query getListOfUsersBySearching($searchingText: String) {
 	getUsers(searchingText: $searchingText) {
 		_createdAt
 		_updatedAt

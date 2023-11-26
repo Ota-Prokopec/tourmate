@@ -15,8 +15,6 @@
 	$: isLoading = $monumentsGraphql?.isLoading || typeof $monumentsGraphql.data === 'undefined';
 
 	$: monuments = $monumentsGraphql.data?.getListOfMonuments;
-
-	$: console.log(monuments);
 </script>
 
 {#if isLoading}
