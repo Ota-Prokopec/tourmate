@@ -7,6 +7,9 @@
 	import type { Location, MonumentCard } from '@app/ts-types';
 	import { distanceTo, getPrettyNumber, normalizeMeters } from '@app/utils';
 	import Range from './Components/Range.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconPin from '$lib/components/Icons/IconPin.svelte';
+	import { goto } from '$app/navigation';
 
 	let monuments: MonumentCard[] | undefined;
 
@@ -42,8 +45,12 @@
 	};
 </script>
 
+<Icon on:click={() => goto('/plan')} class="absolute top-0 left-0 child:w-6 child:h-6 p-2 z-20">
+	<IconPin />
+</Icon>
+
 <Column
-	class="w-full h-auto min-h-full gap-2 bg-slate-900 overflow-auto flex justify-center items-center"
+	class="w-full p-2 h-auto min-h-full gap-2 bg-slate-900 overflow-auto flex justify-center items-center"
 >
 	<div class="w-full h-[500px] min-h-[100%] flex justify-center items-center relative">
 		<LocationScanner>{normalizeMeters(range)}</LocationScanner>

@@ -153,7 +153,7 @@
 				<Column class="gap-0 flex justify-center items-center">
 					<OwnerOptions type="monument" on:edit={editMonument} on:delete={deleteMonument} />
 					{#if !disableSharing}
-						<Icon on:click={() => goto(`/monument/${monument._id}/share`)}>
+						<Icon class="mb-2" on:click={() => goto(`/monument/${monument._id}/share`)}>
 							<IconShare class="w-5 h-5" />
 						</Icon>
 					{/if}
