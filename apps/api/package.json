@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn barrelsby && yarn generate-graphql-schema",
-		"build": "tsc -build",
+		"build": "npx tsc -build",
 		"generate-graphql-schema": "npx ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "npx barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "npx barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
@@ -40,7 +40,7 @@
 		"@rollup/plugin-graphql": "^2.0.4",
 		"@types/express": "^4.17.17",
 		"@types/http-server": "^0.12.1",
-		"npx barrelsby": "^2.8.0",
+		"barrelsby": "^2.8.0",
 		"nodemon": "2.0.22",
 		"ts-node": "^10.9.1",
 		"ts-node-dev": "^2.0.0",
