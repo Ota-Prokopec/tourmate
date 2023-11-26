@@ -1,18 +1,16 @@
 <script lang="ts">
-	import Row from '$lib/components/Common/Row.svelte';
-	import type { MonumentCard } from '@app/ts-types';
-	import { createEventDispatcher } from 'svelte';
-	import Text from '$lib/components/Common/Text.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
 	import { goto } from '$app/navigation';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 
 	export let monument: { name: string; placeDetail: { name: string } };
 </script>
 
 <Row class="justify-between gap-2">
-	<h5 class="mb-2 text-xl text-black">
+	<Text class="mb-2 text-xl font-bold text-black">
 		{monument.name}
-	</h5>
+	</Text>
 	<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
 		<Row class="gap-1">
 			<Icon icon="fas fa-map-marker-alt" class="text-xl " />

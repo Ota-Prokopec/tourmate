@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import ExpMap from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
@@ -65,8 +66,8 @@
 				<Icon icon="fas fa-map-marker-alt" class="text-2xl text-red-500" />
 				{$positionDetails.data?.place_name}
 			</div>
-			<span>lat: {markerLocation[0]}</span>
-			<span> lng: {markerLocation[1]} </span>
+			<Text>lat: {markerLocation[0]}</Text>
+			<Text>lng: {markerLocation[1]}</Text>
 		{/if}
 	</Alert>
 	<ExpMap bind:location bind:map class="w-full h-full">

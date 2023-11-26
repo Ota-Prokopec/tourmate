@@ -13,6 +13,4 @@
 	//$: newMonumentAdded = !browser ? writable([]) : svelteCollections.monument.listenInsert();
 </script>
 
-<div class="w-full flex justify-center absolute p-4" />
-
 <slot />

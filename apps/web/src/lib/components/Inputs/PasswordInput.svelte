@@ -17,7 +17,8 @@
 	class={twMerge('w-full !rounded-3xl', className)}
 	bind:value
 	type="password"
-	placeholder={$LL.enterPassword()}
+	iconPosition="left"
+	floatingLabel={$LL.enterPassword()}
 >
 	<Icon class="child:fill-gray-500">
 		<IconLock />

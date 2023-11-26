@@ -68,7 +68,7 @@
 
 	const like = async () => {
 		if (!isMonumentCard(monument)) throw new Error('monument is not type of monument card');
-		if (!'liked') if (!$user?.$id) throw new Error('user is not authed');
+		if (!$user?.$id) throw new Error('user is not authed');
 		liked = 'pending';
 		try {
 			const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });

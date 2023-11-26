@@ -1,5 +1,9 @@
 <script lang="ts">
 	import Card from '$lib/components/Common/Card.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import IconGitCodeBranch from '$lib/components/Icons/IconGitCodeBranch.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import MeasureDistancesMap from '$lib/components/Map/MeasureDistancesMap.svelte';
 	import { sdk } from '$src/graphql/sdk';
@@ -8,6 +12,7 @@
 	import type { Location, MonumentMarkerData } from '@app/ts-types';
 	import { isLocation } from '@app/utils';
 	import * as turf from '@turf/turf';
+	import { Button } from 'flowbite-svelte';
 	import { distanceTo } from 'geolocation-utils';
 
 	//TODO: make a limit for this because there could be really many requests to appwrite (bandwidth) and cloudinary pictures
@@ -76,9 +81,15 @@
 	const addPoint = async (location: Location) => {
 		locations = [...locations, location];
 	};
+
+	const reset = () => {
+		locations = [];
+		monuments = [];
+	};
 </script>
 
 <MeasureDistancesMap
+	on:reset={reset}
 	{maxZoom}
 	{minZoom}
 	on:newPoint={(e) => addPoint(e.detail.location)}

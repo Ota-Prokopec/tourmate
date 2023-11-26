@@ -36,7 +36,7 @@
 		>
 			<GeolocateControl
 				position="top-left"
-				positionOptions={{ enableHighAccuracy: false }}
+				positionOptions={{ enableHighAccuracy: true }}
 				trackUserLocation
 				showAccuracyCircle={false}
 				showUserLocation

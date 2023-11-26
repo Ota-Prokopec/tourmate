@@ -67,7 +67,7 @@
 			//goto('/');
 		} catch (err) {
 			isLoading = false;
-			alert('', $LL.monumentCreateError());
+			alert('', $LL.monumentCreateError(), { color: 'red' });
 		}
 		isLoading = false;
 	};

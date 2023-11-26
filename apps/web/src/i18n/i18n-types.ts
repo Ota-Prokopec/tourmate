@@ -322,6 +322,18 @@ type RootTranslation = {
 	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​s​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​d​u​r​i​n​g​ ​y​o​u​r​ ​w​i​s​h​e​d​ ​p​a​t​h
 	 */
 	planningMapError: string
+	/**
+	 * W​e​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​s​a​v​e​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​l​i​k​e​ ​t​h​i​s​,​ ​p​l​e​a​s​e​ ​c​h​e​c​k​ ​i​f​ ​e​v​e​r​y​t​h​i​n​g​ ​i​s​ ​f​i​l​l​e​d
+	 */
+	saveQuestionError: string
+	/**
+	 * t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​h​e​r​e
+	 */
+	takePictureHere: string
+	/**
+	 * r​e​s​e​t
+	 */
+	reset: string
 }
 
 export type TranslationFunctions = {
@@ -625,6 +637,18 @@ export type TranslationFunctions = {
 	 * We are sorry, something went wrong during your wished path
 	 */
 	planningMapError: () => LocalizedString
+	/**
+	 * We are not able to save your question like this, please check if everything is filled
+	 */
+	saveQuestionError: () => LocalizedString
+	/**
+	 * take a picture here
+	 */
+	takePictureHere: () => LocalizedString
+	/**
+	 * reset
+	 */
+	reset: () => LocalizedString
 }
 
 export type Formatters = {}

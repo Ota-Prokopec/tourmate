@@ -28,6 +28,7 @@
 	import * as permissions from '@app/appwrite-permissions';
 	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
 	import IconPach from '$lib/components/Icons/IconPach.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
 
 	export let data: LayoutData;
 
@@ -80,7 +81,7 @@
 
 <FirebaseNotification message={foregroundNotification} />
 
-<div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
+<div class="w-full h-full flex flex-wrap flex-col items-center justify-center dark:bg-black">
 	<div class="w-full h-[calc(100%-64px)] top-0 absolute overflow-scroll">
 		<slot />
 	</div>
@@ -90,18 +91,24 @@
 			position="relative"
 			classInner="flex flex-wrap flex-row justify-between"
 			class=""
-			outerClass="mobile:w-full w-[500px] z-50 h-16"
+			outerClass="mobile:w-full w-[500px] z-50 h-16 dark:bg-black"
 		>
 			<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
-				<IconLocation />
+				<Icon>
+					<IconLocation class="fill-black dark:fill-white" />
+				</Icon>
 			</BottomNavItem>
 
 			<BottomNavItem on:click={() => goto('/scan')}>
-				<IconPach src={RiDeviceScan2Line} />
+				<Icon>
+					<IconPach src={RiDeviceScan2Line} />
+				</Icon>
 			</BottomNavItem>
 
 			<BottomNavItem on:click={() => goto('/search/places/*')}>
-				<IconMagnifyingGlass />
+				<Icon>
+					<IconMagnifyingGlass />
+				</Icon>
 			</BottomNavItem>
 
 			<BottomNavItem
@@ -113,11 +120,13 @@
 					}
 				}}
 			>
-				{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
-					<IconPlus />
-				{:else}
-					<IconMap />
-				{/if}
+				<Icon>
+					{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
+						<IconPlus />
+					{:else}
+						<IconMap />
+					{/if}
+				</Icon>
 			</BottomNavItem>
 
 			<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">

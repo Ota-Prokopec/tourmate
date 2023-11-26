@@ -26,6 +26,7 @@
 	import NumberForm from '../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';
 	import RadioForm from '../../../../../lib/components/Experience-monument/question/Forms/RadioForm.svelte';
 	import TextForm from '../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 
 	const dispatch = createEventDispatcher<{
 		save: Omit<Question<AnswerType>, 'pickingAnswers'> & {
@@ -90,9 +91,7 @@
 			dispatch('save', checkedQuestion);
 			hidden = true;
 		} catch (err) {
-			console.log(err);
-
-			error = 'error';
+			error = $LL.saveQuestionError();
 		}
 	};
 

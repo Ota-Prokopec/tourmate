@@ -6,6 +6,7 @@
 	export let icon: string | URL | null = null;
 	export let outlineOnly: boolean = false;
 	export let disabled = false;
+	export let disableDefaultDarkMode = false;
 
 	let className: string = '';
 	export { className as class };
@@ -19,7 +20,11 @@
 	on:touchstart
 	on:touchend
 	on:click
-	class={twMerge('w-min h-min flex justify-center items-center', className)}
+	class={twMerge(
+		'w-min h-min flex justify-center items-center ',
+		!disableDefaultDarkMode && 'dark:text-white text-black fill-black dark:fill-white',
+		className
+	)}
 >
 	{#if typeof icon === 'string' && icon.startsWith('http')}
 		<Avatar src={icon} size="md" />

@@ -1,19 +1,17 @@
 <script lang="ts">
+	import appwrite, { user } from '$lib/appwrite/appwrite';
+	import Button from '$lib/components/Common/Button.svelte';
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Title from '$lib/components/Common/Title.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
-	import appwrite, { user } from '$lib/appwrite/appwrite';
 	import lsStore from '$lib/utils/lsStore';
-	import type { PageData } from './$types';
 	import { sdk } from '$src/graphql/sdk';
-	import ErrorHelpler from '$lib/components/Common/ErrorHelper.svelte';
-	import Button from '$lib/components/Common/Button.svelte';
-	import { ApolloError } from '@apollo/client';
-	import EmailSent from '../../../Components/EmailSent.svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import { AppwriteException } from 'appwrite';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
+	import { AppwriteException } from 'appwrite';
+	import EmailSent from '../../../Components/EmailSent.svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 

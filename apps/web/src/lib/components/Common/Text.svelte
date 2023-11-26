@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<span class={twMerge('break-normal text-black', className)}>
+<span class={twMerge('break-normal text-black dark:text-white', className)}>
 	<slot />
 </span>

@@ -3,6 +3,7 @@
 	"scripts": {
 		"build": "dotenv -e .env.development -- turbo run build",
 		"dev": "dotenv -e .env.development -- turbo run dev",
+		"build-api": "dotenv -e .env.development -- turbo run build --filter=api",
 		"api": "dotenv -e .env.development -- turbo run dev --filter=api",
 		"web": "dotenv -e .env.development -- turbo run dev --filter=web",
 		"lint": "turbo run lint",

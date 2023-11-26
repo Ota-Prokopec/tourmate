@@ -6,8 +6,15 @@
 	import type { Feature, LineString } from 'geojson';
 	import { isLocation } from '@app/utils';
 	import { createEventDispatcher } from 'svelte';
+	import Row from '../Common/Row.svelte';
+	import Text from '../Common/Text.svelte';
+	import Icon from '../Common/Icon.svelte';
+	import IconGitCodeBranch from '../Icons/IconGitCodeBranch.svelte';
+	import LL from '$src/i18n/i18n-svelte';
+	import { Button } from 'flowbite-svelte';
 	const dispatch = createEventDispatcher<{
 		newPoint: { location: Location };
+		reset: undefined;
 	}>();
 
 	export let map: Map | undefined = undefined;
@@ -31,6 +38,8 @@
 		type: 'FeatureCollection',
 		features: []
 	};
+
+	$: lines = geojson.features;
 
 	// Used to draw a line between points
 	const linestring: Feature<LineString> = {
@@ -122,9 +131,8 @@
 					return point.geometry.coordinates;
 				});
 
-				geojson.features.push(linestring);
+				geojson.features = [...geojson.features, linestring];
 				wholeDistanceInMeters = lineDistance(linestring, 'kilometers') * 1000;
-				lines = [...lines, linestring];
 			}
 
 			if (!map) throw new Error('map is not defined');
@@ -146,10 +154,27 @@
 
 	let className = '';
 	export { className as class };
+
+	const reset = () => {
+		if (!map) throw new Error('map is not defined');
+		const source = map.getSource('geojson');
+		if (!source) throw new Error('source is not defined');
+		geojson.features = [];
+		source.setData(geojson);
+		dispatch('reset');
+	};
 </script>
 
 <MapComponent {maxZoom} {minZoom} class={className} bind:map>
 	<slot />
+	<Button on:click={reset} class="absolute bottom-0 right-0 m-4" color="purple">
+		<Row class="justify-center items-center gap-2">
+			<Text>{$LL.reset()}</Text>
+			<Icon>
+				<IconGitCodeBranch />
+			</Icon>
+		</Row>
+	</Button>
 </MapComponent>
 <div bind:this={distanceContainer} id="distance" class="distance-container" />
 

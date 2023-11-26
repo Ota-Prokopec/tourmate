@@ -42,6 +42,7 @@
 </script>
 
 <ItemsLayout
+	class="mt-4"
 	let:id
 	items={[{ title: $LL['connectExperienceToMonument'](), id: 'connectMonument' }]}
 >

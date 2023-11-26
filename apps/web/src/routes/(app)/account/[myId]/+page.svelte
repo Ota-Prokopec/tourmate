@@ -18,6 +18,7 @@
 	import Center from '$lib/components/Common/Center.svelte';
 	import LL from '$src/i18n/i18n-svelte';
 	import Left from '$lib/components/Common/Left.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
 
 	export let data: PageData;
 
@@ -70,7 +71,7 @@
 		profilePicture={newProfilePicture}
 	/>
 {:else}
-	<div class="w-full h-auto flex flex-wrap flex-col p-2">
+	<Column class="p-2">
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
 			{#if isMyAccount}
 				<AvatarImageInput
@@ -95,7 +96,7 @@
 				{/if}
 			</div>
 		</div>
-		<span class="text-3xl p-4">{data.userProfile.username}</span>
+		<Text class="text-3xl p-4">{data.userProfile.username}</Text>
 
 		{#if isMyAccount}
 			<Left>
@@ -148,5 +149,5 @@
 				</Column>
 			{/if}
 		</div>
-	</div>
+	</Column>
 {/if}

@@ -16,6 +16,8 @@
 	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
 	import { alert } from '$src/routes/alertStore';
 	import { goto } from '$app/navigation';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 
 	export let data: PageData;
 
@@ -54,10 +56,12 @@
 
 			<svelte:fragment slot="bottom">
 				<Right>
-					<MediaQuery size="mobile">
-						<Button on:click={() => (onlyMap = true)} color="blue">{$LL.seeOnMap()}</Button>
-					</MediaQuery>
-					<Button on:click={takePicture} color="blue">Take a picture here</Button>
+					<Column class="gap-2 items-end">
+						<MediaQuery size="mobile">
+							<Button on:click={() => (onlyMap = true)} color="blue">{$LL.seeOnMap()}</Button>
+						</MediaQuery>
+						<Button on:click={takePicture} color="blue">{$LL.takePictureHere()}</Button>
+					</Column>
 				</Right>
 			</svelte:fragment>
 		</MonumentCard>
@@ -86,6 +90,8 @@
 	</MediaQuery>
 
 	<Marker class="z-50" location={data.monument.location}>
-		<Icon icon="fas fa-map-marker-alt" class="text-4xl text-red-500" />
+		<Icon class="child:h-8 child:w-8 ">
+			<IconLocation />
+		</Icon>
 	</Marker>
 </Map>

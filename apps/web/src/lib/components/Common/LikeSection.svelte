@@ -30,11 +30,11 @@
 	<Icon on:click={heartClick}>
 		{#if ableToLike}
 			{#if data.liked}
-				<Icon class="fill-red-500">
+				<Icon class="!fill-red-500">
 					<IconHeart class="w-8 h-8" />
 				</Icon>
 			{:else}
-				<Icon class="fill-black"><IconHeartOutline class="w-8 h-8" /></Icon>
+				<Icon class="fill-black dark:fill-white"><IconHeartOutline class="w-8 h-8" /></Icon>
 			{/if}
 		{/if}
 	</Icon>

@@ -90,7 +90,11 @@ const cz = {
 	monumentCreateError: 'it was not successful to save your monument, please try it again',
 	errorMessage: 'We are sorry, there was unpredictable error',
 	tryItAgain: 'try it again',
-	planningMapError: 'We are sorry, something went wrong during your wished path'
+	planningMapError: 'We are sorry, something went wrong during your wished path',
+	saveQuestionError:
+		'We are not able to save your question like this, please check if everything is filled',
+	takePictureHere: 'take a picture here',
+	reset: 'reset'
 } satisfies BaseTranslation;
 
 export default cz;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
 	import Counter from '$lib/components/Common/Counter.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 	import { Input, Radio } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 
@@ -23,7 +24,7 @@
 			}}
 			on:increase={() => (answers = [...answers, ''])}
 			min={2}
-			max={4}>{answers.length}</Counter
+			max={4}><Text>{answers.length}</Text></Counter
 		>
 	{/if}
 

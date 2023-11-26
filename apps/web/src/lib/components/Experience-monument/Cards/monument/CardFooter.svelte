@@ -1,21 +1,19 @@
 <script lang="ts">
 	import ChooseFromIconsItem from '$lib/components/ChooseFromIcons/ChooseFromIconsItem.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
 	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import Popover from '$lib/components/Common/Popover.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import TypeWriter from '$lib/components/Common/TypeWriter.svelte';
+	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 	import type { Location, MonumentCard } from '@app/ts-types';
+	import { getTimeFromAToB, normalizeTime } from '@app/utils';
 	import { createEventDispatcher } from 'svelte';
 	import { topics } from '../../topic/topics';
-	import { at } from 'lodash';
 	import { transports } from '../../transportType/transports';
-	import Column from '$lib/components/Common/Column.svelte';
-	import Popover from '$lib/components/Common/Popover.svelte';
-	import { getTimeFromAToB, normalizeTime } from '@app/utils';
-	import { DateTime } from 'luxon';
-	import LL from '$src/i18n/i18n-svelte';
-	import TypeWriter from '$lib/components/Common/TypeWriter.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
-	import Text from '$lib/components/Common/Text.svelte';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;

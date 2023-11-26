@@ -13,7 +13,8 @@
 	icon
 	class={twMerge('w-full !rounded-3xl', className)}
 	bind:value
-	placeholder="Zadejte email"
+	iconPosition="left"
+	floatingLabel="Zadejte email"
 >
 	<Icon class="child:fill-gray-500">
 		<IconEnvelope />

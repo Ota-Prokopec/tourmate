@@ -15,6 +15,7 @@
 	import Drawer from './Components/MonumentNotFoundDrawer.svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
 	import { lsStore } from '$lib/utils/lsStore';
+	import CardImage from '$lib/components/Experience-monument/Cards/CardImage.svelte';
 
 	if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -81,7 +82,7 @@
 	<Card class="w-full h-auto absolute left-0 !z-20 mobile:w-full mobile:max-w-none">
 		<Header {location} placeName={data.newExperience.placeName} />
 
-		<Img src={picture} />
+		<CardImage imgSrc={picture} />
 
 		<Center
 			on:disconnect={disconnectMonument}
