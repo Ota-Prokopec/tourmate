@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import UserItem from '$lib/components/Common/UserItem.svelte';
+	import UserItem from '$lib/components/User/UserItem.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { Skeleton } from 'flowbite-svelte';

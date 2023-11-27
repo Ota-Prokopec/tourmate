@@ -1,4 +1,4 @@
-import { UserInfo } from './Account'
+import { UserInfo, UserInfoGraphqlDocument } from './Account'
 import { GraphqlDocument } from './Document'
 import { Experience } from './Experience'
 import {

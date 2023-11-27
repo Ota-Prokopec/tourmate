@@ -7,7 +7,7 @@
 		"checkJs": true,
 
 		"strict": true,
-		"noUncheckedIndexedAccess": true,
+		//"noUncheckedIndexedAccess": true,
 
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true,

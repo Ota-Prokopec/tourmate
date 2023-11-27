@@ -13,7 +13,7 @@
 	import Right from '$lib/components/Common/Right.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import UserItem from '$lib/components/Common/UserItem.svelte';
+	import UserItem from '$lib/components/User/UserItem.svelte';
 	import IconShare from '$lib/components/Icons/IconShare.svelte';
 	import lsStore from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';

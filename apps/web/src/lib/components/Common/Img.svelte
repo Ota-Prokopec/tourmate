@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Img } from 'flowbite-svelte';
-	import { isString } from 'lodash';
-	export let src: URL | string;
+	export let src: URL | string | undefined = undefined;
 
 	$: stringSrc = src as string;
 

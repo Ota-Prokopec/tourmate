@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Card from '$lib/components/Common/Card.svelte';
-	import UserItem from '$lib/components/Common/UserItem.svelte';
+	import UserItem from '$lib/components/User/UserItem.svelte';
 	import type { Experience, ExperienceCard, GraphqlDocument } from '@app/ts-types';
 	import { Button, Img, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
@@ -101,7 +101,7 @@
 				<UserItem
 					on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
 					avatarClass="w-10 h-10"
-					class={twMerge('h-auto')}
+					class="h-auto z-20"
 					user={experience.user}
 				/>
 
