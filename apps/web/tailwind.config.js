@@ -49,10 +49,12 @@ module.exports = {
 
 			'2xl': '1536px'
 			// => @media (min-width: 1536px) { ... }
-		}
+		},
+		colors: {}
 	},
 	plugins: [
 		require('flowbite/plugin'),
+		//		require('daisyui'),
 		function ({ addVariant }) {
 			addVariant('child', '& > *');
 			addVariant('child-hover', '& > *:hover');

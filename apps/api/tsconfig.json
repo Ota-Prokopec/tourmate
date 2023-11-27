@@ -7,7 +7,9 @@
 		"lib": ["ES2022"],
 		"target": "ES2022",
 		"declaration": false,
-		"declarationMap": false
+		"declarationMap": false,
+		"strict": true,
+		"noUncheckedIndexedAccess": true
 	},
 
 	"include": [

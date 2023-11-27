@@ -48,7 +48,7 @@
 	mapRangeValue={JSON.stringify(data.user.prefs.mapRange)}
 />
 
-<Map deg={45} bind:zoom={mapZoom} bind:location>
+<Map class="w-full h-[100vh] fixed bottom-0 z-50" deg={45} bind:zoom={mapZoom} bind:location>
 	<Icon
 		on:click={() => (settingsHidden = false)}
 		class="absolute top-0 right-0 m-4 child:fill-black child:w-9 child:h-9"

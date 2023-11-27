@@ -5,19 +5,14 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
 	import { Button } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
-	import { onMount } from 'svelte';
-	import { lsStore } from '$lib/utils/lsStore';
 
 	let mounted = false;
 	onMount(() => (mounted = true));
 
 	const queryClient = new QueryClient();
-
-	$: theme = $lsStore['color-theme'];
-
-	$: if (mounted && typeof theme === 'string') document.body.classList.add(theme);
 </script>
 
 <Alert
@@ -45,7 +40,9 @@
 	{#if $navigating}
 		<FullPageLoading />
 	{:else}
-		<slot />
+		<div class="w-full h-full bg-white dark:bg-black">
+			<slot />
+		</div>
 	{/if}
 </QueryClientProvider>
 

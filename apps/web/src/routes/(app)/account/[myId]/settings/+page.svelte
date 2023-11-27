@@ -8,7 +8,7 @@
 	import { user } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import { DarkMode } from 'flowbite-svelte';
+	import DarkMode from '$lib/components/Common/DarkMode.svelte';
 
 	let isLoading = false;
 
