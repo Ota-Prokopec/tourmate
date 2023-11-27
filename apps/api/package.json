@@ -7,14 +7,14 @@
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn barrelsby && yarn generate-graphql-schema",
-		"build": "npx tsc -build",
-		"generate-graphql-schema": "npx ts-node  ./src/schema.ts",
-		"generate-schema-barrels": "npx barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
-		"generate-resolvers-barrels": "npx barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
-		"generate-types-barrels": "npx barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/types/",
-		"generate-arguments": "npx barrelsby --delete  --singleQuotes --exportDefault --directory ./src/arguments",
-		"generate-database-experiences-monuments-barrels": "npx barrelsby --delete  --singleQuotes --directory ./src/lib/database/experiences-monuments",
-		"generate-database-barrels": "npx barrelsby --delete  --singleQuotes --directory ./src/lib/database/",
+		"build": "tsc -build",
+		"generate-graphql-schema": "ts-node  ./src/schema.ts",
+		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
+		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
+		"generate-types-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/lib/types/",
+		"generate-arguments": "barrelsby --delete  --singleQuotes --exportDefault --directory ./src/arguments",
+		"generate-database-experiences-monuments-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/experiences-monuments",
+		"generate-database-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/",
 		"barrelsby": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-database-experiences-monuments-barrels && yarn generate-arguments"
 	},
 	"dependencies": {

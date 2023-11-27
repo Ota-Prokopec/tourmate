@@ -7,7 +7,8 @@
 		"web": "dotenv -e .env.development -- turbo run dev --filter=web",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
-		"vitest-web": "dotenv -e .env.development -- turbo run vitest --filter=web"
+		"vitest-web": "dotenv -e .env.development -- turbo run vitest --filter=web",
+		"build-api": "turbo run build --filter=api"
 	},
 	"devDependencies": {
 		"dotenv-cli": "^7.2.1",
