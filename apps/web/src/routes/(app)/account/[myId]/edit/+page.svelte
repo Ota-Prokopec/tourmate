@@ -1,19 +1,17 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import Input from '$lib/components/Common/Input.svelte';
-	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import { Button } from 'flowbite-svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
 	import { collections } from '$lib/appwrite/appwrite';
-	import MyAlert from '$lib/components/Alert/Alert.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import type { Base64 } from '@app/ts-types';
-	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
-	import { alert } from '$src/routes/alertStore';
+	import Input from '$lib/components/Common/Input.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
+	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
+	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
+	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
+	import { alert } from '$src/routes/alertStore';
+	import type { Base64 } from '@app/ts-types';
+	import { Button } from 'flowbite-svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 

@@ -1,7 +1,7 @@
 import { arg, mutationField } from 'nexus'
 import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
-import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 import buckets from '@app/cloudinary-server'
 import { Queries } from '../../../lib/appwrite/appwrite'
 
@@ -50,6 +50,8 @@ export default mutationField('createExperience', {
 					longitude: Math.round(args.input.location[1]),
 				})
 			})
-		return fromLatLongIntoLocation(document)[0]
+		const res = fromLatDocumentLongIntoLocationDocument(document)[0]
+		if (!res) throw new ApolloError('creating experience was no successful')
+		return res
 	},
 })

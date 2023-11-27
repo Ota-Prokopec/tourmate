@@ -1,24 +1,16 @@
-import {
-	fromLatLongIntoLocation,
-	locationQueries,
-} from '../lib/database/experiences-monuments'
+import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql/src/databases/appwriteKeys'
+import { Answer } from '@app/ts-types'
 import { isLocation } from '@app/utils'
-import { getUser } from '../lib/users/getUser'
 import { ApolloError } from 'apollo-server-express'
+import { pick } from 'lodash'
 import { list, nullable, objectType } from 'nexus'
 import { defaultRangeMeters } from '../arguments/LocationInput'
-import { pick } from 'lodash'
-import {
-	Answer,
-	NumberTypeAnswerDocument,
-	NumberTypeAnswerGraphqlDocument,
-	RadioTypeAnswerDocument,
-	RadioTypeAnswerGraphqlDocument,
-	TextTypeAnswerDocument,
-	TextTypeAnswerGraphqlDocument,
-} from '@app/ts-types'
-import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql/src/databases/appwriteKeys'
 import { Queries } from '../lib/appwrite/appwrite'
+import {
+	fromLatDocumentLongIntoLocationDocument,
+	locationQueries,
+} from '../lib/database/experiences-monuments'
+import { getUser } from '../lib/users/getUser'
 
 export default objectType({
 	name: 'Monument',
@@ -67,7 +59,7 @@ export default objectType({
 							ctx.user?.prefs.mapRange ?? defaultRangeMeters,
 						),
 					]
-					return fromLatLongIntoLocation(
+					return fromLatDocumentLongIntoLocationDocument(
 						...(await collections.experience.listDocuments(queries)).documents,
 					)
 				},
@@ -120,7 +112,7 @@ export default objectType({
 				const { collections, Queries } = ctx.appwrite
 				const queries = [Queries.experience.equal('connectedMonumentId', source._id)]
 				const expDocs = (await collections.experience.listDocuments(queries)).documents
-				return fromLatLongIntoLocation(...expDocs)
+				return fromLatDocumentLongIntoLocationDocument(...expDocs)
 			},
 		})
 

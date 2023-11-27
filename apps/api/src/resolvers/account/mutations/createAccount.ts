@@ -31,7 +31,7 @@ export default queryField('createAccount', {
 			_createdAt: userInfo._createdAt,
 			_updatedAt: userInfo._updatedAt,
 			_collectionId: userInfo._collectionId,
-			_id: userInfo._id,
+			_documentId: userInfo._id,
 			_permissions: userInfo._permissions,
 			_databaseId: userInfo._databaseId,
 			emailVerification: ctx.user.emailVerification,

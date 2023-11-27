@@ -6,7 +6,7 @@ type Account {
   _collectionId: String!
   _createdAt: String!
   _databaseId: String!
-  _id: String!
+  _documentId: String!
   _permissions: [String!]!
   _updatedAt: String!
   emailVerification: Boolean!
@@ -155,7 +155,7 @@ type Query {
   getAccount: Account!
   getExperience(id: String!): Experience!
   getListOfExperiences(location: LocationInput): [Experience!]!
-  getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
+  getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
   getMonument(id: String!): Monument!
   getUser(myId: String, userId: String): User!
   getUsers(searchingText: String): [User!]!

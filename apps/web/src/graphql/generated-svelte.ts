@@ -33,7 +33,7 @@ export type Account = {
   _collectionId: Scalars['String']['output'];
   _createdAt: Scalars['String']['output'];
   _databaseId: Scalars['String']['output'];
-  _id: Scalars['String']['output'];
+  _documentId: Scalars['String']['output'];
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
   emailVerification: Scalars['Boolean']['output'];
@@ -250,6 +250,7 @@ export type QueryGetListOfMonumentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   location?: InputMaybe<LocationInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   topics?: InputMaybe<Array<Scalars['Topic']['input']>>;
   transports?: InputMaybe<Array<Scalars['Transport']['input']>>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -342,7 +343,7 @@ export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __type
 export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
 export type GetListOfUsersBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
@@ -383,7 +384,7 @@ export type UpdateProfilePictureQueryVariables = Exact<{
 }>;
 
 
-export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
 export type CreateExperienceMutationVariables = Exact<{
   input: CreateExperienceInput;
@@ -467,6 +468,7 @@ export type GetListOfMonumentCardsQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -534,6 +536,7 @@ export const CreateAccountDoc = gql`
 export const GetAccountDoc = gql`
     query getAccount {
   getAccount {
+    _documentId
     userId
     myId
     username
@@ -739,7 +742,7 @@ export const UpdateProfilePictureDoc = gql`
     _createdAt
     _updatedAt
     _collectionId
-    _id
+    _documentId
     _permissions
     _databaseId
     userId
@@ -1112,7 +1115,7 @@ export const DeleteMonumentDoc = gql`
 }
     `;
 export const GetListOfMonumentCardsDoc = gql`
-    query getListOfMonumentCards($location: LocationInput, $topics: [Topic!], $transports: [Transport!], $name: String, $limit: Int, $userId: String) {
+    query getListOfMonumentCards($location: LocationInput, $topics: [Topic!], $transports: [Transport!], $name: String, $limit: Int, $userId: String, $offset: Int) {
   getListOfMonuments(
     location: $location
     topics: $topics
@@ -1120,6 +1123,7 @@ export const GetListOfMonumentCardsDoc = gql`
     name: $name
     limit: $limit
     userId: $userId
+    offset: $offset
   ) {
     _createdAt
     _updatedAt

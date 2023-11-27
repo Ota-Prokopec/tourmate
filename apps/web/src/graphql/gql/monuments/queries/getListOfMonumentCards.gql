@@ -5,6 +5,7 @@ query getListOfMonumentCards(
 	$name: String
 	$limit: Int
 	$userId: String
+	$offset: Int
 ) {
 	getListOfMonuments(
 		location: $location
@@ -13,6 +14,7 @@ query getListOfMonumentCards(
 		name: $name
 		limit: $limit
 		userId: $userId
+		offset: $offset
 	) {
 		_createdAt
 		_updatedAt

@@ -4,9 +4,11 @@ export const convert = (permissions: string[]) => {
 	if (typeof permissions === 'object') permissions = Object.values(permissions) //because appwrite sometimes gives you [] permissions and sometimes {}
 	const arr = permissions?.map((permission): { [key: string]: string } => {
 		const propetries = permission.split('(').join(')').split(')')
-		//@ts-ignore
+		const key = propetries[0]
+		const value = propetries[1]
+		if (!key || !value) throw new Error('Invalid permissions array')
 		return {
-			[propetries[0]]: JSON.parse(propetries[1]),
+			[key]: JSON.parse(value) as string,
 		}
 	})
 	const object: {

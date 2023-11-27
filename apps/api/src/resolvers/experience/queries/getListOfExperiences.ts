@@ -1,6 +1,6 @@
 import { arg, list, nullable, queryField, stringArg } from 'nexus'
 import {
-	fromLatLongIntoLocation,
+	fromLatDocumentLongIntoLocationDocument,
 	locationQueries,
 } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
@@ -11,7 +11,7 @@ export default queryField('getListOfExperiences', {
 	args: {
 		location: nullable('LocationInput'),
 	},
-	resolve: async (s, args, ctx, info) => {
+	resolve: async (s_, args, ctx, info) => {
 		const { collections } = ctx.appwrite
 		const { location: locationOptions } = args
 
@@ -25,7 +25,7 @@ export default queryField('getListOfExperiences', {
 				),
 			)
 
-		return fromLatLongIntoLocation(
+		return fromLatDocumentLongIntoLocationDocument(
 			...(await collections.experience.listDocuments(queries)).documents,
 		)
 	},

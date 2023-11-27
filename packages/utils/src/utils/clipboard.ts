@@ -15,6 +15,7 @@ const readImage = async () => {
 	const clipboard = (await read('image'))[0] ?? (await read('text'))[0]
 
 	const blob = await clipboard?.getType('image/png')
+	if (!blob) throw new Error('Blob not found')
 	const file = new File([blob], 'image.png', { type: 'image/png' })
 
 	return clipboard ? file : null

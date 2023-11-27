@@ -2,7 +2,8 @@ import { getUser } from '../lib/users/getUser'
 import { ApolloError } from 'apollo-server-express'
 import { list, nullable, objectType } from 'nexus'
 import { Queries } from '../lib/appwrite/appwrite'
-import { fromLatLongIntoLocation } from '../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../lib/database/experiences-monuments'
+import { isLocation } from '@app/utils'
 
 export default objectType({
 	name: 'Experience',
@@ -73,7 +74,9 @@ export default objectType({
 
 				if (!monument) return null
 
-				return fromLatLongIntoLocation(monument)[0]
+				const res = fromLatDocumentLongIntoLocationDocument(monument)[0]
+				if (!res) return null
+				return res
 			},
 		})
 	},

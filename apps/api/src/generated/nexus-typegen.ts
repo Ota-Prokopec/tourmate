@@ -96,7 +96,7 @@ export interface NexusGenObjects {
     _collectionId: string; // String!
     _createdAt: string; // String!
     _databaseId: string; // String!
-    _id: string; // String!
+    _documentId: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     emailVerification: boolean; // Boolean!
@@ -219,7 +219,7 @@ export interface NexusGenFieldTypes {
     _collectionId: string; // String!
     _createdAt: string; // String!
     _databaseId: string; // String!
-    _id: string; // String!
+    _documentId: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     emailVerification: boolean; // Boolean!
@@ -368,7 +368,7 @@ export interface NexusGenFieldTypeNames {
     _collectionId: 'String'
     _createdAt: 'String'
     _databaseId: 'String'
-    _id: 'String'
+    _documentId: 'String'
     _permissions: 'String'
     _updatedAt: 'String'
     emailVerification: 'Boolean'
@@ -552,6 +552,7 @@ export interface NexusGenArgTypes {
       limit: number | null; // Int
       location?: NexusGenInputs['LocationInput'] | null; // LocationInput
       name?: string | null; // String
+      offset?: number | null; // Int
       topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
       transports?: NexusGenScalars['Transport'][] | null; // [Transport!]
       userId?: string | null; // String

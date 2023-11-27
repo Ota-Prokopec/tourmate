@@ -10,10 +10,11 @@ import {
 } from '@app/ts-types'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
-import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 
 import { permissions } from '@app/appwrite-ssr-graphql'
 import appwrite from '../../../lib/appwrite/appwrite'
+import { ApolloError } from 'apollo-server-express'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -59,7 +60,9 @@ export default mutationField('createMonument', {
 				},
 				[ctx.user],
 			)
-			return fromLatLongIntoLocation(document)[0]
+			const res = fromLatDocumentLongIntoLocationDocument(document)[0]
+			if (!res) throw new ApolloError('creating monument was not successful')
+			return res
 		} catch (error) {
 			console.log(error)
 			throw new Error('')

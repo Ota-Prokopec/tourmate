@@ -19,7 +19,9 @@ export class Cloudinary {
 	}
 	getFileNameFromUrl(url: URL) {
 		const splits = url.toString().split('/')
-		const file = splits[splits.length - 1].replace('.webp', '')
+		const fileSplit = splits[splits.length - 1]
+		if (!fileSplit) throw new Error('Invalid URL - not able to be splitted')
+		const file = fileSplit.replace('.webp', '')
 		return file
 	}
 }

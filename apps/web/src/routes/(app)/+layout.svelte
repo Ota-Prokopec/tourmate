@@ -69,7 +69,7 @@
 	}`;
 
 	onMount(() => {
-		collections.userInfo.listenUpdate(data.user._id, (updatedUserInfo) => {
+		collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
 			data.user = Object.assign(data.user, {
 				...omit(updatedUserInfo, ...appwriteKeys),
 				_updatedAt: updatedUserInfo.$updatedAt,

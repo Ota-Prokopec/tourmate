@@ -50,8 +50,7 @@ export default (client: Client) => {
 		): Promise<TDocumentGet> {
 			try {
 				if ((permissions && isArrayString(permissions)) || !permissions) {
-					//@ts-ignore
-					return this.atg(
+					const res = this.atg(
 						await databases.createDocument(
 							this.databaseId,
 							this.collectionId,
@@ -60,8 +59,10 @@ export default (client: Client) => {
 							permissions,
 						),
 					)[0]
-				} else
-					return this.atg(
+					if (!res) throw new Error('Document has not been created')
+					return res
+				} else {
+					const res = this.atg(
 						await databases.createDocument(
 							this.databaseId,
 							this.collectionId,
@@ -70,6 +71,9 @@ export default (client: Client) => {
 							permissionslib.owner(...permissions.map((user) => user.$id)),
 						),
 					)[0]
+					if (!res) throw new Error('Document has not been created')
+					return res
+				}
 			} catch (error) {
 				console.log(
 					`Error:${error} databaseId: ${this.databaseId} collectionId: ${this.collectionId}`,
@@ -97,7 +101,7 @@ export default (client: Client) => {
 		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions)
 				permissions = convertObjectInfoArray(permissions)
-			return this.atg(
+			const res = this.atg(
 				await databases.updateDocument(
 					this.databaseId,
 					this.collectionId,
@@ -106,6 +110,8 @@ export default (client: Client) => {
 					permissions,
 				),
 			)[0]
+			if (!res) throw new Error('Document was not updated')
+			return res
 		}
 
 		//update document with node-appwrite
@@ -123,7 +129,7 @@ export default (client: Client) => {
 		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions)
 				permissions = convertObjectInfoArray(permissions)
-			return this.atg(
+			const res = this.atg(
 				await databases.updateDocument(
 					this.databaseId,
 					this.collectionId,
@@ -132,6 +138,8 @@ export default (client: Client) => {
 					permissions,
 				),
 			)[0]
+			if (!res) throw new Error('Permissions were no updated')
+			return res
 		}
 
 		//delete document with node-appwrite
@@ -170,9 +178,10 @@ export default (client: Client) => {
 			let data: TDocumentGet | null
 			if (typeof params === 'string') {
 				try {
-					data = await this.atg(
-						await databases.getDocument(this.databaseId, this.collectionId, params),
-					)[0]
+					data =
+						(await this.atg(
+							await databases.getDocument(this.databaseId, this.collectionId, params),
+						)[0]) ?? null
 				} catch (error) {
 					data = null
 				}

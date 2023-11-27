@@ -1,5 +1,6 @@
 query getAccount {
 	getAccount {
+		_documentId
 		userId
 		myId
 		username

@@ -14,8 +14,11 @@
 		"noUnusedParameters": false,
 		"preserveWatchOutput": true,
 		"skipLibCheck": true,
-		"strict": true
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"skipDefaultLibCheck": true
 	},
 
+	"include": ["../../global.d.ts", "../../tsReset.d.ts"],
 	"exclude": ["node_modules"]
 }

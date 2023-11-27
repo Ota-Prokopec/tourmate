@@ -42,7 +42,7 @@
 	{/if}
 
 	<svelte:component this={size === 'tiny' || size === 'small' ? Columns : Column} columns="1fr 1fr">
-		<ImgSkeleton class="w-full h-full" />
+		<ImgSkeleton class="w-full h-[300px]" />
 		{#if size !== 'tiny'}
 			<Left class="pl-4">
 				<SkeletonLine class="w-[5rem]" />
@@ -56,22 +56,22 @@
 				<Icon class="text-xl ">
 					<IconLocation />
 				</Icon>
-				<SkeletonLine class="w-[10rem] h-[3rem] rounded-md" />
+				<SkeletonLine class="w-[10rem]  rounded-md" />
 			</Row>
 		</Row>
 	</svelte:component>
 
 	{#if size !== 'tiny'}
-		<Row class="w-full justify-between">
+		<Column class="w-full justify-between mt-2">
 			<Row class="w-full justify-between">
-				<SkeletonLine class="w-[150px]" />
+				<SkeletonLine class="w-[150px] " />
 
-				<Column class="gap-1">
+				<Column class="">
 					<SkeletonLine class="rounded-full" />
 					<SkeletonLine class="rounded-full" />
 				</Column>
 			</Row>
-		</Row>
+		</Column>
 	{/if}
 
 	<div class="w-full h-auto flex justify-start">

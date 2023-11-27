@@ -79,6 +79,7 @@ export default (client: Client, hostname: string) => {
 
 				const session = cookiesParsed[0]
 				const sessionLegacy = cookiesParsed[1]
+				if (!session) throw new Error('session was not created/found')
 
 				return {
 					sessionToken: {

@@ -1,8 +1,5 @@
-import { list, nullable, objectType } from 'nexus'
+import { objectType } from 'nexus'
 import UsersPreferences from './UsersPreferences'
-import { fromLatLongIntoLocation } from '../lib/database/experiences-monuments'
-import { GraphqlDocument, Preferences } from '@app/ts-types'
-import { Queries } from '../lib/appwrite/appwrite'
 
 export default objectType({
 	name: 'Account',
@@ -10,7 +7,7 @@ export default objectType({
 		t.string('_createdAt')
 		t.string('_updatedAt')
 		t.string('_collectionId')
-		t.string('_id')
+		t.string('_documentId')
 		t.list.string('_permissions')
 		t.string('_databaseId')
 		t.string('userId')

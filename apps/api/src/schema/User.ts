@@ -1,5 +1,5 @@
 import { list, nullable, objectType } from 'nexus'
-import { fromLatLongIntoLocation } from '../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../lib/database/experiences-monuments'
 import { Queries } from '../lib/appwrite/appwrite'
 
 export default objectType({
@@ -24,7 +24,7 @@ export default objectType({
 				const { collections } = ctx.appwrite
 
 				const queries = [Queries.experience.equal('userId', source.userId)]
-				return fromLatLongIntoLocation(
+				return fromLatDocumentLongIntoLocationDocument(
 					...(await collections.experience.listDocuments(queries)).documents,
 				)
 			},
@@ -36,7 +36,7 @@ export default objectType({
 
 					const queries = [Queries.monument.equal('userId', source.userId)]
 
-					return fromLatLongIntoLocation(
+					return fromLatDocumentLongIntoLocationDocument(
 						...(await collections.monument.listDocuments(queries)).documents,
 					)
 				},

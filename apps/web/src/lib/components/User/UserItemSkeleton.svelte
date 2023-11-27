@@ -16,7 +16,7 @@
 	<Avatar class={twMerge('rounded-full w-14 h-14', avatarClass)} />
 	<Column class="gap-1">
 		<SkeletonLine class="w-[150px] h-[15px]" />
-		{#if disableMyId}
+		{#if !disableMyId}
 			<SkeletonLine class="w-[100px] h-[10px]" />
 		{/if}
 	</Column>
