@@ -25,7 +25,7 @@
 		"@changesets/cli": "^2.26.2",
 		"@types/node": "^18.15.11",
 		"@types/set-cookie-parser": "^2.4.3",
-		"typescript": "^5.2.2"
+		"typescript": "^5.3.2"
 	},
 	"dependencies": {
 		"appwrite": "^13.0.0",

@@ -15,12 +15,14 @@
 		"generate-arguments": "barrelsby --delete  --singleQuotes --exportDefault --directory ./src/arguments",
 		"generate-database-experiences-monuments-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/experiences-monuments",
 		"generate-database-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/",
-		"barrelsby": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-database-experiences-monuments-barrels && yarn generate-arguments"
+		"barrelsby": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-database-experiences-monuments-barrels && yarn generate-arguments",
+		"start": "node --experimental-modules ./dist/index.js"
 	},
 	"dependencies": {
 		"@app/appwrite-permissions": "*",
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/cloudinary-server": "*",
+		"tsconfig": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server-express": "^3.12.1",
 		"appwrite": "^13.0.0",

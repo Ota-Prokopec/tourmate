@@ -12,11 +12,13 @@
 		"moduleResolution": "Node",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
-		"preserveWatchOutput": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
-		"skipDefaultLibCheck": true
+		"skipDefaultLibCheck": true,
+
+		"typeRoots": ["../../global.d.ts", "../../node_modules/@types"],
+		"lib": ["esnext", "DOM", "ES2023"]
 	},
 
 	"include": ["../../global.d.ts", "../../tsReset.d.ts"],

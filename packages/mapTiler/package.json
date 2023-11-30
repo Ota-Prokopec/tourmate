@@ -1,22 +1,23 @@
 {
-	"name": "@app/firebase-client",
-	"version": "1.0.1",
-	"main": "src/index.ts",
-	"types": "src/index.ts",
+	"name": "@app/map-tiler",
+	"version": "1.0.0",
+	"main": "./src/index.ts",
 	"scripts": {
 		"build": "tsc --build"
 	},
 	"devDependencies": {
 		"@types/node": "^18.15.11",
+		"barrelsby": "^2.8.0",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.3.2"
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
-		"@app/appwrite-permissions": "*",
-		"firebase": "^10.2.0",
+		"@maptiler/client": "^1.5.0",
+		"geolocation-utils": "^1.2.5",
+		"lodash": "^4.17.21",
 		"node-appwrite": "^9.0.0",
-		"node-base64-image": "^2.0.5",
+		"typescript": "5.3.2",
 		"zod": "^3.21.4"
 	}
 }
