@@ -16,9 +16,10 @@
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
 		"skipDefaultLibCheck": true,
+		"target": "ES6",
 
 		"typeRoots": ["../../global.d.ts", "../../node_modules/@types"],
-		"lib": ["esnext", "DOM", "ES2023"]
+		"lib": ["esnext", "DOM"]
 	},
 
 	"include": ["../../global.d.ts", "../../tsReset.d.ts"],

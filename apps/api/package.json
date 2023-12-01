@@ -1,13 +1,22 @@
 {
 	"name": "api",
 	"version": "1.0.0",
-	"main": "src/index.ts",
 	"license": "MIT",
 	"types": "src/index.ts",
+	"module": "dist/esm/index.js",
+	"main": "dist/cjs/index.ts",
+	"exports": {
+		".": {
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.js"
+		},
+		"./package.json": "./package.json"
+	},
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn barrelsby && yarn generate-graphql-schema",
 		"build": "tsc -build",
+		"build-rollup": "rollup -c",
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",
@@ -16,13 +25,12 @@
 		"generate-database-experiences-monuments-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/experiences-monuments",
 		"generate-database-barrels": "barrelsby --delete  --singleQuotes --directory ./src/lib/database/",
 		"barrelsby": "yarn generate-types-barrels && yarn generate-schema-barrels && yarn generate-resolvers-barrels && yarn generate-database-experiences-monuments-barrels && yarn generate-arguments",
-		"start": "node --experimental-modules ./dist/index.js"
+		"start": "node --experimental-modules ./dist/esm/index.js"
 	},
 	"dependencies": {
 		"@app/appwrite-permissions": "*",
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/cloudinary-server": "*",
-		"tsconfig": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server-express": "^3.12.1",
 		"appwrite": "^13.0.0",
@@ -35,11 +43,13 @@
 		"lodash": "^4.17.21",
 		"nexus": "1.3.0",
 		"node-appwrite": "^11.0.0",
+		"tsconfig": "*",
 		"vite-plugin-node": "^3.0.2"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^25.0.4",
 		"@rollup/plugin-graphql": "^2.0.4",
+		"@rollup/plugin-typescript": "^11.1.5",
 		"@types/express": "^4.17.17",
 		"@types/http-server": "^0.12.1",
 		"barrelsby": "^2.8.0",

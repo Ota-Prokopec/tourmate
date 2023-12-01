@@ -1,5 +1,5 @@
 import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql/src/databases/appwriteKeys'
-import { Answer } from '@app/ts-types'
+import type { Answer } from '@app/ts-types'
 import { isLocation } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
 import { pick } from 'lodash'

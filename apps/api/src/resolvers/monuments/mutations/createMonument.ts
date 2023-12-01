@@ -1,9 +1,9 @@
 import cloudinary from '@app/cloudinary-server'
 import {
-	Answer,
-	AnswerType,
-	GraphqlDocument,
-	Question,
+	type Answer,
+	type AnswerType,
+	type GraphqlDocument,
+	type Question,
 	isQuestionTypeNumber,
 	isQuestionTypeRadio,
 	isQuestionTypeText,

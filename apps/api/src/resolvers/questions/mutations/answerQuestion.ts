@@ -1,5 +1,5 @@
 import { permissions } from '@app/appwrite-ssr-graphql'
-import { Answer } from '@app/ts-types'
+import type { Answer } from '@app/ts-types'
 import { ApolloError } from 'apollo-server-express'
 import { mutationField, stringArg } from 'nexus'
 

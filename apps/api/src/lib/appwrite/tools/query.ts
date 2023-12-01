@@ -1,7 +1,7 @@
 import { Query } from '@app/appwrite-ssr-graphql'
 import { CollectionName } from './collections'
 
-import {
+import type {
 	Check,
 	ExperienceDocument,
 	ExperienceLikeDocument,

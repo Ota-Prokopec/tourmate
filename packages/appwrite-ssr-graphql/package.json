@@ -1,21 +1,6 @@
 {
 	"name": "@app/appwrite-ssr-graphql",
 	"version": "0.1.3",
-	"license": "MIT",
-	"keywords": [
-		"appwrite",
-		"ssr"
-	],
-	"author": {
-		"name": "Ota Prokopec",
-		"email": "otaprokopec@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Ota-Prokopec/appwrite-ssr-example"
-	},
-	"homepage": "https://github.com/Ota-Prokopec/appwrite-ssr-example",
-	"description": "Create Appwrite apps with your server-side rendering",
 	"main": "src/index.ts",
 	"types": "src/index.ts",
 	"scripts": {
