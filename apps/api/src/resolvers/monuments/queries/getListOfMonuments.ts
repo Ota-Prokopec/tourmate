@@ -4,7 +4,7 @@ import {
 	fromLatDocumentLongIntoLocationDocument,
 } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
-import { Topic, Transport } from '@app/ts-types'
+import type { Topic, Transport } from '@app/ts-types'
 import { defaultRangeMeters } from '../../../arguments'
 
 export default queryField('getListOfMonuments', {

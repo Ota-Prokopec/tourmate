@@ -1,6 +1,6 @@
 import { queryField, stringArg } from 'nexus'
 import { ApolloError } from 'apollo-server-express'
-import { Preferences } from '@app/ts-types'
+import type { Preferences } from '@app/ts-types'
 
 export default queryField('createAccount', {
 	args: { myId: stringArg(), username: stringArg() },

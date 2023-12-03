@@ -58,7 +58,7 @@
 		"svelte-preprocess": "^5.0.4",
 		"tailwindcss": "^3.3.5",
 		"tslib": "^2.4.1",
-		"typescript": "^5.2.2",
+		"typescript": "^5.3.2",
 		"vite-plugin-pwa": "^0.16.4",
 		"vitest": "0.32.4",
 		"webdriverio": "^8.20.4"
@@ -67,7 +67,6 @@
 		"@apollo/client": "^3.8.2",
 		"@app/appwrite-client": "*",
 		"@app/appwrite-permissions": "*",
-		"@app/appwrite-server": "*",
 		"@app/firebase-client": "*",
 		"@app/firebase-server": "*",
 		"@app/image-svelte": "*",

@@ -36,10 +36,10 @@ export { default as getListOfMonuments } from './monuments/queries/getListOfMonu
 export * from './monuments/queries/getListOfMonuments';
 export { default as getMonument } from './monuments/queries/getMonument';
 export * from './monuments/queries/getMonument';
-export { default as CreateMonumentInput } from './monuments/schema/CreateMonumentInput';
-export * from './monuments/schema/CreateMonumentInput';
 export { default as MonumentNameInput } from './monuments/schema/MonumentNameInput';
 export * from './monuments/schema/MonumentNameInput';
+export { default as createMonumentInput } from './monuments/schema/createMonumentInput';
+export * from './monuments/schema/createMonumentInput';
 export { default as answerQuestion } from './questions/mutations/answerQuestion';
 export * from './questions/mutations/answerQuestion';
 export { default as getAccounts } from './user/queries/getAccounts';
