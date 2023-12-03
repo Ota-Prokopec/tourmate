@@ -5,18 +5,20 @@
 		"composite": false,
 		"declaration": true,
 		"declarationMap": true,
-		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"inlineSources": false,
 		"isolatedModules": true,
-		"moduleResolution": "Node",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"skipLibCheck": true,
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
 		"skipDefaultLibCheck": true,
-		"target": "ES6",
+
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"module": "CommonJS",
+		"target": "ES2015",
 
 		"typeRoots": ["../../global.d.ts", "../../node_modules/@types"],
 		"lib": ["esnext", "DOM"]

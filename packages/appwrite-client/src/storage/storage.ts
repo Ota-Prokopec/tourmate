@@ -28,27 +28,54 @@ export default (client: Client) => {
 			return storage.getFile(this.bucketId, fileId)
 		}
 
-		updateFile(id: string, name: string, permissions: string[] | undefined): Promise<Models.File>
-		updateFile(file: Models.File, name: string, permissions: string[] | undefined): Promise<Models.File>
-		updateFile(param: string | Models.File, name: string, permissions: string[] | undefined = []): Promise<Models.File> {
-			return storage.updateFile(this.bucketId, typeof param === 'string' ? param : param.$id, name, permissions)
+		updateFile(
+			id: string,
+			name: string,
+			permissions: string[] | undefined,
+		): Promise<Models.File>
+		updateFile(
+			file: Models.File,
+			name: string,
+			permissions: string[] | undefined,
+		): Promise<Models.File>
+		updateFile(
+			param: string | Models.File,
+			name: string,
+			permissions: string[] | undefined = [],
+		): Promise<Models.File> {
+			return storage.updateFile(
+				this.bucketId,
+				typeof param === 'string' ? param : param.$id,
+				name,
+				permissions,
+			)
 		}
 
 		getFilePreview(file: string | Models.File) {
-			return storage.getFilePreview(this.bucketId, typeof file === 'string' ? file : file.$id)
+			return storage.getFilePreview(
+				this.bucketId,
+				typeof file === 'string' ? file : file.$id,
+			)
 		}
 
 		getFileDownload(file: string | Models.File) {
-			return storage.getFileDownload(this.bucketId, typeof file === 'string' ? file : file.$id)
+			return storage.getFileDownload(
+				this.bucketId,
+				typeof file === 'string' ? file : file.$id,
+			)
 		}
 
 		getFileView(file: string | Models.File) {
-			return storage.getFileView(this.bucketId, typeof file === 'string' ? file : file.$id)
+			return storage.getFileView(
+				this.bucketId,
+				typeof file === 'string' ? file : file.$id,
+			)
 		}
 		getFileURL(fileId: string): URL {
 			const url = `${client.config.endpoint}/storage/buckets/${this.bucketId}/files/${fileId}/view?project=${client.config.project}`
 
-			if (!isURL(url)) throw new Error('Convertion to URL from fileId faild, format is not URL.')
+			if (!isURL(url))
+				throw new Error('Convertion to URL from fileId faild, format is not URL.')
 			return url
 		}
 		getIdFromURL(URL: string) {

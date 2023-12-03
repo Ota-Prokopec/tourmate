@@ -2,21 +2,11 @@
 	"name": "api",
 	"version": "1.0.0",
 	"license": "MIT",
-	"types": "src/index.ts",
-	"module": "dist/esm/index.js",
-	"main": "dist/cjs/index.ts",
-	"exports": {
-		".": {
-			"import": "./dist/esm/index.js",
-			"require": "./dist/cjs/index.js"
-		},
-		"./package.json": "./package.json"
-	},
+	"main": "src/index.ts",
 	"scripts": {
 		"dev": "console-ninja nodemon -w *.ts -e ts -x ts-node --files -H -T src/index.ts",
 		"prebuild": "yarn barrelsby && yarn generate-graphql-schema",
 		"build": "tsc -build",
-		"build-rollup": "rollup -c",
 		"generate-graphql-schema": "ts-node  ./src/schema.ts",
 		"generate-schema-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/schema",
 		"generate-resolvers-barrels": "barrelsby --delete --exportDefault --singleQuotes --directory ./src/resolvers",

@@ -67,7 +67,6 @@
 		"@apollo/client": "^3.8.2",
 		"@app/appwrite-client": "*",
 		"@app/appwrite-permissions": "*",
-		"@app/appwrite-server": "*",
 		"@app/firebase-client": "*",
 		"@app/firebase-server": "*",
 		"@app/image-svelte": "*",

@@ -9,7 +9,7 @@ errors
 1) login too many times errors
 4) dark mode
 5) add a marker to monument card that you have already taken a picture there
-
+6) user will be able to take a picture many and many times after answering the question correctly
 !! when i delete a monument that has pictures connected, pictures will then be without a monument so i have to do that when i load exps the {monumnet: nullable(monument)}
 
 

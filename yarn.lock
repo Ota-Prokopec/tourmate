@@ -6467,14 +6467,6 @@ apollo-server-types@^3.8.0:
     apollo-reporting-protobuf "^3.4.0"
     apollo-server-env "^4.2.1"
 
-appwrite@13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/appwrite/-/appwrite-13.0.0.tgz#0c9c1ed816c5ff7f30cdae251d0c2b7f1c3c13e5"
-  integrity sha512-SRfHNj0y3WAKrCG1uZOrTOkemXQaWKSVPH0xcqa7UrJBZcOsTQC/cHU+3pxtQkUrt0wZzLxvEZBf9oTFyhI0mA==
-  dependencies:
-    cross-fetch "3.1.5"
-    isomorphic-form-data "2.0.0"
-
 appwrite@^10.2.0:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/appwrite/-/appwrite-10.2.0.tgz#de8cde863599ab2ce83e2a2d24372acb15951046"
@@ -13492,14 +13484,6 @@ node-abort-controller@^3.0.1:
   resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-3.1.1.tgz#a94377e964a9a37ac3976d848cb5c765833b8548"
   integrity sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==
 
-node-appwrite@11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/node-appwrite/-/node-appwrite-11.0.0.tgz#bca534d466164caa1f238eb75faf0fb0b743c576"
-  integrity sha512-l+O0d1kCvY56NdlmsiWw91IlUzJszNW7FZodGCyvNlJeR4+JIpy9Mica3T4M+zvZGsbRqLhpghCysQmPBwwhQA==
-  dependencies:
-    axios "^1.4.0"
-    form-data "^4.0.0"
-
 node-appwrite@^11.0.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/node-appwrite/-/node-appwrite-11.1.0.tgz#9fb28235e198ecd05084d70a112fd5f3c6bfac52"
@@ -15589,6 +15573,13 @@ rollup-plugin-terser@^7.0.0:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
+rollup@3.20.2:
+  version "3.20.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.20.2.tgz#f798c600317f216de2e4ad9f4d9ab30a89b690ff"
+  integrity sha512-3zwkBQl7Ai7MFYQE0y1MeQ15+9jsi7XxfrqwTb/9EK8D9C9+//EBR4M+CuA1KODRaNbFez/lWxA5vhEGZp4MUg==
+  optionalDependencies:
+    fsevents "~2.3.2"
+
 rollup@^2.43.1:
   version "2.79.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.79.1.tgz#bedee8faef7c9f93a2647ac0108748f497f081c7"
@@ -15603,7 +15594,7 @@ rollup@^3.27.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-rollup@^4.2.0:
+rollup@^4.2.0, rollup@^4.6.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-4.6.1.tgz#351501c86b5b4f976dde8c5837516452b59921f8"
   integrity sha512-jZHaZotEHQaHLgKr8JnQiDT1rmatjgKlMekyksz+yk9jt/8z9quNjnKNRoaM0wd9DC2QKXjmWWuDYtM3jfF8pQ==
