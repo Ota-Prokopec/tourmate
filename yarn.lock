@@ -6497,7 +6497,7 @@ appwrite@^10.2.0:
     cross-fetch "3.1.5"
     isomorphic-form-data "2.0.0"
 
-appwrite@^13.0.0:
+appwrite@^13.0.0, appwrite@^13.0.1:
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/appwrite/-/appwrite-13.0.1.tgz#74b22a8674a9714ac9c603879b8d4ae8746efde3"
   integrity sha512-kdOLB5Qbr2beQW72diA/dx8L16LywHcQV1H6oqgGtf64Mo6LsvyIM1hEVxWmFLwAXMaOtsqb7Mcs4+oQHo+WmQ==

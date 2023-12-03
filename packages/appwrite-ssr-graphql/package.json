@@ -16,7 +16,8 @@
 		"build": "npm run build:types && npm run build:libs",
 		"build:libs": "rollup -c",
 		"build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
-		"check-dependencies": "dependency-check ./package.json --missing"
+		"prebuild": "yarn check-missing-dependencies",
+		"check-missing-dependencies": " npx dependency-check ./package.json --missing"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.26.2",
@@ -28,7 +29,7 @@
 	},
 	"dependencies": {
 		"@app/appwrite-permissions": "*",
-		"appwrite": "^13.0.0",
+		"appwrite": "^13.0.1",
 		"lodash": "^4.17.21",
 		"node-appwrite": "^11.0.0",
 		"set-cookie-parser": "^2.6.0",

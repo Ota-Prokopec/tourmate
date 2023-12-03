@@ -16,15 +16,17 @@
 		"build": "npm run build:types && npm run build:libs",
 		"build:libs": "rollup -c",
 		"build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
-		"prebuild": "yarn barrelsby",
-		"barrelsby": "barrelsby --delete  --singleQuotes --directory ./src"
+		"prebuild": "yarn barrelsby && yarn  check-missing-dependencies",
+		"barrelsby": "barrelsby --delete  --singleQuotes --directory ./src",
+		"check-missing-dependencies": " npx dependency-check ./package.json --missing"
 	},
 	"devDependencies": {
 		"@types/node": "^18.15.11",
 		"barrelsby": "^2.8.0",
 		"rollup": "3.20.2",
 		"ts-node": "^10.9.1",
-		"typescript": "^5.2.2"
+		"typescript": "^5.2.2",
+		"dependency-check": "^4.1.0"
 	},
 	"dependencies": {
 		"zod": "^3.22.4"
