@@ -1,6 +1,6 @@
 import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
 
-import * as maptiler from '@app/map-tiler';
+import * as maptiler from '@maptiler/client';
 const defaultTypes: maptiler.ReverseGeocodingOptions['types'] = ['locality'];
 
 const mapTiler = (apiKey: string) => {

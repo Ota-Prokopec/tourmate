@@ -21,6 +21,7 @@
 		"@app/appwrite-permissions": "*",
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/cloudinary-server": "*",
+		"@app/utils": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server-express": "^3.12.1",
 		"appwrite": "^13.0.0",
@@ -47,7 +48,7 @@
 		"ts-node": "^10.9.1",
 		"ts-node-dev": "^2.0.0",
 		"type-fest": "^4.6.0",
-		"typescript": "^5.2.2",
+		"typescript": "^5.3.2",
 		"vitest": "^0.34.6"
 	}
 }
