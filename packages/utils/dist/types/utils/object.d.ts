@@ -1,0 +1,2 @@
+export declare const removeKeysFromObject: <TObject extends Record<string, any>, TKeys extends readonly (keyof TObject)[]>(obj: TObject, keys: TKeys) => Omit<TObject, TKeys[number]>;
+//# sourceMappingURL=object.d.ts.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"addText.d.ts","sourceRoot":"","sources":["../../src/actions/addText.ts"],"names":[],"mappings":"AAAA,OAAO,OAAO,MAAM,UAAU,CAAA;AAE9B,OAAO,EAAE,gBAAgB,EAAY,MAAM,YAAY,CAAA;gCAE1B,OAAO,QAAQ,MAAM,WAAW,gBAAgB,GAAG;IAAE,KAAK,EAAE,MAAM,CAAA;CAAE;AAAjG,wBAUC"}

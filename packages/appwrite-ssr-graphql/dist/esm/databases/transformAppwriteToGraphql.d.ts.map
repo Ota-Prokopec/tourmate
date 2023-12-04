@@ -1,0 +1,1 @@
+{"version":3,"file":"transformAppwriteToGraphql.d.ts","sourceRoot":"","sources":["../../src/databases/transformAppwriteToGraphql.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,UAAU,CAAA;AAEjC,OAAO,EAAE,KAAK,EAAE,MAAM,gBAAgB,CAAA;AAEtC,eAAO,MAAM,0BAA0B,wDAEvB,eAAe,EAAE,WACkD,CAAA;AAEnF,eAAO,MAAM,sCAAsC,wDAEnC,OAAO,YAAY,CAAC,eAAe,CAAC;WAE1C,MAAM;;CAEZ,CAAA"}
