@@ -2,7 +2,7 @@
 	"name": "@app/appwrite-client",
 	"version": "1.0.1",
 	"main": "dist/cjs/index.js",
-	"module": "dist/esm/index.js",
+	"module": "./dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
 	"exports": {
 		".": {
@@ -16,7 +16,7 @@
 		"build": "npm run build:types && npm run build:libs",
 		"build:libs": "rollup -c",
 		"build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
-		"check-missing-dependencies": " npx dependency-check ./package.json --missing"
+		"check-missing-dependencies": "npx dependency-check package.json src/**/* --missing"
 	},
 	"devDependencies": {
 		"@types/js-cookie": "^3.0.3",

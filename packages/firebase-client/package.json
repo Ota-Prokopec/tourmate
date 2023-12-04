@@ -16,7 +16,7 @@
 		"build": "npm run build:types && npm run build:libs",
 		"build:libs": "rollup -c",
 		"build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
-		"check-missing-dependencies": " npx dependency-check ./package.json --missing",
+		"check-missing-dependencies": "npx dependency-check package.json src/**/* --missing",
 		"prebuild": "yarn check-missing-dependencies"
 	},
 	"devDependencies": {

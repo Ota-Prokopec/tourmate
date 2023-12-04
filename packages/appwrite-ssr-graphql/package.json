@@ -17,7 +17,7 @@
 		"build:libs": "rollup -c",
 		"build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
 		"prebuild": "yarn check-missing-dependencies",
-		"check-missing-dependencies": " npx dependency-check ./package.json --missing"
+		"check-missing-dependencies": "npx dependency-check package.json src/**/* --missing"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.26.2",

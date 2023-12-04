@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { user as userStore } from '$lib/appwrite/appwrite';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import { sdk } from '$src/graphql/sdk.js';
-	import type { PageData } from './$types';
-	import { alert } from '$src/routes/alertStore';
 	import Center from '$lib/components/Common/Center.svelte';
+	import { sdk } from '$src/graphql/sdk.js';
+	import { alert } from '$src/routes/alertStore';
 	import { Circle3 } from 'svelte-loading-spinners';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 	let firstTime = true;

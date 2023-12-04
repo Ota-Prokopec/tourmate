@@ -138,6 +138,7 @@
 			if (!map) throw new Error('map is not defined');
 			const source = map.getSource('geojson');
 			if (!source) throw new Error('source is not defined');
+			//@ts-ignore
 			source.setData(geojson);
 		});
 	});
@@ -160,6 +161,7 @@
 		const source = map.getSource('geojson');
 		if (!source) throw new Error('source is not defined');
 		geojson.features = [];
+		//@ts-expect-error
 		source.setData(geojson);
 		dispatch('reset');
 	};

@@ -18,7 +18,7 @@
 		"build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
 		"prebuild": "yarn barrelsby && yarn  check-missing-dependencies",
 		"barrelsby": "barrelsby --delete  --singleQuotes --directory ./src",
-		"check-missing-dependencies": " npx dependency-check ./package.json --missing"
+		"check-missing-dependencies": "npx dependency-check package.json src/**/* --missing"
 	},
 	"devDependencies": {
 		"@types/node": "^18.15.11",
