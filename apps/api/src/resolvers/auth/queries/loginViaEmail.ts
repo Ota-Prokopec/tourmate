@@ -17,11 +17,11 @@ export default queryField('logInViaEmail', {
 			)
 
 			ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, cookie.value, {
-				sameSite: 'strict',
-				domain: '.localhost',
-				secure: false,
+				sameSite: 'none',
+				domain: `.${process.env.SERVER_HOSTNAME}`,
+				secure: true,
 				maxAge: 999999999999999,
-				httpOnly: false,
+				httpOnly: true,
 			})
 
 			return { session: cookie.value }
