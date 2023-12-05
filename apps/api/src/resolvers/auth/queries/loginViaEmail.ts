@@ -20,7 +20,7 @@ export default queryField('logInViaEmail', {
 				sameSite: 'none',
 				domain: `.${process.env.SERVER_HOSTNAME}`,
 				secure: true,
-				maxAge: 999999999999999,
+				maxAge: 999999999999999, //TODO: change this
 				httpOnly: true,
 			})
 
