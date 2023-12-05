@@ -1,14 +1,11 @@
 <script>
-	import { page } from '$app/stores';
-	import Center from '$lib/components/Common/Center.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import { navigate } from '$lib/utils/navigator';
 	import LL from '$src/i18n/i18n-svelte';
 	import { Avatar, Button } from 'flowbite-svelte';
 </script>
 
-<Column class="w-full gap-0 justify-start items-center gap-28">
+<Column class="w-full justify-start items-center gap-28">
 	<Avatar
 		rounded
 		border

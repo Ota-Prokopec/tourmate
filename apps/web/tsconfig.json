@@ -20,7 +20,9 @@
 		"noImplicitReturns": true,
 		"importHelpers": true,
 		"allowUnusedLabels": false,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"target": "esnext",
+		"module": "commonjs"
 	},
 	"include": [
 		"src/**/*.d.ts",
