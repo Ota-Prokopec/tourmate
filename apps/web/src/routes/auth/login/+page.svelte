@@ -29,7 +29,7 @@
 		try {
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
 			$lsStore.cookieFallback = { a_session_experiences: session };
-			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/`; //TODO: remove this shit by adding a custom domain to your client and server as sub domain
+			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
 			goto('/');
 		} catch (err) {
 			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
