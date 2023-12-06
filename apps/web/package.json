@@ -15,7 +15,8 @@
 		"test": "yarn vitest",
 		"vitest": "vitest",
 		"vitest-ui": "vitest --ui",
-		"typesafe-i18n": "typesafe-i18n"
+		"typesafe-i18n": "typesafe-i18n",
+		"check-missing-dependencies": " dependency-check package.json src/**/* --missing"
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.4.5",
@@ -43,6 +44,7 @@
 		"@vitest/ui": "^0.34.6",
 		"autoprefixer": "^10.4.14",
 		"daisyui": "^4.4.6",
+		"dependency-check": "^4.1.0",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
@@ -59,20 +61,21 @@
 		"tailwindcss": "^3.3.5",
 		"tslib": "^2.4.1",
 		"typescript": "^5.3.2",
+		"vite": "^4.4.2",
 		"vite-plugin-pwa": "^0.16.4",
 		"vitest": "0.32.4",
-		"webdriverio": "^8.20.4",
-		"vite": "^4.4.2"
+		"webdriverio": "^8.20.4"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.8.2",
 		"@app/appwrite-client": "*",
 		"@app/appwrite-permissions": "*",
+		"@app/appwrite-ssr-graphql": "*",
 		"@app/firebase-client": "*",
 		"@app/firebase-server": "*",
 		"@app/image-svelte": "*",
 		"@app/ts-types": "*",
 		"@app/utils": "*",
+		"@apollo/client": "^3.8.2",
 		"@cloudinary/url-gen": "^1.11.2",
 		"@lordicon/element": "^1.2.0",
 		"@maptiler/client": "^1.6.0",

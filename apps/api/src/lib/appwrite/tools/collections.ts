@@ -1,3 +1,4 @@
+import { Types } from '@app/appwrite-ssr-graphql'
 import type {
 	ExperienceDocumentCreate,
 	ExperienceGraphqlDocument,
@@ -7,17 +8,14 @@ import type {
 	MonumentGraphqlDocument,
 	MonumentLikeDocumentCreate,
 	MonumentLikeGraphqlDocument,
-	NumberTypeAnswerDocument,
 	NumberTypeAnswerDocumentCreate,
 	NumberTypeAnswerGraphqlDocument,
 	PlaceDetailDocumentCreate,
 	PlaceDetailGraphqlDocument,
 	QuestionDocumentCreate,
 	QuestionGraphqlDocument,
-	RadioTypeAnswerDocument,
 	RadioTypeAnswerDocumentCreate,
 	RadioTypeAnswerGraphqlDocument,
-	TextTypeAnswerDocument,
 	TextTypeAnswerDocumentCreate,
 	TextTypeAnswerGraphqlDocument,
 	TokenDocumentCreate,
@@ -27,7 +25,6 @@ import type {
 	UsersAnswerDocumentCreate,
 	UsersAnswerGraphqlDocument,
 } from '@app/ts-types'
-import { Types } from '@app/appwrite-ssr-graphql'
 
 export type Collections = ReturnType<typeof collectionsAdmin>
 export type CollectionName = keyof ReturnType<typeof collectionsAdmin>
