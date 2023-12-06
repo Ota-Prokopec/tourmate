@@ -21,5 +21,7 @@ declare namespace NodeJS {
 		readonly PUBLIC_SESSION: string
 		readonly TESTING_SESSION: string
 		readonly TESTING_SESSION_NAME: string
+		readonly CLIENT_HOSTNAME_COOKIES: string
+		readonly PUBLIC_SESSION_NAME: 'a_session_experiences'
 	}
 }

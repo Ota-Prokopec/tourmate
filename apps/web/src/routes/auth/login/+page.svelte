@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { PUBLIC_SESSION_NAME } from '$env/static/public';
 	import { user } from '$lib/appwrite/appwrite';
 	import Button from '$lib/components/Common/Button.svelte';
 	import Link from '$lib/components/Common/Link.svelte';
@@ -26,8 +27,9 @@
 		} catch (error) {}
 
 		try {
-			const res = await sdk.loginViaEmail({ email, password });
-			$lsStore.cookieFallback = { a_session_experiences: res.logInViaEmail.session };
+			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
+			$lsStore.cookieFallback = { a_session_experiences: session };
+			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/`; //TODO: remove this shit by adding a custom domain to your client and server as sub domain
 			goto('/');
 		} catch (err) {
 			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
