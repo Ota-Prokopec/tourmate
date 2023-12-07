@@ -38,10 +38,11 @@ export default objectType({
 			resolve: async (source, args, ctx, info) => {
 				let userId = source.userId
 				if (!ctx.isAuthed(ctx.user))
-					throw new ApolloError('user is not authorizated to create account', '403')
+					throw new ApolloError(
+						'user is not authorizated to perform this request (Experiences)',
+						'403',
+					)
 				if (!userId) userId = ctx.user.$id //if no input it will be the user that is logged in
-				if (!userId)
-					throw new ApolloError('user is not authorizated to create account', '403')
 
 				const { collections } = ctx.appwrite
 				return await getUser(userId, collections)
@@ -78,7 +79,7 @@ export default objectType({
 		t.field('likes', {
 			type: list('MonumentLike'),
 			resolve: async (source, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
 
 				const queries = [
@@ -95,7 +96,10 @@ export default objectType({
 		t.field('liked', {
 			type: nullable('MonumentLike'),
 			resolve: async (source, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				console.log(ctx.user)
+
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
+
 				const { collections, Queries } = ctx.appwrite
 				const queries = [
 					Queries.monumentLike.equal('monumentId', source._id),
@@ -108,7 +112,7 @@ export default objectType({
 		t.field('connectedExperiences', {
 			type: list('Experience'),
 			resolve: async (source, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
 				const queries = [Queries.experience.equal('connectedMonumentId', source._id)]
 				const expDocs = (await collections.experience.listDocuments(queries)).documents

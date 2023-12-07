@@ -8,11 +8,28 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
+	import { lsStore } from '$lib/utils/lsStore';
+	import { getThemeInternalMode } from '@app/utils';
+	import { user } from '$lib/appwrite/appwrite';
+	import { goto } from '$app/navigation';
+	const userIsLoading = user.isLoading;
 
 	let mounted = false;
 	onMount(() => (mounted = true));
 
 	const queryClient = new QueryClient();
+
+	//client-side appwrite local-storage session loggin out
+	$: if (!$userIsLoading && $user === null) {
+		goto('/auth/login');
+	}
+
+	//darkmode-whitemode
+	$: if (mounted) {
+		const deviceTheme = getThemeInternalMode();
+		if ($lsStore['color-theme'] === 'dark' || deviceTheme === 'dark')
+			document.documentElement.classList.add('dark');
+	}
 </script>
 
 <Alert

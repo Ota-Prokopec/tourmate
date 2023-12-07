@@ -16,22 +16,29 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		let user: Models.User<Preferences> | null = null
 		let appwrite: ReturnType<typeof appwriteConnections.setCookie>
 
+		console.log(cookies)
+
 		try {
 			appwrite = appwriteConnections.setCookie(cookies)
 			user = await appwrite.account.get<Preferences>()
+
 			// appwrite.account.updatePrefs<Preferences>({
 			// 	mapRange: 400,
 			// 	termsAccepted: true,
 			// })
 		} catch (error) {
+			console.log(error)
+
 			appwrite = appwriteConnections.setNone()
 			//user is equal to null
 		}
 
+		console.log(user)
+
 		return {
 			req,
 			res,
-			isAuthed: (ctxUser: unknown): ctxUser is NonNullable<typeof user> =>
+			isAuthed: (ctxUser: typeof user | null): ctxUser is NonNullable<typeof user> =>
 				ctxUser !== null,
 			user: user,
 			appwrite: appwrite,

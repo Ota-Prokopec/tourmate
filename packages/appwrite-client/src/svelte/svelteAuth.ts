@@ -21,20 +21,18 @@ export default (account: Account) => {
 			super(client)
 
 			try {
-				if (window) {
-					this.__get().then(() => this.isLoadingStore.set(false))
+				this.__get().then(() => this.isLoadingStore.set(false))
 
-					client.subscribe('account', (response) => {
-						if (response.events.includes('users.*.update')) {
-							return this.__get()
-						}
+				client.subscribe('account', (response) => {
+					if (response.events.includes('users.*.update')) {
+						return this.__get()
+					}
 
-						if (response.events.includes('users.*.delete')) {
-							this.deleteSessions()
-							return this.userStore.set(null)
-						}
-					})
-				}
+					if (response.events.includes('users.*.delete')) {
+						this.deleteSessions()
+						return this.userStore.set(null)
+					}
+				})
 			} catch (error) {}
 		}
 

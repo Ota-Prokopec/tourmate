@@ -9,6 +9,7 @@
 	import { goto } from '$app/navigation';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import DarkMode from '$lib/components/Common/DarkMode.svelte';
+	import LanguageSwitch from '$lib/components/Common/LanguageSwitch.svelte';
 
 	let isLoading = false;
 
@@ -30,6 +31,7 @@
 	<FullPageLoading />
 {:else}
 	<Column class="w-full justify-center items-center h-full">
+		<LanguageSwitch />
 		<DarkMode />
 		<LogOutButton on:click={logOut} />
 	</Column>
