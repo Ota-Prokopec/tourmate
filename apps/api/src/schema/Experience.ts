@@ -37,7 +37,7 @@ export default objectType({
 		t.field('likes', {
 			type: list('ExperienceLike'),
 			resolve: async (source, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
 
 				const queries = [
@@ -54,7 +54,7 @@ export default objectType({
 		t.field('liked', {
 			type: nullable('ExperienceLike'),
 			resolve: async (source, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 				const { collections, Queries } = ctx.appwrite
 				const queries = [
 					Queries.experienceLike.equal('experienceId', source._id),

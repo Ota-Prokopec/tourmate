@@ -3,6 +3,7 @@
  */
 
 export * from './utils/apolloError';
+export * from './utils/appwriteQueries';
 export * from './utils/array';
 export * from './utils/classes';
 export * from './utils/clipboard';

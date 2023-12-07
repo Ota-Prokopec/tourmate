@@ -350,6 +350,10 @@ type RootTranslation = {
 	 * p​i​c​t​u​r​e​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n
 	 */
 	pictureAlreadyTaken: string
+	/**
+	 * Y​o​u​ ​c​a​n​t​ ​c​r​e​a​t​e​ ​m​o​n​u​m​e​n​t​ ​h​e​r​e​,​ ​b​e​c​a​u​s​e​ ​o​f​ ​d​i​s​t​a​n​c​e​ ​b​e​t​w​e​e​n​ ​o​t​h​e​r​ ​m​o​n​u​m​e​n​t​s
+	 */
+	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments: string
 }
 
 export type TranslationFunctions = {
@@ -681,6 +685,10 @@ export type TranslationFunctions = {
 	 * picture already taken
 	 */
 	pictureAlreadyTaken: () => LocalizedString
+	/**
+	 * You cant create monument here, because of distance between other monuments
+	 */
+	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -1,11 +1,9 @@
 import { arg, intArg, list, nullable, queryField, stringArg } from 'nexus'
-import {
-	locationQueries,
-	fromLatDocumentLongIntoLocationDocument,
-} from '../../../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
 import type { Topic, Transport } from '@app/ts-types'
 import { defaultRangeMeters } from '../../../arguments'
+import { locationQueries } from '@app/utils'
 
 export default queryField('getListOfMonuments', {
 	type: list('Monument'),

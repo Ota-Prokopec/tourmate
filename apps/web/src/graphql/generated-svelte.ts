@@ -453,7 +453,7 @@ export type CreateMonumentMutationVariables = Exact<{
 }>;
 
 
-export type CreateMonumentMutation = { __typename?: 'Mutation', createMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, pictureURL: URL, placeDetailId: string, transports: Array<any>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
+export type CreateMonumentMutation = { __typename?: 'Mutation', createMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, pictureURL: URL, placeDetailId: string, transports: Array<any>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string }, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string }> } };
 
 export type DeleteMonumentMutationVariables = Exact<{
   monumentId: Scalars['String']['input'];
@@ -1106,6 +1106,18 @@ export const CreateMonumentDoc = gql`
       _collectionId
       _updatedAt
       _createdAt
+    }
+    usersConnectedExperiences {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      pictureUrl
+      location
+      connectedMonumentId
     }
   }
 }

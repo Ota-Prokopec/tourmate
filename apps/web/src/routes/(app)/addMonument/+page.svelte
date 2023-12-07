@@ -9,10 +9,17 @@
 	import mapTiler from '$lib/utils/mapTiler';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location } from '@app/ts-types';
+	import { locationQueries } from '@app/utils';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { Alert, Button } from 'flowbite-svelte';
 	import maplibregl, { type Map } from 'maplibre-gl';
 	import { SyncLoader } from 'svelte-loading-spinners';
+	import type { PageData } from './$types';
+	import { collections } from '$lib/appwrite/appwrite';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
+
+	export let data: PageData;
 
 	let map: Map;
 	let location: Location | undefined;
@@ -46,15 +53,31 @@
 		markerLocation = [lngLat.lat, lngLat.lng];
 	});
 
-	const createLocation = () => {
-		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-		goto(`/addMonument/detail/${markerLocation[0]}-${markerLocation[1]}`);
+	const next = async () => {
+		try {
+			if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
+
+			if (!(await isItOkToCreateMonumentHere()))
+				throw new Error('There is something wrong with creating the monument here');
+			goto(`/addMonument/detail/${markerLocation[0]}-${markerLocation[1]}`);
+		} catch (error) {
+			alert('', $LL.cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments(), {
+				color: 'red'
+			});
+		}
 	};
 
 	$: positionDetails = useQuery('positionDetails', async () => {
 		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
 		return (await mapTiler.reverseGeocoding(...markerLocation, { limit: 4 })).at(0);
 	});
+
+	const isItOkToCreateMonumentHere = async () => {
+		if (!markerLocation) throw TypeError('markerLocation is not defined');
+		const queries = locationQueries(markerLocation, data.twoMonumentsMinimalDistance); // / because it searches around so r = 50meters
+		const monumentDocs = await collections.monument.listDocuments(queries);
+		return monumentDocs.total === 0 ? true : false; //only when no monument is found around 50meters
+	};
 </script>
 
 <div class="w-[100dvw] h-[100dvh]">
@@ -70,7 +93,7 @@
 			<Text>lng: {markerLocation[1]}</Text>
 		{/if}
 	</Alert>
-	<ExpMap bind:location bind:map class="w-full h-full">
+	<ExpMap bind:center={location} bind:map class="w-full h-full">
 		{#if monumentsLoaded && $monuments.data?.getListOfMonuments}
 			{#each $monuments.data?.getListOfMonuments as monument}
 				<MonumentMarker {monument} />
@@ -81,7 +104,7 @@
 	<Button
 		class="absolute bottom-0 right-0 mb-24 mr-4 flex flex-wrap flex-row gap-2"
 		color="blue"
-		on:click={createLocation}
+		on:click={next}
 	>
 		<span>označit zde</span>
 		<Icon class="w-4 fill-white">

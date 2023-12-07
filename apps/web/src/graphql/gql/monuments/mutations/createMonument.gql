@@ -23,5 +23,17 @@ mutation createMonument($input: CreateMonumentInput!) {
 			_updatedAt
 			_createdAt
 		}
+		usersConnectedExperiences {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			pictureUrl
+			location
+			connectedMonumentId
+		}
 	}
 }

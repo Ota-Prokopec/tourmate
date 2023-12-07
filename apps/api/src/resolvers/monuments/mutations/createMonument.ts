@@ -21,7 +21,7 @@ export default mutationField('createMonument', {
 	args: { input: arg({ type: 'CreateMonumentInput' }) },
 	resolve: async (s, args, ctx) => {
 		try {
-			if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+			if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 			const { collections } = ctx.appwrite
 
 			// create image for monument

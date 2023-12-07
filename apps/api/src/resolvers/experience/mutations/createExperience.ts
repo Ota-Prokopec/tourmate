@@ -13,7 +13,7 @@ export default mutationField('createExperience', {
 
 		if (!isBase64(args.input.picture))
 			throw new Error('input.imgSrc musts be a valid base64 string')
-		if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+		if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 
 		const monument = await collections.monument.getDocument(
 			args.input.connnectedMonumentId,
@@ -40,8 +40,7 @@ export default mutationField('createExperience', {
 		const document = await buckets.experiences
 			.uploadBase64(args.input.picture)
 			.then(async ({ url }) => {
-				if (!ctx.isAuthed(ctx.user?.$id))
-					throw new ApolloError('User is not Authed', '403')
+				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not Authed', '403')
 				return await collections.experience.createDocument({
 					connectedMonumentId: args.input.connnectedMonumentId,
 					userId: ctx.user.$id,

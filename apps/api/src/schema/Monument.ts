@@ -1,15 +1,12 @@
 import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql'
 import type { Answer } from '@app/ts-types'
-import { isLocation } from '@app/utils'
+import { isLocation, locationQueries } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
 import { pick } from 'lodash'
 import { list, nullable, objectType } from 'nexus'
 import { defaultRangeMeters } from '../arguments/LocationInput'
 import { Queries } from '../lib/appwrite/appwrite'
-import {
-	fromLatDocumentLongIntoLocationDocument,
-	locationQueries,
-} from '../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../lib/database/experiences-monuments'
 import { getUser } from '../lib/users/getUser'
 
 export default objectType({

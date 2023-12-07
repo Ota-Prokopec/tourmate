@@ -7,7 +7,7 @@ export default mutationField('likeMonument', {
 	type: 'MonumentLike',
 	resolve: async (s_, args, ctx) => {
 		const { collections } = appwrite.setAdmin()
-		if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('User is not authenticated')
+		if (!ctx.isAuthed(ctx.user)) throw new Error('User is not authenticated')
 		const monument = await collections.monument.getDocument(args.monumentId)
 		if (!monument) throw new Error('There is no monument below this id')
 		const monumentLike = await collections.monumentLike.createDocument(

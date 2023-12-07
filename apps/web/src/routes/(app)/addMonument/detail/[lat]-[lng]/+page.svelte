@@ -13,6 +13,7 @@
 		Answer,
 		AnswerType,
 		Base64,
+		Experience,
 		GraphqlDocument,
 		Location,
 		Monument,
@@ -24,6 +25,8 @@
 	import AddQuestionButton from '../Components/AddQuestionButton.svelte';
 	import AddQuestionDrawer from '../Components/AddQuestionDrawer.svelte';
 	import type { PageData } from './$types';
+	import { goto } from '$app/navigation';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 
 	export let data: PageData;
 
@@ -41,7 +44,10 @@
 		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
 		| undefined;
 
-	let serverResponse: GraphqlDocument<Monument> | undefined;
+	type ServerResponse = GraphqlDocument<
+		Monument & { usersConnectedExperiences: GraphqlDocument<Experience>[] }
+	>;
+	let serverResponse: ServerResponse | undefined;
 
 	let isLoading = false;
 	let questionDrawerHidden = true;
@@ -64,7 +70,7 @@
 					}
 				})
 			).createMonument;
-			//goto('/');
+			goto('/');
 		} catch (err) {
 			isLoading = false;
 			alert('', $LL.monumentCreateError(), { color: 'red' });
@@ -112,12 +118,14 @@
 	</MonumentCreateForm>
 {/if}
 
-<Map location={data.newMonument.location} class="h-[100dvh] fixed top-0">
+<Map center={data.newMonument.location} class="h-[100dvh] fixed top-0">
 	{#if serverResponse}
 		<MonumentMarker monument={serverResponse} />
 	{:else}
 		<Marker class="z-50" location={data.newMonument.location}>
-			<Icon icon="fas fa-map-marker-alt" class="text-4xl" />
+			<Icon>
+				<IconLocation />
+			</Icon>
 		</Marker>
 	{/if}
 </Map>

@@ -8,7 +8,7 @@ export default queryField('updateProfilePicture', {
 	args: { picture: stringArg() },
 	type: 'Account',
 	resolve: async (s, args, ctx) => {
-		if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+		if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 		if (!isBase64(args.picture)) throw new TypeError('picture is not a base64 string')
 		const { collections } = ctx.appwrite
 

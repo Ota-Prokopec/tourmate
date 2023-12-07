@@ -1,10 +1,8 @@
 import { arg, list, nullable, queryField, stringArg } from 'nexus'
-import {
-	fromLatDocumentLongIntoLocationDocument,
-	locationQueries,
-} from '../../../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
 import { defaultRangeMeters } from '../../../arguments'
+import { locationQueries } from '@app/utils'
 
 export default queryField('getListOfExperiences', {
 	type: list('Experience'),
