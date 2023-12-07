@@ -1,0 +1,5 @@
+mutation answerQuestion($monumentId: String!, $answer: StringOrNumber!) {
+	answerQuestion(monumentId: $monumentId, answer: $answer) {
+		answeredCorrectly
+	}
+}

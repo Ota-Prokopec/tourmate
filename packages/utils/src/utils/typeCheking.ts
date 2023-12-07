@@ -1,5 +1,5 @@
 import { Base64, Location, Topic, Transport, transportZod } from '@app/ts-types'
-import { topicZod } from '@app/ts-types/src/Topic'
+import { topicZod } from '@app/ts-types'
 
 export const isBase64 = (value: unknown): value is Base64 => {
 	if (typeof value !== 'string') return false

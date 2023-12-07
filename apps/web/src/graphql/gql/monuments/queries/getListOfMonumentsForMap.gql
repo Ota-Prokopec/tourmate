@@ -1,0 +1,43 @@
+# you can add a user into this
+query getListOfMonumentsForMap(
+	$transports: [Transport!]
+	$topics: [Topic!]
+	$name: String
+	$limit: Int
+	$location: LocationInput
+) {
+	getListOfMonuments(
+		transports: $transports
+		topics: $topics
+		name: $name
+		limit: $limit
+		location: $location
+	) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		location
+		transports
+		userId
+		name
+		about
+		topics
+		placeDetailId
+		pictureURL
+		usersConnectedExperiences {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			pictureUrl
+			location
+			connectedMonumentId
+		}
+	}
+}

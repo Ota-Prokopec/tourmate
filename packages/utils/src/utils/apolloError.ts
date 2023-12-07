@@ -1,5 +1,18 @@
-export const cacheApolloError = (response: unknown) => {
-	const message = (response as Record<any, any>).response.errors[0].message as string
+import { z } from 'zod'
 
-	return { message }
+const zodSchema = z.object({
+	response: z.object({
+		errors: z.array(
+			z.object({
+				message: z.string(),
+				extensions: z.object({
+					code: z.string(),
+				}),
+			}),
+		),
+	}),
+})
+
+export const parseApolloError = (response: unknown) => {
+	return zodSchema.parse(response)
 }

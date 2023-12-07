@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Hr } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import Text from './Text.svelte';
 	type CategoryKey = $$Generic;
 
 	type Category = {
@@ -14,7 +15,7 @@
 	export { className as class };
 
 	export let categories: ReadonlyArray<Category>;
-	export let chosenCategory = categories[0].key;
+	export let chosenCategory: CategoryKey = categories[0].key;
 	$: dispatch('change', chosenCategory);
 </script>
 
@@ -24,10 +25,8 @@
 			on:click={() => {
 				chosenCategory = key;
 			}}
-			class={`!w-auto pr-4 pl-4 !h-min text-lg  !rounded-none flex flex-wrap flex-col gap-1 ${
-				chosenCategory === key ? 'text-black' : 'text-gray-400'
-			}`}
-			>{title}
+			class={`!w-auto pr-4 pl-4 !h-min text-lg  !rounded-none flex flex-wrap flex-col gap-1`}
+			><Text class={chosenCategory === key ? '' : '!text-gray-400'}>{title}</Text>
 			{#if chosenCategory === key}
 				<span class="w-[120%] relative left-[-10%] h-[6px] bg-gray-300 rounded-full" />
 			{/if}

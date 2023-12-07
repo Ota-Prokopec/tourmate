@@ -4,3 +4,9 @@ export type CarouselImage = {
 	width?: number;
 	height?: number;
 };
+
+export type CarouselFunctions = {
+	goToNext: () => void;
+	goToPrev: () => void;
+	goTo: (index: number) => void;
+};

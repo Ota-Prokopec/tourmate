@@ -1,0 +1,36 @@
+<script lang="ts">
+	import type { UserInfo } from '@app/ts-types';
+	import { twMerge } from 'tailwind-merge';
+	import Avatar from '../Common/Avatar.svelte';
+	import { createEventDispatcher } from 'svelte';
+	import Row from '../Common/Row.svelte';
+	import Text from '../Common/Text.svelte';
+	import Column from '../Common/Column.svelte';
+	const dispatch = createEventDispatcher<{ click: { userId: string } }>();
+
+	export let user: UserInfo;
+	export let disableMyId = false;
+
+	let className = '';
+	export { className as class };
+	export let avatarClass = '';
+</script>
+
+<button
+	on:click={() => dispatch('click', { userId: user.userId })}
+	class={twMerge('flex items-center', className)}
+>
+	<Row class="gap-2 items-center justify-start">
+		<Avatar src={user.profilePictureURL} class={twMerge('rounded-full w-14 h-14', avatarClass)} />
+		<Column class="gap-0 justify-start">
+			<Text class="text-left">
+				{user.username}
+			</Text>
+			{#if !disableMyId}
+				<Text class="text-sm text-left">
+					{user.myId}
+				</Text>
+			{/if}
+		</Column>
+	</Row>
+</button>

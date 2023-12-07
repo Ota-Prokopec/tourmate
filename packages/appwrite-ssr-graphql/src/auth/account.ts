@@ -64,12 +64,10 @@ export default (client: Client, hostname: string) => {
 
 				const json = await response.json()
 
-				const { code } = z.object({ code: z.number() }).parse(json)
+				const { status } = z.object({ status: z.number() }).parse(response)
 
-				if (code >= 400)
-					throw new Error(
-						'wrong email or password at appwrite-server account/createSession',
-					)
+				if (status === 429) throw new Error('429')
+				else if (status >= 401) throw new Error('400')
 
 				const cookiesStr = (response.headers.get('set-cookie') ?? '')
 					.split(SSRHostName)
@@ -81,6 +79,7 @@ export default (client: Client, hostname: string) => {
 
 				const session = cookiesParsed[0]
 				const sessionLegacy = cookiesParsed[1]
+				if (!session) throw new Error('session was not created/found')
 
 				return {
 					sessionToken: {

@@ -1,42 +1,56 @@
 import { arg, mutationField } from 'nexus'
-import createExperienceInput from '../schema/CreateExperienceInput'
 import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
-import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 import buckets from '@app/cloudinary-server'
+import { Queries } from '../../../lib/appwrite/appwrite'
 
 export default mutationField('createExperience', {
-	args: { input: arg({ type: createExperienceInput }) },
+	args: { input: arg({ type: 'CreateExperienceInput' }) },
 	type: 'Experience',
 	resolve: async (s, args, ctx) => {
 		const { collections } = ctx.appwrite
 
-		console.log(args.input.picture)
-
 		if (!isBase64(args.input.picture))
 			throw new Error('input.imgSrc musts be a valid base64 string')
-		if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+		if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 
-		const placeDetail = await collections.placeDetail.createDocument(
-			{
-				name: args.input.placeName,
-			},
-			[ctx.user],
+		const monument = await collections.monument.getDocument(
+			args.input.connnectedMonumentId,
 		)
+		if (!monument) throw new ApolloError('No monument was found', '404')
+
+		//checking: question and answer
+		if (monument.questionId) {
+			const usersAnswer = await collections.usersAnswer.getDocument([
+				Queries.usersAnswer.equal('userId', ctx.user.$id),
+				Queries.usersAnswer.equal('monumentId', monument._id),
+			])
+
+			if (!usersAnswer)
+				throw new ApolloError(
+					'User did not answer the question so he cant save a picture bellow this monument',
+				)
+			if (!usersAnswer.answeredCorrectly)
+				throw new ApolloError(
+					'User answered wrong the question so he cant save a picture bellow this monument',
+				)
+		}
 
 		const document = await buckets.experiences
 			.uploadBase64(args.input.picture)
 			.then(async ({ url }) => {
-				if (!ctx.isAuthed(ctx.user?.$id))
-					throw new ApolloError('User is not Authed', '403')
+				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not Authed', '403')
 				return await collections.experience.createDocument({
+					connectedMonumentId: args.input.connnectedMonumentId,
 					userId: ctx.user.$id,
-					imgSrc: url,
+					pictureUrl: url,
 					latitude: Math.round(args.input.location[0]),
 					longitude: Math.round(args.input.location[1]),
-					placeDetailId: placeDetail._id,
 				})
 			})
-		return fromLatLongIntoLocation(document)[0]
+		const res = fromLatDocumentLongIntoLocationDocument(document)[0]
+		if (!res) throw new ApolloError('creating experience was no successful')
+		return res
 	},
 })

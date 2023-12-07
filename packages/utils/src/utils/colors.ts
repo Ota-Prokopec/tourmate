@@ -1,6 +1,11 @@
 export const colors = [
-	'rgba(240, 248, 255, 1)', // AliceBlue
-	'rgba(255, 228, 196, 1)', // Bisque
+	'rgba(219, 112, 147, 1)', // PaleVioletRed
+	'rgba(255, 69, 0, 1)', // Red-Orange
+	'rgba(32, 178, 170, 1)', // LightSeaGreen
+	'rgba(255, 105, 180, 1)', // HotPink
+	'rgba(0, 255, 255, 1)', // Cyan
+	'rgba(255, 165, 0, 1)', // Orange
+	'rgba(135, 206, 235, 1)', // SkyBlue
 	'rgba(255, 250, 205, 1)', // LemonChiffon
 	'rgba(240, 255, 240, 1)', // Honeydew
 	'rgba(245, 245, 220, 1)', // Beige
@@ -13,13 +18,7 @@ export const colors = [
 	'rgba(250, 128, 114, 1)', // Salmon
 	'rgba(152, 251, 152, 1)', // PaleGreen
 	'rgba(255, 165, 0, 1)', // Orange
-	'rgba(219, 112, 147, 1)', // PaleVioletRed
-	'rgba(255, 69, 0, 1)', // Red-Orange
-	'rgba(32, 178, 170, 1)', // LightSeaGreen
-	'rgba(255, 105, 180, 1)', // HotPink
-	'rgba(0, 255, 255, 1)', // Cyan
-	'rgba(255, 165, 0, 1)', // Orange
-	'rgba(135, 206, 235, 1)', // SkyBlue
+
 	'rgba(255, 0, 0, 1)', // Red
 	'rgba(127, 255, 212, 1)', // Aquamarine
 	'rgba(220, 20, 60, 1)', // Crimson

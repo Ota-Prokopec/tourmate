@@ -4,6 +4,8 @@ query getListOfMonumentCards(
 	$transports: [Transport!]
 	$name: String
 	$limit: Int
+	$userId: String
+	$offset: Int
 ) {
 	getListOfMonuments(
 		location: $location
@@ -11,6 +13,8 @@ query getListOfMonumentCards(
 		transports: $transports
 		name: $name
 		limit: $limit
+		userId: $userId
+		offset: $offset
 	) {
 		_createdAt
 		_updatedAt
@@ -19,14 +23,14 @@ query getListOfMonumentCards(
 		_permissions
 		_databaseId
 		location
-		creatorUserId
+		userId
 		name
 		about
 		topics
 		placeDetailId
 		pictureURL
 		transports
-		creator {
+		user {
 			_createdAt
 			_updatedAt
 			_collectionId
@@ -36,9 +40,7 @@ query getListOfMonumentCards(
 			userId
 			myId
 			username
-			status
-			emailVerification
-			phoneVerification
+
 			profilePictureURL
 		}
 		placeDetail {

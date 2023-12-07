@@ -1,21 +1,28 @@
 import * as lodash from 'lodash'
-const { merge, pick } = lodash
 import { get } from './fetching'
 import type { IP, IPApiResponse, Location } from '@app/ts-types'
+import * as geolocationUtils from 'geolocation-utils'
+
+export const metersOfOneDegree = 111000
 
 export const getUsersLocation = (
-	options: PositionOptions = { enableHighAccuracy: true },
+	options: PositionOptions = { enableHighAccuracy: false },
 ): Promise<Location> => {
 	return new Promise((res) => {
-		if (typeof window === 'undefined') res([0, 0])
+		if (typeof window === 'undefined') throw new Error('You called this on server side')
+
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				function (position) {
 					res([position.coords.latitude, position.coords.longitude])
 				},
-				() => {},
+				(err) => {
+					throw err
+				},
 				options,
 			)
+		} else {
+			throw new Error('Users location was not successfull')
 		}
 	})
 }
@@ -38,13 +45,38 @@ export const getUsersLocationDataByIP = async (ip: IP): Promise<IPApiResponse> =
 	return res as IPApiResponse
 }
 
-export const distanceBetweenTwoLocations = (location1: Location, location2: Location) => {
-	return Math.abs(location1[0] - location2[0]) + Math.abs(location1[1] - location2[1])
+export const degreeToMeters = (degree: number) => {
+	return degree * metersOfOneDegree
 }
 
-export const degreeToMeters = (degree: number) => {
-	return degree * 111_111
-}
 export const metersToDegree = (meters: number) => {
-	return meters / 111_111
+	return meters / metersOfOneDegree
 }
+
+/**
+ * @returns time in seconds
+ */
+export const getTimeFromAToB = (
+	location1: Location,
+	location2: Location,
+	speed: number,
+) => {
+	const distance = geolocationUtils.distanceTo(
+		{ lat: location1[0], lng: location1[1] },
+		{ lat: location2[0], lng: location2[1] },
+	)
+	return distance / speed
+}
+
+export const getLocationUrlOfGoogleMaps = (location: Location) => {
+	return `https://www.google.com/maps/dir/?api=1&destination=${location[0]},${location[1]}`
+}
+
+/**
+ * @returns meters
+ */
+export const distanceTo = (location1: Location, location2: Location) =>
+	geolocationUtils.distanceTo(
+		{ lat: location1[0], lng: location1[1] },
+		{ lat: location2[0], lng: location2[1] },
+	)

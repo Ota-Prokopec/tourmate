@@ -8,8 +8,11 @@ export default defineConfig({
 		host: 'localhost',
 		port: 5222
 	},
-	plugins: [sveltekit()],
 
+	plugins: [sveltekit()],
+	ssr: {
+		noExternal: ['typesafe-i18n']
+	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}'],
 		globals: true,

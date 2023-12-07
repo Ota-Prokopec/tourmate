@@ -4,11 +4,11 @@
 	import Center from '$lib/components/Common/Center.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
+	import { lsStore } from '$lib/utils/lsStore';
 	import { navigate } from '$lib/utils/navigator';
-	import { myNewExperienceStore } from '../editPicture/newExperienceStore';
 
 	const imageHandler = (base64: string) => {
-		$myNewExperienceStore.imgSrc = base64;
+		$lsStore.newExperiencePicture = base64;
 		goto(`/createNewExperience/editPicture`);
 	};
 </script>

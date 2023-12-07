@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { user } from '$lib/appwrite/appwrite';
-	import IconFacebook from '$lib/components/Icons/IconFacebook.svelte';
-	import IconGoogle from '$lib/components/Icons/IconGoogle.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
 	import IconDiscord from '$lib/components/Icons/IconDiscord.svelte';
+	import IconFacebook from '$lib/components/Icons/IconFacebook.svelte';
 	import IconGithub from '$lib/components/Icons/IconGithub.svelte';
-	import { createEventDispatcher } from 'svelte';
+	import IconGoogle from '$lib/components/Icons/IconGoogle.svelte';
 	import type { SocialPlatform } from '@app/ts-types';
+	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	const dispatch = createEventDispatcher<{ click: undefined }>();
 
-	export let termsAccepted: boolean = true;
+	export let disabled: boolean = false;
 
 	const logout = async () => {
 		try {
@@ -27,40 +28,38 @@
 		);
 	};
 
-	const blurryClass = 'opacity-[0.7]  ';
+	const blurryClass = 'opacity-[0.7]';
+
+	const socials = [
+		{
+			key: 'facebook',
+			icon: IconFacebook
+		},
+		{
+			key: 'google',
+			icon: IconGoogle
+		},
+		{
+			key: 'discord',
+			icon: IconDiscord
+		},
+		{
+			key: 'github',
+			icon: IconGithub
+		}
+	] as const;
 </script>
 
-<button class="w-auto flex flex-wrap flex-row gap-10 items-center justify-center">
-	<Icon
-		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
-		on:click={() => login('facebook')}
-	>
-		<IconFacebook />
-	</Icon>
-	<Icon
-		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
-		on:click={() => login('google')}
-	>
-		<IconGoogle />
-	</Icon>
-	<Icon
-		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
-		on:click={() => login('discord')}
-	>
-		<IconDiscord />
-	</Icon>
-	<Icon
-		on:click={() => dispatch('click')}
-		disabled={!termsAccepted}
-		class={twMerge('w-14', !termsAccepted && blurryClass)}
-		on:click={() => login('github')}
-	>
-		<IconGithub />
-	</Icon>
-</button>
+<Row class="gap-10 items-center justify-center dark:bg-white rounded-full w-max">
+	{#each socials as { icon, key }}
+		<Icon
+			{disabled}
+			on:click={() => dispatch('click')}
+			disableDefaultDarkMode
+			class={twMerge('w-14', disabled && blurryClass)}
+			on:click={() => login(key)}
+		>
+			<svelte:component this={icon} />
+		</Icon>
+	{/each}
+</Row>

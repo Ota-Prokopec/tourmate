@@ -3,7 +3,7 @@ query updateProfilePicture($picture: String!) {
 		_createdAt
 		_updatedAt
 		_collectionId
-		_id
+		_documentId
 		_permissions
 		_databaseId
 		userId
@@ -14,7 +14,7 @@ query updateProfilePicture($picture: String!) {
 		phoneVerification
 		profilePictureURL
 		prefs {
-			location
+			mapRange
 			termsAccepted
 		}
 	}

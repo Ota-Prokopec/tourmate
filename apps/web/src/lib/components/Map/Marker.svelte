@@ -7,5 +7,5 @@
 </script>
 
 <Marker class={className} lngLat={{ lat: location[0], lon: location[1] }}>
-	<slot />
+	<button on:click> <slot /> </button>
 </Marker>

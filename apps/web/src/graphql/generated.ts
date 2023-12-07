@@ -15,7 +15,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  AnswerType: { input: any; output: any; }
   Location: { input: [number, number]; output: [number, number]; }
+  StringOrNumber: { input: any; output: any; }
   Topic: { input: "castle" | "monument" | "person" | "animals" | "hiking"; output: "castle" | "monument" | "person" | "animals" | "hiking"; }
   Transport: { input: any; output: any; }
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
@@ -27,18 +29,16 @@ export type Account = {
   _collectionId: Scalars['String']['output'];
   _createdAt: Scalars['String']['output'];
   _databaseId: Scalars['String']['output'];
-  _id: Scalars['String']['output'];
+  _documentId: Scalars['String']['output'];
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
-  emailVerification?: Maybe<Scalars['Boolean']['output']>;
-  experiences: Array<Experience>;
-  monuments: Array<Monument>;
+  emailVerification: Scalars['Boolean']['output'];
   myId: Scalars['String']['output'];
-  phoneVerification?: Maybe<Scalars['Boolean']['output']>;
-  prefs?: Maybe<UsersPreferences>;
+  phoneVerification: Scalars['Boolean']['output'];
+  prefs: UsersPreferences;
   /** This is URL of profile picture. Not its id. */
-  profilePictureURL?: Maybe<Scalars['URL']['output']>;
-  status?: Maybe<Scalars['Boolean']['output']>;
+  profilePictureURL: Scalars['URL']['output'];
+  status: Scalars['Boolean']['output'];
   userId: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -49,17 +49,18 @@ export type CreateAccountInput = {
 };
 
 export type CreateExperienceInput = {
+  connnectedMonumentId: Scalars['String']['input'];
   location: Scalars['Location']['input'];
   picture: Scalars['String']['input'];
-  placeName: Scalars['String']['input'];
 };
 
 export type CreateMonumentInput = {
   about: Scalars['String']['input'];
   location: Scalars['Location']['input'];
   name: Scalars['String']['input'];
-  picture?: InputMaybe<Scalars['String']['input']>;
+  picture: Scalars['String']['input'];
   placeName: Scalars['String']['input'];
+  question?: InputMaybe<QuestionInput>;
   topics: Array<Scalars['Topic']['input']>;
   transports: Array<Scalars['Transport']['input']>;
 };
@@ -77,13 +78,13 @@ export type Experience = {
   _id: Scalars['String']['output'];
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
-  imgSrc: Scalars['URL']['output'];
+  connectedMonument?: Maybe<Monument>;
+  connectedMonumentId: Scalars['String']['output'];
   liked?: Maybe<ExperienceLike>;
   likes: Array<ExperienceLike>;
   location: Scalars['Location']['output'];
-  placeDetail: PlaceDetail;
-  placeDetailId: Scalars['String']['output'];
-  user: Account;
+  pictureUrl: Scalars['URL']['output'];
+  user: User;
   userId: Scalars['String']['output'];
 };
 
@@ -96,13 +97,13 @@ export type ExperienceLike = {
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
   experienceId: Scalars['String']['output'];
-  user: Account;
+  user: User;
   userId: Scalars['String']['output'];
 };
 
 export type LocationInput = {
   location: Scalars['Location']['input'];
-  range?: InputMaybe<Scalars['Int']['input']>;
+  rangeMeters?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Monument = {
@@ -114,19 +115,24 @@ export type Monument = {
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
   about?: Maybe<Scalars['String']['output']>;
-  creator: Account;
-  creatorUserId: Scalars['String']['output'];
+  connectedExperiences: Array<Experience>;
   liked?: Maybe<MonumentLike>;
   likes: Array<MonumentLike>;
   location: Scalars['Location']['output'];
   name: Scalars['String']['output'];
   nearExperiences: Array<Experience>;
   /** This it an URL not id of picture */
-  pictureURL?: Maybe<Scalars['URL']['output']>;
+  pictureURL: Scalars['URL']['output'];
   placeDetail: PlaceDetail;
   placeDetailId: Scalars['String']['output'];
+  question?: Maybe<Question>;
+  questionId?: Maybe<Scalars['String']['output']>;
   topics: Array<Scalars['Topic']['output']>;
   transports: Array<Scalars['Transport']['output']>;
+  user: User;
+  userId: Scalars['String']['output'];
+  usersAnswerToQuestion?: Maybe<UsersAnswerToQuestion>;
+  usersConnectedExperiences: Array<Experience>;
 };
 
 export type MonumentInputByName = {
@@ -143,16 +149,25 @@ export type MonumentLike = {
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
   monumentId: Scalars['String']['output'];
-  user: Account;
+  user: User;
   userId: Scalars['String']['output'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  answerQuestion: UsersAnswerToQuestion;
   createExperience: Experience;
   createMonument: Monument;
+  deleteExperience: Scalars['Boolean']['output'];
   deleteMonument: Scalars['Boolean']['output'];
+  likeExperience: ExperienceLike;
   likeMonument: MonumentLike;
+};
+
+
+export type MutationAnswerQuestionArgs = {
+  answer: Scalars['StringOrNumber']['input'];
+  monumentId: Scalars['String']['input'];
 };
 
 
@@ -166,8 +181,18 @@ export type MutationCreateMonumentArgs = {
 };
 
 
+export type MutationDeleteExperienceArgs = {
+  experienceId: Scalars['String']['input'];
+};
+
+
 export type MutationDeleteMonumentArgs = {
   monumentId: Scalars['String']['input'];
+};
+
+
+export type MutationLikeExperienceArgs = {
+  experienceId: Scalars['String']['input'];
 };
 
 
@@ -190,13 +215,14 @@ export type Query = {
   __typename?: 'Query';
   createAccount: Account;
   getAccount: Account;
-  getAccountByMyId: Account;
-  getAccounts: Array<Account>;
   getExperience: Experience;
   getListOfExperiences: Array<Experience>;
   getListOfMonuments: Array<Monument>;
   getMonument: Monument;
+  getUser: User;
+  getUsers: Array<User>;
   logInViaEmail: EmailLogin;
+  logout: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
 };
 
@@ -204,21 +230,6 @@ export type Query = {
 export type QueryCreateAccountArgs = {
   myId: Scalars['String']['input'];
   username: Scalars['String']['input'];
-};
-
-
-export type QueryGetAccountArgs = {
-  userId?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryGetAccountByMyIdArgs = {
-  myId: Scalars['String']['input'];
-};
-
-
-export type QueryGetAccountsArgs = {
-  searchingText?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -236,13 +247,26 @@ export type QueryGetListOfMonumentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   location?: InputMaybe<LocationInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   topics?: InputMaybe<Array<Scalars['Topic']['input']>>;
   transports?: InputMaybe<Array<Scalars['Transport']['input']>>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type QueryGetMonumentArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetUserArgs = {
+  myId?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetUsersArgs = {
+  searchingText?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -256,10 +280,53 @@ export type QueryUpdateProfilePictureArgs = {
   picture: Scalars['String']['input'];
 };
 
+export type Question = {
+  __typename?: 'Question';
+  _collectionId: Scalars['String']['output'];
+  _createdAt: Scalars['String']['output'];
+  _databaseId: Scalars['String']['output'];
+  _id: Scalars['String']['output'];
+  _permissions: Array<Scalars['String']['output']>;
+  _updatedAt: Scalars['String']['output'];
+  correctAnswer: Scalars['StringOrNumber']['output'];
+  pickingAnswers?: Maybe<Array<Scalars['String']['output']>>;
+  question: Scalars['String']['output'];
+  type: Scalars['AnswerType']['output'];
+};
+
+export type QuestionInput = {
+  correctAnswer: Scalars['StringOrNumber']['input'];
+  pickingAnswers?: InputMaybe<Array<Scalars['String']['input']>>;
+  question: Scalars['String']['input'];
+  type: Scalars['AnswerType']['input'];
+};
+
+export type User = {
+  __typename?: 'User';
+  _collectionId: Scalars['String']['output'];
+  _createdAt: Scalars['String']['output'];
+  _databaseId: Scalars['String']['output'];
+  _id: Scalars['String']['output'];
+  _permissions: Array<Scalars['String']['output']>;
+  _updatedAt: Scalars['String']['output'];
+  experiences: Array<Experience>;
+  monuments: Array<Monument>;
+  myId: Scalars['String']['output'];
+  /** This is URL of profile picture. Not its id. */
+  profilePictureURL: Scalars['URL']['output'];
+  userId: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
+export type UsersAnswerToQuestion = {
+  __typename?: 'UsersAnswerToQuestion';
+  answeredCorrectly: Scalars['Boolean']['output'];
+};
+
 export type UsersPreferences = {
   __typename?: 'UsersPreferences';
-  location?: Maybe<Array<Scalars['Float']['output']>>;
-  termsAccepted?: Maybe<Scalars['Boolean']['output']>;
+  mapRange: Scalars['Int']['output'];
+  termsAccepted: Scalars['Boolean']['output'];
 };
 
 export type CreateAccountQueryVariables = Exact<{
@@ -268,7 +335,33 @@ export type CreateAccountQueryVariables = Exact<{
 }>;
 
 
-export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __typename?: 'Account', _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
+export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __typename?: 'Account', _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+
+export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+
+export type GetListOfUsersBySearchingQueryVariables = Exact<{
+  searchingText?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetListOfUsersBySearchingQuery = { __typename?: 'Query', getUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
+
+export type GetProfileQueryVariables = Exact<{
+  myId: Scalars['String']['input'];
+}>;
+
+
+export type GetProfileQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL, experiences: Array<{ __typename?: 'Experience', connectedMonumentId: string, location: [number, number], pictureUrl: URL, userId: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, connectedMonument?: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, transports: Array<any>, pictureURL: URL, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null } | null }> } };
+
+export type GetUserByMyIdQueryVariables = Exact<{
+  myId: Scalars['String']['input'];
+}>;
+
+
+export type GetUserByMyIdQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL } };
 
 export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
@@ -278,71 +371,48 @@ export type LoginViaEmailQueryVariables = Exact<{
 
 export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
 
-export type GetAccountQueryVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']['input']>;
-}>;
+export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
-
-export type GetAccountByMyIdQueryVariables = Exact<{
-  myId: Scalars['String']['input'];
-}>;
-
-
-export type GetAccountByMyIdQuery = { __typename?: 'Query', getAccountByMyId: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
-
-export type GetListOfAccountsBySearchingQueryVariables = Exact<{
-  searchingText?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type GetListOfAccountsBySearchingQuery = { __typename?: 'Query', getAccounts: Array<{ __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null }> };
-
-export type GetProfileQueryVariables = Exact<{
-  myId: Scalars['String']['input'];
-}>;
-
-
-export type GetProfileQuery = { __typename?: 'Query', getAccountByMyId: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null, experiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }> }>, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, transports: Array<any>, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> } };
+export type LogoutQuery = { __typename?: 'Query', logout: boolean };
 
 export type UpdateProfilePictureQueryVariables = Exact<{
   picture: Scalars['String']['input'];
 }>;
 
 
-export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null, prefs?: { __typename?: 'UsersPreferences', location?: Array<number> | null, termsAccepted?: boolean | null } | null } };
+export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
 export type CreateExperienceMutationVariables = Exact<{
   input: CreateExperienceInput;
 }>;
 
 
-export type CreateExperienceMutation = { __typename?: 'Mutation', createExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string } };
+export type CreateExperienceMutation = { __typename?: 'Mutation', createExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number] } };
+
+export type DeleteExperienceMutationVariables = Exact<{
+  experienceId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteExperienceMutation = { __typename?: 'Mutation', deleteExperience: boolean };
 
 export type GetExperienceQueryVariables = Exact<{
   getExperienceId: Scalars['String']['input'];
 }>;
 
 
-export type GetExperienceQuery = { __typename?: 'Query', getExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string } };
-
-export type GetExperienceWithCreatorAndHisOtherExperiencesQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-
-export type GetExperienceWithCreatorAndHisOtherExperiencesQuery = { __typename?: 'Query', getExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null, experiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number] }> } } };
+export type GetExperienceQuery = { __typename?: 'Query', getExperience: { __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number] } };
 
 export type GetListOfExperienceCardsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetListOfExperienceCardsQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, myId: string, username: string, profilePictureURL?: URL | null, userId: string }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, profilePictureURL?: URL | null } }> }> };
+export type GetListOfExperienceCardsQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, myId: string, username: string, profilePictureURL: URL, userId: string }, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }> }> };
 
 export type GetListOfExperiencesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetListOfExperiencesQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string }> };
+export type GetListOfExperiencesQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number] }> };
 
 export type GetListOfItemsForMapQueryVariables = Exact<{
   transports?: InputMaybe<Array<Scalars['Transport']['input']> | Scalars['Transport']['input']>;
@@ -353,12 +423,19 @@ export type GetListOfItemsForMapQueryVariables = Exact<{
 }>;
 
 
-export type GetListOfItemsForMapQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string }>, getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], transports: Array<any>, creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null }> };
+export type GetListOfItemsForMapQuery = { __typename?: 'Query', getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, connectedMonumentId: string, location: [number, number], user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], transports: Array<any>, userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }> };
 
 export type GetListOfPlaceCardsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetListOfPlaceCardsQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, transports: Array<any>, location: [number, number], creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }>, getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, myId: string, username: string, profilePictureURL?: URL | null, userId: string }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, profilePictureURL?: URL | null } }> }> };
+export type GetListOfPlaceCardsQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, transports: Array<any>, location: [number, number], userId: string, name: string, about?: string | null, placeDetailId: string, pictureURL: URL, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }>, getListOfExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, myId: string, username: string, profilePictureURL: URL, userId: string }, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }> }> };
+
+export type LikeExperienceMutationVariables = Exact<{
+  experienceId: Scalars['String']['input'];
+}>;
+
+
+export type LikeExperienceMutation = { __typename?: 'Mutation', likeExperience: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } };
 
 export type LikeMonumentMutationVariables = Exact<{
   monumentId: Scalars['String']['input'];
@@ -372,7 +449,7 @@ export type CreateMonumentMutationVariables = Exact<{
 }>;
 
 
-export type CreateMonumentMutation = { __typename?: 'Mutation', createMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, pictureURL?: URL | null, placeDetailId: string, transports: Array<any>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
+export type CreateMonumentMutation = { __typename?: 'Mutation', createMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, pictureURL: URL, placeDetailId: string, transports: Array<any>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string }, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string }> } };
 
 export type DeleteMonumentMutationVariables = Exact<{
   monumentId: Scalars['String']['input'];
@@ -387,31 +464,52 @@ export type GetListOfMonumentCardsQueryVariables = Exact<{
   transports?: InputMaybe<Array<Scalars['Transport']['input']> | Scalars['Transport']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetListOfMonumentCardsQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> };
+export type GetListOfMonumentCardsQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, transports: Array<any>, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> };
+
+export type GetListOfMonumentsForMapQueryVariables = Exact<{
+  transports?: InputMaybe<Array<Scalars['Transport']['input']> | Scalars['Transport']['input']>;
+  topics?: InputMaybe<Array<Scalars['Topic']['input']> | Scalars['Topic']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  location?: InputMaybe<LocationInput>;
+}>;
+
+
+export type GetListOfMonumentsForMapQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], transports: Array<any>, userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string }> }> };
 
 export type GetMonumentQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetMonumentQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, about?: string | null, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
+export type GetMonumentQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, about?: string | null, placeDetailId: string, pictureURL: URL, transports: Array<any>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
 
 export type GetMonumentCardQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetMonumentCardQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], creatorUserId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, creator: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'Account', _id: string, userId: string, myId: string, username: string, profilePictureURL?: URL | null } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null } };
+export type GetMonumentCardQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, transports: Array<any>, questionId?: string | null, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer: any, pickingAnswers?: Array<string> | null, type: any } | null, usersAnswerToQuestion?: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } | null } };
 
-export type GetMonumentWithCreatorAndNearestListOfExperienceQueryVariables = Exact<{
+export type GetMonumentCardWithConnectedExperiencesQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetMonumentWithCreatorAndNearestListOfExperienceQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, creatorUserId: string, name: string, about?: string | null, placeDetailId: string, pictureURL?: URL | null, transports: Array<any>, creator: { __typename?: 'Account', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, status?: boolean | null, emailVerification?: boolean | null, phoneVerification?: boolean | null, profilePictureURL?: URL | null }, nearExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, imgSrc: URL, location: [number, number], placeDetailId: string }>, placeDetail: { __typename?: 'PlaceDetail', name: string, _databaseId: string, _permissions: Array<string>, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string } } };
+export type GetMonumentCardWithConnectedExperiencesQuery = { __typename?: 'Query', getMonument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, transports: Array<any>, questionId?: string | null, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null, connectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, likes: Array<{ __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'ExperienceLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, experienceId: string } | null }>, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer: any, pickingAnswers?: Array<string> | null, type: any } | null } };
+
+export type AnswerQuestionMutationVariables = Exact<{
+  monumentId: Scalars['String']['input'];
+  answer: Scalars['StringOrNumber']['input'];
+}>;
+
+
+export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } };
 
 
 export const CreateAccountDocument = gql`
@@ -426,28 +524,16 @@ export const CreateAccountDocument = gql`
     emailVerification
     phoneVerification
     prefs {
-      location
+      mapRange
       termsAccepted
     }
-  }
-}
-    `;
-export const LoginViaEmailDocument = gql`
-    query loginViaEmail($email: String!, $password: String!) {
-  logInViaEmail(email: $email, password: $password) {
-    session
   }
 }
     `;
 export const GetAccountDocument = gql`
-    query getAccount($userId: String) {
-  getAccount(userId: $userId) {
-    _permissions
-    _databaseId
-    _id
-    _collectionId
-    _updatedAt
-    _createdAt
+    query getAccount {
+  getAccount {
+    _documentId
     userId
     myId
     username
@@ -456,38 +542,15 @@ export const GetAccountDocument = gql`
     phoneVerification
     profilePictureURL
     prefs {
-      location
+      mapRange
       termsAccepted
     }
   }
 }
     `;
-export const GetAccountByMyIdDocument = gql`
-    query getAccountByMyId($myId: String!) {
-  getAccountByMyId(myId: $myId) {
-    _permissions
-    _databaseId
-    _id
-    _collectionId
-    _updatedAt
-    _createdAt
-    userId
-    myId
-    username
-    status
-    emailVerification
-    phoneVerification
-    profilePictureURL
-    prefs {
-      location
-      termsAccepted
-    }
-  }
-}
-    `;
-export const GetListOfAccountsBySearchingDocument = gql`
-    query getListOfAccountsBySearching($searchingText: String) {
-  getAccounts(searchingText: $searchingText) {
+export const GetListOfUsersBySearchingDocument = gql`
+    query getListOfUsersBySearching($searchingText: String) {
+  getUsers(searchingText: $searchingText) {
     _createdAt
     _updatedAt
     _collectionId
@@ -503,7 +566,7 @@ export const GetListOfAccountsBySearchingDocument = gql`
     `;
 export const GetProfileDocument = gql`
     query getProfile($myId: String!) {
-  getAccountByMyId(myId: $myId) {
+  getUser(myId: $myId) {
     _permissions
     _databaseId
     _id
@@ -515,16 +578,16 @@ export const GetProfileDocument = gql`
     username
     profilePictureURL
     experiences {
-      _createdAt
-      _updatedAt
-      _collectionId
-      _id
-      _permissions
-      _databaseId
-      userId
-      imgSrc
-      location
-      placeDetailId
+      liked {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        experienceId
+      }
       likes {
         _createdAt
         _updatedAt
@@ -547,23 +610,7 @@ export const GetProfileDocument = gql`
           profilePictureURL
         }
       }
-    }
-    monuments {
-      _createdAt
-      _updatedAt
-      _collectionId
-      _id
-      _permissions
-      _databaseId
-      location
-      creatorUserId
-      name
-      about
-      topics
-      transports
-      placeDetailId
-      pictureURL
-      creator {
+      user {
         _createdAt
         _updatedAt
         _collectionId
@@ -573,49 +620,117 @@ export const GetProfileDocument = gql`
         userId
         myId
         username
-        status
-        emailVerification
-        phoneVerification
         profilePictureURL
       }
-      placeDetail {
+      connectedMonumentId
+      location
+      pictureUrl
+      userId
+      _databaseId
+      _permissions
+      _id
+      _collectionId
+      _updatedAt
+      _createdAt
+      connectedMonument {
         _createdAt
         _updatedAt
         _collectionId
         _id
         _permissions
         _databaseId
-        name
-      }
-      likes {
-        _createdAt
-        _updatedAt
-        _collectionId
-        _id
-        _permissions
-        _databaseId
+        location
         userId
-        monumentId
+        name
+        about
+        topics
+        placeDetailId
+        transports
+        pictureURL
         user {
+          _createdAt
+          _updatedAt
+          _collectionId
           _id
+          _permissions
+          _databaseId
           userId
           myId
           username
           profilePictureURL
         }
-      }
-      liked {
-        _createdAt
-        _updatedAt
-        _collectionId
-        _id
-        _permissions
-        _databaseId
-        userId
-        monumentId
+        placeDetail {
+          _createdAt
+          _updatedAt
+          _collectionId
+          _id
+          _permissions
+          _databaseId
+          name
+        }
+        likes {
+          _createdAt
+          _updatedAt
+          _collectionId
+          _id
+          _permissions
+          _databaseId
+          userId
+          monumentId
+          user {
+            _createdAt
+            _updatedAt
+            _collectionId
+            _id
+            _permissions
+            _databaseId
+            userId
+            myId
+            username
+            profilePictureURL
+          }
+        }
+        liked {
+          _createdAt
+          _updatedAt
+          _collectionId
+          _id
+          _permissions
+          _databaseId
+          userId
+          monumentId
+        }
       }
     }
   }
+}
+    `;
+export const GetUserByMyIdDocument = gql`
+    query getUserByMyId($myId: String!) {
+  getUser(myId: $myId) {
+    _permissions
+    _databaseId
+    _id
+    _collectionId
+    _updatedAt
+    _createdAt
+    userId
+    myId
+    username
+    profilePictureURL
+  }
+}
+    `;
+export const LoginViaEmailDocument = gql`
+    query loginViaEmail($email: String!, $password: String!) {
+  logInViaEmail(email: $email, password: $password) {
+    session
+  }
+}
+    `;
+export const LogoutDocument = gql`
+    query logout {
+  logout
 }
     `;
 export const UpdateProfilePictureDocument = gql`
@@ -624,7 +739,7 @@ export const UpdateProfilePictureDocument = gql`
     _createdAt
     _updatedAt
     _collectionId
-    _id
+    _documentId
     _permissions
     _databaseId
     userId
@@ -635,7 +750,7 @@ export const UpdateProfilePictureDocument = gql`
     phoneVerification
     profilePictureURL
     prefs {
-      location
+      mapRange
       termsAccepted
     }
   }
@@ -651,10 +766,14 @@ export const CreateExperienceDocument = gql`
     _permissions
     _databaseId
     userId
-    imgSrc
+    pictureUrl
     location
-    placeDetailId
   }
+}
+    `;
+export const DeleteExperienceDocument = gql`
+    mutation deleteExperience($experienceId: String!) {
+  deleteExperience(experienceId: $experienceId)
 }
     `;
 export const GetExperienceDocument = gql`
@@ -667,48 +786,8 @@ export const GetExperienceDocument = gql`
     _permissions
     _databaseId
     userId
-    imgSrc
+    pictureUrl
     location
-    placeDetailId
-  }
-}
-    `;
-export const GetExperienceWithCreatorAndHisOtherExperiencesDocument = gql`
-    query getExperienceWithCreatorAndHisOtherExperiences($id: String!) {
-  getExperience(id: $id) {
-    _createdAt
-    _updatedAt
-    _collectionId
-    _id
-    _permissions
-    _databaseId
-    userId
-    imgSrc
-    location
-    placeDetailId
-    user {
-      _createdAt
-      _updatedAt
-      _collectionId
-      _id
-      _permissions
-      _databaseId
-      userId
-      myId
-      username
-      profilePictureURL
-      experiences {
-        _createdAt
-        _updatedAt
-        _collectionId
-        _id
-        _permissions
-        _databaseId
-        userId
-        imgSrc
-        location
-      }
-    }
   }
 }
     `;
@@ -722,9 +801,8 @@ export const GetListOfExperienceCardsDocument = gql`
     _permissions
     _databaseId
     userId
-    imgSrc
+    pictureUrl
     location
-    placeDetailId
     user {
       _createdAt
       _updatedAt
@@ -736,15 +814,6 @@ export const GetListOfExperienceCardsDocument = gql`
       username
       profilePictureURL
       userId
-    }
-    placeDetail {
-      _createdAt
-      _updatedAt
-      _collectionId
-      _id
-      _permissions
-      _databaseId
-      name
     }
     liked {
       _createdAt
@@ -775,7 +844,6 @@ export const GetListOfExperienceCardsDocument = gql`
         userId
         myId
         username
-        status
         profilePictureURL
       }
     }
@@ -792,9 +860,8 @@ export const GetListOfExperiencesDocument = gql`
     _permissions
     _databaseId
     userId
-    imgSrc
+    pictureUrl
     location
-    placeDetailId
   }
 }
     `;
@@ -808,9 +875,21 @@ export const GetListOfItemsForMapDocument = gql`
     _permissions
     _databaseId
     userId
-    imgSrc
+    pictureUrl
+    connectedMonumentId
     location
-    placeDetailId
+    user {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      profilePictureURL
+    }
   }
   getListOfMonuments(
     transports: $transports
@@ -827,12 +906,24 @@ export const GetListOfItemsForMapDocument = gql`
     _databaseId
     location
     transports
-    creatorUserId
+    userId
     name
     about
     topics
     placeDetailId
     pictureURL
+    user {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      profilePictureURL
+    }
   }
 }
     `;
@@ -847,12 +938,12 @@ export const GetListOfPlaceCardsDocument = gql`
     _databaseId
     transports
     location
-    creatorUserId
+    userId
     name
     about
     placeDetailId
     pictureURL
-    creator {
+    user {
       _createdAt
       _updatedAt
       _collectionId
@@ -862,9 +953,6 @@ export const GetListOfPlaceCardsDocument = gql`
       userId
       myId
       username
-      status
-      emailVerification
-      phoneVerification
       profilePictureURL
     }
     placeDetail {
@@ -912,9 +1000,8 @@ export const GetListOfPlaceCardsDocument = gql`
     _permissions
     _databaseId
     userId
-    imgSrc
+    pictureUrl
     location
-    placeDetailId
     user {
       _createdAt
       _updatedAt
@@ -926,15 +1013,6 @@ export const GetListOfPlaceCardsDocument = gql`
       username
       profilePictureURL
       userId
-    }
-    placeDetail {
-      _createdAt
-      _updatedAt
-      _collectionId
-      _id
-      _permissions
-      _databaseId
-      name
     }
     liked {
       _createdAt
@@ -965,10 +1043,23 @@ export const GetListOfPlaceCardsDocument = gql`
         userId
         myId
         username
-        status
         profilePictureURL
       }
     }
+  }
+}
+    `;
+export const LikeExperienceDocument = gql`
+    mutation likeExperience($experienceId: String!) {
+  likeExperience(experienceId: $experienceId) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    experienceId
   }
 }
     `;
@@ -996,7 +1087,7 @@ export const CreateMonumentDocument = gql`
     _permissions
     _databaseId
     location
-    creatorUserId
+    userId
     name
     about
     topics
@@ -1012,6 +1103,18 @@ export const CreateMonumentDocument = gql`
       _updatedAt
       _createdAt
     }
+    usersConnectedExperiences {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      pictureUrl
+      location
+      connectedMonumentId
+    }
   }
 }
     `;
@@ -1021,13 +1124,15 @@ export const DeleteMonumentDocument = gql`
 }
     `;
 export const GetListOfMonumentCardsDocument = gql`
-    query getListOfMonumentCards($location: LocationInput, $topics: [Topic!], $transports: [Transport!], $name: String, $limit: Int) {
+    query getListOfMonumentCards($location: LocationInput, $topics: [Topic!], $transports: [Transport!], $name: String, $limit: Int, $userId: String, $offset: Int) {
   getListOfMonuments(
     location: $location
     topics: $topics
     transports: $transports
     name: $name
     limit: $limit
+    userId: $userId
+    offset: $offset
   ) {
     _createdAt
     _updatedAt
@@ -1036,14 +1141,14 @@ export const GetListOfMonumentCardsDocument = gql`
     _permissions
     _databaseId
     location
-    creatorUserId
+    userId
     name
     about
     topics
     placeDetailId
     pictureURL
     transports
-    creator {
+    user {
       _createdAt
       _updatedAt
       _collectionId
@@ -1053,9 +1158,6 @@ export const GetListOfMonumentCardsDocument = gql`
       userId
       myId
       username
-      status
-      emailVerification
-      phoneVerification
       profilePictureURL
     }
     placeDetail {
@@ -1097,6 +1199,44 @@ export const GetListOfMonumentCardsDocument = gql`
   }
 }
     `;
+export const GetListOfMonumentsForMapDocument = gql`
+    query getListOfMonumentsForMap($transports: [Transport!], $topics: [Topic!], $name: String, $limit: Int, $location: LocationInput) {
+  getListOfMonuments(
+    transports: $transports
+    topics: $topics
+    name: $name
+    limit: $limit
+    location: $location
+  ) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    location
+    transports
+    userId
+    name
+    about
+    topics
+    placeDetailId
+    pictureURL
+    usersConnectedExperiences {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      pictureUrl
+      location
+      connectedMonumentId
+    }
+  }
+}
+    `;
 export const GetMonumentDocument = gql`
     query getMonument($id: String!) {
   getMonument(id: $id) {
@@ -1107,7 +1247,7 @@ export const GetMonumentDocument = gql`
     _permissions
     _databaseId
     location
-    creatorUserId
+    userId
     name
     topics
     about
@@ -1136,14 +1276,14 @@ export const GetMonumentCardDocument = gql`
     _permissions
     _databaseId
     location
-    creatorUserId
+    userId
     name
     about
     topics
     placeDetailId
     pictureURL
     transports
-    creator {
+    user {
       _createdAt
       _updatedAt
       _collectionId
@@ -1153,9 +1293,6 @@ export const GetMonumentCardDocument = gql`
       userId
       myId
       username
-      status
-      emailVerification
-      phoneVerification
       profilePictureURL
     }
     placeDetail {
@@ -1194,11 +1331,27 @@ export const GetMonumentCardDocument = gql`
       userId
       monumentId
     }
+    questionId
+    question {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      question
+      correctAnswer
+      pickingAnswers
+      type
+    }
+    usersAnswerToQuestion {
+      answeredCorrectly
+    }
   }
 }
     `;
-export const GetMonumentWithCreatorAndNearestListOfExperienceDocument = gql`
-    query getMonumentWithCreatorAndNearestListOfExperience($id: String!) {
+export const GetMonumentCardWithConnectedExperiencesDocument = gql`
+    query getMonumentCardWithConnectedExperiences($id: String!) {
   getMonument(id: $id) {
     _createdAt
     _updatedAt
@@ -1207,29 +1360,35 @@ export const GetMonumentWithCreatorAndNearestListOfExperienceDocument = gql`
     _permissions
     _databaseId
     location
-    topics
-    creatorUserId
+    userId
     name
     about
+    topics
     placeDetailId
     pictureURL
     transports
-    creator {
+    user {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
       _permissions
       _databaseId
-      _id
-      _collectionId
-      _updatedAt
-      _createdAt
       userId
       myId
       username
-      status
-      emailVerification
-      phoneVerification
       profilePictureURL
     }
-    nearExperiences {
+    placeDetail {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      name
+    }
+    likes {
       _createdAt
       _updatedAt
       _collectionId
@@ -1237,19 +1396,101 @@ export const GetMonumentWithCreatorAndNearestListOfExperienceDocument = gql`
       _permissions
       _databaseId
       userId
-      imgSrc
-      location
-      placeDetailId
+      monumentId
+      user {
+        _id
+        userId
+        myId
+        username
+        profilePictureURL
+      }
     }
-    placeDetail {
-      name
-      _databaseId
-      _permissions
-      _id
-      _collectionId
-      _updatedAt
+    liked {
       _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      monumentId
     }
+    connectedExperiences {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      pictureUrl
+      location
+      connectedMonumentId
+      user {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        myId
+        username
+        profilePictureURL
+      }
+      likes {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        experienceId
+        user {
+          _createdAt
+          _updatedAt
+          _collectionId
+          _id
+          _permissions
+          _databaseId
+          userId
+          myId
+          username
+          profilePictureURL
+        }
+      }
+      liked {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        experienceId
+      }
+    }
+    questionId
+    question {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      question
+      correctAnswer
+      pickingAnswers
+      type
+    }
+  }
+}
+    `;
+export const AnswerQuestionDocument = gql`
+    mutation answerQuestion($monumentId: String!, $answer: StringOrNumber!) {
+  answerQuestion(monumentId: $monumentId, answer: $answer) {
+    answeredCorrectly
   }
 }
     `;
@@ -1264,20 +1505,23 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     createAccount(variables: CreateAccountQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateAccountQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateAccountQuery>(CreateAccountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createAccount', 'query');
     },
-    loginViaEmail(variables: LoginViaEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginViaEmailQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<LoginViaEmailQuery>(LoginViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'loginViaEmail', 'query');
-    },
     getAccount(variables?: GetAccountQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAccountQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAccountQuery>(GetAccountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAccount', 'query');
     },
-    getAccountByMyId(variables: GetAccountByMyIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAccountByMyIdQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetAccountByMyIdQuery>(GetAccountByMyIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAccountByMyId', 'query');
-    },
-    getListOfAccountsBySearching(variables?: GetListOfAccountsBySearchingQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfAccountsBySearchingQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfAccountsBySearchingQuery>(GetListOfAccountsBySearchingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfAccountsBySearching', 'query');
+    getListOfUsersBySearching(variables?: GetListOfUsersBySearchingQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfUsersBySearchingQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfUsersBySearchingQuery>(GetListOfUsersBySearchingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfUsersBySearching', 'query');
     },
     getProfile(variables: GetProfileQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProfileQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProfileQuery>(GetProfileDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getProfile', 'query');
+    },
+    getUserByMyId(variables: GetUserByMyIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUserByMyIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByMyIdQuery>(GetUserByMyIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByMyId', 'query');
+    },
+    loginViaEmail(variables: LoginViaEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginViaEmailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginViaEmailQuery>(LoginViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'loginViaEmail', 'query');
+    },
+    logout(variables?: LogoutQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LogoutQuery>(LogoutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'logout', 'query');
     },
     updateProfilePicture(variables: UpdateProfilePictureQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateProfilePictureQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateProfilePictureQuery>(UpdateProfilePictureDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateProfilePicture', 'query');
@@ -1285,11 +1529,11 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     createExperience(variables: CreateExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateExperienceMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateExperienceMutation>(CreateExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createExperience', 'mutation');
     },
+    deleteExperience(variables: DeleteExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteExperienceMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteExperienceMutation>(DeleteExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteExperience', 'mutation');
+    },
     getExperience(variables: GetExperienceQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExperienceQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExperienceQuery>(GetExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExperience', 'query');
-    },
-    getExperienceWithCreatorAndHisOtherExperiences(variables: GetExperienceWithCreatorAndHisOtherExperiencesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExperienceWithCreatorAndHisOtherExperiencesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetExperienceWithCreatorAndHisOtherExperiencesQuery>(GetExperienceWithCreatorAndHisOtherExperiencesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExperienceWithCreatorAndHisOtherExperiences', 'query');
     },
     getListOfExperienceCards(variables?: GetListOfExperienceCardsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfExperienceCardsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetListOfExperienceCardsQuery>(GetListOfExperienceCardsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfExperienceCards', 'query');
@@ -1303,6 +1547,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getListOfPlaceCards(variables?: GetListOfPlaceCardsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfPlaceCardsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetListOfPlaceCardsQuery>(GetListOfPlaceCardsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfPlaceCards', 'query');
     },
+    likeExperience(variables: LikeExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LikeExperienceMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LikeExperienceMutation>(LikeExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'likeExperience', 'mutation');
+    },
     likeMonument(variables: LikeMonumentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LikeMonumentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<LikeMonumentMutation>(LikeMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'likeMonument', 'mutation');
     },
@@ -1315,14 +1562,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getListOfMonumentCards(variables?: GetListOfMonumentCardsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfMonumentCardsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetListOfMonumentCardsQuery>(GetListOfMonumentCardsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfMonumentCards', 'query');
     },
+    getListOfMonumentsForMap(variables?: GetListOfMonumentsForMapQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfMonumentsForMapQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfMonumentsForMapQuery>(GetListOfMonumentsForMapDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfMonumentsForMap', 'query');
+    },
     getMonument(variables: GetMonumentQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentQuery>(GetMonumentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonument', 'query');
     },
     getMonumentCard(variables: GetMonumentCardQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentCardQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentCardQuery>(GetMonumentCardDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonumentCard', 'query');
     },
-    getMonumentWithCreatorAndNearestListOfExperience(variables: GetMonumentWithCreatorAndNearestListOfExperienceQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentWithCreatorAndNearestListOfExperienceQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentWithCreatorAndNearestListOfExperienceQuery>(GetMonumentWithCreatorAndNearestListOfExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonumentWithCreatorAndNearestListOfExperience', 'query');
+    getMonumentCardWithConnectedExperiences(variables: GetMonumentCardWithConnectedExperiencesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMonumentCardWithConnectedExperiencesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMonumentCardWithConnectedExperiencesQuery>(GetMonumentCardWithConnectedExperiencesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMonumentCardWithConnectedExperiences', 'query');
+    },
+    answerQuestion(variables: AnswerQuestionMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AnswerQuestionMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AnswerQuestionMutation>(AnswerQuestionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'answerQuestion', 'mutation');
     }
   };
 }

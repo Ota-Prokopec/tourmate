@@ -1,46 +1,94 @@
 <script lang="ts">
-	import { twMerge } from 'tailwind-merge';
-	import { type Document, type GraphqlDocument, type Monument } from '@app/ts-types';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import { Button, Card } from 'flowbite-svelte';
-	import Popover from '$lib/components/Common/Popover.svelte';
-	import Marker from '../Marker.svelte';
-	import { goto } from '$app/navigation';
-	import { urlToString } from '@app/utils';
+	import Carousel from '$lib/components/Carousel/Carousel.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
+	import Center from '$lib/components/Common/Center.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Drawer from '$lib/components/Common/Drawer.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
+	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import type { MonumentCardWithConnectedExperiences, MonumentMarkerData } from '@app/ts-types';
+	import { twMerge } from 'tailwind-merge';
+	import Marker from '../Marker.svelte';
+	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import IconImages from '$lib/components/Icons/IconImages.svelte';
 
-	export let monument: GraphqlDocument<Monument>;
-	export let monuments: GraphqlDocument<Monument>[] | undefined = undefined;
+	export let monument: MonumentMarkerData;
+	export let disableShowingDetails = false;
+	let userAlreadyHasExperienceConnectedToThisMonument =
+		monument.usersConnectedExperiences.length !== 0;
 
-	const monumentsWithSameLocation = monuments
-		?.map((m) => (Math.floor(m.location[0] * 1) === Math.floor(m.location[1] * 1) ? m : null))
-		.filter(Boolean);
-
-	console.log(monumentsWithSameLocation);
-
-	export let bouncing = false;
 	export let zoom: number | undefined = undefined;
+	export let detailHidden = true;
+
+	$: zoomClass = zoom && zoom > 18 ? 'w-20 h-20' : 'w-14 h-14';
+
+	let monumentCardDataPromise:
+		| Promise<{ getMonument: MonumentCardWithConnectedExperiences }>
+		| undefined;
+	const getMonumentCard = async () => {
+		detailHidden = false;
+		monumentCardDataPromise = sdk.getMonumentCardWithConnectedExperiences({ id: monument._id });
+	};
 
 	let className = '';
 	export { className as class };
-
-	$: zoomClass = zoom && zoom > 18 ? 'w-20 h-20' : 'w-14 h-14';
+	export let classDrawer = '';
 </script>
 
+<Drawer
+	class={twMerge('p-2 h-full w-full max-w-[400px]', classDrawer)}
+	bind:hidden={detailHidden}
+	placement="left"
+	size={600}
+>
+	<MediaQuery size="mobile">
+		<Right>
+			<Icon on:click={() => (detailHidden = true)} class="child:w-7 child:h-7"><IconTimes /></Icon>
+		</Right>
+	</MediaQuery>
+	{#if monumentCardDataPromise}
+		{#await monumentCardDataPromise}
+			<Center class="w-full h-full">
+				<Loading />
+			</Center>
+		{:then monumentCardData}
+			{@const monument = monumentCardData.getMonument}
+			<Column class="gap-4">
+				<MonumentCardComponent size="normal" {monument} />
+				{#if monument.connectedExperiences.length}
+					<Carousel class="h-min" swiping arrows>
+						{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
+							{@const experience = {
+								...experienceWithoutConnectedMonument,
+								connectedMonument: monument
+							}}
+							<ExperienceCard class="p-0 self-center shadow-none" {experience} />
+						{/each}
+					</Carousel>
+				{/if}
+			</Column>
+		{/await}
+	{/if}
+</Drawer>
+
 <Marker
+	on:click={() => {
+		if (!disableShowingDetails) getMonumentCard();
+	}}
+	on:click
 	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing'*/, className)}
 	location={monument.location}
 >
+	{#if userAlreadyHasExperienceConnectedToThisMonument}
+		<Icon class="child:fill-gray-900 absolute right-0 top-0 p-[2px]">
+			<IconImages />
+		</Icon>
+	{/if}
+
 	<Avatar class={zoomClass} src={monument.pictureURL} />
-	<Popover class="w-max" placement="top" open={bouncing}>
-		<Card img={urlToString(monument.pictureURL)} class="mb-4">
-			<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-				{monument.name}
-			</h5>
-			<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-				{monument.about}
-			</p>
-			<Button on:click={() => goto(`/monument/${monument._id}`)} color="blue">Read more</Button>
-		</Card>
-	</Popover>
 </Marker>

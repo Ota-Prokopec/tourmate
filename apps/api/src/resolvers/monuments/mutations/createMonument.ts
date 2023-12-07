@@ -1,20 +1,31 @@
-import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
+import cloudinary from '@app/cloudinary-server'
+import {
+	type Answer,
+	type AnswerType,
+	type GraphqlDocument,
+	type Question,
+	isQuestionTypeNumber,
+	isQuestionTypeRadio,
+	isQuestionTypeText,
+} from '@app/ts-types'
 import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
-import cloudinary from '@app/cloudinary-server'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
+
+import { permissions } from '@app/appwrite-ssr-graphql'
+import appwrite from '../../../lib/appwrite/appwrite'
+import { ApolloError } from 'apollo-server-express'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
 	args: { input: arg({ type: 'CreateMonumentInput' }) },
 	resolve: async (s, args, ctx) => {
 		try {
-			if (!ctx.isAuthed(ctx.user?.$id)) throw new Error('user is not authed')
+			if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 			const { collections } = ctx.appwrite
 
 			// create image for monument
-			const filePromise = isBase64(args.input.picture)
-				? cloudinary.monuments.uploadBase64(args.input.picture)
-				: null
+			const filePromise = cloudinary.monuments.uploadBase64(args.input.picture)
 
 			//create place-detail for monument
 			const placeDetailPromise = collections.placeDetail.createDocument(
@@ -24,6 +35,13 @@ export default mutationField('createMonument', {
 				[ctx.user],
 			)
 
+			//add optional question
+			const question = await saveQuestion(
+				args.input.question,
+				permissions.owner(ctx.user.$id),
+			)
+
+			// all promises before the monument it selfs will be created
 			const [file, placeDetail] = await Promise.all([filePromise, placeDetailPromise])
 
 			//create monument
@@ -36,15 +54,81 @@ export default mutationField('createMonument', {
 					longitude: args.input.location[1],
 					about: args.input.about,
 					name: args.input.name,
-					creatorUserId: ctx.user.$id,
-					pictureURL: file?.url,
+					userId: ctx.user.$id,
+					pictureURL: file.url,
+					questionId: question?._id,
 				},
 				[ctx.user],
 			)
-			return fromLatLongIntoLocation(document)[0]
+			const res = fromLatDocumentLongIntoLocationDocument(document)[0]
+			if (!res) throw new ApolloError('creating monument was not successful')
+			return res
 		} catch (error) {
 			console.log(error)
 			throw new Error('')
 		}
 	},
 })
+
+const saveQuestion = async (
+	question:
+		| (Omit<Question<AnswerType>, 'pickingAnswers'> & {
+				pickingAnswers?: Question<AnswerType>['pickingAnswers'] | null
+		  })
+		| undefined
+		| null,
+	permissions: string[],
+): Promise<
+	| GraphqlDocument<
+			Omit<Question<AnswerType>, 'pickingAnswers'> & {
+				pickingAnswers?: Question<AnswerType>['pickingAnswers']
+			}
+	  >
+	| undefined
+> => {
+	if (!question) return undefined
+
+	const { collections } = appwrite.setAdmin()
+
+	let answer: Answer
+
+	if (isQuestionTypeText(question)) {
+		answer = await collections.answerTypeText.createDocument(
+			{
+				correctAnswer: question.correctAnswer,
+			},
+			permissions,
+		)
+	} else if (isQuestionTypeNumber(question)) {
+		answer = await collections.answerTypeNumber.createDocument(
+			{
+				correctAnswer: question.correctAnswer,
+			},
+			permissions,
+		)
+	} else if (isQuestionTypeRadio(question)) {
+		answer = await collections.answerTypeRadio.createDocument(
+			{
+				correctAnswer: question.correctAnswer,
+				pickingAnswers: question.pickingAnswers,
+			},
+			permissions,
+		)
+	} else throw new Error('Uknown type of answer')
+
+	const res = await collections.question.createDocument(
+		{
+			question: question.question,
+			answerType: question.type,
+			answerId: answer._id,
+		},
+		permissions,
+	)
+
+	return {
+		correctAnswer: answer.correctAnswer,
+		pickingAnswers: answer.pickingAnswers,
+		type: question.type,
+		...res,
+	}
+}

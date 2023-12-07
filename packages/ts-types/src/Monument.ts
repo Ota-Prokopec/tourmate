@@ -1,51 +1,34 @@
+import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
-import { Location } from './Location'
+import { Experience, ExperienceGraphqlDocument } from './Experience'
+import { Location, LocationForDocument } from './Location'
+import { AnswerType, Question } from './Question'
 import { Topic } from './Topic'
 import { Transport } from './Transport'
 
 export type Monument = {
 	about?: string | null
-	creatorUserId: string
+	userId: string
 	location: Location
 	name: string
-	pictureURL?: URL | undefined | null
+	pictureURL: URL
 	placeDetailId: string
 	topics: Topic[]
 	transports: Transport[]
+	questionId?: string | null | undefined
 }
 
-export type MonumentDocument = Document<{
-	about?: string
-	creatorUserId: string
-	latitude: number
-	longitude: number
-	name: string
-	pictureURL?: URL
-	placeDetailId: string
-	topics: Topic[]
-	transports: Transport[]
-}>
+export type MonumentDocument = Document<Omit<Monument, 'location'> & LocationForDocument>
 
-export type MonumentGraphqlDocument = GraphqlDocument<{
-	about?: string
-	creatorUserId: string
-	latitude: number
-	longitude: number
-	name: string
-	pictureURL?: URL
-	placeDetailId: string
-	topics: Topic[]
-	transports: Transport[]
-}>
+export type MonumentGraphqlDocument = GraphqlDocument<
+	Omit<Monument, 'location'> & LocationForDocument
+>
 
-export type MonumentDocumentCreate = {
-	about?: string
-	creatorUserId: string
-	latitude: number
-	longitude: number
-	name: string
-	pictureURL?: URL
-	placeDetailId: string
-	topics?: Topic[]
-	transports: Transport[]
-}
+export type MonumentDocumentCreate = Omit<Monument, 'topics' | 'location'> &
+	LocationForDocument & { topics?: Topic[] }
+
+export type MonumentMarkerData = GraphqlDocument<
+	Monument & {
+		usersConnectedExperiences: GraphqlDocument<Experience>[]
+	}
+>

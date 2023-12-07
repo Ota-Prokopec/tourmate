@@ -1,36 +1,35 @@
 <script lang="ts">
-	import lsStore from '$lib/utils/lsStore';
-	import ImageEditor from '$lib/components/ImageEditor/ImageEditor.svelte';
-	import { myNewExperienceStore } from './newExperienceStore';
-	import { Button, Modal } from 'flowbite-svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconNext from '$lib/components/Icons/IconNext.svelte';
-	import { sdk } from '$src/graphql/sdk';
 	import { browser } from '$app/environment';
-	import LocationTextInput from '$lib/components/ImageEditor/items/LocationTextInput.svelte';
-	import imageSvelte from '@app/image-svelte';
-	import type { Base64 } from '@app/ts-types';
-	import type { EditorOptions } from '$lib/components/ImageEditor/items/ImageEditorTypes';
-	import mapTiler from '$lib/utils/mapTiler';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import { goto } from '$app/navigation';
-	import { navigate } from '$lib/utils/navigator';
-	import Row from '$lib/components/Common/Row.svelte';
-	import IconText from '$lib/components/Icons/IconText.svelte';
 	import ColorPicker from '$lib/components/Common/ColorPicker.svelte';
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import IconNext from '$lib/components/Icons/IconNext.svelte';
+	import IconText from '$lib/components/Icons/IconText.svelte';
+	import ImageEditor from '$lib/components/ImageEditor/ImageEditor.svelte';
+	import type { EditorOptions } from '$lib/components/ImageEditor/items/ImageEditorTypes';
+	import LocationTextInput from '$lib/components/ImageEditor/items/LocationTextInput.svelte';
+	import lsStore from '$lib/utils/lsStore';
+	import mapTiler from '$lib/utils/mapTiler';
+	import { navigate } from '$lib/utils/navigator';
+	import imageSvelte from '@app/image-svelte';
+	import { Button, Modal } from 'flowbite-svelte';
+	import LL, { locale } from '$src/i18n/i18n-svelte';
+	import Right from '$lib/components/Common/Right.svelte';
+	import ClickOutside from '$lib/components/Common/ClickOutside.svelte';
 
-	if (!$myNewExperienceStore.imgSrc) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
+	if (!$lsStore.newExperiencePicture) navigate('/createNewExperience'); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
 	const location = $lsStore.usersLocation;
 	let isLoading = true;
-	let url = $myNewExperienceStore.imgSrc;
+	$: url = $lsStore.newExperiencePicture;
 	let locationTextMenuOpened = false;
 
 	const save = async () => {
 		if (!location) throw new Error('user has no location');
 		isLoading = true;
 
-		navigate(`/createNewExperience/editPicture/${location.at(0)}-${location.at(1)}`);
+		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
 
 	const [actions] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (newUrl, o, action) => {
@@ -39,7 +38,8 @@
 		}
 	});
 	const addLocationLabel = async () => {
-		await actions.load($myNewExperienceStore.imgSrc);
+		if (!url) throw new Error('there is no experience picture in lsStore');
+		await actions.load(url);
 		const ctx = await actions.getCtx();
 		const canvas = ctx?.canvas;
 
@@ -83,10 +83,12 @@
 	};
 
 	$: if (location)
-		mapTiler.reverseGeocoding(location[0], location[1], { limit: 1 }).then(([{ place_name }]) => {
-			textOptions.texts = [place_name, `I was here, ${place_name}`];
-			isLoading = false;
-		});
+		mapTiler
+			.reverseGeocoding(location[0], location[1], { limit: 1, language: $locale })
+			.then(([{ place_name }]) => {
+				textOptions.texts = [place_name, `I was here, ${place_name}`];
+				isLoading = false;
+			});
 
 	const editorOptions: EditorOptions = {
 		cropping: {
@@ -102,15 +104,13 @@
 	{/if}
 	<span slot="footer">
 		<Row class="gap-2 relative">
-			<Button on:click={() => (locationTextMenuOpened = false)} color="red"
-				>do not add anything</Button
-			>
+			<Button on:click={() => (locationTextMenuOpened = false)} color="red">{$LL.back()}</Button>
 			<Button
 				on:click={async () => {
 					await addLocationLabel();
 					locationTextMenuOpened = false;
 				}}
-				color="green">Add this text</Button
+				color="green">{$LL.addThisLabel()}</Button
 			>
 			<ColorPicker
 				bind:color={textOptions.color}
@@ -122,28 +122,21 @@
 </Modal>
 
 {#if !isLoading}
-	<ImageEditor options={editorOptions} bind:result={$myNewExperienceStore.imgSrc} {url}>
-		<span slot="inner" />
+	<ImageEditor options={editorOptions} bind:result={$lsStore.newExperiencePicture} {url}>
 		<span slot="tools">
 			<Icon on:click={() => (locationTextMenuOpened = true)} class=" text-4xl"><IconText /></Icon>
 		</span>
 		<span slot="bottom">
 			<div class="w-full bg-gray-400" />
 
-			<Row class="justify-between w-full pb-4 pr-4 pl-4 gap-4 mobile:justify-end">
+			<Right class="w-full p-4">
 				<Button
 					on:click={save}
 					color="green"
-					class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl mr-6 ml-6 p-2 py-0 !m-0  fill-white"
-					>přeskočit editor
-				</Button>
-				<Button
-					on:click={save}
-					color="green"
-					class="h-14 flex flex-wrap  flex-row gap-2 top-0 right-0 text-2xl mr-6 ml-6 p-2 py-0 !m-0  fill-white"
-					>Create <Icon><IconNext /></Icon></Button
+					class=" flex flex-wrap  flex-row gap-2 top-0 right-0 text-2xl mr-6 ml-6 !m-0  fill-white"
+					>{$LL.continue()} <Icon><IconNext /></Icon></Button
 				>
-			</Row>
+			</Right>
 		</span>
 	</ImageEditor>
 {:else}

@@ -7,7 +7,7 @@ mutation createMonument($input: CreateMonumentInput!) {
 		_permissions
 		_databaseId
 		location
-		creatorUserId
+		userId
 		name
 		about
 		topics
@@ -22,6 +22,18 @@ mutation createMonument($input: CreateMonumentInput!) {
 			_collectionId
 			_updatedAt
 			_createdAt
+		}
+		usersConnectedExperiences {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			pictureUrl
+			location
+			connectedMonumentId
 		}
 	}
 }

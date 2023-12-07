@@ -1,4 +1,4 @@
-import { GraphqlDocument } from '.'
+import { GraphqlDocument } from './Document'
 import { Document } from './Document'
 
 export type PlaceDetail = {

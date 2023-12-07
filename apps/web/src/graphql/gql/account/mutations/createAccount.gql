@@ -9,7 +9,7 @@ query createAccount($myId: String!, $username: String!) {
 		emailVerification
 		phoneVerification
 		prefs {
-			location
+			mapRange
 			termsAccepted
 		}
 	}

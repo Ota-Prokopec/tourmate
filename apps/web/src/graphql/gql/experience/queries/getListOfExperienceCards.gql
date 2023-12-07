@@ -7,9 +7,8 @@ query getListOfExperienceCards {
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
 		location
-		placeDetailId
 		user {
 			_createdAt
 			_updatedAt
@@ -22,15 +21,7 @@ query getListOfExperienceCards {
 			profilePictureURL
 			userId
 		}
-		placeDetail {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			name
-		}
+
 		liked {
 			_createdAt
 			_updatedAt
@@ -60,7 +51,6 @@ query getListOfExperienceCards {
 				userId
 				myId
 				username
-				status
 				profilePictureURL
 			}
 		}

@@ -1,12 +1,16 @@
 <script lang="ts">
+	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
+	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
+	import TransportType from '$lib/components/Experience-monument/transportType/TransportType.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard, Topic, Transport } from '@app/ts-types';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
 	import { Skeleton } from 'flowbite-svelte';
-	import TransportType from '$lib/components/Experience-monument/transportType/TransportType.svelte';
 
 	export let searchingLocation: Location | undefined;
 	let isLoading = true;
@@ -45,11 +49,24 @@
 	<TransportType bind:chosenTransports={transports} class="w-full max-w-[400px]" />
 
 	{#if isLoading}
-		<FullPageLoading />
+		<Row class="gap-4">
+			<MonumentCardSkeleton size="normal" />
+			<MonumentCardSkeleton size="normal" />
+			<MonumentCardSkeleton size="normal" />
+			<MonumentCardSkeleton size="normal" />
+			<MonumentCardSkeleton size="normal" />
+			<MonumentCardSkeleton size="normal" />
+			<MonumentCardSkeleton size="normal" />
+		</Row>
 	{:else if monuments && monuments?.length > 0}
-		{#each monuments as monument}
-			<MonumentCardComponent {monument} />
-		{/each}
+		<Column class="justify-center items-center">
+			<Row class="gap-4">
+				{#each monuments as monument}
+					<MonumentCardComponent size="normal" {monument} />
+				{/each}
+			</Row>
+			<LoadMoreButton />
+		</Column>
 	{:else}
 		<Skeleton divClass="w-full" />
 	{/if}

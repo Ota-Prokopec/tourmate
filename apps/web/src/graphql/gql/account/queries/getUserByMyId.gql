@@ -1,0 +1,15 @@
+query getUserByMyId($myId: String!) {
+	getUser(myId: $myId) {
+		_permissions
+		_databaseId
+		_id
+		_collectionId
+		_updatedAt
+		_createdAt
+		userId
+		myId
+		username
+
+		profilePictureURL
+	}
+}

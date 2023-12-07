@@ -1,5 +1,5 @@
 import { objectType } from 'nexus'
-import { getAccount } from '../lib/users/getAccount'
+import { getUser } from '../lib/users/getUser'
 
 export default objectType({
 	name: 'ExperienceLike',
@@ -13,10 +13,10 @@ export default objectType({
 		t.string('userId')
 		t.string('experienceId'),
 			t.field('user', {
-				type: 'Account',
+				type: 'User',
 				resolve: async (source, args, ctx) => {
 					const { collections } = ctx.appwrite
-					return await getAccount(source.userId, false, collections)
+					return await getUser(source.userId, collections)
 				},
 			})
 	},

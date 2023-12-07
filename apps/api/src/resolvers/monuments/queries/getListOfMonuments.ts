@@ -1,10 +1,9 @@
-import { arg, list, nullable, queryField } from 'nexus'
-import {
-	locationQueries,
-	fromLatLongIntoLocation,
-} from '../../../lib/database/experiences-monuments'
+import { arg, intArg, list, nullable, queryField, stringArg } from 'nexus'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 import { Queries } from '../../../lib/appwrite/appwrite'
-import { Topic, Transport } from '@app/ts-types'
+import type { Topic, Transport } from '@app/ts-types'
+import { defaultRangeMeters } from '../../../arguments'
+import { locationQueries } from '@app/utils'
 
 export default queryField('getListOfMonuments', {
 	type: list('Monument'),
@@ -13,16 +12,34 @@ export default queryField('getListOfMonuments', {
 		topics: nullable(list('Topic')),
 		transports: nullable(list('Transport')),
 		name: nullable('String'),
-		limit: nullable(arg({ type: 'Int', default: 10 })),
+		limit: nullable(arg({ type: 'Int', default: 50 })),
+		userId: nullable(stringArg()),
+		offset: nullable(intArg()),
 	},
 	resolve: async (s, args, ctx, info) => {
 		const { collections } = ctx.appwrite
-		const { location: locationOptions, topics, transports, name, limit } = args
+		const {
+			location: locationOptions,
+			topics,
+			transports,
+			name,
+			limit,
+			userId,
+			offset,
+		} = args
 
 		let queries: string[] = []
 
-		if (locationOptions)
-			queries.push(...locationQueries(locationOptions.location, locationOptions.range))
+		if (locationOptions) {
+			queries.push(
+				...locationQueries(
+					locationOptions.location,
+					locationOptions.rangeMeters
+						? locationOptions.rangeMeters
+						: ctx.user?.prefs.mapRange ?? defaultRangeMeters,
+				),
+			)
+		}
 
 		if (topics)
 			queries.push(
@@ -38,8 +55,10 @@ export default queryField('getListOfMonuments', {
 
 		if (name) queries.push(Queries.monument.search('name', name))
 		if (limit) queries.push(Queries.monument.limit(limit))
+		if (userId) queries.push(Queries.monument.equal('userId', userId))
+		if (offset) queries.push(Queries.monument.offset(offset))
 
-		return fromLatLongIntoLocation(
+		return fromLatDocumentLongIntoLocationDocument(
 			...(await collections.monument.listDocuments(queries)).documents,
 		)
 	},

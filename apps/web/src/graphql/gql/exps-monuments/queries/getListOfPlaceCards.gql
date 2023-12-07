@@ -8,12 +8,12 @@ query getListOfPlaceCards {
 		_databaseId
 		transports
 		location
-		creatorUserId
+		userId
 		name
 		about
 		placeDetailId
 		pictureURL
-		creator {
+		user {
 			_createdAt
 			_updatedAt
 			_collectionId
@@ -23,9 +23,7 @@ query getListOfPlaceCards {
 			userId
 			myId
 			username
-			status
-			emailVerification
-			phoneVerification
+
 			profilePictureURL
 		}
 		placeDetail {
@@ -73,9 +71,8 @@ query getListOfPlaceCards {
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
 		location
-		placeDetailId
 		user {
 			_createdAt
 			_updatedAt
@@ -88,15 +85,7 @@ query getListOfPlaceCards {
 			profilePictureURL
 			userId
 		}
-		placeDetail {
-			_createdAt
-			_updatedAt
-			_collectionId
-			_id
-			_permissions
-			_databaseId
-			name
-		}
+
 		liked {
 			_createdAt
 			_updatedAt
@@ -126,7 +115,7 @@ query getListOfPlaceCards {
 				userId
 				myId
 				username
-				status
+
 				profilePictureURL
 			}
 		}

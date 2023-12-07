@@ -1,27 +1,29 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { user } from '$lib/appwrite/appwrite.js';
-	import { onMount } from 'svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import { user as userStore } from '$lib/appwrite/appwrite';
+	import Center from '$lib/components/Common/Center.svelte';
 	import { sdk } from '$src/graphql/sdk.js';
-	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
+	import { alert } from '$src/routes/alertStore';
+	import { Circle3 } from 'svelte-loading-spinners';
+	import type { PageData } from './$types';
 
-	export let data;
-	let errorMessage = '';
+	export let data: PageData;
+	let firstTime = true;
 
-	onMount(async () => {
+	userStore.subscribe(async (user) => {
+		if (!user) return;
+		if (!firstTime) return;
+		else firstTime = false;
+
 		if (!data.params.userId || !data.params.secret)
 			throw new Error('userId or secret token is not defined');
-		console.log(data.user);
-
-		if (!$user) throw new Error('user is not defiened, maybe try it again');
 
 		try {
-			await user.updateVerification(data.params.userId, data.params.secret);
+			await userStore.updateVerification(data.params.userId, data.params.secret);
 
 			const { createAccount: account } = await sdk.createAccount({
 				myId: data.params.myId,
-				username: $user.name
+				username: user.name
 			});
 
 			if (!account) {
@@ -29,10 +31,14 @@
 			}
 			goto('/');
 		} catch (error) {
-			if (error instanceof Error) errorMessage = error.message;
+			if (error instanceof Error)
+				alert('Error', `please share this with the support: [${error.message}]`, {
+					color: 'red'
+				});
 		}
 	});
 </script>
 
-<ErrorHelper bind:message={errorMessage} />
-<FullPageLoading />
+<Center class="w-full mt-24">
+	<Circle3 />
+</Center>

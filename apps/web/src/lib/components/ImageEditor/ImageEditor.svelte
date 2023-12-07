@@ -63,7 +63,7 @@
 
 			const resize = imageJs.height > imageJs.width ? resizeW : resizeH;
 
-			if (action !== 'rotate') {
+			if (action !== 'rotate' && false) {
 				imgUrl.set(url);
 			} else {
 				// i do this because that i got on phone where, is height bigger that width, a width value to make both sides (x, y) larger by adding there a width value because if i added a height image would be full-height screen but too big to width....

@@ -13,9 +13,21 @@ query getListOfItemsForMap(
 		_permissions
 		_databaseId
 		userId
-		imgSrc
+		pictureUrl
+		connectedMonumentId
 		location
-		placeDetailId
+		user {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			myId
+			username
+			profilePictureURL
+		}
 	}
 	getListOfMonuments(
 		transports: $transports
@@ -32,11 +44,23 @@ query getListOfItemsForMap(
 		_databaseId
 		location
 		transports
-		creatorUserId
+		userId
 		name
 		about
 		topics
 		placeDetailId
 		pictureURL
+		user {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			myId
+			username
+			profilePictureURL
+		}
 	}
 }

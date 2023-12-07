@@ -19,7 +19,7 @@
 </script>
 
 {#if !disable}
-	<Card class={twMerge('relative !gap-0', className)}>
+	<Card padding="none" class={twMerge('relative !gap-0', className)}>
 		{#if dismissable}
 			<div class="w-full h-auto flex justify-end">
 				<Icon on:click={dismiss} class="relative right-0 top-0 m-1 hover:bg-blue-300 rounded-lg">

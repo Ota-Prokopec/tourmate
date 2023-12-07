@@ -5,8 +5,12 @@ module.exports = {
 		'./src/**/*.{html,svelte,js,ts}',
 		'../../node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
 	],
+
 	theme: {
 		extend: {
+			spacing: {
+				bottomNavBarHeightSize: 'var(--bottom-navbar-height)'
+			},
 			animation: {
 				cardShrinking: 'cardShrinking 2s linear',
 				bouncing: 'bouncing 1s linear',
@@ -49,10 +53,12 @@ module.exports = {
 
 			'2xl': '1536px'
 			// => @media (min-width: 1536px) { ... }
-		}
+		},
+		colors: {}
 	},
 	plugins: [
 		require('flowbite/plugin'),
+		//		require('daisyui'),
 		function ({ addVariant }) {
 			addVariant('child', '& > *');
 			addVariant('child-hover', '& > *:hover');

@@ -1,15 +1,17 @@
 {
 	"extends": "../../packages/tsconfig/base.json",
 	"compilerOptions": {
+		"module": "CommonJS",
 		"outDir": "dist",
-		"rootDir": "src",
-		"typeRoots": ["../../global.d.ts"],
-		"lib": ["ES2022"],
-		"target": "ES2022",
-		"declaration": false,
-		"declarationMap": false
+		"rootDir": "src"
 	},
 
-	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "../../global.d.ts"],
+	"include": [
+		"src/**/*.d.ts",
+		"src/**/*.ts",
+		"src/**/*.js",
+		"../../global.d.ts",
+		"../../tsReset.d.ts"
+	],
 	"exclude": ["node_modules", "dist"]
 }

@@ -1,20 +1,23 @@
 {
 	"private": true,
 	"scripts": {
-		"build": "dotenv -e .env.development -- turbo run build",
+		"build": "dotenv -e .env.development -- turbo run build --force",
 		"dev": "dotenv -e .env.development -- turbo run dev",
 		"api": "dotenv -e .env.development -- turbo run dev --filter=api",
 		"web": "dotenv -e .env.development -- turbo run dev --filter=web",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
-		"vitest-web": "dotenv -e .env.development -- turbo run vitest --filter=web"
+		"vitest-web": "dotenv -e .env.development -- turbo run vitest --filter=web",
+		"build-api": "turbo run build --filter=api --force",
+		"build-web": "dotenv -e .env.development turbo run build --filter=web --force",
+		"web-preview": "dotenv -e .env.development turbo run preview --filter=web"
 	},
 	"devDependencies": {
 		"dotenv-cli": "^7.2.1",
 		"eslint": "^7.32.0",
 		"eslint-config-custom": "*",
 		"prettier": "^2.5.1",
-		"turbo": "^1.10.14"
+		"turbo": "1.10.4"
 	},
 	"name": "sveltekit-trpc",
 	"packageManager": "yarn@1.22.19",

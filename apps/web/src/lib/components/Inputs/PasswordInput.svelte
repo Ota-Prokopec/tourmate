@@ -2,21 +2,25 @@
 	import { twMerge } from 'tailwind-merge';
 	import Input from '../Common/Input.svelte';
 	import IconEye from '../Icons/IconEye.svelte';
+	import Icon from '../Common/Icon.svelte';
+	import IconLock from '../Icons/IconLock.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let value = '';
-	export let placeholder = 'Zadejte heslo';
 
 	let className = '';
 	export { className as class };
 </script>
 
 <Input
-	let:iconClicked
-	iconFunction="password"
 	icon
 	class={twMerge('w-full !rounded-3xl', className)}
 	bind:value
-	{placeholder}
+	type="password"
+	iconPosition="left"
+	floatingLabel={$LL.enterPassword()}
 >
-	<IconEye active={iconClicked} />
+	<Icon class="child:fill-gray-500">
+		<IconLock />
+	</Icon>
 </Input>

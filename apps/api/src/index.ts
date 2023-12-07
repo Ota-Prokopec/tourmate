@@ -6,20 +6,30 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 export const server = new ApolloServer({ schema, context: context })
-
+//FIXME: this will be possible changed in the future
 const app = express()
 
 const start = async () => {
 	await server.start()
-	server.applyMiddleware({ app, path: '/graphql', cors: false, bodyParserConfig: { limit: '50mb' } })
+	server.applyMiddleware({
+		app,
+		path: '/graphql',
+		cors: false,
+		bodyParserConfig: { limit: '50mb' },
+	})
 }
 
-const clientHostName = process.env.DEV ? `${process.env.CLIENT_HOSTNAME}:5222` : `${process.env.CLIENT_HOSTNAME}/graphql`
+const clientHostName = process.env.CLIENT_HOSTNAME
 
 app.use(cookieParser())
 app.use(
 	cors({
-		origin: [clientHostName, 'https://studio.apollographql.com'],
+		origin: [
+			clientHostName,
+			'https://experiences-web-lovat.vercel.app',
+			'https://studio.apollographql.com',
+			'https://sdz3jzhr-4444.euw.devtunnels.ms',
+		],
 		credentials: true,
 	}),
 )

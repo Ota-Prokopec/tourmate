@@ -6,22 +6,22 @@ type Account {
   _collectionId: String!
   _createdAt: String!
   _databaseId: String!
-  _id: String!
+  _documentId: String!
   _permissions: [String!]!
   _updatedAt: String!
-  emailVerification: Boolean
-  experiences: [Experience!]!
-  monuments: [Monument!]!
+  emailVerification: Boolean!
   myId: String!
-  phoneVerification: Boolean
-  prefs: UsersPreferences
+  phoneVerification: Boolean!
+  prefs: UsersPreferences!
 
   """This is URL of profile picture. Not its id."""
-  profilePictureURL: URL
-  status: Boolean
+  profilePictureURL: URL!
+  status: Boolean!
   userId: String!
   username: String!
 }
+
+scalar AnswerType
 
 input CreateAccountInput {
   myId: String!
@@ -29,17 +29,18 @@ input CreateAccountInput {
 }
 
 input CreateExperienceInput {
+  connnectedMonumentId: String!
   location: Location!
   picture: String!
-  placeName: String!
 }
 
 input CreateMonumentInput {
   about: String!
   location: Location!
   name: String!
-  picture: String
+  picture: String!
   placeName: String!
+  question: QuestionInput
   topics: [Topic!]!
   transports: [Transport!]!
 }
@@ -55,13 +56,13 @@ type Experience {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
-  imgSrc: URL!
+  connectedMonument: Monument
+  connectedMonumentId: String!
   liked: ExperienceLike
   likes: [ExperienceLike!]!
   location: Location!
-  placeDetail: PlaceDetail!
-  placeDetailId: String!
-  user: Account!
+  pictureUrl: URL!
+  user: User!
   userId: String!
 }
 
@@ -73,7 +74,7 @@ type ExperienceLike {
   _permissions: [String!]!
   _updatedAt: String!
   experienceId: String!
-  user: Account!
+  user: User!
   userId: String!
 }
 
@@ -81,7 +82,7 @@ scalar Location
 
 input LocationInput {
   location: Location!
-  range: Int
+  rangeMeters: Float = 700
 }
 
 type Monument {
@@ -92,8 +93,7 @@ type Monument {
   _permissions: [String!]!
   _updatedAt: String!
   about: String
-  creator: Account!
-  creatorUserId: String!
+  connectedExperiences: [Experience!]!
   liked: MonumentLike
   likes: [MonumentLike!]!
   location: Location!
@@ -101,11 +101,17 @@ type Monument {
   nearExperiences: [Experience!]!
 
   """This it an URL not id of picture"""
-  pictureURL: URL
+  pictureURL: URL!
   placeDetail: PlaceDetail!
   placeDetailId: String!
+  question: Question
+  questionId: String
   topics: [Topic!]!
   transports: [Transport!]!
+  user: User!
+  userId: String!
+  usersAnswerToQuestion: UsersAnswerToQuestion
+  usersConnectedExperiences: [Experience!]!
 }
 
 input MonumentInputByName {
@@ -121,14 +127,17 @@ type MonumentLike {
   _permissions: [String!]!
   _updatedAt: String!
   monumentId: String!
-  user: Account!
+  user: User!
   userId: String!
 }
 
 type Mutation {
+  answerQuestion(answer: StringOrNumber!, monumentId: String!): UsersAnswerToQuestion!
   createExperience(input: CreateExperienceInput!): Experience!
   createMonument(input: CreateMonumentInput!): Monument!
+  deleteExperience(experienceId: String!): Boolean!
   deleteMonument(monumentId: String!): Boolean!
+  likeExperience(experienceId: String!): ExperienceLike!
   likeMonument(monumentId: String!): MonumentLike!
 }
 
@@ -144,16 +153,39 @@ type PlaceDetail {
 
 type Query {
   createAccount(myId: String!, username: String!): Account!
-  getAccount(userId: String): Account!
-  getAccountByMyId(myId: String!): Account!
-  getAccounts(searchingText: String): [Account!]!
+  getAccount: Account!
   getExperience(id: String!): Experience!
   getListOfExperiences(location: LocationInput): [Experience!]!
-  getListOfMonuments(limit: Int = 10, location: LocationInput, name: String, topics: [Topic!], transports: [Transport!]): [Monument!]!
+  getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
   getMonument(id: String!): Monument!
+  getUser(myId: String, userId: String): User!
+  getUsers(searchingText: String): [User!]!
   logInViaEmail(email: String!, password: String!): EmailLogin!
+  logout: Boolean!
   updateProfilePicture(picture: String!): Account!
 }
+
+type Question {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  correctAnswer: StringOrNumber!
+  pickingAnswers: [String!]
+  question: String!
+  type: AnswerType!
+}
+
+input QuestionInput {
+  correctAnswer: StringOrNumber!
+  pickingAnswers: [String!]
+  question: String!
+  type: AnswerType!
+}
+
+scalar StringOrNumber
 
 scalar Topic
 
@@ -164,7 +196,28 @@ A field whose value conforms to the standard URL format as specified in RFC3986:
 """
 scalar URL
 
+type User {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  experiences: [Experience!]!
+  monuments: [Monument!]!
+  myId: String!
+
+  """This is URL of profile picture. Not its id."""
+  profilePictureURL: URL!
+  userId: String!
+  username: String!
+}
+
+type UsersAnswerToQuestion {
+  answeredCorrectly: Boolean!
+}
+
 type UsersPreferences {
-  location: [Float!]
-  termsAccepted: Boolean
+  mapRange: Int!
+  termsAccepted: Boolean!
 }

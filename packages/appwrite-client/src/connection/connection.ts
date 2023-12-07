@@ -24,7 +24,6 @@ export default (client: Client) => {
 	const Auth = createAuthDispatcher(account)
 	const Collection = database(client)
 	const user = new Auth()
-	const isLoading = user.isLoading
 
 	return {
 		client,
@@ -36,7 +35,6 @@ export default (client: Client) => {
 		account,
 		database,
 		user,
-		isLoading,
 		Collection,
 		Query,
 		Role,

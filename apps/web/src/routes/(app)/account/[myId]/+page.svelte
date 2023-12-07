@@ -1,37 +1,47 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
-	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import Gallery from '$lib/components/Common/Gallery.svelte';
-	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCard.svelte';
-	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCard.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import type { Base64 } from '@app/ts-types';
-	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
-	import { Skeleton } from 'flowbite-svelte';
-	import Button from '$lib/components/Common/Button.svelte';
-	import Text from '$lib/components/Common/Text.svelte';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { goto } from '$app/navigation';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
+	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import LL from '$src/i18n/i18n-svelte';
+	import type { Base64, ExperienceCard, MonumentCard } from '@app/ts-types';
+	import { useQuery } from '@sveltestack/svelte-query';
+	import { Button, Skeleton } from 'flowbite-svelte';
+	import type { PageData } from './$types';
+	import EditProfileButton from './Components/EditProfileButton.svelte';
+	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
+	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
+	import ExperienceCardSkeleton from '$lib/components/Experience-monument/Cards/experience/ExperienceCardSkeleton.svelte';
 
 	export let data: PageData;
+	let isLoading = false;
 
-	const images = data.userProfile.experiences.map((exp) => ({
-		src: exp.imgSrc
-	}));
+	$: usersProfileQuery = useQuery('usersProfile', async () => {
+		return await sdk.getProfile({ myId: data.props.myId });
+	});
+	$: userProfile = $usersProfileQuery.data?.getUser;
 
-	const usersMonuments = data.userProfile.monuments;
-	const usersExperiences = data.userProfile.experiences;
+	let usersMonuments: MonumentCard[] | undefined = undefined;
+	let usersExperiences: ExperienceCard[] = [];
+	$: usersExperiences = userProfile?.experiences || [];
 
-	let experiencesType: 'monuments' | 'experiences' = 'monuments';
+	let category: 'monuments' | 'experiences' = 'experiences';
 
-	let isMyAccount = data.user?.userId === data.userProfile.userId;
+	$: isMyAccount = data.user.userId === userProfile?.userId;
 
 	const categories = [
-		{ title: 'fotky', key: 'experiences' },
-		{ title: 'památky', key: 'monuments' }
+		{ title: $LL.pictures(), key: 'experiences' },
+		{ title: $LL.monuments(), key: 'monuments' }
 	] as const;
 
 	let screenProfilePicEditor = false;
@@ -47,10 +57,22 @@
 		const {
 			updateProfilePicture: { profilePictureURL }
 		} = await sdk.updateProfilePicture({ picture: base64 });
-		data.userProfile.profilePictureURL = profilePictureURL;
+		if (!userProfile) throw new Error('userProfile is not defined');
+		userProfile.profilePictureURL = profilePictureURL;
 		uploadingProfilePictureIsLoading = false;
 		screenProfilePicEditor = false;
 	};
+
+	$: if (category === 'monuments' && !usersMonuments) {
+		if (!userProfile) throw new Error('userProfile is not defined');
+		isLoading = true;
+		sdk
+			.getListOfMonumentCards({ userId: userProfile.userId })
+			.then(({ getListOfMonuments: monuments }) => {
+				usersMonuments = monuments;
+				isLoading = false;
+			});
+	}
 </script>
 
 {#if screenProfilePicEditor}
@@ -60,54 +82,73 @@
 		profilePicture={newProfilePicture}
 	/>
 {:else}
-	<div class="w-full h-auto flex flex-wrap flex-col">
+	<Column class="p-2">
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
 			{#if isMyAccount}
 				<AvatarImageInput
 					screenErrors
 					class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
-					imageURL={data.userProfile.profilePictureURL}
+					imageURL={userProfile?.profilePictureURL}
 					on:image={async ({ detail: { base64 } }) => {
 						openProfilePicEditor(base64);
 					}}
 				/>
 			{:else}
-				<Avatar
-					size="xl"
-					class="h-40 w-40 overflow-hidden"
-					src={data.userProfile.profilePictureURL}
-				/>
+				<Avatar size="xl" class="h-40 w-40 overflow-hidden" src={userProfile?.profilePictureURL} />
 			{/if}
-			<div class="flex justify-start p-3 gap-4 mt-2 items-center text-2xl">
-				<div>{`${data.userProfile.myId}`}</div>
-				{#if isMyAccount}
-					<Icon icon="fa fa-gear" />
-				{/if}
-			</div>
-		</div>
-		<span class="text-3xl p-4">{data.userProfile.username}</span>
-
-		<div class="w-full h-auto flex justify-center mb-2 flex-wrap flex-col gap-4">
-			<CategoryPicker {categories} bind:chosenCategory={experiencesType} />
-			<Gallery class="">
-				{#if experiencesType === 'experiences'}
-					{#each usersExperiences as experience}
-						<ExperienceCard {experience} />
-					{/each}
-				{:else if usersMonuments.length}
-					{#each usersMonuments as monument}
-						<MonumentCard {monument} />
-					{/each}
+			<Row class="justify-start p-3 gap-4 mt-2 text-2xl">
+				{#if userProfile}
+					<Text>{userProfile.myId}</Text>
 				{:else}
-					<Skeleton divClass="w-full" />
-					<Button on:click={() => goto(`/addMonument`)} class="bg-white border border-gray-400">
-						<Text class="!text-black">Create your first monument</Text>
-						<Icon class="fill-red-500 w-7 h-7">
-							<IconLocation />
-						</Icon>
-					</Button>
+					<SkeletonLine class="w-[180px] h-4" />
 				{/if}
-			</Gallery>
+				{#if isMyAccount}
+					<Icon on:click={() => goto(`${userProfile?.myId}/settings`)} icon="fa fa-gear" />
+				{/if}
+			</Row>
 		</div>
-	</div>
+		{#if userProfile}
+			<Text class="text-3xl p-4">{userProfile?.username}</Text>
+		{:else}
+			<SkeletonLine class="w-[240px] h-4" />
+		{/if}
+
+		{#if isMyAccount && userProfile}
+			<EditProfileButton myId={userProfile?.myId} />
+		{/if}
+
+		<Column class="mb-2 gap-4">
+			<CategoryPicker {categories} bind:chosenCategory={category} />
+
+			<Column class="gap-10 justify-center items-center">
+				{#if userProfile}
+					{#if category === 'experiences'}
+						{#if usersExperiences.length}
+							{#each usersExperiences as experience}
+								<ExperienceCardComponent {experience} />
+							{/each}
+						{:else}
+							<Skeleton divClass="w-full" />
+							{#if isMyAccount}
+								<CreateYourFirstPicture />
+							{/if}
+						{/if}
+					{:else if usersMonuments?.length}
+						{#each usersMonuments as monument}
+							<MonumentCardComponent size="normal" {monument} />
+						{/each}
+					{:else}
+						<Skeleton divClass="w-full" />
+						{#if isMyAccount}
+							<CreateYourFirstMonumentButton />
+						{/if}
+					{/if}
+				{:else}
+					<ExperienceCardSkeleton />
+					<ExperienceCardSkeleton />
+					<ExperienceCardSkeleton />
+				{/if}
+			</Column>
+		</Column>
+	</Column>
 {/if}

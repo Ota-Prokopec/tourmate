@@ -1,0 +1,14 @@
+query getListOfUsersBySearching($searchingText: String) {
+	getUsers(searchingText: $searchingText) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		myId
+		username
+		profilePictureURL
+	}
+}

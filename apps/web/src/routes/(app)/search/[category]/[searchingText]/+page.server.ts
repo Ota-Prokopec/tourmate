@@ -9,3 +9,5 @@ export const load: PageServerLoad = async (event) => {
 		}
 	} as const;
 };
+
+export const ssr = false;

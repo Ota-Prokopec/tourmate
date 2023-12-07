@@ -1,5 +1,5 @@
 import { vitePreprocess } from '@sveltejs/kit/vite';
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-vercel';
 
 import path from 'path';
 
@@ -8,7 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter(),
-		env: { dir: './.env', publicPrefix: 'PUBLIC_' },
+		env: { dir: '../../.env.development', publicPrefix: 'PUBLIC_' },
 		alias: {
 			$lib: path.resolve('src', 'lib'),
 			$root: path.resolve('/'),

@@ -8,7 +8,9 @@ import type { Context } from "./../context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
+    answerType<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "AnswerType";
     location<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Location";
+    stringOrNumber<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "StringOrNumber";
     topic<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Topic";
     transport<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Transport";
     /**
@@ -19,7 +21,9 @@ declare global {
 }
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
+    answerType<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "AnswerType";
     location<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Location";
+    stringOrNumber<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "StringOrNumber";
     topic<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Topic";
     transport<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Transport";
     /**
@@ -40,26 +44,33 @@ export interface NexusGenInputs {
     username: string; // String!
   }
   CreateExperienceInput: { // input type
+    connnectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
     picture: string; // String!
-    placeName: string; // String!
   }
   CreateMonumentInput: { // input type
     about: string; // String!
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
-    picture?: string | null; // String
+    picture: string; // String!
     placeName: string; // String!
+    question?: NexusGenInputs['QuestionInput'] | null; // QuestionInput
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
   }
   LocationInput: { // input type
     location: NexusGenScalars['Location']; // Location!
-    range?: number | null; // Int
+    rangeMeters: number | null; // Float
   }
   MonumentInputByName: { // input type
     limit: number; // Int!
     name: string; // String!
+  }
+  QuestionInput: { // input type
+    correctAnswer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+    pickingAnswers?: string[] | null; // [String!]
+    question: string; // String!
+    type: NexusGenScalars['AnswerType']; // AnswerType!
   }
 }
 
@@ -72,7 +83,9 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  AnswerType: 'radio' | 'text' | 'number'
   Location: [number, number]
+  StringOrNumber: string | number
   Topic: "castle" | "monument" | "person" | "animals" | "hiking"
   Transport: "train" | "bus" | "car" | "walk" | "bike"
   URL: URL
@@ -83,15 +96,15 @@ export interface NexusGenObjects {
     _collectionId: string; // String!
     _createdAt: string; // String!
     _databaseId: string; // String!
-    _id: string; // String!
+    _documentId: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    emailVerification?: boolean | null; // Boolean
+    emailVerification: boolean; // Boolean!
     myId: string; // String!
-    phoneVerification?: boolean | null; // Boolean
-    prefs?: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
-    profilePictureURL?: NexusGenScalars['URL'] | null; // URL
-    status?: boolean | null; // Boolean
+    phoneVerification: boolean; // Boolean!
+    prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
+    profilePictureURL: NexusGenScalars['URL']; // URL!
+    status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
   }
@@ -105,9 +118,9 @@ export interface NexusGenObjects {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    imgSrc: NexusGenScalars['URL']; // URL!
+    connectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
-    placeDetailId: string; // String!
+    pictureUrl: NexusGenScalars['URL']; // URL!
     userId: string; // String!
   }
   ExperienceLike: { // root type
@@ -128,13 +141,14 @@ export interface NexusGenObjects {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     about?: string | null; // String
-    creatorUserId: string; // String!
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
-    pictureURL?: NexusGenScalars['URL'] | null; // URL
+    pictureURL: NexusGenScalars['URL']; // URL!
     placeDetailId: string; // String!
+    questionId?: string | null; // String
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
+    userId: string; // String!
   }
   MonumentLike: { // root type
     _collectionId: string; // String!
@@ -157,9 +171,36 @@ export interface NexusGenObjects {
     name: string; // String!
   }
   Query: {};
+  Question: { // root type
+    _collectionId: string; // String!
+    _createdAt: string; // String!
+    _databaseId: string; // String!
+    _id: string; // String!
+    _permissions: string[]; // [String!]!
+    _updatedAt: string; // String!
+    correctAnswer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+    pickingAnswers?: string[] | null; // [String!]
+    question: string; // String!
+    type: NexusGenScalars['AnswerType']; // AnswerType!
+  }
+  User: { // root type
+    _collectionId: string; // String!
+    _createdAt: string; // String!
+    _databaseId: string; // String!
+    _id: string; // String!
+    _permissions: string[]; // [String!]!
+    _updatedAt: string; // String!
+    myId: string; // String!
+    profilePictureURL: NexusGenScalars['URL']; // URL!
+    userId: string; // String!
+    username: string; // String!
+  }
+  UsersAnswerToQuestion: { // root type
+    answeredCorrectly: boolean; // Boolean!
+  }
   UsersPreferences: { // root type
-    location?: number[] | null; // [Float!]
-    termsAccepted?: boolean | null; // Boolean
+    mapRange: number; // Int!
+    termsAccepted: boolean; // Boolean!
   }
 }
 
@@ -178,17 +219,15 @@ export interface NexusGenFieldTypes {
     _collectionId: string; // String!
     _createdAt: string; // String!
     _databaseId: string; // String!
-    _id: string; // String!
+    _documentId: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    emailVerification: boolean | null; // Boolean
-    experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
-    monuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
+    emailVerification: boolean; // Boolean!
     myId: string; // String!
-    phoneVerification: boolean | null; // Boolean
-    prefs: NexusGenRootTypes['UsersPreferences'] | null; // UsersPreferences
-    profilePictureURL: NexusGenScalars['URL'] | null; // URL
-    status: boolean | null; // Boolean
+    phoneVerification: boolean; // Boolean!
+    prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
+    profilePictureURL: NexusGenScalars['URL']; // URL!
+    status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
   }
@@ -202,13 +241,13 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    imgSrc: NexusGenScalars['URL']; // URL!
+    connectedMonument: NexusGenRootTypes['Monument'] | null; // Monument
+    connectedMonumentId: string; // String!
     liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
-    placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
-    placeDetailId: string; // String!
-    user: NexusGenRootTypes['Account']; // Account!
+    pictureUrl: NexusGenScalars['URL']; // URL!
+    user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
   }
   ExperienceLike: { // field return type
@@ -219,7 +258,7 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     experienceId: string; // String!
-    user: NexusGenRootTypes['Account']; // Account!
+    user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
   }
   Monument: { // field return type
@@ -230,18 +269,23 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     about: string | null; // String
-    creator: NexusGenRootTypes['Account']; // Account!
-    creatorUserId: string; // String!
+    connectedExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     liked: NexusGenRootTypes['MonumentLike'] | null; // MonumentLike
     likes: NexusGenRootTypes['MonumentLike'][]; // [MonumentLike!]!
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
     nearExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
-    pictureURL: NexusGenScalars['URL'] | null; // URL
+    pictureURL: NexusGenScalars['URL']; // URL!
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
+    question: NexusGenRootTypes['Question'] | null; // Question
+    questionId: string | null; // String
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // String!
+    usersAnswerToQuestion: NexusGenRootTypes['UsersAnswerToQuestion'] | null; // UsersAnswerToQuestion
+    usersConnectedExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
   }
   MonumentLike: { // field return type
     _collectionId: string; // String!
@@ -251,13 +295,16 @@ export interface NexusGenFieldTypes {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     monumentId: string; // String!
-    user: NexusGenRootTypes['Account']; // Account!
+    user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
   }
   Mutation: { // field return type
+    answerQuestion: NexusGenRootTypes['UsersAnswerToQuestion']; // UsersAnswerToQuestion!
     createExperience: NexusGenRootTypes['Experience']; // Experience!
     createMonument: NexusGenRootTypes['Monument']; // Monument!
+    deleteExperience: boolean; // Boolean!
     deleteMonument: boolean; // Boolean!
+    likeExperience: NexusGenRootTypes['ExperienceLike']; // ExperienceLike!
     likeMonument: NexusGenRootTypes['MonumentLike']; // MonumentLike!
   }
   PlaceDetail: { // field return type
@@ -272,18 +319,48 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     createAccount: NexusGenRootTypes['Account']; // Account!
     getAccount: NexusGenRootTypes['Account']; // Account!
-    getAccountByMyId: NexusGenRootTypes['Account']; // Account!
-    getAccounts: NexusGenRootTypes['Account'][]; // [Account!]!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
+    getUser: NexusGenRootTypes['User']; // User!
+    getUsers: NexusGenRootTypes['User'][]; // [User!]!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
+    logout: boolean; // Boolean!
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
   }
+  Question: { // field return type
+    _collectionId: string; // String!
+    _createdAt: string; // String!
+    _databaseId: string; // String!
+    _id: string; // String!
+    _permissions: string[]; // [String!]!
+    _updatedAt: string; // String!
+    correctAnswer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+    pickingAnswers: string[] | null; // [String!]
+    question: string; // String!
+    type: NexusGenScalars['AnswerType']; // AnswerType!
+  }
+  User: { // field return type
+    _collectionId: string; // String!
+    _createdAt: string; // String!
+    _databaseId: string; // String!
+    _id: string; // String!
+    _permissions: string[]; // [String!]!
+    _updatedAt: string; // String!
+    experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
+    monuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
+    myId: string; // String!
+    profilePictureURL: NexusGenScalars['URL']; // URL!
+    userId: string; // String!
+    username: string; // String!
+  }
+  UsersAnswerToQuestion: { // field return type
+    answeredCorrectly: boolean; // Boolean!
+  }
   UsersPreferences: { // field return type
-    location: number[] | null; // [Float!]
-    termsAccepted: boolean | null; // Boolean
+    mapRange: number; // Int!
+    termsAccepted: boolean; // Boolean!
   }
 }
 
@@ -292,12 +369,10 @@ export interface NexusGenFieldTypeNames {
     _collectionId: 'String'
     _createdAt: 'String'
     _databaseId: 'String'
-    _id: 'String'
+    _documentId: 'String'
     _permissions: 'String'
     _updatedAt: 'String'
     emailVerification: 'Boolean'
-    experiences: 'Experience'
-    monuments: 'Monument'
     myId: 'String'
     phoneVerification: 'Boolean'
     prefs: 'UsersPreferences'
@@ -316,13 +391,13 @@ export interface NexusGenFieldTypeNames {
     _id: 'String'
     _permissions: 'String'
     _updatedAt: 'String'
-    imgSrc: 'URL'
+    connectedMonument: 'Monument'
+    connectedMonumentId: 'String'
     liked: 'ExperienceLike'
     likes: 'ExperienceLike'
     location: 'Location'
-    placeDetail: 'PlaceDetail'
-    placeDetailId: 'String'
-    user: 'Account'
+    pictureUrl: 'URL'
+    user: 'User'
     userId: 'String'
   }
   ExperienceLike: { // field return type name
@@ -333,7 +408,7 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     experienceId: 'String'
-    user: 'Account'
+    user: 'User'
     userId: 'String'
   }
   Monument: { // field return type name
@@ -344,8 +419,7 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     about: 'String'
-    creator: 'Account'
-    creatorUserId: 'String'
+    connectedExperiences: 'Experience'
     liked: 'MonumentLike'
     likes: 'MonumentLike'
     location: 'Location'
@@ -354,8 +428,14 @@ export interface NexusGenFieldTypeNames {
     pictureURL: 'URL'
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'
+    question: 'Question'
+    questionId: 'String'
     topics: 'Topic'
     transports: 'Transport'
+    user: 'User'
+    userId: 'String'
+    usersAnswerToQuestion: 'UsersAnswerToQuestion'
+    usersConnectedExperiences: 'Experience'
   }
   MonumentLike: { // field return type name
     _collectionId: 'String'
@@ -365,13 +445,16 @@ export interface NexusGenFieldTypeNames {
     _permissions: 'String'
     _updatedAt: 'String'
     monumentId: 'String'
-    user: 'Account'
+    user: 'User'
     userId: 'String'
   }
   Mutation: { // field return type name
+    answerQuestion: 'UsersAnswerToQuestion'
     createExperience: 'Experience'
     createMonument: 'Monument'
+    deleteExperience: 'Boolean'
     deleteMonument: 'Boolean'
+    likeExperience: 'ExperienceLike'
     likeMonument: 'MonumentLike'
   }
   PlaceDetail: { // field return type name
@@ -386,31 +469,71 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     createAccount: 'Account'
     getAccount: 'Account'
-    getAccountByMyId: 'Account'
-    getAccounts: 'Account'
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
     getListOfMonuments: 'Monument'
     getMonument: 'Monument'
+    getUser: 'User'
+    getUsers: 'User'
     logInViaEmail: 'EmailLogin'
+    logout: 'Boolean'
     updateProfilePicture: 'Account'
   }
+  Question: { // field return type name
+    _collectionId: 'String'
+    _createdAt: 'String'
+    _databaseId: 'String'
+    _id: 'String'
+    _permissions: 'String'
+    _updatedAt: 'String'
+    correctAnswer: 'StringOrNumber'
+    pickingAnswers: 'String'
+    question: 'String'
+    type: 'AnswerType'
+  }
+  User: { // field return type name
+    _collectionId: 'String'
+    _createdAt: 'String'
+    _databaseId: 'String'
+    _id: 'String'
+    _permissions: 'String'
+    _updatedAt: 'String'
+    experiences: 'Experience'
+    monuments: 'Monument'
+    myId: 'String'
+    profilePictureURL: 'URL'
+    userId: 'String'
+    username: 'String'
+  }
+  UsersAnswerToQuestion: { // field return type name
+    answeredCorrectly: 'Boolean'
+  }
   UsersPreferences: { // field return type name
-    location: 'Float'
+    mapRange: 'Int'
     termsAccepted: 'Boolean'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    answerQuestion: { // args
+      answer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+      monumentId: string; // String!
+    }
     createExperience: { // args
       input: NexusGenInputs['CreateExperienceInput']; // CreateExperienceInput!
     }
     createMonument: { // args
       input: NexusGenInputs['CreateMonumentInput']; // CreateMonumentInput!
     }
+    deleteExperience: { // args
+      experienceId: string; // String!
+    }
     deleteMonument: { // args
       monumentId: string; // String!
+    }
+    likeExperience: { // args
+      experienceId: string; // String!
     }
     likeMonument: { // args
       monumentId: string; // String!
@@ -420,15 +543,6 @@ export interface NexusGenArgTypes {
     createAccount: { // args
       myId: string; // String!
       username: string; // String!
-    }
-    getAccount: { // args
-      userId?: string | null; // String
-    }
-    getAccountByMyId: { // args
-      myId: string; // String!
-    }
-    getAccounts: { // args
-      searchingText?: string | null; // String
     }
     getExperience: { // args
       id: string; // String!
@@ -440,11 +554,20 @@ export interface NexusGenArgTypes {
       limit: number | null; // Int
       location?: NexusGenInputs['LocationInput'] | null; // LocationInput
       name?: string | null; // String
+      offset?: number | null; // Int
       topics?: NexusGenScalars['Topic'][] | null; // [Topic!]
       transports?: NexusGenScalars['Transport'][] | null; // [Transport!]
+      userId?: string | null; // String
     }
     getMonument: { // args
       id: string; // String!
+    }
+    getUser: { // args
+      myId?: string | null; // String
+      userId?: string | null; // String
+    }
+    getUsers: { // args
+      searchingText?: string | null; // String
     }
     logInViaEmail: { // args
       email: string; // String!

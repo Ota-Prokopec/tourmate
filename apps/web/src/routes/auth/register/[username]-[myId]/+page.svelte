@@ -1,26 +1,20 @@
 <script lang="ts">
-	import Title from '$lib/components/Common/Title.svelte';
-	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
-	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
-	import appwrite, { user } from '$lib/appwrite/appwrite';
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import IconAt from '$lib/components/Icons/IconAt.svelte';
 	import lsStore from '$lib/utils/lsStore';
+	import { navigate } from '$lib/utils/navigator';
+	import LL from '$src/i18n/i18n-svelte';
+	import { Checkbox } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
+	import EmailSent from '../../Components/EmailSent.svelte';
 	import LoginViaSocilaMedia from '../../Components/LoginViaSocilaMedia.svelte';
 	import type { PageData } from './$types';
-	import { sdk } from '$src/graphql/sdk';
-	import ErrorHelpler from '$lib/components/Common/ErrorHelper.svelte';
-	import Button from '$lib/components/Common/Button.svelte';
-	import { Toggle } from 'flowbite-svelte';
-	import { ApolloError } from '@apollo/client';
-	import { SyncLoader } from 'svelte-loading-spinners';
-	import Loading from '$lib/components/Common/Loading.svelte';
-	import EmailSent from '../../Components/EmailSent.svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 
 	export let data: PageData;
 
-	let email = 'otaprokopec@gmail.com';
-	let password = 'aaaaaaaa';
-	let repeatPassword = 'aaaaaaaa';
 	let state: 'loading' | 'email-sent' | null = null;
 	let error = '';
 	let termsAccepted = false;
@@ -29,29 +23,6 @@
 	$lsStore.user = {
 		...data.params
 	};
-
-	const registerViaEmail = async () => {
-		try {
-			state = 'loading';
-
-			await user.create(appwrite.ID.unique(), email, password, data.params.username);
-
-			const {
-				logInViaEmail: { session }
-			} = await sdk.loginViaEmail({ email, password });
-			$lsStore.cookieFallback = { a_session_experiences: session };
-
-			await user.createVerification(
-				`${location.origin}/auth/register/verifyemail/${data.params.myId}`
-			);
-
-			state = 'email-sent';
-		} catch (err) {
-			state = null;
-			if (!(err instanceof ApolloError)) return;
-			error = err.message;
-		}
-	};
 </script>
 
 {#if state === 'email-sent'}
@@ -59,27 +30,21 @@
 {:else if state === 'loading'}
 	<FullPageLoading />
 {:else}
-	<div class="w-full h-auto flex flex-wrap flex-col items-center justify-start p-5 mt-4 gap-14">
-		<div class="w-full max-w-[400px] flex flex-wrap flex-col gap-4 relative">
-			<Title class="text-xl">Zaregistrovat přes e-mail</Title>
-			<EmailInput bind:value={email} />
-			<PasswordInput bind:value={password} />
-			<PasswordInput bind:value={repeatPassword} />
-			<ErrorHelpler bind:message={error} timeout={2000} />
+	<Column class="items-center justify-start p-5 mt-4 gap-14">
+		<Checkbox bind:checked={termsAccepted}>{$LL.acceptTerms()}</Checkbox>
 
-			<div class="w-full flex justify-center">
-				<Button disabled={!termsAccepted} on:click={registerViaEmail} class="w-40 ">
-					Zaregistrovat
-				</Button>
-			</div>
-		</div>
+		<Icon
+			on:click={() => navigate(`email`)}
+			disabled={!termsAccepted}
+			class={twMerge('child:w-10 child:h-10', !termsAccepted && 'fill-gray-400 opacity-[0.8]')}
+		>
+			<IconAt />
+		</Icon>
 
-		<Toggle bind:checked={termsAccepted}>accept terms and permissions</Toggle>
+		<Text>{$LL.or()}</Text>
 
 		<div class="w-full flex flex-wrap flex-col gap-4 relative">
-			<Title class="text-xl">Zaregistrovat přes sociální sítě</Title>
-
-			<LoginViaSocilaMedia {termsAccepted} on:click={() => (state = 'loading')} />
+			<LoginViaSocilaMedia disabled={!termsAccepted} on:click={() => (state = 'loading')} />
 		</div>
-	</div>
+	</Column>
 {/if}

@@ -1,5 +1,5 @@
 <svg
-	class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500"
+	class="w-6 h-6 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500"
 	fill="currentColor"
 	viewBox="0 0 20 20"
 	xmlns="http://www.w3.org/2000/svg"

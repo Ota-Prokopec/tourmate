@@ -14,8 +14,4 @@
 	export { className as class };
 </script>
 
-<ChooseFromIcons
-	class={className}
-	on:change={(e) => (chosenTransports = e.detail)}
-	data={transports}
-/>
+<ChooseFromIcons class={className} bind:chosen={chosenTransports} data={transports} />

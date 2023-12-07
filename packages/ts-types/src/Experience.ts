@@ -1,33 +1,22 @@
+import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
-import { Location } from './Location'
+import { Location, LocationForDocument } from './Location'
 
 export type Experience = {
 	userId: string
-	imgSrc: URL
+	pictureUrl: URL
 	location: Location
-	placeDetailId: string
+	connectedMonumentId: string
 }
 
-export type ExperienceDocument = Document<{
-	userId: string
-	imgSrc: URL
-	latitude: number
-	longitude: number
-	placeDetailId: string
-}>
+export type ExperienceDocument = Document<
+	Omit<Experience, 'location'> & LocationForDocument
+>
 
-export type ExperienceGraphqlDocument = GraphqlDocument<{
-	userId: string
-	imgSrc: URL
-	latitude: number
-	longitude: number
-	placeDetailId: string
-}>
+export type ExperienceGraphqlDocument = GraphqlDocument<
+	Omit<Experience, 'location'> & LocationForDocument
+>
 
-export type ExperienceDocumentCreate = {
-	userId: string
-	imgSrc: URL
-	latitude: number
-	longitude: number
-	placeDetailId: string
-}
+export type ExperienceDocumentCreate = Omit<Experience, 'location'> & LocationForDocument
+
+export type ExperienceMarkerData = GraphqlDocument<Experience> & { user: UserInfo }

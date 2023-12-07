@@ -5,30 +5,38 @@ import IconTrain from '$lib/components/Icons/IconTrain.svelte';
 import IconWalk from '$lib/components/Icons/IconWalk.svelte';
 import type { Transport } from '@app/ts-types';
 
-export const transports: { name: string; component: any; key: Transport }[] = [
+/**
+ * @returns speed is in meters per seconds
+ */
+export const transports: { name: string; component: any; key: Transport; speed: number }[] = [
 	{
 		name: 'car',
 		component: IconCar,
-		key: 'car'
+		key: 'car',
+		speed: 16.5
 	},
 	{
 		name: 'bus',
 		component: IconBus,
-		key: 'bus'
+		key: 'bus',
+		speed: 16.5
 	},
 	{
 		name: 'bike',
 		component: IconBike,
-		key: 'bike'
+		key: 'bike',
+		speed: 4
 	},
 	{
 		name: 'train',
 		component: IconTrain,
-		key: 'train'
+		key: 'train',
+		speed: 13.88
 	},
 	{
 		name: 'walk',
 		component: IconWalk,
-		key: 'walk'
+		key: 'walk',
+		speed: 1.3
 	}
 ];

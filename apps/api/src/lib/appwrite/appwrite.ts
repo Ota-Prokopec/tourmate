@@ -1,8 +1,10 @@
 import { collectionsClient, collectionsAdmin } from './tools/collections'
-import appwriteSSR, { Types } from '@app/appwrite-ssr-graphql'
+import { type Types, setProject } from '@app/appwrite-ssr-graphql'
 import Queries from './tools/query'
 
-const client: ReturnType<typeof appwriteSSR.setProject> = appwriteSSR.setProject({
+//TODO: remove ts-ignore
+//@ts-ignore
+const client: ReturnType<typeof setProject> = setProject({
 	endpoint: process.env.APPWRITE_ENDPOINT || '',
 	projectId: process.env.APPWRITE_PROJECT_ID || '',
 	apiKey: process.env.APPWRITE_API_KEY,

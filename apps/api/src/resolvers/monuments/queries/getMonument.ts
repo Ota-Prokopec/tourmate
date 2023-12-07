@@ -1,5 +1,5 @@
 import { queryField, stringArg } from 'nexus'
-import { fromLatLongIntoLocation } from '../../../lib/database/experiences-monuments'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 
 export default queryField('getMonument', {
 	type: 'Monument',
@@ -10,6 +10,8 @@ export default queryField('getMonument', {
 		const monumentDocument = await collections.monument.getDocument(args.id)
 
 		if (!monumentDocument) throw new Error('Monument not found')
-		return fromLatLongIntoLocation(monumentDocument)[0]
+		const res = fromLatDocumentLongIntoLocationDocument(monumentDocument)[0]
+		if (!res) throw new Error('Monument not found')
+		return res
 	},
 })

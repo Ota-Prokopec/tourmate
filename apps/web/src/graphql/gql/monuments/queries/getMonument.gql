@@ -7,7 +7,7 @@ query getMonument($id: String!) {
 		_permissions
 		_databaseId
 		location
-		creatorUserId
+		userId
 		name
 		topics
 		about

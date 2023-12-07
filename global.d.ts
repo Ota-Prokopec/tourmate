@@ -18,8 +18,10 @@ declare namespace NodeJS {
 		readonly CLOUDINARY_API_SECRET_KEY: string
 		readonly DEV: string
 		readonly SERVER_HOSTNAME_COOKIES: string
-		readonly SESSION: string
+		readonly PUBLIC_SESSION: string
+		readonly TESTING_SESSION: string
+		readonly TESTING_SESSION_NAME: string
+		readonly CLIENT_HOSTNAME_COOKIES: string
+		readonly PUBLIC_SESSION_NAME: 'a_session_experiences'
 	}
 }
-
-import '@total-typescript/ts-reset'

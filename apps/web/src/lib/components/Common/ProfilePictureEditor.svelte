@@ -8,6 +8,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { SyncLoader } from 'svelte-loading-spinners';
 	import Text from './Text.svelte';
+	import Right from './Right.svelte';
 	const dispatch = createEventDispatcher<{ save: { base64: Base64 } }>();
 
 	let result: string | Base64 = '';
@@ -46,20 +47,22 @@
 	url={profilePicture}
 >
 	<span slot="bottom">
-		{#if !disableSave}
-			<Button
-				on:click={save}
-				class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 rounded-full fill-white"
-				color="blue"
-			>
-				{#if isLoading}
-					<SyncLoader color="black" size={30} unit="px" />
-				{:else}
-					change picture <Icon><IconNext /></Icon>
-				{/if}
-			</Button>
-		{:else}
-			<Text class="">you have to crop your picture to 1:1 first</Text>
-		{/if}
+		<Right class="p-4">
+			{#if !disableSave}
+				<Button
+					on:click={save}
+					class="h-14 flex flex-wrap flex-row gap-2 top-0 right-0 text-2xl pr-6 pl-6 rounded-full fill-white"
+					color="blue"
+				>
+					{#if isLoading}
+						<SyncLoader color="black" size={30} unit="px" />
+					{:else}
+						change picture <Icon><IconNext /></Icon>
+					{/if}
+				</Button>
+			{:else}
+				<Text class="">you have to crop your picture to 1:1 first</Text>
+			{/if}
+		</Right>
 	</span>
 </ImageEditor>

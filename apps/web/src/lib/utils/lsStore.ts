@@ -1,18 +1,28 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { Location } from '@app/ts-types';
+import type { Base64, Location } from '@app/ts-types';
 
 export type Storage =
 	| {
 			usersLocation?: Location;
 			user?: { username: string; myId: string };
 			cookieFallback?: Record<'a_session_experiences', string>;
+			newExperiencePicture?: string | Base64;
+			'color-theme'?: 'light' | 'dark';
 	  } & Record<string, any>;
+
+const parseLocalStorageValue = (value: string) => {
+	try {
+		return JSON.parse(value);
+	} catch (error) {
+		return value;
+	}
+};
 
 const storage: Storage = !browser
 	? {}
 	: Object.entries<string>(localStorage)
-			.map(([key, value]) => [key, JSON.parse(value)] as [keyof Storage, any])
+			.map(([key, value]) => [key, parseLocalStorageValue(value)] as [keyof Storage, any])
 			.reduce((res, current) => {
 				res[current[0]] = current[1];
 				return res;
@@ -28,6 +38,8 @@ store.subscribe((storeValue) => {
 			localStorage.setItem(key, JSON.stringify(storeValue[key]));
 	}
 });
+
+export const lsStore = store;
 
 export default store;
 export const typedStore = <Type>() => {

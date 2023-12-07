@@ -1,24 +1,75 @@
 <script lang="ts">
-	import Row from '$lib/components/Common/Row.svelte';
-	import type { MonumentCard } from '@app/ts-types';
-	import { createEventDispatcher } from 'svelte';
-	import Text from '$lib/components/Common/Text.svelte';
+	import ChooseFromIconsItem from '$lib/components/ChooseFromIcons/ChooseFromIconsItem.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import { goto } from '$app/navigation';
+	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import Popover from '$lib/components/Common/Popover.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import TypeWriter from '$lib/components/Common/TypeWriter.svelte';
+	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
+	import LL from '$src/i18n/i18n-svelte';
+	import type { Location, MonumentCard } from '@app/ts-types';
+	import { getTimeFromAToB, normalizeTime } from '@app/utils';
+	import { createEventDispatcher } from 'svelte';
+	import { topics } from '../../topic/topics';
+	import { transports } from '../../transportType/transports';
+	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
+	export let liked: boolean | 'pending';
+	export let amIOwner: boolean;
+	export let usersLocation: Location | undefined;
 </script>
 
-<Row class="justify-between gap-2">
-	<h5 class="mb-2 text-xl text-black">
-		{monument.name}
-	</h5>
-	<Text class="text-right">
-		<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
-			<Row class="gap-1">
-				<Icon icon="fas fa-map-marker-alt" class="text-xl " />
-				{monument.placeDetail.name}
-			</Row>
-		</button>
-	</Text>
+<Row class="w-full justify-between">
+	<LikeSection
+		ableToLike={!amIOwner}
+		on:like={() => dispatch('like')}
+		on:unlike={() => dispatch('unlike')}
+		data={{
+			liked: liked ? true : false,
+			otherUsersThatLiked: monument.likes.map((l) => l.user)
+		}}
+	/>
+	<Column class="gap-1 items-end p-2">
+		<Row>
+			{#each monument.topics as topic}
+				<ChooseFromIconsItem circuit={false}>
+					<svelte:component this={topics.filter((t) => t.key === topic)[0].component} />
+				</ChooseFromIconsItem>
+			{/each}
+		</Row>
+		<Row>
+			{#each monument.transports as transportKey}
+				{@const transport = transports.filter((t) => t.key === transportKey)[0]}
+				<ChooseFromIconsItem circuit={false}>
+					<svelte:component this={transport.component} />
+				</ChooseFromIconsItem>
+				{#if usersLocation}
+					{@const seconds = Math.floor(
+						getTimeFromAToB(usersLocation, monument.location, transport.speed)
+					)}
+
+					{#if seconds !== 0}
+						<Popover class="w-[300px]" placement="bottom">
+							<TypeWriter speed={10}>
+								{normalizeTime(seconds, $LL.and())}
+							</TypeWriter>
+						</Popover>
+					{/if}
+				{/if}
+			{/each}
+		</Row>
+		{#if monument.question}
+			<ChooseFromIconsItem circuit={false}>
+				<IconQuestion />
+			</ChooseFromIconsItem>
+			<Popover placement="right" class="w-[200px]" color="blue">
+				<Text>
+					{monument.question.question}
+				</Text>
+			</Popover>
+		{/if}
+	</Column>
 </Row>

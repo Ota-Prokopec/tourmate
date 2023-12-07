@@ -1,11 +1,6 @@
-query getAccount($userId: String) {
-	getAccount(userId: $userId) {
-		_permissions
-		_databaseId
-		_id
-		_collectionId
-		_updatedAt
-		_createdAt
+query getAccount {
+	getAccount {
+		_documentId
 		userId
 		myId
 		username
@@ -14,7 +9,7 @@ query getAccount($userId: String) {
 		phoneVerification
 		profilePictureURL
 		prefs {
-			location
+			mapRange
 			termsAccepted
 		}
 	}
