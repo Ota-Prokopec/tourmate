@@ -25,6 +25,7 @@
 	import CardImage from '../CardImage.svelte';
 	import CardFooter from './CardFooter.svelte';
 	import CardHeader from './CardHeader.svelte';
+	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 
 	const isMonumentCard = (card: MonumentCard | TinyMonumentCard): card is MonumentCard => {
 		return 'liked' in monument;
@@ -202,6 +203,12 @@
 						on:click={() => goto(`/monument/${monument._id}`)}>{$LL.seeMore()}</Button
 					>
 				{/if}
+				<Row class="w-full h-auto justify-end p-2 gap-2">
+					<Text>{$LL.pictureAlreadyTaken()}</Text>
+					<Icon class="child:fill-green-500 child:w-4 child:h-4">
+						<IconCheck />
+					</Icon>
+				</Row>
 			</Column>
 		{/if}
 		<div class="w-full h-auto mt-2">

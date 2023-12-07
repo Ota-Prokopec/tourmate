@@ -48,7 +48,12 @@
 	mapRangeValue={JSON.stringify(data.user.prefs.mapRange)}
 />
 
-<Map class="w-full h-[100vh] fixed bottom-0 z-50" deg={45} bind:zoom={mapZoom} bind:location>
+<Map
+	class="w-full h-[100vh] fixed bottom-0 z-20"
+	deg={45}
+	bind:zoom={mapZoom}
+	bind:center={location}
+>
 	<Icon
 		on:click={() => (settingsHidden = false)}
 		class="absolute top-0 right-0 m-4 child:fill-black child:w-9 child:h-9"
@@ -59,7 +64,7 @@
 	{#await monumentsPromise then monuments}
 		{#if monuments}
 			{#each monuments.getListOfMonuments as monument}
-				<MonumentMarker zoom={mapZoom} {monument} />
+				<MonumentMarker classDrawer="pb-bottomNavBarHeightSize" zoom={mapZoom} {monument} />
 			{/each}
 		{/if}
 	{:catch}

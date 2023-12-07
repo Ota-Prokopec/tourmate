@@ -15,15 +15,15 @@
 	import { twMerge } from 'tailwind-merge';
 	import Marker from '../Marker.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import IconImages from '$lib/components/Icons/IconImages.svelte';
 
 	export let monument: MonumentMarkerData;
 	export let disableShowingDetails = false;
+	let userAlreadyHasExperienceConnectedToThisMonument =
+		monument.usersConnectedExperiences.length !== 0;
 
 	export let zoom: number | undefined = undefined;
 	export let detailHidden = true;
-
-	let className = '';
-	export { className as class };
 
 	$: zoomClass = zoom && zoom > 18 ? 'w-20 h-20' : 'w-14 h-14';
 
@@ -34,10 +34,14 @@
 		detailHidden = false;
 		monumentCardDataPromise = sdk.getMonumentCardWithConnectedExperiences({ id: monument._id });
 	};
+
+	let className = '';
+	export { className as class };
+	export let classDrawer = '';
 </script>
 
 <Drawer
-	class="p-2 h-full w-full max-w-[400px]"
+	class={twMerge('p-2 h-full w-full max-w-[400px]', classDrawer)}
 	bind:hidden={detailHidden}
 	placement="left"
 	size={600}
@@ -80,5 +84,11 @@
 	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing'*/, className)}
 	location={monument.location}
 >
+	{#if userAlreadyHasExperienceConnectedToThisMonument}
+		<Icon class="child:fill-gray-900 absolute right-0 top-0 p-[2px]">
+			<IconImages />
+		</Icon>
+	{/if}
+
 	<Avatar class={zoomClass} src={monument.pictureURL} />
 </Marker>

@@ -1,18 +1,21 @@
 <script lang="ts">
 	import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
-	import lsSvelte from '$lib/utils/lsStore';
+	import { lsStore } from '$lib/utils/lsStore';
 	import type { Location } from '@app/ts-types';
 	import type { Map } from 'maplibre-gl';
 	import { FillExtrusionLayer, GeolocateControl, MapLibre } from 'svelte-maplibre';
 	import { twMerge } from 'tailwind-merge';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
+	import UserMarker from './Markers/UserMarker.svelte';
 
 	export let map: Map | undefined = undefined;
-	export let location: Location | undefined = $lsSvelte.usersLocation;
+	export let center: Location | undefined = $lsStore.usersLocation;
+	const usersLocation = $lsStore.usersLocation;
 
 	export let zoom: number = 16;
 	export let maxZoom: number | undefined = undefined;
 	export let minZoom: number | undefined = undefined;
+	export let showUser = false;
 	export let deg = 0;
 	let style = `https://api.maptiler.com/maps/basic-v2/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
 
@@ -21,13 +24,13 @@
 </script>
 
 <div class={twMerge('w-full h-full relative', className)}>
-	{#if location}
+	{#if center}
 		<MapLibre
 			{style}
 			{maxZoom}
 			{minZoom}
 			bind:map
-			center={[location[1], location[0]]}
+			center={[center[1], center[0]]}
 			zoom={14}
 			bind:pitch={deg}
 			on:zoom={(e) => {
@@ -81,6 +84,9 @@
 					'fill-extrusion-opacity': 0.6
 				}}
 			/>
+			{#if showUser && usersLocation}
+				<UserMarker location={usersLocation} />
+			{/if}
 			<slot />
 		</MapLibre>
 	{:else}

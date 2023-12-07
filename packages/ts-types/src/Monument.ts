@@ -1,5 +1,6 @@
 import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
+import { Experience, ExperienceGraphqlDocument } from './Experience'
 import { Location, LocationForDocument } from './Location'
 import { AnswerType, Question } from './Question'
 import { Topic } from './Topic'
@@ -26,4 +27,8 @@ export type MonumentGraphqlDocument = GraphqlDocument<
 export type MonumentDocumentCreate = Omit<Monument, 'topics' | 'location'> &
 	LocationForDocument & { topics?: Topic[] }
 
-export type MonumentMarkerData = GraphqlDocument<Monument>
+export type MonumentMarkerData = GraphqlDocument<
+	Monument & {
+		usersConnectedExperiences: GraphqlDocument<Experience>[]
+	}
+>

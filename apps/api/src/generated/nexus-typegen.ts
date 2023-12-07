@@ -285,6 +285,7 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
     usersAnswerToQuestion: NexusGenRootTypes['UsersAnswerToQuestion'] | null; // UsersAnswerToQuestion
+    usersConnectedExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
   }
   MonumentLike: { // field return type
     _collectionId: string; // String!
@@ -434,6 +435,7 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
     userId: 'String'
     usersAnswerToQuestion: 'UsersAnswerToQuestion'
+    usersConnectedExperiences: 'Experience'
   }
   MonumentLike: { // field return type name
     _collectionId: 'String'

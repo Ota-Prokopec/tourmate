@@ -64,10 +64,10 @@ type RootTranslation = {
 	 */
 	saveErrorTitle: RequiredParams<'what'>
 	/**
-	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​s​a​v​i​n​g​ ​y​o​u​r​ ​{​t​y​p​e​}​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
-	 * @param {string} type
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​s​a​v​i​n​g​ ​y​o​u​r​ ​{​w​h​a​t​}​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+	 * @param {string} what
 	 */
-	saveErrorMessage: RequiredParams<'type'>
+	saveErrorMessage: RequiredParams<'what'>
 	/**
 	 * {​w​h​a​t​}​ ​w​a​s​ ​n​o​t​ ​u​p​d​a​t​e​d
 	 * @param {string} what
@@ -342,6 +342,14 @@ type RootTranslation = {
 	 * t​h​e​m​e
 	 */
 	theme: string
+	/**
+	 * y​o​u
+	 */
+	you: string
+	/**
+	 * p​i​c​t​u​r​e​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n
+	 */
+	pictureAlreadyTaken: string
 }
 
 export type TranslationFunctions = {
@@ -394,9 +402,9 @@ export type TranslationFunctions = {
 	 */
 	saveErrorTitle: (arg: { what: string }) => LocalizedString
 	/**
-	 * We are sorry, but there was a problem with saving your {type}. Please try it again.
+	 * We are sorry, but there was a problem with saving your {what}. Please try it again.
 	 */
-	saveErrorMessage: (arg: { type: string }) => LocalizedString
+	saveErrorMessage: (arg: { what: string }) => LocalizedString
 	/**
 	 * {what} was not updated
 	 */
@@ -665,6 +673,14 @@ export type TranslationFunctions = {
 	 * theme
 	 */
 	theme: () => LocalizedString
+	/**
+	 * you
+	 */
+	you: () => LocalizedString
+	/**
+	 * picture already taken
+	 */
+	pictureAlreadyTaken: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -18,7 +18,7 @@ const en = {
 
 	saveErrorTitle: '{what: string} was not saved',
 	saveErrorMessage:
-		'We are sorry, but there was a problem with saving your {type: string}. Please try it again.',
+		'We are sorry, but there was a problem with saving your {what: string}. Please try it again.',
 	updateErrorTitle: '{what: string} was not updated',
 	updateErrorMessage: '{what: string} was not updated, please try it again',
 	deleteErrorTitle: '{what: string} was not deleted',
@@ -98,7 +98,9 @@ const en = {
 	takePictureHere: 'take a picture here',
 	reset: 'reset',
 	language: 'language',
-	theme: 'theme'
+	theme: 'theme',
+	you: 'you',
+	pictureAlreadyTaken: 'picture already taken'
 } satisfies BaseTranslation;
 
 export default en;

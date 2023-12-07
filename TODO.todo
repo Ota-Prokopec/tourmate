@@ -15,6 +15,8 @@ errors
 !!!when user not authed => on ssr tell him about it and reroute => /auth/login!! not only not loaded application
 8) search monuments pagination
 9) better languages
+10) upravit styly na telefon
+11) add topics and transports
 
 
 o	Registrace uživatele přes e-mail a přes Google.

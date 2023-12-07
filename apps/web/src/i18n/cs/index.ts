@@ -96,7 +96,9 @@ const cz = {
 	takePictureHere: 'take a picture here',
 	reset: 'reset',
 	language: 'jazyk',
-	theme: 'téma'
+	theme: 'téma',
+	you: 'ty',
+	pictureAlreadyTaken: 'picture already taken'
 } satisfies BaseTranslation;
 
 export default cz;

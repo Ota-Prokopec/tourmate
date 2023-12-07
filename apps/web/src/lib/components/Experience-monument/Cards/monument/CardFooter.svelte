@@ -32,7 +32,7 @@
 			otherUsersThatLiked: monument.likes.map((l) => l.user)
 		}}
 	/>
-	<Column class="gap-1">
+	<Column class="gap-1 items-end p-2">
 		<Row>
 			{#each monument.topics as topic}
 				<ChooseFromIconsItem circuit={false}>
@@ -62,10 +62,10 @@
 			{/each}
 		</Row>
 		{#if monument.question}
-			<Icon>
+			<ChooseFromIconsItem circuit={false}>
 				<IconQuestion />
-			</Icon>
-			<Popover placement="right" class="min-w-[200px]" color="blue">
+			</ChooseFromIconsItem>
+			<Popover placement="right" class="w-[200px]" color="blue">
 				<Text>
 					{monument.question.question}
 				</Text>

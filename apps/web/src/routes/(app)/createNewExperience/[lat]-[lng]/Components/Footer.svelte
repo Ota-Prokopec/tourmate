@@ -15,7 +15,7 @@
 	const dispatch = createEventDispatcher<{ save: undefined }>();
 
 	export let isUserCloseEnoughToMonument: boolean | null;
-	export let isLoading: boolean;
+	export let isPublishingLoading: boolean;
 	export let monument: MonumentCard | undefined;
 	$: question = monument?.question;
 	let isAnsweringLoading = false;
@@ -98,10 +98,10 @@
 	{/if}
 
 	<Button color="green" on:click={() => dispatch('save')} disabled={!ableToSave}>
-		{#if isLoading}
+		{#if isPublishingLoading}
 			<Loading />
 		{:else}
-			<span>Zveřejnit</span>
+			Zveřejnit
 		{/if}
 	</Button>
 

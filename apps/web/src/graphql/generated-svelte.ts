@@ -136,6 +136,7 @@ export type Monument = {
   user: User;
   userId: Scalars['String']['output'];
   usersAnswerToQuestion?: Maybe<UsersAnswerToQuestion>;
+  usersConnectedExperiences: Array<Experience>;
 };
 
 export type MonumentInputByName = {
@@ -483,7 +484,7 @@ export type GetListOfMonumentsForMapQueryVariables = Exact<{
 }>;
 
 
-export type GetListOfMonumentsForMapQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], transports: Array<any>, userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL }> };
+export type GetListOfMonumentsForMapQuery = { __typename?: 'Query', getListOfMonuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], transports: Array<any>, userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string }> }> };
 
 export type GetMonumentQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1213,6 +1214,18 @@ export const GetListOfMonumentsForMapDoc = gql`
     topics
     placeDetailId
     pictureURL
+    usersConnectedExperiences {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      pictureUrl
+      location
+      connectedMonumentId
+    }
   }
 }
     `;

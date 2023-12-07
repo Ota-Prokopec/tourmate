@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { twMerge } from 'tailwind-merge';
 
-	let className = '';
+	let className = 'fill-red-500 w-8 h-8';
 	export { className as class };
 </script>
 

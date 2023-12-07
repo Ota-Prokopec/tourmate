@@ -5,8 +5,12 @@ module.exports = {
 		'./src/**/*.{html,svelte,js,ts}',
 		'../../node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
 	],
+
 	theme: {
 		extend: {
+			spacing: {
+				bottomNavBarHeightSize: 'var(--bottom-navbar-height)'
+			},
 			animation: {
 				cardShrinking: 'cardShrinking 2s linear',
 				bouncing: 'bouncing 1s linear',

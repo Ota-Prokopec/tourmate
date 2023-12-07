@@ -111,6 +111,7 @@ type Monument {
   user: User!
   userId: String!
   usersAnswerToQuestion: UsersAnswerToQuestion
+  usersConnectedExperiences: [Experience!]!
 }
 
 input MonumentInputByName {

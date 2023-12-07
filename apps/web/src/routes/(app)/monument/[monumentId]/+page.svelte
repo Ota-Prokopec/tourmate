@@ -25,7 +25,7 @@
 	const experiences = monument.connectedExperiences;
 
 	let onlyMap = false;
-	let distanceInMeters: number = 0;
+	let distanceInMeters: number | undefined;
 
 	const takePicture = () => {
 		if (!distanceInMeters) throw new Error('distance is not defined');
@@ -42,7 +42,7 @@
 </script>
 
 {#if !onlyMap}
-	<Row class="absolute top-0 left-0 z-50 gap-4 mobile:w-full">
+	<Column class="absolute top-0 left-0 z-50 gap-4 mobile:w-full">
 		<MonumentCard
 			bind:distanceInMeters
 			class="mobile:w-full mobile:max-w-none"
@@ -67,7 +67,7 @@
 		</MonumentCard>
 
 		{#if experiences.length}
-			<Card class="bg-transparent !p-0">
+			<Card class="bg-transparent !pl-0 !pr-0">
 				<Carousel class="h-min" swiping arrows>
 					{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
 						{@const experience = {
@@ -79,10 +79,10 @@
 				</Carousel>
 			</Card>
 		{/if}
-	</Row>
+	</Column>
 {/if}
 
-<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
+<Map showUser center={data.monument.location} class="h-[100dvh] fixed top-0">
 	<MediaQuery size="mobile">
 		<Icon on:click={() => (onlyMap = false)} class="child:w-8 child:h-8 absolute top-0 right-0 m-2">
 			<IconTimes />
@@ -90,7 +90,7 @@
 	</MediaQuery>
 
 	<Marker class="z-50" location={data.monument.location}>
-		<Icon class="child:h-8 child:w-8 ">
+		<Icon class="child:h-8 child:w-8">
 			<IconLocation />
 		</Icon>
 	</Marker>

@@ -20,7 +20,7 @@
 	if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
 	export let data: PageData;
-	let isLoading = false;
+	let isPublishingLoading = false;
 
 	const picture = $lsStore.newExperiencePicture;
 	const location = data.newExperience.location;
@@ -36,18 +36,30 @@
 	let isUserCloseEnoughToMonument: boolean | null = null;
 
 	const save = async () => {
-		if (!location) throw new Error('user has no location');
-		if (!connectedMonumentId) throw new Error('no monument is connected');
-		if (!picture) throw new Error('no picture found in lsStore');
+		try {
+			isPublishingLoading = true;
+			if (!location) throw new Error('user has no location');
+			if (!connectedMonumentId) throw new Error('no monument is connected');
+			if (!picture) throw new Error('no picture found in lsStore');
 
-		await sdk.createExperience({
-			input: {
-				connnectedMonumentId: connectedMonumentId,
-				location: location,
-				picture: picture
-			}
-		});
-		navigate('/');
+			await sdk.createExperience({
+				input: {
+					connnectedMonumentId: connectedMonumentId,
+					location: location,
+					picture: picture
+				}
+			});
+			navigate('/');
+		} catch (error) {
+			alert(
+				$LL.saveErrorTitle({ what: $LL.experience() }),
+				$LL.saveErrorMessage({ what: $LL.experience() }),
+				{
+					color: 'red'
+				}
+			);
+		}
+		isPublishingLoading = false;
 	};
 
 	const chooseMonument = async (monumentId: string) => {
@@ -93,7 +105,12 @@
 			bind:hideDrawer
 		/>
 
-		<Footer {isUserCloseEnoughToMonument} monument={monumentToConnect} {isLoading} on:save={save} />
+		<Footer
+			{isUserCloseEnoughToMonument}
+			monument={monumentToConnect}
+			{isPublishingLoading}
+			on:save={save}
+		/>
 	</Card>
 {/if}
 
@@ -105,7 +122,7 @@
 	{/if}
 </MediaQuery>
 
-<Map location={data.newExperience.location} class="h-full w-full fixed top-0">
+<Map showUser center={data.newExperience.location} class="h-full w-full fixed top-0">
 	{#each data.newExperience.nearMonuments as monument}
 		<MonumentMarker
 			disableShowingDetails
