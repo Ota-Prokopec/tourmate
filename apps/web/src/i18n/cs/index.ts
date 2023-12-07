@@ -94,7 +94,9 @@ const cz = {
 	saveQuestionError:
 		'We are not able to save your question like this, please check if everything is filled',
 	takePictureHere: 'take a picture here',
-	reset: 'reset'
+	reset: 'reset',
+	language: 'jazyk',
+	theme: 'téma'
 } satisfies BaseTranslation;
 
 export default cz;

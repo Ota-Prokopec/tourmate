@@ -20,7 +20,7 @@
 	const queryClient = new QueryClient();
 
 	//client-side appwrite local-storage session loggin out
-	$: if (!$userIsLoading && $user === null) {
+	$: if (mounted && !$userIsLoading && $user === null) {
 		goto('/auth/login');
 	}
 

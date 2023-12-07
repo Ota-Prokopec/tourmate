@@ -1,4 +1,4 @@
-<script lang="ts" generics="T extends string">
+<script lang="ts">
 	import Text from './Text.svelte';
 
 	import Column from './Column.svelte';
@@ -7,24 +7,27 @@
 
 	import { twMerge } from 'tailwind-merge';
 
+	type ID = $$Generic<string>;
+	type Title = $$Generic<string>;
+
 	export let items: Array<{
-		title: string;
-		id: T;
+		title: Title;
+		id: ID;
 		remove?: boolean;
 	}>;
 
 	let className = '';
 	export { className as class };
-	export let itemsClass = '';
+	export let textClasses = '';
 </script>
 
-<Row class={twMerge('gap-4 w-full', className)}>
+<Column>
 	{#each items as { title, id, remove }}
 		{#if !remove}
-			<Column class="gap-1 w-full ">
-				<Text class="text-xl w-auto">{title}</Text>
-				<span class={itemsClass}><slot {id} /></span>
+			<Column class={twMerge('gap-1', className)}>
+				<Text class={twMerge('text-xl text-left', textClasses)}>{title}</Text>
+				<slot {id} />
 			</Column>
 		{/if}
 	{/each}
-</Row>
+</Column>

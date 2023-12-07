@@ -334,6 +334,14 @@ type RootTranslation = {
 	 * r​e​s​e​t
 	 */
 	reset: string
+	/**
+	 * l​a​n​g​u​a​g​e
+	 */
+	language: string
+	/**
+	 * t​h​e​m​e
+	 */
+	theme: string
 }
 
 export type TranslationFunctions = {
@@ -649,6 +657,14 @@ export type TranslationFunctions = {
 	 * reset
 	 */
 	reset: () => LocalizedString
+	/**
+	 * language
+	 */
+	language: () => LocalizedString
+	/**
+	 * theme
+	 */
+	theme: () => LocalizedString
 }
 
 export type Formatters = {}

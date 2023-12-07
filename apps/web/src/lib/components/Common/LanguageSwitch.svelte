@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setLocale, locale } from '$src/i18n/i18n-svelte';
-	import { Select } from 'flowbite-svelte';
+	import { Helper, Select } from 'flowbite-svelte';
 
 	const languageItems: [
 		{
@@ -25,6 +25,9 @@
 	let selected: (typeof languageItems)[number]['value'] = $locale;
 
 	$: setLocale(selected);
+
+	let className = '';
+	export { className as class };
 </script>
 
-<Select class="mt-2" items={languageItems} bind:value={selected} />
+<Select class={className} items={languageItems} bind:value={selected} />

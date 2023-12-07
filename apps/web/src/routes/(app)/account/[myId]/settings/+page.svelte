@@ -10,6 +10,8 @@
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import DarkMode from '$lib/components/Common/DarkMode.svelte';
 	import LanguageSwitch from '$lib/components/Common/LanguageSwitch.svelte';
+	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
+	import Center from '$lib/components/Common/Center.svelte';
 
 	let isLoading = false;
 
@@ -25,14 +27,33 @@
 		}
 		isLoading = false;
 	};
+
+	let items: [
+		{ id: 'language'; title: string },
+		{ id: 'theme'; title: string },
+		{ id: 'logOut'; title: string }
+	];
+	$: items = [
+		{ title: $LL.language(), id: 'language' },
+		{ title: $LL.theme(), id: 'theme' },
+		{ title: $LL.logOut(), id: 'logOut' }
+	];
 </script>
 
 {#if isLoading}
 	<FullPageLoading />
 {:else}
-	<Column class="w-full justify-center items-center h-full">
-		<LanguageSwitch />
-		<DarkMode />
-		<LogOutButton on:click={logOut} />
-	</Column>
+	<Center class="h-full w-full">
+		<ItemsLayout class="justify-center items-center" textClasses="w-full" let:id {items}>
+			{#if id === 'language'}
+				<LanguageSwitch class="w-min" />
+			{/if}
+			{#if id === 'theme'}
+				<DarkMode class="w-min" />
+			{/if}
+			{#if id === 'logOut'}
+				<LogOutButton on:click={logOut} />
+			{/if}
+		</ItemsLayout>
+	</Center>
 {/if}

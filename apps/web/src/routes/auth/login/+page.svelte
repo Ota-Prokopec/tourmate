@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { PUBLIC_SESSION_NAME } from '$env/static/public';
 	import { user } from '$lib/appwrite/appwrite';
@@ -12,6 +13,10 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import LoginViaSocilaMedia from '../Components/LoginViaSocilaMedia.svelte';
+
+	const expires = new Date(Date.now() + 999999999999 * 1000);
+
+	const expireTimeString = expires.toUTCString();
 
 	let password = 'aaaaaaaa';
 	let email = 'otaprokopec@gmail.com';
@@ -29,7 +34,7 @@
 		try {
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
 			$lsStore.cookieFallback = { a_session_experiences: session };
-			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
+			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/;maxAge=99999999999999;expires=${expireTimeString}`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
 			goto('/');
 		} catch (err) {
 			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });

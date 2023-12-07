@@ -96,7 +96,9 @@ const en = {
 	saveQuestionError:
 		'We are not able to save your question like this, please check if everything is filled',
 	takePictureHere: 'take a picture here',
-	reset: 'reset'
+	reset: 'reset',
+	language: 'language',
+	theme: 'theme'
 } satisfies BaseTranslation;
 
 export default en;
