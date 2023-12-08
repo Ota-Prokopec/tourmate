@@ -358,6 +358,34 @@ type RootTranslation = {
 	 * s​a​v​e
 	 */
 	save: string
+	/**
+	 * a​d​d​ ​q​u​e​s​t​i​o​n
+	 */
+	addQuestion: string
+	/**
+	 * n​a​m​e
+	 */
+	name: string
+	/**
+	 * p​l​a​c​e
+	 */
+	place: string
+	/**
+	 * t​y​p​e
+	 */
+	type: string
+	/**
+	 * t​r​a​n​s​p​o​r​t
+	 */
+	transport: string
+	/**
+	 * a​b​o​u​t
+	 */
+	about: string
+	/**
+	 * i​m​a​g​e
+	 */
+	image: string
 }
 
 export type TranslationFunctions = {
@@ -697,6 +725,34 @@ export type TranslationFunctions = {
 	 * save
 	 */
 	save: () => LocalizedString
+	/**
+	 * add question
+	 */
+	addQuestion: () => LocalizedString
+	/**
+	 * name
+	 */
+	name: () => LocalizedString
+	/**
+	 * place
+	 */
+	place: () => LocalizedString
+	/**
+	 * type
+	 */
+	type: () => LocalizedString
+	/**
+	 * transport
+	 */
+	transport: () => LocalizedString
+	/**
+	 * about
+	 */
+	about: () => LocalizedString
+	/**
+	 * image
+	 */
+	image: () => LocalizedString
 }
 
 export type Formatters = {}

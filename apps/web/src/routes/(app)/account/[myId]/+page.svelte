@@ -21,6 +21,7 @@
 	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
 	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
 	import EditProfileButton from './Components/EditProfileButton.svelte';
+	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 
 	export let data: PageData;
 
@@ -117,8 +118,8 @@
 			<CategoryPicker {categories} bind:chosenCategory={category} />
 
 			<Column class="gap-10 justify-center items-center">
-				{#if userProfile}
-					{#if category === 'experiences'}
+				{#if category === 'experiences'}
+					{#if userProfile}
 						{#if usersExperiences.length}
 							{#each usersExperiences as experience}
 								<ExperienceCardComponent {experience} />
@@ -129,20 +130,24 @@
 								<CreateYourFirstPicture />
 							{/if}
 						{/if}
-					{:else if category === 'monuments'}
-						{#if !usersMonuments}
-							<ExperienceCardSkeleton />
-							<ExperienceCardSkeleton />
-							<ExperienceCardSkeleton />
-						{:else if usersMonuments.length}
-							{#each usersMonuments as monument}
-								<MonumentCardComponent size="normal" {monument} />
-							{/each}
-						{:else}
-							<Skeleton divClass="w-full" />
-							{#if isMyAccount}
-								<CreateYourFirstMonumentButton />
-							{/if}
+					{:else}
+						<ExperienceCardSkeleton />
+						<ExperienceCardSkeleton />
+						<ExperienceCardSkeleton />
+					{/if}
+				{:else if category === 'monuments'}
+					{#if !usersMonuments}
+						<MonumentCardSkeleton size="normal" />
+						<MonumentCardSkeleton size="normal" />
+						<MonumentCardSkeleton size="normal" />
+					{:else if usersMonuments.length}
+						{#each usersMonuments as monument}
+							<MonumentCardComponent size="normal" {monument} />
+						{/each}
+					{:else}
+						<Skeleton divClass="w-full" />
+						{#if isMyAccount}
+							<CreateYourFirstMonumentButton />
 						{/if}
 					{/if}
 				{/if}

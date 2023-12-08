@@ -67,9 +67,9 @@
 
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 justify-start items-start">
 			{#if chosenCategory === 'monuments'}
-				<SearchMonuments {searchingText} />
+				<SearchMonuments limit={data.search.resultLimit} {searchingText} />
 			{:else if chosenCategory === 'places'}
-				<SearchPlaces {searchingLocation} />
+				<SearchPlaces limit={data.search.resultLimit} {searchingLocation} />
 			{:else if chosenCategory === 'users'}
 				<SearchUsers {searchingText} />
 			{/if}

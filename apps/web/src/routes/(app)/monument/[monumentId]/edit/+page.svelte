@@ -68,6 +68,7 @@
 
 {#if !res || error}
 	<MonumentCreateForm
+		class="mobile:!m-0"
 		{placeName}
 		location={data.monument.location}
 		bind:name
@@ -78,7 +79,7 @@
 	>
 		<svelte:fragment slot="image">
 			{#if picture}
-				<Img class="rounded-2xl" src={picture} />
+				<Img class="rounded-2xl mb-4" src={picture} />
 			{/if}
 		</svelte:fragment>
 
@@ -89,7 +90,7 @@
 				{#if isLoading}
 					<Loading />
 				{:else}
-					Uložil změny
+					{$LL.save()}
 				{/if}
 			</Button>
 		</Right>

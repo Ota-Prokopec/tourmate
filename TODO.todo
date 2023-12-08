@@ -7,28 +7,12 @@ errors
 
 errors: 
 {
-    Realtime změna fotky profile
-    Mobile darkmode stuck
-    Monument loading ať profile screens create your first nonument
-    Pictures already také does not work
-    AddMinument screen new monuments when pon moved
-    Create monument style responvively
     (main) page map load new monuments based on users location when ealking
-    Searching by place, the range is top big, ONLY around 2-3kms
-    Liking the own monument by clicking on the picture
-    Scanning range does not work
 }
 
 
 1) login too many times errors
-5) monument 50meters of each other
-6) user will be able to take a picture many and many times after answering the question correctly
-7) languages change
-!! when i delete a monument that has pictures connected, pictures will then be without a monument so i have to do that when i load exps the {monumnet: nullable(monument)}
-!!!when user not authed => on ssr tell him about it and reroute => /auth/login!! not only not loaded application
-8) search monuments pagination
 9) better languages
-10) upravit styly na telefon
 11) add topics and transports
 12) Terms And conditions
 

@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import type { Base64, Location } from '@app/ts-types';
+import { Locales } from '$src/i18n/i18n-types';
 
 export type Storage =
 	| {
@@ -9,6 +10,7 @@ export type Storage =
 			cookieFallback?: Record<'a_session_experiences', string>;
 			newExperiencePicture?: string | Base64;
 			'color-theme'?: 'light' | 'dark';
+			language?: Locales;
 	  } & Record<string, any>;
 
 const parseLocalStorageValue = (value: string) => {

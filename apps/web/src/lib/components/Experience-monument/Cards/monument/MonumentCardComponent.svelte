@@ -174,7 +174,12 @@
 			this={size === 'tiny' || size === 'small' ? Columns : Column}
 			columns="1fr 1fr"
 		>
-			<CardImage on:like={like} imgSrc={monument.pictureURL} />
+			<CardImage
+				on:like={() => {
+					if (!amIOwner && liked === 'unliked') like();
+				}}
+				imgSrc={monument.pictureURL}
+			/>
 			{#if size !== 'tiny'}
 				<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
 			{/if}
