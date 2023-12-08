@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
 	import OwnerOptions from '../OwnerOptions.svelte';
 	import { distanceTo } from 'geolocation-utils';
 	import LL from '$src/i18n/i18n-svelte';
@@ -18,31 +19,31 @@
 	import lsStore from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import { alert } from '$src/routes/alertStore';
-	import type { MonumentCard } from '@app/ts-types';
+	import type { MonumentCard, SmallMonumentCard } from '@app/ts-types';
 	import { getLocationUrlOfGoogleMaps, normalizeMeters } from '@app/utils';
 	import { Button, Modal } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import CardImage from '../CardImage.svelte';
-	import CardFooter from './CardFooter.svelte';
-	import CardHeader from './CardHeader.svelte';
+	import CardFooter from './MonumentCardFooter.svelte';
+	import CardHeader from './MonumentCardHeader.svelte';
 	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 
-	const isMonumentCard = (card: MonumentCard | TinyMonumentCard): card is MonumentCard => {
+	const isMonumentCard = (card: MonumentCard | SmallMonumentCard): card is MonumentCard => {
 		return 'liked' in monument;
 	};
-	const isTinyMonumentCard = (card: MonumentCard | TinyMonumentCard): card is TinyMonumentCard => {
+	const isTinyMonumentCard = (
+		card: MonumentCard | SmallMonumentCard
+	): card is SmallMonumentCard => {
 		return !('liked' in monument);
 	};
 
 	const usersLocation = $lsStore.usersLocation;
 
-	type TinyMonumentCard = Omit<MonumentCard, 'user' | 'likes' | 'liked' | 'question'>;
-
 	type T = $$Generic<'normal' | 'small' | 'tiny'>;
 
 	export let size: T;
 
-	export let monument: typeof size extends 'normal' ? MonumentCard : TinyMonumentCard;
+	export let monument: typeof size extends 'normal' ? MonumentCard : SmallMonumentCard;
 
 	let amIOwner: boolean | undefined =
 		'user' in monument ? monument.user.userId === $user?.$id : undefined;
@@ -51,8 +52,8 @@
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let dismissable = false;
-	let liked: boolean | 'pending' | undefined =
-		'liked' in monument ? (monument.liked ? true : false) : undefined;
+	let liked: LikeSectionState | undefined =
+		'liked' in monument ? (monument.liked ? 'liked' : 'unliked') : undefined;
 
 	export let distanceInMeters = usersLocation
 		? distanceTo(
@@ -70,30 +71,37 @@
 	const like = async () => {
 		if (!isMonumentCard(monument)) throw new Error('monument is not type of monument card');
 		if (!$user?.$id) throw new Error('user is not authed');
-		liked = 'pending';
+		liked = 'like-pending';
 		try {
 			const { likeMonument: doc } = await sdk.likeMonument({ monumentId: monument._id });
 			monument.liked = doc;
-			liked = true;
+			liked = 'liked';
 		} catch (error) {
-			liked = false;
-			alert('Error monument like', 'Your like was not recorded, please try it again.', {
+			liked = 'unliked';
+			alert($LL.likeErrorTitle(), $LL.likeErrorMessage(), {
 				color: 'red'
 			});
 			throw new Error('like monument error happend');
 		}
 	};
 	const unlike = async () => {
-		if (!isMonumentCard(monument)) throw new Error('monument is not type of monument card');
-		if (liked === 'pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
-		if (!$user?.$id) throw new Error('user is not authed');
-		liked = 'pending';
-		await collections.monumentLike.deleteDocument([
-			Queries.monumentLike.equal('monumentId', monument._id),
-			Queries.monumentLike.equal('userId', $user.$id)
-		]);
-		liked = false;
-		monument.liked = null;
+		try {
+			if (!isMonumentCard(monument)) throw new Error('monument is not type of monument card');
+
+			if (!$user?.$id) throw new Error('user is not authed');
+			liked = 'unlike-pending';
+			await collections.monumentLike.deleteDocument([
+				Queries.monumentLike.equal('monumentId', monument._id),
+				Queries.monumentLike.equal('userId', $user.$id)
+			]);
+			liked = 'unliked';
+			monument.liked = null;
+		} catch (error) {
+			alert($LL.removeLikeErrorTitle(), $LL.removeLikeErrorMessage(), {
+				color: 'red'
+			});
+			liked = 'liked';
+		}
 	};
 
 	let showModalDeleteDocument = false;
@@ -138,7 +146,7 @@
 	<Card
 		on:dismiss
 		{dismissable}
-		class={twMerge('relative justify-self-center gap-2 p-2', className)}
+		class={twMerge('relative justify-self-center gap-2 p-2 min-w-[350px] mobile:w-full', className)}
 	>
 		{#if size !== 'tiny'}
 			<Row class="justify-between">
@@ -203,12 +211,16 @@
 						on:click={() => goto(`/monument/${monument._id}`)}>{$LL.seeMore()}</Button
 					>
 				{/if}
-				<Row class="w-full h-auto justify-end p-2 gap-2">
-					<Text>{$LL.pictureAlreadyTaken()}</Text>
-					<Icon class="child:fill-green-500 child:w-4 child:h-4">
-						<IconCheck />
-					</Icon>
-				</Row>
+				{#if isMonumentCard(monument)}
+					{#if monument.usersConnectedExperiences.length}
+						<Row class="w-full h-auto justify-end p-2 gap-2">
+							<Text>{$LL.pictureAlreadyTaken()}</Text>
+							<Icon class="child:fill-green-500 child:w-4 child:h-4">
+								<IconCheck />
+							</Icon>
+						</Row>
+					{/if}
+				{/if}
 			</Column>
 		{/if}
 		<div class="w-full h-auto mt-2">

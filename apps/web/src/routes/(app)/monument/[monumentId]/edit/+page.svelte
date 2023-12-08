@@ -9,6 +9,7 @@
 		GraphqlDocument,
 		Location,
 		Monument,
+		MonumentMarkerData,
 		Question,
 		Topic
 	} from '@app/ts-types';
@@ -39,7 +40,7 @@
 	const question: Question<AnswerType> | undefined = data.monument.question ?? undefined;
 	let questionDrawerHidden = true;
 
-	let res: GraphqlDocument<Monument> | undefined;
+	let res: MonumentMarkerData | undefined;
 	let error: AppwriteException;
 	let isLoading = false;
 
@@ -95,7 +96,7 @@
 	</MonumentCreateForm>
 {/if}
 
-<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
+<Map center={data.monument.location} class="h-[100dvh] fixed top-0">
 	{#if res}
 		<MonumentMarker monument={res} />
 	{:else}

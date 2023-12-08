@@ -5,26 +5,24 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
+	import ExperienceCardSkeleton from '$lib/components/Experience-monument/Cards/experience/ExperienceCardSkeleton.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import type { Base64, ExperienceCard, MonumentCard } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import { Button, Skeleton } from 'flowbite-svelte';
+	import { Skeleton } from 'flowbite-svelte';
 	import type { PageData } from './$types';
-	import EditProfileButton from './Components/EditProfileButton.svelte';
-	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
 	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
 	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
-	import ExperienceCardSkeleton from '$lib/components/Experience-monument/Cards/experience/ExperienceCardSkeleton.svelte';
+	import EditProfileButton from './Components/EditProfileButton.svelte';
 
 	export let data: PageData;
-	let isLoading = false;
 
 	$: usersProfileQuery = useQuery('usersProfile', async () => {
 		return await sdk.getProfile({ myId: data.props.myId });
@@ -65,12 +63,10 @@
 
 	$: if (category === 'monuments' && !usersMonuments) {
 		if (!userProfile) throw new Error('userProfile is not defined');
-		isLoading = true;
 		sdk
 			.getListOfMonumentCards({ userId: userProfile.userId })
 			.then(({ getListOfMonuments: monuments }) => {
 				usersMonuments = monuments;
-				isLoading = false;
 			});
 	}
 </script>
@@ -133,20 +129,22 @@
 								<CreateYourFirstPicture />
 							{/if}
 						{/if}
-					{:else if usersMonuments?.length}
-						{#each usersMonuments as monument}
-							<MonumentCardComponent size="normal" {monument} />
-						{/each}
-					{:else}
-						<Skeleton divClass="w-full" />
-						{#if isMyAccount}
-							<CreateYourFirstMonumentButton />
+					{:else if category === 'monuments'}
+						{#if !usersMonuments}
+							<ExperienceCardSkeleton />
+							<ExperienceCardSkeleton />
+							<ExperienceCardSkeleton />
+						{:else if usersMonuments.length}
+							{#each usersMonuments as monument}
+								<MonumentCardComponent size="normal" {monument} />
+							{/each}
+						{:else}
+							<Skeleton divClass="w-full" />
+							{#if isMyAccount}
+								<CreateYourFirstMonumentButton />
+							{/if}
 						{/if}
 					{/if}
-				{:else}
-					<ExperienceCardSkeleton />
-					<ExperienceCardSkeleton />
-					<ExperienceCardSkeleton />
 				{/if}
 			</Column>
 		</Column>

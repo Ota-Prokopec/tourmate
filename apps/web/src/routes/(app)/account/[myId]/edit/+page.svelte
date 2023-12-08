@@ -12,6 +12,7 @@
 	import type { Base64 } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import type { PageData } from './$types';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -49,6 +50,7 @@
 			await collections.userInfo.updateDocument(data.userProfile._id, {
 				username: username
 			});
+			goto(`/account/${data.userProfile.myId}`);
 		} catch (error) {
 			alert($LL.updateProfileErrorTitle(), $LL.updateProfileErrorMessage(), { color: 'red' });
 		}
@@ -84,7 +86,7 @@
 				{#if isLoading}
 					<Loading />
 				{:else}
-					save
+					{$LL.save()}
 				{/if}
 			</Button>
 		</Column>

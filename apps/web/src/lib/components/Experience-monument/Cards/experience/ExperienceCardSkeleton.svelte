@@ -1,13 +1,11 @@
 <script lang="ts">
 	import Card from '$lib/components/Common/Card.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
+	import ImgSkeleton from '$lib/components/Common/ImgSkeleton.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
-	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
 	import UserInfoSkeleton from '$lib/components/User/UserItemSkeleton.svelte';
 	import { twMerge } from 'tailwind-merge';
 	import MonumentCardSkeleton from '../monument/MonumentCardSkeleton.svelte';
-	import Img from '$lib/components/Common/Img.svelte';
-	import ImgSkeleton from '$lib/components/Common/ImgSkeleton.svelte';
 
 	let className = '';
 	export { className as class };

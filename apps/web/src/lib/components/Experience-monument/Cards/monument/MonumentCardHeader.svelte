@@ -4,6 +4,7 @@
 	import Columns from '$lib/components/Common/Columns.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 
 	export let monument: { name: string; placeDetail: { name: string } };
 </script>
@@ -14,7 +15,9 @@
 	</Text>
 	<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
 		<Columns columns="min-content auto" class="gap-1">
-			<Icon icon="fas fa-map-marker-alt" class="text-xl " />
+			<Icon class="child:w-6 child:h-6">
+				<IconLocation />
+			</Icon>
 			<Text class="text-left">
 				{monument.placeDetail.name}
 			</Text>

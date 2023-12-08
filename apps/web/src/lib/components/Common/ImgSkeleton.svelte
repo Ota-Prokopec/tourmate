@@ -11,9 +11,7 @@
 		className
 	)}
 >
-	<div
-		class="flex justify-center items-center w-full h-full bg-gray-300 rounded sm:w-96 dark:bg-gray-700"
-	>
+	<div class="flex justify-center items-center w-full h-full bg-gray-300 rounded dark:bg-gray-700">
 		<svg
 			width="48"
 			height="48"

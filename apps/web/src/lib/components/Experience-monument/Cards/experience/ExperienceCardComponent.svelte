@@ -14,7 +14,7 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import OwnerOptions from '../OwnerOptions.svelte';
 	import MonumentCard from '../monument/MonumentCardComponent.svelte';
-	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import LikeSection from '$lib/components/LikeSection/LikeSection.svelte';
 	import LL from '$src/i18n/i18n-svelte';
 
 	export let experience: ExperienceCard;
