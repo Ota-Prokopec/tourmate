@@ -8,7 +8,7 @@
 	import lsStore from '$lib/utils/lsStore';
 	import mapTiler from '$lib/utils/mapTiler';
 	import { sdk } from '$src/graphql/sdk';
-	import type { Location } from '@app/ts-types';
+	import type { Location, MonumentMarkerData } from '@app/ts-types';
 	import { locationQueries } from '@app/utils';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { Alert, Button } from 'flowbite-svelte';
@@ -27,16 +27,22 @@
 
 	$: usersLocation = $lsStore.usersLocation;
 
-	const monuments = useQuery('monuments', async () => {
-		if (!usersLocation) throw new Error('users location is not available');
-		return await sdk.getListOfMonumentsForMap({
-			location: {
-				location: usersLocation
-			}
-		});
-	});
+	let monuments: MonumentMarkerData[] = [];
 
-	$: monumentsLoaded = $monuments.data && !$monuments.isLoading && !$monuments.isError;
+	const loadNewMonuments = async () => {
+		if (!markerLocation) throw new Error('markerLocation is not defined');
+		const newMonuments = (
+			await sdk.getListOfMonumentsForMap({
+				location: {
+					rangeMeters: 1000,
+					location: markerLocation
+				}
+			})
+		).getListOfMonuments;
+		monuments = [...monuments, ...newMonuments];
+	};
+
+	$: if (markerLocation && monuments.length === 0) loadNewMonuments();
 
 	$: marker =
 		map && location
@@ -51,6 +57,7 @@
 		if (!marker) throw new TypeError('Marker is undefined');
 		const lngLat = marker.getLngLat();
 		markerLocation = [lngLat.lat, lngLat.lng];
+		loadNewMonuments();
 	});
 
 	const next = async () => {
@@ -94,11 +101,9 @@
 		{/if}
 	</Alert>
 	<ExpMap bind:center={location} bind:map class="w-full h-full">
-		{#if monumentsLoaded && $monuments.data?.getListOfMonuments}
-			{#each $monuments.data?.getListOfMonuments as monument}
-				<MonumentMarker {monument} />
-			{/each}
-		{/if}
+		{#each monuments as monument}
+			<MonumentMarker {monument} />
+		{/each}
 	</ExpMap>
 
 	<Button

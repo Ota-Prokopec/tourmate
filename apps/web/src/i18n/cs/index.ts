@@ -100,7 +100,15 @@ const cz = {
 	you: 'ty',
 	pictureAlreadyTaken: 'picture already taken',
 	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments:
-		'You cant create monument here, because of distance between other monuments'
+		'You cant create monument here, because of distance between other monuments',
+	save: 'uložit',
+	addQuestion: 'add question',
+	name: 'name',
+	place: 'place',
+	type: 'type',
+	transport: 'transport',
+	about: 'about',
+	image: 'image'
 } satisfies BaseTranslation;
 
 export default cz;

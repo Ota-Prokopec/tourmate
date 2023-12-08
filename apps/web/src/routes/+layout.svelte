@@ -25,11 +25,14 @@
 	}
 
 	//darkmode-whitemode
-	$: if (mounted) {
+	onMount(() => {
+		const preferencedTheme = $lsStore['color-theme'];
 		const deviceTheme = getThemeInternalMode();
-		if ($lsStore['color-theme'] === 'dark' || deviceTheme === 'dark')
+
+		if (preferencedTheme === 'dark' || (!preferencedTheme && deviceTheme === 'dark')) {
 			document.documentElement.classList.add('dark');
-	}
+		}
+	});
 </script>
 
 <Alert

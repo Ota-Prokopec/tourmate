@@ -8,6 +8,7 @@
 	import TextArea from '$lib/components/Common/TextArea.svelte';
 	import Card from '$lib/components/Common/Card.svelte';
 	import { twMerge } from 'tailwind-merge';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let placeName: string;
 	export let location: Location;
@@ -22,7 +23,12 @@
 	export { className as class };
 </script>
 
-<Card class={twMerge('w-full h-min m-4 sm:absolute sm:left-0 z-10 p-2', className)}>
+<Card
+	class={twMerge(
+		'w-full h-min m-4 sm:absolute sm:left-0 z-10 p-2 flex flex-wrap flex-col gap-4',
+		className
+	)}
+>
 	<Icon icon="fas fa-map-marker-alt" class="text-3xl" />
 	<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 		{placeName}
@@ -33,12 +39,12 @@
 	<ItemsLayout
 		let:id
 		items={[
-			{ title: 'Name', id: 'name' },
-			{ title: 'place', id: 'place' },
-			{ title: 'typ', id: 'type' },
-			{ title: 'transport', id: 'transport' },
-			{ title: 'about', id: 'about' },
-			{ title: 'image', id: 'image' }
+			{ title: $LL.name(), id: 'name' },
+			{ title: $LL.place(), id: 'place' },
+			{ title: $LL.type(), id: 'type' },
+			{ title: $LL.transport(), id: 'transport' },
+			{ title: $LL.about(), id: 'about' },
+			{ title: $LL.image(), id: 'image' }
 		]}
 	>
 		{#if id === 'name'}

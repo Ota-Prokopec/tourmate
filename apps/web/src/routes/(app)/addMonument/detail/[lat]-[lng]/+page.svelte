@@ -87,6 +87,7 @@
 
 {#if !serverResponse}
 	<MonumentCreateForm
+		class="mobile:!m-0"
 		{placeName}
 		{location}
 		bind:name
@@ -97,7 +98,7 @@
 	>
 		<svelte:fragment slot="image">
 			<BasicImageInput
-				class="bg-cover w-full min-h-[300px]"
+				class="bg-cover w-full min-h-[300px] mb-4"
 				on:image={(e) => (image = e.detail.base64)}
 			/>
 		</svelte:fragment>

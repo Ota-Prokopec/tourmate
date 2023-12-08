@@ -102,7 +102,15 @@ const en = {
 	you: 'you',
 	pictureAlreadyTaken: 'picture already taken',
 	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments:
-		'You cant create monument here, because of distance between other monuments'
+		'You cant create monument here, because of distance between other monuments',
+	save: 'save',
+	addQuestion: 'add question',
+	name: 'name',
+	place: 'place',
+	type: 'type',
+	transport: 'transport',
+	about: 'about',
+	image: 'image'
 } satisfies BaseTranslation;
 
 export default en;

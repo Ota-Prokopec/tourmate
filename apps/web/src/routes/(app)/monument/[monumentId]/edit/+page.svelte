@@ -9,6 +9,7 @@
 		GraphqlDocument,
 		Location,
 		Monument,
+		MonumentMarkerData,
 		Question,
 		Topic
 	} from '@app/ts-types';
@@ -39,7 +40,7 @@
 	const question: Question<AnswerType> | undefined = data.monument.question ?? undefined;
 	let questionDrawerHidden = true;
 
-	let res: GraphqlDocument<Monument> | undefined;
+	let res: MonumentMarkerData | undefined;
 	let error: AppwriteException;
 	let isLoading = false;
 
@@ -67,6 +68,7 @@
 
 {#if !res || error}
 	<MonumentCreateForm
+		class="mobile:!m-0"
 		{placeName}
 		location={data.monument.location}
 		bind:name
@@ -77,7 +79,7 @@
 	>
 		<svelte:fragment slot="image">
 			{#if picture}
-				<Img class="rounded-2xl" src={picture} />
+				<Img class="rounded-2xl mb-4" src={picture} />
 			{/if}
 		</svelte:fragment>
 
@@ -88,14 +90,14 @@
 				{#if isLoading}
 					<Loading />
 				{:else}
-					Uložil změny
+					{$LL.save()}
 				{/if}
 			</Button>
 		</Right>
 	</MonumentCreateForm>
 {/if}
 
-<Map location={data.monument.location} class="h-[100dvh] fixed top-0">
+<Map center={data.monument.location} class="h-[100dvh] fixed top-0">
 	{#if res}
 		<MonumentMarker monument={res} />
 	{:else}

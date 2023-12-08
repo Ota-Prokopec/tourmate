@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Column from '$lib/components/Common/Column.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import UserItem from '$lib/components/User/UserItem.svelte';
@@ -23,7 +24,7 @@
 {:else if users?.length}
 	<Column class="gap-4">
 		{#each users as user}
-			<UserItem {user} />
+			<UserItem on:click={(e) => goto(`/account/${e.detail.myId}`)} {user} />
 		{/each}
 	</Column>
 {:else}

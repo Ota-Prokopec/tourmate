@@ -1,20 +1,21 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Column from '$lib/components/Common/Column.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
 	import LocationScanner from '$lib/components/Common/LocationScanner.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import IconPin from '$lib/components/Icons/IconPin.svelte';
 	import lsSvelte from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Location, MonumentCard } from '@app/ts-types';
-	import { distanceTo, getPrettyNumber, normalizeMeters } from '@app/utils';
+	import { distanceTo, normalizeMeters } from '@app/utils';
 	import Range from './Components/Range.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconPin from '$lib/components/Icons/IconPin.svelte';
-	import { goto } from '$app/navigation';
 
 	let monuments: MonumentCard[] | undefined;
 
 	let metersLimit = 8_000;
 	let range = 200;
+	const timeout = 4; // seconds
 
 	$: location = $lsSvelte.usersLocation;
 
@@ -29,7 +30,7 @@
 	) => {
 		const timeAllowesToCheck =
 			typeof timeWhenLastLoad !== 'undefined'
-				? timeWhenLastLoad / 1000 + 20 < Date.now() / 1000
+				? timeWhenLastLoad / 1000 + timeout < Date.now() / 1000
 				: true;
 
 		if (!timeAllowesToCheck) return;

@@ -2,7 +2,6 @@
 	import Range from '$lib/components/Common/Range.svelte';
 
 	export let max = 1000;
-	console.log(max);
 
 	export let value: number;
 	let range = value / 100;

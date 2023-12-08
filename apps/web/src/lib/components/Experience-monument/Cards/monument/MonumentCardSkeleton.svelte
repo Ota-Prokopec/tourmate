@@ -3,18 +3,18 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import ImgSkeleton from '$lib/components/Common/ImgSkeleton.svelte';
 	import Left from '$lib/components/Common/Left.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import IconShare from '$lib/components/Icons/IconShare.svelte';
 	import UserItemSkeleton from '$lib/components/User/UserItemSkeleton.svelte';
 	import LL from '$src/i18n/i18n-svelte';
-	import { Button, Img } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import OwnerOptions from '../OwnerOptions.svelte';
-	import ImgSkeleton from '$lib/components/Common/ImgSkeleton.svelte';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 
 	export let size: 'tiny' | 'small' | 'normal';
 
@@ -42,7 +42,7 @@
 	{/if}
 
 	<svelte:component this={size === 'tiny' || size === 'small' ? Columns : Column} columns="1fr 1fr">
-		<ImgSkeleton class="w-full h-[300px]" />
+		<ImgSkeleton class={twMerge('w-full', size === 'normal' && 'h-[350px]')} />
 		{#if size !== 'tiny'}
 			<Left class="pl-4">
 				<SkeletonLine class="w-[5rem]" />
@@ -53,7 +53,7 @@
 			<SkeletonLine class="w-[10rem]" />
 
 			<Row class="gap-1">
-				<Icon class="text-xl ">
+				<Icon class="child:w-6 child:h-6">
 					<IconLocation />
 				</Icon>
 				<SkeletonLine class="w-[10rem]  rounded-md" />

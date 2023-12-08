@@ -2,7 +2,7 @@
 	import ChooseFromIconsItem from '$lib/components/ChooseFromIcons/ChooseFromIconsItem.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import LikeSection from '$lib/components/LikeSection/LikeSection.svelte';
 	import Popover from '$lib/components/Common/Popover.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
@@ -14,10 +14,11 @@
 	import { createEventDispatcher } from 'svelte';
 	import { topics } from '../../topic/topics';
 	import { transports } from '../../transportType/transports';
+	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let monument: MonumentCard;
-	export let liked: boolean | 'pending';
+	export let liked: LikeSectionState;
 	export let amIOwner: boolean;
 	export let usersLocation: Location | undefined;
 </script>
@@ -28,7 +29,7 @@
 		on:like={() => dispatch('like')}
 		on:unlike={() => dispatch('unlike')}
 		data={{
-			liked: liked ? true : false,
+			liked: liked,
 			otherUsersThatLiked: monument.likes.map((l) => l.user)
 		}}
 	/>

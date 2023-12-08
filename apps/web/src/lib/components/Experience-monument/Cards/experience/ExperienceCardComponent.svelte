@@ -14,26 +14,30 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import OwnerOptions from '../OwnerOptions.svelte';
 	import MonumentCard from '../monument/MonumentCardComponent.svelte';
-	import LikeSection from '$lib/components/Common/LikeSection.svelte';
+	import LikeSection from '$lib/components/LikeSection/LikeSection.svelte';
 	import LL from '$src/i18n/i18n-svelte';
+	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
 
 	export let experience: ExperienceCard;
 
 	export let dismissable = false;
-	let liked: boolean | 'pending' = experience.liked ? true : false;
+
+	let liked: LikeSectionState | undefined =
+		'liked' in experience ? (experience.liked ? 'liked' : 'unliked') : undefined;
+
 	let isCardVisible = true;
 	let amIOwner: boolean | 'pending' =
 		$user === null ? 'pending' : experience.user.userId === $user.$id;
 
 	const like = async () => {
 		if (!$user?.$id) throw new Error('user is not authed');
-		liked = 'pending';
+		liked = 'like-pending';
 		try {
 			const { likeExperience: doc } = await sdk.likeExperience({ experienceId: experience._id });
 			experience.liked = doc;
-			liked = true;
+			liked = 'liked';
 		} catch (error) {
-			liked = false;
+			liked = 'unliked';
 			alert($LL.likeErrorTitle(), $LL.likeErrorMessage(), {
 				color: 'red'
 			});
@@ -42,16 +46,17 @@
 	};
 	const unlike = async () => {
 		try {
-			if (liked === 'pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
+			if (liked === 'like-pending') return; // dont continue, because i dont know what state it will be, either liked or not => the state is pending so it is fetching at this time, i will know result in a while
 			if (!$user?.$id) throw new Error('user is not authed');
-			liked = 'pending';
+			liked = 'unlike-pending';
 			await collections.experienceLike.deleteDocument([
 				Queries.experienceLike.equal('experienceId', experience._id),
 				Queries.experienceLike.equal('userId', $user.$id)
 			]);
-			liked = false;
+			liked = 'unliked';
 			experience.liked = null;
 		} catch (error) {
+			liked = 'liked';
 			alert($LL.removeLikeErrorTitle(), $LL.removeLikeErrorMessage(), { color: 'red' });
 		}
 	};
@@ -111,16 +116,18 @@
 			</Row>
 
 			<CardImage on:like={like} imgSrc={experience.pictureUrl}>
-				<LikeSection
-					class="absolute bottom-0 left-0 m-6"
-					ableToLike={!amIOwner}
-					on:like={like}
-					on:unlike={unlike}
-					data={{
-						liked: liked ? true : false,
-						otherUsersThatLiked: experience.likes.map((l) => l.user)
-					}}
-				/>
+				{#if typeof liked !== 'undefined'}
+					<LikeSection
+						class="absolute bottom-0 left-0 m-6"
+						ableToLike={!amIOwner}
+						on:like={like}
+						on:unlike={unlike}
+						data={{
+							liked: liked,
+							otherUsersThatLiked: experience.likes.map((l) => l.user)
+						}}
+					/>
+				{/if}
 			</CardImage>
 
 			{#if experience.connectedMonument}

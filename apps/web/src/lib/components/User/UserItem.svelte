@@ -6,7 +6,7 @@
 	import Row from '../Common/Row.svelte';
 	import Text from '../Common/Text.svelte';
 	import Column from '../Common/Column.svelte';
-	const dispatch = createEventDispatcher<{ click: { userId: string } }>();
+	const dispatch = createEventDispatcher<{ click: { userId: string; myId: string } }>();
 
 	export let user: UserInfo;
 	export let disableMyId = false;
@@ -17,7 +17,7 @@
 </script>
 
 <button
-	on:click={() => dispatch('click', { userId: user.userId })}
+	on:click={() => dispatch('click', { userId: user.userId, myId: user.myId })}
 	class={twMerge('flex items-center', className)}
 >
 	<Row class="gap-2 items-center justify-start">

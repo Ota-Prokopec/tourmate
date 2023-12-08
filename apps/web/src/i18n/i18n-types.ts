@@ -354,6 +354,38 @@ type RootTranslation = {
 	 * Y​o​u​ ​c​a​n​t​ ​c​r​e​a​t​e​ ​m​o​n​u​m​e​n​t​ ​h​e​r​e​,​ ​b​e​c​a​u​s​e​ ​o​f​ ​d​i​s​t​a​n​c​e​ ​b​e​t​w​e​e​n​ ​o​t​h​e​r​ ​m​o​n​u​m​e​n​t​s
 	 */
 	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments: string
+	/**
+	 * s​a​v​e
+	 */
+	save: string
+	/**
+	 * a​d​d​ ​q​u​e​s​t​i​o​n
+	 */
+	addQuestion: string
+	/**
+	 * n​a​m​e
+	 */
+	name: string
+	/**
+	 * p​l​a​c​e
+	 */
+	place: string
+	/**
+	 * t​y​p​e
+	 */
+	type: string
+	/**
+	 * t​r​a​n​s​p​o​r​t
+	 */
+	transport: string
+	/**
+	 * a​b​o​u​t
+	 */
+	about: string
+	/**
+	 * i​m​a​g​e
+	 */
+	image: string
 }
 
 export type TranslationFunctions = {
@@ -689,6 +721,38 @@ export type TranslationFunctions = {
 	 * You cant create monument here, because of distance between other monuments
 	 */
 	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments: () => LocalizedString
+	/**
+	 * save
+	 */
+	save: () => LocalizedString
+	/**
+	 * add question
+	 */
+	addQuestion: () => LocalizedString
+	/**
+	 * name
+	 */
+	name: () => LocalizedString
+	/**
+	 * place
+	 */
+	place: () => LocalizedString
+	/**
+	 * type
+	 */
+	type: () => LocalizedString
+	/**
+	 * transport
+	 */
+	transport: () => LocalizedString
+	/**
+	 * about
+	 */
+	about: () => LocalizedString
+	/**
+	 * image
+	 */
+	image: () => LocalizedString
 }
 
 export type Formatters = {}

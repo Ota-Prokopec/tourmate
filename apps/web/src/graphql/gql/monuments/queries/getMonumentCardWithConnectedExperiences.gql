@@ -119,6 +119,18 @@ query getMonumentCardWithConnectedExperiences($id: String!) {
 				experienceId
 			}
 		}
+		usersConnectedExperiences {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			pictureUrl
+			location
+			connectedMonumentId
+		}
 		questionId
 		question {
 			_createdAt
