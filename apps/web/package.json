@@ -75,6 +75,7 @@
 		"@app/image-svelte": "*",
 		"@app/ts-types": "*",
 		"@app/utils": "*",
+		"@app/settings": "*",
 		"@apollo/client": "^3.8.2",
 		"@cloudinary/url-gen": "^1.11.2",
 		"@lordicon/element": "^1.2.0",

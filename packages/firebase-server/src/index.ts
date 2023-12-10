@@ -6,13 +6,9 @@ import json from './firebasePrivateObject'
 
 if (!firebase.apps.length) {
 	const firebaseApp = initializeApp({
-		//FIXME: remove ts-ignore
-		//@ts-ignore
 		credential: admin.credential.cert(json),
 		projectId: process.env.FIREBASE_PROJECT_ID,
 	})
 }
 
-const notifications = Notifications()
-
-export { notifications }
+export const notifications = Notifications()

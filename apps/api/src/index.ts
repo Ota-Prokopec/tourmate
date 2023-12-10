@@ -4,10 +4,12 @@ import { context } from './context'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import { expressRouter } from './express-routes/router'
 
 export const server = new ApolloServer({ schema, context: context })
 //FIXME: this will be possible changed in the future
 const app = express()
+app.use('/apikey', expressRouter)
 
 const start = async () => {
 	await server.start()
