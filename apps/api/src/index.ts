@@ -27,6 +27,7 @@ app.use(
 	cors({
 		origin: [
 			clientHostName,
+			process.env.APPWRITE_ENDPOINT,
 			'https://experiences-web-lovat.vercel.app',
 			'https://studio.apollographql.com',
 			'https://sdz3jzhr-4444.euw.devtunnels.ms',
