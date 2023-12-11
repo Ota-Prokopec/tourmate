@@ -1,19 +1,18 @@
 const fetch = require('node-fetch');
 module.exports = async function (req, res) {
-	const serverUrl = req.variables.PRODUCTION_URL;
-	const apiKey = req.variables.EXPERIENCES_API_KEY;
+	const serverUrl = req.variable['SERVER_HOSTNAME'];
+	const apiKey = req.variables['EXPERIENCES_API_KEY'];
 	const eventData = JSON.parse(req.variables.APPWRITE_FUNCTION_EVENT_DATA);
 
-	fetch(`${serverUrl}/api/notification`, {
+	fetch(`${serverUrl}/apikey/notification/monument/send`, {
 		method: 'POST',
 		headers: {
-			apiKey: apiKey,
+			'experiences-api-key': apiKey,
 			'content-type': 'application/json'
 		},
 		body: JSON.stringify({
-			title: 'Byl přidán nový zážitek',
-			body: eventData.name,
-			image: eventData.pictureURL
+			monumentId: eventData.$id,
+			img: eventData.pictureURL
 		})
 	});
 
