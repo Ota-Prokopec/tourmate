@@ -9,7 +9,6 @@ import { expressRouter } from './express-routes/router'
 export const server = new ApolloServer({ schema, context: context })
 //FIXME: this will be possible changed in the future
 const app = express()
-app.use('/apikey', expressRouter)
 
 const start = async () => {
 	await server.start()
@@ -36,7 +35,9 @@ app.use(
 	}),
 )
 
+app.use(express.json())
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
+app.use('/apikey', expressRouter)
 
 start()
 

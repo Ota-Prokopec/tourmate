@@ -11,6 +11,7 @@ export * from './Experience';
 export * from './Likes';
 export * from './Location';
 export * from './Monument';
+export * from './Notifications';
 export * from './Others';
 export * from './PlaceDetails';
 export * from './Question';

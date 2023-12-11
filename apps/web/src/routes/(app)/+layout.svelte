@@ -16,7 +16,6 @@
 
 <script lang="ts">
 	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import FirebaseNotification from '$lib/components/Common/FirebaseNotification.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
 	import IconMap from '$lib/components/Icons/IconMap.svelte';
@@ -28,10 +27,9 @@
 	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
 	import { collections } from '../../lib/appwrite/appwrite';
 	import type { LayoutData } from './$types';
+	import Notification from '$lib/components/Notification/Notification.svelte';
 
 	export let data: LayoutData;
-
-	let foregroundNotification: MessagePayload | undefined;
 
 	$: browser &&
 		watchUsersLocation(
@@ -40,26 +38,6 @@
 			},
 			{ enableHighAccuracy: false }
 		);
-
-	onMount(async () => {
-		const { notifications } = await import('@app/firebase-client');
-		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
-			type: 'classic',
-			scope: '/'
-		});
-		const token = await notifications.initUser(data.user.userId, reg);
-		try {
-			await collections.token.createDocument(
-				{
-					userId: data.user.userId,
-					fcmFirebaseToken: token
-				},
-				permissions.owner(data.user.userId)
-			);
-		} catch (error) {}
-
-		notifications.watchNotifications((payload) => (foregroundNotification = payload));
-	});
 
 	const usernameSplited = data.user.username.split(' ');
 
@@ -78,7 +56,7 @@
 	});
 </script>
 
-<FirebaseNotification message={foregroundNotification} />
+<Notification userId={data.user.userId} />
 
 <div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
 	<div class="w-full h-[calc(100%-64px)] top-0 absolute overflow-scroll">

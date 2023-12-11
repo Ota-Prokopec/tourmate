@@ -110,7 +110,8 @@ const en = {
 	type: 'type',
 	transport: 'transport',
 	about: 'about',
-	image: 'image'
+	image: 'image',
+	newMonumentWasAdded: 'new monument was added'
 } satisfies BaseTranslation;
 
 export default en;

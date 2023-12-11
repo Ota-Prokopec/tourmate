@@ -2,7 +2,7 @@ export default {
 	type: 'service_account',
 	project_id: 'experiences-5dfad',
 	private_key_id: 'c439df885370569396149f4ea61a93e6ac8cde54',
-	private_key: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
+	private_key: JSON.parse(JSON.stringify({ p: process.env.FIREBASE_PRIVATE_KEY }))['p'],
 	client_email: 'firebase-adminsdk-xopyz@experiences-5dfad.iam.gserviceaccount.com',
 	client_id: '110119845593257399449',
 	auth_uri: 'https://accounts.google.com/o/oauth2/auth',
@@ -12,3 +12,5 @@ export default {
 		'https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-xopyz%40experiences-5dfad.iam.gserviceaccount.com',
 	universe_domain: 'googleapis.com',
 }
+
+console.log(process.env.FIREBASE_PRIVATE_KEY)

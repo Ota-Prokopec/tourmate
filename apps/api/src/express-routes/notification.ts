@@ -5,24 +5,32 @@ import { cacheName } from '@app/settings'
 import { z } from 'zod'
 
 const zodValidationInput = z.object({
-	body: z.string(),
+	monumentId: z.string(),
 	title: z.string(),
+	body: z.string(),
 	img: z.string().optional(),
 })
 
 export const notificationRouter = Router()
 
-notificationRouter.post('/send', async (req, res) => {
+notificationRouter.post('/monument/send', async (req, res) => {
 	const { collections } = appwrite.setAdmin()
-	const { title, body, img } = zodValidationInput.parse(req.body)
+
+	const { title, monumentId, body, img } = zodValidationInput.parse(req.body)
 
 	const FPBTokens = (await collections.token.listDocuments()).documents.map(
 		(document) => document.fcmFirebaseToken,
 	)
 
-	const notificationsResponse = await notifications.create(
+	if (FPBTokens.length === 0) {
+		res.json({ status: 'ok', successCount: 0 })
+		return
+	}
+
+	const notificationsResponse = await notifications.create<'newMonument'>(
 		{
 			body: body,
+			data: { type: 'newMonument', monumentId: monumentId },
 			title: title,
 			icon: `${cacheName}/icon.png`,
 			imageUrl: img,
@@ -31,8 +39,6 @@ notificationRouter.post('/send', async (req, res) => {
 	)
 
 	if (notificationsResponse.failureCount !== 0)
-		throw new Error(
-			`messaging failed with number of failed messages: ${notificationsResponse.failureCount}`,
-		)
-	else res.json({ status: 'ok' })
+		res.json({ status: 'failed', successCount: notificationsResponse.successCount })
+	else res.json({ status: 'ok', successCount: notificationsResponse.successCount })
 })

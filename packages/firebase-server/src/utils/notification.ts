@@ -1,23 +1,25 @@
-import type { App } from 'firebase-admin/app'
+import { NotificationBodyPayload } from '@app/ts-types'
 import * as messaging from 'firebase-admin/messaging'
-import { link } from 'fs'
+import type { NotificationType } from '@app/ts-types'
 
 export default () => {
 	const notifications = messaging.getMessaging()
 
-	const createNotification = async (
+	const createNotification = async <Type extends NotificationType>(
 		{
 			title,
 			body,
 			imageUrl,
 			icon,
 			color,
+			data,
 			clickAction,
 			visibility,
 			redirectionLink,
 		}: {
 			title?: string
 			body?: string
+			data?: NotificationBodyPayload<Type>
 			imageUrl?: string
 			icon?: string
 			color?: string
@@ -32,10 +34,13 @@ export default () => {
 			body: body,
 			imageUrl: imageUrl,
 		}
+		console.log(data)
 
 		const message: messaging.MulticastMessage = {
 			notification: notification,
+			/*
 			android: {
+				data: data as unknown as { [key: string]: string }, //FIXME: THIS is really bad way to do it
 				notification: {
 					...notification,
 					icon: icon,
@@ -49,9 +54,12 @@ export default () => {
 				fcmOptions: {
 					imageUrl: imageUrl,
 				},
+
 				payload: { aps: { alert: notification } },
 			},
+			*/
 			webpush: {
+				data: data as unknown as { [key: string]: string }, //FIXME: THIS is really bad way to do it
 				notification: notification,
 				fcmOptions: { link: redirectionLink },
 			},
