@@ -386,6 +386,10 @@ type RootTranslation = {
 	 * i​m​a​g​e
 	 */
 	image: string
+	/**
+	 * n​e​w​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​a​d​d​e​d
+	 */
+	newMonumentWasAdded: string
 }
 
 export type TranslationFunctions = {
@@ -753,6 +757,10 @@ export type TranslationFunctions = {
 	 * image
 	 */
 	image: () => LocalizedString
+	/**
+	 * new monument was added
+	 */
+	newMonumentWasAdded: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -3,12 +3,13 @@ import { browser } from '$app/environment';
 import type { Base64, Location } from '@app/ts-types';
 import { Locales } from '$src/i18n/i18n-types';
 
-export type Storage =
+export type Data =
 	| {
 			usersLocation?: Location;
 			user?: { username: string; myId: string };
 			cookieFallback?: Record<'a_session_experiences', string>;
 			newExperiencePicture?: string | Base64;
+			alreadyHasNotificationToken?: boolean;
 			'color-theme'?: 'light' | 'dark';
 			language?: Locales;
 	  } & Record<string, any>;
@@ -21,7 +22,7 @@ const parseLocalStorageValue = (value: string) => {
 	}
 };
 
-const storage: Storage = !browser
+const data: Data = !browser
 	? {}
 	: Object.entries<string>(localStorage)
 			.map(([key, value]) => [key, parseLocalStorageValue(value)] as [keyof Storage, any])
@@ -30,9 +31,9 @@ const storage: Storage = !browser
 				return res;
 			}, {} as Storage);
 
-const store = writable(storage);
+export const lsStore = writable(data);
 
-store.subscribe((storeValue) => {
+lsStore.subscribe((storeValue) => {
 	if (!browser) return;
 
 	for (const key of Object.keys(storeValue)) {
@@ -41,9 +42,18 @@ store.subscribe((storeValue) => {
 	}
 });
 
-export const lsStore = store;
-
-export default store;
+export default lsStore;
 export const typedStore = <Type>() => {
-	return writable<Type>(storage as Type);
+	return writable<Type>(data as Type);
 };
+
+export const storage = new Proxy(data, {
+	get: (target, prop, receiver) => {
+		return localStorage.getItem(prop.toString());
+	},
+	set: (target, prop, value, receiver) => {
+		lsStore.update((currentData) => ({ ...currentData, [prop.toString()]: value }));
+		localStorage.setItem(prop.toString(), value);
+		return true;
+	}
+});

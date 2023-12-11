@@ -148,6 +148,7 @@
 		{dismissable}
 		class={twMerge('relative justify-self-center gap-2 p-2 min-w-[350px] mobile:w-full', className)}
 	>
+		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
 			<Row class="justify-between">
 				{#if isMonumentCard(monument)}

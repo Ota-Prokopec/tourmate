@@ -4,6 +4,7 @@ import { context } from './context'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import { expressRouter } from './express-routes/router'
 
 export const server = new ApolloServer({ schema, context: context })
 //FIXME: this will be possible changed in the future
@@ -26,6 +27,7 @@ app.use(
 	cors({
 		origin: [
 			clientHostName,
+			process.env.APPWRITE_ENDPOINT,
 			'https://experiences-web-lovat.vercel.app',
 			'https://studio.apollographql.com',
 			'https://sdz3jzhr-4444.euw.devtunnels.ms',
@@ -34,7 +36,9 @@ app.use(
 	}),
 )
 
+app.use(express.json())
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
+app.use('/apikey', expressRouter)
 
 start()
 

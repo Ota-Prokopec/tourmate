@@ -2,17 +2,18 @@ import { initializeApp } from 'firebase-admin/app'
 import Notifications from './utils/notification'
 import admin from 'firebase-admin'
 import firebase from 'firebase-admin'
-import json from './firebasePrivateObject'
+
+const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/gm, '\n')
 
 if (!firebase.apps.length) {
 	const firebaseApp = initializeApp({
-		//FIXME: remove ts-ignore
-		//@ts-ignore
-		credential: admin.credential.cert(json),
+		credential: admin.credential.cert({
+			clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+			privateKey: privateKey,
+			projectId: process.env.FIREBASE_PROJECT_ID,
+		}),
 		projectId: process.env.FIREBASE_PROJECT_ID,
 	})
 }
 
-const notifications = Notifications()
-
-export { notifications }
+export const notifications = Notifications()

@@ -1,8 +1,6 @@
 import { FirebaseApp } from 'firebase/app'
 import * as messaging from 'firebase/messaging'
 
-import * as permissions from '@app/appwrite-permissions'
-
 export default (firebase: FirebaseApp, vapidKey: string) => {
 	const notifications = messaging.getMessaging(firebase)
 

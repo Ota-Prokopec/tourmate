@@ -14,4 +14,11 @@ export const load: LayoutLoad = async (event) => {
 			setLocale(language);
 		}
 	}
+
+	// service-worker registration
+	if (browser) {
+		const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+			scope: '/'
+		});
+	}
 };

@@ -17,7 +17,7 @@ export type UserInfoDocumentCreate = Omit<UserInfo, 'profilePictureURL'> & {
 
 export type Token = {
 	userId: string
-	fcmFirebaseToken?: string | null | undefined
+	fcmFirebaseToken: string
 }
 
 export type TokenDocument = Document<Token>

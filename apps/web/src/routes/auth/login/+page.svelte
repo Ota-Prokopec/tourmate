@@ -18,7 +18,7 @@
 
 	const expireTimeString = expires.toUTCString();
 
-	let password = 'aaaaaaaa';
+	let password = '';
 	let email = 'otaprokopec@gmail.com';
 	let loading = false;
 

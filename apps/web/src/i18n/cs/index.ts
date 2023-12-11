@@ -108,7 +108,8 @@ const cz = {
 	type: 'type',
 	transport: 'transport',
 	about: 'about',
-	image: 'image'
+	image: 'image',
+	newMonumentWasAdded: 'new monument was added'
 } satisfies BaseTranslation;
 
 export default cz;

@@ -22,6 +22,8 @@
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/cloudinary-server": "*",
 		"@app/utils": "*",
+		"@app/settings": "*",
+		"@app/firebase-server": "*",
 		"@types/cookie-parser": "^1.4.3",
 		"apollo-server-express": "^3.12.1",
 		"appwrite": "^13.0.0",
