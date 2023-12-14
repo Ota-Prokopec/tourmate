@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { notificationRouter } from './notification'
+import { notificationRouter } from './createMonumentNotification'
 
 export const expressRouter = Router()
 

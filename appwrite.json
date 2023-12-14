@@ -5,7 +5,7 @@
 		{
 			"$id": "monumentCreateNotifications",
 			"name": "monumentCreateNotifications",
-			"runtime": "node-16.0",
+			"runtime": "node-18.0",
 			"path": "functions/monumentCreateNotifications",
 			"entrypoint": "src/index.js",
 			"ignore": ["node_modules", ".npm"],

@@ -6,7 +6,8 @@ import { z } from 'zod'
 
 const zodValidationInput = z.object({
 	monumentId: z.string(),
-	img: z.string().optional(),
+	img: z.string(),
+	monumentName: z.string(),
 })
 
 export const notificationRouter = Router()
@@ -14,7 +15,7 @@ export const notificationRouter = Router()
 notificationRouter.post('/monument/send', async (req, res) => {
 	const { collections } = appwrite.setAdmin()
 
-	const { monumentId, img } = zodValidationInput.parse(req.body)
+	const { monumentId, img, monumentName } = zodValidationInput.parse(req.body)
 
 	const FPBTokens = (await collections.token.listDocuments()).documents.map(
 		(document) => document.fcmFirebaseToken,
@@ -25,11 +26,19 @@ notificationRouter.post('/monument/send', async (req, res) => {
 		return
 	}
 
-	const notificationsResponse = await notifications.create<'newMonument'>(
+	const notificationsResponse = await notifications.create(
 		{
-			data: { type: 'newMonument', monumentId: monumentId },
+			data: {
+				type: 'newMonument',
+				monumentId: monumentId,
+				img,
+				monumentName: monumentName,
+			},
 			icon: `${cacheName}/icon.png`,
 			imageUrl: img,
+			clickAction: `${process.env.CLIENT_HOSTNAME}/monument/${monumentId}`,
+			visibility: 'public',
+			redirectionLink: `${process.env.CLIENT_HOSTNAME}/monument/${monumentId}`,
 		},
 		FPBTokens,
 	)

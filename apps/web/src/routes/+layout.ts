@@ -11,8 +11,9 @@ export const load: LayoutLoad = async (event) => {
 	if (browser) {
 		const { language } = get(lsStore);
 		if (language) {
-			setLocale(language);
+			setLocale(language); //set the users locale language
 		}
+		setLocale('en'); //set the default language
 	}
 
 	// service-worker registration

@@ -39,6 +39,13 @@ export default () => {
 		const message: messaging.MulticastMessage = {
 			notification: notification,
 			/*
+			
+			*/
+			webpush: {
+				data: data as unknown as { [key: string]: string }, //FIXME: THIS is really bad way to do it
+				notification: notification,
+				fcmOptions: { link: redirectionLink },
+			},
 			android: {
 				data: data as unknown as { [key: string]: string }, //FIXME: THIS is really bad way to do it
 				notification: {
@@ -56,12 +63,6 @@ export default () => {
 				},
 
 				payload: { aps: { alert: notification } },
-			},
-			*/
-			webpush: {
-				data: data as unknown as { [key: string]: string }, //FIXME: THIS is really bad way to do it
-				notification: notification,
-				fcmOptions: { link: redirectionLink },
 			},
 			tokens: tokens,
 		}
