@@ -16,6 +16,7 @@ type Account {
 
   """This is URL of profile picture. Not its id."""
   profilePictureURL: URL!
+  secondsFromUserCreatedToNow: Float!
   status: Boolean!
   userId: String!
   username: String!

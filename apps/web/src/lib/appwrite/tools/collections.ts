@@ -4,6 +4,8 @@ import {
 	ExperienceDocumentCreate,
 	ExperienceLikeDocument,
 	ExperienceLikeDocumentCreate,
+	LocationForNotificationsDocument,
+	LocationForNotificationsDocumentCreate,
 	MonumentDocument,
 	MonumentDocumentCreate,
 	MonumentLikeDocument,
@@ -36,6 +38,10 @@ export default (Collection: Types.Appwrite['Collection']) => {
 		experienceLike: new Collection<ExperienceLikeDocument, ExperienceLikeDocumentCreate>(
 			'experiences',
 			'experience-likes'
-		)
+		),
+		locationForNotificaiton: new Collection<
+			LocationForNotificationsDocument,
+			LocationForNotificationsDocumentCreate
+		>('experiences', 'locationForNotificaitons')
 	};
 };

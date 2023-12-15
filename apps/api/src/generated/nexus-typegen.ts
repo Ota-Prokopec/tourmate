@@ -104,6 +104,7 @@ export interface NexusGenObjects {
     phoneVerification: boolean; // Boolean!
     prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
     profilePictureURL: NexusGenScalars['URL']; // URL!
+    secondsFromUserCreatedToNow: number; // Float!
     status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
@@ -227,6 +228,7 @@ export interface NexusGenFieldTypes {
     phoneVerification: boolean; // Boolean!
     prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
     profilePictureURL: NexusGenScalars['URL']; // URL!
+    secondsFromUserCreatedToNow: number; // Float!
     status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
@@ -377,6 +379,7 @@ export interface NexusGenFieldTypeNames {
     phoneVerification: 'Boolean'
     prefs: 'UsersPreferences'
     profilePictureURL: 'URL'
+    secondsFromUserCreatedToNow: 'Float'
     status: 'Boolean'
     userId: 'String'
     username: 'String'

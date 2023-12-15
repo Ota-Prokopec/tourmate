@@ -110,7 +110,9 @@ const cz = {
 	about: 'about',
 	image: 'image',
 	newMonumentWasAdded: 'new monument was added',
-	chooseYourLocationForNotifications: 'choose your location for notifications'
+	chooseYourLocationForNotifications: 'choose your location for notifications',
+	notificaionsLocation: 'notificaions location',
+	change: 'change'
 } satisfies BaseTranslation;
 
 export default cz;

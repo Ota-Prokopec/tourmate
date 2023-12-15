@@ -394,6 +394,14 @@ type RootTranslation = {
 	 * c​h​o​o​s​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
 	 */
 	chooseYourLocationForNotifications: string
+	/**
+	 * n​o​t​i​f​i​c​a​i​o​n​s​ ​l​o​c​a​t​i​o​n
+	 */
+	notificaionsLocation: string
+	/**
+	 * c​h​a​n​g​e
+	 */
+	change: string
 }
 
 export type TranslationFunctions = {
@@ -769,6 +777,14 @@ export type TranslationFunctions = {
 	 * choose your location for notifications
 	 */
 	chooseYourLocationForNotifications: () => LocalizedString
+	/**
+	 * notificaions location
+	 */
+	notificaionsLocation: () => LocalizedString
+	/**
+	 * change
+	 */
+	change: () => LocalizedString
 }
 
 export type Formatters = {}

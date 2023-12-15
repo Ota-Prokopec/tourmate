@@ -29,7 +29,7 @@
 			if (!account) {
 				throw new Error('It was not successful to create your account');
 			}
-			goto('/auth/setLocationForNotification');
+			goto(`/account/${user.$id}/setlocationfornotifications`);
 		} catch (error) {
 			if (error instanceof Error)
 				alert('Error', `please share this with the support: [${error.message}]`, {

@@ -13,6 +13,7 @@ export default objectType({
 		t.string('userId')
 		t.string('myId')
 		t.string('username')
+		t.float('secondsFromUserCreatedToNow')
 		t.boolean('status')
 		t.boolean('emailVerification')
 		t.boolean('phoneVerification')

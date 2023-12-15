@@ -19,8 +19,6 @@
 
 	const queryClient = new QueryClient();
 
-	$: console.log($page.route.id);
-
 	//client-side appwrite local-storage session loggin out
 	$: if (mounted && !$userIsLoading && $user === null && !$page.route.id?.startsWith('/auth/')) {
 		goto('/auth/login');

@@ -42,6 +42,7 @@ export type Account = {
   prefs: UsersPreferences;
   /** This is URL of profile picture. Not its id. */
   profilePictureURL: Scalars['URL']['output'];
+  secondsFromUserCreatedToNow: Scalars['Int']['output'];
   status: Scalars['Boolean']['output'];
   userId: Scalars['String']['output'];
   username: Scalars['String']['output'];
@@ -344,7 +345,7 @@ export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __type
 export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, _createdAt: string, secondsFromUserCreatedToNow: number, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
 export type GetListOfUsersBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
@@ -538,6 +539,8 @@ export const GetAccountDoc = gql`
     query getAccount {
   getAccount {
     _documentId
+    _createdAt
+    secondsFromUserCreatedToNow
     userId
     myId
     username

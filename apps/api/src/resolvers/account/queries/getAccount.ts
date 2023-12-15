@@ -12,7 +12,17 @@ export default queryField('getAccount', {
 
 		const userInfo = await getUser(ctx.user.$id, collections)
 
+		console.log(userInfo._createdAt)
+
+		const miliProfileCreated = new Date(userInfo._createdAt).getTime() //time from ever to moment when user created the profile
+
+		const miliNow = new Date().getTime() //time from ever to now
+		console.log(miliProfileCreated)
+
+		const secondsFromUserCreatedToNow = (miliNow - miliProfileCreated) / 1000
+
 		return {
+			secondsFromUserCreatedToNow: secondsFromUserCreatedToNow,
 			...omit(userInfo, '_id'),
 			...pick(ctx.user, 'emailVerification', 'status', 'phoneVerification', 'prefs'),
 			_documentId: userInfo._id,

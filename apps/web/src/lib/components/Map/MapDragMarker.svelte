@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ExpMap from '$lib/components/Map/Map.svelte';
 	import type { Location } from '@app/ts-types';
-	import maplibregl, { type Map } from 'maplibre-gl';
+	import maplibregl, { Marker, type Map } from 'maplibre-gl';
 	import Alert from '../Alert/Alert.svelte';
 	import Text from '../Common/Text.svelte';
 	import Icon from '../Common/Icon.svelte';
@@ -15,7 +15,13 @@
 	export let center: Location | undefined = undefined;
 	export let map: Map | undefined = undefined;
 	export let markerLocation: Location | undefined = center;
-	export let marker;
+	export let marker: Marker | undefined = undefined;
+	export let markerClassNames = '';
+	export let zoom: number = 14;
+	export let minZoom: number | undefined = undefined;
+	export let maxZoom: number | undefined = undefined;
+	export let markerElement: HTMLElement | undefined = undefined;
+	$: markerElement = marker?.getElement();
 
 	$: marker =
 		map && center
@@ -23,6 +29,8 @@
 					.setLngLat({ lat: center[0], lng: center[1] })
 					.addTo(map)
 			: undefined;
+
+	$: if (marker) markerClassNames.split(' ').map((className) => marker?.addClassName(className));
 
 	$: marker?.addClassName('z-50');
 
@@ -59,6 +67,9 @@
 		{/if}
 	</Alert>
 	<ExpMap
+		{minZoom}
+		{maxZoom}
+		bind:zoom
 		on:load={(e) => {
 			const { lat, lng } = e.detail.getCenter();
 			load([lat, lng]);
