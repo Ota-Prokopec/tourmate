@@ -111,7 +111,8 @@ const en = {
 	transport: 'transport',
 	about: 'about',
 	image: 'image',
-	newMonumentWasAdded: 'new monument was added'
+	newMonumentWasAdded: 'new monument was added',
+	chooseYourLocationForNotifications: 'choose your location for notifications'
 } satisfies BaseTranslation;
 
 export default en;

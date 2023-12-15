@@ -36,9 +36,7 @@
 				if (!account) throw new Error('It was not successful to create your account');
 			}
 
-			// go to main page
-
-			goto('/');
+			goto('/auth/setLocationForNotification');
 		} catch (error) {
 			if (error instanceof Error) errMessage = error.message;
 		}

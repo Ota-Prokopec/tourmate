@@ -12,6 +12,7 @@ export const load: ServerLoad = async (event) => {
 		if (event.url.href?.includes('auth')) {
 			return { user: null };
 		}
+		console.log(error);
 
 		throw redirect(307, '/auth/login');
 	}

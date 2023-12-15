@@ -36,6 +36,7 @@
 			on:zoom={(e) => {
 				zoom = e.detail.map.getZoom();
 			}}
+			on:load
 		>
 			<GeolocateControl
 				position="top-left"

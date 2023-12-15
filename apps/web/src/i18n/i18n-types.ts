@@ -390,6 +390,10 @@ type RootTranslation = {
 	 * n​e​w​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​a​d​d​e​d
 	 */
 	newMonumentWasAdded: string
+	/**
+	 * c​h​o​o​s​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+	 */
+	chooseYourLocationForNotifications: string
 }
 
 export type TranslationFunctions = {
@@ -761,6 +765,10 @@ export type TranslationFunctions = {
 	 * new monument was added
 	 */
 	newMonumentWasAdded: () => LocalizedString
+	/**
+	 * choose your location for notifications
+	 */
+	chooseYourLocationForNotifications: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -18,10 +18,11 @@
 	import { collections } from '$lib/appwrite/appwrite';
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
+	import Full from '$lib/components/Common/Full.svelte';
+	import MapDragMarker from '$lib/components/Map/MapDragMarker.svelte';
 
 	export let data: PageData;
 
-	let map: Map;
 	let location: Location | undefined;
 	$: markerLocation = location;
 
@@ -42,23 +43,7 @@
 		monuments = [...monuments, ...newMonuments];
 	};
 
-	$: if (markerLocation && monuments.length === 0) loadNewMonuments();
-
-	$: marker =
-		map && location
-			? new maplibregl.Marker({ draggable: true })
-					.setLngLat({ lat: location[0], lng: location[1] })
-					.addTo(map)
-			: undefined;
-
-	$: marker?.addClassName('z-50');
-
-	$: marker?.on('dragend', () => {
-		if (!marker) throw new TypeError('Marker is undefined');
-		const lngLat = marker.getLngLat();
-		markerLocation = [lngLat.lat, lngLat.lng];
-		loadNewMonuments();
-	});
+	$: if (markerLocation && monuments.length === 0) loadNewMonuments(); //first load
 
 	const next = async () => {
 		try {
@@ -74,11 +59,6 @@
 		}
 	};
 
-	$: positionDetails = useQuery('positionDetails', async () => {
-		if (!markerLocation) throw TypeError('markerLocation is not defined'); //this will probably throw on server
-		return (await mapTiler.reverseGeocoding(...markerLocation, { limit: 4 })).at(0);
-	});
-
 	const isItOkToCreateMonumentHere = async () => {
 		if (!markerLocation) throw TypeError('markerLocation is not defined');
 		const queries = locationQueries(markerLocation, data.twoMonumentsMinimalDistance); // / because it searches around so r = 50meters
@@ -87,24 +67,12 @@
 	};
 </script>
 
-<div class="w-[100dvw] h-[100dvh]">
-	<Alert class="absolute m-2 z-50 pl-5 pr-5 flex flex-wrap flex-col gap-0" color="dark">
-		{#if $positionDetails.isLoading || !markerLocation}
-			<SyncLoader color="black" size={30} />
-		{:else}
-			<div class="flex flex-wrap flex-row gap-4 mb-2">
-				<Icon icon="fas fa-map-marker-alt" class="text-2xl text-red-500" />
-				{$positionDetails.data?.place_name}
-			</div>
-			<Text>lat: {markerLocation[0]}</Text>
-			<Text>lng: {markerLocation[1]}</Text>
-		{/if}
-	</Alert>
-	<ExpMap bind:center={location} bind:map class="w-full h-full">
+<Full>
+	<MapDragMarker on:drag={loadNewMonuments} bind:markerLocation>
 		{#each monuments as monument}
 			<MonumentMarker {monument} />
 		{/each}
-	</ExpMap>
+	</MapDragMarker>
 
 	<Button
 		class="absolute bottom-0 right-0 mb-24 mr-4 flex flex-wrap flex-row gap-2"
@@ -116,4 +84,4 @@
 			<IconNext class="w-10 text-white" />
 		</Icon>
 	</Button>
-</div>
+</Full>
