@@ -114,7 +114,10 @@ const en = {
 	newMonumentWasAdded: 'new monument was added',
 	chooseYourLocationForNotifications: 'choose your location for notifications',
 	notificaionsLocation: 'notificaions location',
-	change: 'change'
+	change: 'change',
+	cancel: 'cancel',
+	yourLocationIsCurrently_InRangeOf:
+		'your location is currently {location: [number, number]} of range {range: string}'
 } satisfies BaseTranslation;
 
 export default en;

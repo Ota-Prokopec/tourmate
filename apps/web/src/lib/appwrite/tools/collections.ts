@@ -39,9 +39,9 @@ export default (Collection: Types.Appwrite['Collection']) => {
 			'experiences',
 			'experience-likes'
 		),
-		locationForNotificaiton: new Collection<
+		locationForNotification: new Collection<
 			LocationForNotificationsDocument,
 			LocationForNotificationsDocumentCreate
-		>('experiences', 'locationForNotificaitons')
+		>('experiences', 'locationForNotifications')
 	};
 };

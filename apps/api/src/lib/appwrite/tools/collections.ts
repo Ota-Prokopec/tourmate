@@ -88,10 +88,10 @@ export const collectionsClient = (
 			'experiences',
 			'usersAnswers',
 		),
-		locationForNotificaiton: new Collection<
+		locationForNotification: new Collection<
 			LocationForNotificationsGraphqlDocument,
 			LocationForNotificationsDocumentCreate
-		>('experiences', 'locationForNotificaitons'),
+		>('experiences', 'locationForNotifications'),
 	}
 }
 
@@ -147,9 +147,9 @@ export const collectionsAdmin = (
 			'experiences',
 			'usersAnswers',
 		),
-		locationForNotificaiton: new Collection<
+		locationForNotification: new Collection<
 			LocationForNotificationsGraphqlDocument,
 			LocationForNotificationsDocumentCreate
-		>('experiences', 'locationForNotificaitons'),
+		>('experiences', 'locationForNotifications'),
 	}
 }

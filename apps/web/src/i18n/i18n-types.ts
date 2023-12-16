@@ -2,6 +2,8 @@
 /* eslint-disable */
 import type { BaseTranslation as BaseTranslationType, LocalizedString, RequiredParams } from 'typesafe-i18n'
 
+import type { [number, number] } from './custom-types'
+
 export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
@@ -402,6 +404,16 @@ type RootTranslation = {
 	 * c​h​a​n​g​e
 	 */
 	change: string
+	/**
+	 * c​a​n​c​e​l
+	 */
+	cancel: string
+	/**
+	 * y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​{​l​o​c​a​t​i​o​n​}​ ​o​f​ ​r​a​n​g​e​ ​{​r​a​n​g​e​}
+	 * @param {[number, number]} location
+	 * @param {string} range
+	 */
+	yourLocationIsCurrently_InRangeOf: RequiredParams<'location' | 'range'>
 }
 
 export type TranslationFunctions = {
@@ -785,6 +797,14 @@ export type TranslationFunctions = {
 	 * change
 	 */
 	change: () => LocalizedString
+	/**
+	 * cancel
+	 */
+	cancel: () => LocalizedString
+	/**
+	 * your location is currently {location} of range {range}
+	 */
+	yourLocationIsCurrently_InRangeOf: (arg: { location: [number, number], range: string }) => LocalizedString
 }
 
 export type Formatters = {}
