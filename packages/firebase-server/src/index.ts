@@ -3,7 +3,7 @@ import Notifications from './utils/notification'
 import admin from 'firebase-admin'
 import firebase from 'firebase-admin'
 
-const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/gm, '\n')
+const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/gm, '\n') ?? ''
 
 if (!firebase.apps.length) {
 	const firebaseApp = initializeApp({
