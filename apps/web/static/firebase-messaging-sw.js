@@ -11,24 +11,6 @@ self.addEventListener('install', (event) => {
 	);
 });
 
-// self.addEventListener('fetch', (event) => {
-// 	event.respondWith(
-// 		caches.match(event.request).then((response) => {
-// 			return response || fetch(event.request);
-// 		})
-// 	);
-// });
-
-self.addEventListener('push', (event) => {
-	event.waitUntil(
-		self.registration.showNotification('Push Notification', {
-			icon: '/icon.png',
-			badge: '/icon.png',
-			image: '/icon.png'
-		})
-	);
-});
-
 const firebaseConfig = {
 	apiKey: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
 	authDomain: 'experiences-5dfad.firebaseapp.com',
@@ -42,3 +24,37 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(async (payload) => {
+	console.log('[firebase-messaging-sw.js] Received background message ', payload);
+	// Customize notification here
+	const title = 'Experiences';
+	const options = {
+		body: 'new monument',
+		icon: '/icon.png',
+		silent: false,
+		vibrate: [300, 400, 100],
+		data: {
+			imageUrl: payload.data.img // Replace with the path to your image
+		},
+		imageUrl: payload.data.img
+	};
+
+	const notification = self.registration.showNotification(title, options);
+
+	addEventListener('notificationclick', (event) => {
+		event.notification.close();
+		event.waitUntil(
+			clients
+				.matchAll({
+					type: 'window'
+				})
+				.then((clientList) => {
+					for (const client of clientList) {
+						if (client.url === '/' && 'focus' in client) return client.focus();
+					}
+					if (clients.openWindow) return clients.openWindow(`monument/${payload.data.monumentId}`);
+				})
+		);
+	});
+});

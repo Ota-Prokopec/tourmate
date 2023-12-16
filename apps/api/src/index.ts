@@ -4,7 +4,6 @@ import { context } from './context'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import { expressRouter } from './express-routes/router'
 
 export const server = new ApolloServer({ schema, context: context })
 //FIXME: this will be possible changed in the future
@@ -16,7 +15,7 @@ const start = async () => {
 		app,
 		path: '/graphql',
 		cors: false,
-		bodyParserConfig: { limit: '50mb' },
+		bodyParserConfig: { limit: '10mb' },
 	})
 }
 
@@ -36,9 +35,9 @@ app.use(
 	}),
 )
 
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))
 app.get('/', (req, res) => res.send('This is experiences api graphql'))
-app.use('/apikey', expressRouter)
+//app.use('/apikey', expressRouter)
 
 start()
 

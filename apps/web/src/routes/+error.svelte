@@ -1,4 +1,4 @@
-<script>
+<script lang="tscenter">
 	import Column from '$lib/components/Common/Column.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import LL from '$src/i18n/i18n-svelte';

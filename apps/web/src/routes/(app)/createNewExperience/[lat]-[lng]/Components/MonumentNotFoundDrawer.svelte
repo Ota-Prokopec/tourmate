@@ -19,7 +19,6 @@
 	bind:hidden={hideDrawer}
 	placement="auto"
 	class="!z-50 w-auto max-w-[400px] h-[calc(100%-100px)] fixed top-[100px]"
-	size={400}
 >
 	<Row class="gap-4 justify-center">
 		<Right>

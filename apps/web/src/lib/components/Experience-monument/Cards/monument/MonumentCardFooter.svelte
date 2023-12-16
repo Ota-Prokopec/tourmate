@@ -37,27 +37,29 @@
 		<Row>
 			{#each monument.topics as topic}
 				<ChooseFromIconsItem circuit={false}>
-					<svelte:component this={topics.filter((t) => t.key === topic)[0].component} />
+					{@const component = topics.filter((t) => t.key === topic)[0]?.component}
+					<svelte:component this={component} />
 				</ChooseFromIconsItem>
 			{/each}
 		</Row>
 		<Row>
 			{#each monument.transports as transportKey}
 				{@const transport = transports.filter((t) => t.key === transportKey)[0]}
-				<ChooseFromIconsItem circuit={false}>
-					<svelte:component this={transport.component} />
-				</ChooseFromIconsItem>
-				{#if usersLocation}
-					{@const seconds = Math.floor(
-						getTimeFromAToB(usersLocation, monument.location, transport.speed)
-					)}
-
-					{#if seconds !== 0}
-						<Popover class="w-[300px]" placement="bottom">
-							<TypeWriter speed={10}>
-								{normalizeTime(seconds, $LL.and())}
-							</TypeWriter>
-						</Popover>
+				{#if transport}
+					<ChooseFromIconsItem circuit={false}>
+						<svelte:component this={transport.component} />
+					</ChooseFromIconsItem>
+					{#if usersLocation}
+						{@const seconds = Math.floor(
+							getTimeFromAToB(usersLocation, monument.location, transport.speed)
+						)}
+						{#if seconds !== 0}
+							<Popover class="w-[300px]" placement="bottom">
+								<TypeWriter speed={10}>
+									{normalizeTime(seconds, $LL.and())}
+								</TypeWriter>
+							</Popover>
+						{/if}
 					{/if}
 				{/if}
 			{/each}

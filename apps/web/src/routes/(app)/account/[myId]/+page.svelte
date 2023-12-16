@@ -22,21 +22,20 @@
 	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
 	import EditProfileButton from './Components/EditProfileButton.svelte';
 	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
+	import { getListOfExperienceCards } from '$src/graphql/generated-svelte';
 
 	export let data: PageData;
-
-	$: usersProfileQuery = useQuery('usersProfile', async () => {
-		return await sdk.getProfile({ myId: data.props.myId });
-	});
-	$: userProfile = $usersProfileQuery.data?.getUser;
+	const { usersProfile } = data;
 
 	let usersMonuments: MonumentCard[] | undefined = undefined;
-	let usersExperiences: ExperienceCard[] = [];
-	$: usersExperiences = userProfile?.experiences || [];
+
+	$: usersExperiences = useQuery('usersExperiences', async () => {
+		return await sdk.getListOfExperiences({ userId: usersProfile.userId });
+	});
 
 	let category: 'monuments' | 'experiences' = 'experiences';
 
-	$: isMyAccount = data.user.userId === userProfile?.userId;
+	$: isMyAccount = data.user.userId === usersProfile?.userId;
 
 	const categories = [
 		{ title: $LL.pictures(), key: 'experiences' },
@@ -56,16 +55,16 @@
 		const {
 			updateProfilePicture: { profilePictureURL }
 		} = await sdk.updateProfilePicture({ picture: base64 });
-		if (!userProfile) throw new Error('userProfile is not defined');
-		userProfile.profilePictureURL = profilePictureURL;
+		if (!usersProfile) throw new Error('usersProfile is not defined');
+		usersProfile.profilePictureURL = profilePictureURL;
 		uploadingProfilePictureIsLoading = false;
 		screenProfilePicEditor = false;
 	};
 
 	$: if (category === 'monuments' && !usersMonuments) {
-		if (!userProfile) throw new Error('userProfile is not defined');
+		if (!usersProfile) throw new Error('usersProfile is not defined');
 		sdk
-			.getListOfMonumentCards({ userId: userProfile.userId })
+			.getListOfMonumentCards({ userId: usersProfile.userId, limit: 10 })
 			.then(({ getListOfMonuments: monuments }) => {
 				usersMonuments = monuments;
 			});
@@ -85,33 +84,33 @@
 				<AvatarImageInput
 					screenErrors
 					class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
-					imageURL={userProfile?.profilePictureURL}
+					imageURL={usersProfile?.profilePictureURL}
 					on:image={async ({ detail: { base64 } }) => {
 						openProfilePicEditor(base64);
 					}}
 				/>
 			{:else}
-				<Avatar size="xl" class="h-40 w-40 overflow-hidden" src={userProfile?.profilePictureURL} />
+				<Avatar size="xl" class="h-40 w-40 overflow-hidden" src={usersProfile?.profilePictureURL} />
 			{/if}
 			<Row class="justify-start p-3 gap-4 mt-2 text-2xl">
-				{#if userProfile}
-					<Text>{userProfile.myId}</Text>
+				{#if usersProfile}
+					<Text>{usersProfile.myId}</Text>
 				{:else}
 					<SkeletonLine class="w-[180px] h-4" />
 				{/if}
 				{#if isMyAccount}
-					<Icon on:click={() => goto(`${userProfile?.myId}/settings`)} icon="fa fa-gear" />
+					<Icon on:click={() => goto(`${usersProfile?.myId}/settings`)} icon="fa fa-gear" />
 				{/if}
 			</Row>
 		</div>
-		{#if userProfile}
-			<Text class="text-3xl p-4">{userProfile?.username}</Text>
+		{#if usersProfile}
+			<Text class="text-3xl p-4">{usersProfile?.username}</Text>
 		{:else}
 			<SkeletonLine class="w-[240px] h-4" />
 		{/if}
 
-		{#if isMyAccount && userProfile}
-			<EditProfileButton myId={userProfile?.myId} />
+		{#if isMyAccount && usersProfile}
+			<EditProfileButton myId={usersProfile?.myId} />
 		{/if}
 
 		<Column class="mb-2 gap-4">
@@ -119,9 +118,11 @@
 
 			<Column class="gap-10 justify-center items-center">
 				{#if category === 'experiences'}
-					{#if userProfile}
-						{#if usersExperiences.length}
-							{#each usersExperiences as experience}
+					{#if !$usersExperiences.isLoading}
+						{@const experiences = $usersExperiences.data?.getListOfExperiences ?? []}
+
+						{#if experiences.length}
+							{#each experiences as experience}
 								<ExperienceCardComponent {experience} />
 							{/each}
 						{:else}

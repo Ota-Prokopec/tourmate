@@ -390,6 +390,32 @@ type RootTranslation = {
 	 * n​e​w​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​a​d​d​e​d
 	 */
 	newMonumentWasAdded: string
+	/**
+	 * c​h​o​o​s​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+	 */
+	chooseYourLocationForNotifications: string
+	/**
+	 * n​o​t​i​f​i​c​a​i​o​n​s​ ​l​o​c​a​t​i​o​n
+	 */
+	notificaionsLocation: string
+	/**
+	 * c​h​a​n​g​e
+	 */
+	change: string
+	/**
+	 * c​a​n​c​e​l
+	 */
+	cancel: string
+	/**
+	 * y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​{​l​o​c​a​t​i​o​n​}​ ​o​f​ ​r​a​n​g​e​ ​{​r​a​n​g​e​}
+	 * @param {number[]} location
+	 * @param {string} range
+	 */
+	yourLocationIsCurrently_InRangeOf: RequiredParams<'location' | 'range'>
+	/**
+	 * e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​c​r​e​a​t​e​d
+	 */
+	experienceWasCreated: string
 }
 
 export type TranslationFunctions = {
@@ -761,6 +787,30 @@ export type TranslationFunctions = {
 	 * new monument was added
 	 */
 	newMonumentWasAdded: () => LocalizedString
+	/**
+	 * choose your location for notifications
+	 */
+	chooseYourLocationForNotifications: () => LocalizedString
+	/**
+	 * notificaions location
+	 */
+	notificaionsLocation: () => LocalizedString
+	/**
+	 * change
+	 */
+	change: () => LocalizedString
+	/**
+	 * cancel
+	 */
+	cancel: () => LocalizedString
+	/**
+	 * your location is currently {location} of range {range}
+	 */
+	yourLocationIsCurrently_InRangeOf: (arg: { location: number[], range: string }) => LocalizedString
+	/**
+	 * experience was created
+	 */
+	experienceWasCreated: () => LocalizedString
 }
 
 export type Formatters = {}

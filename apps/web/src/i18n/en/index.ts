@@ -111,7 +111,14 @@ const en = {
 	transport: 'transport',
 	about: 'about',
 	image: 'image',
-	newMonumentWasAdded: 'new monument was added'
+	newMonumentWasAdded: 'new monument was added',
+	chooseYourLocationForNotifications: 'choose your location for notifications',
+	notificaionsLocation: 'notificaions location',
+	change: 'change',
+	cancel: 'cancel',
+	yourLocationIsCurrently_InRangeOf:
+		'your location is currently {location: number[]} of range {range: string}',
+	experienceWasCreated: 'experience was created'
 } satisfies BaseTranslation;
 
 export default en;

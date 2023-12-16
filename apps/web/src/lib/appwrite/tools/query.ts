@@ -5,6 +5,7 @@ type CollectionName = keyof ReturnType<typeof collections>;
 import {
 	ExperienceDocument,
 	ExperienceLikeDocument,
+	LocationForNotificationsDocument,
 	MonumentDocument,
 	MonumentLikeDocument,
 	PlaceDetailDocument,
@@ -19,7 +20,8 @@ const query = {
 	placeDetail: Query<PlaceDetailDocument>(),
 	token: Query<TokenDocument>(),
 	monumentLike: Query<MonumentLikeDocument>(),
-	experienceLike: Query<ExperienceLikeDocument>()
+	experienceLike: Query<ExperienceLikeDocument>(),
+	locationForNotification: Query<LocationForNotificationsDocument>()
 } satisfies Record<CollectionName, any>;
 
 export default query;

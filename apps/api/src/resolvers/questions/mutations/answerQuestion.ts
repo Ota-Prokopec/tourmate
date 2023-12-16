@@ -2,12 +2,14 @@ import { permissions } from '@app/appwrite-ssr-graphql'
 import type { Answer } from '@app/ts-types'
 import { ApolloError } from 'apollo-server-express'
 import { mutationField, stringArg } from 'nexus'
+import appwrite from '../../../lib/appwrite/appwrite'
 
 export default mutationField('answerQuestion', {
 	args: { monumentId: stringArg(), answer: 'StringOrNumber' },
 	type: 'UsersAnswerToQuestion',
 	resolve: async (s_, args, ctx) => {
 		const { collections } = ctx.appwrite
+		const { collections: adminCollections } = appwrite.setAdmin()
 
 		if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authed', '401')
 
@@ -31,7 +33,7 @@ export default mutationField('answerQuestion', {
 		const result: boolean =
 			answerDoc.correctAnswer.toString().localeCompare(args.answer.toString()) === 0
 
-		const usersAnswerDocument = await collections.usersAnswer.createDocument(
+		const usersAnswerDocument = await adminCollections.usersAnswer.createDocument(
 			{
 				monumentId: monument._id,
 				answeredCorrectly: result,

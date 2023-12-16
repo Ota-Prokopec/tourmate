@@ -1,5 +1,8 @@
 import { Types } from '@app/appwrite-ssr-graphql'
+
 import type {
+	LocationForNotificationsGraphqlDocument,
+	LocationForNotificationsDocumentCreate,
 	ExperienceDocumentCreate,
 	ExperienceGraphqlDocument,
 	ExperienceLikeDocumentCreate,
@@ -85,6 +88,10 @@ export const collectionsClient = (
 			'experiences',
 			'usersAnswers',
 		),
+		locationForNotification: new Collection<
+			LocationForNotificationsGraphqlDocument,
+			LocationForNotificationsDocumentCreate
+		>('experiences', 'locationForNotifications'),
 	}
 }
 
@@ -140,5 +147,9 @@ export const collectionsAdmin = (
 			'experiences',
 			'usersAnswers',
 		),
+		locationForNotification: new Collection<
+			LocationForNotificationsGraphqlDocument,
+			LocationForNotificationsDocumentCreate
+		>('experiences', 'locationForNotifications'),
 	}
 }

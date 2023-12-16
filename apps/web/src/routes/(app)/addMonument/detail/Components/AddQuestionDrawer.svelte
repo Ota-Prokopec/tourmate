@@ -58,7 +58,7 @@
 
 	let chosenCategory: Key = question ? question.type : 'text'; // ?? categories[0].key;
 
-	$: chosenCategory = categories[carouselIndex].key;
+	$: chosenCategory = categories[carouselIndex]?.key ?? 'text';
 
 	const changeFormTypeByPicker = (key: Key) => {
 		if (!carousel) throw new Error('carousel has not been loaded yet');
@@ -127,7 +127,6 @@
 <Drawer
 	bind:hidden
 	placement="auto"
-	size={400}
 	class="z-50 fixed top-0 right-0 w-[500px] mobile:w-full mobile:h-[calc(100% - 20px)] top-[20px]"
 >
 	{#if error}

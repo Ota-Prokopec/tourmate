@@ -1,6 +1,8 @@
 query getAccount {
 	getAccount {
 		_documentId
+		_createdAt
+		secondsFromUserCreatedToNow
 		userId
 		myId
 		username

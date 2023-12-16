@@ -4,13 +4,13 @@ import { writable } from 'svelte/store'
 import type { Models } from 'appwrite'
 import type { Writable } from 'svelte/store'
 import { Preferences } from '@app/ts-types'
-import lodash from 'lodash'
+import lodash, { merge } from 'lodash'
 
-export default (account: Account) => {
+export default <Preferences extends Record<string, any>>(account: Account) => {
 	const client = account.client
 
 	return class Auth extends Account {
-		public userStore: Writable<Models.User<Models.Preferences> | null> = writable(null)
+		public userStore: Writable<Models.User<Preferences> | null> = writable(null)
 		public subscribe = this.userStore.subscribe
 
 		public isLoadingStore = writable(true)
@@ -70,16 +70,12 @@ export default (account: Account) => {
 
 		async addPreferences(prefs: Partial<Preferences>) {
 			const currentPrefs = await account.getPrefs<Preferences>()
-			return await account.updatePrefs({ ...currentPrefs, ...prefs })
-		}
-		async removePreferences(...prefsNames: string[]) {
-			const currentPrefs = await account.getPrefs<Preferences>()
-			return await account.updatePrefs(lodash.omit(currentPrefs, prefsNames))
+			return await account.updatePrefs(merge(currentPrefs, prefs))
 		}
 
 		async __get() {
 			try {
-				const user = await account.get()
+				const user = await account.get<Preferences>()
 				this.userStore.set(user)
 
 				return user

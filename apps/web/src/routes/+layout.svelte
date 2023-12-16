@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import Alert from '$lib/components/Alert/Alert.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
@@ -20,7 +20,7 @@
 	const queryClient = new QueryClient();
 
 	//client-side appwrite local-storage session loggin out
-	$: if (mounted && !$userIsLoading && $user === null) {
+	$: if (mounted && !$userIsLoading && $user === null && !$page.route.id?.startsWith('/auth/')) {
 		goto('/auth/login');
 	}
 

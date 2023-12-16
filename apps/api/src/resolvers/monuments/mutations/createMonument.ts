@@ -1,20 +1,24 @@
 import cloudinary from '@app/cloudinary-server'
 import {
+	isQuestionTypeNumber,
+	isQuestionTypeRadio,
+	isQuestionTypeText,
 	type Answer,
 	type AnswerType,
 	type GraphqlDocument,
 	type Question,
-	isQuestionTypeNumber,
-	isQuestionTypeRadio,
-	isQuestionTypeText,
+	Location,
 } from '@app/ts-types'
-import { isBase64 } from '@app/utils'
 import { arg, mutationField } from 'nexus'
 import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
-
 import { permissions } from '@app/appwrite-ssr-graphql'
-import appwrite from '../../../lib/appwrite/appwrite'
 import { ApolloError } from 'apollo-server-express'
+import appwrite, { Queries } from '../../../lib/appwrite/appwrite'
+import { notifications } from '@app/firebase-server'
+import { locationQueries } from '@app/utils'
+
+/**90km => 90 000meters */
+const notificationsRange = 90_000
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -60,8 +64,12 @@ export default mutationField('createMonument', {
 				},
 				[ctx.user],
 			)
+
 			const res = fromLatDocumentLongIntoLocationDocument(document)[0]
 			if (!res) throw new ApolloError('creating monument was not successful')
+
+			const notificationsSendingSuccess = await sendNotification(res._id, res.location)
+
 			return res
 		} catch (error) {
 			console.log(error)
@@ -131,4 +139,25 @@ const saveQuestion = async (
 		type: question.type,
 		...res,
 	}
+}
+
+const sendNotification = async (monumentId: string, monumentLocation: Location) => {
+	const { collections } = appwrite.setAdmin()
+	const locationQuery = locationQueries(monumentLocation, notificationsRange)
+
+	const userIds: string[] /**userIds that will get the notification */ = await (
+		await collections.locationForNotification.listDocuments(locationQuery)
+	).documents.map((document) => document.userId)
+
+	//if there is no user that the notification would be sent to => we wont even search for tokens
+	if (userIds.length === 0) return null
+
+	const tokens = (
+		await collections.token.listDocuments([Queries.token.equal('userId', userIds)])
+	).documents.map((document) => document.fcmFirebaseToken)
+
+	return await notifications.create(
+		{ data: { type: 'newMonument', monumentId: monumentId } },
+		tokens,
+	)
 }

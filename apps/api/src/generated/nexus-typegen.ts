@@ -227,6 +227,7 @@ export interface NexusGenFieldTypes {
     phoneVerification: boolean; // Boolean!
     prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
     profilePictureURL: NexusGenScalars['URL']; // URL!
+    secondsFromUserCreatedToNow: number; // Float!
     status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
@@ -377,6 +378,7 @@ export interface NexusGenFieldTypeNames {
     phoneVerification: 'Boolean'
     prefs: 'UsersPreferences'
     profilePictureURL: 'URL'
+    secondsFromUserCreatedToNow: 'Float'
     status: 'Boolean'
     userId: 'String'
     username: 'String'
@@ -549,6 +551,7 @@ export interface NexusGenArgTypes {
     }
     getListOfExperiences: { // args
       location?: NexusGenInputs['LocationInput'] | null; // LocationInput
+      userId?: string | null; // String
     }
     getListOfMonuments: { // args
       limit: number | null; // Int

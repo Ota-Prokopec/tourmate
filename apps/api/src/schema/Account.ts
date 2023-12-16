@@ -23,5 +23,15 @@ export default objectType({
 		t.field('prefs', {
 			type: UsersPreferences,
 		})
+		t.field('secondsFromUserCreatedToNow', {
+			type: 'Float',
+			resolve: (source, args, ctx) => {
+				const miliProfileCreated = new Date(source._createdAt).getTime() //time from ever to moment when user created the profile
+				const miliNow = new Date().getTime() //time from ever to now
+				console.log(miliProfileCreated)
+				const secondsFromUserCreatedToNow = (miliNow - miliProfileCreated) / 1000
+				return Math.floor(secondsFromUserCreatedToNow)
+			},
+		})
 	},
 })

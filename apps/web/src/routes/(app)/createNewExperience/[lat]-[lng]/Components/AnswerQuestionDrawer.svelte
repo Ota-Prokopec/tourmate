@@ -60,7 +60,6 @@
 	bind:hidden
 	placement="auto"
 	class="!z-50 w-full max-w-[400px] mobile:h-[calc(100%-100px)] fixed mobile:top-[100px]"
-	size={400}
 >
 	<MediaQuery size="mobile">
 		<Right>

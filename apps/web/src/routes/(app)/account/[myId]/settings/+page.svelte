@@ -12,8 +12,11 @@
 	import LanguageSwitch from '$lib/components/Common/LanguageSwitch.svelte';
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
+	import { Button } from 'flowbite-svelte';
+	import type { PageData } from './$types';
 
 	let isLoading = false;
+	export let data: PageData;
 
 	const logOut = async () => {
 		isLoading = true;
@@ -31,11 +34,13 @@
 	let items: [
 		{ id: 'language'; title: string },
 		{ id: 'theme'; title: string },
+		{ id: 'locationForNotifications'; title: string },
 		{ id: 'logOut'; title: string }
 	];
 	$: items = [
 		{ title: $LL.language(), id: 'language' },
 		{ title: $LL.theme(), id: 'theme' },
+		{ title: $LL.notificaionsLocation(), id: 'locationForNotifications' },
 		{ title: $LL.logOut(), id: 'logOut' }
 	];
 </script>
@@ -47,11 +52,15 @@
 		<ItemsLayout class="justify-center items-center" textClasses="w-full" let:id {items}>
 			{#if id === 'language'}
 				<LanguageSwitch class="w-min" />
-			{/if}
-			{#if id === 'theme'}
+			{:else if id === 'theme'}
 				<DarkMode class="w-min" />
-			{/if}
-			{#if id === 'logOut'}
+			{:else if id === 'locationForNotifications'}
+				<Button
+					color="blue"
+					on:click={() => goto(`/account/${data.user.myId}/settings/setlocationfornotifications`)}
+					>{$LL.change()}</Button
+				>
+			{:else if id === 'logOut'}
 				<LogOutButton on:click={logOut} />
 			{/if}
 		</ItemsLayout>

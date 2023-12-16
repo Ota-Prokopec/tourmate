@@ -1,4 +1,5 @@
 import { Document, GraphqlDocument } from './Document'
+import { Location } from './Location'
 
 export type UserInfo = {
 	userId: string
@@ -7,7 +8,10 @@ export type UserInfo = {
 	profilePictureURL: URL
 }
 
-export type Preferences = { termsAccepted: boolean; mapRange: number }
+export type Preferences = {
+	termsAccepted: boolean
+	mapRange: number
+}
 
 export type UserInfoDocument = Document<UserInfo>
 export type UserInfoGraphqlDocument = GraphqlDocument<UserInfo>

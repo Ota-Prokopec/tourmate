@@ -17,6 +17,7 @@
 	import LL, { locale } from '$src/i18n/i18n-svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import ClickOutside from '$lib/components/Common/ClickOutside.svelte';
+	import { error } from '@sveltejs/kit';
 
 	if (!$lsStore.newExperiencePicture) navigate('/createNewExperience'); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -57,7 +58,11 @@
 
 		await actions.load(ctx.canvas.toDataURL('image/png'));
 
-		actions.addText(textOptions.texts[textOptions.index], {
+		const text = textOptions.texts[textOptions.index];
+
+		if (!text) throw new Error('text is not available');
+
+		actions.addText(text, {
 			x: x,
 			y: y,
 			vAlign: 'middle',
@@ -85,7 +90,9 @@
 	$: if (location)
 		mapTiler
 			.reverseGeocoding(location[0], location[1], { limit: 1, language: $locale })
-			.then(([{ place_name }]) => {
+			.then(([result]) => {
+				if (!result) throw error(500);
+				const { place_name } = result;
 				textOptions.texts = [place_name, `I was here, ${place_name}`];
 				isLoading = false;
 			});

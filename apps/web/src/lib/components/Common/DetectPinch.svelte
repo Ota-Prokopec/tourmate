@@ -32,7 +32,7 @@
 		evCache[index] = ev;
 
 		if (evCache.length === 2) {
-			const curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
+			const curDiff = Math.abs(evCache[0]?.clientX ?? 0 - (evCache.at(0)?.clientX ?? 0));
 
 			if (prevDiff > 0) {
 				if (curDiff > prevDiff) {

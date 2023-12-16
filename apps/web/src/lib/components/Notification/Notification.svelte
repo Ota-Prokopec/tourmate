@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { collections, user } from '$lib/appwrite/appwrite';
-	import { lsStore, storage } from '$lib/utils/lsStore';
-	import { alert } from '$src/routes/alertStore';
+	import { collections } from '$lib/appwrite/appwrite';
+	import { storage } from '$lib/utils/lsStore';
 	import { owner } from '@app/appwrite-permissions';
 	import type { NotificationBodyPayload, NotificationType } from '@app/ts-types';
 	import type { MessagePayload } from 'firebase/messaging';
 	import { onMount } from 'svelte';
-	import Alert from '../Alert/Alert.svelte';
-	import Text from '../Common/Text.svelte';
-	import LL from '$src/i18n/i18n-svelte';
 	import Center from '../Common/Center.svelte';
 	import FirebaseMonumentNotification from './FirebaseMonumentNotification.svelte';
 
@@ -16,13 +12,10 @@
 
 	let foregroundNotification: Message | undefined;
 
-	$: console.log(foregroundNotification);
-
 	export let userId: string;
 
 	onMount(async () => {
 		const { notifications } = await import('@app/firebase-client');
-		notifications.watchNotifications(console.log);
 
 		const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
 			type: 'classic',
@@ -49,7 +42,7 @@
 	});
 </script>
 
-<Center class="w-full h-auto">
+<Center class="w-full h-auto z-50">
 	{@const data = foregroundNotification?.data}
 	{#if data?.type === 'newMonument'}
 		<FirebaseMonumentNotification monumentId={data.monumentId} />

@@ -35,7 +35,7 @@
 	};
 </script>
 
-<Drawer placement="top" bind:hidden={settingsHidden} class="w-full absolute" size={400}>
+<Drawer placement="top" bind:hidden={settingsHidden} class="w-full absolute">
 	<Center>
 		<Row class="justify-center items-center gap-1">
 			<Text class="text-2xl">Settings</Text>

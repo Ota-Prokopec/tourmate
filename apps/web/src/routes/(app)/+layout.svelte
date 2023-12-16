@@ -41,8 +41,8 @@
 
 	const usernameSplited = data.user.username.split(' ');
 
-	const usersInitials = `${data.user.username.split(' ')[0][0]} ${
-		usernameSplited.length >= 2 && data.user.username.split(' ')[1][0]
+	const usersInitials = `${usernameSplited[0]?.at(0)} ${
+		usernameSplited.length >= 2 && usernameSplited[1]?.at(0)
 	}`;
 
 	onMount(() => {

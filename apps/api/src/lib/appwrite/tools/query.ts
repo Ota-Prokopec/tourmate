@@ -5,6 +5,7 @@ import type {
 	Check,
 	ExperienceDocument,
 	ExperienceLikeDocument,
+	LocationForNotificationsDocument,
 	MonumentDocument,
 	MonumentLikeDocument,
 	NumberTypeAnswerDocument,
@@ -30,6 +31,7 @@ const query = {
 	answerTypeRadio: Query<RadioTypeAnswerDocument>(),
 	question: Query<QuestionDocument>(),
 	usersAnswer: Query<UsersAnswerDocument>(),
+	locationForNotification: Query<LocationForNotificationsDocument>(),
 } satisfies Record<CollectionName, any>
 
 export type QueryType = (typeof query)[keyof typeof query]

@@ -7,10 +7,12 @@
 	import { twMerge } from 'tailwind-merge';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
 	import UserMarker from './Markers/UserMarker.svelte';
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher<{ load: { center: Location } }>();
 
 	export let map: Map | undefined = undefined;
 	export let center: Location | undefined = $lsStore.usersLocation;
-	const usersLocation = $lsStore.usersLocation;
+	$: usersLocation = $lsStore.usersLocation;
 
 	export let zoom: number = 16;
 	export let maxZoom: number | undefined = undefined;
@@ -35,6 +37,10 @@
 			bind:pitch={deg}
 			on:zoom={(e) => {
 				zoom = e.detail.map.getZoom();
+			}}
+			on:load={() => {
+				if (!center) throw new Error('center is not defined');
+				dispatch('load', { center });
 			}}
 		>
 			<GeolocateControl

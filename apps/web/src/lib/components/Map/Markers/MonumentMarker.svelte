@@ -44,7 +44,6 @@
 	class={twMerge('p-2 h-full w-full max-w-[400px]', classDrawer)}
 	bind:hidden={detailHidden}
 	placement="left"
-	size={600}
 >
 	<MediaQuery size="mobile">
 		<Right>
