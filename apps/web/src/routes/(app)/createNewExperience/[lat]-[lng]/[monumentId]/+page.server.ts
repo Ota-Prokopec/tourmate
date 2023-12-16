@@ -2,12 +2,14 @@ import mapTiler from '$lib/utils/mapTiler';
 import { isLocation, metersToDegree } from '@app/utils';
 import { PageServerLoad } from './$types';
 import { sdkssr } from '$src/graphql/sdkssr';
-import { maximalRangeInMetersToConnectMonumentToPicture } from './options';
+import { maximalRangeInMetersToConnectMonumentToPicture } from '../options';
 
 export const ssr = false;
 
 export const load: PageServerLoad = async (event) => {
 	const location = [JSON.parse(event.params.lat), JSON.parse(event.params.lng)];
+	const chosenMonumentId =
+		event.params.monumentId === 'not-chosen' ? null : event.params.monumentId;
 
 	if (!isLocation(location)) throw new Error('Invalid location param in url');
 
@@ -28,9 +30,10 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		newExperience: {
-			placeName: placeDetail.place_name,
+			placeName: placeDetail?.place_name,
 			location: location,
-			nearMonuments
+			nearMonuments,
+			chosenMonumentId: chosenMonumentId
 		}
 	};
 };

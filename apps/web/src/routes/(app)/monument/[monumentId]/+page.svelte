@@ -28,7 +28,7 @@
 	let distanceInMeters: number | undefined;
 
 	const takePicture = () => {
-		if (!distanceInMeters) throw new Error('distance is not defined');
+		if (typeof distanceInMeters === 'undefined') throw new Error('distance is not defined');
 		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
 			alert(
 				$LL.notAbleToConnectMonumentBecauseOfDistanceErrorTitle(),
@@ -37,7 +37,7 @@
 			);
 			throw new Error('Your distanceInMeters from monument is bigger that maximal distance.');
 		}
-		goto('/createNewExperience');
+		goto(`/createNewExperience/${monument.location[0]}-${monument.location[1]}/${monument._id}`);
 	};
 </script>
 

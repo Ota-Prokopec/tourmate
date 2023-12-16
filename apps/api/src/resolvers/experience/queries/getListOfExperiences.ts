@@ -8,10 +8,11 @@ export default queryField('getListOfExperiences', {
 	type: list('Experience'),
 	args: {
 		location: nullable('LocationInput'),
+		userId: nullable('String'),
 	},
 	resolve: async (s_, args, ctx, info) => {
 		const { collections } = ctx.appwrite
-		const { location: locationOptions } = args
+		const { location: locationOptions, userId } = args
 
 		const queries: string[] = []
 
@@ -22,6 +23,11 @@ export default queryField('getListOfExperiences', {
 					locationOptions.rangeMeters ?? defaultRangeMeters,
 				),
 			)
+
+		if (userId) queries.push(Queries.experience.equal('userId', userId))
+
+		//desc sorting
+		queries.push(Queries.experience.orderDesc('$createdAt'))
 
 		return fromLatDocumentLongIntoLocationDocument(
 			...(await collections.experience.listDocuments(queries)).documents,

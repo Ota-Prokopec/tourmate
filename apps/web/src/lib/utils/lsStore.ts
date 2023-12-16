@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import type { Base64, Location } from '@app/ts-types';
 import { Locales } from '$src/i18n/i18n-types';
+import { omit } from 'lodash';
 
 export type Data =
 	| {
@@ -35,7 +36,6 @@ export const lsStore = writable(data);
 
 lsStore.subscribe((storeValue) => {
 	if (!browser) return;
-
 	for (const key of Object.keys(storeValue)) {
 		if (browser && storeValue[key] !== localStorage[key])
 			localStorage.setItem(key, JSON.stringify(storeValue[key]));
@@ -49,11 +49,17 @@ export const typedStore = <Type>() => {
 
 export const storage = new Proxy(data, {
 	get: (target, prop, receiver) => {
-		return localStorage.getItem(prop.toString());
+		const item = localStorage.getItem(prop.toString());
+		return item ? parseLocalStorageValue(item) : item;
 	},
 	set: (target, prop, value, receiver) => {
 		lsStore.update((currentData) => ({ ...currentData, [prop.toString()]: value }));
-		localStorage.setItem(prop.toString(), value);
+		//localStorage.setItem(prop.toString(), JSON.stringify(value));
 		return true;
+	},
+	deleteProperty: (target, propKey) => {
+		Reflect.deleteProperty(target, propKey.toString());
+		lsStore.update((currentData) => ({ ...omit(currentData, propKey.toString()) }));
+		return false;
 	}
 });

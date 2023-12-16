@@ -156,7 +156,7 @@ type Query {
   createAccount(myId: String!, username: String!): Account!
   getAccount: Account!
   getExperience(id: String!): Experience!
-  getListOfExperiences(location: LocationInput): [Experience!]!
+  getListOfExperiences(location: LocationInput, userId: String): [Experience!]!
   getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
   getMonument(id: String!): Monument!
   getUser(myId: String, userId: String): User!

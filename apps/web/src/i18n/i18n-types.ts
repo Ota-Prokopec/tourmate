@@ -414,6 +414,10 @@ type RootTranslation = {
 	 * @param {string} range
 	 */
 	yourLocationIsCurrently_InRangeOf: RequiredParams<'location' | 'range'>
+	/**
+	 * e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​c​r​e​a​t​e​d
+	 */
+	experienceWasCreated: string
 }
 
 export type TranslationFunctions = {
@@ -805,6 +809,10 @@ export type TranslationFunctions = {
 	 * your location is currently {location} of range {range}
 	 */
 	yourLocationIsCurrently_InRangeOf: (arg: { location: [number, number], range: string }) => LocalizedString
+	/**
+	 * experience was created
+	 */
+	experienceWasCreated: () => LocalizedString
 }
 
 export type Formatters = {}
