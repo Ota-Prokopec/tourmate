@@ -24,7 +24,7 @@
 
 	$: document = useQuery('locationForNotificaiton_get', async () => {
 		return await collections.locationForNotification.getDocument([
-			Queries.locationForNotificaiton.equal('userId', userId)
+			Queries.locationForNotification.equal('userId', userId)
 		]);
 	});
 

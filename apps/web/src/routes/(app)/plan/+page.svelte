@@ -62,6 +62,9 @@
 		try {
 			const startingLocation = locations[locations.length - 2];
 			const endingLocation = locations[locations.length - 1];
+			if (!startingLocation) throw new Error('startingLocation is not defined');
+			if (!endingLocation) throw new Error('endingLocation is not defined');
+
 			const [searchingLocations, mapRange] = getLocationsInAreaOfTwoPoints(
 				startingLocation,
 				endingLocation

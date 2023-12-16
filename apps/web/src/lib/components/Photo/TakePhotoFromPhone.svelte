@@ -19,7 +19,9 @@
 			throw new Error('User did not choose');
 		}
 
-		dispatch('image', e.currentTarget.files[0]);
+		const file = e.currentTarget.files[0];
+		if (!file) throw new Error('file not found');
+		dispatch('image', file);
 	};
 </script>
 

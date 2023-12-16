@@ -54,6 +54,7 @@
 		if (!videoElement) throw new Error('videoElement is not defined');
 		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
 		videoTrack = stream.getVideoTracks()[0];
+		if (!videoTrack) throw new Error('videoTrack is not defined');
 		videoTrack.applyConstraints();
 		imageCapture = new ImageCapture(videoTrack);
 		if (videoElement) videoElement.srcObject = stream; //set video to video element
@@ -64,13 +65,16 @@
 		onLoad();
 		const devs = await navigator.mediaDevices.enumerateDevices();
 		const vidDevs = devs.filter((device) => device.kind === 'videoinput');
+		const user = vidDevs.filter(
+			(device) => device.label.includes('ace') || device.label.includes('ront') // ace = face, ront = front
+		)[0];
+		const environment = vidDevs.filter(
+			(device) => !device.label.includes('ace') && !device.label.includes('ront')
+		)[0];
+		if (!user || !environment) throw new Error('environment or user is not defined');
 		cameraDevices = {
-			user: vidDevs.filter(
-				(device) => device.label.includes('ace') || device.label.includes('ront') // ace = face, ront = front
-			)[0],
-			environment: vidDevs.filter(
-				(device) => !device.label.includes('ace') && !device.label.includes('ront')
-			)[0]
+			user: user,
+			environment: environment
 		};
 		cameraDeviceId = cameraDevices[facingMode].deviceId;
 	});

@@ -104,7 +104,6 @@ export interface NexusGenObjects {
     phoneVerification: boolean; // Boolean!
     prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
     profilePictureURL: NexusGenScalars['URL']; // URL!
-    secondsFromUserCreatedToNow: number; // Float!
     status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!

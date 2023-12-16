@@ -21,7 +21,7 @@ const query = {
 	token: Query<TokenDocument>(),
 	monumentLike: Query<MonumentLikeDocument>(),
 	experienceLike: Query<ExperienceLikeDocument>(),
-	locationForNotificaiton: Query<LocationForNotificationsDocument>()
+	locationForNotification: Query<LocationForNotificationsDocument>()
 } satisfies Record<CollectionName, any>;
 
 export default query;

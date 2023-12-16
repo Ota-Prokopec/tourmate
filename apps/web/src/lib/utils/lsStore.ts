@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import type { Base64, Location } from '@app/ts-types';
 import { Locales } from '$src/i18n/i18n-types';
-import { omit } from 'lodash';
+import * as lodash from 'lodash';
 
 export type Data =
 	| {
@@ -59,7 +59,7 @@ export const storage = new Proxy(data, {
 	},
 	deleteProperty: (target, propKey) => {
 		Reflect.deleteProperty(target, propKey.toString());
-		lsStore.update((currentData) => ({ ...omit(currentData, propKey.toString()) }));
+		lsStore.update((currentData) => ({ ...lodash.omit(currentData, propKey.toString()) }));
 		return false;
 	}
 });

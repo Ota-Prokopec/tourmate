@@ -101,7 +101,7 @@
 
 			// If a feature was clicked, remove it from the map
 			if (features.length) {
-				const id = features[0].properties.id;
+				const id = features[0]?.properties.id ?? '';
 				geojson.features = geojson.features.filter((point) => {
 					return point.properties.id !== id;
 				});

@@ -13,7 +13,6 @@ export default objectType({
 		t.string('userId')
 		t.string('myId')
 		t.string('username')
-		t.float('secondsFromUserCreatedToNow')
 		t.boolean('status')
 		t.boolean('emailVerification')
 		t.boolean('phoneVerification')
@@ -23,6 +22,16 @@ export default objectType({
 		})
 		t.field('prefs', {
 			type: UsersPreferences,
+		})
+		t.field('secondsFromUserCreatedToNow', {
+			type: 'Float',
+			resolve: (source, args, ctx) => {
+				const miliProfileCreated = new Date(source._createdAt).getTime() //time from ever to moment when user created the profile
+				const miliNow = new Date().getTime() //time from ever to now
+				console.log(miliProfileCreated)
+				const secondsFromUserCreatedToNow = (miliNow - miliProfileCreated) / 1000
+				return Math.floor(secondsFromUserCreatedToNow)
+			},
 		})
 	},
 })
