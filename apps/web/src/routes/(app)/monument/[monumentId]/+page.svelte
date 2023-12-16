@@ -67,14 +67,14 @@
 		</MonumentCard>
 
 		{#if experiences.length}
-			<Card class="bg-transparent !pl-0 !pr-0">
+			<Card class="bg-transparent !pl-0 !pr-0 mobile:!w-full mobile:max-w-none mobile:!p-10">
 				<Carousel class="h-min" swiping arrows>
 					{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
 						{@const experience = {
 							...experienceWithoutConnectedMonument,
 							connectedMonument: monument
 						}}
-						<ExperienceCardComponent class="p-0 self-center shadow-none" {experience} />
+						<ExperienceCardComponent class="p-0 self-center shadow-none w-full" {experience} />
 					{/each}
 				</Carousel>
 			</Card>

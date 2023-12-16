@@ -1,18 +1,5 @@
 {
 	"projectId": "experiences",
 	"projectName": "",
-	"functions": [
-		{
-			"$id": "monumentCreateNotifications",
-			"name": "monumentCreateNotifications",
-			"runtime": "node-18.0",
-			"path": "functions/monumentCreateNotifications",
-			"entrypoint": "src/index.js",
-			"ignore": ["node_modules", ".npm"],
-			"execute": [],
-			"events": ["databases.experiences.collections.monuments.documents.*.create"],
-			"schedule": "",
-			"timeout": 4
-		}
-	]
+	"functions": []
 }

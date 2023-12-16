@@ -34,7 +34,6 @@ export default () => {
 			body: body,
 			imageUrl: imageUrl,
 		}
-		console.log(data)
 
 		const message: messaging.MulticastMessage = {
 			notification: notification,

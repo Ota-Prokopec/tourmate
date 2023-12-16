@@ -3,7 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { Marker } from 'svelte-maplibre';
 	const dispatch = createEventDispatcher<{
-		drag: { location: Location };
+		dragend: { location: Location };
 	}>();
 
 	export let location: Location;
@@ -11,7 +11,7 @@
 
 	const onChange = (localLocationValue: Location) => {
 		location = localLocationValue;
-		dispatch('drag', { location });
+		dispatch('dragend', { location });
 	};
 
 	let className = '';
@@ -20,7 +20,7 @@
 
 <Marker
 	{draggable}
-	on:drag={(e) => onChange([e.detail.lngLat[1], e.detail.lngLat[0]])}
+	on:dragend={(e) => onChange([e.detail.lngLat[1], e.detail.lngLat[0]])}
 	class={className}
 	lngLat={{ lat: location[0], lon: location[1] }}
 >

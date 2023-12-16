@@ -146,7 +146,7 @@
 	<Card
 		on:dismiss
 		{dismissable}
-		class={twMerge('relative justify-self-center gap-2 p-2 min-w-[350px] mobile:w-full', className)}
+		class={twMerge('relative justify-self-center gap-2 p-2  mobile:w-full', className)}
 	>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
