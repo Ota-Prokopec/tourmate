@@ -20,9 +20,12 @@
 	const queryClient = new QueryClient();
 
 	//client-side appwrite local-storage session loggin out
-	$: if (mounted && !$userIsLoading && $user === null && !$page.route.id?.startsWith('/auth/')) {
-		goto('/auth/login');
-	}
+	onMount(async () => {
+		const account = await user.getUser();
+		if (account && !$page.route.id?.startsWith('/auth/')) {
+			goto('/auth/login');
+		}
+	});
 
 	//darkmode-whitemode
 	onMount(() => {

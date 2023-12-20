@@ -35,7 +35,7 @@
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
 			$lsStore.cookieFallback = { a_session_experiences: session };
 			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/;maxAge=99999999999999;expires=${expireTimeString}`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
-			goto('/', { replaceState: true, invalidateAll: true });
+			goto('/', { invalidateAll: true });
 		} catch (err) {
 			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
 			loading = false;
