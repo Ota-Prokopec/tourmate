@@ -76,6 +76,7 @@ export default <Preferences extends Record<string, any>>(account: Account) => {
 		async __get() {
 			try {
 				const user = await account.get<Preferences>()
+
 				this.userStore.set(user)
 
 				return user
