@@ -28,6 +28,8 @@ export default queryField('getListOfMonuments', {
 			offset,
 		} = args
 
+		console.log(topics)
+
 		let queries: string[] = []
 
 		if (locationOptions) {

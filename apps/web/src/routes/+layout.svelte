@@ -22,7 +22,7 @@
 	//client-side appwrite local-storage session loggin out
 	onMount(async () => {
 		const account = await user.getUser();
-		if (account && !$page.route.id?.startsWith('/auth/')) {
+		if (!account && !$page.route.id?.startsWith('/auth/')) {
 			goto('/auth/login');
 		}
 	});

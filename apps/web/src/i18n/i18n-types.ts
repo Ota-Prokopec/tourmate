@@ -416,6 +416,10 @@ type RootTranslation = {
 	 * e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​c​r​e​a​t​e​d
 	 */
 	experienceWasCreated: string
+	/**
+	 * n​o​t​ ​f​o​u​n​d
+	 */
+	notFound: string
 }
 
 export type TranslationFunctions = {
@@ -811,6 +815,10 @@ export type TranslationFunctions = {
 	 * experience was created
 	 */
 	experienceWasCreated: () => LocalizedString
+	/**
+	 * not found
+	 */
+	notFound: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -176,6 +176,7 @@
 			columns="1fr 1fr"
 		>
 			<CardImage
+				disableFullScreen
 				on:like={() => {
 					if (!amIOwner && liked === 'unliked') like();
 				}}

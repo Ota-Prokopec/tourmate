@@ -116,7 +116,8 @@ const cz = {
 	cancel: 'cancel',
 	yourLocationIsCurrently_InRangeOf:
 		'your location is currently {location: any} of range {range: string}',
-	experienceWasCreated: 'experience was created'
+	experienceWasCreated: 'experience was created',
+	notFound: 'not found'
 } satisfies BaseTranslation;
 
 export default cz;
