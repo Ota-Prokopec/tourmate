@@ -21,7 +21,10 @@
 		| 'navbarUl'
 		| 'form'
 		| 'none' = 'green';
+
+	let className = '';
+	export { className as class };
 </script>
 
 <Icon class="text-sm text-blue-500" icon="fa fa-question-circle" />
-<Popover {trigger} {placement} {color}><slot /></Popover>
+<Popover class={className} {trigger} {placement} {color}><slot /></Popover>

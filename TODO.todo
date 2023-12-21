@@ -1,7 +1,6 @@
 1) notifications
 
-loading theme
-loading the main map
+
 
 
 translates
@@ -12,6 +11,8 @@ errors:
 {
     (main) page map load new monuments based on users location when ealking
 }
+
+add more special characters into userId
 
 
 

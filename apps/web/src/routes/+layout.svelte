@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
-	import { lsStore } from '$lib/utils/lsStore';
+	import { lsStore, storage } from '$lib/utils/lsStore';
 	import { getThemeInternalMode } from '@app/utils';
 	import { user } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';

@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<div class={twMerge('rounded-full', className)}>
+<div class={twMerge('rounded-full ', className)}>
 	<slot />
 </div>

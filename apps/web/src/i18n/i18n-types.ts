@@ -55,7 +55,7 @@ type RootTranslation = {
 	 */
 	updateProfileErrorTitle: string
 	/**
-	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​T​r​y​ ​t​o​ ​r​e​s​e​t​ ​t​h​e​ ​p​a​g​e​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​ ​i​n​ ​a​n​o​t​h​e​r​ ​u​s​e​r​s​ ​p​r​o​f​i​l​e​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​t​o​ ​a​n​o​t​h​e​r​.
 	 */
 	updateProfileErrorMessage: string
 	/**
@@ -118,7 +118,7 @@ type RootTranslation = {
 	 */
 	regitrationPageTitle: string
 	/**
-	 * P​l​e​a​s​e​ ​u​s​e​r​n​a​m​e​ ​a​n​d​ ​u​s​e​r​ ​i​d​ ​h​a​s​ ​c​o​n​t​a​i​n​ ​a​t​ ​l​e​a​s​t​ ​4​ ​l​e​t​t​e​r​s
+	 * P​l​e​a​s​e​ ​u​s​e​r​n​a​m​e​ ​a​n​d​ ​u​s​e​r​ ​i​d​ ​h​a​s​ ​c​o​n​t​a​i​n​ ​a​t​ ​l​e​a​s​t​ ​4​ ​l​e​t​t​e​r​s​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​w​i​l​l​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​c​o​n​t​a​i​n​ ​@​ ​c​h​a​r​a​c​t​e​r​,​ ​y​o​u​ ​w​i​l​l​ ​n​o​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​h​a​v​e​ ​a​n​y​ ​s​p​e​c​i​a​l​ ​c​h​a​r​a​c​t​e​r​s​ ​i​n​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​e​x​c​l​u​d​i​n​g​ ​f​e​w​ ​o​f​ ​t​h​e​m​ ​(​-​,​ ​_​)
 	 */
 	registrationPageUsernameUserIdConditions: string
 	/**
@@ -468,7 +468,7 @@ export type TranslationFunctions = {
 	 */
 	updateProfileErrorTitle: () => LocalizedString
 	/**
-	 * We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.
+	 * We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.
 	 */
 	updateProfileErrorMessage: () => LocalizedString
 	/**
@@ -524,7 +524,7 @@ export type TranslationFunctions = {
 	 */
 	regitrationPageTitle: () => LocalizedString
 	/**
-	 * Please username and user id has contain at least 4 letters
+	 * Please username and user id has contain at least 4 letters. Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)
 	 */
 	registrationPageUsernameUserIdConditions: () => LocalizedString
 	/**

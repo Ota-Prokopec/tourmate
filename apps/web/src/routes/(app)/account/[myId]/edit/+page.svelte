@@ -13,12 +13,14 @@
 	import { Button } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import MyIdInput from '$lib/components/Inputs/MyIdInput.svelte';
 
 	export let data: PageData;
 
 	let username = data.userProfile.username;
+	let myId = data.userProfile.myId;
 	let isLoading = false;
-	$: disabled = username === data.userProfile.username;
+	$: disabled = username === data.userProfile.username && myId === data.userProfile.myId;
 
 	let screenProfilePicEditor = false;
 	let newProfilePicture: string | Base64 = '';
@@ -48,9 +50,10 @@
 		try {
 			isLoading = true;
 			await collections.userInfo.updateDocument(data.userProfile._id, {
-				username: username
+				username,
+				myId
 			});
-			goto(`/account/${data.userProfile.myId}`);
+			goto(`/account/${myId}`);
 		} catch (error) {
 			alert($LL.updateProfileErrorTitle(), $LL.updateProfileErrorMessage(), { color: 'red' });
 		}
@@ -76,12 +79,7 @@
 				}}
 			/>
 			<Input bind:value={username} class="w-full" floatingLabel={$LL.userName()} />
-			<Input
-				disabled
-				bind:value={data.userProfile.myId}
-				class="w-full"
-				floatingLabel="experienceId"
-			/>
+			<MyIdInput bind:myId />
 			<Button on:click={saveChanges} {disabled} color="green" class="mt-8">
 				{#if isLoading}
 					<Loading />

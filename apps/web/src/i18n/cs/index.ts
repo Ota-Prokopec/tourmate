@@ -14,7 +14,7 @@ const cz = {
 		'We are sorry, but there was a problem in updating your profile picture. Try to reset the page and try it again.',
 	updateProfileErrorTitle: 'Profile was not updated',
 	updateProfileErrorMessage:
-		'We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.',
+		'We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.',
 
 	saveErrorTitle: '{what: string} - neuloženo',
 	saveErrorMessage: '{what: string} - nepovedlo se uložit, prosíme zkuste to znovu.',
@@ -31,7 +31,7 @@ const cz = {
 	unsuccessfulRegister: 'registrace se nezdařila',
 	regitrationPageTitle: 'Vítejte do aplikace experience.',
 	registrationPageUsernameUserIdConditions:
-		'uživatelské jméno a experienceId musí obsahovat nejméně 4 písmena',
+		'uživatelské jméno a experienceId musí obsahovat nejméně 4 písmena.Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)',
 	acceptTerms: 'souhlasit s právy a povinostma',
 	or: 'nebo',
 	passwordsDontMatch: 'Vaše hesla se neshodují',

@@ -23,21 +23,21 @@
 
 			if (!userId) throw new Error('User is not Authed');
 
-			const myUserInfoAlreadyExists = (
-				await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)])
-			).total;
+			const myUserInfoAlreadyExists =
+				(await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)]))
+					.total > 0;
 
 			//if your account is not created, create an account
-			if (myUserInfoAlreadyExists === 0) {
+			if (myUserInfoAlreadyExists) {
 				//create experience account
 				const { createAccount: account } = await sdk.createAccount({
 					myId: usersParams.myId,
 					username: usersParams.username
 				});
-				if (!account) throw new Error('It was not successful to create your account');
-			}
 
-			goto(`/account/${usersParams.myId}/setlocationfornotifications`);
+				if (!account) throw new Error('It was not successful to create your account');
+				goto(`/auth/register/setlocationfornotifications`, { invalidateAll: true }); //finish your registration
+			} else goto('/'); //go to the main page
 		} catch (error) {
 			if (error instanceof Error) errMessage = error.message;
 		}

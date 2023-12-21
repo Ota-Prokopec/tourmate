@@ -28,8 +28,13 @@
 	import { collections } from '../../lib/appwrite/appwrite';
 	import type { LayoutData } from './$types';
 	import Notification from '$lib/components/Notification/Notification.svelte';
+	import Bar from './Components/Bar.svelte';
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 
 	export let data: LayoutData;
+	let isLoading = true;
+
+	$: if ($lsSvelte.usersLocation) isLoading = false;
 
 	$: browser &&
 		watchUsersLocation(
@@ -58,61 +63,20 @@
 
 <Notification userId={data.user.userId} />
 
-<div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
-	<div class="w-full h-[calc(100%-64px)] top-0 absolute overflow-scroll">
-		<slot />
+{#if isLoading}
+	<FullPageLoading />
+{:else}
+	<div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
+		<div class="w-full h-[calc(100%-64px)] top-0 absolute overflow-scroll">
+			<slot />
+		</div>
+
+		<div class="w-full h-auto fixed bottom-0 flex justify-center z-50">
+			<Bar
+				userId={data.user.myId}
+				profilePictureURL={data.user.profilePictureURL}
+				{usersInitials}
+			/>
+		</div>
 	</div>
-
-	<div class="w-full h-auto fixed bottom-0 flex justify-center z-50">
-		<BottomNav
-			position="relative"
-			classInner="flex flex-wrap flex-row justify-between "
-			class=""
-			outerClass="mobile:w-full w-[500px] z-50 h-16 dark:bg-black rounded-3xl mobile:rounded-none"
-		>
-			<BottomNavItem on:click={() => goto('/addMonument')} appBtnPosition="left">
-				<Icon>
-					<IconLocation class="fill-black dark:fill-white" />
-				</Icon>
-			</BottomNavItem>
-
-			<BottomNavItem on:click={() => goto('/scan')}>
-				<Icon>
-					<IconPach src={RiDeviceScan2Line} />
-				</Icon>
-			</BottomNavItem>
-
-			<BottomNavItem on:click={() => goto('/search/places/*')}>
-				<Icon>
-					<IconMagnifyingGlass />
-				</Icon>
-			</BottomNavItem>
-
-			<BottomNavItem
-				on:click={() => {
-					if ($page.url.pathname === '/') {
-						goto('/createNewExperience');
-					} else {
-						goto('/');
-					}
-				}}
-			>
-				<Icon>
-					{#if $mapOrTakePhoto === 'map' && $page.url.pathname === '/'}
-						<IconPlus />
-					{:else}
-						<IconMap />
-					{/if}
-				</Icon>
-			</BottomNavItem>
-
-			<BottomNavItem on:click={() => goto(`/account/${data.user.myId}`)} appBtnPosition="right">
-				<Avatar class="w-10 h-10" src={data.user.profilePictureURL}>
-					{#if !data.user.profilePictureURL}
-						{usersInitials}
-					{/if}
-				</Avatar>
-			</BottomNavItem>
-		</BottomNav>
-	</div>
-</div>
+{/if}

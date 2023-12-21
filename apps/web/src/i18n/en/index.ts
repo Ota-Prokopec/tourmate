@@ -14,7 +14,7 @@ const en = {
 		'We are sorry, but there was a problem in updating your profile picture. Try to reset the page and try it again.',
 	updateProfileErrorTitle: 'Profile was not updated',
 	updateProfileErrorMessage:
-		'We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.',
+		'We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.',
 
 	saveErrorTitle: '{what: string} was not saved',
 	saveErrorMessage:
@@ -32,7 +32,7 @@ const en = {
 	unsuccessfulRegister: 'registration was not successful',
 	regitrationPageTitle: 'Welcome into experinece app, we are happy to see you here.',
 	registrationPageUsernameUserIdConditions:
-		'Please username and user id has contain at least 4 letters',
+		'Please username and user id has contain at least 4 letters. Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)',
 	acceptTerms: 'accept terms and permissions',
 	or: 'or',
 	passwordsDontMatch: 'Your passwords dont match',
