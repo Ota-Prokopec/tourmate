@@ -119,7 +119,8 @@ const en = {
 	yourLocationIsCurrently_InRangeOf:
 		'your location is currently {location: number[]} of range {range: string}',
 	experienceWasCreated: 'experience was created',
-	notFound: 'not found'
+	notFound: 'not found',
+	noContent: 'there is no content'
 } satisfies BaseTranslation;
 
 export default en;

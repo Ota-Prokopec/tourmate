@@ -2,7 +2,7 @@
 	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import NotFound from '$lib/components/Common/NotFound.svelte';
+	import NotFound from '$lib/components/Common/NoContent.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
@@ -58,7 +58,7 @@
 	$: addMonuments(topics, transports, searchingLocation);
 </script>
 
-<Column class="gap-4 justify-center">
+<Column class="gap-4 justify-center w-full">
 	<TopicComponent bind:chosenTopics={topics} class="w-full max-w-[400px]" />
 	<TransportType bind:chosenTransports={transports} class="w-full max-w-[400px]" />
 

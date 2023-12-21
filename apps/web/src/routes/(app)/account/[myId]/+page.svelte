@@ -23,6 +23,7 @@
 	import EditProfileButton from './Components/EditProfileButton.svelte';
 	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 	import { getListOfExperienceCards } from '$src/graphql/generated-svelte';
+	import NotFound from '$lib/components/Common/NoContent.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
@@ -126,7 +127,7 @@
 								<ExperienceCardComponent {experience} />
 							{/each}
 						{:else}
-							<Skeleton divClass="w-full" />
+							<NotFound class="w-full" />
 							{#if isMyAccount}
 								<CreateYourFirstPicture />
 							{/if}
@@ -146,7 +147,7 @@
 							<MonumentCardComponent size="normal" {monument} />
 						{/each}
 					{:else}
-						<Skeleton divClass="w-full" />
+						<NotFound class="w-full" />
 						{#if isMyAccount}
 							<CreateYourFirstMonumentButton />
 						{/if}

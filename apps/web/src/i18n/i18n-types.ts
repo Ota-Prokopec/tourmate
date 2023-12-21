@@ -420,6 +420,10 @@ type RootTranslation = {
 	 * n​o​t​ ​f​o​u​n​d
 	 */
 	notFound: string
+	/**
+	 * t​h​e​r​e​ ​i​s​ ​n​o​ ​c​o​n​t​e​n​t
+	 */
+	noContent: string
 }
 
 export type TranslationFunctions = {
@@ -819,6 +823,10 @@ export type TranslationFunctions = {
 	 * not found
 	 */
 	notFound: () => LocalizedString
+	/**
+	 * there is no content
+	 */
+	noContent: () => LocalizedString
 }
 
 export type Formatters = {}
