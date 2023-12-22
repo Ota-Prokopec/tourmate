@@ -11,7 +11,7 @@
 	import lsStore from '$lib/utils/lsStore';
 	import LL from '$src/i18n/i18n-svelte';
 	import type { MonumentCard } from '@app/ts-types';
-	import { device, distanceTo } from '@app/utils';
+	import { distanceTo } from '@app/utils';
 	import { Button, Skeleton } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { Stretch } from 'svelte-loading-spinners';
@@ -42,12 +42,12 @@
 </script>
 
 <ItemsLayout
-	class="mt-4"
+	class="mt-4 h-auto "
 	let:id
 	items={[{ title: $LL['connectExperienceToMonument'](), id: 'connectMonument' }]}
 >
 	{#if id === 'connectMonument'}
-		<Column class="gap-2">
+		<Column class="justify-start">
 			{#await monumentToConnectPromise}
 				<Stretch color="black" />
 			{:then monumentToConnect}
@@ -69,23 +69,16 @@
 					</Right>
 				{/if}
 			{/await}
-
-			<MediaQuery size="mobile">
-				<Right>
-					<Button
-						class="flex justify-center items-center"
-						on:click={() => (cardShown = false)}
-						color="yellow"
-					>
-						<Row class="gap-2">
-							<Text>{$LL.showMap()}</Text>
-							<Icon class="child:h-5 child:w-5 child:fill-red-500">
-								<IconLocation />
-							</Icon>
-						</Row>
-					</Button>
-				</Right>
-			</MediaQuery>
 		</Column>
 	{/if}
 </ItemsLayout>
+<MediaQuery class="mt-4" size="mobile">
+	<Button on:click={() => (cardShown = false)} color="yellow">
+		<Row class="gap-2">
+			<Text>{$LL.showMap()}</Text>
+			<Icon class="child:h-5 child:w-5 child:fill-red-500">
+				<IconLocation />
+			</Icon>
+		</Row>
+	</Button>
+</MediaQuery>
