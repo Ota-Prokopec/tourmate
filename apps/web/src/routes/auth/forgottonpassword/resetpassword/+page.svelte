@@ -1,24 +1,24 @@
 <script lang="ts">
 	import { user } from '$lib/appwrite/appwrite';
-
-	import { Helper } from 'flowbite-svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
-	import { AppwriteException } from 'appwrite';
-	import { goto } from '$app/navigation';
-	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
-	import MyAlert from '$lib/components/Alert/Alert.svelte';
-	import { Button as FlowbiteButton } from 'flowbite-svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
+	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
+	import { navigate } from '$lib/utils/navigator.js';
+	import LL from '$src/i18n/i18n-svelte.js';
+	import { alert } from '$src/routes/alertStore.js';
+	import { AppwriteException } from 'appwrite';
+	import { Helper } from 'flowbite-svelte';
 
 	export let data;
 
 	let newPassword = '';
 	let repeatPassword = '';
 	let error = '';
-	let loading: boolean = false;
-	let success = false;
+	let isLoading = false;
+	$: disable = !(repeatPassword.length >= 8 && newPassword.length >= 8);
 
 	const resetPassword = async () => {
+		isLoading = true;
 		try {
 			await user.updateRecovery(
 				data.resetPasswordTokens.userId,
@@ -26,21 +26,18 @@
 				newPassword,
 				repeatPassword
 			);
-			success = true;
+			alert('', $LL.passwordChanged(), {
+				color: 'green',
+				buttons: [{ title: $LL.back(), onClick: () => navigate(-2) }]
+			});
 		} catch (err) {
 			if (!(err instanceof AppwriteException)) return;
-			error = err.message;
-			setTimeout(() => (error = ''), error.length * 100); //it deletes fail errors messages
+
+			alert('', $LL.passwordChangeError(), { color: 'red' });
 		}
+		isLoading = false;
 	};
 </script>
-
-<MyAlert color="green" visible={true}>
-	<span slot="title">Password was successfully changed</span>
-	<span slot="buttons">
-		<FlowbiteButton color="green" on:click={() => goto('/login')}>zpět</FlowbiteButton>
-	</span>
-</MyAlert>
 
 <div class="w-full h-min flex flex-wrap flex-col items-center justify-center p-5 gap-6">
 	<div class="w-full text-center">Obnovte si vaše heslo</div>
@@ -50,12 +47,8 @@
 		<Helper color="red">{error}</Helper>
 	</div>
 
-	<Button
-		class="h-10 w-64 bg-blue-500"
-		on:click={() => resetPassword()}
-		disabled={!(newPassword === repeatPassword && newPassword.length >= 8)}
-	>
-		{#if loading}
+	<Button class="h-10 w-64 bg-blue-500" on:click={() => resetPassword()} disabled={disable}>
+		{#if isLoading}
 			<Loading />
 		{:else}
 			pokračovat

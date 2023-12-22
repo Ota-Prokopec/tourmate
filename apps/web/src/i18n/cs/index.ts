@@ -117,8 +117,12 @@ const cz = {
 	yourLocationIsCurrently_InRangeOf:
 		'your location is currently {location: any} of range {range: string}',
 	experienceWasCreated: 'experience was created',
+	monumentCreated: 'monument was created',
 	notFound: 'not found',
-	noContent: 'there is no content'
+	noContent: 'there is no content',
+	passwordChanged: 'your password was successfully changed',
+	passwordChangeError: 'your password was not successfully changed',
+	yourQuestion: 'your question'
 } satisfies BaseTranslation;
 
 export default cz;

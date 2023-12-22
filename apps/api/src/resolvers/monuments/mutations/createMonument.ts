@@ -156,6 +156,8 @@ const sendNotification = async (monumentId: string, monumentLocation: Location) 
 		await collections.token.listDocuments([Queries.token.equal('userId', userIds)])
 	).documents.map((document) => document.fcmFirebaseToken)
 
+	if (tokens.length === 0) return null
+
 	return await notifications.create(
 		{ data: { type: 'newMonument', monumentId: monumentId } },
 		tokens,

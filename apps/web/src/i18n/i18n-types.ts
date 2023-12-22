@@ -417,6 +417,10 @@ type RootTranslation = {
 	 */
 	experienceWasCreated: string
 	/**
+	 * m​o​n​u​m​e​n​t​ ​w​a​s​ ​c​r​e​a​t​e​d
+	 */
+	monumentCreated: string
+	/**
 	 * n​o​t​ ​f​o​u​n​d
 	 */
 	notFound: string
@@ -424,6 +428,18 @@ type RootTranslation = {
 	 * t​h​e​r​e​ ​i​s​ ​n​o​ ​c​o​n​t​e​n​t
 	 */
 	noContent: string
+	/**
+	 * y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​h​a​n​g​e​d
+	 */
+	passwordChanged: string
+	/**
+	 * y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​h​a​n​g​e​d​.​ ​C​h​e​c​k​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​a​n​d​ ​t​h​e​ ​r​e​p​e​a​t​e​d​ ​p​a​s​s​w​o​r​d​ ​a​n​d​ ​t​r​y​ ​a​g​a​i​n​.
+	 */
+	passwordChangeError: string
+	/**
+	 * y​o​u​r​ ​q​u​e​s​t​i​o​n
+	 */
+	yourQuestion: string
 }
 
 export type TranslationFunctions = {
@@ -820,6 +836,10 @@ export type TranslationFunctions = {
 	 */
 	experienceWasCreated: () => LocalizedString
 	/**
+	 * monument was created
+	 */
+	monumentCreated: () => LocalizedString
+	/**
 	 * not found
 	 */
 	notFound: () => LocalizedString
@@ -827,6 +847,18 @@ export type TranslationFunctions = {
 	 * there is no content
 	 */
 	noContent: () => LocalizedString
+	/**
+	 * your password was successfully changed
+	 */
+	passwordChanged: () => LocalizedString
+	/**
+	 * your password was not successfully changed. Check your password and the repeated password and try again.
+	 */
+	passwordChangeError: () => LocalizedString
+	/**
+	 * your question
+	 */
+	yourQuestion: () => LocalizedString
 }
 
 export type Formatters = {}

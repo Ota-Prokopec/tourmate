@@ -64,7 +64,7 @@
 	{#await monumentsPromise then monuments}
 		{#if monuments}
 			{#each monuments.getListOfMonuments as monument}
-				<MonumentMarker classDrawer="pb-bottomNavBarHeightSize" zoom={mapZoom} {monument} />
+				<MonumentMarker classDrawer="!pb-bottomNavBarHeightSize" zoom={mapZoom} {monument} />
 			{/each}
 		{/if}
 	{:catch}

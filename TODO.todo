@@ -13,6 +13,7 @@ errors:
 }
 
 add more special characters into userId
+monument topics, transports
 
 
 
@@ -22,6 +23,10 @@ add more special characters into userId
 11) add topics and transports
 12) Terms And conditions
 13) notifications
+
+Testing
+1) auth - do the oauth2 register
+2) account - done
 
 
 

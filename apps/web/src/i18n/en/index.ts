@@ -119,8 +119,13 @@ const en = {
 	yourLocationIsCurrently_InRangeOf:
 		'your location is currently {location: number[]} of range {range: string}',
 	experienceWasCreated: 'experience was created',
+	monumentCreated: 'monument was created',
 	notFound: 'not found',
-	noContent: 'there is no content'
+	noContent: 'there is no content',
+	passwordChanged: 'your password was successfully changed',
+	passwordChangeError:
+		'your password was not successfully changed. Check your password and the repeated password and try again.',
+	yourQuestion: 'your question'
 } satisfies BaseTranslation;
 
 export default en;

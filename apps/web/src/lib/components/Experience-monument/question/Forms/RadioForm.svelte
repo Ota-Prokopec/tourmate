@@ -24,8 +24,10 @@
 			}}
 			on:increase={() => (answers = [...answers, ''])}
 			min={2}
-			max={4}><Text>{answers.length}</Text></Counter
+			max={4}
 		>
+			<Text>{answers.length}</Text>
+		</Counter>
 	{/if}
 
 	{#each answers as answer}
@@ -33,6 +35,7 @@
 			name="answers"
 			color="green"
 			class="text-black w-full"
+			checked={chosenAnswer === answer}
 			value={answer}
 			bind:group={chosenAnswer}
 		>

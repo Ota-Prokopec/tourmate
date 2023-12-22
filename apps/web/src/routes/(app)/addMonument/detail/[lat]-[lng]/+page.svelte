@@ -70,6 +70,7 @@
 					}
 				})
 			).createMonument;
+			alert('', $LL.monumentCreated(), { color: 'green' });
 			goto('/');
 		} catch (err) {
 			isLoading = false;

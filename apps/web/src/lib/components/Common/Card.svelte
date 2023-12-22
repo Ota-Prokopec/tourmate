@@ -19,7 +19,7 @@
 </script>
 
 {#if !disable}
-	<Card padding="none" class={twMerge('relative !gap-0', className)}>
+	<Card padding="none" class={twMerge('relative !gap-0 h-auto ', className)}>
 		{#if dismissable}
 			<div class="w-full h-auto flex justify-end gap-2">
 				<slot name="dismissArea" />
@@ -29,7 +29,7 @@
 			</div>
 		{/if}
 
-		<button on:click class="w-full h-full">
+		<button on:click class="w-full h-auto">
 			<slot />
 		</button>
 	</Card>

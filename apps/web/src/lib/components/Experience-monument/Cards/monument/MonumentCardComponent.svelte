@@ -146,7 +146,7 @@
 	<Card
 		on:dismiss
 		{dismissable}
-		class={twMerge('relative justify-self-center gap-2 p-2  mobile:w-full', className)}
+		class={twMerge('relative justify-self-center gap-2 !p-2 !pb-2 mobile:w-full', className)}
 	>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
@@ -173,6 +173,7 @@
 
 		<svelte:component
 			this={size === 'tiny' || size === 'small' ? Columns : Column}
+			class="pb-2 pt-2"
 			columns="1fr 1fr"
 		>
 			<CardImage
@@ -212,10 +213,8 @@
 					<Button on:click={seeOnGoogleMaps} color="green">{$LL.seeOnGoogleMaps()}</Button>
 				</Right>
 				{#if !disableSeeMoreButton}
-					<Button
-						color="blue"
-						class=" w-full p-2"
-						on:click={() => goto(`/monument/${monument._id}`)}>{$LL.seeMore()}</Button
+					<Button color="blue" class="w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
+						>{$LL.seeMore()}</Button
 					>
 				{/if}
 				{#if isMonumentCard(monument)}

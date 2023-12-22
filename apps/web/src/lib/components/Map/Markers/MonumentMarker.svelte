@@ -16,6 +16,7 @@
 	import Marker from '../Marker.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import IconImages from '$lib/components/Icons/IconImages.svelte';
+	import Full from '$lib/components/Common/Full.svelte';
 
 	export let monument: MonumentMarkerData;
 	export let disableShowingDetails = false;
@@ -41,7 +42,7 @@
 </script>
 
 <Drawer
-	class={twMerge('p-2 h-full w-full max-w-[400px]', classDrawer)}
+	class={twMerge('p-2 h-full w-full max-w-[400px] ', classDrawer)}
 	bind:hidden={detailHidden}
 	placement="left"
 >
@@ -57,8 +58,8 @@
 			</Center>
 		{:then monumentCardData}
 			{@const monument = monumentCardData.getMonument}
-			<Column class="gap-4">
-				<MonumentCardComponent size="normal" {monument} />
+			<Column class={'flex-nowrap'}>
+				<MonumentCardComponent class="mb-bottomNavBarHeightSize" size="normal" {monument} />
 				{#if monument.connectedExperiences.length}
 					<Carousel class="h-min" swiping arrows>
 						{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
