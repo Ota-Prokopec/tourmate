@@ -18,8 +18,12 @@
 	import Drawer from '../Components/MonumentNotFoundDrawer.svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from '../options';
 	import type { PageData } from './$types';
-	import { base64ToFile, fileToBase64 } from '@app/utils';
+	import { base64ToFile, device, fileToBase64 } from '@app/utils';
 	import { goto } from '$app/navigation';
+	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
+	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
+	import TakePhotoFromPhone from '$lib/components/Photo/TakePhotoFromPhone.svelte';
+	import ImageInput from '$lib/components/ImageInputs/ImageInput.svelte';
 
 	//if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -109,8 +113,15 @@
 
 		{#if picture}
 			<CardImage imgSrc={picture} />
+		{:else if device.recognizeWidth() === 'mobile'}
+			<TakePhotoFromPhone />
 		{:else}
-			<BasicImageInput on:image={(e) => (picture = e.detail.base64)} class="min-h-[200px]" />
+			<ImageInput
+				screenErrors
+				method="gallery"
+				class="min-h-40"
+				on:image={(e) => (picture = e.detail.base64)}
+			/>
 		{/if}
 
 		<Center

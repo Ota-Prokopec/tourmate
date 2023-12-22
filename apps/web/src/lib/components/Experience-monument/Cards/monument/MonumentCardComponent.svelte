@@ -143,14 +143,10 @@
 </Modal>
 
 {#if isCardVisible}
-	<Card
-		on:dismiss
-		{dismissable}
-		class={twMerge('relative justify-self-center gap-2 !p-2 !pb-2 mobile:w-full', className)}
-	>
+	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full', className)}>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
-			<Row class="justify-between">
+			<Row class="justify-between w-full">
 				{#if isMonumentCard(monument)}
 					<UserItem
 						on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
@@ -173,7 +169,7 @@
 
 		<svelte:component
 			this={size === 'tiny' || size === 'small' ? Columns : Column}
-			class="pb-2 pt-2"
+			class="pb-2 pt-2 w-full"
 			columns="1fr 1fr"
 		>
 			<CardImage
@@ -208,7 +204,7 @@
 		</div>
 
 		{#if size !== 'tiny'}
-			<Column class="gap-2 mt-2">
+			<Column class="gap-2 ">
 				<Right>
 					<Button on:click={seeOnGoogleMaps} color="green">{$LL.seeOnGoogleMaps()}</Button>
 				</Right>

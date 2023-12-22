@@ -122,7 +122,9 @@ const cz = {
 	noContent: 'there is no content',
 	passwordChanged: 'your password was successfully changed',
 	passwordChangeError: 'your password was not successfully changed',
-	yourQuestion: 'your question'
+	yourQuestion: 'your question',
+	imageFromClipboardloadingError: 'There was an error with loading image from clipboard',
+	public: 'public'
 } satisfies BaseTranslation;
 
 export default cz;

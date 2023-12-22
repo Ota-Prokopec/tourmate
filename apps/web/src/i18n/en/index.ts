@@ -125,7 +125,9 @@ const en = {
 	passwordChanged: 'your password was successfully changed',
 	passwordChangeError:
 		'your password was not successfully changed. Check your password and the repeated password and try again.',
-	yourQuestion: 'your question'
+	yourQuestion: 'your question',
+	imageFromClipboardloadingError: 'There was an error with loading image from clipboard',
+	public: 'public'
 } satisfies BaseTranslation;
 
 export default en;

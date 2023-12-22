@@ -5,7 +5,7 @@
 	import { Img } from 'flowbite-svelte';
 	import Avatar from '../Common/Avatar.svelte';
 
-	export let imageURL: URL | Base64 | null | undefined = undefined;
+	export let imageURL: URL | Base64 | null | undefined | string = undefined;
 	export let autoImagesrcCompleter = true;
 	export let disabled: boolean = false;
 	export let method: 'gallery' | 'copyPaste' | 'both' = 'gallery';
@@ -17,6 +17,7 @@
 
 	let className = '';
 	export { className as class };
+	export let avatarClassName = '';
 
 	$: imgUrlAsString = imageURL as string;
 </script>
@@ -30,5 +31,5 @@
 	on:image
 	on:image={onImage}
 >
-	<Avatar size="xl" src={imgUrlAsString} />
+	<Avatar size="xl" class={avatarClassName} src={imgUrlAsString} />
 </ImageInput>

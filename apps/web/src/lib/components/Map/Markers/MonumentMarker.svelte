@@ -42,6 +42,7 @@
 </script>
 
 <Drawer
+	backdrop={true}
 	class={twMerge('p-2 h-full w-full max-w-[400px] ', classDrawer)}
 	bind:hidden={detailHidden}
 	placement="left"

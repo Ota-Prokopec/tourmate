@@ -440,6 +440,14 @@ type RootTranslation = {
 	 * y​o​u​r​ ​q​u​e​s​t​i​o​n
 	 */
 	yourQuestion: string
+	/**
+	 * T​h​e​r​e​ ​w​a​s​ ​a​n​ ​e​r​r​o​r​ ​w​i​t​h​ ​l​o​a​d​i​n​g​ ​i​m​a​g​e​ ​f​r​o​m​ ​c​l​i​p​b​o​a​r​d
+	 */
+	imageFromClipboardloadingError: string
+	/**
+	 * p​u​b​l​i​c
+	 */
+	'public': string
 }
 
 export type TranslationFunctions = {
@@ -859,6 +867,14 @@ export type TranslationFunctions = {
 	 * your question
 	 */
 	yourQuestion: () => LocalizedString
+	/**
+	 * There was an error with loading image from clipboard
+	 */
+	imageFromClipboardloadingError: () => LocalizedString
+	/**
+	 * public
+	 */
+	'public': () => LocalizedString
 }
 
 export type Formatters = {}
