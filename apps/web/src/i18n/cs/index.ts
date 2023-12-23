@@ -124,7 +124,16 @@ const cz = {
 	passwordChangeError: 'your password was not successfully changed',
 	yourQuestion: 'your question',
 	imageFromClipboardloadingError: 'There was an error with loading image from clipboard',
-	public: 'public'
+	public: 'public',
+
+	castle: 'hrad/zámek',
+	person: 'Osobnost',
+	hiking: 'pěší turistika',
+
+	cookiesAlertText:
+		'This site uses cookies to store users sessions and users data including users current location.',
+
+	accept: 'accept'
 } satisfies BaseTranslation;
 
 export default cz;

@@ -13,6 +13,7 @@ export type Data =
 			alreadyHasNotificationToken?: boolean;
 			'color-theme'?: 'light' | 'dark';
 			language?: Locales;
+			cookiesAccepted?: boolean;
 	  } & Record<string, any>;
 
 const parseLocalStorageValue = (value: string) => {

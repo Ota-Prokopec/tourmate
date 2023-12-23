@@ -90,8 +90,15 @@
 			acknowledge that you have read, understood, and agreed to these Terms and Conditions. If you
 			have any questions or concerns, please contact us at [Contact Email].
 		</Text>
+
+		<Text class="text-xl font-bold">11. Users location</Text>
+
+		<Text>
+			Users location will be stored in local storage of your browser. User will be able to choose
+			his location to get notifications when a new monument is created near to the user and this
+			location will be stored in the database.
+		</Text>
 	{:else}
-		Certainly! Here's the translation of the provided text into Czech: ```html
 		<Text class="text-xl font-bold">1. Přijetí podmínek</Text>
 
 		<Text>
@@ -174,6 +181,14 @@
 			Tyto Obchodní podmínky podléhají a jsou vykládány v souladu s právem [Jurisdikce]. Veškeré
 			spory vyplývající z těchto podmínek nebo s nimi související spadají do výlučné jurisdikce
 			soudů v [Jurisdikce]. Používáním Aplikace Tour
+		</Text>
+
+		<Text class="text-xl font-bold">11. Uživatelova poloha</Text>
+
+		<Text>
+			Poloha uživatele bude uložena v lokálním úložišti vašeho prohlížeče. Uživatel bude moci vybrat
+			svou polohu a dostávat oznámení, když je v blízkosti uživatele vytvořen nový památník, a tato
+			poloha bude uložena v databázi.
 		</Text>
 	{/if}
 </Column>

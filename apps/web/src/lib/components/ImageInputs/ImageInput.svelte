@@ -91,7 +91,7 @@
 <Dropzone
 	on:focus={() => (usePopup = true)}
 	on:mouseover={() => (usePopup = true)}
-	class={twMerge('object-cover ', className)}
+	class={twMerge('object-cover min-w-none ', className)}
 	{id}
 	accept="image/*"
 	on:drop={dropHandle}

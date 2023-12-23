@@ -12,6 +12,7 @@
 	import { getThemeInternalMode } from '@app/utils';
 	import { user } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';
+	import CookiesAlert from '$lib/components/Common/CookiesAlert.svelte';
 	const userIsLoading = user.isLoading;
 
 	let mounted = false;
@@ -58,6 +59,8 @@
 		{/if}
 	</span>
 </Alert>
+
+<CookiesAlert />
 
 <QueryClientProvider client={queryClient}>
 	{#if $navigating}

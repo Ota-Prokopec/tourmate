@@ -4,7 +4,7 @@
 </script>
 
 <Input
-	pattern={/[^a-zA-Z0-9_-]/}
+	pattern={/[^a-zA-Z0-9_.-]/}
 	maxLength={40}
 	class="w-full"
 	bind:value={myId}

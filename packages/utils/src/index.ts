@@ -11,6 +11,7 @@ export * from './utils/colors';
 export * from './utils/device';
 export * from './utils/elementIdGenerator';
 export * from './utils/fetching';
+export * from './utils/language';
 export * from './utils/localStorage';
 export * from './utils/location';
 export * from './utils/normalizators';

@@ -127,7 +127,16 @@ const en = {
 		'your password was not successfully changed. Check your password and the repeated password and try again.',
 	yourQuestion: 'your question',
 	imageFromClipboardloadingError: 'There was an error with loading image from clipboard',
-	public: 'public'
+	public: 'public',
+
+	castle: 'castle',
+	person: 'person',
+	hiking: 'hiking',
+
+	cookiesAlertText:
+		'This site uses cookies to store users sessions and users data including users current location.',
+
+	accept: 'accept'
 } satisfies BaseTranslation;
 
 export default en;

@@ -88,7 +88,7 @@
 
 {#if !serverResponse}
 	<MonumentCreateForm
-		class="mobile:!m-0"
+		class="mobile:!m-0 mobile:!w-full mobile:max-w-none"
 		{placeName}
 		{location}
 		bind:name
