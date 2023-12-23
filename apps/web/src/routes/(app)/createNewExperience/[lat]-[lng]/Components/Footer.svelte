@@ -20,8 +20,6 @@
 	$: question = monument?.question;
 	let isAnsweringLoading = false;
 
-	$: console.log(monument?.usersAnswerToQuestion);
-
 	$: usersAnswer = monument?.usersAnswerToQuestion;
 
 	$: ableToAnswer = monument?.question && !usersAnswer && isUserCloseEnoughToMonument;

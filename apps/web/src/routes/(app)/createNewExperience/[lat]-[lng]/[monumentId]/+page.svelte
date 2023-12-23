@@ -58,7 +58,7 @@
 					picture: picture
 				}
 			});
-			storage.newExperiencePicture = undefined;
+			//storage.newExperiencePicture = undefined; i have this in +layout.svelte
 			alert('', $LL.experienceWasCreated(), { color: 'green' });
 			goto('/');
 		} catch (error) {

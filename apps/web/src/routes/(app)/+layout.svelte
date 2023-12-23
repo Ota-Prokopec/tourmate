@@ -1,35 +1,21 @@
 <script lang="ts" context="module">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
-	import IconPlus from '$lib/components/Icons/IconPlus.svelte';
-	import type { MessagePayload } from 'firebase/messaging';
-	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import { writable } from 'svelte/store';
 
 	export const mapOrTakePhoto = writable<'map' | 'takePhoto'>('map');
-
-	import { browser } from '$app/environment';
-	import lsSvelte from '$lib/utils/lsStore';
-	import { watchUsersLocation } from '@app/utils';
 </script>
 
 <script lang="ts">
-	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconMagnifyingGlass from '$lib/components/Icons/IconMagnifyingGlass.svelte';
-	import IconMap from '$lib/components/Icons/IconMap.svelte';
-	import IconPach from '$lib/components/Icons/IconPach.svelte';
+	import { browser } from '$app/environment';
+	import lsSvelte from '$lib/utils/lsStore';
+	import { watchUsersLocation } from '@app/utils';
+	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Notification from '$lib/components/Notification/Notification.svelte';
 	import { appwriteKeys } from '@app/appwrite-client';
-	import * as permissions from '@app/appwrite-permissions';
 	import { omit } from 'lodash';
 	import { onMount } from 'svelte';
-	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
 	import { collections } from '../../lib/appwrite/appwrite';
 	import type { LayoutData } from './$types';
-	import Notification from '$lib/components/Notification/Notification.svelte';
 	import Bar from './Components/Bar.svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 
 	export let data: LayoutData;
 	let isLoading = true;
@@ -58,6 +44,16 @@
 				_createdAt: updatedUserInfo.$createdAt
 			});
 		});
+	});
+
+	import { beforeNavigate } from '$app/navigation';
+	import { storage } from '$lib/utils/lsStore';
+	//this is for /createNewExperience/[]/[] so when i am getting back from that and i have a picture stored in lsStore => i have to delete it that i did not have it there infinite years =>  the picture is there only for being it restored when user reloads the page
+	beforeNavigate((e) => {
+		const includesNewExperienceCreate = e.from?.route.id?.includes(
+			'/(app)/createNewExperience/[lat]-[lng]/[monumentId]'
+		); //this means that you are getting back from creating the monument so it menas i have to delete a picture from lsStore
+		if (includesNewExperienceCreate) storage.newExperiencePicture = undefined;
 	});
 </script>
 
