@@ -33,7 +33,7 @@ const en = {
 	regitrationPageTitle: 'Welcome into experinece app, we are happy to see you here.',
 	registrationPageUsernameUserIdConditions:
 		'Please username and user id has contain at least 4 letters. Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)',
-	acceptTerms: 'accept terms and permissions',
+	acceptTerms: 'accept terms and conditions',
 	or: 'or',
 	passwordsDontMatch: 'Your passwords dont match',
 	userAlreadyExists: 'user already exists',

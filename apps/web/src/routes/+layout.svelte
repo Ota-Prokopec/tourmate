@@ -63,7 +63,7 @@
 	{#if $navigating}
 		<FullPageLoading />
 	{:else}
-		<div class="w-full h-full bg-white dark:bg-black">
+		<div class="w-full h-full bg-white dark:bg-black overflow-auto">
 			<slot />
 		</div>
 	{/if}

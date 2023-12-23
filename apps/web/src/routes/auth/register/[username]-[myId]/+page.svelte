@@ -12,6 +12,7 @@
 	import LoginViaSocilaMedia from '../../Components/LoginViaSocilaMedia.svelte';
 	import type { PageData } from './$types';
 	import Column from '$lib/components/Common/Column.svelte';
+	import Link from '$lib/components/Common/Link.svelte';
 
 	export let data: PageData;
 
@@ -31,7 +32,9 @@
 	<FullPageLoading />
 {:else}
 	<Column class="items-center justify-start p-5 mt-4 gap-14">
-		<Checkbox bind:checked={termsAccepted}>{$LL.acceptTerms()}</Checkbox>
+		<Checkbox bind:checked={termsAccepted}>
+			<Link href={`/auth/terms`}>{$LL.acceptTerms()}</Link></Checkbox
+		>
 
 		<Icon
 			on:click={() => navigate(`email`)}

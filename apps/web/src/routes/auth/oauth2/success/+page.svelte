@@ -23,6 +23,8 @@
 				(await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)]))
 					.total > 0;
 
+			storage.cookieFallback = { a_session_experiences: data.session };
+
 			//if there already is a userInfo document with my $id it means i only want to login so navigate me into the main page
 			if (myUserInfoAlreadyExists) {
 				goto('/', { invalidateAll: true }); //go to the main page
@@ -30,8 +32,6 @@
 			}
 
 			if (!usersParams) throw new Error('Users params in localstorage are not complete');
-
-			storage.cookieFallback = { a_session_experiences: data.session };
 
 			//if your account is not created, create an account
 			if (!myUserInfoAlreadyExists) {

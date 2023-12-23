@@ -20,6 +20,7 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 
 		try {
 			appwrite = appwriteConnections.setCookie(cookies)
+
 			user = await appwrite.account.get<Preferences>()
 
 			// appwrite.account.updatePrefs<Preferences>({

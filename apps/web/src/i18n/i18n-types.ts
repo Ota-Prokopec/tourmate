@@ -122,7 +122,7 @@ type RootTranslation = {
 	 */
 	registrationPageUsernameUserIdConditions: string
 	/**
-	 * a​c​c​e​p​t​ ​t​e​r​m​s​ ​a​n​d​ ​p​e​r​m​i​s​s​i​o​n​s
+	 * a​c​c​e​p​t​ ​t​e​r​m​s​ ​a​n​d​ ​c​o​n​d​i​t​i​o​n​s
 	 */
 	acceptTerms: string
 	/**
@@ -552,7 +552,7 @@ export type TranslationFunctions = {
 	 */
 	registrationPageUsernameUserIdConditions: () => LocalizedString
 	/**
-	 * accept terms and permissions
+	 * accept terms and conditions
 	 */
 	acceptTerms: () => LocalizedString
 	/**
