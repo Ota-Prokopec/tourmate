@@ -5,13 +5,14 @@
 	import Text from './Text.svelte';
 	import lsStore, { storage } from '$lib/utils/lsStore';
 	import Right from './Right.svelte';
+	import { browser } from '$app/environment';
 
 	const accepted = () => {
 		storage.cookiesAccepted = true;
 	};
 </script>
 
-{#if !storage.cookiesAccepted}
+{#if browser && !storage.cookiesAccepted}
 	<Alert class="absolute bottom-0 m-2 mb-10">
 		<Text>
 			{$LL.cookiesAlertText()}

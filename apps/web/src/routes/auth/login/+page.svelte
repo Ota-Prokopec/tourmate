@@ -43,8 +43,8 @@
 	};
 </script>
 
-<div class="w-full h-auto flex flex-wrap flex-col items-center p-5 gap-6">
-	<div class="flex w-full pl-2 pr-2 flex-wrap flex-col gap-1 max-w-[400px]">
+<div class="w-full h-auto flex flex-wrap flex-col items-center gap-6">
+	<div class="flex w-full flex-wrap flex-col gap-1 max-w-[400px]">
 		<EmailInput class="w-full !rounded-3xl" bind:value={email} />
 		<PasswordInput class="w-full !rounded-3xl" bind:value={password} />
 	</div>
