@@ -9,6 +9,7 @@
 	import Card from '$lib/components/Common/Card.svelte';
 	import { twMerge } from 'tailwind-merge';
 	import LL from '$src/i18n/i18n-svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 
 	export let placeName: string;
 	export let location: Location;
@@ -33,9 +34,9 @@
 	<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 		{placeName}
 	</h5>
-	<p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+	<Text class="mb-3 font-normal text-gray-500 dark:text-gray-400 break-all">
 		lokace: [{location}]
-	</p>
+	</Text>
 	<ItemsLayout
 		let:id
 		items={[

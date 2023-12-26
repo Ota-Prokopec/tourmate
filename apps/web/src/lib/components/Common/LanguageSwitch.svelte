@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { lsStore } from '$lib/utils/lsStore';
-	import { setLocale, locale } from '$src/i18n/i18n-svelte';
-	import { Helper, Select } from 'flowbite-svelte';
+	import { locale, setLocale } from '$src/i18n/i18n-svelte';
+	import { Select } from 'flowbite-svelte';
 
 	const languageItems: [
 		{

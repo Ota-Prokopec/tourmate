@@ -1,23 +1,22 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Carousel from '$lib/components/Carousel/Carousel.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import LL from '$src/i18n/i18n-svelte';
-	import { Button, Card } from 'flowbite-svelte';
-	import type { PageData } from './$types';
-	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
 	import { alert } from '$src/routes/alertStore';
-	import { goto } from '$app/navigation';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
-	import Column from '$lib/components/Common/Column.svelte';
+	import { Button, Card } from 'flowbite-svelte';
+	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
@@ -42,7 +41,7 @@
 </script>
 
 {#if !onlyMap}
-	<Column class="absolute top-0 left-0 z-50 gap-4 mobile:w-full">
+	<div class="min-w-[400px] absolute top-0 left-0 h-auto z-50">
 		<MonumentCard
 			bind:distanceInMeters
 			class="mobile:w-full mobile:max-w-none"
@@ -79,7 +78,7 @@
 				</Carousel>
 			</Card>
 		{/if}
-	</Column>
+	</div>
 {/if}
 
 <Map showUser center={data.monument.location} class="h-[100dvh] fixed top-0">

@@ -14,7 +14,7 @@ const en = {
 		'We are sorry, but there was a problem in updating your profile picture. Try to reset the page and try it again.',
 	updateProfileErrorTitle: 'Profile was not updated',
 	updateProfileErrorMessage:
-		'We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.',
+		'We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.',
 
 	saveErrorTitle: '{what: string} was not saved',
 	saveErrorMessage:
@@ -32,8 +32,8 @@ const en = {
 	unsuccessfulRegister: 'registration was not successful',
 	regitrationPageTitle: 'Welcome into experinece app, we are happy to see you here.',
 	registrationPageUsernameUserIdConditions:
-		'Please username and user id has contain at least 4 letters',
-	acceptTerms: 'accept terms and permissions',
+		'Please username and user id has contain at least 4 letters. Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)',
+	acceptTerms: 'accept terms and conditions',
 	or: 'or',
 	passwordsDontMatch: 'Your passwords dont match',
 	userAlreadyExists: 'user already exists',
@@ -118,7 +118,25 @@ const en = {
 	cancel: 'cancel',
 	yourLocationIsCurrently_InRangeOf:
 		'your location is currently {location: number[]} of range {range: string}',
-	experienceWasCreated: 'experience was created'
+	experienceWasCreated: 'experience was created',
+	monumentCreated: 'monument was created',
+	notFound: 'not found',
+	noContent: 'there is no content',
+	passwordChanged: 'your password was successfully changed',
+	passwordChangeError:
+		'your password was not successfully changed. Check your password and the repeated password and try again.',
+	yourQuestion: 'your question',
+	imageFromClipboardloadingError: 'There was an error with loading image from clipboard',
+	public: 'public',
+
+	castle: 'castle',
+	person: 'person',
+	hiking: 'hiking',
+
+	cookiesAlertText:
+		'This site uses cookies to store users sessions and users data including users current location.',
+
+	accept: 'accept'
 } satisfies BaseTranslation;
 
 export default en;

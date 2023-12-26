@@ -15,30 +15,37 @@
 
 	onMount(async () => {
 		try {
-			if (!usersParams) throw new Error('Users params in localstorage are not complete');
-
-			storage.cookieFallback = { a_session_experiences: data.session };
-
 			const { $id: userId } = await user.get();
 
 			if (!userId) throw new Error('User is not Authed');
 
-			const myUserInfoAlreadyExists = (
-				await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)])
-			).total;
+			const myUserInfoAlreadyExists =
+				(await collections.userInfo.listDocuments([Queries.userInfo.equal('userId', userId)]))
+					.total > 0;
+
+			storage.cookieFallback = { a_session_experiences: data.session };
+
+			//if there already is a userInfo document with my $id it means i only want to login so navigate me into the main page
+			if (myUserInfoAlreadyExists) {
+				goto('/', { invalidateAll: true }); //go to the main page
+				return;
+			}
+
+			if (!usersParams) throw new Error('Users params in localstorage are not complete');
 
 			//if your account is not created, create an account
-			if (myUserInfoAlreadyExists === 0) {
+			if (!myUserInfoAlreadyExists) {
 				//create experience account
 				const { createAccount: account } = await sdk.createAccount({
 					myId: usersParams.myId,
 					username: usersParams.username
 				});
-				if (!account) throw new Error('It was not successful to create your account');
-			}
 
-			goto(`/account/${usersParams.myId}/setlocationfornotifications`);
+				if (!account) throw new Error('It was not successful to create your account');
+				goto(`/auth/register/setlocationfornotifications`, { invalidateAll: true }); //finish your registration
+			}
 		} catch (error) {
+			console.log(error);
 			if (error instanceof Error) errMessage = error.message;
 		}
 	});

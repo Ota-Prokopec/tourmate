@@ -55,7 +55,7 @@ type RootTranslation = {
 	 */
 	updateProfileErrorTitle: string
 	/**
-	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​T​r​y​ ​t​o​ ​r​e​s​e​t​ ​t​h​e​ ​p​a​g​e​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+	 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​ ​i​n​ ​a​n​o​t​h​e​r​ ​u​s​e​r​s​ ​p​r​o​f​i​l​e​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​t​o​ ​a​n​o​t​h​e​r​.
 	 */
 	updateProfileErrorMessage: string
 	/**
@@ -118,11 +118,11 @@ type RootTranslation = {
 	 */
 	regitrationPageTitle: string
 	/**
-	 * P​l​e​a​s​e​ ​u​s​e​r​n​a​m​e​ ​a​n​d​ ​u​s​e​r​ ​i​d​ ​h​a​s​ ​c​o​n​t​a​i​n​ ​a​t​ ​l​e​a​s​t​ ​4​ ​l​e​t​t​e​r​s
+	 * P​l​e​a​s​e​ ​u​s​e​r​n​a​m​e​ ​a​n​d​ ​u​s​e​r​ ​i​d​ ​h​a​s​ ​c​o​n​t​a​i​n​ ​a​t​ ​l​e​a​s​t​ ​4​ ​l​e​t​t​e​r​s​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​w​i​l​l​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​c​o​n​t​a​i​n​ ​@​ ​c​h​a​r​a​c​t​e​r​,​ ​y​o​u​ ​w​i​l​l​ ​n​o​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​h​a​v​e​ ​a​n​y​ ​s​p​e​c​i​a​l​ ​c​h​a​r​a​c​t​e​r​s​ ​i​n​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​e​x​c​l​u​d​i​n​g​ ​f​e​w​ ​o​f​ ​t​h​e​m​ ​(​-​,​ ​_​)
 	 */
 	registrationPageUsernameUserIdConditions: string
 	/**
-	 * a​c​c​e​p​t​ ​t​e​r​m​s​ ​a​n​d​ ​p​e​r​m​i​s​s​i​o​n​s
+	 * a​c​c​e​p​t​ ​t​e​r​m​s​ ​a​n​d​ ​c​o​n​d​i​t​i​o​n​s
 	 */
 	acceptTerms: string
 	/**
@@ -416,6 +416,58 @@ type RootTranslation = {
 	 * e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​c​r​e​a​t​e​d
 	 */
 	experienceWasCreated: string
+	/**
+	 * m​o​n​u​m​e​n​t​ ​w​a​s​ ​c​r​e​a​t​e​d
+	 */
+	monumentCreated: string
+	/**
+	 * n​o​t​ ​f​o​u​n​d
+	 */
+	notFound: string
+	/**
+	 * t​h​e​r​e​ ​i​s​ ​n​o​ ​c​o​n​t​e​n​t
+	 */
+	noContent: string
+	/**
+	 * y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​h​a​n​g​e​d
+	 */
+	passwordChanged: string
+	/**
+	 * y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​h​a​n​g​e​d​.​ ​C​h​e​c​k​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​a​n​d​ ​t​h​e​ ​r​e​p​e​a​t​e​d​ ​p​a​s​s​w​o​r​d​ ​a​n​d​ ​t​r​y​ ​a​g​a​i​n​.
+	 */
+	passwordChangeError: string
+	/**
+	 * y​o​u​r​ ​q​u​e​s​t​i​o​n
+	 */
+	yourQuestion: string
+	/**
+	 * T​h​e​r​e​ ​w​a​s​ ​a​n​ ​e​r​r​o​r​ ​w​i​t​h​ ​l​o​a​d​i​n​g​ ​i​m​a​g​e​ ​f​r​o​m​ ​c​l​i​p​b​o​a​r​d
+	 */
+	imageFromClipboardloadingError: string
+	/**
+	 * p​u​b​l​i​c
+	 */
+	'public': string
+	/**
+	 * c​a​s​t​l​e
+	 */
+	castle: string
+	/**
+	 * p​e​r​s​o​n
+	 */
+	person: string
+	/**
+	 * h​i​k​i​n​g
+	 */
+	hiking: string
+	/**
+	 * T​h​i​s​ ​s​i​t​e​ ​u​s​e​s​ ​c​o​o​k​i​e​s​ ​t​o​ ​s​t​o​r​e​ ​u​s​e​r​s​ ​s​e​s​s​i​o​n​s​ ​a​n​d​ ​u​s​e​r​s​ ​d​a​t​a​ ​i​n​c​l​u​d​i​n​g​ ​u​s​e​r​s​ ​c​u​r​r​e​n​t​ ​l​o​c​a​t​i​o​n​.
+	 */
+	cookiesAlertText: string
+	/**
+	 * a​c​c​e​p​t
+	 */
+	accept: string
 }
 
 export type TranslationFunctions = {
@@ -460,7 +512,7 @@ export type TranslationFunctions = {
 	 */
 	updateProfileErrorTitle: () => LocalizedString
 	/**
-	 * We are sorry, but there was a problem in updating your profile. Try to reset the page and try it again.
+	 * We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.
 	 */
 	updateProfileErrorMessage: () => LocalizedString
 	/**
@@ -516,11 +568,11 @@ export type TranslationFunctions = {
 	 */
 	regitrationPageTitle: () => LocalizedString
 	/**
-	 * Please username and user id has contain at least 4 letters
+	 * Please username and user id has contain at least 4 letters. Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)
 	 */
 	registrationPageUsernameUserIdConditions: () => LocalizedString
 	/**
-	 * accept terms and permissions
+	 * accept terms and conditions
 	 */
 	acceptTerms: () => LocalizedString
 	/**
@@ -811,6 +863,58 @@ export type TranslationFunctions = {
 	 * experience was created
 	 */
 	experienceWasCreated: () => LocalizedString
+	/**
+	 * monument was created
+	 */
+	monumentCreated: () => LocalizedString
+	/**
+	 * not found
+	 */
+	notFound: () => LocalizedString
+	/**
+	 * there is no content
+	 */
+	noContent: () => LocalizedString
+	/**
+	 * your password was successfully changed
+	 */
+	passwordChanged: () => LocalizedString
+	/**
+	 * your password was not successfully changed. Check your password and the repeated password and try again.
+	 */
+	passwordChangeError: () => LocalizedString
+	/**
+	 * your question
+	 */
+	yourQuestion: () => LocalizedString
+	/**
+	 * There was an error with loading image from clipboard
+	 */
+	imageFromClipboardloadingError: () => LocalizedString
+	/**
+	 * public
+	 */
+	'public': () => LocalizedString
+	/**
+	 * castle
+	 */
+	castle: () => LocalizedString
+	/**
+	 * person
+	 */
+	person: () => LocalizedString
+	/**
+	 * hiking
+	 */
+	hiking: () => LocalizedString
+	/**
+	 * This site uses cookies to store users sessions and users data including users current location.
+	 */
+	cookiesAlertText: () => LocalizedString
+	/**
+	 * accept
+	 */
+	accept: () => LocalizedString
 }
 
 export type Formatters = {}

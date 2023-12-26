@@ -5,7 +5,7 @@
 	import Avatar from '../Common/Avatar.svelte';
 	import { twMerge } from 'tailwind-merge';
 
-	export let imageURL: URL | Base64 | null | undefined = undefined;
+	export let imageURL: URL | Base64 | null | undefined | string = undefined;
 	export let autoImagesrcCompleter = true;
 	export let disabled: boolean = false;
 	export let method: 'gallery' | 'copyPaste' | 'both' = 'gallery';

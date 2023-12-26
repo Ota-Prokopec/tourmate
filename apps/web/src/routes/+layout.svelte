@@ -8,10 +8,11 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
-	import { lsStore } from '$lib/utils/lsStore';
+	import { lsStore, storage } from '$lib/utils/lsStore';
 	import { getThemeInternalMode } from '@app/utils';
 	import { user } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';
+	import CookiesAlert from '$lib/components/Common/CookiesAlert.svelte';
 	const userIsLoading = user.isLoading;
 
 	let mounted = false;
@@ -22,7 +23,7 @@
 	//client-side appwrite local-storage session loggin out
 	onMount(async () => {
 		const account = await user.getUser();
-		if (account && !$page.route.id?.startsWith('/auth/')) {
+		if (!account && !$page.route.id?.startsWith('/auth/')) {
 			goto('/auth/login');
 		}
 	});
@@ -59,11 +60,13 @@
 	</span>
 </Alert>
 
+<CookiesAlert />
+
 <QueryClientProvider client={queryClient}>
 	{#if $navigating}
 		<FullPageLoading />
 	{:else}
-		<div class="w-full h-full bg-white dark:bg-black">
+		<div class="w-full h-full bg-white dark:bg-black overflow-auto">
 			<slot />
 		</div>
 	{/if}

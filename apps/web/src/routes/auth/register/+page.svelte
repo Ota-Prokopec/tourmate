@@ -13,6 +13,7 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
+	import MyIdInput from '$lib/components/Inputs/MyIdInput.svelte';
 
 	let username = '';
 	let myId = '';
@@ -38,19 +39,13 @@
 	<Text class="text-xl">{$LL.regitrationPageTitle()}</Text>
 
 	<Right>
-		<Help placement="left">{$LL.registrationPageUsernameUserIdConditions()}</Help>
+		<Help class="w-[80%] max-w-[400px]" placement="left"
+			>{$LL.registrationPageUsernameUserIdConditions()}</Help
+		>
 	</Right>
 	<ErrorHelpler bind:message={error} timeout={2000} />
-	<Input class="w-full " bind:value={username} floatingLabel="uživatelské jméno" />
-	<Input
-		pattern={/[^a-zA-Z0-9_-]/}
-		maxLength={40}
-		class="w-full "
-		bind:value={myId}
-		icon="@"
-		prefix="@"
-		floatingLabel="uživatelské ID"
-	/>
+	<Input class="w-full" bind:value={username} floatingLabel="uživatelské jméno" />
+	<MyIdInput bind:myId />
 </Column>
 
 <Right class="fixed bottom-0 p-10">

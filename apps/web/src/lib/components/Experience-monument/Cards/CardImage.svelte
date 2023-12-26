@@ -1,7 +1,5 @@
 <script lang="ts">
 	import Card from '$lib/components/Common/Card.svelte';
-	import Drawer from '$lib/components/Common/Drawer.svelte';
-	import Full from '$lib/components/Common/Full.svelte';
 	import Img from '$lib/components/Common/Img.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
@@ -9,6 +7,7 @@
 
 	export let imgSrc: string | URL | null | undefined;
 	export let fullScreen = false;
+	export let disableFullScreen = false;
 
 	let className = '';
 	export { className as class };
@@ -26,7 +25,7 @@
 	{/if}
 
 	<button
-		on:click={() => (fullScreen = true)}
+		on:click={() => (fullScreen = !disableFullScreen)}
 		class={twMerge('h-auto w-full relative', className)}
 		on:dblclick={() => {
 			dispatch('like');

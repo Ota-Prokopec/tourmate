@@ -1,6 +1,8 @@
 import { queryField, stringArg } from 'nexus'
 import { ApolloError } from 'apollo-server-express'
 import type { Preferences } from '@app/ts-types'
+import { owner } from '@app/appwrite-permissions'
+import { ID } from 'appwrite'
 
 export default queryField('createAccount', {
 	args: { myId: stringArg(), username: stringArg() },
@@ -18,12 +20,16 @@ export default queryField('createAccount', {
 			termsAccepted: true,
 		})
 
-		const userInfoPromise = collections.userInfo.createDocument({
-			myId: args.myId,
-			username: args.username,
-			userId: ctx.user.$id,
-			profilePictureURL: undefined,
-		})
+		const userInfoPromise = collections.userInfo.createDocument(
+			{
+				myId: args.myId,
+				username: args.username,
+				userId: ctx.user.$id,
+				profilePictureURL: undefined,
+			},
+			owner(ctx.user.$id),
+			ID.unique(),
+		)
 
 		const [userInfo] = await Promise.all([userInfoPromise])
 

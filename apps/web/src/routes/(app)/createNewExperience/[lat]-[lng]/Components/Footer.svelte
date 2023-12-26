@@ -33,6 +33,8 @@
 		numberAnswer: number | undefined;
 		radioAnswer: string | undefined;
 	}) => {
+		console.log('answer the question');
+
 		try {
 			isAnsweringLoading = true;
 			if (!question) throw new Error('There is no question in monument');
@@ -93,7 +95,7 @@
 				{$LL.cantAnswerTheQuestionTwice()}
 			</Popover>
 		{/if}
-	{:else if monument?.question && ableToSave}
+	{:else if monument?.question && usersAnswer?.answeredCorrectly === true}
 		<Text>{$LL.answeredCorrectly()}</Text>
 	{/if}
 
@@ -101,7 +103,7 @@
 		{#if isPublishingLoading}
 			<Loading />
 		{:else}
-			Zveřejnit
+			{$LL.public()}
 		{/if}
 	</Button>
 

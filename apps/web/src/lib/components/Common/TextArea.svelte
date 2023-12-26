@@ -3,6 +3,7 @@
 	import { Textarea } from 'flowbite-svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
+	import Text from './Text.svelte';
 
 	const dispatch = createEventDispatcher();
 	export let value: string = '';
@@ -13,7 +14,7 @@
 	export let disableScroll: boolean = true;
 	export let disabled: boolean = false;
 	export let disableResizeOnLoad: boolean = false;
-	export let disableEnterKey: boolean = false;
+	export let disableEnterKey: boolean = true;
 	export let minRows: number | null = null;
 
 	let className = '';
@@ -37,7 +38,7 @@
 
 <div class={twMerge('relative', classWrap)}>
 	{#if letterCount}
-		<span class="text-[11px] absolute right-0 top-[-14px] pr-1">{value.length}/{maxLength}</span>
+		<Text class="text-[11px] absolute right-0 top-[-14px] pr-1">{value.length}/{maxLength}</Text>
 	{/if}
 	<Textarea
 		{id}

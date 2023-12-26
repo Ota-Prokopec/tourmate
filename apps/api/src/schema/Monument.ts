@@ -167,8 +167,10 @@ export default objectType({
 			resolve: async (source, args, ctx) => {
 				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authed', '401')
 				const { collections } = ctx.appwrite
+
 				const answerDocument = await collections.usersAnswer.getDocument([
 					Queries.usersAnswer.equal('userId', ctx.user.$id),
+					Queries.usersAnswer.equal('monumentId', source._id),
 				])
 
 				if (!answerDocument) return null

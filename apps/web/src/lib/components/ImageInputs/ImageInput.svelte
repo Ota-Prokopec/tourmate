@@ -6,6 +6,8 @@
 	import { twMerge } from 'tailwind-merge';
 	import MyAlert from '../Alert/Alert.svelte';
 	import Popover from '../Common/Popover.svelte';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
 
 	//	import clipboard from '$lib/utils/clipboard'
 	const dispatch = createEventDispatcher<{
@@ -36,14 +38,18 @@
 	const id = elementIdGenerator();
 
 	const clipBoardRead = async () => {
-		const file = await clipboard.readImage();
+		try {
+			const file = await clipboard.readImage();
 
-		if (!file)
-			err({
-				message: 'No file is supported',
-				code: 404
-			});
-		else change(file);
+			if (!file)
+				err({
+					message: 'No file is supported',
+					code: 404
+				});
+			else change(file);
+		} catch (error) {
+			clipboardError();
+		}
 	};
 
 	const dropHandle = async (event: any) => {
@@ -74,27 +80,18 @@
 	};
 
 	let error: { code: number; message: string } | null = null;
-</script>
 
-{#if screenErrors && error}
-	<MyAlert class="absolute ml-auto mr-auto top-0" color="red">
-		<span slot="title">Error: Nahrání fotografie</span>
-		{error.code === 404 ? 'Ve schránce nemáte žádnou fotografii, která by se uložila' : ''}
-		<span slot="buttons">
-			<Button
-				on:click={() => {
-					error = null;
-				}}
-				color="red">ok</Button
-			>
-		</span>
-	</MyAlert>
-{/if}
+	const clipboardError = () => {
+		if (screenErrors) {
+			alert('', $LL.imageFromClipboardloadingError(), { color: 'red' });
+		}
+	};
+</script>
 
 <Dropzone
 	on:focus={() => (usePopup = true)}
 	on:mouseover={() => (usePopup = true)}
-	class={twMerge('object-cover ', className)}
+	class={twMerge('object-cover min-w-none ', className)}
 	{id}
 	accept="image/*"
 	on:drop={dropHandle}
@@ -108,7 +105,7 @@
 </Dropzone>
 
 {#if usePopup}
-	<Popover class={`z-[9999] w-auto`} color="light">
+	<Popover class={twMerge(`z-[9999] w-auto`, !usePopup && 'hidden')} color="light">
 		<ButtonGroup>
 			<Button on:click={openGallery} class="bg-red-500">přes galerii</Button>
 			<Button on:click={clipBoardRead} class="bg-red-500">přes schránku</Button>

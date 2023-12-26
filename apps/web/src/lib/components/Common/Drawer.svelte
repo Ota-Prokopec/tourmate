@@ -8,6 +8,8 @@
 	export let placement: 'right' | 'left' | 'top' | 'bottom' | 'auto';
 	if (placement === 'auto') placement = device.recognizeWidth() === 'mobile' ? 'bottom' : 'right';
 	export let hidden = true;
+	export let activateClickOutside = true;
+	export let backdrop = true;
 
 	let className = '';
 	export { className as class };
@@ -22,6 +24,8 @@
 
 {#if placement !== 'auto'}
 	<Drawer
+		{backdrop}
+		{activateClickOutside}
 		bind:hidden
 		class={twMerge('rounded-xl relative z-50', className)}
 		{placement}

@@ -29,7 +29,7 @@
 			if (!account) {
 				throw new Error('It was not successful to create your account');
 			}
-			goto(`/account/${user.$id}/setlocationfornotifications`);
+			goto(`/auth/register/setlocationfornotifications`, { invalidateAll: true }); //finish your registration
 		} catch (error) {
 			if (error instanceof Error)
 				alert('Error', `please share this with the support: [${error.message}]`, {

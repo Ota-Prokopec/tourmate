@@ -17,7 +17,7 @@
 	const confirm = async () => {
 		try {
 			loading = true;
-			await user.createRecovery(email, `${location.origin}/forgottonpassword/resetpassword`);
+			await user.createRecovery(email, `${location.origin}/auth/forgottonpassword/resetpassword`);
 			status = 'email-sent';
 			loading = false;
 		} catch (error) {

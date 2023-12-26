@@ -7,17 +7,18 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import Input from '$lib/components/Common/Input.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
+	import TextArea from '$lib/components/Common/TextArea.svelte';
 	import Title from '$lib/components/Common/Title.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 	import {
-		type Answer,
 		getQuestionType,
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
 		isQuestionTypeText,
+		type Answer,
 		type AnswerType,
 		type Question
 	} from '@app/ts-types';
@@ -26,7 +27,6 @@
 	import NumberForm from '../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';
 	import RadioForm from '../../../../../lib/components/Experience-monument/question/Forms/RadioForm.svelte';
 	import TextForm from '../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
-	import LL from '$src/i18n/i18n-svelte';
 
 	const dispatch = createEventDispatcher<{
 		save: Omit<Question<AnswerType>, 'pickingAnswers'> & {
@@ -147,7 +147,13 @@
 	<Column>
 		<Title>Your question</Title>
 
-		<Input bind:value={questionHelper} floatingLabel="your question" class="w-full" />
+		<TextArea
+			maxLength={500}
+			letterCount
+			bind:value={questionHelper}
+			placeholder={$LL.yourQuestion()}
+			class="w-full"
+		/>
 
 		<CategoryPicker
 			{chosenCategory}

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import NotFound from '$lib/components/Common/NoContent.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
+	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 	import TopicComponent from '$lib/components/Experience-monument/topic/Topic.svelte';
@@ -13,7 +13,6 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { Location, MonumentCard, Topic, Transport } from '@app/ts-types';
-	import { Skeleton } from 'flowbite-svelte';
 
 	export let searchingLocation: Location | undefined;
 	let isLoading = true;
@@ -39,7 +38,6 @@
 					topics,
 					transports,
 					limit,
-					offset: offset - limit,
 					location: location
 						? {
 								location: location,
@@ -49,11 +47,10 @@
 						: undefined
 				})
 			).getListOfMonuments;
-			monuments = [...monuments, ...newMonuments];
+			monuments = newMonuments;
 		} catch (error) {
 			alert($LL.monumentsLoadErrorTitle(), $LL.monumentsLoadErrorMessage(), { color: 'red' });
 		}
-		isLoadMoreButtonLoading = false;
 
 		isLoading = false;
 	};
@@ -61,7 +58,7 @@
 	$: addMonuments(topics, transports, searchingLocation);
 </script>
 
-<Column class="gap-4 justify-center">
+<Column class="gap-4 justify-center w-full">
 	<TopicComponent bind:chosenTopics={topics} class="w-full max-w-[400px]" />
 	<TransportType bind:chosenTransports={transports} class="w-full max-w-[400px]" />
 
@@ -82,13 +79,8 @@
 					<MonumentCardComponent size="normal" {monument} />
 				{/each}
 			</Row>
-			{#if isLoadMoreButtonLoading}
-				<Loading />
-			{:else}
-				<LoadMoreButton on:click={() => addMonuments(topics, transports, searchingLocation)} />
-			{/if}
 		</Column>
 	{:else}
-		<Skeleton divClass="w-full" />
+		<NotFound />
 	{/if}
 </Column>

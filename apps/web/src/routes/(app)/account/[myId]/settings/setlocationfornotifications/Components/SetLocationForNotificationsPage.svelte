@@ -19,7 +19,7 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher<{ back: undefined }>();
 
-	let center: Location;
+	export let center: Location | undefined = undefined;
 	let range = 45 * 1000; //in meters ans it is only the half of the circle so r = 90_000m
 
 	$: document = useQuery('locationForNotificaiton_get', async () => {
