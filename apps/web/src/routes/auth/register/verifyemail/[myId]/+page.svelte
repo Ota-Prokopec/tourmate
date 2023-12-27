@@ -6,6 +6,7 @@
 	import { alert } from '$src/routes/alertStore';
 	import { Circle3 } from 'svelte-loading-spinners';
 	import type { PageData } from './$types';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let data: PageData;
 	let firstTime = true;
@@ -32,7 +33,7 @@
 			goto(`/auth/register/setlocationfornotifications`, { invalidateAll: true }); //finish your registration
 		} catch (error) {
 			if (error instanceof Error)
-				alert('Error', `please share this with the support: [${error.message}]`, {
+				alert('Error', $LL.error.unexpectedError(), {
 					color: 'red'
 				});
 		}

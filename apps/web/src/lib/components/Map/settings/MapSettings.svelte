@@ -10,6 +10,7 @@
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import IconSettings from '$lib/components/Icons/IconSettings.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import { Button, Input } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -24,11 +25,7 @@
 			isLoading = true;
 			await user.addPreferences({ mapRange: parseInt(mapRangeValue) });
 		} catch (error) {
-			alert(
-				'saving map preferences failed',
-				'We are sorry, but your map preferences were not saved. Please try it later again.',
-				{ color: 'red' }
-			);
+			alert('', $LL.component.MapSettings.saveErrorMessage(), { color: 'red' });
 		}
 		isLoading = false;
 		dispatch('change', { range: parseInt(mapRangeValue) });
@@ -38,12 +35,16 @@
 <Drawer placement="top" bind:hidden={settingsHidden} class="w-full absolute">
 	<Center>
 		<Row class="justify-center items-center gap-1">
-			<Text class="text-2xl">Settings</Text>
+			<Text class="text-2xl">{$LL.common.settings()}</Text>
 			<Icon><IconSettings /></Icon>
 		</Row>
 	</Center>
 	<Column class="mt-2">
-		<ItemsLayout class="w-full" let:id items={[{ id: 'mapRange', title: 'range of the map' }]}>
+		<ItemsLayout
+			class="w-full"
+			let:id
+			items={[{ id: 'mapRange', title: $LL.component.MapSettings.mapRange() }]}
+		>
 			{#if id === 'mapRange'}
 				<Input class="w-full max-w-[400px]" type="number" bind:value={mapRangeValue} />
 			{/if}
@@ -53,7 +54,7 @@
 				{#if isLoading}
 					<Loading />
 				{:else}
-					save
+					{$LL.common.save()}
 				{/if}
 			</Button>
 		</Right>

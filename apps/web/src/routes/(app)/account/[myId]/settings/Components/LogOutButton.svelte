@@ -4,5 +4,5 @@
 </script>
 
 <Button on:click color="red">
-	{$LL.logOut()}
+	{$LL.component.LogOutButton.label()}
 </Button>

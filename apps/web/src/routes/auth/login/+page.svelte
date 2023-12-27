@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { PUBLIC_SESSION_NAME } from '$env/static/public';
 	import { user } from '$lib/appwrite/appwrite';
@@ -19,7 +18,7 @@
 	const expireTimeString = expires.toUTCString();
 
 	let password = '';
-	let email = 'otaprokopec@gmail.com';
+	let email = '';
 	let loading = false;
 
 	$: condition = email.length >= 1 && password.length >= 1;
@@ -37,7 +36,7 @@
 			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/;maxAge=99999999999999;expires=${expireTimeString}`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
 			goto('/', { invalidateAll: true });
 		} catch (err) {
-			alert('', $LL.unsuccessfulLogin(), { color: 'yellow' });
+			alert('', $LL.page.signIn.unsuccessfulLogin(), { color: 'yellow' });
 			loading = false;
 		}
 	};
@@ -58,10 +57,10 @@
 		{#if loading}
 			<Loading />
 		{:else}
-			Přihlásit se
+			{$LL.page.signIn.singIn()}
 		{/if}
 	</Button>
 	<LoginViaSocilaMedia />
-	<Link href="/auth/forgottonpassword">{$LL.forgotenPassword()}</Link>
-	<Link href="/auth/register">{$LL.signUp()}</Link>
+	<Link href="/auth/forgottonpassword">{$LL.page.signIn.forgottenPassword()}</Link>
+	<Link href="/auth/register">{$LL.page.signIn.signUp()}</Link>
 </div>

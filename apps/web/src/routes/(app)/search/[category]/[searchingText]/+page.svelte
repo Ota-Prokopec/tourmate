@@ -10,6 +10,8 @@
 	import { browser } from '$app/environment';
 	import { changeURLwithoutReloading } from '@app/utils';
 	import type { Location } from '@app/ts-types';
+	import LL from '$src/i18n/i18n-svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
@@ -30,15 +32,15 @@
 
 	const categories = [
 		{
-			title: 'users',
+			title: $LL.page.search.categories.users(),
 			key: 'users'
 		},
 		{
-			title: 'zážitky',
+			title: $LL.page.search.categories.monuments(),
 			key: 'monuments'
 		},
 		{
-			title: 'místa',
+			title: $LL.page.search.categories.places(),
 			key: 'places'
 		}
 	] as const;

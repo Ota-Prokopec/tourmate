@@ -1,3 +1,4 @@
+import { page } from '$app/stores';
 import type { PageServerLoad } from './$types';
 import type { Category } from './types';
 
