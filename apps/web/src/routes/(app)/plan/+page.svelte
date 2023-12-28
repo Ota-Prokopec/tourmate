@@ -87,8 +87,6 @@
 
 <MeasureDistancesMap
 	on:reset={reset}
-	{maxZoom}
-	{minZoom}
 	on:newPoint={(e) => addPoint(e.detail.location)}
 	class="w-full h-full absolute top-0 z-10"
 >
