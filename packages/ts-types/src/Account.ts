@@ -11,6 +11,7 @@ export type UserInfo = {
 export type Preferences = {
 	termsAccepted: boolean
 	mapRange: number
+	colorTheme: ColorTheme
 }
 
 export type UserInfoDocument = Document<UserInfo>

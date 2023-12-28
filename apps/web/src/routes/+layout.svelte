@@ -13,10 +13,10 @@
 	import { user } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';
 	import CookiesAlert from '$lib/components/Common/CookiesAlert.svelte';
-	import { LayoutData } from './$types';
+	import type { LayoutData } from './$types';
 	const userIsLoading = user.isLoading;
 
-	
+	export let data: LayoutData;
 
 	let mounted = false;
 	onMount(() => (mounted = true));
@@ -33,11 +33,13 @@
 
 	//darkmode-whitemode
 	onMount(async () => {
-		const preferencedTheme = 
-
+		const preferencedTheme = data.user?.prefs.colorTheme;
 		const deviceTheme = getThemeInternalMode();
 
-		if (preferencedTheme === 'dark' || (!preferencedTheme && deviceTheme === 'dark')) {
+		if (
+			(preferencedTheme && preferencedTheme === 'dark') ||
+			(!preferencedTheme && deviceTheme === 'dark')
+		) {
 			document.documentElement.classList.add('dark');
 		}
 	});

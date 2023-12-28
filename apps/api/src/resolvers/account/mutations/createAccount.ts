@@ -13,8 +13,6 @@ export default queryField('createAccount', {
 
 		const { collections, account } = ctx.appwrite
 
-		account.getPrefs()
-
 		const updatePrefs = await account.updatePreferences({
 			mapRange: 6000,
 			termsAccepted: true,

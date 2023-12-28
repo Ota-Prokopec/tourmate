@@ -16,7 +16,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   AnswerType: { input: any; output: any; }
-  ColorTheme: { input: any; output: any; }
+  ColorTheme: { input: 'dark' | 'light'; output: 'dark' | 'light'; }
   Location: { input: [number, number]; output: [number, number]; }
   StringOrNumber: { input: any; output: any; }
   Topic: { input: "castle" | "monument" | "person" | "animals" | "hiking"; output: "castle" | "monument" | "person" | "animals" | "hiking"; }
@@ -344,7 +344,7 @@ export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __type
 export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, _createdAt: string, secondsFromUserCreatedToNow: number, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, _createdAt: string, secondsFromUserCreatedToNow: number, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean, colorTheme: 'dark' | 'light' } } };
 
 export type GetListOfUsersBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
@@ -553,6 +553,7 @@ export const GetAccountDocument = gql`
     prefs {
       mapRange
       termsAccepted
+      colorTheme
     }
   }
 }

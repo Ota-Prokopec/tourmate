@@ -1,5 +1,4 @@
 import { objectType } from 'nexus'
-import UsersPreferences from './UsersPreferences'
 
 export default objectType({
 	name: 'Account',
@@ -21,7 +20,7 @@ export default objectType({
 			description: 'This is URL of profile picture. Not its id.',
 		})
 		t.field('prefs', {
-			type: UsersPreferences,
+			type: 'UsersPreferences',
 		})
 		t.field('secondsFromUserCreatedToNow', {
 			type: 'Float',
