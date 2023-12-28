@@ -28,7 +28,7 @@
 	class="shadow-[0px_0px_2px_2px_gray] p-2 w-full h-auto min-h-40 rounded-2xl z-20 min-h-[80px]"
 >
 	{#if typeof question === 'undefined'}
-		<Text class="text-xl">{$LL.addQuestion()}</Text>
+		<Text class="text-xl">{$LL.component.AddQuestionButton.label()}</Text>
 	{:else}
 		<Column class="w-full opacity-80 hover:opacity-40">
 			<Text>{question.question}</Text>

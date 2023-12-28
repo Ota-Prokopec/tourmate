@@ -36,5 +36,33 @@ export const componentsEN = {
 		saveErrorMessage:
 			'We are sorry, but your map preferences were not saved. Please try it later again.',
 		mapRange: 'range of the map'
+	},
+	NoContent: {
+		notFound: 'not found'
+	},
+	MeasureDistancesMap: {
+		resetButtonLabel: 'reset'
+	},
+	MonumentCreateForm: {
+		monumentName: 'monument name',
+		place: 'place',
+		type: 'type',
+		transport: 'transport',
+		about: 'about',
+		image: 'image'
+	},
+	AddQuestionDrawer: {
+		saveError:
+			"'We are not able to save your question like this, please check if everything is filled up.",
+		yourQuestion: 'Your question',
+		save: 'save'
+	},
+	AddQuestionButton: {
+		label: 'add your question'
+	},
+	ImageInput: {
+		throughGallery: 'through gallery',
+		throughClipboard: 'through clipboard',
+		clipboardNotFound: 'There is no picture available in your clipboard.'
 	}
 } satisfies BaseTranslation;

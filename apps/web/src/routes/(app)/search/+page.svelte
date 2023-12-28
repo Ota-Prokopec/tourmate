@@ -15,20 +15,22 @@
 
 	export let data: PageData;
 
-	let searchingText = data.search.searchingText;
+	let searchingText = '';
 	let searchingLocation: Location | undefined;
 
 	let chosenCategory: Category = data.search.category; //data.search.category;
 
 	const changeUrl = () => {
 		if (!browser) return;
-		changeURLwithoutReloading(
-			`${location.origin}/search/${chosenCategory}/${searchingText || '*'}`
-		);
+		const url = new URL(`${$page.url.origin}${$page.url.pathname}`);
+		url.searchParams.append('chosenCategory', chosenCategory);
+		changeURLwithoutReloading(url.href);
 	};
 
-	$: if (chosenCategory) changeUrl();
-	$: if (searchingText || !searchingText) changeUrl();
+	$: if (chosenCategory) {
+		searchingText = '';
+		changeUrl();
+	}
 
 	const categories = [
 		{

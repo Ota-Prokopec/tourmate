@@ -72,6 +72,38 @@ type RootTranslation = {
 			 */
 			signUp: string
 		}
+		forgottenPassword: {
+			/**
+			 * D​i​d​ ​y​o​u​ ​f​o​r​g​e​t​ ​t​h​e​ ​p​a​s​s​w​o​r​d​?​ ​R​e​s​e​t​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​h​e​r​e​.​ ​P​a​s​s​ ​y​o​u​r​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s​ ​i​n​ ​t​o​ ​t​h​e​ ​t​e​x​t​ ​f​i​e​l​d​ ​b​e​l​l​o​w​ ​a​n​d​ ​w​a​i​t​ ​f​o​r​ ​t​h​e​ ​e​-​m​a​i​l​.
+			 */
+			title: string
+			/**
+			 * I​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​e​-​m​a​i​l​ ​w​i​t​h​ ​l​i​n​k​ ​t​o​ ​r​e​s​e​t​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​.​ ​P​l​e​a​s​e​ ​c​h​e​c​h​ ​y​o​u​r​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s​ ​t​w​i​c​e​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.​ ​I​f​ ​t​h​e​ ​e​r​r​o​r​ ​p​e​r​s​i​s​t​s​,​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​T​o​u​r​m​a​t​e​ ​s​u​p​p​o​r​t​.
+			 */
+			error: string
+			/**
+			 * c​o​n​t​i​n​u​e
+			 */
+			'continue': string
+			resetPassword: {
+				/**
+				 * P​a​s​s​w​o​r​d​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​h​a​n​g​e​d​.
+				 */
+				passwordChaged: string
+				/**
+				 * Y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​h​a​n​g​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​ ​o​r​ ​c​o​n​t​a​c​t​ ​o​u​r​ ​s​u​p​p​o​r​t​.
+				 */
+				error: string
+				/**
+				 * R​e​c​o​v​e​r​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d
+				 */
+				recoverPassword: string
+				/**
+				 * r​e​c​o​v​e​r​ ​p​a​s​s​w​o​r​d
+				 */
+				recover: string
+			}
+		}
 		account: {
 			settings: {
 				/**
@@ -119,6 +151,57 @@ type RootTranslation = {
 				 */
 				places: string
 			}
+		}
+		scan: {
+			/**
+			 * y​o​u​ ​a​r​e​ ​{​m​e​t​e​r​s​}​ ​f​a​r​ ​f​r​o​m​ ​t​h​e​ ​t​a​r​g​e​t​.
+			 * @param {string} meters
+			 */
+			usersDistanceFromTarget: RequiredParams<'meters'>
+		}
+		plan: {
+			/**
+			 * r​e​s​t​a​r​t
+			 */
+			restart: string
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​s​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​d​u​r​i​n​g​ ​y​o​u​r​ ​w​i​s​h​e​d​ ​p​a​t​h
+			 */
+			planningError: string
+		}
+		addMonument: {
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​y​o​u​ ​c​a​n​t​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​h​e​r​e​,​ ​b​e​c​a​u​s​e​ ​t​h​e​r​e​ ​a​r​e​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​t​o​o​ ​c​l​o​s​e​ ​t​o​ ​y​o​u​r​s​.​ ​P​l​e​a​s​e​ ​c​h​o​o​s​e​ ​a​n​o​t​h​e​r​ ​p​l​a​c​e​ ​f​o​r​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​o​r​ ​c​o​n​t​a​c​t​ ​u​s​.
+			 */
+			distanceBetweenMonumentsTooSmall: string
+			/**
+			 * m​a​r​k​ ​h​e​r​e
+			 */
+			markHere: string
+			detail: {
+				/**
+				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.
+				 */
+				monumentCreated: string
+				/**
+				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 */
+				monumentCreateError: string
+				/**
+				 * c​r​e​a​t​e
+				 */
+				create: string
+			}
+		}
+		globalError: {
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​t​h​e​r​e​ ​w​a​s​ ​u​n​p​r​e​d​i​c​t​a​b​l​e​ ​e​r​r​o​r
+			 */
+			title: string
+			/**
+			 * t​r​y​ ​i​t​ ​a​g​a​i​n
+			 */
+			reloadButtonLabel: string
 		}
 	}
 	common: {
@@ -246,6 +329,78 @@ type RootTranslation = {
 			 */
 			mapRange: string
 		}
+		NoContent: {
+			/**
+			 * n​o​t​ ​f​o​u​n​d
+			 */
+			notFound: string
+		}
+		MeasureDistancesMap: {
+			/**
+			 * r​e​s​e​t
+			 */
+			resetButtonLabel: string
+		}
+		MonumentCreateForm: {
+			/**
+			 * m​o​n​u​m​e​n​t​ ​n​a​m​e
+			 */
+			monumentName: string
+			/**
+			 * p​l​a​c​e
+			 */
+			place: string
+			/**
+			 * t​y​p​e
+			 */
+			type: string
+			/**
+			 * t​r​a​n​s​p​o​r​t
+			 */
+			transport: string
+			/**
+			 * a​b​o​u​t
+			 */
+			about: string
+			/**
+			 * i​m​a​g​e
+			 */
+			image: string
+		}
+		AddQuestionDrawer: {
+			/**
+			 * '​W​e​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​s​a​v​e​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​l​i​k​e​ ​t​h​i​s​,​ ​p​l​e​a​s​e​ ​c​h​e​c​k​ ​i​f​ ​e​v​e​r​y​t​h​i​n​g​ ​i​s​ ​f​i​l​l​e​d​ ​u​p​.
+			 */
+			saveError: string
+			/**
+			 * Y​o​u​r​ ​q​u​e​s​t​i​o​n
+			 */
+			yourQuestion: string
+			/**
+			 * s​a​v​e
+			 */
+			save: string
+		}
+		AddQuestionButton: {
+			/**
+			 * a​d​d​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n
+			 */
+			label: string
+		}
+		ImageInput: {
+			/**
+			 * t​h​r​o​u​g​h​ ​g​a​l​l​e​r​y
+			 */
+			throughGallery: string
+			/**
+			 * t​h​r​o​u​g​h​ ​c​l​i​p​b​o​a​r​d
+			 */
+			throughClipboard: string
+			/**
+			 * T​h​e​r​e​ ​i​s​ ​n​o​ ​p​i​c​t​u​r​e​ ​a​v​a​i​l​a​b​l​e​ ​i​n​ ​y​o​u​r​ ​c​l​i​p​b​o​a​r​d​.
+			 */
+			clipboardNotFound: string
+		}
 	}
 	error: {
 		/**
@@ -334,6 +489,38 @@ export type TranslationFunctions = {
 			 */
 			signUp: () => LocalizedString
 		}
+		forgottenPassword: {
+			/**
+			 * Did you forget the password? Reset your password here. Pass your e-mail address in to the text field bellow and wait for the e-mail.
+			 */
+			title: () => LocalizedString
+			/**
+			 * It was not successful to send you an e-mail with link to reset your password. Please chech your e-mail address twice and try it again. If the error persists, please contact the Tourmate support.
+			 */
+			error: () => LocalizedString
+			/**
+			 * continue
+			 */
+			'continue': () => LocalizedString
+			resetPassword: {
+				/**
+				 * Password was successfully changed.
+				 */
+				passwordChaged: () => LocalizedString
+				/**
+				 * Your password was not successfully changed, please try it again or contact our support.
+				 */
+				error: () => LocalizedString
+				/**
+				 * Recover your password
+				 */
+				recoverPassword: () => LocalizedString
+				/**
+				 * recover password
+				 */
+				recover: () => LocalizedString
+			}
+		}
 		account: {
 			settings: {
 				/**
@@ -381,6 +568,56 @@ export type TranslationFunctions = {
 				 */
 				places: () => LocalizedString
 			}
+		}
+		scan: {
+			/**
+			 * you are {meters} far from the target.
+			 */
+			usersDistanceFromTarget: (arg: { meters: string }) => LocalizedString
+		}
+		plan: {
+			/**
+			 * restart
+			 */
+			restart: () => LocalizedString
+			/**
+			 * We are sorry, something went wrong during your wished path
+			 */
+			planningError: () => LocalizedString
+		}
+		addMonument: {
+			/**
+			 * We are sorry, but you cant create your monument here, because there are monuments that are too close to yours. Please choose another place for your monument or contact us.
+			 */
+			distanceBetweenMonumentsTooSmall: () => LocalizedString
+			/**
+			 * mark here
+			 */
+			markHere: () => LocalizedString
+			detail: {
+				/**
+				 * Your monument was successfully created.
+				 */
+				monumentCreated: () => LocalizedString
+				/**
+				 * Your monument was not successfully created. Please try it again.
+				 */
+				monumentCreateError: () => LocalizedString
+				/**
+				 * create
+				 */
+				create: () => LocalizedString
+			}
+		}
+		globalError: {
+			/**
+			 * We are sorry, there was unpredictable error
+			 */
+			title: () => LocalizedString
+			/**
+			 * try it again
+			 */
+			reloadButtonLabel: () => LocalizedString
 		}
 	}
 	common: {
@@ -507,6 +744,78 @@ export type TranslationFunctions = {
 			 * range of the map
 			 */
 			mapRange: () => LocalizedString
+		}
+		NoContent: {
+			/**
+			 * not found
+			 */
+			notFound: () => LocalizedString
+		}
+		MeasureDistancesMap: {
+			/**
+			 * reset
+			 */
+			resetButtonLabel: () => LocalizedString
+		}
+		MonumentCreateForm: {
+			/**
+			 * monument name
+			 */
+			monumentName: () => LocalizedString
+			/**
+			 * place
+			 */
+			place: () => LocalizedString
+			/**
+			 * type
+			 */
+			type: () => LocalizedString
+			/**
+			 * transport
+			 */
+			transport: () => LocalizedString
+			/**
+			 * about
+			 */
+			about: () => LocalizedString
+			/**
+			 * image
+			 */
+			image: () => LocalizedString
+		}
+		AddQuestionDrawer: {
+			/**
+			 * 'We are not able to save your question like this, please check if everything is filled up.
+			 */
+			saveError: () => LocalizedString
+			/**
+			 * Your question
+			 */
+			yourQuestion: () => LocalizedString
+			/**
+			 * save
+			 */
+			save: () => LocalizedString
+		}
+		AddQuestionButton: {
+			/**
+			 * add your question
+			 */
+			label: () => LocalizedString
+		}
+		ImageInput: {
+			/**
+			 * through gallery
+			 */
+			throughGallery: () => LocalizedString
+			/**
+			 * through clipboard
+			 */
+			throughClipboard: () => LocalizedString
+			/**
+			 * There is no picture available in your clipboard.
+			 */
+			clipboardNotFound: () => LocalizedString
 		}
 	}
 	error: {

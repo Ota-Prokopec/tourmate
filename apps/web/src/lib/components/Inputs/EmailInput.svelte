@@ -12,6 +12,8 @@
 
 <Input
 	icon
+	type="email"
+	autocomplete="email"
 	class={twMerge('w-full !rounded-3xl', className)}
 	bind:value
 	iconPosition="left"

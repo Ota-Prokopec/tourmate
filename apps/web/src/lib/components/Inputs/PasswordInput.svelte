@@ -18,6 +18,7 @@
 	bind:value
 	type="password"
 	iconPosition="left"
+	autocomplete="password"
 	floatingLabel={$LL.component.PasswordInput.label()}
 >
 	<Icon class="child:fill-gray-500">

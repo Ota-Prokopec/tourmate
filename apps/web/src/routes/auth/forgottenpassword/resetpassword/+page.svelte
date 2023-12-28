@@ -26,21 +26,21 @@
 				newPassword,
 				repeatPassword
 			);
-			alert('', $LL.passwordChanged(), {
+			alert('', $LL.page.forgottenPassword.resetPassword.passwordChaged(), {
 				color: 'green',
-				buttons: [{ title: $LL.back(), onClick: () => navigate(-2) }]
+				buttons: [{ title: $LL.common.back(), onClick: () => navigate(-2) }]
 			});
 		} catch (err) {
 			if (!(err instanceof AppwriteException)) return;
 
-			alert('', $LL.passwordChangeError(), { color: 'red' });
+			alert('', $LL.page.forgottenPassword.resetPassword.error(), { color: 'red' });
 		}
 		isLoading = false;
 	};
 </script>
 
 <div class="w-full h-min flex flex-wrap flex-col items-center justify-center p-5 gap-6">
-	<div class="w-full text-center">Obnovte si vaše heslo</div>
+	<div class="w-full text-center">{$LL.page.forgottenPassword.resetPassword.recoverPassword()}</div>
 	<div class="flex w-full pl-2 pr-2 flex-wrap flex-row gap-1 justify-center">
 		<PasswordInput class="w-full max-w-[400px]" bind:value={newPassword} />
 		<PasswordInput class="w-full max-w-[400px]" bind:value={repeatPassword} />
@@ -51,7 +51,7 @@
 		{#if isLoading}
 			<Loading />
 		{:else}
-			pokračovat
+			{$LL.page.forgottenPassword.resetPassword.recover()}
 		{/if}
 	</Button>
 </div>

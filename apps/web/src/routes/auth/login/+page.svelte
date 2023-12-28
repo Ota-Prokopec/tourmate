@@ -61,6 +61,6 @@
 		{/if}
 	</Button>
 	<LoginViaSocilaMedia />
-	<Link href="/auth/forgottonpassword">{$LL.page.signIn.forgottenPassword()}</Link>
+	<Link href="/auth/forgottenpassword">{$LL.page.signIn.forgottenPassword()}</Link>
 	<Link href="/auth/register">{$LL.page.signIn.signUp()}</Link>
 </div>

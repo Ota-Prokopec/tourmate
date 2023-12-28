@@ -171,7 +171,7 @@
 	<slot />
 	<Button on:click={reset} class="absolute bottom-0 right-0 m-4" color="purple">
 		<Row class="justify-center items-center gap-2">
-			<Text>{$LL.reset()}</Text>
+			<Text>{$LL.component.MeasureDistancesMap.resetButtonLabel()}</Text>
 			<Icon>
 				<IconGitCodeBranch />
 			</Icon>
