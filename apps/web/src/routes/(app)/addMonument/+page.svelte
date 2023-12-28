@@ -21,13 +21,12 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import mapTiler from '$lib/utils/mapTiler';
 	import { useQuery } from '@sveltestack/svelte-query';
+	import Column from '$lib/components/Common/Column.svelte';
 
 	export let data: PageData;
 
 	let location: Location | undefined = $lsStore.usersLocation;
 	$: markerLocation = location;
-
-	$: usersLocation = $lsStore.usersLocation;
 
 	let monuments: MonumentMarkerData[] = [];
 
@@ -54,7 +53,7 @@
 				throw new Error('There is something wrong with creating the monument here');
 			goto(`/addMonument/detail/${markerLocation[0]}-${markerLocation[1]}`);
 		} catch (error) {
-			alert('', $LL.cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments(), {
+			alert('', $LL.page.addMonument.distanceBetweenMonumentsTooSmall(), {
 				color: 'red'
 			});
 		}
@@ -85,8 +84,10 @@
 				<Icon icon="fas fa-map-marker-alt" class="text-2xl text-red-500" />
 				{$positionDetails.data?.place_name}
 			</div>
-			<Text>lat: {markerLocation[0]}</Text>
-			<Text>lng: {markerLocation[1]}</Text>
+			<Column class="gap-0">
+				<Text>lat: {markerLocation[0]}</Text>
+				<Text>lng: {markerLocation[1]}</Text>
+			</Column>
 		{/if}
 	</Alert>
 	<Map>
@@ -105,7 +106,7 @@
 		color="blue"
 		on:click={next}
 	>
-		<span>označit zde</span>
+		{$LL.page.addMonument.markHere()}
 		<Icon class="w-4 fill-white">
 			<IconNext class="w-10 text-white" />
 		</Icon>

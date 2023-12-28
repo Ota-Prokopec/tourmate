@@ -28,7 +28,7 @@
 				}
 			});
 		} catch (error) {
-			alert($LL.monumentsLoadErrorTitle(), $LL.monumentsLoadErrorMessage(), { color: 'red' });
+			alert('', $LL.error.monumentLoadErrorMessage(), { color: 'red' });
 		}
 	};
 
@@ -69,7 +69,7 @@
 		{/if}
 	{:catch}
 		<Eval
-			evaluate={alert($LL.monumentsLoadErrorTitle(), $LL.monumentsLoadErrorMessage(), {
+			evaluate={alert('', $LL.error.monumentLoadErrorMessage(), {
 				color: 'red'
 			})}
 		/>

@@ -26,7 +26,7 @@
 			$lsStore.cookieFallback = { a_session_experiences: '' };
 			goto('/auth/login');
 		} catch (error) {
-			alert('', $LL.logOutError(), { color: 'red' });
+			alert('', $LL.page.account.settings.logOut.errorMessage(), { color: 'red' });
 		}
 		isLoading = false;
 	};
@@ -38,10 +38,13 @@
 		{ id: 'logOut'; title: string }
 	];
 	$: items = [
-		{ title: $LL.language(), id: 'language' },
-		{ title: $LL.theme(), id: 'theme' },
-		{ title: $LL.notificaionsLocation(), id: 'locationForNotifications' },
-		{ title: $LL.logOut(), id: 'logOut' }
+		{ title: $LL.page.account.settings.language(), id: 'language' },
+		{ title: $LL.page.account.settings.theme(), id: 'theme' },
+		{
+			title: $LL.page.account.settings.locationForNotifications.title(),
+			id: 'locationForNotifications'
+		},
+		{ title: $LL.page.account.settings.logOut.label(), id: 'logOut' }
 	];
 </script>
 
@@ -58,7 +61,7 @@
 				<Button
 					color="blue"
 					on:click={() => goto(`/account/${data.user.myId}/settings/setlocationfornotifications`)}
-					>{$LL.change()}</Button
+					>{$LL.page.account.settings.locationForNotifications.buttonLabel()}</Button
 				>
 			{:else if id === 'logOut'}
 				<LogOutButton on:click={logOut} />

@@ -78,7 +78,7 @@
 			liked = 'liked';
 		} catch (error) {
 			liked = 'unliked';
-			alert($LL.likeErrorTitle(), $LL.likeErrorMessage(), {
+			alert('', $LL.error.addLikeError(), {
 				color: 'red'
 			});
 			throw new Error('like monument error happend');
@@ -97,7 +97,7 @@
 			liked = 'unliked';
 			monument.liked = null;
 		} catch (error) {
-			alert($LL.removeLikeErrorTitle(), $LL.removeLikeErrorMessage(), {
+			alert('', $LL.error.removeLikeError(), {
 				color: 'red'
 			});
 			liked = 'liked';
@@ -115,11 +115,7 @@
 			showModalDeleteDocument = false;
 			isCardVisible = false;
 		} catch (error) {
-			alert(
-				$LL.deleteErrorTitle({ what: $LL.monument() }),
-				$LL.deleteErrorMessage({ what: $LL.monument() }),
-				{ color: 'red' }
-			);
+			alert('', $LL.error.deleteErrorMessage({ what: $LL.common.monument() }), { color: 'red' });
 		}
 	};
 
@@ -133,11 +129,11 @@
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>
-	<Text>Do you really want to delete your monument, there is no way to get it back.</Text>
+	<Text>{$LL.component.MonumentCardComponent.reallyDeleteTheMonumentLabel()}</Text>
 	<svelte:fragment slot="footer">
-		<Button on:click={reallyDeleteMonument} color="red">Yes really</Button>
+		<Button on:click={reallyDeleteMonument} color="red">{$LL.common.yes()}</Button>
 		<Button on:click={() => (showModalDeleteDocument = false)} color="green"
-			>No i missed clicked</Button
+			>{$LL.common.no()}</Button
 		>
 	</svelte:fragment>
 </Modal>
@@ -206,17 +202,19 @@
 		{#if size !== 'tiny'}
 			<Column class="gap-2 ">
 				<Right>
-					<Button on:click={seeOnGoogleMaps} color="green">{$LL.seeOnGoogleMaps()}</Button>
+					<Button on:click={seeOnGoogleMaps} color="green"
+						>{$LL.component.MonumentCardComponent.seeOnGoogleMaps()}</Button
+					>
 				</Right>
 				{#if !disableSeeMoreButton}
 					<Button color="blue" class="w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
-						>{$LL.seeMore()}</Button
+						>{$LL.component.MonumentCardComponent.seeMore()}</Button
 					>
 				{/if}
 				{#if isMonumentCard(monument)}
 					{#if monument.usersConnectedExperiences.length}
 						<Row class="w-full h-auto justify-end p-2 gap-2">
-							<Text>{$LL.pictureAlreadyTaken()}</Text>
+							<Text>{$LL.component.MonumentCardComponent.pictureAlreadyTaken()}</Text>
 							<Icon class="child:fill-green-500 child:w-4 child:h-4">
 								<IconCheck />
 							</Icon>

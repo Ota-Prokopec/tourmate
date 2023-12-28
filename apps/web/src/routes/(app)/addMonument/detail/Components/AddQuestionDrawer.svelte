@@ -68,7 +68,7 @@
 		carousel.goTo(index);
 	};
 
-	let error: string | null = null;
+	let errorMessage: string | null = null;
 
 	const save = () => {
 		try {
@@ -91,7 +91,7 @@
 			dispatch('save', checkedQuestion);
 			hidden = true;
 		} catch (err) {
-			error = $LL.saveQuestionError();
+			errorMessage = $LL.component.AddQuestionDrawer.saveError();
 		}
 	};
 
@@ -129,10 +129,15 @@
 	placement="auto"
 	class="z-50 fixed top-0 right-0 w-[500px] mobile:w-full mobile:h-[calc(100% - 20px)] top-[20px]"
 >
-	{#if error}
+	{#if errorMessage}
 		<Center class="relative">
-			<Alert on:close={() => (error = null)} class="w-full relative top-0" dismissable color="red">
-				{error}
+			<Alert
+				on:close={() => (errorMessage = null)}
+				class="w-full relative top-0"
+				dismissable
+				color="red"
+			>
+				{errorMessage}
 			</Alert>
 		</Center>
 	{/if}
@@ -145,13 +150,13 @@
 	</MediaQuery>
 
 	<Column>
-		<Title>Your question</Title>
+		<Title>{$LL.component.AddQuestionDrawer.yourQuestion()}</Title>
 
 		<TextArea
 			maxLength={500}
 			letterCount
 			bind:value={questionHelper}
-			placeholder={$LL.yourQuestion()}
+			placeholder={$LL.component.AddQuestionDrawer.yourQuestion()}
 			class="w-full"
 		/>
 
@@ -173,6 +178,6 @@
 	</Column>
 
 	<Right>
-		<Button on:click={save} color="green">save</Button>
+		<Button on:click={save} color="green">{$LL.component.AddQuestionDrawer.save()}</Button>
 	</Right>
 </Drawer>

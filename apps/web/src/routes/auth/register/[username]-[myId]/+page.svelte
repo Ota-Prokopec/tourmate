@@ -33,7 +33,7 @@
 {:else}
 	<Column class="items-center justify-start p-5 mt-4 gap-14">
 		<Checkbox bind:checked={termsAccepted}>
-			<Link href={`/auth/terms`}>{$LL.acceptTerms()}</Link></Checkbox
+			<Link href={`/auth/terms`}>{$LL.page.signUp.acceptTerms()}</Link></Checkbox
 		>
 
 		<Icon
@@ -44,7 +44,7 @@
 			<IconAt />
 		</Icon>
 
-		<Text>{$LL.or()}</Text>
+		<Text>{$LL.common.or()}</Text>
 
 		<div class="w-full flex flex-wrap flex-col gap-4 relative">
 			<LoginViaSocilaMedia disabled={!termsAccepted} on:click={() => (state = 'loading')} />

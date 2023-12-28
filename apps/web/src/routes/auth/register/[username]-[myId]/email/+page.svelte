@@ -31,7 +31,7 @@
 			state = 'loading';
 
 			if (password !== repeatPassword) {
-				alert('', $LL.passwordsDontMatch(), { color: 'yellow' });
+				alert('', $LL.page.signUp.passwordsDontMatch(), { color: 'yellow' });
 				throw new Error('password dont equal');
 			}
 
@@ -39,7 +39,7 @@
 				await user.create(appwrite.ID.unique(), email, password, data.params.username);
 			} catch (error) {
 				if (!(error instanceof AppwriteException)) return;
-				if (error.code === 409) alert('', $LL.userAlreadyExists(), { color: 'yellow' });
+				if (error.code === 409) alert('', $LL.page.signUp.userAlreadyExists(), { color: 'yellow' });
 				throw new Error('appwrite does not allow you to create an account');
 			}
 			try {
@@ -58,7 +58,7 @@
 					`${location.origin}/auth/register/verifyemail/${data.params.myId}`
 				);
 			} catch (error) {
-				alert('', $LL.unsuccessfulRegister(), { color: 'yellow' });
+				alert('', $LL.page.signUp.unsuccessfulRegister(), { color: 'yellow' });
 				throw new Error('appwrite did not successfully created a verification email for you');
 			}
 			state = 'email-sent';
@@ -75,14 +75,14 @@
 {:else}
 	<div class="w-full h-auto flex flex-wrap flex-col items-center justify-start p-5 mt-4 gap-14">
 		<div class="w-full max-w-[400px] flex flex-wrap flex-col gap-4 relative">
-			<Title class="text-xl">{$LL.signUpVia({ via: 'e-mail' })}</Title>
+			<Title class="text-xl">{$LL.page.signUp.signUpVia({ via: 'e-mail' })}</Title>
 			<EmailInput bind:value={email} />
 			<PasswordInput bind:value={password} />
 			<PasswordInput bind:value={repeatPassword} />
 
 			<div class="w-full flex justify-center">
 				<Button disabled={!ableToRegister} on:click={registerViaEmail} class="w-40 ">
-					Zaregistrovat
+					{$LL.page.signUp.signUp()}
 				</Button>
 			</div>
 		</div>

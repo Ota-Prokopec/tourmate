@@ -4,6 +4,7 @@
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
+	import NotFound from '$lib/components/Common/NoContent.svelte';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
@@ -11,19 +12,16 @@
 	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import ExperienceCardSkeleton from '$lib/components/Experience-monument/Cards/experience/ExperienceCardSkeleton.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
-	import type { Base64, ExperienceCard, MonumentCard } from '@app/ts-types';
+	import type { Base64, MonumentCard } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import { Skeleton } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
 	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
 	import EditProfileButton from './Components/EditProfileButton.svelte';
-	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
-	import { getListOfExperienceCards } from '$src/graphql/generated-svelte';
-	import NotFound from '$lib/components/Common/NoContent.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
@@ -39,8 +37,8 @@
 	$: isMyAccount = data.user.userId === usersProfile?.userId;
 
 	const categories = [
-		{ title: $LL.pictures(), key: 'experiences' },
-		{ title: $LL.monuments(), key: 'monuments' }
+		{ title: $LL.common.pictures(), key: 'experiences' },
+		{ title: $LL.common.monuments(), key: 'monuments' }
 	] as const;
 
 	let screenProfilePicEditor = false;

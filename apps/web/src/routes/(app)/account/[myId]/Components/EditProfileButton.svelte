@@ -9,6 +9,6 @@
 
 <Left>
 	<Button on:click={() => goto(`${myId}/edit`)} color="green">
-		{$LL.editProfile()}
+		{$LL.component.EditProfileButton.label()}
 	</Button>
 </Left>

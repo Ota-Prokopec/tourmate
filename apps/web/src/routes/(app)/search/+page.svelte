@@ -10,35 +10,39 @@
 	import { browser } from '$app/environment';
 	import { changeURLwithoutReloading } from '@app/utils';
 	import type { Location } from '@app/ts-types';
+	import LL from '$src/i18n/i18n-svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
-	let searchingText = data.search.searchingText;
+	let searchingText = '';
 	let searchingLocation: Location | undefined;
 
 	let chosenCategory: Category = data.search.category; //data.search.category;
 
 	const changeUrl = () => {
 		if (!browser) return;
-		changeURLwithoutReloading(
-			`${location.origin}/search/${chosenCategory}/${searchingText || '*'}`
-		);
+		const url = new URL(`${$page.url.origin}${$page.url.pathname}`);
+		url.searchParams.append('chosenCategory', chosenCategory);
+		changeURLwithoutReloading(url.href);
 	};
 
-	$: if (chosenCategory) changeUrl();
-	$: if (searchingText || !searchingText) changeUrl();
+	$: if (chosenCategory) {
+		searchingText = '';
+		changeUrl();
+	}
 
 	const categories = [
 		{
-			title: 'users',
+			title: $LL.page.search.categories.users(),
 			key: 'users'
 		},
 		{
-			title: 'zážitky',
+			title: $LL.page.search.categories.monuments(),
 			key: 'monuments'
 		},
 		{
-			title: 'místa',
+			title: $LL.page.search.categories.places(),
 			key: 'places'
 		}
 	] as const;

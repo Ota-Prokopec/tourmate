@@ -49,7 +49,7 @@
 			).getListOfMonuments;
 			monuments = newMonuments;
 		} catch (error) {
-			alert($LL.monumentsLoadErrorTitle(), $LL.monumentsLoadErrorMessage(), { color: 'red' });
+			alert('', $LL.error.monumentLoadErrorMessage(), { color: 'red' });
 		}
 
 		isLoading = false;

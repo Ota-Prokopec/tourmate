@@ -10,6 +10,7 @@
 	import type { Location, MonumentCard } from '@app/ts-types';
 	import { distanceTo, normalizeMeters } from '@app/utils';
 	import Range from './Components/Range.svelte';
+	import LL from '$src/i18n/i18n-svelte';
 
 	let monuments: MonumentCard[] | undefined;
 
@@ -61,7 +62,9 @@
 		{#if monuments && location}
 			{#each monuments as monument}
 				<MonumentCardComponent size="normal" dismissable {monument}>
-					you are {normalizeMeters(distanceTo(location, monument.location))} far from target
+					{$LL.page.scan.usersDistanceFromTarget({
+						meters: normalizeMeters(distanceTo(location, monument.location))
+					})}
 				</MonumentCardComponent>
 			{/each}
 		{/if}
