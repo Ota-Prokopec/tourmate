@@ -30,7 +30,7 @@
 </script>
 
 <Column class="w-full items-center max-w-[400px]">
-	<Text class="text-xl">{$LL.page.signUp.title()}</Text>
+	<Text class="text-xl text-center">{$LL.page.signUp.title()}</Text>
 
 	<Right>
 		<Help class="w-[80%] max-w-[400px]" placement="left"

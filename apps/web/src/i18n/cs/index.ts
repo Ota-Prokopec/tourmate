@@ -1,134 +1,14 @@
 import type { BaseTranslation } from '../i18n-types';
+import { componentsCS } from './components';
+import { commonCS } from './common';
+import { errorsCS } from './errors';
+import { pageCS } from './page';
 
-const cz = {
-	monuments: 'památky',
-	pictures: 'obrázky',
-	monument: 'památka',
-	experience: 'obrázek',
-	places: 'místa',
-	monumentsLoadErrorTitle: 'Památky nebyly načteny',
-	monumentsLoadErrorMessage:
-		'Omlouváme se, došlo k problému při načítání památek na mapě. Zkuste obnovit stránku.',
-	updateProfilePictureErrorTitle: 'Profilový obrázek nebyl aktualizován',
-	updateProfilePictureErrorMessage:
-		'Omlouváme se, došlo k problému při aktualizaci profilového obrázku. Zkuste obnovit stránku a zkuste to znovu.',
-	updateProfileErrorTitle: 'Profil nebyl aktualizován',
-	updateProfileErrorMessage:
-		'Omlouváme se, došlo k problému při aktualizaci profilu. Váš uživatelský identifikátor již existuje v profilu jiného uživatele. Změňte svůj uživatelský identifikátor na jiný.',
-	saveErrorTitle: '{what: string} nebylo uloženo',
-	saveErrorMessage: 'Omlouváme se, došlo k problému s uložením {what: string}. Zkuste to znovu.',
-	updateErrorTitle: '{what: string} nebylo aktualizováno',
-	updateErrorMessage: '{what: string} nebylo aktualizováno, zkuste to znovu',
-	deleteErrorTitle: '{what: string} nebylo smazáno',
-	deleteErrorMessage: '{what: string} nebylo smazáno, zkuste to znovu.',
-	userName: 'uživatelské jméno',
-	forgotenPassword: 'zapomenuté heslo',
-	signUp: 'registrovat se',
-	signUpVia: 'registrovat se přes {via: string}',
-	unsuccessfulLogin: 'přihlášení nebylo úspěšné',
-	unsuccessfulRegister: 'registrace nebyla úspěšná',
-	regitrationPageTitle: 'Vítejte v aplikaci Experience, jsme rádi, že vás zde vidíme.',
-	registrationPageUsernameUserIdConditions:
-		'Uživatelské jméno a uživatelské ID musí obsahovat minimálně 4 písmena. Vaše uživatelské ID automaticky obsahuje znak @, nemůžete použít žádné speciální znaky s výjimkou několika z nich (-, _).',
-	acceptTerms: 'přijmout obchodní podmínky',
-	or: 'nebo',
-	passwordsDontMatch: 'Vaše hesla se neshodují',
-	userAlreadyExists: 'uživatel již existuje',
-	takeYourFirstPicture: 'udělejte svůj první obrázek',
-	createYourFirstMonument: 'vytvořte svou první památku',
-	and: 'a',
-	seeOnGoogleMaps: 'Zobrazit na Google Maps',
-	seeMore: 'zobrazit více',
-	continue: 'další',
-	toEditor: 'do editoru',
-	skipEditor: 'přeskočit editor',
-	locationNowFoundErrorTitle: 'Poloha nenalezena',
-	locationNowFoundErrorMessage:
-		'Omlouváme se, ale vaše poloha nemohla být načtena. Vraťte se zpět a zkuste to znovu.',
-	back: 'zpět',
-	addThisLabel: 'přidat tento štítek',
-	deleteMonumentErrorTitle: 'Odstranění památky nebylo úspěšné',
-	deleteMonumentErrorMessage:
-		'Omlouváme se, ale došlo k chybě při mazání vaší památky. Zkuste to znovu nebo nás kontaktujte.',
-	reallyDeleteYour_Question: 'Opravdu chcete smazat {what: string}? Nelze to vrátit zpět.',
-	likeErrorTitle: 'Váš lajk nebyl zaznamenán',
-	likeErrorMessage: 'Omlouváme se, ale došlo k problému s líbáním. Zkuste znovu načíst aplikaci.',
-	removeLikeErrorTitle: 'Váš lajk nebyl smazán',
-	removeLikeErrorMessage:
-		'Omlouváme se, ale došlo k problému s odstraněním vašeho lajku. Zkuste znovu načíst aplikaci.',
-	seeOnMap: 'zobrazit na mapě',
-	notAbleToConnectMonumentBecauseOfDistanceErrorTitle: 'Nelze spojit památku s vaším obrázkem',
-	notAbleToConnectMonumentBecauseOfDistanceErrorMessage:
-		'Nemůžete spojit tuto památku s vaším obrázkem, protože jste od této památky příliš daleko. Buď si vyberte jinou památku, která vám vyhovuje, nebo se přiblížte k této památce.',
-	showMap: 'zobrazit mapu',
-	cantFindAnyMonumentQuestion: 'nemůžete najít žádnou památku?',
-	connectExperienceToMonument: 'připojte zážitek k památce',
-	enterEmail: 'zadejte e-mail',
-	enterPassword: 'zadejte heslo',
-	editProfile: 'upravit profil',
-	logOut: 'odhlásit se',
-	logOutError: 'odhlášení nebylo úspěšné',
-	monumentIncludesQuestion: 'památka obsahuje otázku',
-	thereIsNoQuestionInMonument: 'v památce není žádná otázka',
-	answerQuestionError: 'odpověď na otázku nebyla úspěšná, zkuste to znovu',
-	answerTheQuestion: 'odpovězte na otázku',
-	cantAnswerTheQuestionTwice:
-		'Zdá se, že jste již odpověděli špatně na otázku, nemůžete odpovědět dvakrát.',
-	answeredCorrectly: 'Odpověděli jste správně',
-	answer: 'odpovědět',
-	congratulationForAnsweringTheQuestionCorrectly: 'Gratulujeme k správné odpovědi na otázku',
-	answeredTheQuestionWrong: 'Odpověděli jste špatně na otázku',
-	notAbleToTakeAPictureWithTheMonument: 'Nemůžete udělat obrázek s touto památkou',
-	nowYouCanTakeAPictureWithTheMonument: 'Nyní můžete udělat obrázek s touto památkou',
-	monumentThatWasConnectedToTheExperienceWasDeleted:
-		'Památka, která byla spojena se zážitkem, byla smazána',
-	monumentCreateError: 'Uložení památky nebylo úspěšné, zkuste to znovu',
-	errorMessage: 'Omlouváme se, došlo k nepředvídatelné chybě',
-	tryItAgain: 'zkuste to znovu',
-	planningMapError: 'Omlouváme se, něco se pokazilo při plánování vaší požadované trasy',
-	saveQuestionError: 'Nemůžeme uložit vaši otázku takto, zkontrolujte, zda je vše vyplněno',
-	takePictureHere: 'udělejte tady obrázek',
-	reset: 'resetovat',
-	language: 'jazyk',
-	theme: 'téma',
-	you: 'vy',
-	pictureAlreadyTaken: 'obrázek již pořízen',
-	cantCreateMonumentHereBecauseOfDistanceBetweenOtherMonuments:
-		'Nemůžete vytvořit památku zde kvůli vzdálenosti mezi jinými památkami',
-	save: 'uložit',
-	addQuestion: 'přidat otázku',
-	name: 'název',
-	place: 'místo',
-	type: 'typ',
-	transport: 'doprava',
-	about: 'o',
-	image: 'obrázek',
-	newMonumentWasAdded: 'byla přidána nová památka',
-	chooseYourLocationForNotifications: 'vyberte své umístění pro oznámení',
-	notificaionsLocation: 'umístění oznámení',
-	change: 'změnit',
-	cancel: 'zrušit',
-	yourLocationIsCurrently_InRangeOf:
-		'vaše poloha je aktuálně {location: number[]} od dosahu {range: string}',
-	experienceWasCreated: 'zážitek byl vytvořen',
-	monumentCreated: 'památka byla vytvořena',
-	notFound: 'nenalezeno',
-	noContent: 'žádný obsah',
-	passwordChanged: 'vaše heslo bylo úspěšně změněno',
-	passwordChangeError:
-		'změna hesla nebyla úspěšná. Zkontrolujte své heslo a opakující se heslo a zkuste to znovu.',
-	yourQuestion: 'vaše otázka',
-	imageFromClipboardloadingError: 'Došlo k chybě při načítání obrázku ze schránky',
-	public: 'veřejné',
-
-	castle: 'hrad',
-	person: 'osoba',
-	hiking: 'pěší turistika',
-
-	cookiesAlertText:
-		'Tato stránka používá soubory cookie k ukládání relací uživatelů a dat uživatelů, včetně aktuální polohy uživatelů.',
-
-	accept: 'přijmout'
+const en = {
+	page: pageCS,
+	common: commonCS,
+	component: componentsCS,
+	error: errorsCS
 } satisfies BaseTranslation;
 
-export default cz;
+export default en;

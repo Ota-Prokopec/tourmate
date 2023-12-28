@@ -11,5 +11,6 @@
 	bind:value={myId}
 	icon="@"
 	prefix="@"
+	invisiblePrefix
 	floatingLabel={$LL.component.MyIdInput.label()}
 />

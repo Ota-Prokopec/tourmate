@@ -117,7 +117,6 @@
 		{disabled}
 		use:retype
 		{id}
-		{...$$props}
 		class={twMerge(
 			'rounded-3xl !m-0: p-4 text-gray-900 border border-gray-300 text-left outline-none appearance-none w-full bg-gray-50',
 			icon && (iconPosition === 'left' ? 'pl-12' : 'pr-12'),
