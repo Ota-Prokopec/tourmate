@@ -6,6 +6,9 @@
 	import { alert } from '$src/routes/alertStore';
 	import { Circle3 } from 'svelte-loading-spinners';
 	import type { PageData } from './$types';
+	import LL from '$src/i18n/i18n-svelte';
+	import { getSystemLanguageAbbreviation } from '@app/utils';
+	import { isLanguage } from '@app/ts-types';
 
 	export let data: PageData;
 	let firstTime = true;
@@ -21,9 +24,17 @@
 		try {
 			await userStore.updateVerification(data.params.userId, data.params.secret);
 
+			let defaultLanguage = getSystemLanguageAbbreviation();
+			if (!isLanguage(defaultLanguage)) defaultLanguage = 'en';
+			if (!isLanguage(defaultLanguage))
+				throw new Error(
+					'the language should be en if you have some language that Tourmate does not support the default is en'
+				);
+
 			const { createAccount: account } = await sdk.createAccount({
 				myId: data.params.myId,
-				username: user.name
+				username: user.name,
+				language: defaultLanguage
 			});
 
 			if (!account) {
@@ -32,7 +43,7 @@
 			goto(`/auth/register/setlocationfornotifications`, { invalidateAll: true }); //finish your registration
 		} catch (error) {
 			if (error instanceof Error)
-				alert('Error', `please share this with the support: [${error.message}]`, {
+				alert('Error', $LL.error.unexpectedError(), {
 					color: 'red'
 				});
 		}

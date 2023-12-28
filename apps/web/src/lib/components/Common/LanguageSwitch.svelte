@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { user } from '$lib/appwrite/appwrite';
 	import { lsStore } from '$lib/utils/lsStore';
 	import { locale, setLocale } from '$src/i18n/i18n-svelte';
 	import { Select } from 'flowbite-svelte';
@@ -26,7 +27,7 @@
 	let selected: (typeof languageItems)[number]['value'] = $locale;
 
 	$: setLocale(selected);
-	$: $lsStore.language = selected;
+	$: user.addPreferences({ language: selected });
 
 	let className = '';
 	export { className as class };

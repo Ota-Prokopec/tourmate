@@ -1,16 +1,20 @@
-import { ServerLoad, error, redirect } from '@sveltejs/kit';
 import { sdkssr } from '$src/graphql/sdkssr';
+import { error, redirect } from '@sveltejs/kit';
+import { LayoutServerLoad } from './$types';
 
-export const load: ServerLoad = async (event) => {
+export const load: LayoutServerLoad = async (event) => {
 	const routeId = event.route.id;
 	if (!routeId) throw error(404);
+
 	try {
-		const userRes = await sdkssr(event).getAccount();
+		const user = (await sdkssr(event).getAccount()).getAccount;
 
 		return {
-			user: userRes.getAccount
+			user
 		};
 	} catch (error) {
+		console.log(error);
+
 		if (event.url.href?.includes('auth')) {
 			return { user: null };
 		}

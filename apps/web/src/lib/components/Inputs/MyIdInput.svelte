@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LL from '$src/i18n/i18n-svelte';
 	import Input from '../Common/Input.svelte';
 	export let myId: string;
 </script>
@@ -10,5 +11,6 @@
 	bind:value={myId}
 	icon="@"
 	prefix="@"
-	floatingLabel="uživatelské ID"
+	invisiblePrefix
+	floatingLabel={$LL.component.MyIdInput.label()}
 />

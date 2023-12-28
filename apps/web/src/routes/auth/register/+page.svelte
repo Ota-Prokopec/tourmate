@@ -1,23 +1,18 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Button from '$lib/components/Common/Button.svelte';
-	import ErrorHelpler from '$lib/components/Common/ErrorHelper.svelte';
-	import Help from '$lib/components/Common/Help.svelte';
-	import Input from '$lib/components/Common/Input.svelte';
-	import IconNext from '$lib/components/Icons/IconNext.svelte';
 	import { collections, Queries } from '$lib/appwrite/appwrite';
-	import Text from '$lib/components/Common/Text.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
-	import Column from '$lib/components/Common/Column.svelte';
 	import ButtonNext from '$lib/components/Buttons/ButtonNext.svelte';
-	import LL from '$src/i18n/i18n-svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import Help from '$lib/components/Common/Help.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
-	import Center from '$lib/components/Common/Center.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 	import MyIdInput from '$lib/components/Inputs/MyIdInput.svelte';
+	import UsernameInput from '$lib/components/Inputs/UsernameInput.svelte';
+	import LL from '$src/i18n/i18n-svelte';
+	import { alert } from '$src/routes/alertStore';
 
 	let username = '';
 	let myId = '';
-	let error = '';
 
 	const redirect = async () => {
 		try {
@@ -29,22 +24,21 @@
 
 			goto(`/auth/register/${username}-${myId}`);
 		} catch (err) {
-			error = 'user with myId already exists';
-			console.log('error');
+			alert('', $LL.page.signUp.userAlreadyExists());
 		}
 	};
 </script>
 
 <Column class="w-full items-center max-w-[400px]">
-	<Text class="text-xl">{$LL.regitrationPageTitle()}</Text>
+	<Text class="text-xl text-center">{$LL.page.signUp.title()}</Text>
 
 	<Right>
 		<Help class="w-[80%] max-w-[400px]" placement="left"
-			>{$LL.registrationPageUsernameUserIdConditions()}</Help
+			>{$LL.page.signUp.usernameUserIdConditions()}</Help
 		>
 	</Right>
-	<ErrorHelpler bind:message={error} timeout={2000} />
-	<Input class="w-full" bind:value={username} floatingLabel="uživatelské jméno" />
+
+	<UsernameInput bind:value={username} />
 	<MyIdInput bind:myId />
 </Column>
 

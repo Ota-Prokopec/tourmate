@@ -40,26 +40,25 @@
 	<ItemsLayout
 		let:id
 		items={[
-			{ title: $LL.name(), id: 'name' },
-			{ title: $LL.place(), id: 'place' },
-			{ title: $LL.type(), id: 'type' },
-			{ title: $LL.transport(), id: 'transport' },
-			{ title: $LL.about(), id: 'about' },
-			{ title: $LL.image(), id: 'image' }
+			{ title: $LL.component.MonumentCreateForm.monumentName(), id: 'name' },
+			{ title: $LL.component.MonumentCreateForm.place(), id: 'place' },
+			{ title: $LL.component.MonumentCreateForm.type(), id: 'type' },
+			{ title: $LL.component.MonumentCreateForm.transport(), id: 'transport' },
+			{ title: $LL.component.MonumentCreateForm.about(), id: 'about' },
+			{ title: $LL.component.MonumentCreateForm.image(), id: 'image' }
 		]}
 	>
 		{#if id === 'name'}
 			<Input
 				bind:value={name}
-				floatingLabel="name of monument"
+				floatingLabel={$LL.component.MonumentCreateForm.monumentName()}
 				class=" "
 				classWrap="w-full max-w-[400px]"
 			/>
 		{:else if id === 'place'}
 			<Input
 				bind:value={placeName}
-				floatingLabel="umístění"
-				class=" "
+				floatingLabel={$LL.component.MonumentCreateForm.place()}
 				classWrap="w-full max-w-[400px]"
 			/>
 		{:else if id === 'type'}

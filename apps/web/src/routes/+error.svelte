@@ -1,4 +1,4 @@
-<script lang="tscenter">
+<script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import LL from '$src/i18n/i18n-svelte';
@@ -14,8 +14,10 @@
 	/>
 	<Column class="w-full items-center justify-center  gap-4">
 		<Text class="text-red-500 text-3xl">
-			{$LL.errorMessage()}
+			{$LL.page.globalError.title()}
 		</Text>
-		<Button on:click={() => location.reload()} color="green">{$LL.tryItAgain()}</Button>
+		<Button on:click={() => location.reload()} color="green"
+			>{$LL.page.globalError.reloadButtonLabel()}</Button
+		>
 	</Column>
 </Column>

@@ -1,23 +1,13 @@
 import { browser } from '$app/environment';
-import { lsStore } from '$lib/utils/lsStore';
 import { setLocale } from '$src/i18n/i18n-svelte';
 import { loadLocaleAsync } from '$src/i18n/i18n-util.async';
-import { get } from 'svelte/store';
-import { LayoutLoad } from './$types';
 import { getSystemLanguageAbbreviation } from '@app/utils';
+import { error } from '@sveltejs/kit';
+import { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async (event) => {
-	await loadLocaleAsync('cs');
-	await loadLocaleAsync('en');
-	if (browser) {
-		const { language } = get(lsStore);
-		const deviceLanguage = getSystemLanguageAbbreviation();
-		if (language) {
-			setLocale(language); //set the users locale language
-		} else if (deviceLanguage) {
-			if (deviceLanguage === 'en' || deviceLanguage === 'cs') setLocale(deviceLanguage);
-		} else setLocale('en'); //set the default language
-	}
+	const routeId = event.route.id;
+	if (!routeId) throw error(404);
 
 	// service-worker registration
 	if (browser) {
@@ -25,4 +15,18 @@ export const load: LayoutLoad = async (event) => {
 			scope: '/'
 		});
 	}
+
+	await loadLocaleAsync('cs');
+	await loadLocaleAsync('en');
+
+	const myLanguage = event.data.user?.prefs.language;
+	const deviceLanguage = getSystemLanguageAbbreviation();
+
+	if (myLanguage) {
+		setLocale(myLanguage); //set the users locale language
+	} else if (deviceLanguage) {
+		if (deviceLanguage === 'en' || deviceLanguage === 'cs') setLocale(deviceLanguage);
+	} else setLocale('en'); //set the default language
+
+	return event.data;
 };

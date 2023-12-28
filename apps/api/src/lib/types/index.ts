@@ -4,6 +4,10 @@
 
 export { default as AnswerType } from './scalarTypes/custom/AnswerType';
 export * from './scalarTypes/custom/AnswerType';
+export { default as ColorTheme } from './scalarTypes/custom/ColorTheme';
+export * from './scalarTypes/custom/ColorTheme';
+export { default as Language } from './scalarTypes/custom/Language';
+export * from './scalarTypes/custom/Language';
 export { default as Location } from './scalarTypes/custom/Location';
 export * from './scalarTypes/custom/Location';
 export { default as StringOrNumber } from './scalarTypes/custom/StringOrNumber';

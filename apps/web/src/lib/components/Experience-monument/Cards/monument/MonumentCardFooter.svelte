@@ -56,7 +56,7 @@
 						{#if seconds !== 0}
 							<Popover class="w-[300px]" placement="bottom">
 								<TypeWriter speed={10}>
-									{normalizeTime(seconds, $LL.and())}
+									{normalizeTime(seconds, $LL.common.and())}
 								</TypeWriter>
 							</Popover>
 						{/if}

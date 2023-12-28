@@ -1,5 +1,5 @@
-query createAccount($myId: String!, $username: String!) {
-	createAccount(myId: $myId, username: $username) {
+query createAccount($myId: String!, $username: String!, $language: Language!) {
+	createAccount(myId: $myId, username: $username, language: $language) {
 		_updatedAt
 		_createdAt
 		userId

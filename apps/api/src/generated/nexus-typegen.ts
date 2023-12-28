@@ -9,6 +9,8 @@ import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     answerType<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "AnswerType";
+    colorTheme<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "ColorTheme";
+    language<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Language";
     location<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Location";
     stringOrNumber<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "StringOrNumber";
     topic<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Topic";
@@ -22,6 +24,8 @@ declare global {
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
     answerType<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "AnswerType";
+    colorTheme<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "ColorTheme";
+    language<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Language";
     location<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Location";
     stringOrNumber<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "StringOrNumber";
     topic<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Topic";
@@ -84,6 +88,8 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   AnswerType: 'radio' | 'text' | 'number'
+  ColorTheme: "dark" | "light"
+  Language: "en" | "cs"
   Location: [number, number]
   StringOrNumber: string | number
   Topic: "castle" | "monument" | "person" | "animals" | "hiking"
@@ -199,6 +205,8 @@ export interface NexusGenObjects {
     answeredCorrectly: boolean; // Boolean!
   }
   UsersPreferences: { // root type
+    colorTheme: NexusGenScalars['ColorTheme']; // ColorTheme!
+    language: NexusGenScalars['Language']; // Language!
     mapRange: number; // Int!
     termsAccepted: boolean; // Boolean!
   }
@@ -360,6 +368,8 @@ export interface NexusGenFieldTypes {
     answeredCorrectly: boolean; // Boolean!
   }
   UsersPreferences: { // field return type
+    colorTheme: NexusGenScalars['ColorTheme']; // ColorTheme!
+    language: NexusGenScalars['Language']; // Language!
     mapRange: number; // Int!
     termsAccepted: boolean; // Boolean!
   }
@@ -511,6 +521,8 @@ export interface NexusGenFieldTypeNames {
     answeredCorrectly: 'Boolean'
   }
   UsersPreferences: { // field return type name
+    colorTheme: 'ColorTheme'
+    language: 'Language'
     mapRange: 'Int'
     termsAccepted: 'Boolean'
   }
@@ -543,6 +555,7 @@ export interface NexusGenArgTypes {
   }
   Query: {
     createAccount: { // args
+      language: NexusGenScalars['Language']; // Language!
       myId: string; // String!
       username: string; // String!
     }

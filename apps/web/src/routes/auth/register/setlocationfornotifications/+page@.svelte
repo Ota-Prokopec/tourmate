@@ -7,6 +7,7 @@
 	import lsStore from '$lib/utils/lsStore';
 	import { browser } from '$app/environment';
 	import type { Location } from '@app/ts-types';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let data: PageData;
 	let mapCenter: Location;
@@ -24,5 +25,5 @@
 {#if data.user}
 	<SetLocationForNotificationsPage center={mapCenter} on:back={saved} userId={data.user.userId} />
 {:else}
-	<Alert>There was an error while loading your account</Alert>
+	<Alert>{$LL.error.accountNotFound()}</Alert>
 {/if}

@@ -83,7 +83,7 @@
 
 	const clipboardError = () => {
 		if (screenErrors) {
-			alert('', $LL.imageFromClipboardloadingError(), { color: 'red' });
+			alert('', $LL.component.ImageInput.clipboardNotFound(), { color: 'red' });
 		}
 	};
 </script>
@@ -107,8 +107,12 @@
 {#if usePopup}
 	<Popover class={twMerge(`z-[9999] w-auto`, !usePopup && 'hidden')} color="light">
 		<ButtonGroup>
-			<Button on:click={openGallery} class="bg-red-500">přes galerii</Button>
-			<Button on:click={clipBoardRead} class="bg-red-500">přes schránku</Button>
+			<Button on:click={openGallery} class="bg-red-500"
+				>{$LL.component.ImageInput.throughGallery()}</Button
+			>
+			<Button on:click={clipBoardRead} class="bg-red-500"
+				>{$LL.component.ImageInput.throughClipboard()}</Button
+			>
 		</ButtonGroup>
 	</Popover>
 {/if}

@@ -11,8 +11,6 @@ export type Data =
 			cookieFallback?: Record<'a_session_experiences', string>;
 			newExperiencePicture?: string | Base64;
 			alreadyHasNotificationToken?: boolean;
-			'color-theme'?: 'light' | 'dark';
-			language?: Locales;
 			cookiesAccepted?: boolean;
 	  } & Record<string, any>;
 
@@ -55,7 +53,6 @@ export const storage = new Proxy(data, {
 	},
 	set: (target, prop, value, receiver) => {
 		lsStore.update((currentData) => ({ ...currentData, [prop.toString()]: value }));
-		//localStorage.setItem(prop.toString(), JSON.stringify(value));
 		return true;
 	},
 	deleteProperty: (target, propKey) => {

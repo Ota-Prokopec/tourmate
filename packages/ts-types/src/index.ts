@@ -19,3 +19,5 @@ export * from './Question';
 export * from './Topic';
 export * from './Transport';
 export * from './TsTypes';
+export * from './Application/ColorTheme';
+export * from './Application/Language';

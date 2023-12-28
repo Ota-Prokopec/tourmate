@@ -7,6 +7,8 @@
 	import ErrorHelper from '$lib/components/Common/ErrorHelper.svelte';
 	import { Queries, collections, user } from '$lib/appwrite/appwrite';
 	import { onMount } from 'svelte';
+	import { getSystemLanguageAbbreviation } from '@app/utils';
+	import { isLanguage } from '@app/ts-types';
 
 	const { user: usersParams } = $lsStore;
 
@@ -34,11 +36,20 @@
 			if (!usersParams) throw new Error('Users params in localstorage are not complete');
 
 			//if your account is not created, create an account
+			//set up the language
+			let defaultLanguage = getSystemLanguageAbbreviation();
+			if (!isLanguage(defaultLanguage)) defaultLanguage = 'en';
+			if (!isLanguage(defaultLanguage))
+				throw new Error(
+					'the language should be en if you have some language that Tourmate does not support the default is en'
+				);
+
 			if (!myUserInfoAlreadyExists) {
 				//create experience account
 				const { createAccount: account } = await sdk.createAccount({
 					myId: usersParams.myId,
-					username: usersParams.username
+					username: usersParams.username,
+					language: defaultLanguage
 				});
 
 				if (!account) throw new Error('It was not successful to create your account');

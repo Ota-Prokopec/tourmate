@@ -20,7 +20,7 @@
 >
 	<Row class="justify-between items-center gap-[10px]">
 		<Text class="text-xl">
-			{$LL.noContent()}
+			{$LL.component.NoContent.notFound()}
 		</Text>
 		<Icon disabled class="child:fill-red-500 child:w-10 child:h-10">
 			<IconTimes />

@@ -70,11 +70,11 @@
 					}
 				})
 			).createMonument;
-			alert('', $LL.monumentCreated(), { color: 'green' });
+			alert('', $LL.page.addMonument.detail.monumentCreated(), { color: 'green' });
 			goto('/');
 		} catch (err) {
 			isLoading = false;
-			alert('', $LL.monumentCreateError(), { color: 'red' });
+			alert('', $LL.page.addMonument.detail.monumentCreateError(), { color: 'red' });
 		}
 		isLoading = false;
 	};
@@ -114,7 +114,7 @@
 			{#if isLoading}
 				<Loading />
 			{:else}
-				<span>Vytvořit</span>
+				<span>{$LL.page.addMonument.detail.create()}</span>
 			{/if}
 		</Button>
 	</MonumentCreateForm>
