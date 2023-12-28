@@ -16,12 +16,10 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		let user: Models.User<Preferences> | null = null
 		let appwrite: ReturnType<typeof appwriteConnections.setCookie>
 
-		console.log(cookies)
-
 		try {
 			appwrite = appwriteConnections.setCookie(cookies)
 
-			user = await appwrite.account.get<Preferences>()
+			user = await appwrite.account.get()
 
 			// appwrite.account.updatePrefs<Preferences>({
 			// 	mapRange: 400,

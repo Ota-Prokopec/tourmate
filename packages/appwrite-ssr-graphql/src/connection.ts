@@ -1,11 +1,16 @@
 import { Client } from 'appwrite'
 import { Client as ClientAdmin } from 'node-appwrite'
 import { getSessionFromCookie } from './auth/account'
-import type { Types } from './types/Types'
 import setAdmin from './set/setAdmin'
 import setClient from './set/setClient'
+import type { Types } from './types/Types'
 
-export const connections = (clientClient: Client, clientAdmin: ClientAdmin, hostname: string, apiKey?: string | undefined) => {
+export const connections = (
+	clientClient: Client,
+	clientAdmin: ClientAdmin,
+	hostname: string,
+	apiKey?: string | undefined,
+) => {
 	const { endpoint, project } = clientClient.config
 	return {
 		setSession: (session: string) => {
@@ -31,9 +36,18 @@ export const connections = (clientClient: Client, clientAdmin: ClientAdmin, host
 	}
 }
 
-const setProject = (params: { projectId: string; endpoint: string; apiKey?: string; hostname: string }) => {
-	const clientClient = new Client().setEndpoint(params.endpoint).setProject(params.projectId)
-	const clientAdmin = new ClientAdmin().setEndpoint(params.endpoint).setProject(params.projectId)
+const setProject = (params: {
+	projectId: string
+	endpoint: string
+	apiKey?: string
+	hostname: string
+}) => {
+	const clientClient = new Client()
+		.setEndpoint(params.endpoint)
+		.setProject(params.projectId)
+	const clientAdmin = new ClientAdmin()
+		.setEndpoint(params.endpoint)
+		.setProject(params.projectId)
 
 	return connections(clientClient, clientAdmin, params.hostname, params.apiKey)
 }

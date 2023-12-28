@@ -20,6 +20,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   AnswerType: { input: any; output: any; }
+  ColorTheme: { input: any; output: any; }
   Location: { input: [number, number]; output: [number, number]; }
   StringOrNumber: { input: any; output: any; }
   Topic: { input: "castle" | "monument" | "person" | "animals" | "hiking"; output: "castle" | "monument" | "person" | "animals" | "hiking"; }
@@ -331,6 +332,7 @@ export type UsersAnswerToQuestion = {
 
 export type UsersPreferences = {
   __typename?: 'UsersPreferences';
+  colorTheme: Scalars['ColorTheme']['output'];
   mapRange: Scalars['Int']['output'];
   termsAccepted: Scalars['Boolean']['output'];
 };

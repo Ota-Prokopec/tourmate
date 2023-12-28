@@ -13,11 +13,12 @@ export default queryField('createAccount', {
 
 		const { collections, account } = ctx.appwrite
 
-		//! Preferences
-		//@ts-ignore
-		const updatePrefs = await account.updatePrefs<Preferences>({
+		account.getPrefs()
+
+		const updatePrefs = await account.updatePreferences({
 			mapRange: 6000,
 			termsAccepted: true,
+			colorTheme: 'light',
 		})
 
 		const userInfoPromise = collections.userInfo.createDocument(

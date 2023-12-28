@@ -88,5 +88,8 @@ export default <Preferences extends Record<string, any>>(account: Account) => {
 		getUser() {
 			return this.__get()
 		}
+		getPreferences() {
+			return account.getPrefs<Preferences>()
+		}
 	}
 }

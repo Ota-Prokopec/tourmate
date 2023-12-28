@@ -1,7 +1,7 @@
-import { Account, Client, ID } from 'appwrite'
+import { Account, Client } from 'appwrite'
 import * as setCookie from 'set-cookie-parser'
-import { Types } from '../types/Types'
 import { z } from 'zod'
+import { Types } from '../types/Types'
 
 const userHasCookies = (cookies: {}): cookies is Types.Cookie[] =>
 	Object.entries(cookies).length !== 0
@@ -27,6 +27,8 @@ export const getSessionFromCookie = (
 	return session.value
 }
 
+// ----------------------------------------------------------------
+
 export default (client: Client, hostname: string) => {
 	const sessionNames = [
 		'a_session_' + client.config.project.toLowerCase(),
@@ -35,7 +37,7 @@ export default (client: Client, hostname: string) => {
 
 	const SSRHostName = hostname === 'localhost' ? 'localhost' : `.${hostname}`
 
-	return class Auth extends Account {
+	return class Auth<Preferences extends object> extends Account {
 		constructor() {
 			super(client)
 		}
@@ -141,6 +143,9 @@ export default (client: Client, hostname: string) => {
 					...params,
 				},
 			}
+		}
+		updatePreferences(prefs: Preferences) {
+			return this.updatePrefs<Preferences>(prefs)
 		}
 	}
 }

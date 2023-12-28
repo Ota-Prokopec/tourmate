@@ -64,5 +64,10 @@ export const componentsEN = {
 		throughGallery: 'through gallery',
 		throughClipboard: 'through clipboard',
 		clipboardNotFound: 'There is no picture available in your clipboard.'
+	},
+	CookiesAlert: {
+		title:
+			'This site uses cookies to store users sessions and users data including users current location.',
+		acceptButtonLabel: 'accept cookies'
 	}
 } satisfies BaseTranslation;

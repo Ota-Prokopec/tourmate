@@ -4,6 +4,7 @@
 
 export * from './Account';
 export * from './Answer';
+export * from './Application';
 export * from './Card';
 export * from './Checking';
 export * from './Document';

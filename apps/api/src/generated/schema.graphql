@@ -24,6 +24,8 @@ type Account {
 
 scalar AnswerType
 
+scalar ColorTheme
+
 input CreateAccountInput {
   myId: String!
   username: String!
@@ -219,6 +221,7 @@ type UsersAnswerToQuestion {
 }
 
 type UsersPreferences {
+  colorTheme: ColorTheme!
   mapRange: Int!
   termsAccepted: Boolean!
 }

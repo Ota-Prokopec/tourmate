@@ -1,5 +1,5 @@
-import { Document, GraphqlDocument } from './Document'
-import { Location } from './Location'
+import type { ColorTheme } from './Application'
+import type { Document, GraphqlDocument } from './Document'
 
 export type UserInfo = {
 	userId: string

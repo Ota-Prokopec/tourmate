@@ -8,7 +8,7 @@ if (!firebase.apps.length) {
 	const firebaseApp = initializeApp({
 		//@ts-ignore
 		credential: admin.credential.cert(firebasePrivateObject),
-		projectId: process.env.FIREBASE_PROJECT_ID ?? '',
+		projectId: process.env.FIREBASE_PROJECT_ID ?? 'not-found',
 	})
 }
 

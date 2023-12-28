@@ -60,5 +60,10 @@ export const componentsCS = {
 		throughGallery: 'přes galerii',
 		throughClipboard: 'přes schránku',
 		clipboardNotFound: 'Ve vaší schránce není k dispozici žádný obrázek.'
+	},
+	CookiesAlert: {
+		title:
+			'Tato stránka používá soubory cookie ke ukládání relací uživatelů a dat uživatelů, včetně aktuální polohy uživatelů.',
+		acceptButtonLabel: 'přijmout cookies'
 	}
 } satisfies BaseTranslation;

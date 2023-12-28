@@ -8,7 +8,6 @@ export default (client: Client, hostname: string) => {
 	const Auth = account_(client, hostname)
 	const Collection = databse_(client)
 	const Bucket = storage_(client)
-	const account = new Auth()
 	const teams = new Teams(client)
 	const functions = new Functions(client)
 	const locale = new Locale(client)
@@ -20,7 +19,6 @@ export default (client: Client, hostname: string) => {
 		Auth,
 		Collection,
 		Bucket,
-		account,
 		teams,
 		functions,
 		locale,

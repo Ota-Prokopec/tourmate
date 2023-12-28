@@ -401,6 +401,16 @@ type RootTranslation = {
 			 */
 			clipboardNotFound: string
 		}
+		CookiesAlert: {
+			/**
+			 * T​h​i​s​ ​s​i​t​e​ ​u​s​e​s​ ​c​o​o​k​i​e​s​ ​t​o​ ​s​t​o​r​e​ ​u​s​e​r​s​ ​s​e​s​s​i​o​n​s​ ​a​n​d​ ​u​s​e​r​s​ ​d​a​t​a​ ​i​n​c​l​u​d​i​n​g​ ​u​s​e​r​s​ ​c​u​r​r​e​n​t​ ​l​o​c​a​t​i​o​n​.
+			 */
+			title: string
+			/**
+			 * a​c​c​e​p​t​ ​c​o​o​k​i​e​s
+			 */
+			acceptButtonLabel: string
+		}
 	}
 	error: {
 		/**
@@ -816,6 +826,16 @@ export type TranslationFunctions = {
 			 * There is no picture available in your clipboard.
 			 */
 			clipboardNotFound: () => LocalizedString
+		}
+		CookiesAlert: {
+			/**
+			 * This site uses cookies to store users sessions and users data including users current location.
+			 */
+			title: () => LocalizedString
+			/**
+			 * accept cookies
+			 */
+			acceptButtonLabel: () => LocalizedString
 		}
 	}
 	error: {

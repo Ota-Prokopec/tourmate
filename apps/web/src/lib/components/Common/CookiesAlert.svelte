@@ -15,10 +15,12 @@
 {#if browser && !storage.cookiesAccepted}
 	<Alert class="absolute bottom-0 m-2 mb-10">
 		<Text>
-			{$LL.cookiesAlertText()}
+			{$LL.component.CookiesAlert.title()}
 		</Text>
 		<Right slot="buttons">
-			<Button color="green" on:click={accepted}>{$LL.accept()}</Button>
+			<Button color="green" on:click={accepted}
+				>{$LL.component.CookiesAlert.acceptButtonLabel()}</Button
+			>
 		</Right>
 	</Alert>
 {/if}
