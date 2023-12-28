@@ -17,6 +17,7 @@ export type Scalars = {
   Float: { input: number; output: number; }
   AnswerType: { input: any; output: any; }
   ColorTheme: { input: 'dark' | 'light'; output: 'dark' | 'light'; }
+  Language: { input: 'en'|'cs'; output: 'en'|'cs'; }
   Location: { input: [number, number]; output: [number, number]; }
   StringOrNumber: { input: any; output: any; }
   Topic: { input: "castle" | "monument" | "person" | "animals" | "hiking"; output: "castle" | "monument" | "person" | "animals" | "hiking"; }
@@ -230,6 +231,7 @@ export type Query = {
 
 
 export type QueryCreateAccountArgs = {
+  language: Scalars['Language']['input'];
   myId: Scalars['String']['input'];
   username: Scalars['String']['input'];
 };
@@ -329,6 +331,7 @@ export type UsersAnswerToQuestion = {
 export type UsersPreferences = {
   __typename?: 'UsersPreferences';
   colorTheme: Scalars['ColorTheme']['output'];
+  language: Scalars['Language']['output'];
   mapRange: Scalars['Int']['output'];
   termsAccepted: Scalars['Boolean']['output'];
 };
@@ -336,6 +339,7 @@ export type UsersPreferences = {
 export type CreateAccountQueryVariables = Exact<{
   myId: Scalars['String']['input'];
   username: Scalars['String']['input'];
+  language: Scalars['Language']['input'];
 }>;
 
 
@@ -344,7 +348,7 @@ export type CreateAccountQuery = { __typename?: 'Query', createAccount: { __type
 export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, _createdAt: string, secondsFromUserCreatedToNow: number, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean, colorTheme: 'dark' | 'light' } } };
+export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, _createdAt: string, secondsFromUserCreatedToNow: number, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean, colorTheme: 'dark' | 'light', language: 'en'|'cs' } } };
 
 export type GetListOfUsersBySearchingQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
@@ -520,8 +524,8 @@ export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: 
 
 
 export const CreateAccountDocument = gql`
-    query createAccount($myId: String!, $username: String!) {
-  createAccount(myId: $myId, username: $username) {
+    query createAccount($myId: String!, $username: String!, $language: Language!) {
+  createAccount(myId: $myId, username: $username, language: $language) {
     _updatedAt
     _createdAt
     userId
@@ -554,6 +558,7 @@ export const GetAccountDocument = gql`
       mapRange
       termsAccepted
       colorTheme
+      language
     }
   }
 }

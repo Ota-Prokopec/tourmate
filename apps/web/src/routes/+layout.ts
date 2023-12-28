@@ -6,20 +6,30 @@ import { getSystemLanguageAbbreviation } from '@app/utils';
 import { setLocale } from '$src/i18n/i18n-svelte';
 import lsStore from '$lib/utils/lsStore';
 import { browser } from '$app/environment';
+import { Language } from '@app/ts-types';
 
 export const load: ServerLoad = async (event) => {
 	const routeId = event.route.id;
 	if (!routeId) throw error(404);
 
-	if (browser) await handleColorTheme();
+	// service-worker registration
+	if (browser) {
+		const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+			scope: '/'
+		});
+	}
 
 	try {
-		const userRes = await sdkssr(event).getAccount();
+		const user = (await sdkssr(event).getAccount()).getAccount;
+
+		await handleColorTheme(user.prefs.language); //if the user exists it means that he has the language in appwrite
 
 		return {
-			user: userRes.getAccount
+			user
 		};
 	} catch (error) {
+		await handleColorTheme(); //the default or system language
+
 		if (event.url.href?.includes('auth')) {
 			return { user: null };
 		}
@@ -28,20 +38,14 @@ export const load: ServerLoad = async (event) => {
 	}
 };
 
-const handleColorTheme = async () => {
+const handleColorTheme = async (myLanguage?: Language) => {
 	await loadLocaleAsync('cs');
 	await loadLocaleAsync('en');
 
-	const { language } = get(lsStore);
 	const deviceLanguage = getSystemLanguageAbbreviation();
-	if (language) {
-		setLocale(language); //set the users locale language
+	if (myLanguage) {
+		setLocale(myLanguage); //set the users locale language
 	} else if (deviceLanguage) {
 		if (deviceLanguage === 'en' || deviceLanguage === 'cs') setLocale(deviceLanguage);
 	} else setLocale('en'); //set the default language
-
-	// service-worker registration
-	const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
-		scope: '/'
-	});
 };

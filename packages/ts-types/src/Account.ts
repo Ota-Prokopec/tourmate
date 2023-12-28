@@ -1,4 +1,5 @@
-import type { ColorTheme } from './Application'
+import type { ColorTheme } from './Application/ColorTheme'
+import { Language } from './Application/Language'
 import type { Document, GraphqlDocument } from './Document'
 
 export type UserInfo = {
@@ -12,6 +13,7 @@ export type Preferences = {
 	termsAccepted: boolean
 	mapRange: number
 	colorTheme: ColorTheme
+	language: Language
 }
 
 export type UserInfoDocument = Document<UserInfo>

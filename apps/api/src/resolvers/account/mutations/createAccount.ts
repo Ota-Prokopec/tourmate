@@ -1,11 +1,10 @@
-import { queryField, stringArg } from 'nexus'
-import { ApolloError } from 'apollo-server-express'
-import type { Preferences } from '@app/ts-types'
 import { owner } from '@app/appwrite-permissions'
+import { ApolloError } from 'apollo-server-express'
 import { ID } from 'appwrite'
+import { queryField, stringArg } from 'nexus'
 
 export default queryField('createAccount', {
-	args: { myId: stringArg(), username: stringArg() },
+	args: { myId: stringArg(), username: stringArg(), language: 'Language' },
 	type: 'Account',
 	resolve: async (s_, args, ctx, info) => {
 		if (!ctx.isAuthed(ctx.user))
@@ -17,6 +16,7 @@ export default queryField('createAccount', {
 			mapRange: 6000,
 			termsAccepted: true,
 			colorTheme: 'light',
+			language: args.language,
 		})
 
 		const userInfoPromise = collections.userInfo.createDocument(

@@ -7,6 +7,8 @@
 	import { Circle3 } from 'svelte-loading-spinners';
 	import type { PageData } from './$types';
 	import LL from '$src/i18n/i18n-svelte';
+	import { getSystemLanguageAbbreviation } from '@app/utils';
+	import { isLanguage } from '@app/ts-types';
 
 	export let data: PageData;
 	let firstTime = true;
@@ -22,9 +24,17 @@
 		try {
 			await userStore.updateVerification(data.params.userId, data.params.secret);
 
+			let defaultLanguage = getSystemLanguageAbbreviation();
+			if (!isLanguage(defaultLanguage)) defaultLanguage = 'en';
+			if (!isLanguage(defaultLanguage))
+				throw new Error(
+					'the language should be en if you have some language that Tourmate does not support the default is en'
+				);
+
 			const { createAccount: account } = await sdk.createAccount({
 				myId: data.params.myId,
-				username: user.name
+				username: user.name,
+				language: defaultLanguage
 			});
 
 			if (!account) {

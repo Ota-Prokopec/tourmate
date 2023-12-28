@@ -4,7 +4,6 @@
 
 export * from './Account';
 export * from './Answer';
-export * from './Application';
 export * from './Card';
 export * from './Checking';
 export * from './Document';
@@ -20,3 +19,5 @@ export * from './Question';
 export * from './Topic';
 export * from './Transport';
 export * from './TsTypes';
+export * from './Application/ColorTheme';
+export * from './Application/Language';

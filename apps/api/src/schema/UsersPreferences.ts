@@ -6,5 +6,6 @@ export default objectType({
 		t.int('mapRange')
 		t.boolean('termsAccepted')
 		t.field('colorTheme', { type: 'ColorTheme' })
+		t.field('language', { type: 'Language' })
 	},
 })

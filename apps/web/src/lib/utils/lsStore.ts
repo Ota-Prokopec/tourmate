@@ -11,7 +11,6 @@ export type Data =
 			cookieFallback?: Record<'a_session_experiences', string>;
 			newExperiencePicture?: string | Base64;
 			alreadyHasNotificationToken?: boolean;
-			language?: Locales;
 			cookiesAccepted?: boolean;
 	  } & Record<string, any>;
 

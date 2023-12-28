@@ -81,6 +81,8 @@ type ExperienceLike {
   userId: String!
 }
 
+scalar Language
+
 scalar Location
 
 input LocationInput {
@@ -155,7 +157,7 @@ type PlaceDetail {
 }
 
 type Query {
-  createAccount(myId: String!, username: String!): Account!
+  createAccount(language: Language!, myId: String!, username: String!): Account!
   getAccount: Account!
   getExperience(id: String!): Experience!
   getListOfExperiences(location: LocationInput, userId: String): [Experience!]!
@@ -222,6 +224,7 @@ type UsersAnswerToQuestion {
 
 type UsersPreferences {
   colorTheme: ColorTheme!
+  language: Language!
   mapRange: Int!
   termsAccepted: Boolean!
 }

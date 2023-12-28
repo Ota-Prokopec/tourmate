@@ -14,7 +14,8 @@ const codegenConfigConfig: CodegenConfig['config'] = {
 			output: '[number, number]' // this means our server will return CustomScalar as number
 		},
 		Topic: '"castle" | "monument" | "person" | "animals" | "hiking"',
-		ColorTheme: "'dark' | 'light'"
+		ColorTheme: "'dark' | 'light'",
+		Language: "'en'|'cs'"
 	}
 };
 
