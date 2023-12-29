@@ -59,16 +59,12 @@
 				}
 			});
 			//storage.newExperiencePicture = undefined; i have this in +layout.svelte
-			alert('', $LL.experienceWasCreated(), { color: 'green' });
+			alert('', $LL.page.createNewExperience.experienceWasCreated(), { color: 'green' });
 			goto('/');
 		} catch (error) {
-			alert(
-				$LL.saveErrorTitle({ what: $LL.experience() }),
-				$LL.saveErrorMessage({ what: $LL.experience() }),
-				{
-					color: 'red'
-				}
-			);
+			alert('', $LL.page.createNewExperience.saveErrorMessage(), {
+				color: 'red'
+			});
 		}
 
 		isPublishingLoading = false;
@@ -86,8 +82,8 @@
 	const connectToMonument = async (monumentId: string, distanceInMeters: number) => {
 		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
 			alert(
-				$LL['notAbleToConnectMonumentBecauseOfDistanceErrorTitle'](),
-				$LL['notAbleToConnectMonumentBecauseOfDistanceErrorMessage'](),
+				'',
+				$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage(),
 				{ color: 'yellow' }
 			);
 		}

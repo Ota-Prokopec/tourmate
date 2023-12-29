@@ -1,4 +1,5 @@
 <script lang="ts">
+	import SeeOnMapButton from '$lib/components/Buttons/SeeOnMapButton.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
@@ -22,7 +23,7 @@
 	}>();
 
 	export let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
-	export let monumentToConnect: MonumentCard | undefined;
+
 	export let cardShown: boolean;
 	export let hideDrawer: boolean;
 	$: usersLocation = $lsStore.usersLocation;
@@ -44,7 +45,12 @@
 <ItemsLayout
 	class="mt-4 h-auto "
 	let:id
-	items={[{ title: $LL['connectExperienceToMonument'](), id: 'connectMonument' }]}
+	items={[
+		{
+			title: $LL.page.createNewExperience.Center.connectExperienceToMonument(),
+			id: 'connectMonument'
+		}
+	]}
 >
 	{#if id === 'connectMonument'}
 		<Column class="justify-start">
@@ -64,7 +70,7 @@
 					<Skeleton class="w-full h-40" />
 					<Right>
 						<Button on:click={() => (hideDrawer = false)} color="blue"
-							>{$LL.cantFindAnyMonumentQuestion()}</Button
+							>{$LL.page.createNewExperience.Center.cantFindAnyMonumentQuestion()}</Button
 						>
 					</Right>
 				{/if}
@@ -73,12 +79,5 @@
 	{/if}
 </ItemsLayout>
 <MediaQuery class="mt-4" size="mobile">
-	<Button on:click={() => (cardShown = false)} color="yellow">
-		<Row class="gap-2">
-			<Text>{$LL.showMap()}</Text>
-			<Icon class="child:h-5 child:w-5 child:fill-red-500">
-				<IconLocation />
-			</Icon>
-		</Row>
-	</Button>
+	<SeeOnMapButton on:click={() => (cardShown = false)} />
 </MediaQuery>

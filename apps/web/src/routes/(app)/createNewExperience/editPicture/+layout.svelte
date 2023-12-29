@@ -14,7 +14,7 @@
 
 	const skip = () => {
 		if (!location) {
-			alert($LL.locationNowFoundErrorTitle(), $LL.locationNowFoundErrorMessage(), { color: 'red' });
+			alert('', $LL.error.locationNowFoundErrorMessage(), { color: 'red' });
 			throw new Error('user has no location');
 		}
 		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);

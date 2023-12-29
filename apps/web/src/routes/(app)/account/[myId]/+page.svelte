@@ -21,7 +21,7 @@
 	import type { PageData } from './$types';
 	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
 	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
-	import EditProfileButton from './Components/EditProfileButton.svelte';
+	import EditProfileButton from '../../../../lib/components/Buttons/EditProfileButton.svelte';
 	import ExperienceSection from './Components/ExperienceSection.svelte';
 	import MonumentsSection from './Components/MonumentsSection.svelte';
 

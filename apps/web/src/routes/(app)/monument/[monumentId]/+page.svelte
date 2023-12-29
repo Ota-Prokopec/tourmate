@@ -17,6 +17,8 @@
 	import { Button, Card } from 'flowbite-svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
 	import type { PageData } from './$types';
+	import TakePictureHereButton from '$lib/components/Buttons/TakePictureHereButton.svelte';
+	import SeeOnMapButton from '$lib/components/Buttons/SeeOnMapButton.svelte';
 
 	export let data: PageData;
 
@@ -30,14 +32,16 @@
 		if (typeof distanceInMeters === 'undefined') throw new Error('distance is not defined');
 		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
 			alert(
-				$LL.notAbleToConnectMonumentBecauseOfDistanceErrorTitle(),
-				$LL.notAbleToConnectMonumentBecauseOfDistanceErrorMessage(),
+				'',
+				$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage(),
 				{ color: 'yellow' }
 			);
 			throw new Error('Your distanceInMeters from monument is bigger that maximal distance.');
 		}
 		goto(`/createNewExperience/${monument.location[0]}-${monument.location[1]}/${monument._id}`);
 	};
+
+	const seeOnMap = () => (onlyMap = true);
 </script>
 
 {#if !onlyMap}
@@ -57,9 +61,10 @@
 				<Right>
 					<Column class="gap-2 items-end">
 						<MediaQuery size="mobile">
-							<Button on:click={() => (onlyMap = true)} color="blue">{$LL.seeOnMap()}</Button>
+							<SeeOnMapButton on:click={seeOnMap} />
 						</MediaQuery>
-						<Button on:click={takePicture} color="blue">{$LL.takePictureHere()}</Button>
+
+						<TakePictureHereButton on:click={takePicture} />
 					</Column>
 				</Right>
 			</svelte:fragment>

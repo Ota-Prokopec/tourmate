@@ -26,6 +26,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import SuccessCard from '$lib/components/Common/SuccessCard.svelte';
 	import FailureCard from '$lib/components/Common/FailureCard.svelte';
+	import QuestionAnsweredWrongCard from './QuestionAnsweredWrongCard.svelte';
+	import QuestionAnsweredCorrectlyCard from './QuestionAnsweredCorrectlyCard.svelte';
 
 	const dispatch = createEventDispatcher<{
 		answer: {
@@ -70,27 +72,9 @@
 	</MediaQuery>
 
 	{#if usersAnswer?.answeredCorrectly}
-		<SuccessCard class="w-full h-auto min-h-[400px] ">
-			<Column class="gap-0 mt-10">
-				<Text class="text-green-400 ">
-					{$LL.congratulationForAnsweringTheQuestionCorrectly()}
-				</Text>
-				<Text class="">
-					{$LL.nowYouCanTakeAPictureWithTheMonument()}
-				</Text>
-			</Column>
-		</SuccessCard>
+		<QuestionAnsweredCorrectlyCard />
 	{:else if usersAnswer && !usersAnswer.answeredCorrectly}
-		<FailureCard class="w-full h-auto min-h-[400px] ">
-			<Column class="gap-0 mt-10">
-				<Text class="">
-					{$LL.answeredTheQuestionWrong()}
-				</Text>
-				<Text class="">
-					{$LL.notAbleToTakeAPictureWithTheMonument()}
-				</Text>
-			</Column>
-		</FailureCard>
+		<QuestionAnsweredWrongCard />
 	{:else}
 		<Column class="justify-center items-center">
 			<Text>{question.question}</Text>
@@ -106,7 +90,7 @@
 				{#if isLoading}
 					<Loading />
 				{:else}
-					{$LL.answer()}
+					{$LL.component.AnswerQuestionDrawer.answer()}
 				{/if}
 			</Button>
 		</Column>

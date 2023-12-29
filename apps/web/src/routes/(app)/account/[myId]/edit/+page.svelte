@@ -14,6 +14,8 @@
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
 	import MyIdInput from '$lib/components/Inputs/MyIdInput.svelte';
+	import UsernameInput from '$lib/components/Inputs/UsernameInput.svelte';
+	import SaveButton from '$lib/components/Buttons/SaveButton.svelte';
 
 	export let data: PageData;
 
@@ -40,7 +42,7 @@
 			uploadingProfilePictureIsLoading = false;
 			screenProfilePicEditor = false;
 		} catch (error) {
-			alert($LL.updateProfilePictureErrorTitle(), $LL.updateProfilePictureErrorMessage(), {
+			alert('', $LL.page.account.edit.updateProfilePictureErrorMessage(), {
 				color: 'red'
 			});
 		}
@@ -55,7 +57,7 @@
 			});
 			goto(`/account/${myId}`);
 		} catch (error) {
-			alert($LL.updateProfileErrorTitle(), $LL.updateProfileErrorMessage(), { color: 'red' });
+			alert('', $LL.page.account.edit.updateProfileErrorMessage(), { color: 'red' });
 		}
 		isLoading = false;
 	};
@@ -78,15 +80,9 @@
 					openProfilePicEditor(base64);
 				}}
 			/>
-			<Input bind:value={username} class="w-full" floatingLabel={$LL.userName()} />
+			<UsernameInput bind:value={username} />
 			<MyIdInput bind:myId />
-			<Button on:click={saveChanges} {disabled} color="green" class="mt-8">
-				{#if isLoading}
-					<Loading />
-				{:else}
-					{$LL.save()}
-				{/if}
-			</Button>
+			<SaveButton on:click={saveChanges} />
 		</Column>
 	</Center>
 {/if}

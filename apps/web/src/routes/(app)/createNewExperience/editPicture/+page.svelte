@@ -18,6 +18,7 @@
 	import Right from '$lib/components/Common/Right.svelte';
 	import ClickOutside from '$lib/components/Common/ClickOutside.svelte';
 	import { error } from '@sveltejs/kit';
+	import ContinueButton from '$lib/components/Buttons/ContinueButton.svelte';
 
 	if (!$lsStore.newExperiencePicture) navigate('/createNewExperience'); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -111,13 +112,15 @@
 	{/if}
 	<span slot="footer">
 		<Row class="gap-2 relative">
-			<Button on:click={() => (locationTextMenuOpened = false)} color="red">{$LL.back()}</Button>
+			<Button on:click={() => (locationTextMenuOpened = false)} color="red"
+				>{$LL.common.back()}</Button
+			>
 			<Button
 				on:click={async () => {
 					await addLocationLabel();
 					locationTextMenuOpened = false;
 				}}
-				color="green">{$LL.addThisLabel()}</Button
+				color="green">{'this is not translated'}</Button
 			>
 			<ColorPicker
 				bind:color={textOptions.color}
@@ -137,12 +140,7 @@
 			<div class="w-full bg-gray-400" />
 
 			<Right class="w-full p-4">
-				<Button
-					on:click={save}
-					color="green"
-					class=" flex flex-wrap  flex-row gap-2 top-0 right-0 text-2xl mr-6 ml-6 !m-0  fill-white"
-					>{$LL.continue()} <Icon><IconNext /></Icon></Button
-				>
+				<ContinueButton on:click={save} />
 			</Right>
 		</span>
 	</ImageEditor>
