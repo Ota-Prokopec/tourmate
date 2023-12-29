@@ -25,10 +25,6 @@
 	let newProfilePicture: string | Base64 = '';
 	let uploadingProfilePictureIsLoading = false;
 
-	const openProfilePicEditor = (base64: Base64) => {
-		screenProfilePicEditor = true;
-		newProfilePicture = base64;
-	};
 	const updateProfilePicture = async (base64: Base64) => {
 		try {
 			uploadingProfilePictureIsLoading = true;
@@ -60,26 +56,18 @@
 	};
 </script>
 
-{#if screenProfilePicEditor}
-	<ProfilePictureEditor
-		isLoading={uploadingProfilePictureIsLoading}
-		on:save={(e) => updateProfilePicture(e.detail.base64)}
-		profilePicture={newProfilePicture}
-	/>
-{:else}
-	<Center>
-		<Column class="items-center w-full max-w-[400px] justify-center gap-4 mt-4 p-2">
-			<AvatarImageInput
-				screenErrors
-				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
-				imageURL={data.userProfile.profilePictureURL}
-				on:image={async ({ detail: { base64 } }) => {
-					openProfilePicEditor(base64);
-				}}
-			/>
-			<UsernameInput bind:value={username} />
-			<MyIdInput bind:myId />
-			<SaveButton on:click={saveChanges} />
-		</Column>
-	</Center>
-{/if}
+<Center>
+	<Column class="items-center w-full max-w-[400px] justify-center gap-4 mt-4 p-2">
+		<AvatarImageInput
+			screenErrors
+			class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
+			imageURL={data.userProfile.profilePictureURL}
+			on:image={async ({ detail: { base64 } }) => {
+				updateProfilePicture(base64);
+			}}
+		/>
+		<UsernameInput bind:value={username} />
+		<MyIdInput bind:myId />
+		<SaveButton on:click={saveChanges} />
+	</Column>
+</Center>

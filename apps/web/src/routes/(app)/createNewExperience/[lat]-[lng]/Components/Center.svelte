@@ -1,13 +1,8 @@
 <script lang="ts">
-	import SeeOnMapButton from '$lib/components/Buttons/SeeOnMapButton.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
-	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import lsStore from '$lib/utils/lsStore';
 	import LL from '$src/i18n/i18n-svelte';

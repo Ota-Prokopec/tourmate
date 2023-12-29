@@ -89,8 +89,8 @@ export const pageEN = {
 		}
 	},
 	createNewExperience: {
-		experienceWasCreated: 'Your new experience was successfully created',
-		saveErrorMessage: 'Your experience was not created, please try it again',
+		experienceWasCreated: 'Your new picture was successfully created',
+		saveErrorMessage: 'Your picture was not created, please try it again',
 		Footer: {
 			answerQuestionError: 'It was not successful to answer the question. Please try it again.',
 			cantAnswerTwice:

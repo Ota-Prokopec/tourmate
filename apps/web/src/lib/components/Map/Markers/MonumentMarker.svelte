@@ -49,7 +49,8 @@
 >
 	<MediaQuery size="mobile">
 		<Right>
-			<Icon on:click={() => (detailHidden = true)} class="child:w-7 child:h-7"><IconTimes /></Icon>
+			<Icon on:click={() => (detailHidden = true)} class="child:w-10 child:h-10"><IconTimes /></Icon
+			>
 		</Right>
 	</MediaQuery>
 	{#if monumentCardDataPromise}

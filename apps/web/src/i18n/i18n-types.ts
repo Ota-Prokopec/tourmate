@@ -235,11 +235,11 @@ type RootTranslation = {
 		}
 		createNewExperience: {
 			/**
-			 * Y​o​u​r​ ​n​e​w​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d
+			 * Y​o​u​r​ ​n​e​w​ ​p​i​c​t​u​r​e​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d
 			 */
 			experienceWasCreated: string
 			/**
-			 * Y​o​u​r​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​n​o​t​ ​c​r​e​a​t​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
+			 * Y​o​u​r​ ​p​i​c​t​u​r​e​ ​w​a​s​ ​n​o​t​ ​c​r​e​a​t​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
 			 */
 			saveErrorMessage: string
 			Footer: {
@@ -443,7 +443,7 @@ type RootTranslation = {
 			 */
 			transport: string
 			/**
-			 * a​b​o​u​t
+			 * a​b​o​u​t​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			about: string
 			/**
@@ -466,15 +466,15 @@ type RootTranslation = {
 			save: string
 			questionTypes: {
 				/**
-				 * s​i​n​g​l​e​-​c​h​o​i​c​e
+				 * c​h​o​i​c​e
 				 */
 				radio: string
 				/**
-				 * t​e​x​t​ ​a​n​s​w​e​r
+				 * t​e​x​t
 				 */
 				text: string
 				/**
-				 * n​u​m​b​e​r​ ​a​n​s​w​e​r
+				 * n​u​m​b​e​r
 				 */
 				number: string
 			}
@@ -935,11 +935,11 @@ export type TranslationFunctions = {
 		}
 		createNewExperience: {
 			/**
-			 * Your new experience was successfully created
+			 * Your new picture was successfully created
 			 */
 			experienceWasCreated: () => LocalizedString
 			/**
-			 * Your experience was not created, please try it again
+			 * Your picture was not created, please try it again
 			 */
 			saveErrorMessage: () => LocalizedString
 			Footer: {
@@ -1143,7 +1143,7 @@ export type TranslationFunctions = {
 			 */
 			transport: () => LocalizedString
 			/**
-			 * about
+			 * about experience
 			 */
 			about: () => LocalizedString
 			/**
@@ -1166,15 +1166,15 @@ export type TranslationFunctions = {
 			save: () => LocalizedString
 			questionTypes: {
 				/**
-				 * single-choice
+				 * choice
 				 */
 				radio: () => LocalizedString
 				/**
-				 * text answer
+				 * text
 				 */
 				text: () => LocalizedString
 				/**
-				 * number answer
+				 * number
 				 */
 				number: () => LocalizedString
 			}

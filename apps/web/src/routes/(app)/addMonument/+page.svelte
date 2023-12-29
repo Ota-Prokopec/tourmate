@@ -25,7 +25,7 @@
 
 	export let data: PageData;
 
-	let location: Location | undefined = $lsStore.usersLocation;
+	let location: Location | undefined | null = $lsStore.usersLocation;
 	$: markerLocation = location;
 
 	let monuments: MonumentMarkerData[] = [];

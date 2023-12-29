@@ -25,7 +25,7 @@
 	$: checkMonuments(location, range, () => {}).then(() => {});
 
 	const checkMonuments = async (
-		location: Location | undefined,
+		location: Location | undefined | null,
 		range: number,
 		callback: () => void
 	) => {

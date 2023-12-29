@@ -1,6 +1,4 @@
 import type { BaseTranslation } from '../i18n-types';
-import { commonEN } from './common';
-import { pageEN } from './page';
 
 export const componentsEN = {
 	EmailInput: {
@@ -44,7 +42,7 @@ export const componentsEN = {
 		place: 'place',
 		type: 'type',
 		transport: 'transport',
-		about: 'about',
+		about: 'about experience',
 		image: 'image'
 	},
 	AddQuestionDrawer: {
@@ -53,9 +51,9 @@ export const componentsEN = {
 		yourQuestion: 'Your question',
 		save: 'save',
 		questionTypes: {
-			radio: 'single-choice',
-			text: 'text answer',
-			number: 'number answer'
+			radio: 'choice',
+			text: 'text',
+			number: 'number'
 		}
 	},
 	AddQuestionButton: {

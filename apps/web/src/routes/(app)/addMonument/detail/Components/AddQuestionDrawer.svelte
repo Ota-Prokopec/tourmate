@@ -72,7 +72,7 @@
 
 	const save = () => {
 		try {
-			question = {
+			const temporaryQuestion = {
 				type: chosenCategory,
 				question: questionHelper,
 				correctAnswer:
@@ -83,12 +83,15 @@
 						: pickingAnswerHelper,
 				pickingAnswers: chosenCategory === 'radio' ? pickingAnswersHelper : undefined
 			};
+
+			if (!temporaryQuestion) throw new Error('Question does not exist');
+			const [type, checkedQuestion] = getQuestionType(temporaryQuestion);
+
+			question = checkedQuestion;
+
 			clearOthers();
 
-			if (!question) throw new Error('Question does not exist');
-			const [type, checkedQuestion] = getQuestionType(question);
-
-			dispatch('save', checkedQuestion);
+			dispatch('save', question);
 			hidden = true;
 		} catch (err) {
 			errorMessage = $LL.component.AddQuestionDrawer.saveError();
