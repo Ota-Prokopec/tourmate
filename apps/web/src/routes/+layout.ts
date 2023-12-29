@@ -6,15 +6,15 @@ import { error } from '@sveltejs/kit';
 import { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async (event) => {
+	if (!browser) return; // !use this only on browser (client side)
+
 	const routeId = event.route.id;
 	if (!routeId) throw error(404);
 
 	// service-worker registration
-	if (browser) {
-		const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
-			scope: '/'
-		});
-	}
+	const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+		scope: '/'
+	});
 
 	//language
 	await loadLocaleAsync('cs');

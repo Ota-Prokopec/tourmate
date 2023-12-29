@@ -12,15 +12,14 @@
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import type { Base64, MonumentCard } from '@app/ts-types';
-	import EditProfileButton from '../../../../lib/components/Buttons/EditProfileButton.svelte';
 	import type { PageData } from './$types';
 	import ExperienceSection from './Components/ExperienceSection.svelte';
 	import MonumentsSection from './Components/MonumentsSection.svelte';
+	import Left from '$lib/components/Common/Left.svelte';
+	import { Button } from 'flowbite-svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
-
-	let usersMonuments: MonumentCard[] | undefined = undefined;
 
 	let category: 'monuments' | 'experiences' = 'experiences';
 
@@ -35,10 +34,6 @@
 	let newProfilePicture: string | Base64 = '';
 	let uploadingProfilePictureIsLoading = false;
 
-	const openProfilePicEditor = (base64: Base64) => {
-		screenProfilePicEditor = true;
-		newProfilePicture = base64;
-	};
 	const updateProfilePicture = async (base64: Base64) => {
 		uploadingProfilePictureIsLoading = true;
 		const {
@@ -51,66 +46,62 @@
 	};
 </script>
 
-{#if screenProfilePicEditor}
-	<ProfilePictureEditor
-		isLoading={uploadingProfilePictureIsLoading}
-		on:save={(e) => updateProfilePicture(e.detail.base64)}
-		profilePicture={newProfilePicture}
-	/>
-{:else}
-	<Column class="p-2">
-		<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
-			{#if isMyAccount}
-				<AvatarImageInput
-					screenErrors
-					class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
-					imageURL={usersProfile?.profilePictureURL}
-					on:image={async ({ detail: { base64 } }) => {
-						openProfilePicEditor(base64);
-					}}
-				/>
-			{:else}
-				<Avatar size="xl" class="h-40 w-40 overflow-hidden" src={usersProfile?.profilePictureURL} />
-			{/if}
-			<Row class="justify-start p-3 gap-4 mt-2 text-2xl">
-				{#if usersProfile}
-					<Text>{usersProfile.myId}</Text>
-				{:else}
-					<SkeletonLine class="w-[180px] h-4" />
-				{/if}
-				{#if isMyAccount}
-					<Icon on:click={() => goto(`${usersProfile?.myId}/settings`)} icon="fa fa-gear" />
-				{/if}
-			</Row>
-		</div>
-		{#if usersProfile}
-			<Text class="text-3xl p-4">{usersProfile?.username}</Text>
+<Column class="p-2">
+	<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
+		{#if isMyAccount}
+			<AvatarImageInput
+				screenErrors
+				class="!w-40 !h-40 bg-cover bg-center !rounded-full relative overflow-hidden "
+				imageURL={usersProfile?.profilePictureURL}
+				on:image={async ({ detail: { base64 } }) => {
+					updateProfilePicture(base64);
+				}}
+			/>
 		{:else}
-			<SkeletonLine class="w-[240px] h-4" />
+			<Avatar size="xl" class="h-40 w-40 overflow-hidden" src={usersProfile?.profilePictureURL} />
 		{/if}
+		<Row class="justify-start p-3 gap-4 mt-2 text-2xl">
+			{#if usersProfile}
+				<Text>{usersProfile.myId}</Text>
+			{:else}
+				<SkeletonLine class="w-[180px] h-4" />
+			{/if}
+			{#if isMyAccount}
+				<Icon on:click={() => goto(`/account/${usersProfile?.myId}/settings`)} icon="fa fa-gear" />
+			{/if}
+		</Row>
+	</div>
+	{#if usersProfile}
+		<Text class="text-3xl p-4">{usersProfile?.username}</Text>
+	{:else}
+		<SkeletonLine class="w-[240px] h-4" />
+	{/if}
 
-		{#if isMyAccount && usersProfile}
-			<EditProfileButton myId={usersProfile?.myId} />
-		{/if}
+	{#if isMyAccount && usersProfile}
+		<Left>
+			<Button on:click={() => goto(`/account/${usersProfile?.myId}/edit`)} color="green">
+				{$LL.page.account.editProfileButtonLabel()}
+			</Button>
+		</Left>
+	{/if}
 
-		<Column class="mb-2 gap-4">
-			<CategoryPicker {categories} bind:chosenCategory={category} />
+	<Column class="mb-2 gap-4">
+		<CategoryPicker {categories} bind:chosenCategory={category} />
 
-			<Column class="gap-10 justify-center items-center">
-				{#if category === 'experiences'}
-					<ExperienceSection
-						userId={data.usersProfile.userId}
-						{isMyAccount}
-						cardsLimit={data.cardsLimit}
-					/>
-				{:else if category === 'monuments'}
-					<MonumentsSection
-						userId={data.usersProfile.userId}
-						{isMyAccount}
-						cardsLimit={data.cardsLimit}
-					/>
-				{/if}
-			</Column>
+		<Column class="gap-10 justify-center items-center">
+			{#if category === 'experiences'}
+				<ExperienceSection
+					userId={data.usersProfile.userId}
+					{isMyAccount}
+					cardsLimit={data.cardsLimit}
+				/>
+			{:else if category === 'monuments'}
+				<MonumentsSection
+					userId={data.usersProfile.userId}
+					{isMyAccount}
+					cardsLimit={data.cardsLimit}
+				/>
+			{/if}
 		</Column>
 	</Column>
-{/if}
+</Column>

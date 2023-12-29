@@ -24,6 +24,8 @@
 	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
 	import TakePhotoFromPhone from '$lib/components/Photo/TakePhotoFromPhone.svelte';
 	import ImageInput from '$lib/components/ImageInputs/ImageInput.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 
 	//if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -32,8 +34,9 @@
 	let isPublishingLoading = false;
 
 	$: picture = storage.newExperiencePicture;
+
 	const location = data.newExperience.location;
-	let hideDrawer = true;
+	let hiddenCantFindMonumentDrawer = true;
 	let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
 	let monumentToConnect: MonumentCard | undefined;
 	$: monumentToConnectPromise?.then((data) => {
@@ -101,31 +104,29 @@
 	let cardShown = true;
 </script>
 
-<Drawer bind:hideDrawer nearMonuments={data.newExperience.nearMonuments} />
+<Drawer
+	bind:hideDrawer={hiddenCantFindMonumentDrawer}
+	nearMonuments={data.newExperience.nearMonuments}
+/>
 
 {#if cardShown}
 	<Card class="w-full h-auto absolute left-0 !z-20 mobile:w-full mobile:max-w-none">
 		<Header {location} placeName={data.newExperience.placeName ?? 'not-loaded'} />
 
-		{#if picture}
-			<CardImage imgSrc={picture} />
-		{:else if device.recognizeWidth() === 'mobile'}
-			<TakePhotoFromPhone />
-		{:else}
-			<ImageInput
-				screenErrors
-				method="gallery"
-				class="min-h-40"
-				on:image={(e) => (picture = e.detail.base64)}
-			/>
-		{/if}
+		<BasicImageInput
+			imageURL={picture}
+			screenErrors
+			method="gallery"
+			class="min-h-40 w-full"
+			on:image={(e) => (picture = e.detail.base64)}
+		/>
 
 		<Center
 			on:disconnect={disconnectMonument}
 			on:connect={(e) => connectToMonument(e.detail.monumentId, e.detail.distanceInMeters)}
 			{monumentToConnectPromise}
 			bind:cardShown
-			bind:hideDrawer
+			bind:hiddenCantFindMonumentDrawer
 		/>
 
 		<Footer
@@ -139,9 +140,12 @@
 
 <MediaQuery size="mobile">
 	{#if !cardShown}
-		<Button on:click={() => (cardShown = true)} color="blue" class="absolute bottom-0 m-2 z-20"
-			>back to card</Button
+		<Icon
+			on:click={() => (cardShown = true)}
+			class="absolute top-0 right-0 m-2 z-20 child:w-10 child:h-10 child:fill-black"
 		>
+			<IconTimes />
+		</Icon>
 	{/if}
 </MediaQuery>
 

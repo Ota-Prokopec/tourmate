@@ -49,12 +49,6 @@
 </Button>
 {#if disabled}
 	<Popover color="red">
-		{#if $locale === 'en'}
-			We are sorry, you cant edit your question in monument, because some people could already
-			answerTypeZod.
-		{:else}
-			Omlouváme set, ale nemůžete upravovat vaší otázku v zážitku, neboť je možné, že už na vaši
-			otázku někdo odpověděl.
-		{/if}
+		{$LL.component.AddQuestionButton.notAbleToEditQuestion()}
 	</Popover>
 {/if}

@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Button from '$lib/components/Common/Button.svelte';
+	import CancelButton from '$lib/components/Buttons/CancelButton.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
-	import { lsStore } from '$lib/utils/lsStore';
+	import { lsStore, storage } from '$lib/utils/lsStore';
 	import { navigate } from '$lib/utils/navigator';
 
 	const imageHandler = (base64: string) => {
+		const location = storage.usersLocation;
+		if (!location) throw new Error('user has no location');
+
 		$lsStore.newExperiencePicture = base64;
-		goto(`/createNewExperience/editPicture`);
+		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
 </script>
 
@@ -19,6 +22,6 @@
 			on:image={(e) => imageHandler(e.detail.base64)}
 			class="max-w-[500px] w-[100vw] h-auto min-h-[300px]"
 		/>
-		<Button on:click={() => navigate(-1)} class="max-w-[300px] w-full">cancel</Button>
+		<CancelButton on:click={() => navigate(-1)} />
 	</Column>
 </Center>

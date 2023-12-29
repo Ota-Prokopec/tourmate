@@ -43,9 +43,9 @@
 		| undefined;
 
 	const categories: { title: string; key: AnswerType }[] = [
-		{ title: 'radio', key: 'radio' },
-		{ title: 'text', key: 'text' },
-		{ title: 'number', key: 'number' }
+		{ title: $LL.component.AddQuestionDrawer.questionTypes.radio(), key: 'radio' },
+		{ title: $LL.component.AddQuestionDrawer.questionTypes.text(), key: 'text' },
+		{ title: $LL.component.AddQuestionDrawer.questionTypes.number(), key: 'number' }
 	];
 
 	let carouselIndex = question

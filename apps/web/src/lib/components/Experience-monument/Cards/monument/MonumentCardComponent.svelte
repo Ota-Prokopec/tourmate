@@ -186,14 +186,7 @@
 
 		{#if size !== 'tiny'}
 			{#if isMonumentCard(monument) && typeof liked !== 'undefined' && typeof amIOwner !== 'undefined'}
-				<CardFooter
-					{usersLocation}
-					{liked}
-					on:like={like}
-					on:unlike={unlike}
-					{amIOwner}
-					{monument}
-				/>
+				<CardFooter {usersLocation} {liked} on:like={like} on:unlike={unlike} {monument} />
 			{/if}
 		{/if}
 

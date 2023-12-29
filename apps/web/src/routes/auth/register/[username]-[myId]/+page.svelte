@@ -17,7 +17,6 @@
 	export let data: PageData;
 
 	let state: 'loading' | 'email-sent' | null = null;
-	let error = '';
 	let termsAccepted = false;
 
 	//set username and myid into localstorage for being able to access this data when user registers via socila media

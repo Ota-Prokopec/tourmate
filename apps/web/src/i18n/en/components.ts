@@ -19,9 +19,7 @@ export const componentsEN = {
 	MyIdInput: {
 		label: 'enter your id'
 	},
-	EditProfileButton: {
-		label: 'edit profile'
-	},
+
 	MonumentCardComponent: {
 		reallyDeleteTheMonumentLabel:
 			'Do you really want to delete your monument, there is no way to get it back.',
@@ -53,10 +51,17 @@ export const componentsEN = {
 		saveError:
 			"'We are not able to save your question like this, please check if everything is filled up.",
 		yourQuestion: 'Your question',
-		save: 'save'
+		save: 'save',
+		questionTypes: {
+			radio: 'single-choice',
+			text: 'text answer',
+			number: 'number answer'
+		}
 	},
 	AddQuestionButton: {
-		label: 'add your question'
+		label: 'add your question',
+		notAbleToEditQuestion:
+			'We are sorry, you cant edit your question in monument, because some people could already answered.'
 	},
 	ImageInput: {
 		throughGallery: 'through gallery',
@@ -70,6 +75,9 @@ export const componentsEN = {
 	},
 	SeeOnMapButton: {
 		label: 'see on map'
+	},
+	SeeMapButton: {
+		label: 'see map'
 	},
 	SeeOnGoogleMapsButton: {
 		label: 'see on google maps'
@@ -130,5 +138,11 @@ export const componentsEN = {
 			'monument that was connected to the experience was deleted',
 		reallyDeleteYourExperienceQuestion:
 			'Do you really want to delete your picture? There is no way to get it back.'
+	},
+	CancelButton: {
+		label: 'cancel'
+	},
+	BasicImageInput: {
+		title: 'Click to upload or drag and drop'
 	}
 } satisfies BaseTranslation;

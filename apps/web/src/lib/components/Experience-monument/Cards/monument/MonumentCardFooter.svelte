@@ -19,13 +19,11 @@
 
 	export let monument: MonumentCard;
 	export let liked: LikeSectionState;
-	export let amIOwner: boolean;
-	export let usersLocation: Location | undefined;
+	export let usersLocation: Location | undefined | null;
 </script>
 
 <Row class="w-full justify-between">
 	<LikeSection
-		ableToLike={!amIOwner}
 		on:like={() => dispatch('like')}
 		on:unlike={() => dispatch('unlike')}
 		data={{
@@ -55,7 +53,7 @@
 						)}
 						{#if seconds !== 0}
 							<Popover class="w-[300px]" placement="bottom">
-								<TypeWriter speed={10}>
+								<TypeWriter class="text-center" speed={8}>
 									{normalizeTime(seconds, $LL.common.and())}
 								</TypeWriter>
 							</Popover>

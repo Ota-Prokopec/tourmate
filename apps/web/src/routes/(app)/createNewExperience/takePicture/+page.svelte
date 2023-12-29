@@ -5,13 +5,15 @@
 	import { fileToBase64 } from '@app/utils';
 	import Center from '$lib/components/Common/Center.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import { lsStore } from '$lib/utils/lsStore';
+	import { lsStore, storage } from '$lib/utils/lsStore';
 
 	const imageHandler = async (file: File) => {
+		const location = storage.usersLocation;
+		if (!location) throw new Error('user has no location');
 		const base64 = await fileToBase64(file);
-		lsStore;
+
 		$lsStore.newExperiencePicture = base64;
-		goto(`/createNewExperience/editPicture`);
+		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
 </script>
 

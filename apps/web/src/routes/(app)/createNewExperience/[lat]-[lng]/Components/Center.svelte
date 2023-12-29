@@ -25,7 +25,7 @@
 	export let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
 
 	export let cardShown: boolean;
-	export let hideDrawer: boolean;
+	export let hiddenCantFindMonumentDrawer: boolean;
 	$: usersLocation = $lsStore.usersLocation;
 
 	$: monumentToConnectPromise?.then((monument) => {
@@ -69,15 +69,19 @@
 				{:else}
 					<Skeleton class="w-full h-40" />
 					<Right>
-						<Button on:click={() => (hideDrawer = false)} color="blue"
-							>{$LL.page.createNewExperience.Center.cantFindAnyMonumentQuestion()}</Button
-						>
+						<Column class="gap-1">
+							<Button on:click={() => (hiddenCantFindMonumentDrawer = false)} color="blue"
+								>{$LL.page.createNewExperience.Center.cantFindAnyMonumentQuestion()}</Button
+							>
+							<MediaQuery class="mt-4" size="mobile">
+								<Button color="blue" on:click={() => (cardShown = false)}>
+									{$LL.page.createNewExperience.Center.chooseMonumentFromMap()}
+								</Button>
+							</MediaQuery>
+						</Column>
 					</Right>
 				{/if}
 			{/await}
 		</Column>
 	{/if}
 </ItemsLayout>
-<MediaQuery class="mt-4" size="mobile">
-	<SeeOnMapButton on:click={() => (cardShown = false)} />
-</MediaQuery>

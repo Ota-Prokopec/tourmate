@@ -1,21 +1,18 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { collections } from '$lib/appwrite/appwrite';
+	import SaveButton from '$lib/components/Buttons/SaveButton.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
-	import Input from '$lib/components/Common/Input.svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
+	import MyIdInput from '$lib/components/Inputs/MyIdInput.svelte';
+	import UsernameInput from '$lib/components/Inputs/UsernameInput.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { Base64 } from '@app/ts-types';
-	import { Button } from 'flowbite-svelte';
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
-	import MyIdInput from '$lib/components/Inputs/MyIdInput.svelte';
-	import UsernameInput from '$lib/components/Inputs/UsernameInput.svelte';
-	import SaveButton from '$lib/components/Buttons/SaveButton.svelte';
 
 	export let data: PageData;
 

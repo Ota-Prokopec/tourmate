@@ -113,6 +113,10 @@ type RootTranslation = {
 			 * p​i​c​t​u​r​e​s
 			 */
 			pictures: string
+			/**
+			 * e​d​i​t​ ​p​r​o​f​i​l​e
+			 */
+			editProfileButtonLabel: string
 			settings: {
 				/**
 				 * l​a​n​g​u​a​g​e
@@ -269,6 +273,10 @@ type RootTranslation = {
 				 * c​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
 				 */
 				connectExperienceToMonument: string
+				/**
+				 * c​h​o​o​s​e​ ​e​x​p​r​e​r​i​e​n​c​e​ ​f​r​o​m​ ​t​h​e​ ​m​a​p
+				 */
+				chooseMonumentFromMap: string
 			}
 		}
 	}
@@ -379,12 +387,6 @@ type RootTranslation = {
 			 */
 			label: string
 		}
-		EditProfileButton: {
-			/**
-			 * e​d​i​t​ ​p​r​o​f​i​l​e
-			 */
-			label: string
-		}
 		MonumentCardComponent: {
 			/**
 			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​,​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
@@ -462,12 +464,30 @@ type RootTranslation = {
 			 * s​a​v​e
 			 */
 			save: string
+			questionTypes: {
+				/**
+				 * s​i​n​g​l​e​-​c​h​o​i​c​e
+				 */
+				radio: string
+				/**
+				 * t​e​x​t​ ​a​n​s​w​e​r
+				 */
+				text: string
+				/**
+				 * n​u​m​b​e​r​ ​a​n​s​w​e​r
+				 */
+				number: string
+			}
 		}
 		AddQuestionButton: {
 			/**
 			 * a​d​d​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n
 			 */
 			label: string
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​y​o​u​ ​c​a​n​t​ ​e​d​i​t​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​m​o​n​u​m​e​n​t​,​ ​b​e​c​a​u​s​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​o​u​l​d​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​.
+			 */
+			notAbleToEditQuestion: string
 		}
 		ImageInput: {
 			/**
@@ -496,6 +516,12 @@ type RootTranslation = {
 		SeeOnMapButton: {
 			/**
 			 * s​e​e​ ​o​n​ ​m​a​p
+			 */
+			label: string
+		}
+		SeeMapButton: {
+			/**
+			 * s​e​e​ ​m​a​p
 			 */
 			label: string
 		}
@@ -634,6 +660,18 @@ type RootTranslation = {
 			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​p​i​c​t​u​r​e​?​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
 			 */
 			reallyDeleteYourExperienceQuestion: string
+		}
+		CancelButton: {
+			/**
+			 * c​a​n​c​e​l
+			 */
+			label: string
+		}
+		BasicImageInput: {
+			/**
+			 * C​l​i​c​k​ ​t​o​ ​u​p​l​o​a​d​ ​o​r​ ​d​r​a​g​ ​a​n​d​ ​d​r​o​p
+			 */
+			title: string
 		}
 	}
 	error: {
@@ -776,6 +814,10 @@ export type TranslationFunctions = {
 			 * pictures
 			 */
 			pictures: () => LocalizedString
+			/**
+			 * edit profile
+			 */
+			editProfileButtonLabel: () => LocalizedString
 			settings: {
 				/**
 				 * language
@@ -931,6 +973,10 @@ export type TranslationFunctions = {
 				 * connect experience to the monument
 				 */
 				connectExperienceToMonument: () => LocalizedString
+				/**
+				 * choose exprerience from the map
+				 */
+				chooseMonumentFromMap: () => LocalizedString
 			}
 		}
 	}
@@ -1041,12 +1087,6 @@ export type TranslationFunctions = {
 			 */
 			label: () => LocalizedString
 		}
-		EditProfileButton: {
-			/**
-			 * edit profile
-			 */
-			label: () => LocalizedString
-		}
 		MonumentCardComponent: {
 			/**
 			 * Do you really want to delete your monument, there is no way to get it back.
@@ -1124,12 +1164,30 @@ export type TranslationFunctions = {
 			 * save
 			 */
 			save: () => LocalizedString
+			questionTypes: {
+				/**
+				 * single-choice
+				 */
+				radio: () => LocalizedString
+				/**
+				 * text answer
+				 */
+				text: () => LocalizedString
+				/**
+				 * number answer
+				 */
+				number: () => LocalizedString
+			}
 		}
 		AddQuestionButton: {
 			/**
 			 * add your question
 			 */
 			label: () => LocalizedString
+			/**
+			 * We are sorry, you cant edit your question in monument, because some people could already answered.
+			 */
+			notAbleToEditQuestion: () => LocalizedString
 		}
 		ImageInput: {
 			/**
@@ -1158,6 +1216,12 @@ export type TranslationFunctions = {
 		SeeOnMapButton: {
 			/**
 			 * see on map
+			 */
+			label: () => LocalizedString
+		}
+		SeeMapButton: {
+			/**
+			 * see map
 			 */
 			label: () => LocalizedString
 		}
@@ -1294,6 +1358,18 @@ export type TranslationFunctions = {
 			 * Do you really want to delete your picture? There is no way to get it back.
 			 */
 			reallyDeleteYourExperienceQuestion: () => LocalizedString
+		}
+		CancelButton: {
+			/**
+			 * cancel
+			 */
+			label: () => LocalizedString
+		}
+		BasicImageInput: {
+			/**
+			 * Click to upload or drag and drop
+			 */
+			title: () => LocalizedString
 		}
 	}
 	error: {

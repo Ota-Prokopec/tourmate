@@ -36,6 +36,7 @@ export const pageEN = {
 	account: {
 		monuments: 'experiences',
 		pictures: 'pictures',
+		editProfileButtonLabel: 'edit profile',
 		settings: {
 			language: 'language',
 			theme: 'theme',
@@ -100,7 +101,8 @@ export const pageEN = {
 		},
 		Center: {
 			cantFindAnyMonumentQuestion: "can't find any monument?",
-			connectExperienceToMonument: 'connect experience to the monument'
+			connectExperienceToMonument: 'connect experience to the monument',
+			chooseMonumentFromMap: 'choose exprerience from the map'
 		}
 	}
 } satisfies BaseTranslation;
