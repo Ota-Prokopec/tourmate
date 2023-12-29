@@ -1,5 +1,5 @@
-query getListOfExperiences($location: LocationInput, $userId: String) {
-	getListOfExperiences(location: $location, userId: $userId) {
+query getListOfExperiences($location: LocationInput, $userId: String, $limit: Int, $offset: Int) {
+	getListOfExperiences(location: $location, userId: $userId, limit: $limit, offset: $offset) {
 		liked {
 			_createdAt
 			_updatedAt

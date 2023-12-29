@@ -34,6 +34,8 @@ export const pageEN = {
 		}
 	},
 	account: {
+		monuments: 'experiences',
+		pictures: 'pictures',
 		settings: {
 			language: 'language',
 			theme: 'theme',

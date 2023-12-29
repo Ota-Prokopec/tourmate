@@ -65,5 +65,9 @@ export const componentsCS = {
 		title:
 			'Tato stránka používá soubory cookie ke ukládání relací uživatelů a dat uživatelů, včetně aktuální polohy uživatelů.',
 		acceptButtonLabel: 'přijmout cookies'
+	},
+	MonumentCardSkeleton: {
+		seeOnGoogleMaps: 'zobrazit na Google Maps',
+		seeMore: 'zobrazit více informací'
 	}
 } satisfies BaseTranslation;

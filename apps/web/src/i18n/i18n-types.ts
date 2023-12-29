@@ -105,6 +105,14 @@ type RootTranslation = {
 			}
 		}
 		account: {
+			/**
+			 * e​x​p​e​r​i​e​n​c​e​s
+			 */
+			monuments: string
+			/**
+			 * p​i​c​t​u​r​e​s
+			 */
+			pictures: string
 			settings: {
 				/**
 				 * l​a​n​g​u​a​g​e
@@ -411,6 +419,16 @@ type RootTranslation = {
 			 */
 			acceptButtonLabel: string
 		}
+		MonumentCardSkeleton: {
+			/**
+			 * s​e​e​ ​o​n​ ​G​o​o​g​l​e​ ​m​a​p​s
+			 */
+			seeOnGoogleMaps: string
+			/**
+			 * s​e​e​ ​m​o​r​e
+			 */
+			seeMore: string
+		}
 	}
 	error: {
 		/**
@@ -532,6 +550,14 @@ export type TranslationFunctions = {
 			}
 		}
 		account: {
+			/**
+			 * experiences
+			 */
+			monuments: () => LocalizedString
+			/**
+			 * pictures
+			 */
+			pictures: () => LocalizedString
 			settings: {
 				/**
 				 * language
@@ -836,6 +862,16 @@ export type TranslationFunctions = {
 			 * accept cookies
 			 */
 			acceptButtonLabel: () => LocalizedString
+		}
+		MonumentCardSkeleton: {
+			/**
+			 * see on Google maps
+			 */
+			seeOnGoogleMaps: () => LocalizedString
+			/**
+			 * see more
+			 */
+			seeMore: () => LocalizedString
 		}
 	}
 	error: {

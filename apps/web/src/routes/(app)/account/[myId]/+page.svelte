@@ -22,23 +22,21 @@
 	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
 	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
 	import EditProfileButton from './Components/EditProfileButton.svelte';
+	import ExperienceSection from './Components/ExperienceSection.svelte';
+	import MonumentsSection from './Components/MonumentsSection.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
 
 	let usersMonuments: MonumentCard[] | undefined = undefined;
 
-	$: usersExperiences = useQuery('usersExperiences', async () => {
-		return await sdk.getListOfExperiences({ userId: usersProfile.userId });
-	});
-
 	let category: 'monuments' | 'experiences' = 'experiences';
 
 	$: isMyAccount = data.user.userId === usersProfile?.userId;
 
 	const categories = [
-		{ title: $LL.common.pictures(), key: 'experiences' },
-		{ title: $LL.common.monuments(), key: 'monuments' }
+		{ title: $LL.page.account.pictures(), key: 'experiences' },
+		{ title: $LL.page.account.monuments(), key: 'monuments' }
 	] as const;
 
 	let screenProfilePicEditor = false;
@@ -59,15 +57,6 @@
 		uploadingProfilePictureIsLoading = false;
 		screenProfilePicEditor = false;
 	};
-
-	$: if (category === 'monuments' && !usersMonuments) {
-		if (!usersProfile) throw new Error('usersProfile is not defined');
-		sdk
-			.getListOfMonumentCards({ userId: usersProfile.userId, limit: 10 })
-			.then(({ getListOfMonuments: monuments }) => {
-				usersMonuments = monuments;
-			});
-	}
 </script>
 
 {#if screenProfilePicEditor}
@@ -117,39 +106,17 @@
 
 			<Column class="gap-10 justify-center items-center">
 				{#if category === 'experiences'}
-					{#if !$usersExperiences.isLoading}
-						{@const experiences = $usersExperiences.data?.getListOfExperiences ?? []}
-
-						{#if experiences.length}
-							{#each experiences as experience}
-								<ExperienceCardComponent {experience} />
-							{/each}
-						{:else}
-							<NotFound class="w-full" />
-							{#if isMyAccount}
-								<CreateYourFirstPicture />
-							{/if}
-						{/if}
-					{:else}
-						<ExperienceCardSkeleton />
-						<ExperienceCardSkeleton />
-						<ExperienceCardSkeleton />
-					{/if}
+					<ExperienceSection
+						userId={data.usersProfile.userId}
+						{isMyAccount}
+						cardsLimit={data.cardsLimit}
+					/>
 				{:else if category === 'monuments'}
-					{#if !usersMonuments}
-						<MonumentCardSkeleton size="normal" />
-						<MonumentCardSkeleton size="normal" />
-						<MonumentCardSkeleton size="normal" />
-					{:else if usersMonuments.length}
-						{#each usersMonuments as monument}
-							<MonumentCardComponent size="normal" {monument} />
-						{/each}
-					{:else}
-						<NotFound class="w-full" />
-						{#if isMyAccount}
-							<CreateYourFirstMonumentButton />
-						{/if}
-					{/if}
+					<MonumentsSection
+						userId={data.usersProfile.userId}
+						{isMyAccount}
+						cardsLimit={data.cardsLimit}
+					/>
 				{/if}
 			</Column>
 		</Column>

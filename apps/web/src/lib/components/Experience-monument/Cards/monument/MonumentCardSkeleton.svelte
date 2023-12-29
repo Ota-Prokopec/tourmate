@@ -81,10 +81,12 @@
 	{#if size !== 'tiny'}
 		<Column class="gap-2 mt-2">
 			<Right>
-				<Button color="green">{$LL.seeOnGoogleMaps()}</Button>
+				<Button color="green">{$LL.component.MonumentCardSkeleton.seeOnGoogleMaps()}</Button>
 			</Right>
 			{#if !disableSeeMoreButton}
-				<Button color="blue" class=" w-full p-2">{$LL.seeMore()}</Button>
+				<Button color="blue" class=" w-full p-2"
+					>{$LL.component.MonumentCardSkeleton.seeMore()}</Button
+				>
 			{/if}
 		</Column>
 	{/if}

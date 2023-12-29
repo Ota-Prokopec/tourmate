@@ -33,6 +33,8 @@ export const pageCS = {
 		}
 	},
 	account: {
+		monuments: 'zážitky',
+		pictures: 'fotky',
 		settings: {
 			language: 'jazyk',
 			theme: 'téma',

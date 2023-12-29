@@ -69,5 +69,9 @@ export const componentsEN = {
 		title:
 			'This site uses cookies to store users sessions and users data including users current location.',
 		acceptButtonLabel: 'accept cookies'
+	},
+	MonumentCardSkeleton: {
+		seeOnGoogleMaps: 'see on Google maps',
+		seeMore: 'see more'
 	}
 } satisfies BaseTranslation;
