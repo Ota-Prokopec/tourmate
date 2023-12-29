@@ -2,12 +2,17 @@
 	import { twMerge } from 'tailwind-merge';
 	import { MoonSolid, SunSolid } from 'flowbite-svelte-icons';
 	import { user } from '$lib/appwrite/appwrite';
+	import type { ColorTheme } from '@app/ts-types';
 	export let btnClass =
 		'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5';
 
-	const toggleTheme = () => {
-		const isDark = window.document.documentElement.classList.toggle('dark');
-		user.addPreferences({ colorTheme: isDark ? 'light' : 'dark' });
+	export let theme: ColorTheme;
+
+	const toggleTheme = async () => {
+		theme = theme === 'dark' ? 'light' : 'dark';
+		if (theme === 'dark') document.documentElement.classList.add('dark');
+		else document.documentElement.classList.remove('dark');
+		await user.addPreferences({ colorTheme: theme });
 	};
 
 	let className = '';

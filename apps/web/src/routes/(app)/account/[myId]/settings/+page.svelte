@@ -14,9 +14,12 @@
 	import Center from '$lib/components/Common/Center.svelte';
 	import { Button } from 'flowbite-svelte';
 	import type { PageData } from './$types';
+	import type { ColorTheme } from '@app/ts-types';
 
 	let isLoading = false;
 	export let data: PageData;
+
+	let colorTheme: ColorTheme = data.user.prefs.colorTheme;
 
 	const logOut = async () => {
 		isLoading = true;
@@ -56,7 +59,7 @@
 			{#if id === 'language'}
 				<LanguageSwitch class="w-min" />
 			{:else if id === 'theme'}
-				<DarkMode class="w-min" />
+				<DarkMode bind:theme={colorTheme} class="w-min" />
 			{:else if id === 'locationForNotifications'}
 				<Button
 					color="blue"
