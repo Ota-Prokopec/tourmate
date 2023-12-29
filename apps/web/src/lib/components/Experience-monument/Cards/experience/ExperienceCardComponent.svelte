@@ -38,7 +38,7 @@
 			liked = 'liked';
 		} catch (error) {
 			liked = 'unliked';
-			alert($LL.likeErrorTitle(), $LL.likeErrorMessage(), {
+			alert('', $LL.error.addLikeError(), {
 				color: 'red'
 			});
 			throw new Error('like monument error happend');
@@ -57,7 +57,7 @@
 			experience.liked = null;
 		} catch (error) {
 			liked = 'liked';
-			alert($LL.removeLikeErrorTitle(), $LL.removeLikeErrorMessage(), { color: 'red' });
+			alert('', $LL.error.removeLikeError(), { color: 'red' });
 		}
 	};
 
@@ -66,13 +66,13 @@
 	const deleteExperience = () => {
 		showModalDeleteDocument = true;
 	};
-	const reallyDeleteMonument = async () => {
+	const reallyDeleteExperience = async () => {
 		try {
 			await sdk.deleteExperience({ experienceId: experience._id });
 			showModalDeleteDocument = false;
 			isCardVisible = false;
 		} catch (error) {
-			alert($LL.deleteMonumentErrorTitle(), $LL.deleteMonumentErrorMessage());
+			alert('', $LL.error.universalErrorMessage());
 		}
 	};
 
@@ -83,11 +83,11 @@
 </script>
 
 <Modal color="red" bind:open={showModalDeleteDocument}>
-	<Text>{$LL.reallyDeleteYour_Question({ what: $LL.monument() })}</Text>
+	<Text>{$LL.component.ExperienceCardComponent.reallyDeleteYourExperienceQuestion()}</Text>
 	<svelte:fragment slot="footer">
-		<Button on:click={reallyDeleteMonument} color="red">Yes really</Button>
+		<Button on:click={reallyDeleteExperience} color="red">{$LL.common.yes()}</Button>
 		<Button on:click={() => (showModalDeleteDocument = false)} color="green"
-			>No i missed clicked</Button
+			>{$LL.common.no()}</Button
 		>
 	</svelte:fragment>
 </Modal>
@@ -134,7 +134,7 @@
 				<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
 			{:else}
 				<Text>
-					{$LL.monumentThatWasConnectedToTheExperienceWasDeleted()}
+					{$LL.component.ExperienceCardComponent.monumentThatWasConnectedToTheExperienceWasDeleted()}
 				</Text>
 			{/if}
 		</Column>

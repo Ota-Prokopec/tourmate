@@ -15,6 +15,8 @@
 	import { Button } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import OwnerOptions from '../OwnerOptions.svelte';
+	import MoreInformationButton from '$lib/components/Buttons/MoreInformationButton.svelte';
+	import SeeOnGoogleMapsButton from '$lib/components/Buttons/SeeOnGoogleMapsButton.svelte';
 
 	export let size: 'tiny' | 'small' | 'normal';
 
@@ -81,10 +83,10 @@
 	{#if size !== 'tiny'}
 		<Column class="gap-2 mt-2">
 			<Right>
-				<Button color="green">{$LL.seeOnGoogleMaps()}</Button>
+				<SeeOnGoogleMapsButton />
 			</Right>
 			{#if !disableSeeMoreButton}
-				<Button color="blue" class=" w-full p-2">{$LL.seeMore()}</Button>
+				<MoreInformationButton />
 			{/if}
 		</Column>
 	{/if}

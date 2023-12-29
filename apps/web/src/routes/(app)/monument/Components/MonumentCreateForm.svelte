@@ -35,7 +35,7 @@
 		{placeName}
 	</h5>
 	<Text class="mb-3 font-normal text-gray-500 dark:text-gray-400 break-all">
-		lokace: [{location}]
+		[{location}]
 	</Text>
 	<ItemsLayout
 		let:id

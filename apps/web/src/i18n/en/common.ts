@@ -12,5 +12,12 @@ export const commonEN = {
 	yes: 'yes',
 	no: 'no',
 	save: 'save',
-	settings: 'settings'
+	settings: 'settings',
+	topic: {
+		castle: 'castle',
+		monument: 'experience',
+		person: 'person',
+		hiking: 'hiking',
+		zoo: 'zoo'
+	}
 } satisfies BaseTranslation;

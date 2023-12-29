@@ -25,7 +25,7 @@
 
 	export let data: PageData;
 
-	let location: Location | undefined = $lsStore.usersLocation;
+	let location: Location | undefined | null = $lsStore.usersLocation;
 	$: markerLocation = location;
 
 	let monuments: MonumentMarkerData[] = [];
@@ -53,9 +53,13 @@
 				throw new Error('There is something wrong with creating the monument here');
 			goto(`/addMonument/detail/${markerLocation[0]}-${markerLocation[1]}`);
 		} catch (error) {
-			alert('', $LL.page.addMonument.distanceBetweenMonumentsTooSmall(), {
-				color: 'red'
-			});
+			alert(
+				'',
+				$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage(),
+				{
+					color: 'red'
+				}
+			);
 		}
 	};
 

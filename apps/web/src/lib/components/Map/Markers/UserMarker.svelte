@@ -14,6 +14,6 @@
 		<IconGeolocationSearch />
 	</Icon>
 	<Popover placement="top">
-		{$LL.you()}
+		{$LL.component.UserMarker.you()}
 	</Popover>
 </Marker>

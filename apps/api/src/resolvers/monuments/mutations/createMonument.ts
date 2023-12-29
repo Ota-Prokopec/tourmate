@@ -70,6 +70,8 @@ export default mutationField('createMonument', {
 
 			const notificationsSendingSuccess = await sendNotification(res._id, res.location)
 
+			console.log(notificationsSendingSuccess)
+
 			return res
 		} catch (error) {
 			console.log(error)

@@ -9,10 +9,12 @@ export default queryField('getListOfExperiences', {
 	args: {
 		location: nullable('LocationInput'),
 		userId: nullable('String'),
+		limit: nullable('Int'),
+		offset: nullable('Int'),
 	},
 	resolve: async (s_, args, ctx, info) => {
 		const { collections } = ctx.appwrite
-		const { location: locationOptions, userId } = args
+		const { location: locationOptions, userId, limit, offset } = args
 
 		const queries: string[] = []
 
@@ -25,6 +27,8 @@ export default queryField('getListOfExperiences', {
 			)
 
 		if (userId) queries.push(Queries.experience.equal('userId', userId))
+		if (limit) queries.push(Queries.experience.limit(limit))
+		if (offset) queries.push(Queries.experience.offset(offset))
 
 		//desc sorting
 		queries.push(Queries.experience.orderDesc('$createdAt'))

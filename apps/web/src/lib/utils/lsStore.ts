@@ -6,15 +6,16 @@ import * as lodash from 'lodash';
 
 export type Data =
 	| {
-			usersLocation?: Location;
-			user?: { username: string; myId: string };
-			cookieFallback?: Record<'a_session_experiences', string>;
-			newExperiencePicture?: string | Base64;
-			alreadyHasNotificationToken?: boolean;
-			cookiesAccepted?: boolean;
+			usersLocation?: Location | null;
+			user?: { username: string; myId: string } | null;
+			cookieFallback?: Record<'a_session_experiences', string> | null;
+			newExperiencePicture?: string | Base64 | null;
+			alreadyHasNotificationToken?: boolean | null;
+			cookiesAccepted?: boolean | null;
 	  } & Record<string, any>;
 
 const parseLocalStorageValue = (value: string) => {
+	if (value === 'undefined') return undefined;
 	try {
 		return JSON.parse(value);
 	} catch (error) {
@@ -49,7 +50,8 @@ export const typedStore = <Type>() => {
 export const storage = new Proxy(data, {
 	get: (target, prop, receiver) => {
 		const item = localStorage.getItem(prop.toString());
-		return item ? parseLocalStorageValue(item) : item;
+		const res = item ? parseLocalStorageValue(item) : item;
+		return res;
 	},
 	set: (target, prop, value, receiver) => {
 		lsStore.update((currentData) => ({ ...currentData, [prop.toString()]: value }));

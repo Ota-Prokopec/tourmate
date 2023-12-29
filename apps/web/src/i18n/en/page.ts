@@ -34,6 +34,9 @@ export const pageEN = {
 		}
 	},
 	account: {
+		monuments: 'experiences',
+		pictures: 'pictures',
+		editProfileButtonLabel: 'edit profile',
 		settings: {
 			language: 'language',
 			theme: 'theme',
@@ -45,6 +48,12 @@ export const pageEN = {
 				label: 'log out',
 				errorMessage: 'Unsuccessful log out'
 			}
+		},
+		edit: {
+			updateProfilePictureErrorMessage:
+				'We are sorry, but there was a problem in updating your profile picture. Try to reset the page and try it again.',
+			updateProfileErrorMessage:
+				'We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.'
 		}
 	},
 	search: {
@@ -62,8 +71,6 @@ export const pageEN = {
 		planningError: 'We are sorry, something went wrong during your wished path'
 	},
 	addMonument: {
-		distanceBetweenMonumentsTooSmall:
-			'We are sorry, but you cant create your monument here, because there are monuments that are too close to yours. Please choose another place for your monument or contact us.',
 		markHere: 'mark here',
 		detail: {
 			monumentCreated: 'Your monument was successfully created.',
@@ -74,5 +81,28 @@ export const pageEN = {
 	globalError: {
 		title: 'We are sorry, there was unpredictable error',
 		reloadButtonLabel: 'try it again'
+	},
+	monument: {
+		edit: {
+			save: 'save',
+			updateError: 'Your monument was not successfully updated. Please try it again.'
+		}
+	},
+	createNewExperience: {
+		experienceWasCreated: 'Your new picture was successfully created',
+		saveErrorMessage: 'Your picture was not created, please try it again',
+		Footer: {
+			answerQuestionError: 'It was not successful to answer the question. Please try it again.',
+			cantAnswerTwice:
+				"It seems you have already answered the question wrong, you can't answer twice.",
+			answeredCorrectly: 'You answered correctly',
+			public: 'public the picture',
+			answerQuestion: 'Answer the question'
+		},
+		Center: {
+			cantFindAnyMonumentQuestion: "can't find any monument?",
+			connectExperienceToMonument: 'connect experience to the monument',
+			chooseMonumentFromMap: 'choose exprerience from the map'
+		}
 	}
 } satisfies BaseTranslation;

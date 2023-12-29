@@ -247,7 +247,9 @@ export type QueryGetExperienceArgs = {
 
 
 export type QueryGetListOfExperiencesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
   location?: InputMaybe<LocationInput>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -424,6 +426,8 @@ export type GetListOfExperienceCardsQuery = { __typename?: 'Query', getListOfExp
 export type GetListOfExperiencesQueryVariables = Exact<{
   location?: InputMaybe<LocationInput>;
   userId?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -745,8 +749,13 @@ export const GetListOfExperienceCardsDoc = gql`
 }
     `;
 export const GetListOfExperiencesDoc = gql`
-    query getListOfExperiences($location: LocationInput, $userId: String) {
-  getListOfExperiences(location: $location, userId: $userId) {
+    query getListOfExperiences($location: LocationInput, $userId: String, $limit: Int, $offset: Int) {
+  getListOfExperiences(
+    location: $location
+    userId: $userId
+    limit: $limit
+    offset: $offset
+  ) {
     liked {
       _createdAt
       _updatedAt

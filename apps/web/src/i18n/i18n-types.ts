@@ -105,6 +105,18 @@ type RootTranslation = {
 			}
 		}
 		account: {
+			/**
+			 * e​x​p​e​r​i​e​n​c​e​s
+			 */
+			monuments: string
+			/**
+			 * p​i​c​t​u​r​e​s
+			 */
+			pictures: string
+			/**
+			 * e​d​i​t​ ​p​r​o​f​i​l​e
+			 */
+			editProfileButtonLabel: string
 			settings: {
 				/**
 				 * l​a​n​g​u​a​g​e
@@ -134,6 +146,16 @@ type RootTranslation = {
 					 */
 					errorMessage: string
 				}
+			}
+			edit: {
+				/**
+				 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​ ​p​i​c​t​u​r​e​.​ ​T​r​y​ ​t​o​ ​r​e​s​e​t​ ​t​h​e​ ​p​a​g​e​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 */
+				updateProfilePictureErrorMessage: string
+				/**
+				 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​ ​i​n​ ​a​n​o​t​h​e​r​ ​u​s​e​r​s​ ​p​r​o​f​i​l​e​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​t​o​ ​a​n​o​t​h​e​r​.
+				 */
+				updateProfileErrorMessage: string
 			}
 		}
 		search: {
@@ -171,10 +193,6 @@ type RootTranslation = {
 		}
 		addMonument: {
 			/**
-			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​y​o​u​ ​c​a​n​t​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​h​e​r​e​,​ ​b​e​c​a​u​s​e​ ​t​h​e​r​e​ ​a​r​e​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​t​o​o​ ​c​l​o​s​e​ ​t​o​ ​y​o​u​r​s​.​ ​P​l​e​a​s​e​ ​c​h​o​o​s​e​ ​a​n​o​t​h​e​r​ ​p​l​a​c​e​ ​f​o​r​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​o​r​ ​c​o​n​t​a​c​t​ ​u​s​.
-			 */
-			distanceBetweenMonumentsTooSmall: string
-			/**
 			 * m​a​r​k​ ​h​e​r​e
 			 */
 			markHere: string
@@ -202,6 +220,64 @@ type RootTranslation = {
 			 * t​r​y​ ​i​t​ ​a​g​a​i​n
 			 */
 			reloadButtonLabel: string
+		}
+		monument: {
+			edit: {
+				/**
+				 * s​a​v​e
+				 */
+				save: string
+				/**
+				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​u​p​d​a​t​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 */
+				updateError: string
+			}
+		}
+		createNewExperience: {
+			/**
+			 * Y​o​u​r​ ​n​e​w​ ​p​i​c​t​u​r​e​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d
+			 */
+			experienceWasCreated: string
+			/**
+			 * Y​o​u​r​ ​p​i​c​t​u​r​e​ ​w​a​s​ ​n​o​t​ ​c​r​e​a​t​e​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n
+			 */
+			saveErrorMessage: string
+			Footer: {
+				/**
+				 * I​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​a​n​s​w​e​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 */
+				answerQuestionError: string
+				/**
+				 * I​t​ ​s​e​e​m​s​ ​y​o​u​ ​h​a​v​e​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​r​o​n​g​,​ ​y​o​u​ ​c​a​n​'​t​ ​a​n​s​w​e​r​ ​t​w​i​c​e​.
+				 */
+				cantAnswerTwice: string
+				/**
+				 * Y​o​u​ ​a​n​s​w​e​r​e​d​ ​c​o​r​r​e​c​t​l​y
+				 */
+				answeredCorrectly: string
+				/**
+				 * p​u​b​l​i​c​ ​t​h​e​ ​p​i​c​t​u​r​e
+				 */
+				'public': string
+				/**
+				 * A​n​s​w​e​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n
+				 */
+				answerQuestion: string
+			}
+			Center: {
+				/**
+				 * c​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
+				 */
+				cantFindAnyMonumentQuestion: string
+				/**
+				 * c​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
+				 */
+				connectExperienceToMonument: string
+				/**
+				 * c​h​o​o​s​e​ ​e​x​p​r​e​r​i​e​n​c​e​ ​f​r​o​m​ ​t​h​e​ ​m​a​p
+				 */
+				chooseMonumentFromMap: string
+			}
 		}
 	}
 	common: {
@@ -253,6 +329,28 @@ type RootTranslation = {
 		 * s​e​t​t​i​n​g​s
 		 */
 		settings: string
+		topic: {
+			/**
+			 * c​a​s​t​l​e
+			 */
+			castle: string
+			/**
+			 * e​x​p​e​r​i​e​n​c​e
+			 */
+			monument: string
+			/**
+			 * p​e​r​s​o​n
+			 */
+			person: string
+			/**
+			 * h​i​k​i​n​g
+			 */
+			hiking: string
+			/**
+			 * z​o​o
+			 */
+			zoo: string
+		}
 	}
 	component: {
 		EmailInput: {
@@ -289,25 +387,11 @@ type RootTranslation = {
 			 */
 			label: string
 		}
-		EditProfileButton: {
-			/**
-			 * e​d​i​t​ ​p​r​o​f​i​l​e
-			 */
-			label: string
-		}
 		MonumentCardComponent: {
 			/**
 			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​,​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
 			 */
 			reallyDeleteTheMonumentLabel: string
-			/**
-			 * s​e​e​ ​o​n​ ​g​o​o​g​l​e​ ​m​a​p​s
-			 */
-			seeOnGoogleMaps: string
-			/**
-			 * s​e​e​ ​m​o​r​e​ ​i​n​f​o​r​m​a​t​i​o​n
-			 */
-			seeMore: string
 			/**
 			 * P​i​c​t​u​r​e​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n
 			 */
@@ -359,7 +443,7 @@ type RootTranslation = {
 			 */
 			transport: string
 			/**
-			 * a​b​o​u​t
+			 * a​b​o​u​t​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			about: string
 			/**
@@ -380,12 +464,30 @@ type RootTranslation = {
 			 * s​a​v​e
 			 */
 			save: string
+			questionTypes: {
+				/**
+				 * c​h​o​i​c​e
+				 */
+				radio: string
+				/**
+				 * t​e​x​t
+				 */
+				text: string
+				/**
+				 * n​u​m​b​e​r
+				 */
+				number: string
+			}
 		}
 		AddQuestionButton: {
 			/**
 			 * a​d​d​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n
 			 */
 			label: string
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​y​o​u​ ​c​a​n​t​ ​e​d​i​t​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​m​o​n​u​m​e​n​t​,​ ​b​e​c​a​u​s​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​o​u​l​d​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​.
+			 */
+			notAbleToEditQuestion: string
 		}
 		ImageInput: {
 			/**
@@ -410,6 +512,166 @@ type RootTranslation = {
 			 * a​c​c​e​p​t​ ​c​o​o​k​i​e​s
 			 */
 			acceptButtonLabel: string
+		}
+		SeeOnMapButton: {
+			/**
+			 * s​e​e​ ​o​n​ ​m​a​p
+			 */
+			label: string
+		}
+		SeeMapButton: {
+			/**
+			 * s​e​e​ ​m​a​p
+			 */
+			label: string
+		}
+		SeeOnGoogleMapsButton: {
+			/**
+			 * s​e​e​ ​o​n​ ​g​o​o​g​l​e​ ​m​a​p​s
+			 */
+			label: string
+		}
+		TakePictureHereButton: {
+			/**
+			 * t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​h​e​r​e
+			 */
+			label: string
+		}
+		ContinueButton: {
+			/**
+			 * c​o​n​t​i​n​u​e
+			 */
+			label: string
+		}
+		MonumentNotFoundDrawer: {
+			/**
+			 * C​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
+			 */
+			cantFindAnyMonumentQuestion: string
+			/**
+			 * A​j​,​ ​a​j​ ​n​o​ ​m​o​n​u​m​e​n​t​ ​i​s​ ​h​e​r​e​.​.​.
+			 */
+			noMonumentHere: string
+			/**
+			 * I​f​ ​y​o​u​ ​c​a​n​t​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​s​c​r​e​e​n​ ​o​n​ ​m​a​p​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​.
+			 */
+			createNewOneMessage: string
+			/**
+			 * Y​o​u​ ​a​r​e​ ​i​n​ ​t​h​e​ ​a​r​e​a​ ​w​h​e​r​e​ ​a​r​e​ ​n​o​ ​m​o​n​u​m​e​n​t​s​ ​y​o​u​ ​c​o​u​l​d​ ​c​o​n​n​e​c​t​,​ ​y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​t​i​l​l​ ​s​o​m​e​o​n​e​ ​w​i​l​l​ ​c​r​e​a​t​e​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t​ ​i​n​ ​y​o​u​r​ ​a​r​e​a​ ​o​r​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​ ​m​o​n​u​m​e​n​t​.
+			 */
+			noMonumentsHereMessage: string
+		}
+		CreateNewMonumentButton: {
+			/**
+			 * c​r​e​a​t​e​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t
+			 */
+			label: string
+		}
+		AnswerQuestionDrawer: {
+			/**
+			 * a​n​s​w​e​r
+			 */
+			answer: string
+			/**
+			 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+			 */
+			notAbleToTakeAPictureWithTheMonument: string
+		}
+		QuestionAnsweredWrongCard: {
+			/**
+			 * Y​o​u​ ​a​n​s​w​e​r​e​d​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​w​r​o​n​g
+			 */
+			title: string
+			/**
+			 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+			 */
+			notAbleToTakeAPictureWithTheMonument: string
+		}
+		QuestionAnsweredCorrectlyCard: {
+			/**
+			 * c​o​n​g​r​a​t​u​l​a​t​i​o​n​ ​f​o​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​a​n​s​w​e​r​i​n​g​ ​c​o​r​r​e​c​t​l​y
+			 */
+			title: string
+			/**
+			 * N​o​w​ ​y​o​u​ ​c​a​n​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+			 */
+			nowYouCanTakePictureWithTheMonument: string
+		}
+		SetLocationForNotificationsPage: {
+			/**
+			 * I​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​s​e​t​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+			 */
+			errorMessage: string
+			/**
+			 * y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​{​l​o​c​a​t​i​o​n​}​ ​o​f​ ​r​a​n​g​e​ ​{​r​a​n​g​e​}
+			 * @param {number[]} location
+			 * @param {string} range
+			 */
+			yourLocationIsCurrently_InRangeOf_: RequiredParams<'location' | 'range'>
+			/**
+			 * c​h​o​o​s​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+			 */
+			chooseYourLocationForNotifications: string
+			/**
+			 * c​a​n​c​e​l
+			 */
+			cancel: string
+			/**
+			 * s​a​v​e
+			 */
+			save: string
+		}
+		CreateYourFirstPictureButton: {
+			/**
+			 * C​r​e​a​t​e​ ​y​o​u​r​ ​f​i​r​s​t​ ​p​i​c​t​u​r​e
+			 */
+			label: string
+		}
+		CreateYourFirstMonumentButton: {
+			/**
+			 * C​r​e​a​t​e​ ​y​o​u​r​ ​f​i​r​s​t​ ​e​x​p​e​r​i​e​n​c​e
+			 */
+			label: string
+		}
+		FirebaseMonumentNotification: {
+			/**
+			 * N​e​w​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​a​d​d​e​d
+			 */
+			newMonumentWasAdded: string
+		}
+		UserMarker: {
+			/**
+			 * y​o​u
+			 */
+			you: string
+		}
+		MoreInformationButton: {
+			/**
+			 * s​e​e​ ​m​o​r​e​ ​i​n​f​o​r​m​a​t​i​o​n
+			 */
+			label: string
+		}
+		ExperienceCardComponent: {
+			/**
+			 * m​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
+			 */
+			monumentThatWasConnectedToTheExperienceWasDeleted: string
+			/**
+			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​p​i​c​t​u​r​e​?​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
+			 */
+			reallyDeleteYourExperienceQuestion: string
+		}
+		CancelButton: {
+			/**
+			 * c​a​n​c​e​l
+			 */
+			label: string
+		}
+		BasicImageInput: {
+			/**
+			 * C​l​i​c​k​ ​t​o​ ​u​p​l​o​a​d​ ​o​r​ ​d​r​a​g​ ​a​n​d​ ​d​r​o​p
+			 */
+			title: string
 		}
 	}
 	error: {
@@ -438,6 +700,18 @@ type RootTranslation = {
 		 * W​e​ ​c​o​u​l​d​ ​n​o​t​ ​l​o​a​d​ ​m​o​n​u​m​e​n​t​s​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 		 */
 		monumentLoadErrorMessage: string
+		/**
+		 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​y​o​u​ ​c​a​n​t​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​h​e​r​e​,​ ​b​e​c​a​u​s​e​ ​t​h​e​r​e​ ​a​r​e​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​t​o​o​ ​c​l​o​s​e​ ​t​o​ ​y​o​u​r​s​.​ ​P​l​e​a​s​e​ ​c​h​o​o​s​e​ ​a​n​o​t​h​e​r​ ​p​l​a​c​e​ ​f​o​r​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​o​r​ ​c​o​n​t​a​c​t​ ​u​s​.
+		 */
+		notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage: string
+		/**
+		 * W​e​ ​a​r​e​ ​s​o​r​r​y​ ​b​u​t​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​c​o​u​l​d​ ​n​o​t​ ​b​e​ ​l​o​a​d​e​d​.​ ​P​l​e​a​s​e​ ​r​e​t​u​r​n​ ​b​a​c​k​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+		 */
+		locationNowFoundErrorMessage: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​ ​o​r​ ​i​n​f​o​r​m​ ​o​u​r​ ​s​u​p​p​o​r​t​.
+		 */
+		universalErrorMessage: string
 	}
 }
 
@@ -532,6 +806,18 @@ export type TranslationFunctions = {
 			}
 		}
 		account: {
+			/**
+			 * experiences
+			 */
+			monuments: () => LocalizedString
+			/**
+			 * pictures
+			 */
+			pictures: () => LocalizedString
+			/**
+			 * edit profile
+			 */
+			editProfileButtonLabel: () => LocalizedString
 			settings: {
 				/**
 				 * language
@@ -561,6 +847,16 @@ export type TranslationFunctions = {
 					 */
 					errorMessage: () => LocalizedString
 				}
+			}
+			edit: {
+				/**
+				 * We are sorry, but there was a problem in updating your profile picture. Try to reset the page and try it again.
+				 */
+				updateProfilePictureErrorMessage: () => LocalizedString
+				/**
+				 * We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.
+				 */
+				updateProfileErrorMessage: () => LocalizedString
 			}
 		}
 		search: {
@@ -597,10 +893,6 @@ export type TranslationFunctions = {
 		}
 		addMonument: {
 			/**
-			 * We are sorry, but you cant create your monument here, because there are monuments that are too close to yours. Please choose another place for your monument or contact us.
-			 */
-			distanceBetweenMonumentsTooSmall: () => LocalizedString
-			/**
 			 * mark here
 			 */
 			markHere: () => LocalizedString
@@ -628,6 +920,64 @@ export type TranslationFunctions = {
 			 * try it again
 			 */
 			reloadButtonLabel: () => LocalizedString
+		}
+		monument: {
+			edit: {
+				/**
+				 * save
+				 */
+				save: () => LocalizedString
+				/**
+				 * Your monument was not successfully updated. Please try it again.
+				 */
+				updateError: () => LocalizedString
+			}
+		}
+		createNewExperience: {
+			/**
+			 * Your new picture was successfully created
+			 */
+			experienceWasCreated: () => LocalizedString
+			/**
+			 * Your picture was not created, please try it again
+			 */
+			saveErrorMessage: () => LocalizedString
+			Footer: {
+				/**
+				 * It was not successful to answer the question. Please try it again.
+				 */
+				answerQuestionError: () => LocalizedString
+				/**
+				 * It seems you have already answered the question wrong, you can't answer twice.
+				 */
+				cantAnswerTwice: () => LocalizedString
+				/**
+				 * You answered correctly
+				 */
+				answeredCorrectly: () => LocalizedString
+				/**
+				 * public the picture
+				 */
+				'public': () => LocalizedString
+				/**
+				 * Answer the question
+				 */
+				answerQuestion: () => LocalizedString
+			}
+			Center: {
+				/**
+				 * can't find any monument?
+				 */
+				cantFindAnyMonumentQuestion: () => LocalizedString
+				/**
+				 * connect experience to the monument
+				 */
+				connectExperienceToMonument: () => LocalizedString
+				/**
+				 * choose exprerience from the map
+				 */
+				chooseMonumentFromMap: () => LocalizedString
+			}
 		}
 	}
 	common: {
@@ -679,6 +1029,28 @@ export type TranslationFunctions = {
 		 * settings
 		 */
 		settings: () => LocalizedString
+		topic: {
+			/**
+			 * castle
+			 */
+			castle: () => LocalizedString
+			/**
+			 * experience
+			 */
+			monument: () => LocalizedString
+			/**
+			 * person
+			 */
+			person: () => LocalizedString
+			/**
+			 * hiking
+			 */
+			hiking: () => LocalizedString
+			/**
+			 * zoo
+			 */
+			zoo: () => LocalizedString
+		}
 	}
 	component: {
 		EmailInput: {
@@ -715,25 +1087,11 @@ export type TranslationFunctions = {
 			 */
 			label: () => LocalizedString
 		}
-		EditProfileButton: {
-			/**
-			 * edit profile
-			 */
-			label: () => LocalizedString
-		}
 		MonumentCardComponent: {
 			/**
 			 * Do you really want to delete your monument, there is no way to get it back.
 			 */
 			reallyDeleteTheMonumentLabel: () => LocalizedString
-			/**
-			 * see on google maps
-			 */
-			seeOnGoogleMaps: () => LocalizedString
-			/**
-			 * see more information
-			 */
-			seeMore: () => LocalizedString
 			/**
 			 * Picture already taken
 			 */
@@ -785,7 +1143,7 @@ export type TranslationFunctions = {
 			 */
 			transport: () => LocalizedString
 			/**
-			 * about
+			 * about experience
 			 */
 			about: () => LocalizedString
 			/**
@@ -806,12 +1164,30 @@ export type TranslationFunctions = {
 			 * save
 			 */
 			save: () => LocalizedString
+			questionTypes: {
+				/**
+				 * choice
+				 */
+				radio: () => LocalizedString
+				/**
+				 * text
+				 */
+				text: () => LocalizedString
+				/**
+				 * number
+				 */
+				number: () => LocalizedString
+			}
 		}
 		AddQuestionButton: {
 			/**
 			 * add your question
 			 */
 			label: () => LocalizedString
+			/**
+			 * We are sorry, you cant edit your question in monument, because some people could already answered.
+			 */
+			notAbleToEditQuestion: () => LocalizedString
 		}
 		ImageInput: {
 			/**
@@ -836,6 +1212,164 @@ export type TranslationFunctions = {
 			 * accept cookies
 			 */
 			acceptButtonLabel: () => LocalizedString
+		}
+		SeeOnMapButton: {
+			/**
+			 * see on map
+			 */
+			label: () => LocalizedString
+		}
+		SeeMapButton: {
+			/**
+			 * see map
+			 */
+			label: () => LocalizedString
+		}
+		SeeOnGoogleMapsButton: {
+			/**
+			 * see on google maps
+			 */
+			label: () => LocalizedString
+		}
+		TakePictureHereButton: {
+			/**
+			 * take a picture here
+			 */
+			label: () => LocalizedString
+		}
+		ContinueButton: {
+			/**
+			 * continue
+			 */
+			label: () => LocalizedString
+		}
+		MonumentNotFoundDrawer: {
+			/**
+			 * Can't find any monument?
+			 */
+			cantFindAnyMonumentQuestion: () => LocalizedString
+			/**
+			 * Aj, aj no monument is here...
+			 */
+			noMonumentHere: () => LocalizedString
+			/**
+			 * If you cant choose from monuments that are screen on map you can create.
+			 */
+			createNewOneMessage: () => LocalizedString
+			/**
+			 * You are in the area where are no monuments you could connect, you will have to wait till someone will create a new monument in your area or you can create your own monument.
+			 */
+			noMonumentsHereMessage: () => LocalizedString
+		}
+		CreateNewMonumentButton: {
+			/**
+			 * create a new monument
+			 */
+			label: () => LocalizedString
+		}
+		AnswerQuestionDrawer: {
+			/**
+			 * answer
+			 */
+			answer: () => LocalizedString
+			/**
+			 * You are not able to take a picture with this monument
+			 */
+			notAbleToTakeAPictureWithTheMonument: () => LocalizedString
+		}
+		QuestionAnsweredWrongCard: {
+			/**
+			 * You answered the question wrong
+			 */
+			title: () => LocalizedString
+			/**
+			 * You are not able to take a picture with this monument
+			 */
+			notAbleToTakeAPictureWithTheMonument: () => LocalizedString
+		}
+		QuestionAnsweredCorrectlyCard: {
+			/**
+			 * congratulation for the question answering correctly
+			 */
+			title: () => LocalizedString
+			/**
+			 * Now you can take a picture with this monument
+			 */
+			nowYouCanTakePictureWithTheMonument: () => LocalizedString
+		}
+		SetLocationForNotificationsPage: {
+			/**
+			 * It was not successful to set your location for notifications
+			 */
+			errorMessage: () => LocalizedString
+			/**
+			 * your location is currently {location} of range {range}
+			 */
+			yourLocationIsCurrently_InRangeOf_: (arg: { location: number[], range: string }) => LocalizedString
+			/**
+			 * choose your location for notifications
+			 */
+			chooseYourLocationForNotifications: () => LocalizedString
+			/**
+			 * cancel
+			 */
+			cancel: () => LocalizedString
+			/**
+			 * save
+			 */
+			save: () => LocalizedString
+		}
+		CreateYourFirstPictureButton: {
+			/**
+			 * Create your first picture
+			 */
+			label: () => LocalizedString
+		}
+		CreateYourFirstMonumentButton: {
+			/**
+			 * Create your first experience
+			 */
+			label: () => LocalizedString
+		}
+		FirebaseMonumentNotification: {
+			/**
+			 * New monument was added
+			 */
+			newMonumentWasAdded: () => LocalizedString
+		}
+		UserMarker: {
+			/**
+			 * you
+			 */
+			you: () => LocalizedString
+		}
+		MoreInformationButton: {
+			/**
+			 * see more information
+			 */
+			label: () => LocalizedString
+		}
+		ExperienceCardComponent: {
+			/**
+			 * monument that was connected to the experience was deleted
+			 */
+			monumentThatWasConnectedToTheExperienceWasDeleted: () => LocalizedString
+			/**
+			 * Do you really want to delete your picture? There is no way to get it back.
+			 */
+			reallyDeleteYourExperienceQuestion: () => LocalizedString
+		}
+		CancelButton: {
+			/**
+			 * cancel
+			 */
+			label: () => LocalizedString
+		}
+		BasicImageInput: {
+			/**
+			 * Click to upload or drag and drop
+			 */
+			title: () => LocalizedString
 		}
 	}
 	error: {
@@ -863,6 +1397,18 @@ export type TranslationFunctions = {
 		 * We could not load monuments, please try again.
 		 */
 		monumentLoadErrorMessage: () => LocalizedString
+		/**
+		 * We are sorry, but you cant create your monument here, because there are monuments that are too close to yours. Please choose another place for your monument or contact us.
+		 */
+		notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage: () => LocalizedString
+		/**
+		 * We are sorry but your location could not be loaded. Please return back and try it again.
+		 */
+		locationNowFoundErrorMessage: () => LocalizedString
+		/**
+		 * Something went wrong, please try it again or inform our support.
+		 */
+		universalErrorMessage: () => LocalizedString
 	}
 }
 

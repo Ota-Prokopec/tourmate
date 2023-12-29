@@ -33,8 +33,6 @@
 		numberAnswer: number | undefined;
 		radioAnswer: string | undefined;
 	}) => {
-		console.log('answer the question');
-
 		try {
 			isAnsweringLoading = true;
 			if (!question) throw new Error('There is no question in monument');
@@ -56,7 +54,7 @@
 				})
 			).answerQuestion;
 		} catch (error) {
-			alert('', $LL.answerQuestionError(), { color: 'red' });
+			alert('', $LL.page.createNewExperience.Footer.answerQuestionError(), { color: 'red' });
 		}
 		isAnsweringLoading = false;
 	};
@@ -84,7 +82,7 @@
 			on:click={() => (answerQuestionDrawerHidden = false)}
 		>
 			<Column class="justify-center items-center gap-2">
-				answer the question
+				{$LL.page.createNewExperience.Footer.answerQuestion()}
 				<Icon class="child:h-5 child:w-5 child:rotate-90 child:fill-white">
 					<IconNext />
 				</Icon>
@@ -92,24 +90,24 @@
 		</Button>
 		{#if usersAnswer?.answeredCorrectly === false}
 			<Popover placement="top" color="red">
-				{$LL.cantAnswerTheQuestionTwice()}
+				{$LL.page.createNewExperience.Footer.cantAnswerTwice()}
 			</Popover>
 		{/if}
 	{:else if monument?.question && usersAnswer?.answeredCorrectly === true}
-		<Text>{$LL.answeredCorrectly()}</Text>
+		<Text>{$LL.page.createNewExperience.Footer.answeredCorrectly()}</Text>
 	{/if}
 
 	<Button color="green" on:click={() => dispatch('save')} disabled={!ableToSave}>
 		{#if isPublishingLoading}
 			<Loading />
 		{:else}
-			{$LL.public()}
+			{$LL.page.createNewExperience.Footer.public()}
 		{/if}
 	</Button>
 
 	{#if !isUserCloseEnoughToMonument && monument}
 		<Popover color="red">
-			{$LL.notAbleToConnectMonumentBecauseOfDistanceErrorMessage()}
+			{$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage()}
 		</Popover>
 	{/if}
 </Column>

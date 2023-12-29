@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
-	import CongratulationCard from '$lib/components/Common/SuccessCard.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
@@ -18,14 +17,14 @@
 		isQuestionTypeText,
 		type Answer,
 		type AnswerType,
+		type Nullable,
 		type Question,
-		type UsersAnswer,
-		type Nullable
+		type UsersAnswer
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
-	import SuccessCard from '$lib/components/Common/SuccessCard.svelte';
-	import FailureCard from '$lib/components/Common/FailureCard.svelte';
+	import QuestionAnsweredCorrectlyCard from './QuestionAnsweredCorrectlyCard.svelte';
+	import QuestionAnsweredWrongCard from './QuestionAnsweredWrongCard.svelte';
 
 	const dispatch = createEventDispatcher<{
 		answer: {
@@ -70,27 +69,9 @@
 	</MediaQuery>
 
 	{#if usersAnswer?.answeredCorrectly}
-		<SuccessCard class="w-full h-auto min-h-[400px] ">
-			<Column class="gap-0 mt-10">
-				<Text class="text-green-400 ">
-					{$LL.congratulationForAnsweringTheQuestionCorrectly()}
-				</Text>
-				<Text class="">
-					{$LL.nowYouCanTakeAPictureWithTheMonument()}
-				</Text>
-			</Column>
-		</SuccessCard>
+		<QuestionAnsweredCorrectlyCard />
 	{:else if usersAnswer && !usersAnswer.answeredCorrectly}
-		<FailureCard class="w-full h-auto min-h-[400px] ">
-			<Column class="gap-0 mt-10">
-				<Text class="">
-					{$LL.answeredTheQuestionWrong()}
-				</Text>
-				<Text class="">
-					{$LL.notAbleToTakeAPictureWithTheMonument()}
-				</Text>
-			</Column>
-		</FailureCard>
+		<QuestionAnsweredWrongCard />
 	{:else}
 		<Column class="justify-center items-center">
 			<Text>{question.question}</Text>
@@ -99,14 +80,18 @@
 			{:else if isQuestionTypeNumber(question)}
 				<NumberForm bind:answer={numberAnswer} />
 			{:else if isQuestionTypeRadio(question)}
-				<RadioForm answers={question.pickingAnswers} bind:chosenAnswer={radioAnswer} />
+				<RadioForm
+					disableCounter
+					answers={question.pickingAnswers}
+					bind:chosenAnswer={radioAnswer}
+				/>
 			{/if}
 
 			<Button on:click={answer} color="green">
 				{#if isLoading}
 					<Loading />
 				{:else}
-					{$LL.answer()}
+					{$LL.component.AnswerQuestionDrawer.answer()}
 				{/if}
 			</Button>
 		</Column>

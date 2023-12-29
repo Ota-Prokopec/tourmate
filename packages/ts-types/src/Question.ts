@@ -50,20 +50,20 @@ export const isQuestion = (value: unknown) => {
 }
 
 const questionTypeRadioZod = z.object({
-	question: z.string().nonempty(),
+	question: z.string().min(1),
 	type: z.literal('radio'),
-	correctAnswer: z.string().nonempty(),
+	correctAnswer: z.string().min(1),
 	pickingAnswers: z.string().array(),
 })
 const questionTypeNumberZod = z.object({
-	question: z.string().nonempty(),
+	question: z.string().min(1),
 	type: z.literal('number'),
 	correctAnswer: z.number(),
 })
 const questionTypeTextZod = z.object({
-	question: z.string().nonempty(),
+	question: z.string().min(1),
 	type: z.literal('text'),
-	correctAnswer: z.string().nonempty(),
+	correctAnswer: z.string().min(1),
 })
 
 type Skeleton<T extends AnswerType> = {

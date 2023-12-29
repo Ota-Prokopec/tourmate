@@ -57,11 +57,7 @@
 
 			isLoading = false;
 		} catch (error) {
-			alert(
-				$LL.updateErrorTitle({ what: $LL.monument() }),
-				$LL.updateErrorMessage({ what: $LL.monument() }),
-				{ color: 'red' }
-			);
+			alert('', $LL.page.monument.edit.updateError(), { color: 'red' });
 		}
 	};
 </script>
@@ -90,7 +86,7 @@
 				{#if isLoading}
 					<Loading />
 				{:else}
-					{$LL.save()}
+					{$LL.page.monument.edit.save()}
 				{/if}
 			</Button>
 		</Right>

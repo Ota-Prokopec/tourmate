@@ -5,12 +5,19 @@ export const commonCS = {
 	and: 'a',
 	continue: 'další',
 	back: 'zpět',
-	Pictures: 'fotografie',
+	pictures: 'obrázky',
 	monuments: 'památky',
-	picture: 'fotografie',
+	picture: 'obrázek',
 	monument: 'památka',
 	yes: 'ano',
 	no: 'ne',
 	save: 'uložit',
-	settings: 'nastavení'
+	settings: 'nastavení',
+	topic: {
+		castle: 'zámek',
+		monument: 'zkušenost',
+		person: 'osoba',
+		hiking: 'turistika',
+		zoo: 'zoo'
+	}
 } satisfies BaseTranslation;

@@ -4,6 +4,7 @@
 	import ImageInput from './ImageInput.svelte';
 	import Avatar from '../Common/Avatar.svelte';
 	import { twMerge } from 'tailwind-merge';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let imageURL: URL | Base64 | null | undefined | string = undefined;
 	export let autoImagesrcCompleter = true;
@@ -31,7 +32,7 @@
 	{#if !imageURL}
 		<IconUpload />
 		<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-			<span class="font-semibold">Click to upload</span> or drag and drop
+			<span class="font-semibold">{$LL.component.BasicImageInput.title()}</span>
 		</p>
 		<p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
 	{:else}

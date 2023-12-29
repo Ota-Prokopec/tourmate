@@ -67,7 +67,7 @@
 
 			dispatch('back');
 		} catch (error) {
-			alert('', $LL.errorMessage(), { color: 'red' });
+			alert('', $LL.component.SetLocationForNotificationsPage.errorMessage(), { color: 'red' });
 		}
 		isLoading = false;
 	};
@@ -87,25 +87,27 @@
 		<Column>
 			{#if currentLocation}
 				<Card>
-					<Text
-						>{$LL.yourLocationIsCurrently_InRangeOf({
+					<Text>
+						{$LL.component.SetLocationForNotificationsPage.yourLocationIsCurrently_InRangeOf_({
 							location: currentLocation,
 							range: normalizeMeters(range)
-						})}</Text
-					>
+						})}
+					</Text>
 				</Card>
 			{/if}
 
-			<Text class="text-lg text-center">{$LL.chooseYourLocationForNotifications()}</Text>
+			<Text class="text-lg text-center"
+				>{$LL.component.SetLocationForNotificationsPage.chooseYourLocationForNotifications()}</Text
+			>
 			<Right class="gap-2">
 				<Button on:click={() => dispatch('back')} disable={!markerLocation} color="red">
-					{$LL.cancel()}
+					{$LL.component.SetLocationForNotificationsPage.cancel()}
 				</Button>
 				<Button on:click={save} disable={!markerLocation} color="green">
 					{#if isLoading}
 						<Loading />
 					{:else}
-						{$LL.save()}
+						{$LL.component.SetLocationForNotificationsPage.save()}
 					{/if}
 				</Button>
 			</Right>

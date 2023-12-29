@@ -7,7 +7,7 @@
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
-	import lsStore from '$lib/utils/lsStore';
+	import lsStore, { storage } from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
@@ -32,7 +32,7 @@
 
 		try {
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
-			$lsStore.cookieFallback = { a_session_experiences: session };
+			storage.cookieFallback = { a_session_experiences: session };
 			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/;maxAge=99999999999999;expires=${expireTimeString}`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
 			goto('/', { invalidateAll: true });
 		} catch (err) {

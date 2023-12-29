@@ -43,9 +43,9 @@
 		| undefined;
 
 	const categories: { title: string; key: AnswerType }[] = [
-		{ title: 'radio', key: 'radio' },
-		{ title: 'text', key: 'text' },
-		{ title: 'number', key: 'number' }
+		{ title: $LL.component.AddQuestionDrawer.questionTypes.radio(), key: 'radio' },
+		{ title: $LL.component.AddQuestionDrawer.questionTypes.text(), key: 'text' },
+		{ title: $LL.component.AddQuestionDrawer.questionTypes.number(), key: 'number' }
 	];
 
 	let carouselIndex = question
@@ -72,7 +72,7 @@
 
 	const save = () => {
 		try {
-			question = {
+			const temporaryQuestion = {
 				type: chosenCategory,
 				question: questionHelper,
 				correctAnswer:
@@ -83,12 +83,15 @@
 						: pickingAnswerHelper,
 				pickingAnswers: chosenCategory === 'radio' ? pickingAnswersHelper : undefined
 			};
+
+			if (!temporaryQuestion) throw new Error('Question does not exist');
+			const [type, checkedQuestion] = getQuestionType(temporaryQuestion);
+
+			question = checkedQuestion;
+
 			clearOthers();
 
-			if (!question) throw new Error('Question does not exist');
-			const [type, checkedQuestion] = getQuestionType(question);
-
-			dispatch('save', checkedQuestion);
+			dispatch('save', question);
 			hidden = true;
 		} catch (err) {
 			errorMessage = $LL.component.AddQuestionDrawer.saveError();

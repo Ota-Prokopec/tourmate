@@ -1,12 +1,8 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
 	import ItemsLayout from '$lib/components/Common/ItemsLayout.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
-	import Row from '$lib/components/Common/Row.svelte';
-	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import lsStore from '$lib/utils/lsStore';
 	import LL from '$src/i18n/i18n-svelte';
@@ -22,9 +18,9 @@
 	}>();
 
 	export let monumentToConnectPromise: Promise<{ getMonument: MonumentCard }> | undefined;
-	export let monumentToConnect: MonumentCard | undefined;
+
 	export let cardShown: boolean;
-	export let hideDrawer: boolean;
+	export let hiddenCantFindMonumentDrawer: boolean;
 	$: usersLocation = $lsStore.usersLocation;
 
 	$: monumentToConnectPromise?.then((monument) => {
@@ -44,7 +40,12 @@
 <ItemsLayout
 	class="mt-4 h-auto "
 	let:id
-	items={[{ title: $LL['connectExperienceToMonument'](), id: 'connectMonument' }]}
+	items={[
+		{
+			title: $LL.page.createNewExperience.Center.connectExperienceToMonument(),
+			id: 'connectMonument'
+		}
+	]}
 >
 	{#if id === 'connectMonument'}
 		<Column class="justify-start">
@@ -63,22 +64,19 @@
 				{:else}
 					<Skeleton class="w-full h-40" />
 					<Right>
-						<Button on:click={() => (hideDrawer = false)} color="blue"
-							>{$LL.cantFindAnyMonumentQuestion()}</Button
-						>
+						<Column class="gap-1">
+							<Button on:click={() => (hiddenCantFindMonumentDrawer = false)} color="blue"
+								>{$LL.page.createNewExperience.Center.cantFindAnyMonumentQuestion()}</Button
+							>
+							<MediaQuery class="mt-4" size="mobile">
+								<Button color="blue" on:click={() => (cardShown = false)}>
+									{$LL.page.createNewExperience.Center.chooseMonumentFromMap()}
+								</Button>
+							</MediaQuery>
+						</Column>
 					</Right>
 				{/if}
 			{/await}
 		</Column>
 	{/if}
 </ItemsLayout>
-<MediaQuery class="mt-4" size="mobile">
-	<Button on:click={() => (cardShown = false)} color="yellow">
-		<Row class="gap-2">
-			<Text>{$LL.showMap()}</Text>
-			<Icon class="child:h-5 child:w-5 child:fill-red-500">
-				<IconLocation />
-			</Icon>
-		</Row>
-	</Button>
-</MediaQuery>

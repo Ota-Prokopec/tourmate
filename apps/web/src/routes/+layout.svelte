@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
+	import { user } from '$lib/appwrite/appwrite';
 	import Alert from '$lib/components/Alert/Alert.svelte';
+	import CookiesAlert from '$lib/components/Common/CookiesAlert.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
@@ -8,15 +11,6 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
-	import { lsStore, storage } from '$lib/utils/lsStore';
-	import { getThemeInternalMode } from '@app/utils';
-	import { user } from '$lib/appwrite/appwrite';
-	import { goto } from '$app/navigation';
-	import CookiesAlert from '$lib/components/Common/CookiesAlert.svelte';
-	import type { LayoutData } from './$types';
-	const userIsLoading = user.isLoading;
-
-	export let data: LayoutData;
 
 	let mounted = false;
 	onMount(() => (mounted = true));
@@ -28,19 +22,6 @@
 		const account = await user.getUser();
 		if (!account && !$page.route.id?.startsWith('/auth/')) {
 			goto('/auth/login');
-		}
-	});
-
-	//darkmode-whitemode
-	onMount(async () => {
-		const preferencedTheme = data.user?.prefs.colorTheme;
-		const deviceTheme = getThemeInternalMode();
-
-		if (
-			(preferencedTheme && preferencedTheme === 'dark') ||
-			(!preferencedTheme && deviceTheme === 'dark')
-		) {
-			document.documentElement.classList.add('dark');
 		}
 	});
 </script>

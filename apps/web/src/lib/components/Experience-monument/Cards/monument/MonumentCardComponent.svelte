@@ -27,6 +27,8 @@
 	import CardFooter from './MonumentCardFooter.svelte';
 	import CardHeader from './MonumentCardHeader.svelte';
 	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
+	import SeeOnGoogleMapsButton from '$lib/components/Buttons/SeeOnGoogleMapsButton.svelte';
+	import MoreInformationButton from '$lib/components/Buttons/MoreInformationButton.svelte';
 
 	const isMonumentCard = (card: MonumentCard | SmallMonumentCard): card is MonumentCard => {
 		return 'liked' in monument;
@@ -184,14 +186,7 @@
 
 		{#if size !== 'tiny'}
 			{#if isMonumentCard(monument) && typeof liked !== 'undefined' && typeof amIOwner !== 'undefined'}
-				<CardFooter
-					{usersLocation}
-					{liked}
-					on:like={like}
-					on:unlike={unlike}
-					{amIOwner}
-					{monument}
-				/>
+				<CardFooter {usersLocation} {liked} on:like={like} on:unlike={unlike} {monument} />
 			{/if}
 		{/if}
 
@@ -202,14 +197,10 @@
 		{#if size !== 'tiny'}
 			<Column class="gap-2 ">
 				<Right>
-					<Button on:click={seeOnGoogleMaps} color="green"
-						>{$LL.component.MonumentCardComponent.seeOnGoogleMaps()}</Button
-					>
+					<SeeOnGoogleMapsButton on:click={seeOnGoogleMaps} />
 				</Right>
 				{#if !disableSeeMoreButton}
-					<Button color="blue" class="w-full p-2" on:click={() => goto(`/monument/${monument._id}`)}
-						>{$LL.component.MonumentCardComponent.seeMore()}</Button
-					>
+					<MoreInformationButton on:click={() => goto(`/monument/${monument._id}`)} />
 				{/if}
 				{#if isMonumentCard(monument)}
 					{#if monument.usersConnectedExperiences.length}

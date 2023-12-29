@@ -35,7 +35,7 @@
 		</Icon>
 	</BottomNavItem>
 
-	<BottomNavItem on:click={() => goto('/search/places/*')}>
+	<BottomNavItem on:click={() => goto('/search')}>
 		<Icon>
 			<IconMagnifyingGlass />
 		</Icon>

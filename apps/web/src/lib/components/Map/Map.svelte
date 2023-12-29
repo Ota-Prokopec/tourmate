@@ -11,7 +11,7 @@
 	const dispatch = createEventDispatcher<{ load: { center: Location } }>();
 
 	export let map: Map | undefined = undefined;
-	export let center: Location | undefined = $lsStore.usersLocation;
+	export let center: Location | undefined | null = $lsStore.usersLocation;
 	$: usersLocation = $lsStore.usersLocation;
 
 	export let zoom: number = 16;

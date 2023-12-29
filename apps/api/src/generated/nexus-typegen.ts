@@ -563,7 +563,9 @@ export interface NexusGenArgTypes {
       id: string; // String!
     }
     getListOfExperiences: { // args
+      limit?: number | null; // Int
       location?: NexusGenInputs['LocationInput'] | null; // LocationInput
+      offset?: number | null; // Int
       userId?: string | null; // String
     }
     getListOfMonuments: { // args

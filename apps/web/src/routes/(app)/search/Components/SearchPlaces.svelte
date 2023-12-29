@@ -58,28 +58,22 @@
 	$: addMonuments(topics, transports, searchingLocation);
 </script>
 
-<Column class="gap-4 justify-center w-full">
+<Column class="gap-4 justify-center items-center w-full">
 	<TopicComponent bind:chosenTopics={topics} class="w-full max-w-[400px]" />
 	<TransportType bind:chosenTransports={transports} class="w-full max-w-[400px]" />
 
 	{#if isLoading}
-		<Row class="gap-4">
-			<MonumentCardSkeleton size="normal" />
-			<MonumentCardSkeleton size="normal" />
-			<MonumentCardSkeleton size="normal" />
-			<MonumentCardSkeleton size="normal" />
-			<MonumentCardSkeleton size="normal" />
-			<MonumentCardSkeleton size="normal" />
-			<MonumentCardSkeleton size="normal" />
-		</Row>
+		<MonumentCardSkeleton size="normal" />
+		<MonumentCardSkeleton size="normal" />
+		<MonumentCardSkeleton size="normal" />
+		<MonumentCardSkeleton size="normal" />
+		<MonumentCardSkeleton size="normal" />
+		<MonumentCardSkeleton size="normal" />
+		<MonumentCardSkeleton size="normal" />
 	{:else if monuments && monuments?.length > 0}
-		<Column class="justify-center items-center">
-			<Row class="gap-4 justify-center">
-				{#each monuments as monument}
-					<MonumentCardComponent size="normal" {monument} />
-				{/each}
-			</Row>
-		</Column>
+		{#each monuments as monument}
+			<MonumentCardComponent size="normal" {monument} />
+		{/each}
 	{:else}
 		<NotFound />
 	{/if}
