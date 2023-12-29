@@ -4,24 +4,16 @@
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import NotFound from '$lib/components/Common/NoContent.svelte';
 	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
-	import ExperienceCardSkeleton from '$lib/components/Experience-monument/Cards/experience/ExperienceCardSkeleton.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import type { Base64, MonumentCard } from '@app/ts-types';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import type { PageData } from './$types';
-	import CreateYourFirstMonumentButton from './Components/CreateYourFirstMonumentButton.svelte';
-	import CreateYourFirstPicture from './Components/CreateYourFirstPicture.svelte';
 	import EditProfileButton from '../../../../lib/components/Buttons/EditProfileButton.svelte';
+	import type { PageData } from './$types';
 	import ExperienceSection from './Components/ExperienceSection.svelte';
 	import MonumentsSection from './Components/MonumentsSection.svelte';
 

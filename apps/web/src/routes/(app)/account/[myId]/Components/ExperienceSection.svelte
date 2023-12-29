@@ -2,12 +2,12 @@
 	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import CreateYourFirstPicture from './CreateYourFirstPicture.svelte';
 	import ExperienceCardSkeleton from '$lib/components/Experience-monument/Cards/experience/ExperienceCardSkeleton.svelte';
 	import NoContent from '$lib/components/Common/NoContent.svelte';
 	import type { ExperienceCard } from '@app/ts-types';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
+	import CreateYourFirstPictureButton from '$lib/components/Buttons/CreateYourFirstPictureButton.svelte';
 
 	export let userId: string;
 	export let cardsLimit: number;
@@ -43,7 +43,7 @@
 {:else}
 	<NoContent class="w-full" />
 	{#if isMyAccount}
-		<CreateYourFirstPicture />
+		<CreateYourFirstPictureButton />
 	{/if}
 {/if}
 

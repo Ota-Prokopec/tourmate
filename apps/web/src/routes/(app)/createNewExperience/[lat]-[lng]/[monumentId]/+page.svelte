@@ -124,7 +124,6 @@
 			on:disconnect={disconnectMonument}
 			on:connect={(e) => connectToMonument(e.detail.monumentId, e.detail.distanceInMeters)}
 			{monumentToConnectPromise}
-			{monumentToConnect}
 			bind:cardShown
 			bind:hideDrawer
 		/>

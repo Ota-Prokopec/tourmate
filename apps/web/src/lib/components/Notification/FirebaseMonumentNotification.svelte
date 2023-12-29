@@ -13,7 +13,9 @@
 {#await monumentCardPromise then monumentCard}
 	<Center class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2 pt-4">
 		<MonumentCardComponent dismissable size="tiny" monument={monumentCard.getMonument}>
-			<Text class="text-xl w-full text-left" slot="dismissArea">{$LL.newMonumentWasAdded()}</Text>
+			<Text class="text-xl w-full text-left" slot="dismissArea"
+				>{$LL.component.FirebaseMonumentNotification.newMonumentWasAdded()}</Text
+			>
 		</MonumentCardComponent>
 	</Center>
 {/await}

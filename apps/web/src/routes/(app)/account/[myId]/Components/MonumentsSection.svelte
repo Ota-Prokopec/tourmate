@@ -4,9 +4,9 @@
 	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { MonumentCard } from '@app/ts-types';
-	import CreateYourFirstMonumentButton from './CreateYourFirstMonumentButton.svelte';
 	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import CreateYourFirstMonumentButton from '$lib/components/Buttons/CreateYourFirstMonumentButton.svelte';
 
 	export let userId: string;
 	export let cardsLimit: number;

@@ -1,5 +1,5 @@
-import type { PageServerLoad } from './[category]/[searchingText]/$types';
-import { isCategory, type Category } from './types';
+import type { PageServerLoad } from './$types';
+import { isCategory } from './types';
 
 export const load: PageServerLoad = async (event) => {
 	let chosenCategory = event.url.searchParams.get('chosenCategory');

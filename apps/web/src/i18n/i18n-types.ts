@@ -321,6 +321,28 @@ type RootTranslation = {
 		 * s​e​t​t​i​n​g​s
 		 */
 		settings: string
+		topic: {
+			/**
+			 * c​a​s​t​l​e
+			 */
+			castle: string
+			/**
+			 * e​x​p​e​r​i​e​n​c​e
+			 */
+			monument: string
+			/**
+			 * p​e​r​s​o​n
+			 */
+			person: string
+			/**
+			 * h​i​k​i​n​g
+			 */
+			hiking: string
+			/**
+			 * z​o​o
+			 */
+			zoo: string
+		}
 	}
 	component: {
 		EmailInput: {
@@ -368,14 +390,6 @@ type RootTranslation = {
 			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​,​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
 			 */
 			reallyDeleteTheMonumentLabel: string
-			/**
-			 * s​e​e​ ​o​n​ ​g​o​o​g​l​e​ ​m​a​p​s
-			 */
-			seeOnGoogleMaps: string
-			/**
-			 * s​e​e​ ​m​o​r​e​ ​i​n​f​o​r​m​a​t​i​o​n
-			 */
-			seeMore: string
 			/**
 			 * P​i​c​t​u​r​e​ ​a​l​r​e​a​d​y​ ​t​a​k​e​n
 			 */
@@ -593,6 +607,34 @@ type RootTranslation = {
 			 */
 			label: string
 		}
+		FirebaseMonumentNotification: {
+			/**
+			 * N​e​w​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​a​d​d​e​d
+			 */
+			newMonumentWasAdded: string
+		}
+		UserMarker: {
+			/**
+			 * y​o​u
+			 */
+			you: string
+		}
+		MoreInformationButton: {
+			/**
+			 * s​e​e​ ​m​o​r​e​ ​i​n​f​o​r​m​a​t​i​o​n
+			 */
+			label: string
+		}
+		ExperienceCardComponent: {
+			/**
+			 * m​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
+			 */
+			monumentThatWasConnectedToTheExperienceWasDeleted: string
+			/**
+			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​p​i​c​t​u​r​e​?​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
+			 */
+			reallyDeleteYourExperienceQuestion: string
+		}
 	}
 	error: {
 		/**
@@ -628,6 +670,10 @@ type RootTranslation = {
 		 * W​e​ ​a​r​e​ ​s​o​r​r​y​ ​b​u​t​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​c​o​u​l​d​ ​n​o​t​ ​b​e​ ​l​o​a​d​e​d​.​ ​P​l​e​a​s​e​ ​r​e​t​u​r​n​ ​b​a​c​k​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
 		 */
 		locationNowFoundErrorMessage: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​ ​o​r​ ​i​n​f​o​r​m​ ​o​u​r​ ​s​u​p​p​o​r​t​.
+		 */
+		universalErrorMessage: string
 	}
 }
 
@@ -937,6 +983,28 @@ export type TranslationFunctions = {
 		 * settings
 		 */
 		settings: () => LocalizedString
+		topic: {
+			/**
+			 * castle
+			 */
+			castle: () => LocalizedString
+			/**
+			 * experience
+			 */
+			monument: () => LocalizedString
+			/**
+			 * person
+			 */
+			person: () => LocalizedString
+			/**
+			 * hiking
+			 */
+			hiking: () => LocalizedString
+			/**
+			 * zoo
+			 */
+			zoo: () => LocalizedString
+		}
 	}
 	component: {
 		EmailInput: {
@@ -984,14 +1052,6 @@ export type TranslationFunctions = {
 			 * Do you really want to delete your monument, there is no way to get it back.
 			 */
 			reallyDeleteTheMonumentLabel: () => LocalizedString
-			/**
-			 * see on google maps
-			 */
-			seeOnGoogleMaps: () => LocalizedString
-			/**
-			 * see more information
-			 */
-			seeMore: () => LocalizedString
 			/**
 			 * Picture already taken
 			 */
@@ -1207,6 +1267,34 @@ export type TranslationFunctions = {
 			 */
 			label: () => LocalizedString
 		}
+		FirebaseMonumentNotification: {
+			/**
+			 * New monument was added
+			 */
+			newMonumentWasAdded: () => LocalizedString
+		}
+		UserMarker: {
+			/**
+			 * you
+			 */
+			you: () => LocalizedString
+		}
+		MoreInformationButton: {
+			/**
+			 * see more information
+			 */
+			label: () => LocalizedString
+		}
+		ExperienceCardComponent: {
+			/**
+			 * monument that was connected to the experience was deleted
+			 */
+			monumentThatWasConnectedToTheExperienceWasDeleted: () => LocalizedString
+			/**
+			 * Do you really want to delete your picture? There is no way to get it back.
+			 */
+			reallyDeleteYourExperienceQuestion: () => LocalizedString
+		}
 	}
 	error: {
 		/**
@@ -1241,6 +1329,10 @@ export type TranslationFunctions = {
 		 * We are sorry but your location could not be loaded. Please return back and try it again.
 		 */
 		locationNowFoundErrorMessage: () => LocalizedString
+		/**
+		 * Something went wrong, please try it again or inform our support.
+		 */
+		universalErrorMessage: () => LocalizedString
 	}
 }
 

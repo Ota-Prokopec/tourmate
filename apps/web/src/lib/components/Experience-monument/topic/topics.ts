@@ -7,7 +7,7 @@ import LL from '$src/i18n/i18n-svelte';
 import { type Topic } from '@app/ts-types';
 import { get } from 'svelte/store';
 
-const translates = get(LL);
+const translates = get(LL).common.topic;
 
 export const topics: {
 	name: string;

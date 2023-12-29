@@ -25,8 +25,6 @@ export const componentsEN = {
 	MonumentCardComponent: {
 		reallyDeleteTheMonumentLabel:
 			'Do you really want to delete your monument, there is no way to get it back.',
-		seeOnGoogleMaps: 'see on google maps',
-		seeMore: 'see more information',
 		pictureAlreadyTaken: 'Picture already taken'
 	},
 	LogOutButton: {
@@ -117,5 +115,20 @@ export const componentsEN = {
 	},
 	CreateYourFirstMonumentButton: {
 		label: 'Create your first experience'
+	},
+	FirebaseMonumentNotification: {
+		newMonumentWasAdded: 'New monument was added'
+	},
+	UserMarker: {
+		you: 'you'
+	},
+	MoreInformationButton: {
+		label: 'see more information'
+	},
+	ExperienceCardComponent: {
+		monumentThatWasConnectedToTheExperienceWasDeleted:
+			'monument that was connected to the experience was deleted',
+		reallyDeleteYourExperienceQuestion:
+			'Do you really want to delete your picture? There is no way to get it back.'
 	}
 } satisfies BaseTranslation;
