@@ -39,15 +39,14 @@
 	{#each usersMonuments as monument}
 		<MonumentCardComponent size="normal" {monument} />
 	{/each}
+	{#if loadMoreIsLoading}
+		<Loading />
+	{:else}
+		<LoadMoreButton on:click={loadMonuments} />
+	{/if}
 {:else}
 	<NoContent class="w-full" />
 	{#if isMyAccount}
 		<CreateYourFirstMonumentButton />
 	{/if}
-{/if}
-
-{#if loadMoreIsLoading}
-	<Loading />
-{:else}
-	<LoadMoreButton on:click={loadMonuments} />
 {/if}

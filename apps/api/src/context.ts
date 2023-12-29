@@ -3,6 +3,7 @@ import { Models } from 'appwrite'
 import type { Preferences } from '@app/ts-types'
 import appwriteConnections from './lib/appwrite/appwrite'
 import { Types } from '@app/appwrite-ssr-graphql'
+import { notifications } from '@app/firebase-server'
 
 export const context = async ({ req, res }: { res: Response; req: Request }) => {
 	try {
@@ -19,6 +20,13 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		try {
 			appwrite = appwriteConnections.setCookie(cookies)
 
+			// appwrite.account.updatePreferences({
+			// 	colorTheme: 'dark',
+			// 	language: 'en',
+			// 	mapRange: 3000,
+			// 	termsAccepted: true,
+			// })
+
 			user = await appwrite.account.get()
 
 			// appwrite.account.updatePrefs<Preferences>({
@@ -26,13 +34,9 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 			// 	termsAccepted: true,
 			// })
 		} catch (error) {
-			console.log(error)
-
 			appwrite = appwriteConnections.setNone()
 			//user is equal to null
 		}
-
-		console.log(user)
 
 		return {
 			req,

@@ -40,15 +40,14 @@
 	{#each usersExperiences as experience}
 		<ExperienceCardComponent {experience} />
 	{/each}
+	{#if loadMoreIsLoading}
+		<Loading />
+	{:else}
+		<LoadMoreButton on:click={loadMonuments} />
+	{/if}
 {:else}
 	<NoContent class="w-full" />
 	{#if isMyAccount}
 		<CreateYourFirstPictureButton />
 	{/if}
-{/if}
-
-{#if loadMoreIsLoading}
-	<Loading />
-{:else}
-	<LoadMoreButton on:click={loadMonuments} />
 {/if}
