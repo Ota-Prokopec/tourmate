@@ -4,7 +4,7 @@ import { writable } from 'svelte/store'
 import type { Models } from 'appwrite'
 import type { Writable } from 'svelte/store'
 import { Preferences } from '@app/ts-types'
-import lodash, { merge } from 'lodash'
+import lodash from 'lodash'
 
 export default <Preferences extends Record<string, any>>(account: Account) => {
 	const client = account.client
@@ -70,7 +70,7 @@ export default <Preferences extends Record<string, any>>(account: Account) => {
 
 		async addPreferences(prefs: Partial<Preferences>) {
 			const currentPrefs = await account.getPrefs<Preferences>()
-			return await account.updatePrefs(merge(currentPrefs, prefs))
+			return await account.updatePrefs(lodash.merge(currentPrefs, prefs))
 		}
 
 		async __get() {
