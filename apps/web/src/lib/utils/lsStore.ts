@@ -7,7 +7,6 @@ import * as lodash from 'lodash';
 export type Data =
 	| {
 			usersLocation?: Location | null;
-			user?: { username: string; myId: string } | null;
 			cookieFallback?: Record<'a_session_experiences', string> | null;
 			newExperiencePicture?: string | Base64 | null;
 			alreadyHasNotificationToken?: boolean | null;

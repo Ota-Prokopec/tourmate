@@ -24,7 +24,7 @@
 
 			goto(`/auth/register/${username}-${myId}`);
 		} catch (err) {
-			alert('', $LL.page.signUp.userAlreadyExists());
+			alert('', $LL.page.signUp.userAlreadyExists(), { color: 'red' });
 		}
 	};
 </script>
