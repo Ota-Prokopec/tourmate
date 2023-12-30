@@ -27,6 +27,8 @@ app.use(
 		origin: [
 			clientHostName,
 			process.env.APPWRITE_ENDPOINT,
+			'http://localhost:5222/',
+			'https://experiencesapp.vercel.app',
 			'https://experiences-web-lovat.vercel.app',
 			'https://studio.apollographql.com',
 			'https://sdz3jzhr-4444.euw.devtunnels.ms',
