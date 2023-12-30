@@ -13,19 +13,34 @@
 
 	export let disabled: boolean = false;
 
+	export let userData:
+		| {
+				myId: string;
+				username: string;
+		  }
+		| undefined = undefined;
+
 	const logout = async () => {
 		try {
 			await user.deleteSessions(); //first things first, i will delete session, if some exists
 		} catch (error) {}
 	};
 
+	const createSuccessURL = () => {
+		const url = new URL(`${location.origin}/auth/oauth2/success`);
+		if (userData) {
+			url.searchParams.append('myId', userData.myId);
+			url.searchParams.append('username', userData.username);
+		}
+		return url;
+	};
+
 	const login = async (platform: SocialPlatform) => {
 		await logout();
-		await user.createOAuth2Session(
-			platform,
-			`${location.origin}/auth/oauth2/success`,
-			`${location.origin}/oauth2/failure`
-		);
+		const successURL = createSuccessURL();
+		console.log(successURL);
+
+		await user.createOAuth2Session(platform, successURL.href, `${location.origin}/oauth2/failure`);
 	};
 
 	const blurryClass = 'opacity-[0.5]';

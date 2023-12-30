@@ -9,10 +9,12 @@
 	import { onMount } from 'svelte';
 	import { getSystemLanguageAbbreviation } from '@app/utils';
 	import { isLanguage } from '@app/ts-types';
+	import type { PageData } from './$types';
 
-	let { user: usersParams } = $lsStore;
+	export let data: PageData;
 
-	export let data;
+	let { username, myId } = data;
+
 	let errMessage = '';
 
 	onMount(async () => {
@@ -33,14 +35,9 @@
 				return;
 			}
 
-			//*if the user does not have user-params in the localstorage (it happens when user clicks google login before creating user account)
-			if (!usersParams) {
-				//*set the default user-params
-				usersParams = {
-					myId: `@${userId}`,
-					username: userData.name
-				};
-			}
+			//*if the user does not have myId and username in query in url (it happens when user clicks google login before creating user account)
+			if (!myId) myId = `@${userId}`;
+			if (!username) username = userData.name;
 
 			//if your account is not created, create an account
 			//set up the language
@@ -54,8 +51,8 @@
 			if (!myUserInfoAlreadyExists) {
 				//create experience account
 				const { createAccount: account } = await sdk.createAccount({
-					myId: usersParams.myId,
-					username: usersParams.username,
+					myId: myId,
+					username: username,
 					language: language
 				});
 

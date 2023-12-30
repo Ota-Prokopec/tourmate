@@ -12,6 +12,8 @@ const params = {
 
 export const load: PageServerLoad = (event) => {
 	const urlParams = new URLSearchParams(event.url.searchParams);
+
+	//authorization
 	const secret = urlParams.get('secret');
 
 	if (!secret) throw error(409);
@@ -19,7 +21,13 @@ export const load: PageServerLoad = (event) => {
 	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, params);
 	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}_legacy`, secret, params);
 
+	//getting params
+	const username = urlParams.get('username');
+	const myId = urlParams.get('myId');
+
 	return {
-		session: secret
+		session: secret,
+		username,
+		myId
 	};
 };

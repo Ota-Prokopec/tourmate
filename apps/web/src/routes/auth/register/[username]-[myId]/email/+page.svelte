@@ -1,6 +1,5 @@
 <script lang="ts">
 	import appwrite, { user } from '$lib/appwrite/appwrite';
-	import Button from '$lib/components/Common/Button.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Title from '$lib/components/Common/Title.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
@@ -12,12 +11,13 @@
 	import { AppwriteException } from 'appwrite';
 	import EmailSent from '../../../Components/EmailSent.svelte';
 	import type { PageData } from './$types';
+	import { Button } from 'flowbite-svelte';
 
 	export let data: PageData;
 
-	let email = 'otaprokopec@gmail.com';
-	let password = 'aaaaaaaa';
-	let repeatPassword = 'aaaaaaaa';
+	let email = '';
+	let password = '';
+	let repeatPassword = '';
 	let state: 'loading' | 'email-sent' | null = null;
 	$: ableToRegister = email.length > 7 && password.length > 6 && repeatPassword.length > 6;
 
@@ -40,7 +40,7 @@
 			} catch (error) {
 				if (!(error instanceof AppwriteException)) return;
 				if (error.code === 409) alert('', $LL.page.signUp.userAlreadyExists(), { color: 'yellow' });
-				throw new Error('appwrite does not allow you to create an account');
+				else alert('', $LL.error.universalErrorMessage(), { color: 'yellow' });
 			}
 			try {
 				const {
@@ -81,7 +81,7 @@
 			<PasswordInput bind:value={repeatPassword} />
 
 			<div class="w-full flex justify-center">
-				<Button disabled={!ableToRegister} on:click={registerViaEmail} class="w-40 ">
+				<Button color="blue" disabled={!ableToRegister} on:click={registerViaEmail} class="w-40 ">
 					{$LL.page.signUp.signUp()}
 				</Button>
 			</div>

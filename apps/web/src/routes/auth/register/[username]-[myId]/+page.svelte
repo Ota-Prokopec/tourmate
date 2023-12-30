@@ -18,11 +18,6 @@
 
 	let state: 'loading' | 'email-sent' | null = null;
 	let termsAccepted = false;
-
-	//set username and myid into localstorage for being able to access this data when user registers via socila media
-	$lsStore.user = {
-		...data.params
-	};
 </script>
 
 {#if state === 'email-sent'}
@@ -46,7 +41,11 @@
 		<Text>{$LL.common.or()}</Text>
 
 		<div class="w-full flex flex-wrap flex-col gap-4 relative">
-			<LoginViaSocilaMedia disabled={!termsAccepted} on:click={() => (state = 'loading')} />
+			<LoginViaSocilaMedia
+				userData={data.params}
+				disabled={!termsAccepted}
+				on:click={() => (state = 'loading')}
+			/>
 		</div>
 	</Column>
 {/if}
