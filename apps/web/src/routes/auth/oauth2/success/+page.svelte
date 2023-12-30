@@ -10,14 +10,14 @@
 	import { getSystemLanguageAbbreviation } from '@app/utils';
 	import { isLanguage } from '@app/ts-types';
 
-	const { user: usersParams } = $lsStore;
+	let { user: usersParams } = $lsStore;
 
 	export let data;
 	let errMessage = '';
 
 	onMount(async () => {
 		try {
-			const { $id: userId } = await user.get();
+			const { $id: userId, ...userData } = await user.get();
 
 			if (!userId) throw new Error('User is not Authed');
 
@@ -33,13 +33,20 @@
 				return;
 			}
 
-			if (!usersParams) throw new Error('Users params in localstorage are not complete');
+			//*if the user does not have user-params in the localstorage (it happens when user clicks google login before creating user account)
+			if (!usersParams) {
+				//*set the default user-params
+				usersParams = {
+					myId: `@${userId}`,
+					username: userData.name
+				};
+			}
 
 			//if your account is not created, create an account
 			//set up the language
-			let defaultLanguage = getSystemLanguageAbbreviation();
-			if (!isLanguage(defaultLanguage)) defaultLanguage = 'en';
-			if (!isLanguage(defaultLanguage))
+			let language = getSystemLanguageAbbreviation();
+			if (!isLanguage(language)) language = 'en'; //set the default language
+			if (!isLanguage(language))
 				throw new Error(
 					'the language should be en if you have some language that Tourmate does not support the default is en'
 				);
@@ -49,7 +56,7 @@
 				const { createAccount: account } = await sdk.createAccount({
 					myId: usersParams.myId,
 					username: usersParams.username,
-					language: defaultLanguage
+					language: language
 				});
 
 				if (!account) throw new Error('It was not successful to create your account');
