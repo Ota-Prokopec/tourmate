@@ -18,12 +18,12 @@ export const load: PageServerLoad = (event) => {
 
 	if (!secret) throw error(409);
 
-	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, params);
-	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}_legacy`, secret, params);
-
 	//getting params
 	const username = urlParams.get('username');
 	const myId = urlParams.get('myId');
+
+	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, params);
+	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}_legacy`, secret, params);
 
 	return {
 		session: secret,

@@ -16,6 +16,10 @@
 			"cache": false,
 			"persistent": false
 		},
+		"preview": {
+			"cache": false,
+			"persistent": false
+		},
 		"vitest": {}
 	}
 }
