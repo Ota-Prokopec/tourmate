@@ -2,7 +2,7 @@ import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql'
 import type { Answer } from '@app/ts-types'
 import { isLocation, locationQueries } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
-import { pick } from 'lodash'
+import lodash from 'lodash'
 import { list, nullable, objectType } from 'nexus'
 import { defaultRangeMeters } from '../arguments/LocationInput'
 import { Queries } from '../lib/appwrite/appwrite'
@@ -154,7 +154,7 @@ export default objectType({
 				if (!answer) throw new Error('Answer bellow the id was not found')
 
 				return {
-					...pick(questionDocument, ...appwriteGraphqlKeys),
+					...lodash.pick(questionDocument, ...appwriteGraphqlKeys),
 					type: questionDocument.answerType,
 					correctAnswer: answer.correctAnswer,
 					question: questionDocument.question,

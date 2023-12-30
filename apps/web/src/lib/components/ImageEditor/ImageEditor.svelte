@@ -14,7 +14,7 @@
 	import myCropper from './utils/cropper';
 	import { writable } from 'svelte/store';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { omit, pick } from 'lodash';
+	import { pick } from 'lodash';
 	const dispatch = createEventDispatcher<{
 		change: { url: string | Base64; width: number; height: number };
 	}>();
