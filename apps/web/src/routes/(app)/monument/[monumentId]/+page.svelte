@@ -45,53 +45,54 @@
 </script>
 
 {#if !onlyMap}
-	<div class="min-w-[400px] absolute top-0 left-0 h-auto z-50">
-		<MonumentCard
-			bind:distanceInMeters
-			class="mobile:w-full mobile:max-w-none"
-			disableSeeMoreButton
-			size="normal"
-			monument={data.monument}
-		>
-			<Text class="ml-2 mt-4">
-				{data.monument.about}
-			</Text>
+	<MonumentCard
+		bind:distanceInMeters
+		class="mobile:w-full mobile:max-w-none z-20"
+		disableSeeMoreButton
+		size="normal"
+		monument={data.monument}
+	>
+		<Text class="ml-2 mt-4">
+			{data.monument.about}
+		</Text>
 
-			<svelte:fragment slot="bottom">
-				<Right>
-					<Column class="gap-2 items-end">
-						<MediaQuery size="mobile">
-							<SeeOnMapButton on:click={seeOnMap} />
-						</MediaQuery>
+		<svelte:fragment slot="bottom">
+			<Right>
+				<Column class="gap-2 items-end">
+					<MediaQuery size="mobile">
+						<SeeOnMapButton on:click={seeOnMap} />
+					</MediaQuery>
 
-						<TakePictureHereButton on:click={takePicture} />
-					</Column>
-				</Right>
-			</svelte:fragment>
-		</MonumentCard>
+					<TakePictureHereButton on:click={takePicture} />
+				</Column>
+			</Right>
+		</svelte:fragment>
+	</MonumentCard>
 
-		{#if experiences.length}
-			<Card class="bg-transparent !pl-0 !pr-0 mobile:!w-full mobile:max-w-none mobile:!p-10">
-				<Carousel class="h-min" swiping arrows>
-					{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
-						{@const experience = {
-							...experienceWithoutConnectedMonument,
-							connectedMonument: monument
-						}}
-						<ExperienceCardComponent class="p-0 self-center shadow-none w-full" {experience} />
-					{/each}
-				</Carousel>
-			</Card>
-		{/if}
-	</div>
+	{#if experiences.length}
+		<Card class="bg-transparent !pl-0 !pr-0 mobile:!w-full mobile:max-w-none mobile:!p-10">
+			<Carousel class="h-min" swiping arrows>
+				{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
+					{@const experience = {
+						...experienceWithoutConnectedMonument,
+						connectedMonument: monument
+					}}
+					<ExperienceCardComponent class="p-0 self-center shadow-none w-full" {experience} />
+				{/each}
+			</Carousel>
+		</Card>
+	{/if}
 {/if}
 
 <Map showUser center={data.monument.location} class="h-[100dvh] fixed top-0">
-	<MediaQuery size="mobile">
-		<Icon on:click={() => (onlyMap = false)} class="child:w-8 child:h-8 absolute top-0 right-0 m-2">
+	{#if onlyMap}
+		<Icon
+			on:click={() => (onlyMap = false)}
+			class="child:w-8 child:h-8 absolute top-0 right-0 m-2 child:fill-black"
+		>
 			<IconTimes />
 		</Icon>
-	</MediaQuery>
+	{/if}
 
 	<Marker class="z-50" location={data.monument.location}>
 		<Icon class="child:h-8 child:w-8">

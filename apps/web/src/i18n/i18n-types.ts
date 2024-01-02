@@ -192,10 +192,6 @@ type RootTranslation = {
 			planningError: string
 		}
 		addMonument: {
-			/**
-			 * m​a​r​k​ ​h​e​r​e
-			 */
-			markHere: string
 			detail: {
 				/**
 				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.
@@ -900,10 +896,6 @@ export type TranslationFunctions = {
 			planningError: () => LocalizedString
 		}
 		addMonument: {
-			/**
-			 * mark here
-			 */
-			markHere: () => LocalizedString
 			detail: {
 				/**
 				 * Your monument was successfully created.

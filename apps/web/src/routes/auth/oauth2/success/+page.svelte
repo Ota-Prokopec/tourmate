@@ -19,16 +19,12 @@
 
 	let errMessage = '';
 
-	const expires = new Date(Date.now() + 999999999999 * 1000);
-
-	const expireTimeString = expires.toUTCString();
-
 	onMount(async () => {
 		try {
 			//session in localstorage for client to appwrite
 			storage.cookieFallback = { a_session_experiences: data.session };
 			//cookies for ssr
-			document.cookie = `${PUBLIC_SESSION_NAME}=${data.session};path=/;maxAge=99999999999999;expires=${expireTimeString}`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
+			await sdk.setSession({ session: data.session });
 
 			const { $id: userId, ...userData } = await user.get();
 
