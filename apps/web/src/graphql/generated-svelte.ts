@@ -230,6 +230,7 @@ export type Query = {
   getUsers: Array<User>;
   logInViaEmail: EmailLogin;
   logout: Scalars['Boolean']['output'];
+  setSession: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
 };
 
@@ -284,6 +285,11 @@ export type QueryGetUsersArgs = {
 export type QueryLogInViaEmailArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+
+export type QuerySetSessionArgs = {
+  session: Scalars['String']['input'];
 };
 
 
@@ -377,6 +383,13 @@ export type GetUserByMyIdQueryVariables = Exact<{
 
 export type GetUserByMyIdQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL } };
 
+export type UpdateProfilePictureQueryVariables = Exact<{
+  picture: Scalars['String']['input'];
+}>;
+
+
+export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+
 export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -390,12 +403,12 @@ export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutQuery = { __typename?: 'Query', logout: boolean };
 
-export type UpdateProfilePictureQueryVariables = Exact<{
-  picture: Scalars['String']['input'];
+export type SetSessionQueryVariables = Exact<{
+  session: Scalars['String']['input'];
 }>;
 
 
-export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+export type SetSessionQuery = { __typename?: 'Query', setSession: boolean };
 
 export type CreateExperienceMutationVariables = Exact<{
   input: CreateExperienceInput;
@@ -619,18 +632,6 @@ export const GetUserByMyIdDoc = gql`
   }
 }
     `;
-export const LoginViaEmailDoc = gql`
-    query loginViaEmail($email: String!, $password: String!) {
-  logInViaEmail(email: $email, password: $password) {
-    session
-  }
-}
-    `;
-export const LogoutDoc = gql`
-    query logout {
-  logout
-}
-    `;
 export const UpdateProfilePictureDoc = gql`
     query updateProfilePicture($picture: String!) {
   updateProfilePicture(picture: $picture) {
@@ -652,6 +653,23 @@ export const UpdateProfilePictureDoc = gql`
       termsAccepted
     }
   }
+}
+    `;
+export const LoginViaEmailDoc = gql`
+    query loginViaEmail($email: String!, $password: String!) {
+  logInViaEmail(email: $email, password: $password) {
+    session
+  }
+}
+    `;
+export const LogoutDoc = gql`
+    query logout {
+  logout
+}
+    `;
+export const SetSessionDoc = gql`
+    query setSession($session: String!) {
+  setSession(session: $session)
 }
     `;
 export const CreateExperienceDoc = gql`
@@ -1722,6 +1740,41 @@ export const getUserByMyId = (
             return result;
           }
         
+export const updateProfilePicture = (
+            options: Omit<
+              WatchQueryOptions<UpdateProfilePictureQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<UpdateProfilePictureQuery> & {
+              query: ObservableQuery<
+                UpdateProfilePictureQuery,
+                UpdateProfilePictureQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: UpdateProfilePictureDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<UpdateProfilePictureQuery> & {
+                query: ObservableQuery<
+                  UpdateProfilePictureQuery,
+                  UpdateProfilePictureQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
 export const loginViaEmail = (
             options: Omit<
               WatchQueryOptions<LoginViaEmailQueryVariables>, 
@@ -1792,28 +1845,28 @@ export const logout = (
             return result;
           }
         
-export const updateProfilePicture = (
+export const setSession = (
             options: Omit<
-              WatchQueryOptions<UpdateProfilePictureQueryVariables>, 
+              WatchQueryOptions<SetSessionQueryVariables>, 
               "query"
             >
           ): Readable<
-            ApolloQueryResult<UpdateProfilePictureQuery> & {
+            ApolloQueryResult<SetSessionQuery> & {
               query: ObservableQuery<
-                UpdateProfilePictureQuery,
-                UpdateProfilePictureQueryVariables
+                SetSessionQuery,
+                SetSessionQueryVariables
               >;
             }
           > => {
             const q = client.watchQuery({
-              query: UpdateProfilePictureDoc,
+              query: SetSessionDoc,
               ...options,
             });
             var result = readable<
-              ApolloQueryResult<UpdateProfilePictureQuery> & {
+              ApolloQueryResult<SetSessionQuery> & {
                 query: ObservableQuery<
-                  UpdateProfilePictureQuery,
-                  UpdateProfilePictureQueryVariables
+                  SetSessionQuery,
+                  SetSessionQueryVariables
                 >;
               }
             >(

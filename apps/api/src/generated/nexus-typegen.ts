@@ -336,6 +336,7 @@ export interface NexusGenFieldTypes {
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
     logout: boolean; // Boolean!
+    setSession: boolean; // Boolean!
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
   }
   Question: { // field return type
@@ -489,6 +490,7 @@ export interface NexusGenFieldTypeNames {
     getUsers: 'User'
     logInViaEmail: 'EmailLogin'
     logout: 'Boolean'
+    setSession: 'Boolean'
     updateProfilePicture: 'Account'
   }
   Question: { // field return type name
@@ -590,6 +592,9 @@ export interface NexusGenArgTypes {
     logInViaEmail: { // args
       email: string; // String!
       password: string; // String!
+    }
+    setSession: { // args
+      session: string; // String!
     }
     updateProfilePicture: { // args
       picture: string; // String!

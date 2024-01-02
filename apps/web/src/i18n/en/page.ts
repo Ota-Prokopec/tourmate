@@ -71,7 +71,6 @@ export const pageEN = {
 		planningError: 'We are sorry, something went wrong during your wished path'
 	},
 	addMonument: {
-		markHere: 'mark here',
 		detail: {
 			monumentCreated: 'Your monument was successfully created.',
 			monumentCreateError: 'Your monument was not successfully created. Please try it again.',

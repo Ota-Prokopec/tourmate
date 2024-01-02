@@ -1,0 +1,3 @@
+query setSession($session: String!) {
+	setSession(session: $session)
+}

@@ -70,7 +70,6 @@ export const pageCS = {
 		planningError: 'Omlouváme se, něco se pokazilo při plánování vaší požadované trasy'
 	},
 	addMonument: {
-		markHere: 'označit zde',
 		detail: {
 			monumentCreated: 'Vaše památka byla úspěšně vytvořena.',
 			monumentCreateError: 'Vaše památka nebyla úspěšně vytvořena. Zkuste to znovu.',

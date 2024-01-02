@@ -226,6 +226,7 @@ export type Query = {
   getUsers: Array<User>;
   logInViaEmail: EmailLogin;
   logout: Scalars['Boolean']['output'];
+  setSession: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
 };
 
@@ -280,6 +281,11 @@ export type QueryGetUsersArgs = {
 export type QueryLogInViaEmailArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+
+export type QuerySetSessionArgs = {
+  session: Scalars['String']['input'];
 };
 
 
@@ -373,6 +379,13 @@ export type GetUserByMyIdQueryVariables = Exact<{
 
 export type GetUserByMyIdQuery = { __typename?: 'Query', getUser: { __typename?: 'User', _permissions: Array<string>, _databaseId: string, _id: string, _collectionId: string, _updatedAt: string, _createdAt: string, userId: string, myId: string, username: string, profilePictureURL: URL } };
 
+export type UpdateProfilePictureQueryVariables = Exact<{
+  picture: Scalars['String']['input'];
+}>;
+
+
+export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+
 export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -386,12 +399,12 @@ export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutQuery = { __typename?: 'Query', logout: boolean };
 
-export type UpdateProfilePictureQueryVariables = Exact<{
-  picture: Scalars['String']['input'];
+export type SetSessionQueryVariables = Exact<{
+  session: Scalars['String']['input'];
 }>;
 
 
-export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
+export type SetSessionQuery = { __typename?: 'Query', setSession: boolean };
 
 export type CreateExperienceMutationVariables = Exact<{
   input: CreateExperienceInput;
@@ -615,18 +628,6 @@ export const GetUserByMyIdDocument = gql`
   }
 }
     `;
-export const LoginViaEmailDocument = gql`
-    query loginViaEmail($email: String!, $password: String!) {
-  logInViaEmail(email: $email, password: $password) {
-    session
-  }
-}
-    `;
-export const LogoutDocument = gql`
-    query logout {
-  logout
-}
-    `;
 export const UpdateProfilePictureDocument = gql`
     query updateProfilePicture($picture: String!) {
   updateProfilePicture(picture: $picture) {
@@ -648,6 +649,23 @@ export const UpdateProfilePictureDocument = gql`
       termsAccepted
     }
   }
+}
+    `;
+export const LoginViaEmailDocument = gql`
+    query loginViaEmail($email: String!, $password: String!) {
+  logInViaEmail(email: $email, password: $password) {
+    session
+  }
+}
+    `;
+export const LogoutDocument = gql`
+    query logout {
+  logout
+}
+    `;
+export const SetSessionDocument = gql`
+    query setSession($session: String!) {
+  setSession(session: $session)
 }
     `;
 export const CreateExperienceDocument = gql`
@@ -1566,14 +1584,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getUserByMyId(variables: GetUserByMyIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUserByMyIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserByMyIdQuery>(GetUserByMyIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByMyId', 'query');
     },
+    updateProfilePicture(variables: UpdateProfilePictureQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateProfilePictureQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateProfilePictureQuery>(UpdateProfilePictureDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateProfilePicture', 'query');
+    },
     loginViaEmail(variables: LoginViaEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginViaEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LoginViaEmailQuery>(LoginViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'loginViaEmail', 'query');
     },
     logout(variables?: LogoutQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LogoutQuery>(LogoutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'logout', 'query');
     },
-    updateProfilePicture(variables: UpdateProfilePictureQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateProfilePictureQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateProfilePictureQuery>(UpdateProfilePictureDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateProfilePicture', 'query');
+    setSession(variables: SetSessionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SetSessionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SetSessionQuery>(SetSessionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'setSession', 'query');
     },
     createExperience(variables: CreateExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateExperienceMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateExperienceMutation>(CreateExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createExperience', 'mutation');

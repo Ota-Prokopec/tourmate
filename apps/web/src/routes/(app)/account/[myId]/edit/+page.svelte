@@ -13,6 +13,7 @@
 	import { alert } from '$src/routes/alertStore';
 	import type { Base64 } from '@app/ts-types';
 	import type { PageData } from './$types';
+	import { navigate } from '$lib/utils/navigator';
 
 	export let data: PageData;
 
@@ -48,7 +49,7 @@
 				username,
 				myId
 			});
-			goto(`/account/${myId}`);
+			navigate(`/account/${myId}`, { invalidateAll: true });
 		} catch (error) {
 			alert('', $LL.page.account.edit.updateProfileErrorMessage(), { color: 'red' });
 		}
@@ -68,6 +69,6 @@
 		/>
 		<UsernameInput bind:value={username} />
 		<MyIdInput bind:myId />
-		<SaveButton on:click={saveChanges} />
+		<SaveButton bind:isLoading on:click={saveChanges} />
 	</Column>
 </Center>

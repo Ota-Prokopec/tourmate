@@ -13,10 +13,10 @@ export const load: PageServerLoad = async (event) => {
 	const username = urlParams.get('username');
 	const myId = urlParams.get('myId');
 
-	//for server
+	//for ssr
 	await event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, {
 		sameSite: 'none',
-		domain: process.env.SERVER_HOSTNAME_COOKIES,
+		domain: process.env.CLIENT_HOSTNAME,
 		secure: true,
 		maxAge: 1000000000,
 		httpOnly: true,

@@ -22,11 +22,13 @@
 	import mapTiler from '$lib/utils/mapTiler';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import Column from '$lib/components/Common/Column.svelte';
+	import ButtonNext from '$lib/components/Buttons/ButtonNext.svelte';
 
 	export let data: PageData;
 
 	let location: Location | undefined | null = $lsStore.usersLocation;
 	$: markerLocation = location;
+	let monumentsLoaded = false;
 
 	let monuments: MonumentMarkerData[] = [];
 
@@ -41,9 +43,10 @@
 			})
 		).getListOfMonuments;
 		monuments = [...monuments, ...newMonuments];
+		monumentsLoaded = true;
 	};
 
-	$: if (markerLocation && monuments.length === 0) loadNewMonuments(); //first load
+	$: if (markerLocation && !monumentsLoaded) loadNewMonuments(); //first load
 
 	const next = async () => {
 		try {
@@ -105,14 +108,8 @@
 		{/each}
 	</Map>
 
-	<Button
-		class="absolute bottom-0 right-0 mb-24 mr-4 flex flex-wrap flex-row gap-2"
-		color="blue"
+	<ButtonNext
 		on:click={next}
-	>
-		{$LL.page.addMonument.markHere()}
-		<Icon class="w-4 fill-white">
-			<IconNext class="w-10 text-white" />
-		</Icon>
-	</Button>
+		class="absolute bottom-0 right-0 mb-24 mr-4 flex flex-wrap flex-row gap-2"
+	/>
 </Full>
