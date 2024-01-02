@@ -279,6 +279,14 @@ type RootTranslation = {
 				chooseMonumentFromMap: string
 			}
 		}
+		oauth: {
+			success: {
+				/**
+				 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​w​e​ ​w​e​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​s​i​g​n​ ​y​o​u​ ​i​n​ ​t​h​e​ ​T​o​u​r​m​a​t​e​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 */
+				errorMessage: string
+			}
+		}
 	}
 	common: {
 		/**
@@ -977,6 +985,14 @@ export type TranslationFunctions = {
 				 * choose exprerience from the map
 				 */
 				chooseMonumentFromMap: () => LocalizedString
+			}
+		}
+		oauth: {
+			success: {
+				/**
+				 * We are sorry, we were not able to sign you in the Tourmate. Please try it again.
+				 */
+				errorMessage: () => LocalizedString
 			}
 		}
 	}

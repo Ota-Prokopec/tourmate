@@ -104,5 +104,11 @@ export const pageEN = {
 			connectExperienceToMonument: 'connect experience to the monument',
 			chooseMonumentFromMap: 'choose exprerience from the map'
 		}
+	},
+	oauth: {
+		success: {
+			errorMessage:
+				'We are sorry, we were not able to sign you in the Tourmate. Please try it again.'
+		}
 	}
 } satisfies BaseTranslation;

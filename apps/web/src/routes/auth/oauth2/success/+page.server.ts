@@ -1,16 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-const params = {
-	sameSite: 'lax',
-	domain: process.env.SERVER_HOSTNAME_COOKIES,
-	secure: true,
-	maxAge: 1000000000,
-	httpOnly: true,
-	path: '/'
-} as const;
-
-export const load: PageServerLoad = (event) => {
+export const load: PageServerLoad = async (event) => {
 	const urlParams = new URLSearchParams(event.url.searchParams);
 
 	//authorization
@@ -22,8 +13,15 @@ export const load: PageServerLoad = (event) => {
 	const username = urlParams.get('username');
 	const myId = urlParams.get('myId');
 
-	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, params);
-	event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}_legacy`, secret, params);
+	//for server
+	await event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, {
+		sameSite: 'none',
+		domain: process.env.SERVER_HOSTNAME_COOKIES,
+		secure: true,
+		maxAge: 1000000000,
+		httpOnly: true,
+		path: '/'
+	});
 
 	return {
 		session: secret,

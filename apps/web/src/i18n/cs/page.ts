@@ -103,5 +103,11 @@ export const pageCS = {
 			connectExperienceToMonument: 'připojte zážitek k památce',
 			chooseMonumentFromMap: 'vyberte zážitek z mapy'
 		}
+	},
+	oauth: {
+		success: {
+			errorMessage:
+				'Omlouváme se, nebylo nám možné přihlásit vás do aplikace Tourmate. Prosím, zkuste to znovu.'
+		}
 	}
 } satisfies BaseTranslation;
