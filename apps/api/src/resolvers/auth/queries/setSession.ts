@@ -6,10 +6,11 @@ export default queryField('setSession', {
 	resolve: async (source, args, ctx, info) => {
 		ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, args.session, {
 			sameSite: 'none',
-			domain: `.${process.env.SERVER_HOSTNAME_COOKIES}`,
+			domain: process.env.SERVER_HOSTNAME_COOKIES,
 			secure: true,
 			maxAge: 999999999999999, //TODO: change this
 			httpOnly: true,
+			path: '/',
 		})
 
 		return true
