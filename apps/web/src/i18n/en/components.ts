@@ -142,5 +142,10 @@ export const componentsEN = {
 	},
 	BasicImageInput: {
 		title: 'Click to upload or drag and drop'
+	},
+	InstallApp: {
+		title: 'Install tourmate app',
+		text: 'Install our tourmate app for better experience',
+		installButtonLabel: 'install'
 	}
 } satisfies BaseTranslation;

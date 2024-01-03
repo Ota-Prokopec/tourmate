@@ -1,31 +1,9 @@
-1) notifications
-
-
-
-
-translates
-errors
-
-
-errors: 
-{
-    (main) page map load new monuments based on users location when ealking
-}
 
 
 
 
 
 
-1) login too many times errors
-9) better languages
-11) add topics and transports
-12) Terms And conditions
-13) notifications
-
-Testing
-1) auth - do the oauth2 register
-2) account - done
 
 
 

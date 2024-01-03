@@ -17,17 +17,15 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		let user: Models.User<Preferences> | null = null
 		let appwrite: ReturnType<typeof appwriteConnections.setCookie>
 
-		console.log(cookies)
-
 		try {
 			appwrite = appwriteConnections.setCookie(cookies)
 
-			// appwrite.account.updatePreferences({
-			// 	colorTheme: 'dark',
-			// 	language: 'en',
-			// 	mapRange: 3000,
-			// 	termsAccepted: true,
-			// })
+			/*appwrite.account.updatePreferences({
+				colorTheme: 'dark',
+				language: 'en',
+				mapRange: 3000,
+				termsAccepted: true,
+			})*/
 
 			user = await appwrite.account.get()
 

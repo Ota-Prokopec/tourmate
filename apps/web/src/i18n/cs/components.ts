@@ -139,5 +139,10 @@ export const componentsCS = {
 	},
 	BasicImageInput: {
 		title: 'Klikněte pro nahrání nebo přetáhněte soubor sem'
+	},
+	InstallApp: {
+		title: 'Nainstalujte aplikaci Tourmate',
+		text: 'Nainstalujte naši aplikaci Tourmate pro lepší zážitek',
+		installButtonLabel: 'nainstalovat'
 	}
 } satisfies BaseTranslation;

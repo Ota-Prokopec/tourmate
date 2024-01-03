@@ -4,7 +4,7 @@ export default queryField('setSession', {
 	type: 'Boolean',
 	args: { session: 'String' },
 	resolve: async (source, args, ctx, info) => {
-		ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, args.session, {
+		await ctx.res.cookie(`a_session_${process.env.APPWRITE_PROJECT_ID}`, args.session, {
 			sameSite: 'none',
 			domain: process.env.SERVER_HOSTNAME_COOKIES,
 			secure: true,
