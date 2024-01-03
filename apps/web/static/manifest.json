@@ -1,10 +1,11 @@
 {
-	"name": "Experiences",
-	"short_name": "Experiences",
+	"name": "tourmate",
+	"short_name": "tourmate",
 	"theme_color": "#fff",
 	"background_color": "#fff",
 	"display": "standalone",
 	"orientation": "portrait",
+	"form_factor": "wide",
 	"scope": "/",
 	"start_url": "/",
 	"background": {
@@ -12,6 +13,12 @@
 		"type": "module"
 	},
 	"icons": [
+		{
+			"src": "icons/icon-72x72.png",
+			"sizes": "72x72",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
 		{
 			"src": "icons/icon-72x72.png",
 			"sizes": "72x72",

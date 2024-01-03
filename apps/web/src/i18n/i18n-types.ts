@@ -677,6 +677,20 @@ type RootTranslation = {
 			 */
 			title: string
 		}
+		InstallApp: {
+			/**
+			 * I​n​s​t​a​l​l​ ​t​o​u​r​m​a​t​e​ ​a​p​p
+			 */
+			title: string
+			/**
+			 * I​n​s​t​a​l​l​ ​o​u​r​ ​t​o​u​r​m​a​t​e​ ​a​p​p​ ​f​o​r​ ​b​e​t​t​e​r​ ​e​x​p​e​r​i​e​n​c​e
+			 */
+			text: string
+			/**
+			 * i​n​s​t​a​l​l
+			 */
+			installButtonLabel: string
+		}
 	}
 	error: {
 		/**
@@ -1378,6 +1392,20 @@ export type TranslationFunctions = {
 			 * Click to upload or drag and drop
 			 */
 			title: () => LocalizedString
+		}
+		InstallApp: {
+			/**
+			 * Install tourmate app
+			 */
+			title: () => LocalizedString
+			/**
+			 * Install our tourmate app for better experience
+			 */
+			text: () => LocalizedString
+			/**
+			 * install
+			 */
+			installButtonLabel: () => LocalizedString
 		}
 	}
 	error: {
