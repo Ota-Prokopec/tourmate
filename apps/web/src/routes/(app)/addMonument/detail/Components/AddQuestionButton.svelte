@@ -16,9 +16,7 @@
 	import RadioForm from '$lib/components/Experience-monument/question/Forms/RadioForm.svelte';
 	import TextForm from '$lib/components/Experience-monument/question/Forms/TextForm.svelte';
 
-	export let question:
-		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
-		| undefined;
+	export let question: Question | undefined;
 	export let disabled = false;
 </script>
 

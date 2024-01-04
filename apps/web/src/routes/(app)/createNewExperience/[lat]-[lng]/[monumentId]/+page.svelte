@@ -1,16 +1,17 @@
 <script lang="ts">
-	import CardImage from '$lib/components/Experience-monument/Cards/CardImage.svelte';
+	import { goto } from '$app/navigation';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import { storage } from '$lib/utils/lsStore';
-	import { navigate } from '$lib/utils/navigator';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { MonumentCard } from '@app/ts-types';
-	import { Button, Card } from 'flowbite-svelte';
+	import { Card } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import Center from '../Components/Center.svelte';
 	import Footer from '../Components/Footer.svelte';
@@ -18,14 +19,6 @@
 	import Drawer from '../Components/MonumentNotFoundDrawer.svelte';
 	import { maximalRangeInMetersToConnectMonumentToPicture } from '../options';
 	import type { PageData } from './$types';
-	import { base64ToFile, device, fileToBase64 } from '@app/utils';
-	import { goto } from '$app/navigation';
-	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
-	import TakePhotoFromPhone from '$lib/components/Photo/TakePhotoFromPhone.svelte';
-	import ImageInput from '$lib/components/ImageInputs/ImageInput.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 
 	//if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -110,7 +103,7 @@
 />
 
 {#if cardShown}
-	<Card class="w-full h-auto absolute left-0 !z-20 mobile:w-full mobile:max-w-none">
+	<Card class="w-full h-auto absolute left-0 !z-20 mobile:w-full mobile:max-w-none gap-4 ">
 		<Header {location} placeName={data.newExperience.placeName ?? 'not-loaded'} />
 
 		<BasicImageInput

@@ -37,46 +37,33 @@
 	//TODO: create translation for connection the picture to the monument
 </script>
 
-<ItemsLayout
-	class="mt-4 h-auto "
-	let:id
-	items={[
-		{
-			title: $LL.page.createNewExperience.Center.connectExperienceToMonument(),
-			id: 'connectMonument'
-		}
-	]}
->
-	{#if id === 'connectMonument'}
-		<Column class="justify-start">
-			{#await monumentToConnectPromise}
-				<Stretch color="black" />
-			{:then monumentToConnect}
-				{#if monumentToConnect}
-					<MonumentCardComponent
-						on:dismiss={() => dispatch('disconnect')}
-						dismissable
-						disableSeeMoreButton
-						disableSharing
-						size="normal"
-						monument={monumentToConnect.getMonument}
-					/>
-				{:else}
-					<Skeleton class="w-full h-40" />
-					<Right>
-						<Column class="gap-1">
-							<Button on:click={() => (hiddenCantFindMonumentDrawer = false)} color="blue"
-								>{$LL.page.createNewExperience.Center.cantFindAnyMonumentQuestion()}</Button
-							>
-							<MediaQuery class="mt-4" size="mobile">
-								<Button color="blue" on:click={() => (cardShown = false)}>
-									{$LL.page.createNewExperience.Center.chooseMonumentFromMap()}
-								</Button>
-							</MediaQuery>
-						</Column>
-					</Right>
-				{/if}
-			{/await}
-		</Column>
-	{/if}
-</ItemsLayout>
+<Column class="justify-start">
+	{#await monumentToConnectPromise}
+		<Stretch color="black" />
+	{:then monumentToConnect}
+		{#if monumentToConnect}
+			<MonumentCardComponent
+				on:dismiss={() => dispatch('disconnect')}
+				dismissable
+				disableSeeMoreButton
+				disableSharing
+				size="normal"
+				monument={monumentToConnect.getMonument}
+			/>
+		{:else}
+			<Skeleton class="w-full h-40" />
+			<Right>
+				<Column class="gap-1">
+					<Button on:click={() => (hiddenCantFindMonumentDrawer = false)} color="blue"
+						>{$LL.page.createNewExperience.Center.cantFindAnyMonumentQuestion()}</Button
+					>
+					<MediaQuery class="mt-4" size="mobile">
+						<Button color="blue" on:click={() => (cardShown = false)}>
+							{$LL.page.createNewExperience.Center.chooseMonumentFromMap()}
+						</Button>
+					</MediaQuery>
+				</Column>
+			</Right>
+		{/if}
+	{/await}
+</Column>

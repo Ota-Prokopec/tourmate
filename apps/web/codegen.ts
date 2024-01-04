@@ -15,7 +15,8 @@ const codegenConfigConfig: CodegenConfig['config'] = {
 		},
 		Topic: '"castle" | "monument" | "person" | "animals" | "hiking"',
 		ColorTheme: "'dark' | 'light'",
-		Language: "'en'|'cs'"
+		Language: "'en'|'cs'",
+		StringOrNumber: 'string|number'
 	}
 };
 

@@ -18,6 +18,7 @@
 		Location,
 		Monument,
 		Question,
+		QuestionWithCorrectAnswerRequired,
 		Topic,
 		Transport
 	} from '@app/ts-types';
@@ -40,9 +41,7 @@
 	let topics: Topic[] = [];
 	let transports: Transport[] = [];
 
-	let question:
-		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
-		| undefined;
+	export let question: QuestionWithCorrectAnswerRequired | undefined;
 
 	type ServerResponse = GraphqlDocument<
 		Monument & { usersConnectedExperiences: GraphqlDocument<Experience>[] }

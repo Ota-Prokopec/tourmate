@@ -8,7 +8,7 @@ export const ssr = false;
  */
 export const load: LayoutLoad = () => {
 	return {
-		/**minimal distance of two monuments 50meters */
-		twoMonumentsMinimalDistance: 50 as const
+		/**minimal distance of two monuments 10meters */
+		twoMonumentsMinimalDistance: 10 as const
 	};
 };

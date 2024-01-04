@@ -10,7 +10,7 @@ export default objectType({
 		t.list.string('_permissions')
 		t.string('_databaseId')
 		t.string('question')
-		t.field({ name: 'correctAnswer', type: 'StringOrNumber' })
+		t.nullable.field({ name: 'correctAnswer', type: 'StringOrNumber' })
 		t.nullable.list.string('pickingAnswers')
 		t.field({ type: 'AnswerType', name: 'type' })
 	},

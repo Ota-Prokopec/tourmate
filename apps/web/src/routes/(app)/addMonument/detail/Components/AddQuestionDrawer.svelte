@@ -20,7 +20,8 @@
 		isQuestionTypeText,
 		type Answer,
 		type AnswerType,
-		type Question
+		type Question,
+		type QuestionWithCorrectAnswerRequired
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -29,18 +30,14 @@
 	import TextForm from '../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
 
 	const dispatch = createEventDispatcher<{
-		save: Omit<Question<AnswerType>, 'pickingAnswers'> & {
-			pickingAnswers?: Answer['pickingAnswers'];
-		};
+		save: QuestionWithCorrectAnswerRequired;
 	}>();
 
 	export let hidden = true;
 
 	let carousel: CarouselFunctions | undefined;
 
-	export let question:
-		| (Omit<Question<AnswerType>, 'pickingAnswers'> & { pickingAnswers?: Answer['pickingAnswers'] })
-		| undefined;
+	export let question: QuestionWithCorrectAnswerRequired | undefined;
 
 	const categories: { title: string; key: AnswerType }[] = [
 		{ title: $LL.component.AddQuestionDrawer.questionTypes.radio(), key: 'radio' },
@@ -86,8 +83,10 @@
 
 			if (!temporaryQuestion) throw new Error('Question does not exist');
 			const [type, checkedQuestion] = getQuestionType(temporaryQuestion);
+			const correctAnswer = checkedQuestion.correctAnswer;
+			if (!correctAnswer) throw new Error('Correct answer does not exist');
 
-			question = checkedQuestion;
+			question = { ...checkedQuestion, correctAnswer };
 
 			clearOthers();
 

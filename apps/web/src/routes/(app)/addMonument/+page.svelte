@@ -1,28 +1,26 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { collections } from '$lib/appwrite/appwrite';
+	import Alert from '$lib/components/Alert/Alert.svelte';
+	import ButtonNext from '$lib/components/Buttons/ButtonNext.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 	import Full from '$lib/components/Common/Full.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconNext from '$lib/components/Icons/IconNext.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import Map from '$lib/components/Map/Map.svelte';
+	import Marker from '$lib/components/Map/Marker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import lsStore from '$lib/utils/lsStore';
+	import mapTiler from '$lib/utils/mapTiler';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { Location, MonumentMarkerData } from '@app/ts-types';
 	import { locationQueries } from '@app/utils';
-	import { Button } from 'flowbite-svelte';
-	import type { PageData } from './$types';
-	import Map from '$lib/components/Map/Map.svelte';
-	import Marker from '$lib/components/Map/Marker.svelte';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
-	import Alert from '$lib/components/Alert/Alert.svelte';
-	import { SyncLoader } from 'svelte-loading-spinners';
-	import Text from '$lib/components/Common/Text.svelte';
-	import mapTiler from '$lib/utils/mapTiler';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import Column from '$lib/components/Common/Column.svelte';
-	import ButtonNext from '$lib/components/Buttons/ButtonNext.svelte';
+	import { SyncLoader } from 'svelte-loading-spinners';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 

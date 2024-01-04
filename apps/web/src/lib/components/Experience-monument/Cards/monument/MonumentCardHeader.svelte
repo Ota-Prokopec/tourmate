@@ -5,6 +5,8 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
+	import { navigate } from '$lib/utils/navigator';
+	import { getUrlForSearchPage } from '$src/routes/(app)/search/tools';
 
 	export let monument: { name: string; placeDetail: { name: string } };
 </script>
@@ -13,7 +15,7 @@
 	<Text class="mb-2 text-xl font-bold text-black">
 		{monument.name}
 	</Text>
-	<button on:click={() => goto(`/search/places/${monument.placeDetail.name}`)}>
+	<button on:click={() => navigate(getUrlForSearchPage('places'))}>
 		<Columns columns="min-content auto" class="gap-1">
 			<Icon class="child:w-6 child:h-6">
 				<IconLocation />

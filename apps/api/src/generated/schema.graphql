@@ -178,7 +178,7 @@ type Question {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
-  correctAnswer: StringOrNumber!
+  correctAnswer: StringOrNumber
   pickingAnswers: [String!]
   question: String!
   type: AnswerType!

@@ -1,5 +1,7 @@
 import type { LayoutServerLoad } from './$types';
 import { sdkssr } from '$src/graphql/sdkssr';
+import { error } from '@sveltejs/kit';
+import { MonumentCard, getQuestionType, isQuestion } from '@app/ts-types';
 
 export const ssr = false;
 
@@ -13,6 +15,6 @@ export const load: LayoutServerLoad = async (event) => {
 	).getMonument;
 
 	return {
-		monument
+		monument: monument
 	};
 };

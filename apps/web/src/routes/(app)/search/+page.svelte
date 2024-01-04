@@ -12,6 +12,7 @@
 	import type { Location } from '@app/ts-types';
 	import LL from '$src/i18n/i18n-svelte';
 	import { page } from '$app/stores';
+	import { getUrlForSearchPage } from './tools';
 
 	export let data: PageData;
 
@@ -22,9 +23,8 @@
 
 	const changeUrl = () => {
 		if (!browser) return;
-		const url = new URL(`${$page.url.origin}${$page.url.pathname}`);
-		url.searchParams.append('chosenCategory', chosenCategory);
-		changeURLwithoutReloading(url.href);
+
+		changeURLwithoutReloading(getUrlForSearchPage(chosenCategory));
 	};
 
 	$: if (chosenCategory) {

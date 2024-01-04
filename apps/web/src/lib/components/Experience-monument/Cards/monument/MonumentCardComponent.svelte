@@ -47,7 +47,7 @@
 
 	export let monument: typeof size extends 'normal' ? MonumentCard : SmallMonumentCard;
 
-	let amIOwner: boolean | undefined =
+	let isOwner: boolean | undefined =
 		'user' in monument ? monument.user.userId === $user?.$id : undefined;
 
 	export let isCardVisible = true;
@@ -155,7 +155,9 @@
 				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
-					<OwnerOptions type="monument" on:edit={editMonument} on:delete={deleteMonument} />
+					{#if isOwner}
+						<OwnerOptions type="monument" on:edit={editMonument} on:delete={deleteMonument} />
+					{/if}
 					{#if !disableSharing}
 						<Icon class="mb-2" on:click={() => goto(`/monument/${monument._id}/share`)}>
 							<IconShare class="w-5 h-5" />
@@ -173,7 +175,7 @@
 			<CardImage
 				disableFullScreen
 				on:like={() => {
-					if (!amIOwner && liked === 'unliked') like();
+					if (liked === 'unliked') like();
 				}}
 				imgSrc={monument.pictureURL}
 			/>
@@ -185,7 +187,7 @@
 		</svelte:component>
 
 		{#if size !== 'tiny'}
-			{#if isMonumentCard(monument) && typeof liked !== 'undefined' && typeof amIOwner !== 'undefined'}
+			{#if isMonumentCard(monument) && liked}
 				<CardFooter {usersLocation} {liked} on:like={like} on:unlike={unlike} {monument} />
 			{/if}
 		{/if}
