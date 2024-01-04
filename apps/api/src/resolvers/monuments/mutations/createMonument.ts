@@ -8,6 +8,7 @@ import {
 	type GraphqlDocument,
 	type Question,
 	Location,
+	QuestionWithCorrectAnswerRequired,
 } from '@app/ts-types'
 import { arg, mutationField } from 'nexus'
 import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
@@ -82,16 +83,16 @@ export default mutationField('createMonument', {
 
 const saveQuestion = async (
 	question:
-		| (Omit<Question<AnswerType>, 'pickingAnswers'> & {
-				pickingAnswers?: Question<AnswerType>['pickingAnswers'] | null
+		| (Omit<QuestionWithCorrectAnswerRequired, 'pickingAnswers'> & {
+				pickingAnswers?: Question['pickingAnswers'] | null
 		  })
 		| undefined
 		| null,
 	permissions: string[],
 ): Promise<
 	| GraphqlDocument<
-			Omit<Question<AnswerType>, 'pickingAnswers'> & {
-				pickingAnswers?: Question<AnswerType>['pickingAnswers']
+			Omit<Question, 'pickingAnswers'> & {
+				pickingAnswers?: Question['pickingAnswers']
 			}
 	  >
 	| undefined
