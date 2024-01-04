@@ -48,15 +48,6 @@
 			username and password. Any activities that occur under your account are your responsibility.</Text
 		>
 
-		<Text class="text-xl font-bold">6. Intellectual Property</Text>
-
-		<Text>
-			The content and materials provided through the App, including but not limited to text,
-			graphics, logos, images, and software, are owned or licensed by TourMate.cz and are protected
-			by intellectual property laws. You agree not to reproduce, distribute, modify, or create
-			derivative works from any content without our express written consent.
-		</Text>
-
 		<Text class="text-xl font-bold">7. Limitation of Liability</Text>
 
 		<Text>
@@ -97,6 +88,13 @@
 			Users location will be stored in local storage of your browser. User will be able to choose
 			his location to get notifications when a new monument is created near to the user and this
 			location will be stored in the database.
+		</Text>
+
+		<Text class="text-xl font-bold">12. responsibility</Text>
+
+		<Text>
+			The application is not responsible for content the user loads into application. You as a user
+			are responsible for content that you load into the application.
 		</Text>
 	{:else}
 		<Text class="text-xl font-bold">1. Přijetí podmínek</Text>
@@ -141,15 +139,6 @@
 			Za všechny aktivity, které se vyskytnou pod vaším účtem, nesete odpovědnost.
 		</Text>
 
-		<Text class="text-xl font-bold">6. Práva duševního vlastnictví</Text>
-
-		<Text>
-			Obsah a materiály poskytované prostřednictvím Aplikace, včetně textu, grafiky, log, obrázků a
-			softwaru, jsou vlastněny nebo licencovány společností TourMate.cz a jsou chráněny právy
-			duševního vlastnictví. Souhlasíte s tím, že nebudete reprodukovat, distribuovat, upravovat
-			nebo vytvářet odvozené práce z jakéhokoli obsahu bez našeho výslovného písemného souhlasu.
-		</Text>
-
 		<Text class="text-xl font-bold">7. Omezení odpovědnosti</Text>
 
 		<Text>
@@ -189,6 +178,13 @@
 			Poloha uživatele bude uložena v lokálním úložišti vašeho prohlížeče. Uživatel bude moci vybrat
 			svou polohu a dostávat oznámení, když je v blízkosti uživatele vytvořen nový památník, a tato
 			poloha bude uložena v databázi.
+		</Text>
+
+		<Text class="text-xl font-bold">12. odpovědnost</Text>
+
+		<Text>
+			Aplikace nenese žádnou odpovědnost za obsah, který uživatel do aplikace zadá. Vy jakožto
+			uživatel nesete plnou odpovědnost za obsah, který do aplikace zadáte.
 		</Text>
 	{/if}
 </Column>
