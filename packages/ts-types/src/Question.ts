@@ -1,5 +1,8 @@
+import { Answer } from './Answer'
 import { Document, GraphqlDocument } from './Document'
 import { z } from 'zod'
+
+export type CorrectAnswerType = string | number
 
 export const answerTypeZod = z.union([
 	z.literal('radio'),
@@ -8,7 +11,9 @@ export const answerTypeZod = z.union([
 ])
 export type AnswerType = z.infer<typeof answerTypeZod>
 
-export const isQuestionTypeRadio = (input: unknown): input is Question<'radio'> => {
+export const isQuestionTypeRadio = (
+	input: unknown,
+): input is z.infer<typeof questionTypeRadioZod> => {
 	try {
 		questionTypeRadioZod.parse(input)
 		return true
@@ -16,7 +21,9 @@ export const isQuestionTypeRadio = (input: unknown): input is Question<'radio'> 
 		return false
 	}
 }
-export const isQuestionTypeNumber = (input: unknown): input is Question<'number'> => {
+export const isQuestionTypeNumber = (
+	input: unknown,
+): input is z.infer<typeof questionTypeNumberZod> => {
 	try {
 		questionTypeNumberZod.parse(input)
 		return true
@@ -24,7 +31,9 @@ export const isQuestionTypeNumber = (input: unknown): input is Question<'number'
 		return false
 	}
 }
-export const isQuestionTypeText = (input: unknown): input is Question<'text'> => {
+export const isQuestionTypeText = (
+	input: unknown,
+): input is z.infer<typeof questionTypeTextZod> => {
 	try {
 		questionTypeTextZod.parse(input)
 		return true
@@ -40,7 +49,7 @@ export const getQuestionType = (question: unknown) => {
 	else throw new Error('Unknown type')
 }
 
-export const isQuestion = (value: unknown) => {
+export const isQuestion = (value: unknown): value is Question => {
 	try {
 		getQuestionType(value)
 		return true
@@ -52,33 +61,34 @@ export const isQuestion = (value: unknown) => {
 const questionTypeRadioZod = z.object({
 	question: z.string().min(1),
 	type: z.literal('radio'),
-	correctAnswer: z.string().min(1),
+	correctAnswer: z.string().min(1).optional(),
 	pickingAnswers: z.string().array(),
 })
 const questionTypeNumberZod = z.object({
 	question: z.string().min(1),
 	type: z.literal('number'),
-	correctAnswer: z.number(),
+	correctAnswer: z.number().optional(),
 })
 const questionTypeTextZod = z.object({
 	question: z.string().min(1),
 	type: z.literal('text'),
-	correctAnswer: z.string().min(1),
+	correctAnswer: z.string().min(1).optional(),
 })
 
 type Skeleton<T extends AnswerType> = {
 	question: string
 	type: T
-	correctAnswer: T extends 'number' ? number : string
+	correctAnswer?: (T extends 'number' ? number : string) | undefined | null
 	pickingAnswers?: string[] | undefined | null
 }
 
-export type Question<T extends AnswerType> = Skeleton<T> &
-	(T extends 'radio'
-		? {
-				pickingAnswers: string[]
-		  }
-		: Skeleton<T>)
+export type Question = Omit<Skeleton<AnswerType>, 'pickingAnswers'> & {
+	pickingAnswers?: Answer['pickingAnswers']
+}
+
+export type QuestionWithCorrectAnswerRequired = Question & {
+	correctAnswer: CorrectAnswerType
+}
 
 export type QuestionDocumentCreate = {
 	question: string

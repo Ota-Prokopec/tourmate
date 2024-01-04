@@ -38,9 +38,7 @@
 	export let hidden = true;
 	export let usersAnswer: Nullable<Pick<UsersAnswer, 'answeredCorrectly'>>;
 
-	export let question: Omit<Question<AnswerType>, 'pickingAnswers'> & {
-		pickingAnswers?: Answer['pickingAnswers'];
-	};
+	export let question: Question;
 
 	let textAnswer: string = '';
 	let numberAnswer: number = 0;

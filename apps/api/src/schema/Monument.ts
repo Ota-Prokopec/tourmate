@@ -132,33 +132,38 @@ export default objectType({
 			type: nullable('Question'),
 			resolve: async (source, args, ctx) => {
 				if (!source.questionId) return null
+				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authed')
+
 				const { collections } = ctx.appwrite
+				const userIsOwner = source.userId === ctx.user?.$id
 
 				const questionDocument = await collections.question.getDocument(source.questionId)
 
 				if (!questionDocument) throw new Error('There is no question bellow this id')
-				let answer: Answer | null
+				let answer: Answer | null = null
 
-				if (questionDocument.answerType === 'text') {
-					answer = await collections.answerTypeText.getDocument(questionDocument.answerId)
-				} else if (questionDocument.answerType === 'number') {
-					answer = await collections.answerTypeNumber.getDocument(
-						questionDocument.answerId,
-					)
-				} else {
-					answer = await collections.answerTypeRadio.getDocument(
-						questionDocument.answerId,
-					)
+				if (userIsOwner) {
+					if (questionDocument.answerType === 'text') {
+						answer = await collections.answerTypeText.getDocument(
+							questionDocument.answerId,
+						)
+					} else if (questionDocument.answerType === 'number') {
+						answer = await collections.answerTypeNumber.getDocument(
+							questionDocument.answerId,
+						)
+					} else {
+						answer = await collections.answerTypeRadio.getDocument(
+							questionDocument.answerId,
+						)
+					}
 				}
-
-				if (!answer) throw new Error('Answer bellow the id was not found')
 
 				return {
 					...lodash.pick(questionDocument, ...appwriteGraphqlKeys),
 					type: questionDocument.answerType,
-					correctAnswer: answer.correctAnswer,
+					correctAnswer: answer?.correctAnswer,
 					question: questionDocument.question,
-					pickingAnswers: answer.pickingAnswers,
+					pickingAnswers: answer?.pickingAnswers,
 				}
 			},
 		})

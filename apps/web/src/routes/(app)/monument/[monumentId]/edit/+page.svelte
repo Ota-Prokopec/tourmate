@@ -1,29 +1,20 @@
 <script lang="ts">
+	import { collections } from '$lib/appwrite/appwrite';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import { P, Button } from 'flowbite-svelte';
+	import Img from '$lib/components/Common/Img.svelte';
+	import Loading from '$lib/components/Common/Loading.svelte';
+	import Right from '$lib/components/Common/Right.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
-	import type {
-		AnswerType,
-		Base64,
-		GraphqlDocument,
-		Location,
-		Monument,
-		MonumentMarkerData,
-		Question,
-		Topic
-	} from '@app/ts-types';
-	import { AppwriteException } from 'appwrite';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import Loading from '$lib/components/Common/Loading.svelte';
-	import Img from '$lib/components/Common/Img.svelte';
-	import { collections } from '$lib/appwrite/appwrite';
-	import MonumentCreateForm from '../../Components/MonumentCreateForm.svelte';
-	import Right from '$lib/components/Common/Right.svelte';
-	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
-	import type { PageData } from './$types';
 	import AddQuestionButton from '$src/routes/(app)/addMonument/detail/Components/AddQuestionButton.svelte';
+	import { alert } from '$src/routes/alertStore';
+	import type { MonumentMarkerData, Question } from '@app/ts-types';
+	import { AppwriteException } from 'appwrite';
+	import { Button } from 'flowbite-svelte';
+	import MonumentCreateForm from '../../Components/MonumentCreateForm.svelte';
+	import type { PageData } from './$types';
 
 	//TODO: dont update question because user has already answered your old one or it was without any question and know there would be a problem => and it will be much easier to dont update or create a new question to already made monument
 
@@ -37,7 +28,8 @@
 	let topics = data.monument.topics;
 	let picture = data.monument.pictureURL;
 	let transports = data.monument.transports;
-	const question: Question<AnswerType> | undefined = data.monument.question ?? undefined;
+
+	const question: Question | undefined = data.monument.question ?? undefined;
 	let questionDrawerHidden = true;
 
 	let res: MonumentMarkerData | undefined;

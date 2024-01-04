@@ -184,7 +184,7 @@ export interface NexusGenObjects {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    correctAnswer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+    correctAnswer?: NexusGenScalars['StringOrNumber'] | null; // StringOrNumber
     pickingAnswers?: string[] | null; // [String!]
     question: string; // String!
     type: NexusGenScalars['AnswerType']; // AnswerType!
@@ -346,7 +346,7 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
-    correctAnswer: NexusGenScalars['StringOrNumber']; // StringOrNumber!
+    correctAnswer: NexusGenScalars['StringOrNumber'] | null; // StringOrNumber
     pickingAnswers: string[] | null; // [String!]
     question: string; // String!
     type: NexusGenScalars['AnswerType']; // AnswerType!
