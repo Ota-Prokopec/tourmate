@@ -155,6 +155,7 @@ export type MonumentLike = {
   _id: Scalars['String']['output'];
   _permissions: Array<Scalars['String']['output']>;
   _updatedAt: Scalars['String']['output'];
+  monument: Monument;
   monumentId: Scalars['String']['output'];
   user: User;
   userId: Scalars['String']['output'];
@@ -224,6 +225,7 @@ export type Query = {
   getAccount: Account;
   getExperience: Experience;
   getListOfExperiences: Array<Experience>;
+  getListOfMonumentLikeDocuments: Array<MonumentLike>;
   getListOfMonuments: Array<Monument>;
   getMonument: Monument;
   getUser: User;
@@ -250,6 +252,13 @@ export type QueryGetExperienceArgs = {
 export type QueryGetListOfExperiencesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   location?: InputMaybe<LocationInput>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetListOfMonumentLikeDocumentsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
@@ -475,6 +484,15 @@ export type LikeMonumentMutationVariables = Exact<{
 
 
 export type LikeMonumentMutation = { __typename?: 'Mutation', likeMonument: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } };
+
+export type GetListOfLikedMonumentCardsQueryVariables = Exact<{
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetListOfLikedMonumentCardsQuery = { __typename?: 'Query', getListOfMonumentLikeDocuments: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, monument: { __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: URL, transports: Array<any>, questionId?: string | null, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: URL } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer?: string|number | null, pickingAnswers?: Array<string> | null, type: any } | null, usersAnswerToQuestion?: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } | null, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: URL, location: [number, number], connectedMonumentId: string }> } }> };
 
 export type CreateMonumentMutationVariables = Exact<{
   input: CreateMonumentInput;
@@ -1109,6 +1127,112 @@ export const LikeMonumentDoc = gql`
     _databaseId
     userId
     monumentId
+  }
+}
+    `;
+export const GetListOfLikedMonumentCardsDoc = gql`
+    query getListOfLikedMonumentCards($offset: Int, $limit: Int, $userId: String) {
+  getListOfMonumentLikeDocuments(offset: $offset, limit: $limit, userId: $userId) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    monumentId
+    monument {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      location
+      userId
+      name
+      about
+      topics
+      placeDetailId
+      pictureURL
+      transports
+      user {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        myId
+        username
+        profilePictureURL
+      }
+      placeDetail {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        name
+      }
+      likes {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        monumentId
+        user {
+          _id
+          userId
+          myId
+          username
+          profilePictureURL
+        }
+      }
+      liked {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        monumentId
+      }
+      questionId
+      question {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        question
+        correctAnswer
+        pickingAnswers
+        type
+      }
+      usersAnswerToQuestion {
+        answeredCorrectly
+      }
+      usersConnectedExperiences {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        pictureUrl
+        location
+        connectedMonumentId
+      }
+    }
   }
 }
     `;
@@ -2103,6 +2227,41 @@ export const likeMonument = (
             });
             return m;
           }
+export const getListOfLikedMonumentCards = (
+            options: Omit<
+              WatchQueryOptions<GetListOfLikedMonumentCardsQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetListOfLikedMonumentCardsQuery> & {
+              query: ObservableQuery<
+                GetListOfLikedMonumentCardsQuery,
+                GetListOfLikedMonumentCardsQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetListOfLikedMonumentCardsDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetListOfLikedMonumentCardsQuery> & {
+                query: ObservableQuery<
+                  GetListOfLikedMonumentCardsQuery,
+                  GetListOfLikedMonumentCardsQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
 export const createMonument = (
             options: Omit<
               MutationOptions<any, CreateMonumentMutationVariables>, 

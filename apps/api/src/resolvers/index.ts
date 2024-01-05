@@ -30,6 +30,8 @@ export { default as likeExperience } from './likes/experiences/mutations/likeExp
 export * from './likes/experiences/mutations/likeExperience';
 export { default as likeMonument } from './likes/monuments/mutations/likeMonument';
 export * from './likes/monuments/mutations/likeMonument';
+export { default as getListOfMonumentLikeDocuments } from './likes/monuments/queries/getListOfMonumentLikeDocuments';
+export * from './likes/monuments/queries/getListOfMonumentLikeDocuments';
 export { default as createMonument } from './monuments/mutations/createMonument';
 export * from './monuments/mutations/createMonument';
 export { default as deleteMonument } from './monuments/mutations/deleteMonument';
@@ -44,7 +46,7 @@ export { default as createMonumentInput } from './monuments/schema/createMonumen
 export * from './monuments/schema/createMonumentInput';
 export { default as answerQuestion } from './questions/mutations/answerQuestion';
 export * from './questions/mutations/answerQuestion';
-export { default as getAccounts } from './user/queries/getAccounts';
-export * from './user/queries/getAccounts';
+export { default as getListOfUsers } from './user/queries/getListOfUsers';
+export * from './user/queries/getListOfUsers';
 export { default as getUser } from './user/queries/getUser';
 export * from './user/queries/getUser';

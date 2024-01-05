@@ -15,7 +15,7 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import { Button, Card } from 'flowbite-svelte';
-	import { maximalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
+	import { minimalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
 	import type { PageData } from './$types';
 	import TakePictureHereButton from '$lib/components/Buttons/TakePictureHereButton.svelte';
 	import SeeOnMapButton from '$lib/components/Buttons/SeeOnMapButton.svelte';
@@ -30,7 +30,7 @@
 
 	const takePicture = () => {
 		if (typeof distanceInMeters === 'undefined') throw new Error('distance is not defined');
-		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
+		if (distanceInMeters > minimalRangeInMetersToConnectMonumentToPicture) {
 			alert(
 				'',
 				$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage(),

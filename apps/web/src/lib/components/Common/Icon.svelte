@@ -21,7 +21,7 @@
 	on:touchend
 	on:click
 	class={twMerge(
-		'w-min h-min flex justify-center items-center ',
+		'w-min h-min flex justify-center items-center',
 		!disableDefaultDarkMode && 'dark:text-white text-black fill-black dark:fill-white',
 		className
 	)}

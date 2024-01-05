@@ -11,5 +11,5 @@ export const navigate = (path: Params[0], gotoParams: Params[1] = undefined) => 
 	} else if (path === 1) history.forward();
 	else if (path === -1) history.back();
 	else if (typeof path === 'number') history.go(path);
-	throw new Error('Invalid param path');
+	else throw new Error('Invalid param path');
 };

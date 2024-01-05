@@ -5,7 +5,7 @@ import { ApolloError } from 'apollo-server-express'
 import lodash from 'lodash'
 import { list, nullable, objectType } from 'nexus'
 import { defaultRangeMeters } from '../arguments/LocationInput'
-import { Queries } from '../lib/appwrite/appwrite'
+import appwrite, { Queries } from '../lib/appwrite/appwrite'
 import { fromLatDocumentLongIntoLocationDocument } from '../lib/database/experiences-monuments'
 import { getUser } from '../lib/users/getUser'
 
@@ -134,7 +134,7 @@ export default objectType({
 				if (!source.questionId) return null
 				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authed')
 
-				const { collections } = ctx.appwrite
+				const { collections } = appwrite.setAdmin() // set admin that you could get answers without being the owner
 				const userIsOwner = source.userId === ctx.user?.$id
 
 				const questionDocument = await collections.question.getDocument(source.questionId)
@@ -142,26 +142,22 @@ export default objectType({
 				if (!questionDocument) throw new Error('There is no question bellow this id')
 				let answer: Answer | null = null
 
-				if (userIsOwner) {
-					if (questionDocument.answerType === 'text') {
-						answer = await collections.answerTypeText.getDocument(
-							questionDocument.answerId,
-						)
-					} else if (questionDocument.answerType === 'number') {
-						answer = await collections.answerTypeNumber.getDocument(
-							questionDocument.answerId,
-						)
-					} else {
-						answer = await collections.answerTypeRadio.getDocument(
-							questionDocument.answerId,
-						)
-					}
+				if (questionDocument.answerType === 'text') {
+					answer = await collections.answerTypeText.getDocument(questionDocument.answerId)
+				} else if (questionDocument.answerType === 'number') {
+					answer = await collections.answerTypeNumber.getDocument(
+						questionDocument.answerId,
+					)
+				} else {
+					answer = await collections.answerTypeRadio.getDocument(
+						questionDocument.answerId,
+					)
 				}
 
 				return {
 					...lodash.pick(questionDocument, ...appwriteGraphqlKeys),
 					type: questionDocument.answerType,
-					correctAnswer: answer?.correctAnswer,
+					correctAnswer: userIsOwner ? answer?.correctAnswer : null,
 					question: questionDocument.question,
 					pickingAnswers: answer?.pickingAnswers,
 				}

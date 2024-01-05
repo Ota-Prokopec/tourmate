@@ -28,8 +28,6 @@ export default queryField('getListOfMonuments', {
 			offset,
 		} = args
 
-		console.log(topics)
-
 		let queries: string[] = []
 
 		if (locationOptions) {
@@ -59,6 +57,9 @@ export default queryField('getListOfMonuments', {
 		if (limit) queries.push(Queries.monument.limit(limit))
 		if (userId) queries.push(Queries.monument.equal('userId', userId))
 		if (offset) queries.push(Queries.monument.offset(offset))
+
+		//desc sorting
+		queries.push(Queries.experience.orderDesc('$createdAt'))
 
 		return fromLatDocumentLongIntoLocationDocument(
 			...(await collections.monument.listDocuments(queries)).documents,

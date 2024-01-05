@@ -14,6 +14,8 @@ export default queryField('getUser', {
 
 		let { userId, myId } = args
 
+		console.log(myId)
+
 		if (myId && !userId) {
 			const userInfo = await collections.userInfo.getDocument([
 				Queries.userInfo.equal('myId', myId),

@@ -8,17 +8,18 @@
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
 	import CreateYourFirstPictureButton from '$lib/components/Buttons/CreateYourFirstPictureButton.svelte';
+	import Paginating from '$lib/components/Common/Paginating.svelte';
 
 	export let userId: string;
 	export let cardsLimit: number;
 	export let isMyAccount: boolean;
 	let usersExperiences: ExperienceCard[] = [];
 	let initialLoading = false;
-	let loadMoreIsLoading = false;
+	let loadingMoreItems = false;
 
 	const loadMonuments = async () => {
 		initialLoading = usersExperiences.length === 0 ? true : false; // true only if there are no monuments in the usersMonuments
-		loadMoreIsLoading = usersExperiences.length > 0 ? true : false; //true only when there already is some monument in the usersMonuments
+		loadingMoreItems = usersExperiences.length > 0 ? true : false; //true only when there already is some monument in the usersMonuments
 
 		await sdk
 			.getListOfExperiences({ userId: userId, limit: cardsLimit, offset: usersExperiences.length })
@@ -26,28 +27,30 @@
 				usersExperiences = [...usersExperiences, ...experiences];
 			});
 		initialLoading = false;
-		loadMoreIsLoading = false;
+		loadingMoreItems = false;
 	};
 
 	loadMonuments();
 </script>
 
-{#if initialLoading}
-	<ExperienceCardSkeleton />
-	<ExperienceCardSkeleton />
-	<ExperienceCardSkeleton />
-{:else if usersExperiences.length}
-	{#each usersExperiences as experience}
-		<ExperienceCardComponent {experience} />
-	{/each}
-	{#if loadMoreIsLoading}
-		<Loading />
-	{:else}
-		<LoadMoreButton on:click={loadMonuments} />
-	{/if}
-{:else}
-	<NoContent class="w-full" />
-	{#if isMyAccount}
-		<CreateYourFirstPictureButton />
-	{/if}
-{/if}
+<Paginating
+	{loadingMoreItems}
+	let:item
+	{initialLoading}
+	list={usersExperiences}
+	on:loadMore={loadMonuments}
+>
+	<svelte:fragment slot="loading">
+		<ExperienceCardSkeleton />
+		<ExperienceCardSkeleton />
+		<ExperienceCardSkeleton />
+	</svelte:fragment>
+
+	<ExperienceCardComponent experience={item} />
+
+	<svelte:fragment slot="noContent">
+		{#if isMyAccount}
+			<CreateYourFirstPictureButton />
+		{/if}
+	</svelte:fragment>
+</Paginating>

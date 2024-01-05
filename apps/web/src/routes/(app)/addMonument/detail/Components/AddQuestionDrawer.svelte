@@ -170,12 +170,17 @@
 
 		<Carousel bind:index={carouselIndex} bind:carousel swiping>
 			<RadioForm
+				type="creating-question"
 				class="min-h-[200px] p-4"
 				bind:answers={pickingAnswersHelper}
 				bind:chosenAnswer={pickingAnswerHelper}
 			/>
-			<TextForm class="min-h-[200px] p-4" bind:answer={TextAnswerHelper} />
-			<NumberForm class="min-h-[200px] p-4" bind:answer={numberAnswerHelper} />
+			<TextForm type="creating-question" class="min-h-[200px] p-4" bind:answer={TextAnswerHelper} />
+			<NumberForm
+				type="creating-question"
+				class="min-h-[200px] p-4"
+				bind:answer={numberAnswerHelper}
+			/>
 		</Carousel>
 	</Column>
 

@@ -36,6 +36,7 @@ export const pageCS = {
 		monuments: 'zážitky',
 		pictures: 'obrázky',
 		editProfileButtonLabel: 'upravit profil',
+		seeLikedMonumentsButtonLabel: 'vidět oblíbené',
 		settings: {
 			language: 'jazyk',
 			theme: 'téma',

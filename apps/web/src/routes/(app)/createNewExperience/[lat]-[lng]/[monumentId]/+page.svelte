@@ -17,8 +17,8 @@
 	import Footer from '../Components/Footer.svelte';
 	import Header from '../Components/Header.svelte';
 	import Drawer from '../Components/MonumentNotFoundDrawer.svelte';
-	import { maximalRangeInMetersToConnectMonumentToPicture } from '../options';
 	import type { PageData } from './$types';
+	import { minimalRangeInMetersToConnectMonumentToPicture } from '../options';
 
 	//if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -76,7 +76,7 @@
 	});
 
 	const connectToMonument = async (monumentId: string, distanceInMeters: number) => {
-		if (distanceInMeters > maximalRangeInMetersToConnectMonumentToPicture) {
+		if (distanceInMeters > minimalRangeInMetersToConnectMonumentToPicture) {
 			alert(
 				'',
 				$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage(),
@@ -85,7 +85,7 @@
 		}
 		connectedMonumentId = monumentId;
 		isUserCloseEnoughToMonument =
-			distanceInMeters <= maximalRangeInMetersToConnectMonumentToPicture;
+			distanceInMeters <= minimalRangeInMetersToConnectMonumentToPicture;
 	};
 
 	const disconnectMonument = () => {

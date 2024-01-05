@@ -7,17 +7,18 @@
 
 	export let answers: string[] = ['', ''];
 	export let chosenAnswer: string = '';
+	export let type: 'answering' | 'creating-question';
+
+	$: console.log(answers);
 
 	//FIXME: this does not show that it is checked
-
-	export let disableCounter = false;
 
 	let className = '';
 	export { className as class };
 </script>
 
 <Column class={twMerge('justify-center items-center', className)}>
-	{#if !disableCounter}
+	{#if type === 'creating-question'}
 		<Counter
 			on:reduce={() => {
 				answers = answers.slice(0, answers.length - 1);
@@ -39,7 +40,11 @@
 			value={answer}
 			bind:group={chosenAnswer}
 		>
-			<Input class="w-full" bind:value={answer} />
+			{#if type === 'creating-question'}
+				<Input class="w-full" bind:value={answer} />
+			{:else}
+				<Text class="w-full">{answer}</Text>
+			{/if}
 		</Radio>
 	{/each}
 </Column>

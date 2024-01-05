@@ -17,6 +17,7 @@
 	import MonumentsSection from './Components/MonumentsSection.svelte';
 	import Left from '$lib/components/Common/Left.svelte';
 	import { Button } from 'flowbite-svelte';
+	import IconHeart from '$lib/components/Icons/IconHeart.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
@@ -31,7 +32,6 @@
 	] as const;
 
 	let screenProfilePicEditor = false;
-	let newProfilePicture: string | Base64 = '';
 	let uploadingProfilePictureIsLoading = false;
 
 	const updateProfilePicture = async (base64: Base64) => {
@@ -47,7 +47,7 @@
 </script>
 
 <Column class="p-2">
-	<div class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
+	<Row class="w-full h-auto flex flex-wrap flex-row gap-2 items-start">
 		{#if isMyAccount}
 			<AvatarImageInput
 				screenErrors
@@ -70,7 +70,8 @@
 				<Icon on:click={() => goto(`/account/${usersProfile?.myId}/settings`)} icon="fa fa-gear" />
 			{/if}
 		</Row>
-	</div>
+	</Row>
+
 	{#if usersProfile}
 		<Text class="text-3xl p-4">{usersProfile?.username}</Text>
 	{:else}
@@ -78,9 +79,19 @@
 	{/if}
 
 	{#if isMyAccount && usersProfile}
-		<Left>
+		<Left class="flex flex-wrap flex-col gap-1 justify-start items-start">
 			<Button on:click={() => goto(`/account/${usersProfile?.myId}/edit`)} color="green">
 				{$LL.page.account.editProfileButtonLabel()}
+			</Button>
+			<Button on:click={() => goto(`/account/${usersProfile?.myId}/liked`)} color="green">
+				<Row class="gap-2">
+					<Text>
+						{$LL.page.account.seeLikedMonumentsButtonLabel()}
+					</Text>
+					<Icon class="child:w-5 child:h-5 child:fill-red-500 ">
+						<IconHeart />
+					</Icon>
+				</Row>
 			</Button>
 		</Left>
 	{/if}

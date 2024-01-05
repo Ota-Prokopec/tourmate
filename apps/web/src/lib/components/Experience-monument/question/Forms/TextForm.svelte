@@ -4,6 +4,7 @@
 	import { twMerge } from 'tailwind-merge';
 
 	export let answer: string = '';
+	export let type: 'answering' | 'creating-question';
 
 	let className = '';
 	export { className as class };
