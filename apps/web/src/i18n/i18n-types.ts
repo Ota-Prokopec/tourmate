@@ -117,6 +117,10 @@ type RootTranslation = {
 			 * e​d​i​t​ ​p​r​o​f​i​l​e
 			 */
 			editProfileButtonLabel: string
+			/**
+			 * s​e​e​ ​l​i​k​e​d
+			 */
+			seeLikedMonumentsButtonLabel: string
 			settings: {
 				/**
 				 * l​a​n​g​u​a​g​e
@@ -836,6 +840,10 @@ export type TranslationFunctions = {
 			 * edit profile
 			 */
 			editProfileButtonLabel: () => LocalizedString
+			/**
+			 * see liked
+			 */
+			seeLikedMonumentsButtonLabel: () => LocalizedString
 			settings: {
 				/**
 				 * language

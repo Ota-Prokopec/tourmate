@@ -131,6 +131,7 @@ type MonumentLike {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
+  monument: Monument!
   monumentId: String!
   user: User!
   userId: String!
@@ -161,6 +162,7 @@ type Query {
   getAccount: Account!
   getExperience(id: String!): Experience!
   getListOfExperiences(limit: Int, location: LocationInput, offset: Int, userId: String): [Experience!]!
+  getListOfMonumentLikeDocuments(limit: Int = 50, offset: Int, userId: String): [MonumentLike!]!
   getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
   getMonument(id: String!): Monument!
   getUser(myId: String, userId: String): User!

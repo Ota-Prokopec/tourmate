@@ -37,6 +37,7 @@ export const pageEN = {
 		monuments: 'experiences',
 		pictures: 'pictures',
 		editProfileButtonLabel: 'edit profile',
+		seeLikedMonumentsButtonLabel: 'see liked',
 		settings: {
 			language: 'language',
 			theme: 'theme',

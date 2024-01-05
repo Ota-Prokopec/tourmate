@@ -1,0 +1,105 @@
+query getListOfLikedMonumentCards($offset: Int, $limit: Int, $userId: String) {
+	getListOfMonumentLikeDocuments(offset: $offset, limit: $limit, userId: $userId) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		monumentId
+		monument {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			location
+			userId
+			name
+			about
+			topics
+			placeDetailId
+			pictureURL
+			transports
+			user {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				myId
+				username
+
+				profilePictureURL
+			}
+			placeDetail {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				name
+			}
+			likes {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				monumentId
+				user {
+					_id
+					userId
+					myId
+					username
+					profilePictureURL
+				}
+			}
+			liked {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				monumentId
+			}
+			questionId
+			question {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				question
+				correctAnswer
+				pickingAnswers
+				type
+			}
+			usersAnswerToQuestion {
+				answeredCorrectly
+			}
+			usersConnectedExperiences {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				pictureUrl
+				location
+				connectedMonumentId
+			}
+		}
+	}
+}
