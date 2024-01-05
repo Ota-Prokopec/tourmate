@@ -1,2 +1,2 @@
-export const minimalRangeInMetersToConnectMonumentToPicture = 2333 as const;
+export const minimalRangeInMetersToConnectMonumentToPicture = 60 as const;
 //FIXME: change this to 100meters
