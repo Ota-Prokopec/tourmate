@@ -6,10 +6,12 @@
 	import Row from '../Common/Row.svelte';
 	import Text from '../Common/Text.svelte';
 	import Column from '../Common/Column.svelte';
+	import { navigate } from '$lib/utils/navigator';
 	const dispatch = createEventDispatcher<{ click: { userId: string; myId: string } }>();
 
 	export let user: UserInfo;
 	export let disableMyId = false;
+	export let disableProfileLinkOnClick = false;
 
 	let className = '';
 	export { className as class };
@@ -17,6 +19,9 @@
 </script>
 
 <button
+	on:click={() => {
+		if (!disableProfileLinkOnClick) navigate(`/account/${user.myId}`);
+	}}
 	on:click={() => dispatch('click', { userId: user.userId, myId: user.myId })}
 	class={twMerge('flex items-center', className)}
 >

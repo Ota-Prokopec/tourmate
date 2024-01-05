@@ -15,8 +15,6 @@
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
 		isQuestionTypeText,
-		type Answer,
-		type AnswerType,
 		type Nullable,
 		type Question,
 		type UsersAnswer
@@ -40,6 +38,8 @@
 
 	export let question: Question;
 
+	console.log(question.pickingAnswers);
+
 	let textAnswer: string = '';
 	let numberAnswer: number = 0;
 	let radioAnswer: string = '';
@@ -51,6 +51,8 @@
 			radioAnswer
 		});
 	};
+
+	console.log(question);
 </script>
 
 <Drawer
@@ -74,12 +76,12 @@
 		<Column class="justify-center items-center">
 			<Text>{question.question}</Text>
 			{#if isQuestionTypeText(question)}
-				<TextForm bind:answer={textAnswer} />
+				<TextForm type="answering" bind:answer={textAnswer} />
 			{:else if isQuestionTypeNumber(question)}
-				<NumberForm bind:answer={numberAnswer} />
+				<NumberForm type="answering" bind:answer={numberAnswer} />
 			{:else if isQuestionTypeRadio(question)}
 				<RadioForm
-					disableCounter
+					type="answering"
 					answers={question.pickingAnswers}
 					bind:chosenAnswer={radioAnswer}
 				/>

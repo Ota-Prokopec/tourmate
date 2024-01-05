@@ -9,7 +9,7 @@ export const load: LayoutServerLoad = async (event) => {
 	const usersProfile = (await sdkssr(event).getProfile({ myId: myId })).getUser;
 	return {
 		usersProfile,
-		cardsLimit: 5,
+		cardsLimit: 2,
 		props: {
 			myId
 		}

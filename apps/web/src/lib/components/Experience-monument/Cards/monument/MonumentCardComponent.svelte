@@ -146,12 +146,7 @@
 		{#if size !== 'tiny'}
 			<Row class="justify-between w-full">
 				{#if isMonumentCard(monument)}
-					<UserItem
-						on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-						avatarClass="w-10 h-10"
-						class="h-auto"
-						user={monument.user}
-					/>
+					<UserItem avatarClass="w-10 h-10" class="h-auto" user={monument.user} />
 				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
