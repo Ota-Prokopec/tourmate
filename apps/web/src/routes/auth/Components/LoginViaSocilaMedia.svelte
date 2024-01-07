@@ -65,7 +65,7 @@
 	] as const;
 </script>
 
-<Row class="gap-10 items-center justify-center dark:bg-gray-200 rounded-full w-max">
+<Row class="gap-10 items-center justify-center dark:bg-gray-200 rounded-xl w-auto">
 	{#each socials as { icon, key }}
 		<Icon
 			{disabled}
