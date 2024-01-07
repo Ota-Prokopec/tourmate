@@ -4,16 +4,18 @@
 	import Alert from '../Alert/Alert.svelte';
 	import Text from './Text.svelte';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	let installPrompt: any = null;
 
-	if (browser) {
+	onMount(async () => {
 		window.addEventListener('beforeinstallprompt', (event) => {
 			console.log('install');
 
 			installPrompt = event;
 		});
-	}
+	});
+
 	const install = async () => {
 		if (!installPrompt) throw new Error('installPrompt is not defined');
 		const result = await installPrompt.prompt();

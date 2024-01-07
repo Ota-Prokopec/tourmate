@@ -48,3 +48,6 @@ messaging.onBackgroundMessage(async (payload) => {
 		);
 	});
 });
+
+addEventListener('install', (event) => {});
+addEventListener('fetch', (event) => {});

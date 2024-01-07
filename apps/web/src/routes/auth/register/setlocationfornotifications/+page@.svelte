@@ -23,7 +23,11 @@
 </script>
 
 {#if data.user}
-	<SetLocationForNotificationsPage center={mapCenter} on:back={saved} userId={data.user.userId} />
+	<SetLocationForNotificationsPage
+		userCenter={mapCenter}
+		on:back={saved}
+		userId={data.user.userId}
+	/>
 {:else}
 	<Alert>{$LL.error.accountNotFound()}</Alert>
 {/if}

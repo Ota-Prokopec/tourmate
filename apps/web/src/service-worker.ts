@@ -19,7 +19,7 @@ const ASSETS = [
 sw.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches.open(cacheName).then((cache) => {
-			//return cache.addAll(ASSETS);
+			//	return cache.addAll(ASSETS);
 		})
 	);
 });
@@ -28,7 +28,7 @@ sw.addEventListener('activate', (event) => {
 	// Remove previous cached data from disk
 	async function deleteOldCaches() {
 		for (const key of await caches.keys()) {
-			if (key !== cacheName) await caches.delete(key);
+			await caches.delete(key);
 		}
 	}
 
@@ -64,7 +64,7 @@ sw.addEventListener('fetch', (event) => {
 			}
 
 			if (response.status === 200) {
-				cache.put(event.request, response.clone());
+				//cache.put(event.request, response.clone());
 			}
 
 			return response;

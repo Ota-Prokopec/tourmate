@@ -27,6 +27,8 @@
 	});
 </script>
 
+<InstallApp />
+
 <Alert
 	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"
 	on:close={() => ($alertStore.shown = false)}
