@@ -1,7 +1,10 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
+	import InstallApp from '$lib/components/Common/InstallApp.svelte';
 	import { Avatar, Img } from 'flowbite-svelte';
 </script>
+
+<InstallApp />
 
 <Column class="justify-start w-full items-center gap-0 h-auto overflow-auto p-2">
 	<Avatar
