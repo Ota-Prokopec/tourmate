@@ -52,7 +52,7 @@
 	class="w-full h-[100vh] fixed bottom-0 z-20"
 	deg={45}
 	bind:zoom={mapZoom}
-	bind:center={location}
+	userCenter={location}
 >
 	<Icon
 		on:click={() => (settingsHidden = false)}

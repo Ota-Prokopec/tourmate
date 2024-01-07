@@ -142,7 +142,7 @@
 	{/if}
 </MediaQuery>
 
-<Map showUser center={data.newExperience.location} class="h-full w-full fixed top-0">
+<Map showUser userCenter={data.newExperience.location} class="h-full w-full fixed top-0">
 	{#each data.newExperience.nearMonuments as monument}
 		<MonumentMarker
 			disableShowingDetails

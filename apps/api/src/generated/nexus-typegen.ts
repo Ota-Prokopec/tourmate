@@ -333,9 +333,9 @@ export interface NexusGenFieldTypes {
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     getListOfMonumentLikeDocuments: NexusGenRootTypes['MonumentLike'][]; // [MonumentLike!]!
     getListOfMonuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
+    getListOfUsers: NexusGenRootTypes['User'][]; // [User!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
     getUser: NexusGenRootTypes['User']; // User!
-    getUsers: NexusGenRootTypes['User'][]; // [User!]!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
     logout: boolean; // Boolean!
     setSession: boolean; // Boolean!
@@ -489,9 +489,9 @@ export interface NexusGenFieldTypeNames {
     getListOfExperiences: 'Experience'
     getListOfMonumentLikeDocuments: 'MonumentLike'
     getListOfMonuments: 'Monument'
+    getListOfUsers: 'User'
     getMonument: 'Monument'
     getUser: 'User'
-    getUsers: 'User'
     logInViaEmail: 'EmailLogin'
     logout: 'Boolean'
     setSession: 'Boolean'
@@ -588,15 +588,17 @@ export interface NexusGenArgTypes {
       transports?: NexusGenScalars['Transport'][] | null; // [Transport!]
       userId?: string | null; // String
     }
+    getListOfUsers: { // args
+      limit: number | null; // Int
+      offset?: number | null; // Int
+      searchingText?: string | null; // String
+    }
     getMonument: { // args
       id: string; // String!
     }
     getUser: { // args
       myId?: string | null; // String
       userId?: string | null; // String
-    }
-    getUsers: { // args
-      searchingText?: string | null; // String
     }
     logInViaEmail: { // args
       email: string; // String!

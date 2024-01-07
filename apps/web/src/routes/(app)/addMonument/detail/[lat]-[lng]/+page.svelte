@@ -119,7 +119,7 @@
 	</MonumentCreateForm>
 {/if}
 
-<Map center={data.newMonument.location} class="h-[100dvh] fixed top-0">
+<Map userCenter={data.newMonument.location} class="h-[100dvh] fixed top-0">
 	{#if serverResponse}
 		<MonumentMarker monument={serverResponse} />
 	{:else}

@@ -84,7 +84,7 @@
 	{/if}
 {/if}
 
-<Map showUser center={data.monument.location} class="h-[100dvh] fixed top-0">
+<Map showUser userCenter={data.monument.location} class="h-[100dvh] fixed top-0">
 	{#if onlyMap}
 		<Icon
 			on:click={() => (onlyMap = false)}

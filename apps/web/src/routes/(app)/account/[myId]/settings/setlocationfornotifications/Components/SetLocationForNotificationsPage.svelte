@@ -19,7 +19,7 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher<{ back: undefined }>();
 
-	export let center: Location | undefined = undefined;
+	export let userCenter: Location | undefined = undefined;
 	let range = 45 * 1000; //in meters ans it is only the half of the circle so r = 90_000m
 
 	$: document = useQuery('locationForNotificaiton_get', async () => {
@@ -74,7 +74,12 @@
 </script>
 
 <Full class="justify-center flex">
-	<Map on:load={(e) => (markerLocation = e.detail.center)} bind:center minZoom={6} maxZoom={6}>
+	<Map
+		on:load={(e) => (markerLocation = e.detail.userCenter)}
+		bind:userCenter
+		minZoom={6}
+		maxZoom={6}
+	>
 		{#if markerLocation}
 			<Marker
 				draggable

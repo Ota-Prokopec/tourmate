@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation';
 import { isURL } from '@app/utils';
 
-type Params = [string | number | URL, undefined] | [string, { invalidateAll: boolean }];
+type Params = [string | number, undefined] | [string, { invalidateAll: boolean }];
 
 export const navigate = (path: Params[0], gotoParams: Params[1] = undefined) => {
 	if (typeof path === 'string') {

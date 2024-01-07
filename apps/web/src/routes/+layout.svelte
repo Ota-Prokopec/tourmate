@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
+	import InstallApp from '$lib/components/Common/InstallApp.svelte';
 
 	let mounted = false;
 	onMount(() => (mounted = true));
@@ -25,6 +26,8 @@
 		}
 	});
 </script>
+
+<InstallApp />
 
 <Alert
 	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"

@@ -5,59 +5,68 @@
 	"background_color": "#fff",
 	"display": "standalone",
 	"orientation": "portrait",
-	"form_factor": "wide",
 	"scope": "/",
+	"id": "/",
+	"display_override": ["window-controls-overlay", "fullscreen", "minimal-ui"],
 	"start_url": "/",
 	"background": {
-		"service_worker": "firebase-messaging-sw.js",
+		"scripts": ["firebase-messaging-sw.js", "service_worker.ts"],
+		"persistent": false,
 		"type": "module"
 	},
 	"icons": [
 		{
-			"src": "icons/icon.png",
-			"sizes": "72x72",
-			"type": "image-maskable/png",
+			"src": "icons/icon-192x192.png",
+			"sizes": "192x192",
 			"purpose": "maskable"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "72x72",
-			"type": "image/png"
+			"src": "icons/icon-256x256.png",
+			"sizes": "256x256"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "96x96",
-			"type": "image/png"
+			"src": "icons/icon-384x384.png",
+			"sizes": "384x384"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "128x128",
-			"type": "image/png"
+			"src": "icons/icon-512x512.png",
+			"sizes": "512x512"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/screenshots/screenshot1.png",
+			"type": "image/png",
+			"sizes": "750x1334",
+			"form_factor": "narrow"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "144x144",
-			"type": "image/png"
+			"src": "/screenshots/screenshot2.png",
+			"type": "image/png",
+			"sizes": "750x1334",
+			"form_factor": "narrow"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "152x152",
-			"type": "image/png"
+			"src": "/screenshots/screenshot1.png",
+			"type": "image/png",
+			"sizes": "750x1334",
+			"form_factor": "wide"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "192x192",
-			"type": "image/png"
+			"src": "/screenshots/screenshot2.png",
+			"type": "image/png",
+			"sizes": "750x1334",
+			"form_factor": "wide"
+		}
+	],
+	"protocol_handlers": [
+		{
+			"protocol": "web+tea",
+			"url": "/tea?type=%s"
 		},
 		{
-			"src": "icons/icon.png",
-			"sizes": "384x384",
-			"type": "image/png"
-		},
-		{
-			"src": "icons/icon.png",
-			"sizes": "512x512",
-			"type": "image/png"
+			"protocol": "web+coffee",
+			"url": "/coffee?type=%s"
 		}
 	]
 }

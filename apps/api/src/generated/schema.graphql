@@ -164,9 +164,9 @@ type Query {
   getListOfExperiences(limit: Int, location: LocationInput, offset: Int, userId: String): [Experience!]!
   getListOfMonumentLikeDocuments(limit: Int = 50, offset: Int, userId: String): [MonumentLike!]!
   getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
+  getListOfUsers(limit: Int = 50, offset: Int, searchingText: String): [User!]!
   getMonument(id: String!): Monument!
   getUser(myId: String, userId: String): User!
-  getUsers(searchingText: String): [User!]!
   logInViaEmail(email: String!, password: String!): EmailLogin!
   logout: Boolean!
   setSession(session: String!): Boolean!

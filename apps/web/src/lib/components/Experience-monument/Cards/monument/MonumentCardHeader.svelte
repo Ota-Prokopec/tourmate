@@ -15,7 +15,7 @@
 	<Text class="mb-2 text-xl font-bold text-black">
 		{monument.name}
 	</Text>
-	<button on:click={() => navigate(getUrlForSearchPage('places'))}>
+	<button on:click={() => navigate(getUrlForSearchPage('places', monument.placeDetail.name).href)}>
 		<Columns columns="min-content auto" class="gap-1">
 			<Icon class="child:w-6 child:h-6">
 				<IconLocation />

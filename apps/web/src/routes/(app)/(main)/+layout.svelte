@@ -6,10 +6,6 @@
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { writable } from 'svelte/store';
 
-	let location: Location | undefined;
-
-	$: browser && watchUsersLocation((loc) => (location = loc));
-
 	//$: newMonumentAdded = !browser ? writable([]) : svelteCollections.monument.listenInsert();
 </script>
 

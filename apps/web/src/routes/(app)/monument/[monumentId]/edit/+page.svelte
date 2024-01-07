@@ -85,7 +85,7 @@
 	</MonumentCreateForm>
 {/if}
 
-<Map center={data.monument.location} class="h-[100dvh] fixed top-0">
+<Map userCenter={data.monument.location} class="h-[100dvh] fixed top-0">
 	{#if res}
 		<MonumentMarker monument={res} />
 	{:else}

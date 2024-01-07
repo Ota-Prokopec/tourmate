@@ -16,7 +16,7 @@
 
 	export let data: PageData;
 
-	let searchingText = '';
+	let searchingText = data.search.searchingText;
 	let searchingLocation: Location | undefined;
 
 	let chosenCategory: Category = data.search.category; //data.search.category;
@@ -24,11 +24,10 @@
 	const changeUrl = () => {
 		if (!browser) return;
 
-		changeURLwithoutReloading(getUrlForSearchPage(chosenCategory));
+		changeURLwithoutReloading(getUrlForSearchPage(chosenCategory, searchingText));
 	};
 
 	$: if (chosenCategory) {
-		searchingText = '';
 		changeUrl();
 	}
 
@@ -75,7 +74,7 @@
 			{:else if chosenCategory === 'places'}
 				<SearchPlaces limit={data.search.resultLimit} {searchingLocation} />
 			{:else if chosenCategory === 'users'}
-				<SearchUsers {searchingText} />
+				<SearchUsers limit={data.search.resultLimit} {searchingText} />
 			{/if}
 		</div>
 	{/if}

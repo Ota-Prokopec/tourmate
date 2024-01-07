@@ -1,35 +1,55 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import Center from '$lib/components/Common/Center.svelte';
-	import Column from '$lib/components/Common/Column.svelte';
-	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Paginating from '$lib/components/Common/Paginating.svelte';
 	import UserItem from '$lib/components/User/UserItem.svelte';
+	import UserItemSkeleton from '$lib/components/User/UserItemSkeleton.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import { Skeleton } from 'flowbite-svelte';
+	import type { UserInfo } from '@app/ts-types';
 
 	export let searchingText: string;
+	export let limit: number;
 
-	$: usersGraphql = useQuery(
-		'monuments',
-		async () => await sdk.getListOfUsersBySearching({ searchingText })
-	);
+	let users: UserInfo[] = [];
 
-	$: isLoading = $usersGraphql?.isLoading;
+	let initialLoading = false;
+	let loadingMoreItems = false;
 
-	$: users = $usersGraphql.data?.getUsers;
+	const loadUsers = async () => {
+		initialLoading = users.length === 0 ? true : false; // true only if there are no monuments in the usersMonuments
+		loadingMoreItems = users.length > 0 ? true : false; //true only when there already is some monument in the usersMonuments
+
+		await sdk
+			.getListOfUsers({ limit: limit, offset: users.length })
+			.then(({ getListOfUsers: newUsers }) => {
+				users = [...users, ...newUsers];
+			});
+		initialLoading = false;
+		loadingMoreItems = false;
+	};
+
+	loadUsers();
 </script>
 
-<Center>
-	{#if isLoading}
-		<FullPageLoading />
-	{:else if users?.length}
-		<Column class="gap-4">
-			{#each users as user}
-				<UserItem on:click={(e) => goto(`/account/${e.detail.myId}`)} {user} />
-			{/each}
-		</Column>
-	{:else}
-		<Skeleton divClass="w-full" />
-	{/if}
-</Center>
+<Paginating
+	wrapperClassName="w-full h-auto"
+	{loadingMoreItems}
+	let:item
+	{initialLoading}
+	list={users}
+	on:loadMore={loadUsers}
+>
+	<svelte:fragment slot="loading">
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+		<UserItemSkeleton class="w-full" />
+	</svelte:fragment>
+
+	<UserItem class="w-full" user={item} />
+</Paginating>

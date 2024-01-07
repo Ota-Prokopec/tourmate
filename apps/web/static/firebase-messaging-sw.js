@@ -1,16 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js');
 
-const cacheName = 'cache';
-
-self.addEventListener('install', (event) => {
-	event.waitUntil(
-		caches.open(cacheName).then((cache) => {
-			return cache.addAll(['/icon.png']);
-		})
-	);
-});
-
 const firebaseConfig = {
 	apiKey: 'AIzaSyBqsxLc9d2EyzazeYQBcCVjUyxwcP6QecM',
 	authDomain: 'experiences-5dfad.firebaseapp.com',
@@ -58,3 +48,6 @@ messaging.onBackgroundMessage(async (payload) => {
 		);
 	});
 });
+
+addEventListener('install', (event) => {});
+addEventListener('fetch', (event) => {});

@@ -30,17 +30,29 @@
 	{:else}
 		<Column class="w-full opacity-80 hover:opacity-40">
 			<Text>{question.question}</Text>
-			{#if isQuestionTypeRadio(question)}
-				<RadioForm
-					class="pointer-events-none w-full"
-					disableCounter
-					answers={question.pickingAnswers}
-					chosenAnswer={question.correctAnswer}
-				/>
-			{:else if isQuestionTypeNumber(question)}
-				<NumberForm class="pointer-events-none w-full" answer={question.correctAnswer} />
-			{:else if isQuestionTypeText(question)}
-				<TextForm class="pointer-events-none w-full" answer={question.correctAnswer} />
+			{#if typeof question.correctAnswer === 'string' || typeof question.correctAnswer === 'number'}
+				{#if isQuestionTypeRadio(question)}
+					<RadioForm
+						class="pointer-events-none w-full"
+						answers={question.pickingAnswers}
+						type="creating-question"
+						chosenAnswer={question.correctAnswer}
+					/>
+				{:else if isQuestionTypeNumber(question)}
+					<NumberForm
+						class="pointer-events-none w-full"
+						type="creating-question"
+						answer={question.correctAnswer}
+					/>
+				{:else if isQuestionTypeText(question)}
+					<TextForm
+						class="pointer-events-none w-full"
+						type="creating-question"
+						answer={question.correctAnswer}
+					/>
+				{/if}
+			{:else}
+				the question.correctAnswer is typeof null | undefined
 			{/if}
 		</Column>
 	{/if}
