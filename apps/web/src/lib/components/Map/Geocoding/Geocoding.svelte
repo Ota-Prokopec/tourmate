@@ -11,6 +11,7 @@
 	import mapTiler from '$lib/utils/mapTiler';
 	import type { GeocodingFeature } from '@maptiler/client';
 	import ClickOutside from '$lib/components/Common/ClickOutside.svelte';
+	import { twMerge } from 'tailwind-merge';
 	const dispatch = createEventDispatcher<{
 		select: {
 			placeName: string;
@@ -58,9 +59,15 @@
 	const onInput = () => {
 		showResults = searchingText.length === 0 ? false : true;
 	};
+
+	let className = '';
+	export { className as class };
 </script>
 
-<ClickOutside on:clickOutside={() => (showResults = false)} class="max-w-full w-[400px]">
+<ClickOutside
+	on:clickOutside={() => (showResults = false)}
+	class={twMerge('max-w-full w-[400px]', className)}
+>
 	<Input
 		pattern={/^\s+/}
 		class="w-full"
