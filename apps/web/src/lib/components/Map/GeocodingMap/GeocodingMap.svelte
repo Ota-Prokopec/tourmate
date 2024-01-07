@@ -8,7 +8,8 @@
 
 	export let userCenter: Location | undefined = undefined;
 
-	export let searchingHidden = true;
+	let searchingHidden = true;
+	$: console.log(searchingHidden);
 </script>
 
 <Map on:dblclick on:moveend bind:userCenter>
@@ -18,9 +19,15 @@
 	>
 		<IconMagnifyingGlass />
 	</Icon>
-	<GeocodingMapDrawer
-		on:select={(e) => (userCenter = e.detail.location)}
-		bind:hidden={searchingHidden}
-	/>
+	{#if !searchingHidden}
+		<GeocodingMapDrawer
+			on:select={(e) => {
+				userCenter = e.detail.location;
+				searchingHidden = true;
+			}}
+			bind:hidden={searchingHidden}
+		/>
+	{/if}
+
 	<slot />
 </Map>
