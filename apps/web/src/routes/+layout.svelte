@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
+	import InstallApp from '$lib/components/Common/InstallApp.svelte';
 
 	let mounted = false;
 	onMount(() => (mounted = true));

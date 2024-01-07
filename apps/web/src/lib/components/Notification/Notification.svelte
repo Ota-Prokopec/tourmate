@@ -28,16 +28,13 @@
 
 		const token = await notifications.initUser(userId, reg);
 
-		try {
-			await collections.token.createDocument(
-				{
-					userId: userId,
-					fcmFirebaseToken: token
-				},
-				owner(userId)
-			);
-		} catch (error) {}
-
+		await collections.token.createDocument(
+			{
+				userId: userId,
+				fcmFirebaseToken: token
+			},
+			owner(userId)
+		);
 		storage.alreadyHasNotificationToken = true;
 	});
 </script>

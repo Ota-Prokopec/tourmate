@@ -5,15 +5,10 @@
 </script>
 
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import lsSvelte from '$lib/utils/lsStore';
-	import { watchUsersLocation } from '@app/utils';
+	import { beforeNavigate } from '$app/navigation';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Notification from '$lib/components/Notification/Notification.svelte';
-	import { appwriteKeys } from '@app/appwrite-client';
-	import { omit } from 'lodash';
-	import { onMount } from 'svelte';
-	import { collections } from '../../lib/appwrite/appwrite';
+	import lsSvelte, { storage } from '$lib/utils/lsStore';
 	import type { LayoutData } from './$types';
 	import Bar from './Components/Bar.svelte';
 
@@ -22,32 +17,12 @@
 
 	$: if ($lsSvelte.usersLocation) isLoading = false;
 
-	$: browser &&
-		watchUsersLocation(
-			async (location) => {
-				lsSvelte.set({ usersLocation: location }); // save location into store and localstorage
-			},
-			{ enableHighAccuracy: false }
-		);
-
 	const usernameSplited = data.user.username.split(' ');
 
 	const usersInitials = `${usernameSplited[0]?.at(0)} ${
 		usernameSplited.length >= 2 && usernameSplited[1]?.at(0)
 	}`;
 
-	onMount(() => {
-		collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
-			data.user = Object.assign(data.user, {
-				...omit(updatedUserInfo, ...appwriteKeys),
-				_updatedAt: updatedUserInfo.$updatedAt,
-				_createdAt: updatedUserInfo.$createdAt
-			});
-		});
-	});
-
-	import { beforeNavigate } from '$app/navigation';
-	import { storage } from '$lib/utils/lsStore';
 	//this is for /createNewExperience/[]/[] so when i am getting back from that and i have a picture stored in lsStore => i have to delete it that i did not have it there infinite years =>  the picture is there only for being it restored when user reloads the page
 	beforeNavigate((e) => {
 		const includesNewExperienceCreate = e.from?.route.id?.includes(
@@ -57,6 +32,7 @@
 	});
 </script>
 
+<!--service-worker for notifications in Notification component-->
 <Notification userId={data.user.userId} />
 
 {#if isLoading}

@@ -22,7 +22,7 @@
 		dispatch('loadMore', { currentList: list });
 	};
 
-	let wrapperClassName = '';
+	export let wrapperClassName = '';
 </script>
 
 <Column class={twMerge('justify-center items-center', wrapperClassName)}>

@@ -1,0 +1,14 @@
+query getListOfUsers($searchingText: String, $offset: Int, $limit: Int) {
+	getListOfUsers(searchingText: $searchingText, offset: $offset, limit: $limit) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		myId
+		username
+		profilePictureURL
+	}
+}

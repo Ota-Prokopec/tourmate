@@ -11,11 +11,6 @@ export const load: LayoutLoad = async (event) => {
 	const routeId = event.route.id;
 	if (!routeId) throw error(404);
 
-	// service-worker registration
-	const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
-		scope: '/'
-	});
-
 	//language
 	await loadLocaleAsync('cs');
 	await loadLocaleAsync('en');

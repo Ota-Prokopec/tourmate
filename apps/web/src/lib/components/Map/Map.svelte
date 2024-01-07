@@ -3,15 +3,20 @@
 	import { lsStore } from '$lib/utils/lsStore';
 	import type { Location } from '@app/ts-types';
 	import type { Map } from 'maplibre-gl';
+	import { createEventDispatcher } from 'svelte';
 	import { FillExtrusionLayer, GeolocateControl, MapLibre } from 'svelte-maplibre';
 	import { twMerge } from 'tailwind-merge';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';
 	import UserMarker from './Markers/UserMarker.svelte';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher<{ load: { center: Location } }>();
+
+	const dispatch = createEventDispatcher<{
+		load: { userCenter: Location };
+		dblclick: { dblclickLocation: Location };
+		moveend: { moveEndLocation: Location };
+	}>();
 
 	export let map: Map | undefined = undefined;
-	export let center: Location | undefined | null = $lsStore.usersLocation;
+	export let userCenter: Location | undefined | null = $lsStore.usersLocation;
 	$: usersLocation = $lsStore.usersLocation;
 
 	export let zoom: number = 16;
@@ -21,26 +26,37 @@
 	export let deg = 0;
 	let style = `https://api.maptiler.com/maps/basic-v2/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
 
+	//events
+
+	$: map?.on('dblclick', (e) =>
+		dispatch('dblclick', { dblclickLocation: [e.lngLat.lat, e.lngLat.lng] })
+	);
+	$: map?.on('moveend', (e) => {
+		const mapBoxCenter = e.target.getCenter();
+		if (!mapBoxCenter) return;
+		dispatch('moveend', { moveEndLocation: [mapBoxCenter.lat, mapBoxCenter.lng] });
+	});
+
 	let className = '';
 	export { className as class };
 </script>
 
 <div class={twMerge('w-full h-full relative', className)}>
-	{#if center}
+	{#if userCenter}
 		<MapLibre
 			{style}
 			{maxZoom}
 			{minZoom}
 			bind:map
-			center={[center[1], center[0]]}
+			center={[userCenter[1], userCenter[0]]}
 			zoom={14}
 			bind:pitch={deg}
 			on:zoom={(e) => {
 				zoom = e.detail.map.getZoom();
 			}}
 			on:load={() => {
-				if (!center) throw new Error('center is not defined');
-				dispatch('load', { center });
+				if (!userCenter) throw new Error('center is not defined');
+				dispatch('load', { userCenter });
 			}}
 		>
 			<GeolocateControl

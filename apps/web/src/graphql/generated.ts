@@ -223,9 +223,9 @@ export type Query = {
   getListOfExperiences: Array<Experience>;
   getListOfMonumentLikeDocuments: Array<MonumentLike>;
   getListOfMonuments: Array<Monument>;
+  getListOfUsers: Array<User>;
   getMonument: Monument;
   getUser: User;
-  getUsers: Array<User>;
   logInViaEmail: EmailLogin;
   logout: Scalars['Boolean']['output'];
   setSession: Scalars['Boolean']['output'];
@@ -271,6 +271,13 @@ export type QueryGetListOfMonumentsArgs = {
 };
 
 
+export type QueryGetListOfUsersArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  searchingText?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGetMonumentArgs = {
   id: Scalars['String']['input'];
 };
@@ -279,11 +286,6 @@ export type QueryGetMonumentArgs = {
 export type QueryGetUserArgs = {
   myId?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryGetUsersArgs = {
-  searchingText?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -367,12 +369,14 @@ export type GetAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAccountQuery = { __typename?: 'Query', getAccount: { __typename?: 'Account', _documentId: string, _createdAt: string, secondsFromUserCreatedToNow: number, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: URL, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean, colorTheme: 'dark' | 'light', language: 'en'|'cs' } } };
 
-export type GetListOfUsersBySearchingQueryVariables = Exact<{
+export type GetListOfUsersQueryVariables = Exact<{
   searchingText?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetListOfUsersBySearchingQuery = { __typename?: 'Query', getUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
+export type GetListOfUsersQuery = { __typename?: 'Query', getListOfUsers: Array<{ __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: URL }> };
 
 export type GetProfileQueryVariables = Exact<{
   myId: Scalars['String']['input'];
@@ -598,9 +602,9 @@ export const GetAccountDocument = gql`
   }
 }
     `;
-export const GetListOfUsersBySearchingDocument = gql`
-    query getListOfUsersBySearching($searchingText: String) {
-  getUsers(searchingText: $searchingText) {
+export const GetListOfUsersDocument = gql`
+    query getListOfUsers($searchingText: String, $offset: Int, $limit: Int) {
+  getListOfUsers(searchingText: $searchingText, offset: $offset, limit: $limit) {
     _createdAt
     _updatedAt
     _collectionId
@@ -1699,8 +1703,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getAccount(variables?: GetAccountQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAccountQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAccountQuery>(GetAccountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAccount', 'query');
     },
-    getListOfUsersBySearching(variables?: GetListOfUsersBySearchingQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfUsersBySearchingQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfUsersBySearchingQuery>(GetListOfUsersBySearchingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfUsersBySearching', 'query');
+    getListOfUsers(variables?: GetListOfUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetListOfUsersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetListOfUsersQuery>(GetListOfUsersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getListOfUsers', 'query');
     },
     getProfile(variables: GetProfileQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProfileQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProfileQuery>(GetProfileDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getProfile', 'query');
