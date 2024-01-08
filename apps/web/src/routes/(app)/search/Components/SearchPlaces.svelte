@@ -58,7 +58,7 @@
 	$: addMonuments(topics, transports, searchingLocation);
 </script>
 
-<Column class="gap-4 justify-center items-center w-full">
+<Column class="gap-4 justify-center items-center w-full ">
 	<TopicComponent bind:chosenTopics={topics} class="w-full max-w-[400px]" />
 	<TransportType bind:chosenTransports={transports} class="w-full max-w-[400px]" />
 

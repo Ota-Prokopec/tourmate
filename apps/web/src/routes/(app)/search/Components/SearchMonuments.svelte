@@ -32,16 +32,14 @@
 	$: loadMonuments(searchingText);
 </script>
 
-{#if isLoading}
-	<FullPageLoading />
-{:else if monuments?.length}
-	<Column class="w-full items-center">
-		<Row class="gap-4 justify-center">
-			{#each monuments as monument}
-				<MonumentCardComponent size="normal" {monument} />
-			{/each}
-		</Row>
-	</Column>
-{:else}
-	<NoContent />
-{/if}
+<Column class="w-full items-center">
+	{#if isLoading}
+		<FullPageLoading />
+	{:else if monuments?.length}
+		{#each monuments as monument}
+			<MonumentCardComponent size="normal" {monument} />
+		{/each}
+	{:else}
+		<NoContent />
+	{/if}
+</Column>

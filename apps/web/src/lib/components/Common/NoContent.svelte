@@ -7,18 +7,19 @@
 	import Icon from './Icon.svelte';
 	import Text from './Text.svelte';
 	import Row from './Row.svelte';
+	import Card from './Card.svelte';
 
 	let className = '';
 	export { className as class };
 </script>
 
-<Center
+<Card
 	class={twMerge(
-		'w-full max-w-[300px] mobile:max-w-none h-[100px] border border-gray-400 rounded-3xl ',
+		'!p-10 w-auto max-w-[300px] mobile:max-w-none h-[100px] border border-gray-400 rounded-3xl justify-center items-center',
 		className
 	)}
 >
-	<Row class="justify-between items-center gap-[10px]">
+	<Row class="items-between items-center gap-[10px] w-auto">
 		<Text class="text-xl">
 			{$LL.component.NoContent.notFound()}
 		</Text>
@@ -26,4 +27,4 @@
 			<IconTimes />
 		</Icon>
 	</Row>
-</Center>
+</Card>

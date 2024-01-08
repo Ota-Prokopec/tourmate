@@ -146,6 +146,7 @@ export const componentsEN = {
 	InstallApp: {
 		title: 'Install tourmate app',
 		text: 'Install our tourmate app for better experience',
-		installButtonLabel: 'install'
+		installButtonLabel: 'install',
+		useChrome: 'of use Chrome version'
 	}
 } satisfies BaseTranslation;

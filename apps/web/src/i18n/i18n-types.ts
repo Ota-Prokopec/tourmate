@@ -694,6 +694,10 @@ type RootTranslation = {
 			 * i​n​s​t​a​l​l
 			 */
 			installButtonLabel: string
+			/**
+			 * o​f​ ​u​s​e​ ​C​h​r​o​m​e​ ​v​e​r​s​i​o​n
+			 */
+			useChrome: string
 		}
 	}
 	error: {
@@ -1414,6 +1418,10 @@ export type TranslationFunctions = {
 			 * install
 			 */
 			installButtonLabel: () => LocalizedString
+			/**
+			 * of use Chrome version
+			 */
+			useChrome: () => LocalizedString
 		}
 	}
 	error: {

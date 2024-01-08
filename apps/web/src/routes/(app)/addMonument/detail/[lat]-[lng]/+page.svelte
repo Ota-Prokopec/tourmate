@@ -98,6 +98,7 @@
 	>
 		<svelte:fragment slot="image">
 			<BasicImageInput
+				screenErrors
 				class="bg-cover w-full min-h-[300px] mb-4"
 				on:image={(e) => (image = e.detail.base64)}
 			/>

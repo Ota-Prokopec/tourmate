@@ -39,7 +39,8 @@
 		return !('liked' in monument);
 	};
 
-	const usersLocation = $lsStore.usersLocation;
+	let usersLocation = $lsStore.usersLocation;
+	$: usersLocation = $lsStore.usersLocation;
 
 	type T = $$Generic<'normal' | 'small' | 'tiny'>;
 
@@ -57,6 +58,7 @@
 	let liked: LikeSectionState | undefined =
 		'liked' in monument ? (monument.liked ? 'liked' : 'unliked') : undefined;
 
+	//reactive distance
 	export let distanceInMeters = usersLocation
 		? distanceTo(
 				{ lat: usersLocation[0], lng: usersLocation[1] },
@@ -64,8 +66,18 @@
 		  )
 		: undefined;
 
-	const distanceInMetersNormalized =
+	$: distanceInMeters = usersLocation
+		? distanceTo(
+				{ lat: usersLocation[0], lng: usersLocation[1] },
+				{ lat: monument.location[0], lng: monument.location[1] }
+		  )
+		: undefined;
+
+	let distanceInMetersNormalized =
 		typeof distanceInMeters === 'number' ? normalizeMeters(distanceInMeters) : undefined;
+	$: distanceInMetersNormalized =
+		typeof distanceInMeters === 'number' ? normalizeMeters(distanceInMeters) : undefined;
+	//reactive distance
 
 	let className = '';
 	export { className as class };
