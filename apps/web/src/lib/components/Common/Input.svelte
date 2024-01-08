@@ -97,7 +97,7 @@
 			class={`absolute inset-y-0 ${
 				iconPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3'
 			} flex items-center  pointer-events-none ${
-				!ableClickIcon ? 'pointer-events-none' : 'pointer-events-auto z-50'
+				!ableClickIcon ? 'pointer-events-none' : 'pointer-events-auto z-10'
 			} z-50 `}
 			on:click={iconClick}
 		>
