@@ -143,6 +143,7 @@ export const componentsCS = {
 	InstallApp: {
 		title: 'Nainstalujte aplikaci Tourmate',
 		text: 'Nainstalujte naši aplikaci Tourmate pro lepší zážitek',
-		installButtonLabel: 'nainstalovat'
+		installButtonLabel: 'nainstalovat',
+		useChrome: 'nebo použijte naší webovou verzi'
 	}
 } satisfies BaseTranslation;
