@@ -9,8 +9,6 @@
 	export let chosenAnswer: string = '';
 	export let type: 'answering' | 'creating-question';
 
-	$: console.log(answers);
-
 	//FIXME: this does not show that it is checked
 
 	let className = '';

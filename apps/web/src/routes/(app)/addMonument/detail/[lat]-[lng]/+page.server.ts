@@ -9,8 +9,10 @@ export const load: PageServerLoad = async (event) => {
 		limit: 1
 	});
 
-	const [[{ place_name }]] = await Promise.all([getPlaceDetailsNoDatabasePromise]);
+	const place_name = (await Promise.all([getPlaceDetailsNoDatabasePromise]))
+		.at(0)
+		?.at(0)?.place_name;
 	return {
-		newMonument: { location, placeName: place_name }
+		newMonument: { location, placeName: place_name ?? '' }
 	};
 };
