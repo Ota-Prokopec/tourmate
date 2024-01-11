@@ -1,7 +1,7 @@
 import type { BaseTranslation } from '../i18n-types';
 
 export const errorsEN = {
-	unexpectedError: 'unexpected error has occurred, please share this with the support team',
+	unexpectedError: 'Unexpected error has occurred, please share this with the support team',
 	accountNotFound: 'Account not found',
 	addLikeError: 'Your like was not recorded.',
 	removeLikeError: 'We could not remove your like.',

@@ -2,51 +2,51 @@ import { BaseTranslation } from 'typesafe-i18n';
 
 export const pageEN = {
 	signUp: {
-		signUp: 'sign up',
-		signUpVia: 'sign up via {via: string}',
-		signIn: 'sing in',
+		signUp: 'Sign up',
+		signUpVia: 'Sign up via {via: string}',
+		signIn: 'Sing in',
 		usernameUserIdConditions:
 			'Please username and user id has contain at least 4 letters. Your userId will automatically contain @ character, you will not be able to have any special characters in your userId excluding few of them (-, _)',
-		acceptTerms: 'accept terms and conditions',
+		acceptTerms: 'Accept terms and conditions',
 		passwordsDontMatch: 'Your passwords dont match',
-		userAlreadyExists: 'user already exists',
-		title: 'Welcome into experinece app, we are happy to see you here.',
+		userAlreadyExists: 'User already exists',
+		title: 'Welcome into Experience app, we are happy to see you here.',
 		unsuccessfulRegister: 'Your registration failed'
 	},
 	signIn: {
-		unsuccessfulLogin: 'login was not successful',
-		singIn: 'sing in',
-		forgottenPassword: 'forgotten password',
-		signUp: 'sign up'
+		unsuccessfulLogin: 'Login was not successful',
+		singIn: 'Sing in',
+		forgottenPassword: 'Forgotten password',
+		signUp: 'Sign up'
 	},
 	forgottenPassword: {
 		title:
-			'Did you forget the password? Reset your password here. Pass your e-mail address in to the text field bellow and wait for the e-mail.',
+			'Did you forget the password? Reset your password here. Pass your e-mail address in to the text field below and wait for the e-mail.',
 		error:
-			'It was not successful to send you an e-mail with link to reset your password. Please chech your e-mail address twice and try it again. If the error persists, please contact the Tourmate support.',
-		continue: 'continue',
+			'It was not successful to send you an e-mail with link to reset your password. Please check your e-mail address twice and try it again. If the error persists, please contact the Tourmate support.',
+		continue: 'Continue',
 		resetPassword: {
 			passwordChaged: 'Password was successfully changed.',
 			error:
 				'Your password was not successfully changed, please try it again or contact our support.',
 			recoverPassword: 'Recover your password',
-			recover: 'recover password'
+			recover: 'Recover password'
 		}
 	},
 	account: {
-		monuments: 'experiences',
-		pictures: 'pictures',
-		editProfileButtonLabel: 'edit profile',
-		seeLikedMonumentsButtonLabel: 'see liked',
+		monuments: 'Experiences',
+		pictures: 'Pictures',
+		editProfileButtonLabel: 'Edit profile',
+		seeLikedMonumentsButtonLabel: 'See liked',
 		settings: {
-			language: 'language',
-			theme: 'theme',
+			language: 'Language',
+			theme: 'Theme',
 			locationForNotifications: {
-				title: 'location for notifications',
-				buttonLabel: 'change'
+				title: 'Location for notifications',
+				buttonLabel: 'Change'
 			},
 			logOut: {
-				label: 'log out',
+				label: 'Log out',
 				errorMessage: 'Unsuccessful log out'
 			}
 		},
@@ -54,37 +54,37 @@ export const pageEN = {
 			updateProfilePictureErrorMessage:
 				'We are sorry, but there was a problem in updating your profile picture. Try to reset the page and try it again.',
 			updateProfileErrorMessage:
-				'We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.'
+				"We are sorry, but there was a problem in updating your profile. Your userId already exists in another user's profile. Please change your userId to another."
 		}
 	},
 	search: {
 		categories: {
-			users: 'users',
-			monuments: 'monuments',
-			places: 'places'
+			users: 'Users',
+			monuments: 'Monuments',
+			places: 'Places'
 		}
 	},
 	scan: {
-		usersDistanceFromTarget: 'you are {meters: string} far from the target.'
+		usersDistanceFromTarget: 'You are {meters: string} far from the target.'
 	},
 	plan: {
-		restart: 'restart',
+		restart: 'Restart',
 		planningError: 'We are sorry, something went wrong during your wished path'
 	},
 	addMonument: {
 		detail: {
 			monumentCreated: 'Your monument was successfully created.',
 			monumentCreateError: 'Your monument was not successfully created. Please try it again.',
-			create: 'create'
+			create: 'Create'
 		}
 	},
 	globalError: {
 		title: 'We are sorry, there was unpredictable error',
-		reloadButtonLabel: 'try it again'
+		reloadButtonLabel: 'Try it again'
 	},
 	monument: {
 		edit: {
-			save: 'save',
+			save: 'Save',
 			updateError: 'Your monument was not successfully updated. Please try it again.'
 		}
 	},
@@ -96,13 +96,13 @@ export const pageEN = {
 			cantAnswerTwice:
 				"It seems you have already answered the question wrong, you can't answer twice.",
 			answeredCorrectly: 'You answered correctly',
-			public: 'public the picture',
+			public: 'Public the picture',
 			answerQuestion: 'Answer the question'
 		},
 		Center: {
-			cantFindAnyMonumentQuestion: "can't find any monument?",
-			connectExperienceToMonument: 'connect experience to the monument',
-			chooseMonumentFromMap: 'choose exprerience from the map'
+			cantFindAnyMonumentQuestion: "Can't find any monument?",
+			connectExperienceToMonument: 'Connect experience to the monument',
+			chooseMonumentFromMap: 'Choose experience from the map'
 		}
 	},
 	oauth: {

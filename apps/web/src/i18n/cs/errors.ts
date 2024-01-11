@@ -1,7 +1,7 @@
 import type { BaseTranslation } from '../i18n-types';
 
 export const errorsCS = {
-	unexpectedError: 'došlo k neočekávané chybě, prosím, sdílejte to s týmem podpory',
+	unexpectedError: 'Došlo k neočekávané chybě, prosím, sdílejte to s týmem podpory',
 	accountNotFound: 'Účet nenalezen',
 	addLikeError: 'Váš like nebyl zaznamenán.',
 	removeLikeError: 'Nemohli jsme odstranit váš like.',

@@ -4,6 +4,7 @@
 	import Card from '$lib/components/Common/Card.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Full from '$lib/components/Common/Full.svelte';
+	import Help from '$lib/components/Common/Help.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
@@ -101,6 +102,11 @@
 				</Card>
 			{/if}
 
+			<Right>
+				<Help class="w-[80%] max-w-[400px]" placement="left"
+					>{$LL.component.SetLocationForNotificationsPage.help()}</Help
+				>
+			</Right>
 			<Text class="text-lg text-center"
 				>{$LL.component.SetLocationForNotificationsPage.chooseYourLocationForNotifications()}</Text
 			>

@@ -2,50 +2,50 @@ import { BaseTranslation } from 'typesafe-i18n';
 
 export const pageCS = {
 	signUp: {
-		signUp: 'registrovat se',
-		signUpVia: 'registrovat se přes {via: string}',
-		signIn: 'přihlásit se',
+		signUp: 'Registrovat se',
+		signUpVia: 'Registrovat se přes {via: string}',
+		signIn: 'Přihlásit se',
 		usernameUserIdConditions:
 			'Prosím, uživatelské jméno a uživatelské ID musí obsahovat minimálně 4 písmena. Vaše uživatelské ID automaticky obsahuje znak @, nemůžete použít žádné speciální znaky s výjimkou několika z nich (-, _)',
-		acceptTerms: 'přijmout obchodní podmínky',
+		acceptTerms: 'Přijmout obchodní podmínky',
 		passwordsDontMatch: 'Vaše hesla se neshodují',
-		userAlreadyExists: 'uživatel již existuje',
+		userAlreadyExists: 'Uživatel již existuje',
 		title: 'Vítejte v aplikaci Experience, jsme rádi, že vás zde vidíme.',
 		unsuccessfulRegister: 'Vaše registrace selhala'
 	},
 	signIn: {
-		unsuccessfulLogin: 'přihlášení nebylo úspěšné',
-		singIn: 'přihlásit se',
-		forgottenPassword: 'zapomenuté heslo',
-		signUp: 'registrovat se'
+		unsuccessfulLogin: 'Přihlášení nebylo úspěšné',
+		singIn: 'Přihlásit se',
+		forgottenPassword: 'Zapomenuté heslo',
+		signUp: 'Registrovat se'
 	},
 	forgottenPassword: {
 		title:
 			'Zapomněli jste heslo? Obnovte si své heslo zde. Zadejte svou e-mailovou adresu do pole níže a čekejte na e-mail.',
 		error:
 			'Nepodařilo se vám odeslat e-mail s odkazem na obnovení hesla. Prosím, zkontrolujte svou e-mailovou adresu dvakrát a zkuste to znovu. Pokud se chyba opakuje, kontaktujte podporu Tourmate.',
-		continue: 'pokračovat',
+		continue: 'Pokračovat',
 		resetPassword: {
 			passwordChaged: 'Heslo bylo úspěšně změněno.',
 			error: 'Vaše heslo nebylo úspěšně změněno, zkuste to znovu nebo kontaktujte naši podporu.',
 			recoverPassword: 'Obnovit heslo',
-			recover: 'obnovit heslo'
+			recover: 'Obnovit heslo'
 		}
 	},
 	account: {
-		monuments: 'zážitky',
-		pictures: 'obrázky',
-		editProfileButtonLabel: 'upravit profil',
-		seeLikedMonumentsButtonLabel: 'vidět oblíbené',
+		monuments: 'Zážitky',
+		pictures: 'Obrázky',
+		editProfileButtonLabel: 'Upravit profil',
+		seeLikedMonumentsButtonLabel: 'Vidět oblíbené',
 		settings: {
-			language: 'jazyk',
-			theme: 'téma',
+			language: 'Jazyk',
+			theme: 'Téma',
 			locationForNotifications: {
-				title: 'umístění pro oznámení',
-				buttonLabel: 'změnit'
+				title: 'Umístění pro oznámení',
+				buttonLabel: 'Změnit'
 			},
 			logOut: {
-				label: 'odhlásit se',
+				label: 'Odhlásit se',
 				errorMessage: 'Odhlášení nebylo úspěšné'
 			}
 		},
@@ -58,32 +58,32 @@ export const pageCS = {
 	},
 	search: {
 		categories: {
-			users: 'uživatelé',
-			monuments: 'památky',
-			places: 'místa'
+			users: 'Uživatelé',
+			monuments: 'Památky',
+			places: 'Místa'
 		}
 	},
 	scan: {
-		usersDistanceFromTarget: 'jste vzdáleni {meters: string} od cíle.'
+		usersDistanceFromTarget: 'Jste vzdáleni {meters: string} od cíle.'
 	},
 	plan: {
-		restart: 'restartovat',
+		restart: 'Restartovat',
 		planningError: 'Omlouváme se, něco se pokazilo při plánování vaší požadované trasy'
 	},
 	addMonument: {
 		detail: {
 			monumentCreated: 'Vaše památka byla úspěšně vytvořena.',
 			monumentCreateError: 'Vaše památka nebyla úspěšně vytvořena. Zkuste to znovu.',
-			create: 'vytvořit'
+			create: 'Vytvořit'
 		}
 	},
 	globalError: {
 		title: 'Omlouváme se, došlo k nepředvídatelné chybě',
-		reloadButtonLabel: 'zkuste to znovu'
+		reloadButtonLabel: 'Zkuste to znovu'
 	},
 	monument: {
 		edit: {
-			save: 'uložit',
+			save: 'Uložit',
 			updateError: 'Vaše památka nebyla úspěšně aktualizována. Zkuste to znovu.'
 		}
 	},
@@ -95,13 +95,13 @@ export const pageCS = {
 			cantAnswerTwice:
 				'Zdá se, že jste již odpověděli špatně na otázku, nemůžete odpovědět dvakrát.',
 			answeredCorrectly: 'Odpověděli jste správně',
-			public: 'zveřejnit obrázek',
+			public: 'Zveřejnit obrázek',
 			answerQuestion: 'Odpovězte na otázku'
 		},
 		Center: {
-			cantFindAnyMonumentQuestion: 'nemůžete najít žádnou památku?',
-			connectExperienceToMonument: 'připojte zážitek k památce',
-			chooseMonumentFromMap: 'vyberte zážitek z mapy'
+			cantFindAnyMonumentQuestion: 'Nemůžete najít žádnou památku?',
+			connectExperienceToMonument: 'Připojte zážitek k památce',
+			chooseMonumentFromMap: 'Vyberte zážitek z mapy'
 		}
 	},
 	oauth: {

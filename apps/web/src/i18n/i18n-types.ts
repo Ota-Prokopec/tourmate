@@ -17,16 +17,16 @@ type RootTranslation = {
 	page: {
 		signUp: {
 			/**
-			 * s​i​g​n​ ​u​p
+			 * S​i​g​n​ ​u​p
 			 */
 			signUp: string
 			/**
-			 * s​i​g​n​ ​u​p​ ​v​i​a​ ​{​v​i​a​}
+			 * S​i​g​n​ ​u​p​ ​v​i​a​ ​{​v​i​a​}
 			 * @param {string} via
 			 */
 			signUpVia: RequiredParams<'via'>
 			/**
-			 * s​i​n​g​ ​i​n
+			 * S​i​n​g​ ​i​n
 			 */
 			signIn: string
 			/**
@@ -34,7 +34,7 @@ type RootTranslation = {
 			 */
 			usernameUserIdConditions: string
 			/**
-			 * a​c​c​e​p​t​ ​t​e​r​m​s​ ​a​n​d​ ​c​o​n​d​i​t​i​o​n​s
+			 * A​c​c​e​p​t​ ​t​e​r​m​s​ ​a​n​d​ ​c​o​n​d​i​t​i​o​n​s
 			 */
 			acceptTerms: string
 			/**
@@ -42,11 +42,11 @@ type RootTranslation = {
 			 */
 			passwordsDontMatch: string
 			/**
-			 * u​s​e​r​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s
+			 * U​s​e​r​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s
 			 */
 			userAlreadyExists: string
 			/**
-			 * W​e​l​c​o​m​e​ ​i​n​t​o​ ​e​x​p​e​r​i​n​e​c​e​ ​a​p​p​,​ ​w​e​ ​a​r​e​ ​h​a​p​p​y​ ​t​o​ ​s​e​e​ ​y​o​u​ ​h​e​r​e​.
+			 * W​e​l​c​o​m​e​ ​i​n​t​o​ ​E​x​p​e​r​i​e​n​c​e​ ​a​p​p​,​ ​w​e​ ​a​r​e​ ​h​a​p​p​y​ ​t​o​ ​s​e​e​ ​y​o​u​ ​h​e​r​e​.
 			 */
 			title: string
 			/**
@@ -56,33 +56,33 @@ type RootTranslation = {
 		}
 		signIn: {
 			/**
-			 * l​o​g​i​n​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l
+			 * L​o​g​i​n​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l
 			 */
 			unsuccessfulLogin: string
 			/**
-			 * s​i​n​g​ ​i​n
+			 * S​i​n​g​ ​i​n
 			 */
 			singIn: string
 			/**
-			 * f​o​r​g​o​t​t​e​n​ ​p​a​s​s​w​o​r​d
+			 * F​o​r​g​o​t​t​e​n​ ​p​a​s​s​w​o​r​d
 			 */
 			forgottenPassword: string
 			/**
-			 * s​i​g​n​ ​u​p
+			 * S​i​g​n​ ​u​p
 			 */
 			signUp: string
 		}
 		forgottenPassword: {
 			/**
-			 * D​i​d​ ​y​o​u​ ​f​o​r​g​e​t​ ​t​h​e​ ​p​a​s​s​w​o​r​d​?​ ​R​e​s​e​t​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​h​e​r​e​.​ ​P​a​s​s​ ​y​o​u​r​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s​ ​i​n​ ​t​o​ ​t​h​e​ ​t​e​x​t​ ​f​i​e​l​d​ ​b​e​l​l​o​w​ ​a​n​d​ ​w​a​i​t​ ​f​o​r​ ​t​h​e​ ​e​-​m​a​i​l​.
+			 * D​i​d​ ​y​o​u​ ​f​o​r​g​e​t​ ​t​h​e​ ​p​a​s​s​w​o​r​d​?​ ​R​e​s​e​t​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​h​e​r​e​.​ ​P​a​s​s​ ​y​o​u​r​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s​ ​i​n​ ​t​o​ ​t​h​e​ ​t​e​x​t​ ​f​i​e​l​d​ ​b​e​l​o​w​ ​a​n​d​ ​w​a​i​t​ ​f​o​r​ ​t​h​e​ ​e​-​m​a​i​l​.
 			 */
 			title: string
 			/**
-			 * I​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​e​-​m​a​i​l​ ​w​i​t​h​ ​l​i​n​k​ ​t​o​ ​r​e​s​e​t​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​.​ ​P​l​e​a​s​e​ ​c​h​e​c​h​ ​y​o​u​r​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s​ ​t​w​i​c​e​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.​ ​I​f​ ​t​h​e​ ​e​r​r​o​r​ ​p​e​r​s​i​s​t​s​,​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​T​o​u​r​m​a​t​e​ ​s​u​p​p​o​r​t​.
+			 * I​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​ ​t​o​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​e​-​m​a​i​l​ ​w​i​t​h​ ​l​i​n​k​ ​t​o​ ​r​e​s​e​t​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​y​o​u​r​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s​ ​t​w​i​c​e​ ​a​n​d​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.​ ​I​f​ ​t​h​e​ ​e​r​r​o​r​ ​p​e​r​s​i​s​t​s​,​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​T​o​u​r​m​a​t​e​ ​s​u​p​p​o​r​t​.
 			 */
 			error: string
 			/**
-			 * c​o​n​t​i​n​u​e
+			 * C​o​n​t​i​n​u​e
 			 */
 			'continue': string
 			resetPassword: {
@@ -99,50 +99,50 @@ type RootTranslation = {
 				 */
 				recoverPassword: string
 				/**
-				 * r​e​c​o​v​e​r​ ​p​a​s​s​w​o​r​d
+				 * R​e​c​o​v​e​r​ ​p​a​s​s​w​o​r​d
 				 */
 				recover: string
 			}
 		}
 		account: {
 			/**
-			 * e​x​p​e​r​i​e​n​c​e​s
+			 * E​x​p​e​r​i​e​n​c​e​s
 			 */
 			monuments: string
 			/**
-			 * p​i​c​t​u​r​e​s
+			 * P​i​c​t​u​r​e​s
 			 */
 			pictures: string
 			/**
-			 * e​d​i​t​ ​p​r​o​f​i​l​e
+			 * E​d​i​t​ ​p​r​o​f​i​l​e
 			 */
 			editProfileButtonLabel: string
 			/**
-			 * s​e​e​ ​l​i​k​e​d
+			 * S​e​e​ ​l​i​k​e​d
 			 */
 			seeLikedMonumentsButtonLabel: string
 			settings: {
 				/**
-				 * l​a​n​g​u​a​g​e
+				 * L​a​n​g​u​a​g​e
 				 */
 				language: string
 				/**
-				 * t​h​e​m​e
+				 * T​h​e​m​e
 				 */
 				theme: string
 				locationForNotifications: {
 					/**
-					 * l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+					 * L​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
 					 */
 					title: string
 					/**
-					 * c​h​a​n​g​e
+					 * C​h​a​n​g​e
 					 */
 					buttonLabel: string
 				}
 				logOut: {
 					/**
-					 * l​o​g​ ​o​u​t
+					 * L​o​g​ ​o​u​t
 					 */
 					label: string
 					/**
@@ -157,7 +157,7 @@ type RootTranslation = {
 				 */
 				updateProfilePictureErrorMessage: string
 				/**
-				 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​ ​i​n​ ​a​n​o​t​h​e​r​ ​u​s​e​r​s​ ​p​r​o​f​i​l​e​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​t​o​ ​a​n​o​t​h​e​r​.
+				 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​r​e​ ​w​a​s​ ​a​ ​p​r​o​b​l​e​m​ ​i​n​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.​ ​Y​o​u​r​ ​u​s​e​r​I​d​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​ ​i​n​ ​a​n​o​t​h​e​r​ ​u​s​e​r​'​s​ ​p​r​o​f​i​l​e​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​u​s​e​r​I​d​ ​t​o​ ​a​n​o​t​h​e​r​.
 				 */
 				updateProfileErrorMessage: string
 			}
@@ -165,29 +165,29 @@ type RootTranslation = {
 		search: {
 			categories: {
 				/**
-				 * u​s​e​r​s
+				 * U​s​e​r​s
 				 */
 				users: string
 				/**
-				 * m​o​n​u​m​e​n​t​s
+				 * M​o​n​u​m​e​n​t​s
 				 */
 				monuments: string
 				/**
-				 * p​l​a​c​e​s
+				 * P​l​a​c​e​s
 				 */
 				places: string
 			}
 		}
 		scan: {
 			/**
-			 * y​o​u​ ​a​r​e​ ​{​m​e​t​e​r​s​}​ ​f​a​r​ ​f​r​o​m​ ​t​h​e​ ​t​a​r​g​e​t​.
+			 * Y​o​u​ ​a​r​e​ ​{​m​e​t​e​r​s​}​ ​f​a​r​ ​f​r​o​m​ ​t​h​e​ ​t​a​r​g​e​t​.
 			 * @param {string} meters
 			 */
 			usersDistanceFromTarget: RequiredParams<'meters'>
 		}
 		plan: {
 			/**
-			 * r​e​s​t​a​r​t
+			 * R​e​s​t​a​r​t
 			 */
 			restart: string
 			/**
@@ -206,7 +206,7 @@ type RootTranslation = {
 				 */
 				monumentCreateError: string
 				/**
-				 * c​r​e​a​t​e
+				 * C​r​e​a​t​e
 				 */
 				create: string
 			}
@@ -217,14 +217,14 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * t​r​y​ ​i​t​ ​a​g​a​i​n
+			 * T​r​y​ ​i​t​ ​a​g​a​i​n
 			 */
 			reloadButtonLabel: string
 		}
 		monument: {
 			edit: {
 				/**
-				 * s​a​v​e
+				 * S​a​v​e
 				 */
 				save: string
 				/**
@@ -256,7 +256,7 @@ type RootTranslation = {
 				 */
 				answeredCorrectly: string
 				/**
-				 * p​u​b​l​i​c​ ​t​h​e​ ​p​i​c​t​u​r​e
+				 * P​u​b​l​i​c​ ​t​h​e​ ​p​i​c​t​u​r​e
 				 */
 				'public': string
 				/**
@@ -266,15 +266,15 @@ type RootTranslation = {
 			}
 			Center: {
 				/**
-				 * c​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
+				 * C​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
 				 */
 				cantFindAnyMonumentQuestion: string
 				/**
-				 * c​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
+				 * C​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
 				 */
 				connectExperienceToMonument: string
 				/**
-				 * c​h​o​o​s​e​ ​e​x​p​r​e​r​i​e​n​c​e​ ​f​r​o​m​ ​t​h​e​ ​m​a​p
+				 * C​h​o​o​s​e​ ​e​x​p​e​r​i​e​n​c​e​ ​f​r​o​m​ ​t​h​e​ ​m​a​p
 				 */
 				chooseMonumentFromMap: string
 			}
@@ -363,41 +363,41 @@ type RootTranslation = {
 	component: {
 		EmailInput: {
 			/**
-			 * e​n​t​e​r​ ​e​m​a​i​l
+			 * E​n​t​e​r​ ​e​m​a​i​l
 			 */
 			label: string
 		}
 		PasswordInput: {
 			/**
-			 * e​n​t​e​r​ ​p​a​s​s​w​o​r​d
+			 * E​n​t​e​r​ ​p​a​s​s​w​o​r​d
 			 */
 			label: string
 		}
 		UsernameInput: {
 			/**
-			 * e​n​t​e​r​ ​u​s​e​r​n​a​m​e
+			 * E​n​t​e​r​ ​u​s​e​r​n​a​m​e
 			 */
 			label: string
 		}
 		EmailSent: {
 			/**
-			 * W​e​ ​s​e​n​t​ ​y​o​u​ ​e​m​a​i​l​ ​c​o​n​f​x​i​r​m​a​t​i​o​n​.
+			 * W​e​ ​s​e​n​t​ ​y​o​u​ ​e​m​a​i​l​ ​c​o​n​f​i​r​m​a​t​i​o​n​.
 			 */
 			title: string
 			/**
-			 * O​p​e​n​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​n​d​ ​c​l​i​c​k​ ​o​n​ ​a​d​d​r​e​s​s​ ​w​e​ ​s​e​n​t​ ​y​o​u​.
+			 * O​p​e​n​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​n​d​ ​c​l​i​c​k​ ​o​n​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​w​e​ ​s​e​n​t​ ​y​o​u​.
 			 */
 			text: string
 		}
 		MyIdInput: {
 			/**
-			 * e​n​t​e​r​ ​y​o​u​r​ ​i​d
+			 * E​n​t​e​r​ ​y​o​u​r​ ​I​D
 			 */
 			label: string
 		}
 		MonumentCardComponent: {
 			/**
-			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​,​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
+			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​?​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
 			 */
 			reallyDeleteTheMonumentLabel: string
 			/**
@@ -407,61 +407,61 @@ type RootTranslation = {
 		}
 		LogOutButton: {
 			/**
-			 * l​o​g​ ​o​u​t
+			 * L​o​g​ ​o​u​t
 			 */
 			label: string
 		}
 		MapSettings: {
 			/**
-			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​y​o​u​r​ ​m​a​p​ ​p​r​e​f​e​r​e​n​c​e​s​ ​w​e​r​e​ ​n​o​t​ ​s​a​v​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​l​a​t​e​r​ ​a​g​a​i​n​.
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​y​o​u​r​ ​m​a​p​ ​p​r​e​f​e​r​e​n​c​e​s​ ​w​e​r​e​ ​n​o​t​ ​s​a​v​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
 			 */
 			saveErrorMessage: string
 			/**
-			 * r​a​n​g​e​ ​o​f​ ​t​h​e​ ​m​a​p
+			 * R​a​n​g​e​ ​o​f​ ​t​h​e​ ​m​a​p
 			 */
 			mapRange: string
 		}
 		NoContent: {
 			/**
-			 * n​o​t​ ​f​o​u​n​d
+			 * N​o​t​ ​f​o​u​n​d
 			 */
 			notFound: string
 		}
 		MeasureDistancesMap: {
 			/**
-			 * r​e​s​e​t
+			 * R​e​s​e​t
 			 */
 			resetButtonLabel: string
 		}
 		MonumentCreateForm: {
 			/**
-			 * m​o​n​u​m​e​n​t​ ​n​a​m​e
+			 * M​o​n​u​m​e​n​t​ ​n​a​m​e
 			 */
 			monumentName: string
 			/**
-			 * p​l​a​c​e
+			 * P​l​a​c​e
 			 */
 			place: string
 			/**
-			 * t​y​p​e
+			 * T​y​p​e
 			 */
 			type: string
 			/**
-			 * t​r​a​n​s​p​o​r​t
+			 * T​r​a​n​s​p​o​r​t
 			 */
 			transport: string
 			/**
-			 * a​b​o​u​t​ ​e​x​p​e​r​i​e​n​c​e
+			 * A​b​o​u​t​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			about: string
 			/**
-			 * i​m​a​g​e
+			 * I​m​a​g​e
 			 */
 			image: string
 		}
 		AddQuestionDrawer: {
 			/**
-			 * '​W​e​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​s​a​v​e​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​l​i​k​e​ ​t​h​i​s​,​ ​p​l​e​a​s​e​ ​c​h​e​c​k​ ​i​f​ ​e​v​e​r​y​t​h​i​n​g​ ​i​s​ ​f​i​l​l​e​d​ ​u​p​.
+			 * W​e​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​s​a​v​e​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​l​i​k​e​ ​t​h​i​s​,​ ​p​l​e​a​s​e​ ​c​h​e​c​k​ ​i​f​ ​e​v​e​r​y​t​h​i​n​g​ ​i​s​ ​f​i​l​l​e​d​ ​u​p​.
 			 */
 			saveError: string
 			/**
@@ -469,41 +469,41 @@ type RootTranslation = {
 			 */
 			yourQuestion: string
 			/**
-			 * s​a​v​e
+			 * S​a​v​e
 			 */
 			save: string
 			questionTypes: {
 				/**
-				 * c​h​o​i​c​e
+				 * C​h​o​i​c​e
 				 */
 				radio: string
 				/**
-				 * t​e​x​t
+				 * T​e​x​t
 				 */
 				text: string
 				/**
-				 * n​u​m​b​e​r
+				 * N​u​m​b​e​r
 				 */
 				number: string
 			}
 		}
 		AddQuestionButton: {
 			/**
-			 * a​d​d​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n
+			 * A​d​d​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n
 			 */
 			label: string
 			/**
-			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​y​o​u​ ​c​a​n​t​ ​e​d​i​t​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​m​o​n​u​m​e​n​t​,​ ​b​e​c​a​u​s​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​o​u​l​d​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​.
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​y​o​u​ ​c​a​n​'​t​ ​e​d​i​t​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​t​h​e​ ​m​o​n​u​m​e​n​t​ ​b​e​c​a​u​s​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​o​u​l​d​ ​h​a​v​e​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​.
 			 */
 			notAbleToEditQuestion: string
 		}
 		ImageInput: {
 			/**
-			 * t​h​r​o​u​g​h​ ​g​a​l​l​e​r​y
+			 * T​h​r​o​u​g​h​ ​g​a​l​l​e​r​y
 			 */
 			throughGallery: string
 			/**
-			 * t​h​r​o​u​g​h​ ​c​l​i​p​b​o​a​r​d
+			 * T​h​r​o​u​g​h​ ​c​l​i​p​b​o​a​r​d
 			 */
 			throughClipboard: string
 			/**
@@ -513,41 +513,41 @@ type RootTranslation = {
 		}
 		CookiesAlert: {
 			/**
-			 * T​h​i​s​ ​s​i​t​e​ ​u​s​e​s​ ​c​o​o​k​i​e​s​ ​t​o​ ​s​t​o​r​e​ ​u​s​e​r​s​ ​s​e​s​s​i​o​n​s​ ​a​n​d​ ​u​s​e​r​s​ ​d​a​t​a​ ​i​n​c​l​u​d​i​n​g​ ​u​s​e​r​s​ ​c​u​r​r​e​n​t​ ​l​o​c​a​t​i​o​n​.
+			 * T​h​i​s​ ​s​i​t​e​ ​u​s​e​s​ ​c​o​o​k​i​e​s​ ​t​o​ ​s​t​o​r​e​ ​u​s​e​r​s​'​ ​s​e​s​s​i​o​n​s​ ​a​n​d​ ​u​s​e​r​s​'​ ​d​a​t​a​,​ ​i​n​c​l​u​d​i​n​g​ ​u​s​e​r​s​'​ ​c​u​r​r​e​n​t​ ​l​o​c​a​t​i​o​n​.
 			 */
 			title: string
 			/**
-			 * a​c​c​e​p​t​ ​c​o​o​k​i​e​s
+			 * A​c​c​e​p​t​ ​c​o​o​k​i​e​s
 			 */
 			acceptButtonLabel: string
 		}
 		SeeOnMapButton: {
 			/**
-			 * s​e​e​ ​o​n​ ​m​a​p
+			 * S​e​e​ ​o​n​ ​m​a​p
 			 */
 			label: string
 		}
 		SeeMapButton: {
 			/**
-			 * s​e​e​ ​m​a​p
+			 * S​e​e​ ​m​a​p
 			 */
 			label: string
 		}
 		SeeOnGoogleMapsButton: {
 			/**
-			 * s​e​e​ ​o​n​ ​g​o​o​g​l​e​ ​m​a​p​s
+			 * S​e​e​ ​o​n​ ​G​o​o​g​l​e​ ​M​a​p​s
 			 */
 			label: string
 		}
 		TakePictureHereButton: {
 			/**
-			 * t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​h​e​r​e
+			 * T​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​h​e​r​e
 			 */
 			label: string
 		}
 		ContinueButton: {
 			/**
-			 * c​o​n​t​i​n​u​e
+			 * C​o​n​t​i​n​u​e
 			 */
 			label: string
 		}
@@ -557,27 +557,27 @@ type RootTranslation = {
 			 */
 			cantFindAnyMonumentQuestion: string
 			/**
-			 * A​j​,​ ​a​j​ ​n​o​ ​m​o​n​u​m​e​n​t​ ​i​s​ ​h​e​r​e​.​.​.
+			 * A​j​,​ ​a​j​,​ ​n​o​ ​m​o​n​u​m​e​n​t​ ​i​s​ ​h​e​r​e​.​.​.
 			 */
 			noMonumentHere: string
 			/**
-			 * I​f​ ​y​o​u​ ​c​a​n​t​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​s​c​r​e​e​n​ ​o​n​ ​m​a​p​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​.
+			 * I​f​ ​y​o​u​ ​c​a​n​'​t​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​s​h​o​w​n​ ​o​n​ ​t​h​e​ ​m​a​p​,​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​.
 			 */
 			createNewOneMessage: string
 			/**
-			 * Y​o​u​ ​a​r​e​ ​i​n​ ​t​h​e​ ​a​r​e​a​ ​w​h​e​r​e​ ​a​r​e​ ​n​o​ ​m​o​n​u​m​e​n​t​s​ ​y​o​u​ ​c​o​u​l​d​ ​c​o​n​n​e​c​t​,​ ​y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​t​i​l​l​ ​s​o​m​e​o​n​e​ ​w​i​l​l​ ​c​r​e​a​t​e​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t​ ​i​n​ ​y​o​u​r​ ​a​r​e​a​ ​o​r​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​ ​m​o​n​u​m​e​n​t​.
+			 * Y​o​u​ ​a​r​e​ ​i​n​ ​a​n​ ​a​r​e​a​ ​w​h​e​r​e​ ​t​h​e​r​e​ ​a​r​e​ ​n​o​ ​m​o​n​u​m​e​n​t​s​ ​y​o​u​ ​c​a​n​ ​c​o​n​n​e​c​t​ ​w​i​t​h​.​ ​Y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​u​n​t​i​l​ ​s​o​m​e​o​n​e​ ​c​r​e​a​t​e​s​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t​ ​i​n​ ​y​o​u​r​ ​a​r​e​a​,​ ​o​r​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​ ​m​o​n​u​m​e​n​t​.
 			 */
 			noMonumentsHereMessage: string
 		}
 		CreateNewMonumentButton: {
 			/**
-			 * c​r​e​a​t​e​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t
+			 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t
 			 */
 			label: string
 		}
 		AnswerQuestionDrawer: {
 			/**
-			 * a​n​s​w​e​r
+			 * A​n​s​w​e​r
 			 */
 			answer: string
 			/**
@@ -597,7 +597,7 @@ type RootTranslation = {
 		}
 		QuestionAnsweredCorrectlyCard: {
 			/**
-			 * c​o​n​g​r​a​t​u​l​a​t​i​o​n​ ​f​o​r​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​a​n​s​w​e​r​i​n​g​ ​c​o​r​r​e​c​t​l​y
+			 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​ ​f​o​r​ ​a​n​s​w​e​r​i​n​g​ ​t​h​e​ ​q​u​e​s​t​i​o​n​ ​c​o​r​r​e​c​t​l​y
 			 */
 			title: string
 			/**
@@ -611,23 +611,27 @@ type RootTranslation = {
 			 */
 			errorMessage: string
 			/**
-			 * y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​{​l​o​c​a​t​i​o​n​}​ ​o​f​ ​r​a​n​g​e​ ​{​r​a​n​g​e​}
+			 * Y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​{​l​o​c​a​t​i​o​n​}​ ​o​f​ ​r​a​n​g​e​ ​{​r​a​n​g​e​}
 			 * @param {number[]} location
 			 * @param {string} range
 			 */
 			yourLocationIsCurrently_InRangeOf_: RequiredParams<'location' | 'range'>
 			/**
-			 * c​h​o​o​s​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+			 * C​h​o​o​s​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
 			 */
 			chooseYourLocationForNotifications: string
 			/**
-			 * c​a​n​c​e​l
+			 * C​a​n​c​e​l
 			 */
 			cancel: string
 			/**
-			 * s​a​v​e
+			 * S​a​v​e
 			 */
 			save: string
+			/**
+			 * W​h​e​n​ ​p​e​o​p​l​e​ ​c​r​e​a​t​e​ ​a​ ​n​e​w​ ​e​x​p​e​r​i​e​n​c​e​ ​a​n​d​ ​y​o​u​ ​s​u​b​s​c​r​i​b​e​ ​t​o​ ​t​h​a​t​ ​p​l​a​c​e​ ​w​h​e​r​e​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​i​l​l​ ​b​e​ ​p​l​a​c​e​d​,​ ​y​o​u​ ​w​i​l​l​ ​b​e​ ​n​o​t​i​f​i​e​d​ ​a​b​o​u​t​ ​t​h​i​s​ ​n​e​w​ ​e​x​p​e​r​i​e​n​c​e​.
+			 */
+			help: string
 		}
 		CreateYourFirstPictureButton: {
 			/**
@@ -649,19 +653,19 @@ type RootTranslation = {
 		}
 		UserMarker: {
 			/**
-			 * y​o​u
+			 * Y​o​u
 			 */
 			you: string
 		}
 		MoreInformationButton: {
 			/**
-			 * s​e​e​ ​m​o​r​e​ ​i​n​f​o​r​m​a​t​i​o​n
+			 * S​e​e​ ​m​o​r​e​ ​i​n​f​o​r​m​a​t​i​o​n
 			 */
 			label: string
 		}
 		ExperienceCardComponent: {
 			/**
-			 * m​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
+			 * M​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
 			 */
 			monumentThatWasConnectedToTheExperienceWasDeleted: string
 			/**
@@ -671,7 +675,7 @@ type RootTranslation = {
 		}
 		CancelButton: {
 			/**
-			 * c​a​n​c​e​l
+			 * C​a​n​c​e​l
 			 */
 			label: string
 		}
@@ -683,26 +687,26 @@ type RootTranslation = {
 		}
 		InstallApp: {
 			/**
-			 * I​n​s​t​a​l​l​ ​t​o​u​r​m​a​t​e​ ​a​p​p
+			 * I​n​s​t​a​l​l​ ​T​o​u​r​m​a​t​e​ ​a​p​p
 			 */
 			title: string
 			/**
-			 * I​n​s​t​a​l​l​ ​o​u​r​ ​t​o​u​r​m​a​t​e​ ​a​p​p​ ​f​o​r​ ​b​e​t​t​e​r​ ​e​x​p​e​r​i​e​n​c​e
+			 * I​n​s​t​a​l​l​ ​o​u​r​ ​T​o​u​r​m​a​t​e​ ​a​p​p​ ​f​o​r​ ​a​ ​b​e​t​t​e​r​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			text: string
 			/**
-			 * i​n​s​t​a​l​l
+			 * I​n​s​t​a​l​l
 			 */
 			installButtonLabel: string
 			/**
-			 * o​f​ ​u​s​e​ ​C​h​r​o​m​e​ ​v​e​r​s​i​o​n
+			 * o​r​ ​u​s​e​ ​C​h​r​o​m​e​ ​v​e​r​s​i​o​n
 			 */
 			useChrome: string
 		}
 	}
 	error: {
 		/**
-		 * u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​,​ ​p​l​e​a​s​e​ ​s​h​a​r​e​ ​t​h​i​s​ ​w​i​t​h​ ​t​h​e​ ​s​u​p​p​o​r​t​ ​t​e​a​m
+		 * U​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​,​ ​p​l​e​a​s​e​ ​s​h​a​r​e​ ​t​h​i​s​ ​w​i​t​h​ ​t​h​e​ ​s​u​p​p​o​r​t​ ​t​e​a​m
 		 */
 		unexpectedError: string
 		/**
@@ -745,15 +749,15 @@ export type TranslationFunctions = {
 	page: {
 		signUp: {
 			/**
-			 * sign up
+			 * Sign up
 			 */
 			signUp: () => LocalizedString
 			/**
-			 * sign up via {via}
+			 * Sign up via {via}
 			 */
 			signUpVia: (arg: { via: string }) => LocalizedString
 			/**
-			 * sing in
+			 * Sing in
 			 */
 			signIn: () => LocalizedString
 			/**
@@ -761,7 +765,7 @@ export type TranslationFunctions = {
 			 */
 			usernameUserIdConditions: () => LocalizedString
 			/**
-			 * accept terms and conditions
+			 * Accept terms and conditions
 			 */
 			acceptTerms: () => LocalizedString
 			/**
@@ -769,11 +773,11 @@ export type TranslationFunctions = {
 			 */
 			passwordsDontMatch: () => LocalizedString
 			/**
-			 * user already exists
+			 * User already exists
 			 */
 			userAlreadyExists: () => LocalizedString
 			/**
-			 * Welcome into experinece app, we are happy to see you here.
+			 * Welcome into Experience app, we are happy to see you here.
 			 */
 			title: () => LocalizedString
 			/**
@@ -783,33 +787,33 @@ export type TranslationFunctions = {
 		}
 		signIn: {
 			/**
-			 * login was not successful
+			 * Login was not successful
 			 */
 			unsuccessfulLogin: () => LocalizedString
 			/**
-			 * sing in
+			 * Sing in
 			 */
 			singIn: () => LocalizedString
 			/**
-			 * forgotten password
+			 * Forgotten password
 			 */
 			forgottenPassword: () => LocalizedString
 			/**
-			 * sign up
+			 * Sign up
 			 */
 			signUp: () => LocalizedString
 		}
 		forgottenPassword: {
 			/**
-			 * Did you forget the password? Reset your password here. Pass your e-mail address in to the text field bellow and wait for the e-mail.
+			 * Did you forget the password? Reset your password here. Pass your e-mail address in to the text field below and wait for the e-mail.
 			 */
 			title: () => LocalizedString
 			/**
-			 * It was not successful to send you an e-mail with link to reset your password. Please chech your e-mail address twice and try it again. If the error persists, please contact the Tourmate support.
+			 * It was not successful to send you an e-mail with link to reset your password. Please check your e-mail address twice and try it again. If the error persists, please contact the Tourmate support.
 			 */
 			error: () => LocalizedString
 			/**
-			 * continue
+			 * Continue
 			 */
 			'continue': () => LocalizedString
 			resetPassword: {
@@ -826,50 +830,50 @@ export type TranslationFunctions = {
 				 */
 				recoverPassword: () => LocalizedString
 				/**
-				 * recover password
+				 * Recover password
 				 */
 				recover: () => LocalizedString
 			}
 		}
 		account: {
 			/**
-			 * experiences
+			 * Experiences
 			 */
 			monuments: () => LocalizedString
 			/**
-			 * pictures
+			 * Pictures
 			 */
 			pictures: () => LocalizedString
 			/**
-			 * edit profile
+			 * Edit profile
 			 */
 			editProfileButtonLabel: () => LocalizedString
 			/**
-			 * see liked
+			 * See liked
 			 */
 			seeLikedMonumentsButtonLabel: () => LocalizedString
 			settings: {
 				/**
-				 * language
+				 * Language
 				 */
 				language: () => LocalizedString
 				/**
-				 * theme
+				 * Theme
 				 */
 				theme: () => LocalizedString
 				locationForNotifications: {
 					/**
-					 * location for notifications
+					 * Location for notifications
 					 */
 					title: () => LocalizedString
 					/**
-					 * change
+					 * Change
 					 */
 					buttonLabel: () => LocalizedString
 				}
 				logOut: {
 					/**
-					 * log out
+					 * Log out
 					 */
 					label: () => LocalizedString
 					/**
@@ -884,7 +888,7 @@ export type TranslationFunctions = {
 				 */
 				updateProfilePictureErrorMessage: () => LocalizedString
 				/**
-				 * We are sorry, but there was a problem in updating your profile. Your userId already exists in another users profile. Please change your userId to another.
+				 * We are sorry, but there was a problem in updating your profile. Your userId already exists in another user's profile. Please change your userId to another.
 				 */
 				updateProfileErrorMessage: () => LocalizedString
 			}
@@ -892,28 +896,28 @@ export type TranslationFunctions = {
 		search: {
 			categories: {
 				/**
-				 * users
+				 * Users
 				 */
 				users: () => LocalizedString
 				/**
-				 * monuments
+				 * Monuments
 				 */
 				monuments: () => LocalizedString
 				/**
-				 * places
+				 * Places
 				 */
 				places: () => LocalizedString
 			}
 		}
 		scan: {
 			/**
-			 * you are {meters} far from the target.
+			 * You are {meters} far from the target.
 			 */
 			usersDistanceFromTarget: (arg: { meters: string }) => LocalizedString
 		}
 		plan: {
 			/**
-			 * restart
+			 * Restart
 			 */
 			restart: () => LocalizedString
 			/**
@@ -932,7 +936,7 @@ export type TranslationFunctions = {
 				 */
 				monumentCreateError: () => LocalizedString
 				/**
-				 * create
+				 * Create
 				 */
 				create: () => LocalizedString
 			}
@@ -943,14 +947,14 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * try it again
+			 * Try it again
 			 */
 			reloadButtonLabel: () => LocalizedString
 		}
 		monument: {
 			edit: {
 				/**
-				 * save
+				 * Save
 				 */
 				save: () => LocalizedString
 				/**
@@ -982,7 +986,7 @@ export type TranslationFunctions = {
 				 */
 				answeredCorrectly: () => LocalizedString
 				/**
-				 * public the picture
+				 * Public the picture
 				 */
 				'public': () => LocalizedString
 				/**
@@ -992,15 +996,15 @@ export type TranslationFunctions = {
 			}
 			Center: {
 				/**
-				 * can't find any monument?
+				 * Can't find any monument?
 				 */
 				cantFindAnyMonumentQuestion: () => LocalizedString
 				/**
-				 * connect experience to the monument
+				 * Connect experience to the monument
 				 */
 				connectExperienceToMonument: () => LocalizedString
 				/**
-				 * choose exprerience from the map
+				 * Choose experience from the map
 				 */
 				chooseMonumentFromMap: () => LocalizedString
 			}
@@ -1089,41 +1093,41 @@ export type TranslationFunctions = {
 	component: {
 		EmailInput: {
 			/**
-			 * enter email
+			 * Enter email
 			 */
 			label: () => LocalizedString
 		}
 		PasswordInput: {
 			/**
-			 * enter password
+			 * Enter password
 			 */
 			label: () => LocalizedString
 		}
 		UsernameInput: {
 			/**
-			 * enter username
+			 * Enter username
 			 */
 			label: () => LocalizedString
 		}
 		EmailSent: {
 			/**
-			 * We sent you email confxirmation.
+			 * We sent you email confirmation.
 			 */
 			title: () => LocalizedString
 			/**
-			 * Open your email and click on address we sent you.
+			 * Open your email and click on the address we sent you.
 			 */
 			text: () => LocalizedString
 		}
 		MyIdInput: {
 			/**
-			 * enter your id
+			 * Enter your ID
 			 */
 			label: () => LocalizedString
 		}
 		MonumentCardComponent: {
 			/**
-			 * Do you really want to delete your monument, there is no way to get it back.
+			 * Do you really want to delete your monument? There is no way to get it back.
 			 */
 			reallyDeleteTheMonumentLabel: () => LocalizedString
 			/**
@@ -1133,61 +1137,61 @@ export type TranslationFunctions = {
 		}
 		LogOutButton: {
 			/**
-			 * log out
+			 * Log out
 			 */
 			label: () => LocalizedString
 		}
 		MapSettings: {
 			/**
-			 * We are sorry, but your map preferences were not saved. Please try it later again.
+			 * We are sorry, but your map preferences were not saved. Please try again later.
 			 */
 			saveErrorMessage: () => LocalizedString
 			/**
-			 * range of the map
+			 * Range of the map
 			 */
 			mapRange: () => LocalizedString
 		}
 		NoContent: {
 			/**
-			 * not found
+			 * Not found
 			 */
 			notFound: () => LocalizedString
 		}
 		MeasureDistancesMap: {
 			/**
-			 * reset
+			 * Reset
 			 */
 			resetButtonLabel: () => LocalizedString
 		}
 		MonumentCreateForm: {
 			/**
-			 * monument name
+			 * Monument name
 			 */
 			monumentName: () => LocalizedString
 			/**
-			 * place
+			 * Place
 			 */
 			place: () => LocalizedString
 			/**
-			 * type
+			 * Type
 			 */
 			type: () => LocalizedString
 			/**
-			 * transport
+			 * Transport
 			 */
 			transport: () => LocalizedString
 			/**
-			 * about experience
+			 * About experience
 			 */
 			about: () => LocalizedString
 			/**
-			 * image
+			 * Image
 			 */
 			image: () => LocalizedString
 		}
 		AddQuestionDrawer: {
 			/**
-			 * 'We are not able to save your question like this, please check if everything is filled up.
+			 * We are not able to save your question like this, please check if everything is filled up.
 			 */
 			saveError: () => LocalizedString
 			/**
@@ -1195,41 +1199,41 @@ export type TranslationFunctions = {
 			 */
 			yourQuestion: () => LocalizedString
 			/**
-			 * save
+			 * Save
 			 */
 			save: () => LocalizedString
 			questionTypes: {
 				/**
-				 * choice
+				 * Choice
 				 */
 				radio: () => LocalizedString
 				/**
-				 * text
+				 * Text
 				 */
 				text: () => LocalizedString
 				/**
-				 * number
+				 * Number
 				 */
 				number: () => LocalizedString
 			}
 		}
 		AddQuestionButton: {
 			/**
-			 * add your question
+			 * Add your question
 			 */
 			label: () => LocalizedString
 			/**
-			 * We are sorry, you cant edit your question in monument, because some people could already answered.
+			 * We are sorry, you can't edit your question in the monument because some people could have already answered.
 			 */
 			notAbleToEditQuestion: () => LocalizedString
 		}
 		ImageInput: {
 			/**
-			 * through gallery
+			 * Through gallery
 			 */
 			throughGallery: () => LocalizedString
 			/**
-			 * through clipboard
+			 * Through clipboard
 			 */
 			throughClipboard: () => LocalizedString
 			/**
@@ -1239,41 +1243,41 @@ export type TranslationFunctions = {
 		}
 		CookiesAlert: {
 			/**
-			 * This site uses cookies to store users sessions and users data including users current location.
+			 * This site uses cookies to store users' sessions and users' data, including users' current location.
 			 */
 			title: () => LocalizedString
 			/**
-			 * accept cookies
+			 * Accept cookies
 			 */
 			acceptButtonLabel: () => LocalizedString
 		}
 		SeeOnMapButton: {
 			/**
-			 * see on map
+			 * See on map
 			 */
 			label: () => LocalizedString
 		}
 		SeeMapButton: {
 			/**
-			 * see map
+			 * See map
 			 */
 			label: () => LocalizedString
 		}
 		SeeOnGoogleMapsButton: {
 			/**
-			 * see on google maps
+			 * See on Google Maps
 			 */
 			label: () => LocalizedString
 		}
 		TakePictureHereButton: {
 			/**
-			 * take a picture here
+			 * Take a picture here
 			 */
 			label: () => LocalizedString
 		}
 		ContinueButton: {
 			/**
-			 * continue
+			 * Continue
 			 */
 			label: () => LocalizedString
 		}
@@ -1283,27 +1287,27 @@ export type TranslationFunctions = {
 			 */
 			cantFindAnyMonumentQuestion: () => LocalizedString
 			/**
-			 * Aj, aj no monument is here...
+			 * Aj, aj, no monument is here...
 			 */
 			noMonumentHere: () => LocalizedString
 			/**
-			 * If you cant choose from monuments that are screen on map you can create.
+			 * If you can't choose from monuments that are shown on the map, you can create your own.
 			 */
 			createNewOneMessage: () => LocalizedString
 			/**
-			 * You are in the area where are no monuments you could connect, you will have to wait till someone will create a new monument in your area or you can create your own monument.
+			 * You are in an area where there are no monuments you can connect with. You will have to wait until someone creates a new monument in your area, or you can create your own monument.
 			 */
 			noMonumentsHereMessage: () => LocalizedString
 		}
 		CreateNewMonumentButton: {
 			/**
-			 * create a new monument
+			 * Create a new monument
 			 */
 			label: () => LocalizedString
 		}
 		AnswerQuestionDrawer: {
 			/**
-			 * answer
+			 * Answer
 			 */
 			answer: () => LocalizedString
 			/**
@@ -1323,7 +1327,7 @@ export type TranslationFunctions = {
 		}
 		QuestionAnsweredCorrectlyCard: {
 			/**
-			 * congratulation for the question answering correctly
+			 * Congratulations for answering the question correctly
 			 */
 			title: () => LocalizedString
 			/**
@@ -1337,21 +1341,25 @@ export type TranslationFunctions = {
 			 */
 			errorMessage: () => LocalizedString
 			/**
-			 * your location is currently {location} of range {range}
+			 * Your location is currently {location} of range {range}
 			 */
 			yourLocationIsCurrently_InRangeOf_: (arg: { location: number[], range: string }) => LocalizedString
 			/**
-			 * choose your location for notifications
+			 * Choose your location for notifications
 			 */
 			chooseYourLocationForNotifications: () => LocalizedString
 			/**
-			 * cancel
+			 * Cancel
 			 */
 			cancel: () => LocalizedString
 			/**
-			 * save
+			 * Save
 			 */
 			save: () => LocalizedString
+			/**
+			 * When people create a new experience and you subscribe to that place where the experience will be placed, you will be notified about this new experience.
+			 */
+			help: () => LocalizedString
 		}
 		CreateYourFirstPictureButton: {
 			/**
@@ -1373,19 +1381,19 @@ export type TranslationFunctions = {
 		}
 		UserMarker: {
 			/**
-			 * you
+			 * You
 			 */
 			you: () => LocalizedString
 		}
 		MoreInformationButton: {
 			/**
-			 * see more information
+			 * See more information
 			 */
 			label: () => LocalizedString
 		}
 		ExperienceCardComponent: {
 			/**
-			 * monument that was connected to the experience was deleted
+			 * Monument that was connected to the experience was deleted
 			 */
 			monumentThatWasConnectedToTheExperienceWasDeleted: () => LocalizedString
 			/**
@@ -1395,7 +1403,7 @@ export type TranslationFunctions = {
 		}
 		CancelButton: {
 			/**
-			 * cancel
+			 * Cancel
 			 */
 			label: () => LocalizedString
 		}
@@ -1407,26 +1415,26 @@ export type TranslationFunctions = {
 		}
 		InstallApp: {
 			/**
-			 * Install tourmate app
+			 * Install Tourmate app
 			 */
 			title: () => LocalizedString
 			/**
-			 * Install our tourmate app for better experience
+			 * Install our Tourmate app for a better experience
 			 */
 			text: () => LocalizedString
 			/**
-			 * install
+			 * Install
 			 */
 			installButtonLabel: () => LocalizedString
 			/**
-			 * of use Chrome version
+			 * or use Chrome version
 			 */
 			useChrome: () => LocalizedString
 		}
 	}
 	error: {
 		/**
-		 * unexpected error has occurred, please share this with the support team
+		 * Unexpected error has occurred, please share this with the support team
 		 */
 		unexpectedError: () => LocalizedString
 		/**
