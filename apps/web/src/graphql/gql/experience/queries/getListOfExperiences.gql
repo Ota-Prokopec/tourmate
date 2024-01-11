@@ -122,6 +122,7 @@ query getListOfExperiences($location: LocationInput, $userId: String, $limit: In
 				userId
 				monumentId
 			}
+			totalLikesCount
 		}
 	}
 }

@@ -144,5 +144,6 @@ query getMonumentCardWithConnectedExperiences($id: String!) {
 			pickingAnswers
 			type
 		}
+		totalLikesCount
 	}
 }

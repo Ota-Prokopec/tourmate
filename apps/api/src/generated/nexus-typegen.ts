@@ -256,6 +256,7 @@ export interface NexusGenFieldTypes {
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
     pictureUrl: NexusGenScalars['URL']; // URL!
+    totalLikesCount: number; // Int!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
   }
@@ -290,6 +291,7 @@ export interface NexusGenFieldTypes {
     question: NexusGenRootTypes['Question'] | null; // Question
     questionId: string | null; // String
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
+    totalLikesCount: number; // Int!
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
@@ -412,6 +414,7 @@ export interface NexusGenFieldTypeNames {
     likes: 'ExperienceLike'
     location: 'Location'
     pictureUrl: 'URL'
+    totalLikesCount: 'Int'
     user: 'User'
     userId: 'String'
   }
@@ -446,6 +449,7 @@ export interface NexusGenFieldTypeNames {
     question: 'Question'
     questionId: 'String'
     topics: 'Topic'
+    totalLikesCount: 'Int'
     transports: 'Transport'
     user: 'User'
     userId: 'String'

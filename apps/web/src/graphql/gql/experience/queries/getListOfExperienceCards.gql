@@ -9,6 +9,8 @@ query getListOfExperienceCards {
 		userId
 		pictureUrl
 		location
+		totalLikesCount
+
 		user {
 			_createdAt
 			_updatedAt

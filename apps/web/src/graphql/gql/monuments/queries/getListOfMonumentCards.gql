@@ -91,5 +91,6 @@ query getListOfMonumentCards(
 			location
 			connectedMonumentId
 		}
+		totalLikesCount
 	}
 }

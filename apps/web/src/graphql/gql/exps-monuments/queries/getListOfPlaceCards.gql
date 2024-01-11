@@ -13,6 +13,8 @@ query getListOfPlaceCards {
 		about
 		placeDetailId
 		pictureURL
+		totalLikesCount
+
 		user {
 			_createdAt
 			_updatedAt
