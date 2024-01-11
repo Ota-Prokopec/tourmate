@@ -77,3 +77,7 @@ export const base64ToFile = (base64: Base64, fileName: string) => {
 	const buffer = Buffer.from(base64, 'base64')
 	return new File([buffer], fileName)
 }
+
+export const base64ToBuffer = (base64: Base64 | string) => {
+	return Buffer.from(base64, 'base64')
+}

@@ -81,7 +81,7 @@ export default objectType({
 
 				const queries = [
 					Queries.monumentLike.equal('monumentId', source._id), // get by monument id
-					Queries.monumentLike.limit(6), // only 6 of them
+					Queries.monumentLike.limit(3), // only 6 of them
 					Queries.monumentLike.notEqual('userId', ctx.user.$id), // dont pick me
 				]
 
