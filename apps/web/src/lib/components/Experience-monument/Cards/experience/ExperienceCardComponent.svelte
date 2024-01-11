@@ -116,7 +116,7 @@
 			</Row>
 
 			<CardImage on:like={like} imgSrc={experience.pictureUrl}>
-				{#if typeof liked !== 'undefined'}
+				{#if typeof liked !== 'undefined' && typeof experience.totalLikesCount !== 'undefined'}
 					<LikeSection
 						class="absolute bottom-0 left-0 m-6"
 						ableToLike={!amIOwner}
@@ -124,7 +124,8 @@
 						on:unlike={unlike}
 						data={{
 							liked: liked,
-							otherUsersThatLiked: experience.likes.map((l) => l.user)
+							otherUsersThatLiked: experience.likes.map((l) => l.user),
+							totalLikesCount: experience.totalLikesCount
 						}}
 					/>
 				{/if}

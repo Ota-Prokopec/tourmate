@@ -256,6 +256,7 @@ export interface NexusGenFieldTypes {
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
     pictureUrl: NexusGenScalars['URL']; // URL!
+    totalLikesCount: number; // Int!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
   }
@@ -413,6 +414,7 @@ export interface NexusGenFieldTypeNames {
     likes: 'ExperienceLike'
     location: 'Location'
     pictureUrl: 'URL'
+    totalLikesCount: 'Int'
     user: 'User'
     userId: 'String'
   }

@@ -42,13 +42,30 @@ export default objectType({
 
 				const queries = [
 					Queries.experienceLike.equal('experienceId', source._id), // get by monument id
-					Queries.experienceLike.limit(6), // only 6 of them
+					Queries.experienceLike.limit(3), // only 6 of them
 					Queries.experienceLike.notEqual('userId', ctx.user.$id), // not pick me
 					//! userid is not working
 				]
 				const likes = await collections.experienceLike.listDocuments(queries)
 
 				return likes.documents
+			},
+		})
+		t.field('totalLikesCount', {
+			type: 'Int',
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
+				const { collections, Queries } = ctx.appwrite
+
+				const queries = [
+					Queries.experienceLike.equal('experienceId', source._id), // get by monument id
+					Queries.monumentLike.limit(1), // only 6 of them
+					Queries.experienceLike.notEqual('userId', ctx.user.$id), // not pick me
+				]
+
+				const likes = await collections.experienceLike.listDocuments(queries)
+
+				return likes.total
 			},
 		})
 		t.field('liked', {

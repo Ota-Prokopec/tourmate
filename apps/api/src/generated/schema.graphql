@@ -65,6 +65,7 @@ type Experience {
   likes: [ExperienceLike!]!
   location: Location!
   pictureUrl: URL!
+  totalLikesCount: Int!
   user: User!
   userId: String!
 }

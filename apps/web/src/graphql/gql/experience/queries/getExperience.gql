@@ -9,5 +9,6 @@ query getExperience($getExperienceId: String!) {
 		userId
 		pictureUrl
 		location
+		totalLikesCount
 	}
 }
