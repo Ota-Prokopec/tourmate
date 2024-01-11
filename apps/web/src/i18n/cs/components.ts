@@ -2,86 +2,86 @@ import type { BaseTranslation } from '../i18n-types';
 
 export const componentsCS = {
 	EmailInput: {
-		label: 'zadejte e-mail'
+		label: 'Zadejte e-mail'
 	},
 	PasswordInput: {
-		label: 'zadejte heslo'
+		label: 'Zadejte heslo'
 	},
 	UsernameInput: {
-		label: 'zadejte uživatelské jméno'
+		label: 'Zadejte uživatelské jméno'
 	},
 	EmailSent: {
 		title: 'Poslali jsme vám potvrzení e-mailem.',
 		text: 'Otevřete svůj e-mail a klikněte na odkaz, který jsme vám poslali.'
 	},
 	MyIdInput: {
-		label: 'zadejte své ID'
+		label: 'Zadejte své ID'
 	},
 	MonumentCardComponent: {
 		reallyDeleteTheMonumentLabel: 'Opravdu chcete smazat svoji památku? Nelze ji obnovit.',
 		pictureAlreadyTaken: 'Obrázek již byl pořízen'
 	},
 	LogOutButton: {
-		label: 'odhlásit se'
+		label: 'Odhlásit se'
 	},
 	MapSettings: {
 		saveErrorMessage:
 			'Omlouváme se, ale vaše preference mapy nebyly uloženy. Zkuste to později znovu.',
-		mapRange: 'rozsah mapy'
+		mapRange: 'Rozsah mapy'
 	},
 	NoContent: {
-		notFound: 'nenalezeno'
+		notFound: 'Nenalezeno'
 	},
 	MeasureDistancesMap: {
-		resetButtonLabel: 'resetovat'
+		resetButtonLabel: 'Resetovat'
 	},
 	MonumentCreateForm: {
-		monumentName: 'název památky',
-		place: 'místo',
-		type: 'typ',
-		transport: 'doprava',
-		about: 'o zážitku',
-		image: 'obrázek'
+		monumentName: 'Název památky',
+		place: 'Místo',
+		type: 'Typ',
+		transport: 'Doprava',
+		about: 'O zážitku',
+		image: 'Obrázek'
 	},
 	AddQuestionDrawer: {
 		saveError: 'Nemůžeme uložit vaši otázku takto, zkontrolujte, zda je vše vyplněno.',
 		yourQuestion: 'Vaše otázka',
-		save: 'uložit',
+		save: 'Uložit',
 		questionTypes: {
-			radio: 'výběr',
-			text: 'text',
-			number: 'číslo'
+			radio: 'Výběr',
+			text: 'Text',
+			number: 'Číslo'
 		}
 	},
 	AddQuestionButton: {
-		label: 'přidat svou otázku',
+		label: 'Přidat svou otázku',
 		notAbleToEditQuestion:
 			'Omlouváme se, nemůžete upravit svou otázku v památce, protože již někteří lidé mohli odpovědět.'
 	},
 	ImageInput: {
-		throughGallery: 'přes galerii',
-		throughClipboard: 'přes schránku',
+		throughGallery: 'Přes galerii',
+		throughClipboard: 'Přes schránku',
 		clipboardNotFound: 'V schránce není k dispozici žádný obrázek.'
 	},
 	CookiesAlert: {
 		title:
 			'Tato stránka používá soubory cookie k ukládání relací uživatelů a dat uživatelů, včetně aktuální polohy uživatelů.',
-		acceptButtonLabel: 'přijmout soubory cookie'
+		acceptButtonLabel: 'Přijmout soubory cookie'
 	},
 	SeeOnMapButton: {
-		label: 'zobrazit na mapě'
+		label: 'Zobrazit na mapě'
 	},
 	SeeMapButton: {
-		label: 'zobrazit mapu'
+		label: 'Zobrazit mapu'
 	},
 	SeeOnGoogleMapsButton: {
-		label: 'zobrazit na Google Maps'
+		label: 'Zobrazit na Google Maps'
 	},
 	TakePictureHereButton: {
-		label: 'pořídit obrázek zde'
+		label: 'Pořídit obrázek zde'
 	},
 	ContinueButton: {
-		label: 'pokračovat'
+		label: 'Pokračovat'
 	},
 	MonumentNotFoundDrawer: {
 		cantFindAnyMonumentQuestion: 'Nemůžete najít žádnou památku?',
@@ -92,10 +92,10 @@ export const componentsCS = {
 			'Nacházíte se v oblasti, kde nejsou žádné památky, ke kterým byste se mohli připojit. Budete muset počkat, dokud někdo vytvoří novou památku ve vaší oblasti, nebo si můžete vytvořit vlastní památku.'
 	},
 	CreateNewMonumentButton: {
-		label: 'vytvořit novou památku'
+		label: 'Vytvořit novou památku'
 	},
 	AnswerQuestionDrawer: {
-		answer: 'odpovědět',
+		answer: 'Odpovědět',
 		notAbleToTakeAPictureWithTheMonument: 'Nemůžete pořídit obrázek s touto památkou'
 	},
 	QuestionAnsweredWrongCard: {
@@ -108,11 +108,12 @@ export const componentsCS = {
 	},
 	SetLocationForNotificationsPage: {
 		errorMessage: 'Nepodařilo se nastavit vaši polohu pro oznámení',
-		yourLocationIsCurrently_InRangeOf_:
-			'vaše poloha je aktuálně {location: number[]} v rozsahu {range: string}',
-		chooseYourLocationForNotifications: 'vyberte si polohu pro oznámení',
-		cancel: 'zrušit',
-		save: 'uložit'
+		yourLocationIsCurrently_InRangeOf:
+			'Vaše poloha je aktuálně {location: number[]} v rozsahu {range: string}',
+		chooseYourLocationForNotifications: 'Vyberte si polohu pro oznámení',
+		cancel: 'Zrušit',
+		save: 'Uložit',
+		help: 'Když lidé vytvoří nový zážitek a přihlásíte se k místu, kde bude tento zážitek umístěn, budete o tomto novém zážitku informováni.'
 	},
 	CreateYourFirstPictureButton: {
 		label: 'Vytvořte svůj první obrázek'
@@ -124,10 +125,10 @@ export const componentsCS = {
 		newMonumentWasAdded: 'Byla přidána nová památka'
 	},
 	UserMarker: {
-		you: 'vy'
+		you: 'Vy'
 	},
 	MoreInformationButton: {
-		label: 'zobrazit více informací'
+		label: 'Zobrazit více informací'
 	},
 	ExperienceCardComponent: {
 		monumentThatWasConnectedToTheExperienceWasDeleted:
@@ -135,7 +136,7 @@ export const componentsCS = {
 		reallyDeleteYourExperienceQuestion: 'Opravdu chcete smazat svůj obrázek? Nelze ho obnovit.'
 	},
 	CancelButton: {
-		label: 'zrušit'
+		label: 'Zrušit'
 	},
 	BasicImageInput: {
 		title: 'Klikněte pro nahrání nebo přetáhněte soubor sem'
@@ -143,7 +144,7 @@ export const componentsCS = {
 	InstallApp: {
 		title: 'Nainstalujte aplikaci Tourmate',
 		text: 'Nainstalujte naši aplikaci Tourmate pro lepší zážitek',
-		installButtonLabel: 'nainstalovat',
-		useChrome: 'nebo použijte naší webovou verzi'
+		installButtonLabel: 'Nainstalovat',
+		useChrome: 'Nebo použijte naší webovou verzi'
 	}
 } satisfies BaseTranslation;
