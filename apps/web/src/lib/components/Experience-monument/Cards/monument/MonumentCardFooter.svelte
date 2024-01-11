@@ -27,6 +27,7 @@
 		on:like={() => dispatch('like')}
 		on:unlike={() => dispatch('unlike')}
 		data={{
+			totalLikesCount: monument.totalLikesCount,
 			liked: liked,
 			otherUsersThatLiked: monument.likes.map((l) => l.user)
 		}}

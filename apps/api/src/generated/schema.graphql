@@ -112,6 +112,7 @@ type Monument {
   question: Question
   questionId: String
   topics: [Topic!]!
+  totalLikesCount: Int!
   transports: [Transport!]!
   user: User!
   userId: String!

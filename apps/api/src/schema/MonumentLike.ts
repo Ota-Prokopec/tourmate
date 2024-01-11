@@ -15,6 +15,7 @@ export default objectType({
 		t.string('_databaseId')
 		t.string('userId')
 		t.string('monumentId')
+
 		t.field('user', {
 			type: 'User',
 			resolve: async (source, args, ctx) => {

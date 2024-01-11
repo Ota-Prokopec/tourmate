@@ -39,12 +39,6 @@
 		return !('liked' in monument);
 	};
 
-	collections.monumentLike.listDocuments([
-		Queries.monumentLike.equal('monumentId', source._id),
-		Queries.monumentLike.limit(0),
-		Queries.monumentLike.notEqual('userId', ctx.user.$id)
-	]);
-
 	let usersLocation = $lsStore.usersLocation;
 	$: usersLocation = $lsStore.usersLocation;
 

@@ -8,9 +8,11 @@
 	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { LikeSectionState } from './LikeSectionState';
+	import Text from '../Common/Text.svelte';
 	const dispatch = createEventDispatcher<{ like: undefined; unlike: undefined }>();
 
 	export let data: {
+		totalLikesCount: number;
 		liked: LikeSectionState;
 		otherUsersThatLiked: UserInfo[];
 	};
@@ -46,12 +48,16 @@
 	<Row class="">
 		{#if data.otherUsersThatLiked.length}
 			{#each data.otherUsersThatLiked as user, index}
-				<Avatar isAvatarFirstInStack={index === 0} {stacked} size="sm" src={user.profilePictureURL}>
-					{#if user.profilePictureURL}
-						{user.username.at(0)}
-					{/if}
-				</Avatar>
+				<Avatar
+					isAvatarFirstInStack={index === 0}
+					{stacked}
+					size="sm"
+					src={user.profilePictureURL}
+				/>
 			{/each}
+			{#if data.totalLikesCount - data.otherUsersThatLiked.length > 0}
+				<Text>+{data.totalLikesCount - data.otherUsersThatLiked.length}</Text>
+			{/if}
 		{/if}
 	</Row>
 </Row>

@@ -90,6 +90,23 @@ export default objectType({
 				return likes.documents
 			},
 		})
+		t.field('totalLikesCount', {
+			type: 'Int',
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
+				const { collections, Queries } = ctx.appwrite
+
+				const queries = [
+					Queries.monumentLike.equal('monumentId', source._id), // get by monument id
+					Queries.monumentLike.limit(1), // only 6 of them
+					Queries.monumentLike.notEqual('userId', ctx.user.$id), // dont pick me
+				]
+
+				const likes = await collections.monumentLike.listDocuments(queries)
+
+				return likes.total
+			},
+		})
 		t.field('liked', {
 			type: nullable('MonumentLike'),
 			resolve: async (source, args, ctx) => {

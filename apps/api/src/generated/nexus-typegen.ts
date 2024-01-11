@@ -290,6 +290,7 @@ export interface NexusGenFieldTypes {
     question: NexusGenRootTypes['Question'] | null; // Question
     questionId: string | null; // String
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
+    totalLikesCount: number; // Int!
     transports: NexusGenScalars['Transport'][]; // [Transport!]!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
@@ -446,6 +447,7 @@ export interface NexusGenFieldTypeNames {
     question: 'Question'
     questionId: 'String'
     topics: 'Topic'
+    totalLikesCount: 'Int'
     transports: 'Transport'
     user: 'User'
     userId: 'String'
