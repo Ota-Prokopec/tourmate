@@ -18,7 +18,7 @@ export const componentsCS = {
 		label: 'Zadejte své ID'
 	},
 	MonumentCardComponent: {
-		reallyDeleteTheMonumentLabel: 'Opravdu chcete smazat svoji památku? Nelze ji obnovit.',
+		reallyDeleteTheMonumentLabel: 'Opravdu chcete smazat svůj zážitek? Nelze ji obnovit.',
 		pictureAlreadyTaken: 'Obrázek již byl pořízen'
 	},
 	LogOutButton: {
@@ -36,7 +36,7 @@ export const componentsCS = {
 		resetButtonLabel: 'Resetovat'
 	},
 	MonumentCreateForm: {
-		monumentName: 'Název památky',
+		monumentName: 'Název zážitku',
 		place: 'Místo',
 		type: 'Typ',
 		transport: 'Doprava',
@@ -56,7 +56,7 @@ export const componentsCS = {
 	AddQuestionButton: {
 		label: 'Přidat svou otázku',
 		notAbleToEditQuestion:
-			'Omlouváme se, nemůžete upravit svou otázku v památce, protože již někteří lidé mohli odpovědět.'
+			'Omlouváme se, nemůžete upravit svou otázku v zážitku, protože již někteří lidé mohli odpovědět.'
 	},
 	ImageInput: {
 		throughGallery: 'Přes galerii',
@@ -84,27 +84,27 @@ export const componentsCS = {
 		label: 'Pokračovat'
 	},
 	MonumentNotFoundDrawer: {
-		cantFindAnyMonumentQuestion: 'Nemůžete najít žádnou památku?',
-		noMonumentHere: 'Aj, aj, žádná památka tady není...',
+		cantFindAnyMonumentQuestion: 'Nemůžete najít žádný zážitek?',
+		noMonumentHere: 'Aj, aj, žádný zážitek tu poblíž není...',
 		createNewOneMessage:
-			'Pokud nemůžete vybrat z památek, které jsou viditelné na mapě, můžete vytvořit vlastní.',
+			'Pokud si nemůžete vybrat ze zážitků, které jsou viditelné na mapě, můžete vytvořit vlastní.',
 		noMonumentsHereMessage:
-			'Nacházíte se v oblasti, kde nejsou žádné památky, ke kterým byste se mohli připojit. Budete muset počkat, dokud někdo vytvoří novou památku ve vaší oblasti, nebo si můžete vytvořit vlastní památku.'
+			'Nacházíte se v oblasti, kde nejsou žádné zážitky, ke kterým byste se mohli připojit. Budete muset počkat, dokud někdo vytvoří nový zážitek ve vaší oblasti, nebo si můžete vytvořit vlastní zážitek.'
 	},
 	CreateNewMonumentButton: {
-		label: 'Vytvořit novou památku'
+		label: 'Vytvořit nový zážitek'
 	},
 	AnswerQuestionDrawer: {
 		answer: 'Odpovědět',
-		notAbleToTakeAPictureWithTheMonument: 'Nemůžete pořídit obrázek s touto památkou'
+		notAbleToTakeAPictureWithTheMonument: 'Nemůžete pořídit obrázek s tímto zážitkem'
 	},
 	QuestionAnsweredWrongCard: {
 		title: 'Odpověděli jste špatně na otázku',
-		notAbleToTakeAPictureWithTheMonument: 'Nemůžete pořídit obrázek s touto památkou'
+		notAbleToTakeAPictureWithTheMonument: 'Nemůžete pořídit obrázek s tímto zážitkem'
 	},
 	QuestionAnsweredCorrectlyCard: {
 		title: 'Gratulujeme k správné odpovědi na otázku',
-		nowYouCanTakePictureWithTheMonument: 'Nyní můžete pořídit obrázek s touto památkou'
+		nowYouCanTakePictureWithTheMonument: 'Nyní můžete pořídit obrázek s tímto zážitkem'
 	},
 	SetLocationForNotificationsPage: {
 		errorMessage: 'Nepodařilo se nastavit vaši polohu pro oznámení',
@@ -122,7 +122,7 @@ export const componentsCS = {
 		label: 'Vytvořte svou první památku'
 	},
 	FirebaseMonumentNotification: {
-		newMonumentWasAdded: 'Byla přidána nová památka'
+		newMonumentWasAdded: 'Byla přidán nový zážitek'
 	},
 	UserMarker: {
 		you: 'Vy'
@@ -132,7 +132,7 @@ export const componentsCS = {
 	},
 	ExperienceCardComponent: {
 		monumentThatWasConnectedToTheExperienceWasDeleted:
-			'Památka, která byla spojena s touto zkušeností, byla smazána',
+			'Zážitek, který byl spojen s touto fotkou, byl smazán',
 		reallyDeleteYourExperienceQuestion: 'Opravdu chcete smazat svůj obrázek? Nelze ho obnovit.'
 	},
 	CancelButton: {

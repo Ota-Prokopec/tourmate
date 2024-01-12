@@ -10,7 +10,7 @@ export const pageCS = {
 		acceptTerms: 'Přijmout obchodní podmínky',
 		passwordsDontMatch: 'Vaše hesla se neshodují',
 		userAlreadyExists: 'Uživatel již existuje',
-		title: 'Vítejte v aplikaci Experience, jsme rádi, že vás zde vidíme.',
+		title: 'Vítejte v aplikaci Tourmate, jsme rádi, že vás zde vidíme.',
 		unsuccessfulRegister: 'Vaše registrace selhala'
 	},
 	signIn: {
@@ -72,8 +72,8 @@ export const pageCS = {
 	},
 	addMonument: {
 		detail: {
-			monumentCreated: 'Vaše památka byla úspěšně vytvořena.',
-			monumentCreateError: 'Vaše památka nebyla úspěšně vytvořena. Zkuste to znovu.',
+			monumentCreated: 'Váš zážitek byl úspěšně vytvořen.',
+			monumentCreateError: 'Váš zážitek nebyla úspěšně vytvořen. Zkuste to znovu.',
 			create: 'Vytvořit'
 		}
 	},
@@ -84,7 +84,7 @@ export const pageCS = {
 	monument: {
 		edit: {
 			save: 'Uložit',
-			updateError: 'Vaše památka nebyla úspěšně aktualizována. Zkuste to znovu.'
+			updateError: 'Váš zážitek nebyl úspěšně aktualizován. Zkuste to znovu.'
 		}
 	},
 	createNewExperience: {
@@ -99,8 +99,8 @@ export const pageCS = {
 			answerQuestion: 'Odpovězte na otázku'
 		},
 		Center: {
-			cantFindAnyMonumentQuestion: 'Nemůžete najít žádnou památku?',
-			connectExperienceToMonument: 'Připojte zážitek k památce',
+			cantFindAnyMonumentQuestion: 'Nemůžete najít žádný zážitek?',
+			connectExperienceToMonument: 'Připojte fotku k zážitku',
 			chooseMonumentFromMap: 'Vyberte zážitek z mapy'
 		}
 	},
