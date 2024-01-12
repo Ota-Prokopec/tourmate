@@ -124,5 +124,6 @@ query getListOfExperiences($location: LocationInput, $userId: String, $limit: In
 			}
 			totalLikesCount
 		}
+		totalLikesCount
 	}
 }

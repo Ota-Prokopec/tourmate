@@ -19,8 +19,8 @@
 	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
 
 	export let experience: ExperienceCard;
-
 	export let dismissable = false;
+	export let disableOwnerOptions = false;
 
 	let liked: LikeSectionState | undefined =
 		'liked' in experience ? (experience.liked ? 'liked' : 'unliked') : undefined;
@@ -82,62 +82,64 @@
 	//TODO: when experience does not have any monument => because monument was deleted => create a card or something that says the monument was deleted at this experience
 </script>
 
-<Modal color="red" bind:open={showModalDeleteDocument}>
-	<Text>{$LL.component.ExperienceCardComponent.reallyDeleteYourExperienceQuestion()}</Text>
-	<svelte:fragment slot="footer">
-		<Button on:click={reallyDeleteExperience} color="red">{$LL.common.yes()}</Button>
-		<Button on:click={() => (showModalDeleteDocument = false)} color="green"
-			>{$LL.common.no()}</Button
+<div>
+	<Modal class="z-[999999] fixed" color="red" bind:open={showModalDeleteDocument}>
+		<Text>{$LL.component.ExperienceCardComponent.reallyDeleteYourExperienceQuestion()}</Text>
+		<svelte:fragment slot="footer">
+			<Button on:click={reallyDeleteExperience} color="red">{$LL.common.yes()}</Button>
+			<Button on:click={() => (showModalDeleteDocument = false)} color="green"
+				>{$LL.common.no()}</Button
+			>
+		</svelte:fragment>
+	</Modal>
+
+	{#if isCardVisible}
+		<Card
+			on:dismiss
+			{dismissable}
+			class={twMerge(
+				'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none p-2 border-0',
+				className
+			)}
 		>
-	</svelte:fragment>
-</Modal>
-
-{#if isCardVisible}
-	<Card
-		on:dismiss
-		{dismissable}
-		class={twMerge(
-			'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none p-2 border-0',
-			className
-		)}
-	>
-		<Column class="relative w-full gap-0">
-			<Row class="w-full absolute justify-between p-2">
-				<UserItem
-					on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
-					avatarClass="w-10 h-10"
-					class="h-auto z-20"
-					user={experience.user}
-				/>
-
-				{#if amIOwner}
-					<OwnerOptions type="experience" on:delete={deleteExperience} />
-				{/if}
-			</Row>
-
-			<CardImage on:like={like} imgSrc={experience.pictureUrl}>
-				{#if typeof liked !== 'undefined' && typeof experience.totalLikesCount !== 'undefined'}
-					<LikeSection
-						class="absolute bottom-0 left-0 m-6"
-						ableToLike={!amIOwner}
-						on:like={like}
-						on:unlike={unlike}
-						data={{
-							liked: liked,
-							otherUsersThatLiked: experience.likes.map((l) => l.user),
-							totalLikesCount: experience.totalLikesCount
-						}}
+			<Column class="relative w-full gap-0">
+				<Row class="w-full absolute justify-between p-2">
+					<UserItem
+						on:click={({ detail: { userId } }) => goto(`/account/${userId}`)}
+						avatarClass="w-10 h-10"
+						class="h-auto z-20"
+						user={experience.user}
 					/>
-				{/if}
-			</CardImage>
 
-			{#if experience.connectedMonument}
-				<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
-			{:else}
-				<Text>
-					{$LL.component.ExperienceCardComponent.monumentThatWasConnectedToTheExperienceWasDeleted()}
-				</Text>
-			{/if}
-		</Column>
-	</Card>
-{/if}
+					{#if amIOwner && !disableOwnerOptions}
+						<OwnerOptions type="experience" on:delete={deleteExperience} />
+					{/if}
+				</Row>
+
+				<CardImage on:like={like} imgSrc={experience.pictureUrl}>
+					{#if typeof liked !== 'undefined' && typeof experience.totalLikesCount !== 'undefined'}
+						<LikeSection
+							class="absolute bottom-0 left-0 m-6 z-50"
+							ableToLike
+							on:like={like}
+							on:unlike={unlike}
+							data={{
+								liked: liked,
+								otherUsersThatLiked: experience.likes.map((l) => l.user),
+								totalLikesCount: experience.totalLikesCount
+							}}
+						/>
+					{/if}
+				</CardImage>
+
+				{#if experience.connectedMonument}
+					<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
+				{:else}
+					<Text>
+						{$LL.component.ExperienceCardComponent.monumentThatWasConnectedToTheExperienceWasDeleted()}
+					</Text>
+				{/if}
+			</Column>
+		</Card>
+	{/if}
+</div>
