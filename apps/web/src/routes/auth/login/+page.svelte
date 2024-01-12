@@ -3,8 +3,10 @@
 	import { PUBLIC_SESSION_NAME } from '$env/static/public';
 	import { user } from '$lib/appwrite/appwrite';
 	import Button from '$lib/components/Common/Button.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 	import Link from '$lib/components/Common/Link.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
 	import lsStore, { storage } from '$lib/utils/lsStore';
@@ -42,7 +44,7 @@
 	};
 </script>
 
-<div class="w-full h-auto flex flex-wrap flex-col items-center gap-6">
+<Column class="items-center gap-6">
 	<div class="flex w-full flex-wrap flex-col gap-1 max-w-[400px]">
 		<EmailInput class="w-full !rounded-3xl" bind:value={email} />
 		<PasswordInput class="w-full !rounded-3xl" bind:value={password} />
@@ -63,4 +65,4 @@
 	<LoginViaSocilaMedia />
 	<Link href="/auth/forgottenpassword">{$LL.page.signIn.forgottenPassword()}</Link>
 	<Link href="/auth/register">{$LL.page.signIn.signUp()}</Link>
-</div>
+</Column>

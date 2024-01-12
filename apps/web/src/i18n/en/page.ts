@@ -10,7 +10,7 @@ export const pageEN = {
 		acceptTerms: 'Accept terms and conditions',
 		passwordsDontMatch: 'Your passwords dont match',
 		userAlreadyExists: 'User already exists',
-		title: 'Welcome into Experience app, we are happy to see you here.',
+		title: 'Welcome into Tourmate app, we are happy to see you here.',
 		unsuccessfulRegister: 'Your registration failed'
 	},
 	signIn: {
@@ -60,7 +60,7 @@ export const pageEN = {
 	search: {
 		categories: {
 			users: 'Users',
-			monuments: 'Monuments',
+			monuments: 'Experiences',
 			places: 'Places'
 		}
 	},
@@ -73,8 +73,8 @@ export const pageEN = {
 	},
 	addMonument: {
 		detail: {
-			monumentCreated: 'Your monument was successfully created.',
-			monumentCreateError: 'Your monument was not successfully created. Please try it again.',
+			monumentCreated: 'Your experience was successfully created.',
+			monumentCreateError: 'Your experience was not successfully created. Please try it again.',
 			create: 'Create'
 		}
 	},
@@ -85,7 +85,7 @@ export const pageEN = {
 	monument: {
 		edit: {
 			save: 'Save',
-			updateError: 'Your monument was not successfully updated. Please try it again.'
+			updateError: 'Your experience was not successfully updated. Please try it again.'
 		}
 	},
 	createNewExperience: {
@@ -100,8 +100,8 @@ export const pageEN = {
 			answerQuestion: 'Answer the question'
 		},
 		Center: {
-			cantFindAnyMonumentQuestion: "Can't find any monument?",
-			connectExperienceToMonument: 'Connect experience to the monument',
+			cantFindAnyMonumentQuestion: "Can't find any experience?",
+			connectExperienceToMonument: 'Connect picture to the experience',
 			chooseMonumentFromMap: 'Choose experience from the map'
 		}
 	},

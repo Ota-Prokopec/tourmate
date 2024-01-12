@@ -46,7 +46,7 @@ type RootTranslation = {
 			 */
 			userAlreadyExists: string
 			/**
-			 * W​e​l​c​o​m​e​ ​i​n​t​o​ ​E​x​p​e​r​i​e​n​c​e​ ​a​p​p​,​ ​w​e​ ​a​r​e​ ​h​a​p​p​y​ ​t​o​ ​s​e​e​ ​y​o​u​ ​h​e​r​e​.
+			 * W​e​l​c​o​m​e​ ​i​n​t​o​ ​T​o​u​r​m​a​t​e​ ​a​p​p​,​ ​w​e​ ​a​r​e​ ​h​a​p​p​y​ ​t​o​ ​s​e​e​ ​y​o​u​ ​h​e​r​e​.
 			 */
 			title: string
 			/**
@@ -169,7 +169,7 @@ type RootTranslation = {
 				 */
 				users: string
 				/**
-				 * M​o​n​u​m​e​n​t​s
+				 * E​x​p​e​r​i​e​n​c​e​s
 				 */
 				monuments: string
 				/**
@@ -198,11 +198,11 @@ type RootTranslation = {
 		addMonument: {
 			detail: {
 				/**
-				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.
+				 * Y​o​u​r​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.
 				 */
 				monumentCreated: string
 				/**
-				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 * Y​o​u​r​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​c​r​e​a​t​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
 				 */
 				monumentCreateError: string
 				/**
@@ -228,7 +228,7 @@ type RootTranslation = {
 				 */
 				save: string
 				/**
-				 * Y​o​u​r​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​u​p​d​a​t​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
+				 * Y​o​u​r​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​n​o​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​u​p​d​a​t​e​d​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​.
 				 */
 				updateError: string
 			}
@@ -266,11 +266,11 @@ type RootTranslation = {
 			}
 			Center: {
 				/**
-				 * C​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
+				 * C​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​e​x​p​e​r​i​e​n​c​e​?
 				 */
 				cantFindAnyMonumentQuestion: string
 				/**
-				 * C​o​n​n​e​c​t​ ​e​x​p​e​r​i​e​n​c​e​ ​t​o​ ​t​h​e​ ​m​o​n​u​m​e​n​t
+				 * C​o​n​n​e​c​t​ ​p​i​c​t​u​r​e​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e
 				 */
 				connectExperienceToMonument: string
 				/**
@@ -397,7 +397,7 @@ type RootTranslation = {
 		}
 		MonumentCardComponent: {
 			/**
-			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​m​o​n​u​m​e​n​t​?​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
+			 * D​o​ ​y​o​u​ ​r​e​a​l​l​y​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​e​x​p​e​r​i​e​n​c​e​?​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​w​a​y​ ​t​o​ ​g​e​t​ ​i​t​ ​b​a​c​k​.
 			 */
 			reallyDeleteTheMonumentLabel: string
 			/**
@@ -435,7 +435,7 @@ type RootTranslation = {
 		}
 		MonumentCreateForm: {
 			/**
-			 * M​o​n​u​m​e​n​t​ ​n​a​m​e
+			 * e​x​p​e​r​i​e​n​c​e​ ​n​a​m​e
 			 */
 			monumentName: string
 			/**
@@ -493,7 +493,7 @@ type RootTranslation = {
 			 */
 			label: string
 			/**
-			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​y​o​u​ ​c​a​n​'​t​ ​e​d​i​t​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​t​h​e​ ​m​o​n​u​m​e​n​t​ ​b​e​c​a​u​s​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​o​u​l​d​ ​h​a​v​e​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​.
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​y​o​u​ ​c​a​n​'​t​ ​e​d​i​t​ ​y​o​u​r​ ​q​u​e​s​t​i​o​n​ ​i​n​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​b​e​c​a​u​s​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​o​u​l​d​ ​h​a​v​e​ ​a​l​r​e​a​d​y​ ​a​n​s​w​e​r​e​d​.
 			 */
 			notAbleToEditQuestion: string
 		}
@@ -553,25 +553,25 @@ type RootTranslation = {
 		}
 		MonumentNotFoundDrawer: {
 			/**
-			 * C​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​m​o​n​u​m​e​n​t​?
+			 * C​a​n​'​t​ ​f​i​n​d​ ​a​n​y​ ​e​x​p​e​r​i​e​n​c​e​?
 			 */
 			cantFindAnyMonumentQuestion: string
 			/**
-			 * A​j​,​ ​a​j​,​ ​n​o​ ​m​o​n​u​m​e​n​t​ ​i​s​ ​h​e​r​e​.​.​.
+			 * A​j​,​ ​a​j​,​ ​n​o​ ​e​x​p​e​r​i​e​n​c​e​ ​i​s​ ​h​e​r​e​.​.​.
 			 */
 			noMonumentHere: string
 			/**
-			 * I​f​ ​y​o​u​ ​c​a​n​'​t​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​m​o​n​u​m​e​n​t​s​ ​t​h​a​t​ ​a​r​e​ ​s​h​o​w​n​ ​o​n​ ​t​h​e​ ​m​a​p​,​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​.
+			 * I​f​ ​y​o​u​ ​c​a​n​'​t​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​e​x​p​e​r​i​e​n​c​e​s​ ​t​h​a​t​ ​a​r​e​ ​s​h​o​w​n​ ​o​n​ ​t​h​e​ ​m​a​p​,​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​.
 			 */
 			createNewOneMessage: string
 			/**
-			 * Y​o​u​ ​a​r​e​ ​i​n​ ​a​n​ ​a​r​e​a​ ​w​h​e​r​e​ ​t​h​e​r​e​ ​a​r​e​ ​n​o​ ​m​o​n​u​m​e​n​t​s​ ​y​o​u​ ​c​a​n​ ​c​o​n​n​e​c​t​ ​w​i​t​h​.​ ​Y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​u​n​t​i​l​ ​s​o​m​e​o​n​e​ ​c​r​e​a​t​e​s​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t​ ​i​n​ ​y​o​u​r​ ​a​r​e​a​,​ ​o​r​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​ ​m​o​n​u​m​e​n​t​.
+			 * Y​o​u​ ​a​r​e​ ​i​n​ ​a​n​ ​a​r​e​a​ ​w​h​e​r​e​ ​t​h​e​r​e​ ​a​r​e​ ​n​o​ ​e​x​p​e​r​i​e​n​c​e​s​ ​y​o​u​ ​c​a​n​ ​c​o​n​n​e​c​t​ ​w​i​t​h​.​ ​Y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​u​n​t​i​l​ ​s​o​m​e​o​n​e​ ​c​r​e​a​t​e​s​ ​a​ ​n​e​w​ ​e​x​p​e​r​i​e​n​c​e​ ​i​n​ ​y​o​u​r​ ​a​r​e​a​,​ ​o​r​ ​y​o​u​ ​c​a​n​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​o​w​n​ ​e​x​p​e​r​i​e​n​c​e​.
 			 */
 			noMonumentsHereMessage: string
 		}
 		CreateNewMonumentButton: {
 			/**
-			 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​m​o​n​u​m​e​n​t
+			 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			label: string
 		}
@@ -581,7 +581,7 @@ type RootTranslation = {
 			 */
 			answer: string
 			/**
-			 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+			 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			notAbleToTakeAPictureWithTheMonument: string
 		}
@@ -591,7 +591,7 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+			 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​b​l​e​ ​t​o​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			notAbleToTakeAPictureWithTheMonument: string
 		}
@@ -601,7 +601,7 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * N​o​w​ ​y​o​u​ ​c​a​n​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​m​o​n​u​m​e​n​t
+			 * N​o​w​ ​y​o​u​ ​c​a​n​ ​t​a​k​e​ ​a​ ​p​i​c​t​u​r​e​ ​w​i​t​h​ ​t​h​i​s​ ​e​x​p​e​r​i​e​n​c​e
 			 */
 			nowYouCanTakePictureWithTheMonument: string
 		}
@@ -647,7 +647,7 @@ type RootTranslation = {
 		}
 		FirebaseMonumentNotification: {
 			/**
-			 * N​e​w​ ​m​o​n​u​m​e​n​t​ ​w​a​s​ ​a​d​d​e​d
+			 * N​e​w​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​a​d​d​e​d
 			 */
 			newMonumentWasAdded: string
 		}
@@ -665,7 +665,7 @@ type RootTranslation = {
 		}
 		ExperienceCardComponent: {
 			/**
-			 * M​o​n​u​m​e​n​t​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​a​s​ ​d​e​l​e​t​e​d
+			 * E​x​p​e​r​i​e​n​c​e​ ​t​h​a​t​ ​w​a​s​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​t​h​e​ ​p​i​c​t​u​r​e​ ​w​a​s​ ​d​e​l​e​t​e​d
 			 */
 			monumentThatWasConnectedToTheExperienceWasDeleted: string
 			/**
@@ -777,7 +777,7 @@ export type TranslationFunctions = {
 			 */
 			userAlreadyExists: () => LocalizedString
 			/**
-			 * Welcome into Experience app, we are happy to see you here.
+			 * Welcome into Tourmate app, we are happy to see you here.
 			 */
 			title: () => LocalizedString
 			/**
@@ -900,7 +900,7 @@ export type TranslationFunctions = {
 				 */
 				users: () => LocalizedString
 				/**
-				 * Monuments
+				 * Experiences
 				 */
 				monuments: () => LocalizedString
 				/**
@@ -928,11 +928,11 @@ export type TranslationFunctions = {
 		addMonument: {
 			detail: {
 				/**
-				 * Your monument was successfully created.
+				 * Your experience was successfully created.
 				 */
 				monumentCreated: () => LocalizedString
 				/**
-				 * Your monument was not successfully created. Please try it again.
+				 * Your experience was not successfully created. Please try it again.
 				 */
 				monumentCreateError: () => LocalizedString
 				/**
@@ -958,7 +958,7 @@ export type TranslationFunctions = {
 				 */
 				save: () => LocalizedString
 				/**
-				 * Your monument was not successfully updated. Please try it again.
+				 * Your experience was not successfully updated. Please try it again.
 				 */
 				updateError: () => LocalizedString
 			}
@@ -996,11 +996,11 @@ export type TranslationFunctions = {
 			}
 			Center: {
 				/**
-				 * Can't find any monument?
+				 * Can't find any experience?
 				 */
 				cantFindAnyMonumentQuestion: () => LocalizedString
 				/**
-				 * Connect experience to the monument
+				 * Connect picture to the experience
 				 */
 				connectExperienceToMonument: () => LocalizedString
 				/**
@@ -1127,7 +1127,7 @@ export type TranslationFunctions = {
 		}
 		MonumentCardComponent: {
 			/**
-			 * Do you really want to delete your monument? There is no way to get it back.
+			 * Do you really want to delete your experience? There is no way to get it back.
 			 */
 			reallyDeleteTheMonumentLabel: () => LocalizedString
 			/**
@@ -1165,7 +1165,7 @@ export type TranslationFunctions = {
 		}
 		MonumentCreateForm: {
 			/**
-			 * Monument name
+			 * experience name
 			 */
 			monumentName: () => LocalizedString
 			/**
@@ -1223,7 +1223,7 @@ export type TranslationFunctions = {
 			 */
 			label: () => LocalizedString
 			/**
-			 * We are sorry, you can't edit your question in the monument because some people could have already answered.
+			 * We are sorry, you can't edit your question in the experience because some people could have already answered.
 			 */
 			notAbleToEditQuestion: () => LocalizedString
 		}
@@ -1283,25 +1283,25 @@ export type TranslationFunctions = {
 		}
 		MonumentNotFoundDrawer: {
 			/**
-			 * Can't find any monument?
+			 * Can't find any experience?
 			 */
 			cantFindAnyMonumentQuestion: () => LocalizedString
 			/**
-			 * Aj, aj, no monument is here...
+			 * Aj, aj, no experience is here...
 			 */
 			noMonumentHere: () => LocalizedString
 			/**
-			 * If you can't choose from monuments that are shown on the map, you can create your own.
+			 * If you can't choose from experiences that are shown on the map, you can create your own.
 			 */
 			createNewOneMessage: () => LocalizedString
 			/**
-			 * You are in an area where there are no monuments you can connect with. You will have to wait until someone creates a new monument in your area, or you can create your own monument.
+			 * You are in an area where there are no experiences you can connect with. You will have to wait until someone creates a new experience in your area, or you can create your own experience.
 			 */
 			noMonumentsHereMessage: () => LocalizedString
 		}
 		CreateNewMonumentButton: {
 			/**
-			 * Create a new monument
+			 * Create a new experience
 			 */
 			label: () => LocalizedString
 		}
@@ -1311,7 +1311,7 @@ export type TranslationFunctions = {
 			 */
 			answer: () => LocalizedString
 			/**
-			 * You are not able to take a picture with this monument
+			 * You are not able to take a picture with this experience
 			 */
 			notAbleToTakeAPictureWithTheMonument: () => LocalizedString
 		}
@@ -1321,7 +1321,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * You are not able to take a picture with this monument
+			 * You are not able to take a picture with this experience
 			 */
 			notAbleToTakeAPictureWithTheMonument: () => LocalizedString
 		}
@@ -1331,7 +1331,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * Now you can take a picture with this monument
+			 * Now you can take a picture with this experience
 			 */
 			nowYouCanTakePictureWithTheMonument: () => LocalizedString
 		}
@@ -1375,7 +1375,7 @@ export type TranslationFunctions = {
 		}
 		FirebaseMonumentNotification: {
 			/**
-			 * New monument was added
+			 * New experience was added
 			 */
 			newMonumentWasAdded: () => LocalizedString
 		}
@@ -1393,7 +1393,7 @@ export type TranslationFunctions = {
 		}
 		ExperienceCardComponent: {
 			/**
-			 * Monument that was connected to the experience was deleted
+			 * Experience that was connected to the picture was deleted
 			 */
 			monumentThatWasConnectedToTheExperienceWasDeleted: () => LocalizedString
 			/**

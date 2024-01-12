@@ -20,7 +20,7 @@ export const componentsEN = {
 
 	MonumentCardComponent: {
 		reallyDeleteTheMonumentLabel:
-			'Do you really want to delete your monument? There is no way to get it back.',
+			'Do you really want to delete your experience? There is no way to get it back.',
 		pictureAlreadyTaken: 'Picture already taken'
 	},
 	LogOutButton: {
@@ -38,7 +38,7 @@ export const componentsEN = {
 		resetButtonLabel: 'Reset'
 	},
 	MonumentCreateForm: {
-		monumentName: 'Monument name',
+		monumentName: 'experience name',
 		place: 'Place',
 		type: 'Type',
 		transport: 'Transport',
@@ -59,7 +59,7 @@ export const componentsEN = {
 	AddQuestionButton: {
 		label: 'Add your question',
 		notAbleToEditQuestion:
-			"We are sorry, you can't edit your question in the monument because some people could have already answered."
+			"We are sorry, you can't edit your question in the experience because some people could have already answered."
 	},
 	ImageInput: {
 		throughGallery: 'Through gallery',
@@ -87,27 +87,27 @@ export const componentsEN = {
 		label: 'Continue'
 	},
 	MonumentNotFoundDrawer: {
-		cantFindAnyMonumentQuestion: "Can't find any monument?",
-		noMonumentHere: 'Aj, aj, no monument is here...',
+		cantFindAnyMonumentQuestion: "Can't find any experience?",
+		noMonumentHere: 'Aj, aj, no experience is here...',
 		createNewOneMessage:
-			"If you can't choose from monuments that are shown on the map, you can create your own.",
+			"If you can't choose from experiences that are shown on the map, you can create your own.",
 		noMonumentsHereMessage:
-			'You are in an area where there are no monuments you can connect with. You will have to wait until someone creates a new monument in your area, or you can create your own monument.'
+			'You are in an area where there are no experiences you can connect with. You will have to wait until someone creates a new experience in your area, or you can create your own experience.'
 	},
 	CreateNewMonumentButton: {
-		label: 'Create a new monument'
+		label: 'Create a new experience'
 	},
 	AnswerQuestionDrawer: {
 		answer: 'Answer',
-		notAbleToTakeAPictureWithTheMonument: 'You are not able to take a picture with this monument'
+		notAbleToTakeAPictureWithTheMonument: 'You are not able to take a picture with this experience'
 	},
 	QuestionAnsweredWrongCard: {
 		title: 'You answered the question wrong',
-		notAbleToTakeAPictureWithTheMonument: 'You are not able to take a picture with this monument'
+		notAbleToTakeAPictureWithTheMonument: 'You are not able to take a picture with this experience'
 	},
 	QuestionAnsweredCorrectlyCard: {
 		title: 'Congratulations for answering the question correctly',
-		nowYouCanTakePictureWithTheMonument: 'Now you can take a picture with this monument'
+		nowYouCanTakePictureWithTheMonument: 'Now you can take a picture with this experience'
 	},
 	SetLocationForNotificationsPage: {
 		errorMessage: 'It was not successful to set your location for notifications',
@@ -125,7 +125,7 @@ export const componentsEN = {
 		label: 'Create your first experience'
 	},
 	FirebaseMonumentNotification: {
-		newMonumentWasAdded: 'New monument was added'
+		newMonumentWasAdded: 'New experience was added'
 	},
 	UserMarker: {
 		you: 'You'
@@ -135,7 +135,7 @@ export const componentsEN = {
 	},
 	ExperienceCardComponent: {
 		monumentThatWasConnectedToTheExperienceWasDeleted:
-			'Monument that was connected to the experience was deleted',
+			'Experience that was connected to the picture was deleted',
 		reallyDeleteYourExperienceQuestion:
 			'Do you really want to delete your picture? There is no way to get it back.'
 	},
