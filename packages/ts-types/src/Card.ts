@@ -34,7 +34,7 @@ export type MonumentCardWithConnectedExperiences = MonumentCard & {
 export type ExperienceCard = GraphqlDocument<Experience> & {
 	user: UserInfo
 	likes: (ExperienceLike & { user: UserInfo })[]
-	totalLikesCount?: number
+	totalLikesCount: number
 	liked?: ExperienceLikeGraphqlDocument | null | undefined
 	connectedMonument?: SmallMonumentCard | null | undefined
 }

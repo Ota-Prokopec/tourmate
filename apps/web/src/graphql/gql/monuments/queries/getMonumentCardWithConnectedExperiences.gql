@@ -118,6 +118,7 @@ query getMonumentCardWithConnectedExperiences($id: String!) {
 				userId
 				experienceId
 			}
+			totalLikesCount
 		}
 		usersConnectedExperiences {
 			_createdAt

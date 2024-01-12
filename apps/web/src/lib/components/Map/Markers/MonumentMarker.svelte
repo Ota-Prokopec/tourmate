@@ -69,7 +69,11 @@
 								...experienceWithoutConnectedMonument,
 								connectedMonument: monument
 							}}
-							<ExperienceCard class="p-0 self-center shadow-none" {experience} />
+							<ExperienceCard
+								disableOwnerOptions
+								class="p-0 self-center shadow-none"
+								{experience}
+							/>
 						{/each}
 					</Carousel>
 				{/if}
