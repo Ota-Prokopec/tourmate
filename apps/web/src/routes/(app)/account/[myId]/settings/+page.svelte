@@ -15,6 +15,9 @@
 	import { Button } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import type { ColorTheme } from '@app/ts-types';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
+	import { navigate } from '$lib/utils/navigator';
 
 	let isLoading = false;
 	export let data: PageData;
@@ -50,6 +53,13 @@
 		{ title: $LL.page.account.settings.logOut.label(), id: 'logOut' }
 	];
 </script>
+
+<Icon
+	on:click={() => navigate('/tutorial')}
+	class="absolute z-50 child:h-4 child:w-4 !child:fill-white rounded-full bg-blue-400 p-1 m-1 mt-[25%]"
+>
+	<IconQuestion />
+</Icon>
 
 {#if isLoading}
 	<FullPageLoading />

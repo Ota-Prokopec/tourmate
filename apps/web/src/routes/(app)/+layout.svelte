@@ -7,10 +7,13 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
 	import Notification from '$lib/components/Notification/Notification.svelte';
 	import lsSvelte, { storage } from '$lib/utils/lsStore';
 	import type { LayoutData } from './$types';
 	import Bar from './Components/Bar.svelte';
+	import { navigate } from '$lib/utils/navigator';
 
 	export let data: LayoutData;
 	let isLoading = true;
@@ -34,6 +37,15 @@
 
 <!--service-worker for notifications in Notification component-->
 <Notification userId={data.user.userId} />
+
+{#if data.user.secondsFromUserCreatedToNow < 4 * 60 * 60}
+	<Icon
+		on:click={() => navigate('/tutorial')}
+		class="absolute z-50 child:h-4 child:w-4 !child:fill-white rounded-full bg-blue-400 p-1 m-1 mt-[25%]"
+	>
+		<IconQuestion />
+	</Icon>
+{/if}
 
 {#if isLoading}
 	<FullPageLoading />
