@@ -423,7 +423,7 @@ type RootTranslation = {
 		}
 		NoContent: {
 			/**
-			 * N​o​t​ ​f​o​u​n​d
+			 * N​o​t​h​i​n​g​ ​f​o​u​n​d​ ​h​e​r​e
 			 */
 			notFound: string
 		}
@@ -1153,7 +1153,7 @@ export type TranslationFunctions = {
 		}
 		NoContent: {
 			/**
-			 * Not found
+			 * Nothing found here
 			 */
 			notFound: () => LocalizedString
 		}

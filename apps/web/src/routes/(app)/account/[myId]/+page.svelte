@@ -18,6 +18,7 @@
 	import Left from '$lib/components/Common/Left.svelte';
 	import { Button } from 'flowbite-svelte';
 	import IconHeart from '$lib/components/Icons/IconHeart.svelte';
+	import Columns from '$lib/components/Common/Columns.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
@@ -96,7 +97,7 @@
 		</Left>
 	{/if}
 
-	<Column class="mb-2 gap-4">
+	<Columns columns="auto_auto" class="mb-2 gap-4">
 		<CategoryPicker {categories} bind:chosenCategory={category} />
 
 		<Column class="gap-10 justify-center items-center">
@@ -114,5 +115,5 @@
 				/>
 			{/if}
 		</Column>
-	</Column>
+	</Columns>
 </Column>

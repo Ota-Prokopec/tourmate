@@ -43,7 +43,7 @@
 
 <Drawer
 	backdrop={true}
-	class={twMerge('p-2 h-full w-full max-w-[400px] ', classDrawer)}
+	class={twMerge('p-2 h-full w-full sm:max-w-[400px] ', classDrawer)}
 	bind:hidden={detailHidden}
 	placement="left"
 >
@@ -87,7 +87,7 @@
 		if (!disableShowingDetails) getMonumentCard();
 	}}
 	on:click
-	class={twMerge('bg-inherit' /*bouncing && 'animate-bouncing'*/, className)}
+	class={twMerge('bg-inherit', className)}
 	location={monument.location}
 >
 	{#if userAlreadyHasExperienceConnectedToThisMonument}

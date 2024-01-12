@@ -19,7 +19,7 @@
 </script>
 
 {#if !disable}
-	<Card padding="md" class={twMerge('relative !gap-0 h-auto ', className)}>
+	<Card padding="md" class={twMerge('relative !gap-0 h-auto mobile:max-w-none', className)}>
 		{#if dismissable}
 			<div class="w-full h-auto flex justify-end gap-2">
 				<slot name="dismissArea" />
