@@ -32,7 +32,7 @@ export const componentsEN = {
 		mapRange: 'Range of the map'
 	},
 	NoContent: {
-		notFound: 'Not found'
+		notFound: 'Nothing found here'
 	},
 	MeasureDistancesMap: {
 		resetButtonLabel: 'Reset'

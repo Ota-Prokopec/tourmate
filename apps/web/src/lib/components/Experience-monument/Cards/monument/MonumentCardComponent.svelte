@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Alert from '$lib/components/Alert/Alert.svelte';
 	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
 	import OwnerOptions from '../OwnerOptions.svelte';
 	import { distanceTo } from 'geolocation-utils';
@@ -142,15 +143,15 @@
 	};
 </script>
 
-<Modal color="red" bind:open={showModalDeleteDocument}>
-	<Text>{$LL.component.MonumentCardComponent.reallyDeleteTheMonumentLabel()}</Text>
-	<svelte:fragment slot="footer">
+<Alert color="red" class="z-50 fixed top-0" dismissable bind:visible={showModalDeleteDocument}>
+	<Text slot="message">{$LL.component.MonumentCardComponent.reallyDeleteTheMonumentLabel()}</Text>
+	<svelte:fragment slot="buttons">
 		<Button on:click={reallyDeleteMonument} color="red">{$LL.common.yes()}</Button>
 		<Button on:click={() => (showModalDeleteDocument = false)} color="green"
 			>{$LL.common.no()}</Button
 		>
 	</svelte:fragment>
-</Modal>
+</Alert>
 
 {#if isCardVisible}
 	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full', className)}>

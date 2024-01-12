@@ -19,6 +19,7 @@
 	<Alert
 		on:click
 		shadow
+		on:close={() => (visible = false)}
 		{dismissable}
 		class={twMerge(
 			'rounded-xl max-w-[500px] z-[9999] max-h-[300px] ml-auto mr-auto mt-5 absolute',

@@ -5,13 +5,12 @@
 	import Map from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import MapSettings from '$lib/components/Map/settings/MapSettings.svelte';
-	import AlmostProfileWithMainImage from '$lib/components/Pages/AlmostProfileWithMainImage.svelte';
 	import lsStore from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
-	import type { Base64, MonumentMarkerData } from '@app/ts-types';
-	import { getUsersLocation, metersToDegree } from '@app/utils';
+	import type { MonumentMarkerData } from '@app/ts-types';
+	import { getUsersLocation } from '@app/utils';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -35,9 +34,6 @@
 	getMonuments(data.user.prefs.mapRange);
 
 	let mapZoom: number;
-
-	let almostProfile = false;
-	let almostProfileImageSrc: string | Base64;
 
 	let settingsHidden = true;
 </script>
@@ -75,11 +71,3 @@
 		/>
 	{/await}
 </Map>
-{#if almostProfile}
-	<AlmostProfileWithMainImage
-		on:close={() => (almostProfile = false)}
-		class="absolute sm:left-0 sm:top-0 sm:m-4 z-[60]"
-		userInfo={data.user}
-		imgSrc={almostProfileImageSrc}
-	/>
-{/if}
