@@ -38,15 +38,6 @@
 <!--service-worker for notifications in Notification component-->
 <Notification userId={data.user.userId} />
 
-{#if data.user.secondsFromUserCreatedToNow < 4 * 60 * 60}
-	<Icon
-		on:click={() => navigate('/tutorial')}
-		class="absolute z-50 child:h-4 child:w-4 !child:fill-white rounded-full bg-blue-400 p-1 m-1 mt-[25%]"
-	>
-		<IconQuestion />
-	</Icon>
-{/if}
-
 {#if isLoading}
 	<FullPageLoading />
 {:else}

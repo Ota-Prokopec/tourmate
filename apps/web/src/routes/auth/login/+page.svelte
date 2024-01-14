@@ -9,15 +9,12 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
+	import { setClientCookieSession } from '$lib/utils/auth';
 	import lsStore, { storage } from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import LoginViaSocilaMedia from '../Components/LoginViaSocilaMedia.svelte';
-
-	const expires = new Date(Date.now() + 999999999999 * 1000);
-
-	const expireTimeString = expires.toUTCString();
 
 	let password = '';
 	let email = '';
@@ -35,7 +32,7 @@
 		try {
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
 			storage.cookieFallback = { a_session_experiences: session };
-			document.cookie = `${PUBLIC_SESSION_NAME}=${session};path=/;maxAge=99999999999999;expires=${expireTimeString}`; //FIXME: remove this shit by adding a custom domain to your client and server as sub domain
+			setClientCookieSession(session);
 			goto('/', { invalidateAll: true });
 		} catch (err) {
 			alert('', $LL.page.signIn.unsuccessfulLogin(), { color: 'yellow' });

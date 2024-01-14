@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { user as userStore } from '$lib/appwrite/appwrite';
+	import { user, user as userStore } from '$lib/appwrite/appwrite';
 	import Center from '$lib/components/Common/Center.svelte';
 	import { sdk } from '$src/graphql/sdk.js';
 	import { alert } from '$src/routes/alertStore';
@@ -9,20 +9,18 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { getSystemLanguageAbbreviation } from '@app/utils';
 	import { isLanguage } from '@app/ts-types';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
-	let firstTime = true;
 
-	userStore.subscribe(async (user) => {
-		if (!user) return;
-		if (!firstTime) return;
-		else firstTime = false;
-
-		if (!data.params.userId || !data.params.secret)
-			throw new Error('userId or secret token is not defined');
-
+	onMount(async () => {
 		try {
-			await userStore.updateVerification(data.params.userId, data.params.secret);
+			const userData = await user.get();
+
+			if (!data.params.token.userId || !data.params.token.secret)
+				throw new Error('userId or secret token is not defined');
+
+			await userStore.updateVerification(data.params.token.userId, data.params.token.secret);
 
 			let defaultLanguage = getSystemLanguageAbbreviation();
 			if (!isLanguage(defaultLanguage)) defaultLanguage = 'en';
@@ -33,7 +31,7 @@
 
 			const { createAccount: account } = await sdk.createAccount({
 				myId: data.params.myId,
-				username: user.name,
+				username: data.params.username,
 				language: defaultLanguage
 			});
 

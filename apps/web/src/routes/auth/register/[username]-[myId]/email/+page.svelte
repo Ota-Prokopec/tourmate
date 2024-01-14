@@ -12,6 +12,7 @@
 	import EmailSent from '../../../Components/EmailSent.svelte';
 	import type { PageData } from './$types';
 	import { Button } from 'flowbite-svelte';
+	import { setClientCookieSession } from '$lib/utils/auth';
 
 	export let data: PageData;
 
@@ -21,9 +22,13 @@
 	let state: 'loading' | 'email-sent' | null = null;
 	$: ableToRegister = email.length > 7 && password.length > 6 && repeatPassword.length > 6;
 
-	//set username and myid into localstorage for being able to access this data when user registers via socila media
-	$lsStore.user = {
-		...data.params
+	const createSuccessURL = () => {
+		const url = new URL(`${location.origin}/auth/register/verifyemail`);
+		if (data.params) {
+			url.searchParams.append('myId', data.params.myId);
+			url.searchParams.append('username', data.params.username);
+		}
+		return url;
 	};
 
 	const registerViaEmail = async () => {
@@ -47,6 +52,8 @@
 					logInViaEmail: { session }
 				} = await sdk.loginViaEmail({ email, password });
 				$lsStore.cookieFallback = { a_session_experiences: session };
+
+				setClientCookieSession(session);
 			} catch (err) {
 				state = null;
 				if (err instanceof AppwriteException) alert('apollo', err.message);
@@ -54,9 +61,7 @@
 			}
 
 			try {
-				await user.createVerification(
-					`${location.origin}/auth/register/verifyemail/${data.params.myId}`
-				);
+				await user.createVerification(createSuccessURL().href);
 			} catch (error) {
 				alert('', $LL.page.signUp.unsuccessfulRegister(), { color: 'yellow' });
 				throw new Error('appwrite did not successfully created a verification email for you');

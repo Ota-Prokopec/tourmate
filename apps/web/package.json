@@ -132,6 +132,7 @@
 		"qrcode": "^1.5.3",
 		"react": "^18.2.0",
 		"react-filerobot-image-editor": "^4.5.2",
+		"sapper": "^0.29.3",
 		"superjson": "^1.13.1",
 		"svelte-appwrite-client": "^0.2.3",
 		"svelte-carousel": "^1.0.25",

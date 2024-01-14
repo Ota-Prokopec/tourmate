@@ -1,16 +1,15 @@
-import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { Base64, Location } from '@app/ts-types';
-import { Locales } from '$src/i18n/i18n-types';
+import type { Location } from '@app/ts-types';
 import * as lodash from 'lodash';
+import { writable } from 'svelte/store';
 
 export type Data =
 	| {
 			usersLocation?: Location | null;
 			cookieFallback?: Record<'a_session_experiences', string> | null;
-			newExperiencePicture?: string | Base64 | null;
 			alreadyHasNotificationToken?: boolean | null;
 			cookiesAccepted?: boolean | null;
+			firstTime?: false | null;
 	  } & Record<string, any>;
 
 const parseLocalStorageValue = (value: string) => {

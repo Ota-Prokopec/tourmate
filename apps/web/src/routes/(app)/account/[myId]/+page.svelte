@@ -86,9 +86,7 @@
 			</Button>
 			<Button on:click={() => goto(`/account/${usersProfile?.myId}/liked`)} color="green">
 				<Row class="gap-2">
-					<Text>
-						{$LL.page.account.seeLikedMonumentsButtonLabel()}
-					</Text>
+					{$LL.page.account.seeLikedMonumentsButtonLabel()}
 					<Icon class="child:w-5 child:h-5 child:fill-red-500 ">
 						<IconHeart />
 					</Icon>
