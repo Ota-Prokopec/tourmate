@@ -8,6 +8,8 @@
 	import Popover from '../Common/Popover.svelte';
 	import { alert } from '$src/routes/alertStore';
 	import LL from '$src/i18n/i18n-svelte';
+	import imageCompression from 'browser-image-compression';
+	import { PUBLIC_MAX_IMAGE_SIZE_IN_MB } from '$env/static/public';
 
 	//	import clipboard from '$lib/utils/clipboard'
 	const dispatch = createEventDispatcher<{
@@ -27,7 +29,11 @@
 	let usePopup: boolean = method === 'copyPaste' || method === 'both' ? true : false;
 
 	const change = async (file: File) => {
-		const base64 = await fileToBase64(file);
+		const compressedFile = await imageCompression(file, {
+			maxSizeMB: parseFloat(PUBLIC_MAX_IMAGE_SIZE_IN_MB)
+		});
+		const base64 = await fileToBase64(compressedFile);
+
 		dispatch('image', { name: file.name, base64: base64, file: file });
 		if (autoImagesrcCompleter) imageURL = base64;
 	};

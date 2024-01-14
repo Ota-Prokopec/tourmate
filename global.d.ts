@@ -23,5 +23,6 @@ declare namespace NodeJS {
 		readonly TESTING_SESSION_NAME: string
 		readonly PUBLIC_SESSION_NAME: string
 		readonly CLIENT_HOSTNAME_COOKIES: string
+		readonly PUBLIC_MAX_IMAGE_SIZE_IN_MB: string
 	}
 }

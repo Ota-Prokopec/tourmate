@@ -96,6 +96,7 @@
 		"@types/w3c-image-capture": "^1.0.8",
 		"@urql/svelte": "^4.0.4",
 		"appwrite": "^13.0.0",
+		"browser-image-compression": "^2.0.2",
 		"bytemd": "^1.21.0",
 		"canvas-txt": "^4.1.1",
 		"cloudinary": "^1.40.0",
