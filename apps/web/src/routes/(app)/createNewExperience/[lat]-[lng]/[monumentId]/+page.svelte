@@ -20,6 +20,7 @@
 	import type { PageData } from './$types';
 	import { pictureStore } from '../../pictureStore';
 	import { get } from 'svelte/store';
+	import { storage } from '$lib/utils/lsStore';
 
 	//if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 
@@ -27,7 +28,7 @@
 
 	let isPublishingLoading = false;
 
-	let picture = get(data.pictureStore);
+	let picture = storage.newExperiencePicture;
 
 	const location = data.newExperience.location;
 	let hiddenCantFindMonumentDrawer = true;

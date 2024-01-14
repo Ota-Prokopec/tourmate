@@ -12,7 +12,7 @@
 		const location = storage.usersLocation;
 		if (!location) throw new Error('user has no location');
 
-		$pictureStore = base64;
+		storage.newExperiencePicture = base64;
 		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
 </script>
