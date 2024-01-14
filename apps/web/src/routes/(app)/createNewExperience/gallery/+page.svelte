@@ -6,12 +6,13 @@
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import { lsStore, storage } from '$lib/utils/lsStore';
 	import { navigate } from '$lib/utils/navigator';
+	import { pictureStore } from '../pictureStore';
 
 	const imageHandler = (base64: string) => {
 		const location = storage.usersLocation;
 		if (!location) throw new Error('user has no location');
 
-		$lsStore.newExperiencePicture = base64;
+		$pictureStore = base64;
 		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
 </script>

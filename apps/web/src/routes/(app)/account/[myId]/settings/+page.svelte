@@ -54,13 +54,6 @@
 	];
 </script>
 
-<Icon
-	on:click={() => navigate('/tutorial')}
-	class="absolute z-50 child:h-4 child:w-4 !child:fill-white rounded-full bg-blue-400 p-1 m-1 mt-[25%]"
->
-	<IconQuestion />
-</Icon>
-
 {#if isLoading}
 	<FullPageLoading />
 {:else}

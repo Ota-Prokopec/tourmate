@@ -703,6 +703,16 @@ type RootTranslation = {
 			 */
 			useChrome: string
 		}
+		Tutorial: {
+			/**
+			 * T​u​t​o​r​i​a​l
+			 */
+			title: string
+			/**
+			 * G​o​t​ ​i​t
+			 */
+			closeButtonLabel: string
+		}
 	}
 	error: {
 		/**
@@ -742,6 +752,10 @@ type RootTranslation = {
 		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​i​t​ ​a​g​a​i​n​ ​o​r​ ​i​n​f​o​r​m​ ​o​u​r​ ​s​u​p​p​o​r​t​.
 		 */
 		universalErrorMessage: string
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​a​s​ ​n​o​t​ ​f​o​u​n​d​.
+		 */
+		userNotFound: string
 	}
 }
 
@@ -1431,6 +1445,16 @@ export type TranslationFunctions = {
 			 */
 			useChrome: () => LocalizedString
 		}
+		Tutorial: {
+			/**
+			 * Tutorial
+			 */
+			title: () => LocalizedString
+			/**
+			 * Got it
+			 */
+			closeButtonLabel: () => LocalizedString
+		}
 	}
 	error: {
 		/**
@@ -1469,6 +1493,10 @@ export type TranslationFunctions = {
 		 * Something went wrong, please try it again or inform our support.
 		 */
 		universalErrorMessage: () => LocalizedString
+		/**
+		 * Your account was not found.
+		 */
+		userNotFound: () => LocalizedString
 	}
 }
 

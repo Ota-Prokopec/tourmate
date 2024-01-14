@@ -1,9 +1,8 @@
 import { Request, Response } from 'express'
 import { Models } from 'appwrite'
-import type { Preferences } from '@app/ts-types'
+import type { Base64, Preferences } from '@app/ts-types'
 import appwriteConnections from './lib/appwrite/appwrite'
 import { Types } from '@app/appwrite-ssr-graphql'
-import { notifications } from '@app/firebase-server'
 
 export const context = async ({ req, res }: { res: Response; req: Request }) => {
 	try {

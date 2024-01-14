@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import MyAlert from '$lib/components/Alert/Alert.svelte';
-	import type { Location, MonumentDocument } from '@app/ts-types';
-	import { watchUsersLocation } from '@app/utils';
-	import { useQuery } from '@sveltestack/svelte-query';
-	import { writable } from 'svelte/store';
+	import Tutorial from '$lib/components/Common/Tutorial.svelte';
+	import lsStore, { storage } from '$lib/utils/lsStore';
 
-	//$: newMonumentAdded = !browser ? writable([]) : svelteCollections.monument.listenInsert();
+	$: firstTime = $lsStore.firstTime;
 </script>
+
+{#if firstTime !== false}
+	<Tutorial on:close={() => ($lsStore.firstTime = false)} />
+{/if}
 
 <slot />

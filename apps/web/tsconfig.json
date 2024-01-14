@@ -19,9 +19,7 @@
 		"noImplicitReturns": true,
 		"importHelpers": true,
 		"allowUnusedLabels": false,
-		"resolveJsonModule": true,
-		"target": "esnext",
-		"module": "commonjs"
+		"resolveJsonModule": true
 	},
 	"include": [
 		"src/**/*.d.ts",
@@ -30,8 +28,7 @@
 		"src/**/*.svelte",
 		"api/**/*.ts",
 		"../../global.d.ts",
-		".svelte-kit/ambient.d.ts",
-		"api/index.ts" //"static/firebase-messaging-sw.js"
+		".svelte-kit/ambient.d.ts"
 	],
 	"exclude": ["node_modules"]
 }

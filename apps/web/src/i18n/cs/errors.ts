@@ -11,5 +11,6 @@ export const errorsCS = {
 		'Omlouváme se, ale nemůžete vytvořit svoji památku zde, protože jsou památky, které jsou příliš blízko k té vaší. Prosím, vyberte jiné místo pro svoji památku nebo nás kontaktujte.',
 	locationNowFoundErrorMessage:
 		'Omlouváme se, ale vaše poloha nemohla být načtena. Vraťte se zpět a zkuste to znovu.',
-	universalErrorMessage: 'Něco šlo špatně, zkuste to znovu nebo informujte naši podporu.'
+	universalErrorMessage: 'Něco šlo špatně, zkuste to znovu nebo informujte naši podporu.',
+	userNotFound: 'Váš účet nebyl nalezen'
 } satisfies BaseTranslation;
