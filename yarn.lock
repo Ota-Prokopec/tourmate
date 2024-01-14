@@ -1387,7 +1387,7 @@
     human-id "^1.0.2"
     prettier "^2.7.1"
 
-"@cloudinary/transformation-builder-sdk@^1.9.0":
+"@cloudinary/transformation-builder-sdk@^1.10.0", "@cloudinary/transformation-builder-sdk@^1.9.0":
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/@cloudinary/transformation-builder-sdk/-/transformation-builder-sdk-1.10.0.tgz#30be98667293d63727f97abeb0f3442f742cdd10"
   integrity sha512-T8evZcLOgvcrBS6bVLseZPGL/BXLReRn+DbbBnKj7yTuJ9ppZ+8EFXpZn7c0Bb2hZz6C/0mC4B5fxKfgTPzDsw==
@@ -1400,6 +1400,13 @@
   integrity sha512-XbG8QgD5fkTUO/YYUWftfz3sUpKzRZJkXhp6xLSxmK/36iyMy2wA4SF5FLCOnv6fLLUneQzXbc4OAwaDM0EWCQ==
   dependencies:
     "@cloudinary/transformation-builder-sdk" "^1.9.0"
+
+"@cloudinary/url-gen@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/url-gen/-/url-gen-1.15.0.tgz#a55c9b51cb27301e0bdc4d60e44a7e73d13db103"
+  integrity sha512-bjU67eZxLUgoRy/Plli4TQio7q6P31OYqnEgXxeN9TKXrzr6h0DeEdIUhKI9gy3HkEBWXWWJIPh7j7gkOJPnyA==
+  dependencies:
+    "@cloudinary/transformation-builder-sdk" "^1.10.0"
 
 "@colors/colors@1.5.0":
   version "1.5.0"

@@ -11,10 +11,6 @@
 	export let method: 'gallery' | 'copyPaste' | 'both' = 'gallery';
 	export let screenErrors: boolean = false;
 
-	const onImage = (e: CustomEvent<{ name: string; file: File; base64: Base64 }>) => {
-		imageURL = e.detail.base64;
-	};
-
 	let className = '';
 	export { className as class };
 	export let avatarClassName = '';
@@ -22,14 +18,6 @@
 	$: imgUrlAsString = imageURL as string;
 </script>
 
-<ImageInput
-	class={className}
-	{autoImagesrcCompleter}
-	{disabled}
-	{method}
-	{screenErrors}
-	on:image
-	on:image={onImage}
->
+<ImageInput class={className} {autoImagesrcCompleter} {disabled} {method} {screenErrors} on:image>
 	<Avatar size="xl" class={avatarClassName} src={imgUrlAsString} />
 </ImageInput>

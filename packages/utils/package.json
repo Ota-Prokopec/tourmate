@@ -29,6 +29,7 @@
 	},
 	"dependencies": {
 		"@app/ts-types": "*",
+		"@cloudinary/url-gen": "^1.15.0",
 		"@maptiler/client": "^1.5.0",
 		"appwrite": "^13.0.1",
 		"compressorjs": "^1.2.1",
