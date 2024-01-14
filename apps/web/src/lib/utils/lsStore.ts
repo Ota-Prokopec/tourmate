@@ -10,6 +10,7 @@ export type Data =
 			alreadyHasNotificationToken?: boolean | null;
 			cookiesAccepted?: boolean | null;
 			firstTime?: false | null;
+			newExperiencePicture?: string | null;
 	  } & Record<string, any>;
 
 const parseLocalStorageValue = (value: string) => {
