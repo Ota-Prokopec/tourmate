@@ -56,6 +56,7 @@
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let dismissable = false;
+	export let disableOwnerOptions = false;
 	let liked: LikeSectionState | undefined =
 		'liked' in monument ? (monument.liked ? 'liked' : 'unliked') : undefined;
 
@@ -154,7 +155,7 @@
 </Alert>
 
 {#if isCardVisible}
-	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full', className)}>
+	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full sm:min-w-[400px]', className)}>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
 			<Row class="justify-between w-full">
@@ -163,7 +164,7 @@
 				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
-					{#if isOwner}
+					{#if isOwner && !disableOwnerOptions}
 						<OwnerOptions type="monument" on:edit={editMonument} on:delete={deleteMonument} />
 					{/if}
 					{#if !disableSharing}

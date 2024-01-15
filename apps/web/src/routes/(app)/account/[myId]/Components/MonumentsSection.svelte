@@ -30,6 +30,7 @@
 </script>
 
 <Paginating
+	wrapperClassName="mobile:w-full"
 	{loadingMoreItems}
 	let:item
 	{initialLoading}

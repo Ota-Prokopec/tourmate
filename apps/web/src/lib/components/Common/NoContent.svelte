@@ -19,7 +19,7 @@
 		className
 	)}
 >
-	<Row class="items-between items-center gap-[10px] w-auto">
+	<Row class="items-between items-center gap-[10px] w-auto justify-center">
 		<Text class="text-xl">
 			{$LL.component.NoContent.notFound()}
 		</Text>
