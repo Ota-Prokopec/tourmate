@@ -25,5 +25,6 @@ declare namespace NodeJS {
 		readonly CLIENT_HOSTNAME_COOKIES: string
 		readonly PUBLIC_MAX_IMAGE_SIZE_IN_MB: string
 		readonly CLOUDINARY_ROOT_FOLDER_NAME: string
+		readonly FIREBASE_PRIVATE_KEY_ID: string
 	}
 }

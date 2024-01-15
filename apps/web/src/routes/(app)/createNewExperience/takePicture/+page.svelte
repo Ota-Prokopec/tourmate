@@ -3,6 +3,7 @@
 	import Center from '$lib/components/Common/Center.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import TakePhotoFromPhone from '$lib/components/Photo/TakePhotoFromPhone.svelte';
+	import { compressImageFile } from '$lib/utils/compressImage';
 	import { storage } from '$lib/utils/lsStore';
 	import { navigate } from '$lib/utils/navigator';
 	import { fileToBase64 } from '@app/utils';
@@ -11,9 +12,7 @@
 	const imageHandler = async (file: File) => {
 		const location = storage.usersLocation;
 		if (!location) throw new Error('user has no location');
-		const compressedFile = await imageCompression(file, {
-			maxSizeMB: parseFloat(PUBLIC_MAX_IMAGE_SIZE_IN_MB)
-		});
+		const compressedFile = await compressImageFile(file, parseFloat(PUBLIC_MAX_IMAGE_SIZE_IN_MB));
 
 		const base64 = await fileToBase64(compressedFile);
 
