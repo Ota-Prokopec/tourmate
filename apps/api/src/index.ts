@@ -15,7 +15,7 @@ const start = async () => {
 		app,
 		path: '/graphql',
 		cors: false,
-		bodyParserConfig: { limit: '10mb' },
+		bodyParserConfig: { limit: '50kB' },
 	})
 }
 

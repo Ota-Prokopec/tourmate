@@ -8,8 +8,7 @@ const options = cloudinary.config({
 	secure: true,
 })
 
-const rootFileName = 'experienceApp'
-
-const buckets = buckets_(options, rootFileName)
+//FIXME: process.env.CLOUDINARY_ROOT_FOLDER_NAME ?? 'tourmate'
+const buckets = buckets_(options, process.env.CLOUDINARY_ROOT_FOLDER_NAME ?? 'tourmate')
 
 export default buckets

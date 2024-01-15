@@ -61,7 +61,12 @@
 		{:then monumentCardData}
 			{@const monument = monumentCardData.getMonument}
 			<Column class={'flex-nowrap'}>
-				<MonumentCardComponent class="mb-bottomNavBarHeightSize" size="normal" {monument} />
+				<MonumentCardComponent
+					disableOwnerOptions
+					class="mb-bottomNavBarHeightSize"
+					size="normal"
+					{monument}
+				/>
 				{#if monument.connectedExperiences.length}
 					<Carousel class="h-min" swiping arrows>
 						{#each monument.connectedExperiences as experienceWithoutConnectedMonument}

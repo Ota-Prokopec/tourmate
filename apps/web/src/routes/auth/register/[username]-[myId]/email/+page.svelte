@@ -40,34 +40,24 @@
 				throw new Error('password dont equal');
 			}
 
-			try {
-				await user.create(appwrite.ID.unique(), email, password, data.params.username);
-			} catch (error) {
-				if (!(error instanceof AppwriteException)) return;
-				if (error.code === 409) alert('', $LL.page.signUp.userAlreadyExists(), { color: 'yellow' });
-				else alert('', $LL.error.universalErrorMessage(), { color: 'yellow' });
-			}
-			try {
-				const {
-					logInViaEmail: { session }
-				} = await sdk.loginViaEmail({ email, password });
-				$lsStore.cookieFallback = { a_session_experiences: session };
+			await user.create(appwrite.ID.unique(), email, password, data.params.username);
 
-				setClientCookieSession(session);
-			} catch (err) {
-				state = null;
-				if (err instanceof AppwriteException) alert('apollo', err.message);
-				throw new Error('registration failed');
-			}
+			const {
+				logInViaEmail: { session }
+			} = await sdk.loginViaEmail({ email, password });
+			$lsStore.cookieFallback = { a_session_experiences: session };
 
-			try {
-				await user.createVerification(createSuccessURL().href);
-			} catch (error) {
-				alert('', $LL.page.signUp.unsuccessfulRegister(), { color: 'yellow' });
-				throw new Error('appwrite did not successfully created a verification email for you');
-			}
+			setClientCookieSession(session);
+
+			await user.createVerification(createSuccessURL().href);
+
 			state = 'email-sent';
 		} catch (error) {
+			if (error instanceof AppwriteException) {
+				if (error.code === 409) alert('', $LL.page.signUp.userAlreadyExists(), { color: 'red' });
+				else alert('', error.message, { color: 'red' });
+			} else alert('', $LL.page.signUp.unsuccessfulRegister(), { color: 'red' });
+
 			state = null;
 		}
 	};
