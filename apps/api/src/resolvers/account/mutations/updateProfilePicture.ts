@@ -32,14 +32,8 @@ export default queryField('updateProfilePicture', {
 
 		const file = await cloudinary.profilePictures.uploadBase64(args.picture)
 
-		const url = new CloudinaryImage('landmannalaugar_iceland.jpg')
-			.resize(scale().width(1000))
-			.delivery(quality(auto()))
-			.delivery(format(auto()))
-			.toURL()
-
 		await collections.userInfo.updateDocument(userInfo._id, {
-			profilePictureURL: url,
+			profilePictureURL: file.url,
 		})
 
 		return {
