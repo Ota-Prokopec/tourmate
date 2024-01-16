@@ -420,6 +420,10 @@ type RootTranslation = {
 			 * R​a​n​g​e​ ​o​f​ ​t​h​e​ ​m​a​p
 			 */
 			mapRange: string
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​b​u​t​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​c​h​o​o​s​e​ ​a​ ​s​m​a​l​l​e​r​ ​m​a​p​ ​r​a​n​g​e
+			 */
+			exceededMaxRange: string
 		}
 		NoContent: {
 			/**
@@ -1164,6 +1168,10 @@ export type TranslationFunctions = {
 			 * Range of the map
 			 */
 			mapRange: () => LocalizedString
+			/**
+			 * We are sorry, but you have to choose a smaller map range
+			 */
+			exceededMaxRange: () => LocalizedString
 		}
 		NoContent: {
 			/**
