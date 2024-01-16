@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { PUBLIC_MAX_IMAGE_SIZE_IN_MB } from '$env/static/public';
+	import { compressImageFile } from '$lib/utils/compressImage';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { Base64 } from '@app/ts-types';
 	import { clipboard, elementIdGenerator, fileToBase64 } from '@app/utils';
-	import imageCompression from 'browser-image-compression';
 	import { Button, ButtonGroup, Dropzone } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import Popover from '../Common/Popover.svelte';
-	import { compressImageFile } from '$lib/utils/compressImage';
 
 	//	import clipboard from '$lib/utils/clipboard'
 	const dispatch = createEventDispatcher<{
@@ -25,16 +24,20 @@
 	export let disabled: boolean = false;
 	export let method: 'gallery' | 'copyPaste' | 'both' = 'gallery';
 	export let screenErrors: boolean = false;
+	export let isLoading = false;
+	export let maxImageSizeInMB = parseFloat(PUBLIC_MAX_IMAGE_SIZE_IN_MB);
 
 	let usePopup: boolean = method === 'copyPaste' || method === 'both' ? true : false;
 
 	const change = async (file: File) => {
-		const compressedFile = await compressImageFile(file, parseFloat(PUBLIC_MAX_IMAGE_SIZE_IN_MB));
+		isLoading = true;
+		const compressedFile = await compressImageFile(file, maxImageSizeInMB);
 
 		const base64 = await fileToBase64(compressedFile);
 
-		dispatch('image', { name: file.name, base64: base64, file: file });
+		dispatch('image', { name: file.name, base64: base64, file: compressedFile });
 		if (autoImagesrcCompleter) imageURL = base64;
+		isLoading = false;
 	};
 
 	let className = '';

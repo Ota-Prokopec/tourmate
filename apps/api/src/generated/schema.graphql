@@ -15,7 +15,7 @@ type Account {
   prefs: UsersPreferences!
 
   """This is URL of profile picture. Not its id."""
-  profilePictureURL: URL!
+  profilePictureURL: String!
   secondsFromUserCreatedToNow: Float!
   status: Boolean!
   userId: String!
@@ -64,7 +64,7 @@ type Experience {
   liked: ExperienceLike
   likes: [ExperienceLike!]!
   location: Location!
-  pictureUrl: URL!
+  pictureUrl: String!
   totalLikesCount: Int!
   user: User!
   userId: String!
@@ -107,7 +107,7 @@ type Monument {
   nearExperiences: [Experience!]!
 
   """This it an URL not id of picture"""
-  pictureURL: URL!
+  pictureURL: String!
   placeDetail: PlaceDetail!
   placeDetailId: String!
   question: Question
@@ -218,7 +218,7 @@ type User {
   myId: String!
 
   """This is URL of profile picture. Not its id."""
-  profilePictureURL: URL!
+  profilePictureURL: String!
   userId: String!
   username: String!
 }

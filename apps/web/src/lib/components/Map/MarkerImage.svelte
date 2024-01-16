@@ -5,7 +5,7 @@
 	import { twMerge } from 'tailwind-merge';
 
 	export let location: Location;
-	export let imgSrc: URL;
+	export let imgSrc: URL | string;
 	export let zoom: number = 14;
 	export let stacked = false;
 

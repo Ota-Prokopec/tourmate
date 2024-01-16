@@ -16,7 +16,7 @@ export default objectType({
 		t.boolean('emailVerification')
 		t.boolean('phoneVerification')
 		t.field('profilePictureURL', {
-			type: 'URL',
+			type: 'String',
 			description: 'This is URL of profile picture. Not its id.',
 		})
 		t.field('prefs', {

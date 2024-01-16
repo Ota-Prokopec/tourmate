@@ -27,7 +27,7 @@ export default objectType({
 		t.string('placeDetailId')
 		t.list.field('transports', { type: 'Transport' })
 		t.field('pictureURL', {
-			type: 'URL',
+			type: 'String',
 			description: 'This it an URL not id of picture',
 		})
 		t.field('user', {

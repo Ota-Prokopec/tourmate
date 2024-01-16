@@ -71,7 +71,6 @@
 		"@app/appwrite-permissions": "*",
 		"@app/appwrite-ssr-graphql": "*",
 		"@app/firebase-client": "*",
-		"@app/firebase-server": "*",
 		"@app/image-svelte": "*",
 		"@app/settings": "*",
 		"@app/ts-types": "*",
