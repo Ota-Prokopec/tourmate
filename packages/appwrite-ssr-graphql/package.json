@@ -33,6 +33,7 @@
 		"lodash": "^4.17.21",
 		"node-appwrite": "^11.0.0",
 		"set-cookie-parser": "^2.6.0",
+		"type-fest": "^4.9.0",
 		"zod": "^3.22.4"
 	}
 }

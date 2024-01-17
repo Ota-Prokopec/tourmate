@@ -10,7 +10,8 @@ export type DatabaseValueTypes =
 	| string[]
 	| number[]
 	| boolean
-	| URL
+	| (URL & string)
+	| string
 	| Base64
 	| undefined
 	| null
@@ -29,16 +30,3 @@ export type PartialDeep<Obj> = {
 }
 
 export type Nullable<T extends any> = T | null | undefined
-// export type inferAppleProperty<T> = T extends (
-// 	param0: any,
-// 	param1: infer Param0,
-// 	...args: any[]
-// ) => any
-// 	? Param0
-// 	: never
-
-// 	type t = Parameters
-
-// const func = (x: number, y: string, z: boolean) => undefined
-
-// type Test = inferAppleProperty<typeof func>

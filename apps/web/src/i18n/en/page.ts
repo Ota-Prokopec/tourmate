@@ -110,5 +110,9 @@ export const pageEN = {
 			errorMessage:
 				'We are sorry, we were not able to sign you in the Tourmate. Please try it again.'
 		}
+	},
+	monumentsCount: {
+		title: 'Experiences count',
+		label: 'Experiences made'
 	}
 } satisfies BaseTranslation;

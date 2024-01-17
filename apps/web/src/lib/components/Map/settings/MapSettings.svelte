@@ -18,12 +18,19 @@
 
 	export let settingsHidden: boolean;
 	export let mapRangeValue: string;
+	export let mapMaxRange = 1000 * 40; //40km
 	export let isLoading = false;
 
 	const save = async () => {
 		try {
 			isLoading = true;
-			await user.addPreferences({ mapRange: parseInt(mapRangeValue) });
+			//checking the value
+			const mapRange = parseInt(mapRangeValue);
+			if (mapRange > mapMaxRange) {
+				alert('', $LL.component.MapSettings.exceededMaxRange(), { color: 'red' });
+				return;
+			}
+			await user.addPreferences({ mapRange: mapRange });
 		} catch (error) {
 			alert('', $LL.component.MapSettings.saveErrorMessage(), { color: 'red' });
 		}

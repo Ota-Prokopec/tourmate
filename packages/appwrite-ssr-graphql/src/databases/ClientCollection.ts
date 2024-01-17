@@ -5,6 +5,7 @@ import {
 	transformAppwriteToGraphql,
 	transformAppwriteToGraphqlDocumentList,
 } from './transformAppwriteToGraphql'
+import { EmptyObject } from 'type-fest'
 
 type Document = Types.Document<{}>
 
@@ -20,7 +21,7 @@ export default (client: Client) => {
 	const databases = new Databases(client)
 
 	return class Collection<
-		TDocumentGet extends Types.Document<{}>,
+		TDocumentGet extends Document,
 		TDocumentCreate extends Record<string, Types.DatabaseValue>,
 	> {
 		public atg
@@ -86,17 +87,17 @@ export default (client: Client) => {
 
 		async updateDocument<TData extends TDocumentGet>(
 			documentId: string,
-			data: Partial<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | EmptyObject | undefined,
 			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			document: Document,
-			data: Partial<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | EmptyObject | undefined,
 			permissions?: string[] | undefined,
 		): Promise<TDocumentGet>
 		async updateDocument<TData extends TDocumentGet>(
 			param: string | Document,
-			data: Partial<TDocumentCreate> | {} | undefined,
+			data: Partial<TDocumentCreate> | EmptyObject | undefined,
 			permissions: string[] | undefined = undefined,
 		): Promise<TDocumentGet> {
 			if (!Array.isArray(permissions) && permissions)

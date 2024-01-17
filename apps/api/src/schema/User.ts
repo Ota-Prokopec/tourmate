@@ -15,7 +15,7 @@ export default objectType({
 		t.string('myId')
 		t.string('username')
 		t.field('profilePictureURL', {
-			type: 'URL',
+			type: 'String',
 			description: 'This is URL of profile picture. Not its id.',
 		})
 		t.field('experiences', {

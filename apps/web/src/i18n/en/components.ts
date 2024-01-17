@@ -29,7 +29,8 @@ export const componentsEN = {
 	MapSettings: {
 		saveErrorMessage:
 			'We are sorry, but your map preferences were not saved. Please try again later.',
-		mapRange: 'Range of the map'
+		mapRange: 'Range of the map',
+		exceededMaxRange: 'We are sorry, but you have to choose a smaller map range'
 	},
 	NoContent: {
 		notFound: 'Nothing found here'

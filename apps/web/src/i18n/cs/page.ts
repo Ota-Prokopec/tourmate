@@ -7,7 +7,7 @@ export const pageCS = {
 		signIn: 'Přihlásit se',
 		usernameUserIdConditions:
 			'Prosím, uživatelské jméno a uživatelské ID musí obsahovat minimálně 4 písmena. Vaše uživatelské ID automaticky obsahuje znak @, nemůžete použít žádné speciální znaky s výjimkou několika z nich (-, _)',
-		acceptTerms: 'Přijmout obchodní podmínky',
+		acceptTerms: 'Přijmout podmínky pro užívání aplikace',
 		passwordsDontMatch: 'Vaše hesla se neshodují',
 		userAlreadyExists: 'Uživatel již existuje',
 		title: 'Vítejte v aplikaci Tourmate, jsme rádi, že vás zde vidíme.',
@@ -109,5 +109,9 @@ export const pageCS = {
 			errorMessage:
 				'Omlouváme se, nebylo nám možné přihlásit vás do aplikace Tourmate. Prosím, zkuste to znovu.'
 		}
+	},
+	monumentsCount: {
+		title: 'Počet zážitků',
+		label: 'zážitků vytvořeno'
 	}
 } satisfies BaseTranslation;

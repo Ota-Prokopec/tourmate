@@ -109,7 +109,7 @@ export interface NexusGenObjects {
     myId: string; // String!
     phoneVerification: boolean; // Boolean!
     prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
-    profilePictureURL: NexusGenScalars['URL']; // URL!
+    profilePictureURL: string; // String!
     status: boolean; // Boolean!
     userId: string; // String!
     username: string; // String!
@@ -126,7 +126,7 @@ export interface NexusGenObjects {
     _updatedAt: string; // String!
     connectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
-    pictureUrl: NexusGenScalars['URL']; // URL!
+    pictureUrl: string; // String!
     userId: string; // String!
   }
   ExperienceLike: { // root type
@@ -149,7 +149,7 @@ export interface NexusGenObjects {
     about?: string | null; // String
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
-    pictureURL: NexusGenScalars['URL']; // URL!
+    pictureURL: string; // String!
     placeDetailId: string; // String!
     questionId?: string | null; // String
     topics: NexusGenScalars['Topic'][]; // [Topic!]!
@@ -197,7 +197,7 @@ export interface NexusGenObjects {
     _permissions: string[]; // [String!]!
     _updatedAt: string; // String!
     myId: string; // String!
-    profilePictureURL: NexusGenScalars['URL']; // URL!
+    profilePictureURL: string; // String!
     userId: string; // String!
     username: string; // String!
   }
@@ -234,7 +234,7 @@ export interface NexusGenFieldTypes {
     myId: string; // String!
     phoneVerification: boolean; // Boolean!
     prefs: NexusGenRootTypes['UsersPreferences']; // UsersPreferences!
-    profilePictureURL: NexusGenScalars['URL']; // URL!
+    profilePictureURL: string; // String!
     secondsFromUserCreatedToNow: number; // Float!
     status: boolean; // Boolean!
     userId: string; // String!
@@ -255,7 +255,7 @@ export interface NexusGenFieldTypes {
     liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
-    pictureUrl: NexusGenScalars['URL']; // URL!
+    pictureUrl: string; // String!
     totalLikesCount: number; // Int!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
@@ -285,7 +285,7 @@ export interface NexusGenFieldTypes {
     location: NexusGenScalars['Location']; // Location!
     name: string; // String!
     nearExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
-    pictureURL: NexusGenScalars['URL']; // URL!
+    pictureURL: string; // String!
     placeDetail: NexusGenRootTypes['PlaceDetail']; // PlaceDetail!
     placeDetailId: string; // String!
     question: NexusGenRootTypes['Question'] | null; // Question
@@ -365,7 +365,7 @@ export interface NexusGenFieldTypes {
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     monuments: NexusGenRootTypes['Monument'][]; // [Monument!]!
     myId: string; // String!
-    profilePictureURL: NexusGenScalars['URL']; // URL!
+    profilePictureURL: string; // String!
     userId: string; // String!
     username: string; // String!
   }
@@ -392,7 +392,7 @@ export interface NexusGenFieldTypeNames {
     myId: 'String'
     phoneVerification: 'Boolean'
     prefs: 'UsersPreferences'
-    profilePictureURL: 'URL'
+    profilePictureURL: 'String'
     secondsFromUserCreatedToNow: 'Float'
     status: 'Boolean'
     userId: 'String'
@@ -413,7 +413,7 @@ export interface NexusGenFieldTypeNames {
     liked: 'ExperienceLike'
     likes: 'ExperienceLike'
     location: 'Location'
-    pictureUrl: 'URL'
+    pictureUrl: 'String'
     totalLikesCount: 'Int'
     user: 'User'
     userId: 'String'
@@ -443,7 +443,7 @@ export interface NexusGenFieldTypeNames {
     location: 'Location'
     name: 'String'
     nearExperiences: 'Experience'
-    pictureURL: 'URL'
+    pictureURL: 'String'
     placeDetail: 'PlaceDetail'
     placeDetailId: 'String'
     question: 'Question'
@@ -523,7 +523,7 @@ export interface NexusGenFieldTypeNames {
     experiences: 'Experience'
     monuments: 'Monument'
     myId: 'String'
-    profilePictureURL: 'URL'
+    profilePictureURL: 'String'
     userId: 'String'
     username: 'String'
   }

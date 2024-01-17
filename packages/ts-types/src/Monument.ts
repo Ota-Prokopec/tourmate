@@ -11,7 +11,7 @@ export type Monument = {
 	userId: string
 	location: Location
 	name: string
-	pictureURL: URL
+	pictureURL: (URL & string) | string
 	placeDetailId: string
 	topics: Topic[]
 	transports: Transport[]

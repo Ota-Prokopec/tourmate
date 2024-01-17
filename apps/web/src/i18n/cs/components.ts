@@ -27,7 +27,8 @@ export const componentsCS = {
 	MapSettings: {
 		saveErrorMessage:
 			'Omlouváme se, ale vaše preference mapy nebyly uloženy. Zkuste to později znovu.',
-		mapRange: 'Rozsah mapy'
+		mapRange: 'Rozsah mapy',
+		exceededMaxRange: 'We are sorry, but you have to choose a smaller map range'
 	},
 	NoContent: {
 		notFound: 'Nic nenalezeno'

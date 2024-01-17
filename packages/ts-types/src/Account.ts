@@ -6,7 +6,7 @@ export type UserInfo = {
 	userId: string
 	myId: string
 	username: string
-	profilePictureURL: URL
+	profilePictureURL: (URL & string) | string
 }
 
 export type Preferences = {
@@ -19,7 +19,7 @@ export type Preferences = {
 export type UserInfoDocument = Document<UserInfo>
 export type UserInfoGraphqlDocument = GraphqlDocument<UserInfo>
 export type UserInfoDocumentCreate = Omit<UserInfo, 'profilePictureURL'> & {
-	profilePictureURL?: URL | undefined | null
+	profilePictureURL?: ((URL & string) | string) | undefined | null
 }
 
 export type Token = {

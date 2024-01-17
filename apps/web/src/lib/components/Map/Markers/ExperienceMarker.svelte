@@ -2,8 +2,6 @@
 	import { twMerge } from 'tailwind-merge';
 	import MarkerImage from '../MarkerImage.svelte';
 	import type { ExperienceMarkerData } from '@app/ts-types';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher<{ almostProfile: { imgSrc: URL } }>();
 
 	export let experience: ExperienceMarkerData;
 	export let zoom: number = 14;
@@ -15,7 +13,6 @@
 </script>
 
 <MarkerImage
-	on:click={() => dispatch('almostProfile', { imgSrc: experience.pictureUrl })}
 	class={twMerge('rounded-full', bouncing && 'animate-bounce', className)}
 	{stacked}
 	on:almostProfile

@@ -17,7 +17,7 @@ export class Cloudinary {
 			files.map((file) => `${this.folder}/${file}`),
 		)
 	}
-	getFileNameFromUrl(url: URL) {
+	getFileNameFromUrl(url: URL | string) {
 		const splits = url.toString().split('/')
 		const fileSplit = splits[splits.length - 1]
 		if (!fileSplit) throw new Error('Invalid URL - not able to be splitted')

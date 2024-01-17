@@ -1,8 +1,12 @@
-import { queryField, stringArg } from 'nexus'
 import cloudinary from '@app/cloudinary-server'
 import { isBase64 } from '@app/utils'
-import { Query } from 'node-appwrite'
+import { CloudinaryImage } from '@cloudinary/url-gen'
+import { format, quality } from '@cloudinary/url-gen/actions/delivery'
+import { scale } from '@cloudinary/url-gen/actions/resize'
+import { auto } from '@cloudinary/url-gen/qualifiers/quality'
 import { ApolloError } from 'apollo-server-express'
+import { queryField, stringArg } from 'nexus'
+import { Query } from 'node-appwrite'
 
 export default queryField('updateProfilePicture', {
 	args: { picture: stringArg() },
@@ -27,6 +31,7 @@ export default queryField('updateProfilePicture', {
 		}
 
 		const file = await cloudinary.profilePictures.uploadBase64(args.picture)
+
 		await collections.userInfo.updateDocument(userInfo._id, {
 			profilePictureURL: file.url,
 		})
