@@ -11,22 +11,24 @@
 	});
 </script>
 
-{#if $monumentsCount.data}
-	<Card class="justify-center items-center flex mobile:w-full min-h-[400px] !p-10 sm:min-w-[400px]">
-		<Text class="text-9xl font-bold text-center">
+<Card class="justify-center items-center flex mobile:w-full min-h-[400px] !p-10 sm:min-w-[400px]">
+	<Text class="text-9xl font-bold text-center">
+		{#if $monumentsCount.data}
 			<AnimatedCounter
 				values={Array.from({ length: $monumentsCount.data }, (_, i) => i.toString())}
 				class="custom-counter"
-				interval={10}
+				interval={35}
 				startImmediately={true}
 				direction="up"
 				loop={false}
 				ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
 				initialValue="0"
 			/>
-		</Text>
-		<Text class="text-3xl">
-			{$LL.page.monumentsCount.label()}
-		</Text>
-	</Card>
-{/if}
+		{:else}
+			0
+		{/if}
+	</Text>
+	<Text class="text-3xl">
+		{$LL.page.monumentsCount.label()}
+	</Text>
+</Card>
