@@ -51,8 +51,6 @@
 			} = await sdk.loginViaEmail({ email, password });
 			$lsStore.cookieFallback = { a_session_experiences: session };
 
-			await user.createEmailSession(email, password);
-
 			setClientCookieSession(session);
 
 			await user.createVerification(createSuccessURL().href);
