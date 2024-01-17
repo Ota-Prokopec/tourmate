@@ -34,6 +34,8 @@
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
 			storage.cookieFallback = { a_session_experiences: session };
 			setClientCookieSession(session);
+			await user.createEmailSession(email, password);
+
 			goto('/', { invalidateAll: true });
 		} catch (err) {
 			alert('', $LL.page.signIn.unsuccessfulLogin(), { color: 'yellow' });
