@@ -727,6 +727,12 @@ type RootTranslation = {
 			 */
 			closeButtonLabel: string
 		}
+		WhatAppOffersButton: {
+			/**
+			 * W​h​a​t​ ​T​o​u​r​m​a​t​e​ ​o​f​f​e​r​s​ ​y​o​u
+			 */
+			label: string
+		}
 	}
 	error: {
 		/**
@@ -1482,6 +1488,12 @@ export type TranslationFunctions = {
 			 * Got it
 			 */
 			closeButtonLabel: () => LocalizedString
+		}
+		WhatAppOffersButton: {
+			/**
+			 * What Tourmate offers you
+			 */
+			label: () => LocalizedString
 		}
 	}
 	error: {

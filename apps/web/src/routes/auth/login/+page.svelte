@@ -7,6 +7,7 @@
 	import Link from '$lib/components/Common/Link.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import WhatAppOffersButton from '$lib/components/Common/WhatAppOffersButton.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
 	import { setClientCookieSession } from '$lib/utils/auth';
@@ -62,4 +63,5 @@
 	<LoginViaSocilaMedia />
 	<Link href="/auth/forgottenpassword">{$LL.page.signIn.forgottenPassword()}</Link>
 	<Link href="/auth/register">{$LL.page.signIn.signUp()}</Link>
+	<WhatAppOffersButton class="mt-4" />
 </Column>

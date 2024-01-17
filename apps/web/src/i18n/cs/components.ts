@@ -151,5 +151,8 @@ export const componentsCS = {
 	Tutorial: {
 		title: 'Tutoriál',
 		closeButtonLabel: 'Mám to'
+	},
+	WhatAppOffersButton: {
+		label: 'Co vám Tourmate nabízí'
 	}
 } satisfies BaseTranslation;
