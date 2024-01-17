@@ -32,7 +32,7 @@
 
 		try {
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
-			storage.cookieFallback = { a_session_experiences: session };
+			$lsStore.cookieFallback = { a_session_experiences: session };
 			setClientCookieSession(session);
 
 			goto('/', { invalidateAll: true });

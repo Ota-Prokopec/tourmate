@@ -4,7 +4,7 @@
 	import Title from '$lib/components/Common/Title.svelte';
 	import EmailInput from '$lib/components/Inputs/EmailInput.svelte';
 	import PasswordInput from '$lib/components/Inputs/PasswordInput.svelte';
-	import lsStore from '$lib/utils/lsStore';
+	import lsStore, { storage } from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';

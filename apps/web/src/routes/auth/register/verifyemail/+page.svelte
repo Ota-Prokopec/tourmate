@@ -15,8 +15,6 @@
 
 	onMount(async () => {
 		try {
-			const userData = await user.get();
-
 			if (!data.params.token.userId || !data.params.token.secret)
 				throw new Error('userId or secret token is not defined');
 
