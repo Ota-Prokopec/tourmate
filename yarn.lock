@@ -1188,6 +1188,11 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
+"@benzara/svelte-animated-counter@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@benzara/svelte-animated-counter/-/svelte-animated-counter-0.0.3.tgz#193068a86559e60aa75812614f0e84c445ece1af"
+  integrity sha512-C/z0qDin5TgyhTE4xcnND0DAMwoRSTICpwXJnJLgduhWBIqH8YQPiF2zB/8ZvGlqWfHlitmxuLabqCzJIEWhaQ==
+
 "@changesets/apply-release-plan@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-7.0.0.tgz#ce3c3dfc5720550a5d592b54ad2f411f816ec5ff"

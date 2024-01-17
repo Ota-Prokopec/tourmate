@@ -287,6 +287,16 @@ type RootTranslation = {
 				errorMessage: string
 			}
 		}
+		monumentsCount: {
+			/**
+			 * E​x​p​e​r​i​e​n​c​e​s​ ​c​o​u​n​t
+			 */
+			title: string
+			/**
+			 * E​x​p​e​r​i​e​n​c​e​s​ ​m​a​d​e
+			 */
+			label: string
+		}
 	}
 	common: {
 		/**
@@ -1034,6 +1044,16 @@ export type TranslationFunctions = {
 				 */
 				errorMessage: () => LocalizedString
 			}
+		}
+		monumentsCount: {
+			/**
+			 * Experiences count
+			 */
+			title: () => LocalizedString
+			/**
+			 * Experiences made
+			 */
+			label: () => LocalizedString
 		}
 	}
 	common: {

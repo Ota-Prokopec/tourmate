@@ -33,6 +33,10 @@
 
 	const registerViaEmail = async () => {
 		try {
+			//log out the current user
+			await user.deleteSessions();
+		} catch (error) {}
+		try {
 			state = 'loading';
 
 			if (password !== repeatPassword) {
