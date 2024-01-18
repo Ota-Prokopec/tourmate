@@ -2,15 +2,14 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import InstallApp from '$lib/components/Common/InstallApp.svelte';
 	import Left from '$lib/components/Common/Left.svelte';
-	import Right from '$lib/components/Common/Right.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import { Avatar, Img } from 'flowbite-svelte';
+	import { Avatar } from 'flowbite-svelte';
 </script>
 
 <InstallApp />
 
 <Column class="justify-start w-full items-center gap-0 h-auto overflow-auto p-2">
-	<Left><Text class="text-3xl m-4 font-bold">tourmate</Text></Left>
+	<Left><Text tag="h1" class="text-3xl m-4 font-bold">tourmate</Text></Left>
 
 	<Avatar
 		rounded
