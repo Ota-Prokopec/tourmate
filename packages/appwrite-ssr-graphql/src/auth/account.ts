@@ -10,7 +10,7 @@ export const getSessionFromCookie = (
 	projectId: string,
 	cookies: Types.Cookie[] | {}[],
 ): string | undefined => {
-	if (!userHasCookies(cookies)) throw new Error('No cookies provided')
+	if (!userHasCookies(cookies)) return undefined
 
 	const sessionNames = [
 		'a_session_' + projectId.toLowerCase(),

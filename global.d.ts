@@ -26,5 +26,6 @@ declare namespace NodeJS {
 		readonly PUBLIC_MAX_IMAGE_SIZE_IN_MB: string
 		readonly CLOUDINARY_ROOT_FOLDER_NAME: string
 		readonly FIREBASE_PRIVATE_KEY_ID: string
+		readonly IOS_AUTHORIZATION_HEADER_NAME: string
 	}
 }

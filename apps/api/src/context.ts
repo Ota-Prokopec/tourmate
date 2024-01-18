@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { Models } from 'appwrite'
 import type { Base64, Preferences } from '@app/ts-types'
 import appwriteConnections from './lib/appwrite/appwrite'
-import { Types } from '@app/appwrite-ssr-graphql'
+import { Types, getSessionFromCookie } from '@app/appwrite-ssr-graphql'
 
 export const context = async ({ req, res }: { res: Response; req: Request }) => {
 	try {
@@ -16,8 +16,17 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 		let user: Models.User<Preferences> | null = null
 		let appwrite: ReturnType<typeof appwriteConnections.setCookie>
 
+		const sessionForAndroid = getSessionFromCookie(
+			process.env.APPWRITE_PROJECT_ID,
+			cookies,
+		)
+		const sessionForIos = req.headers ? req.headers.authorization : undefined
+		console.log(sessionForIos)
+
+		const session = sessionForAndroid ?? sessionForIos
 		try {
-			appwrite = appwriteConnections.setCookie(cookies)
+			if (!session) throw new Error('User is not authenticated')
+			appwrite = appwriteConnections.setSession(session)
 
 			/*appwrite.account.updatePreferences({
 				colorTheme: 'dark',
