@@ -14,8 +14,21 @@
 	import type { LayoutData } from './$types';
 	import Bar from './Components/Bar.svelte';
 	import { navigate } from '$lib/utils/navigator';
+	import lodash from 'lodash';
+	import { appwriteKeys } from '@app/appwrite-client';
+	import { collections } from '$lib/appwrite/appwrite';
 
 	export let data: LayoutData;
+
+	//real-time user update
+	collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
+		data.user = Object.assign(data.user, {
+			...lodash.omit(updatedUserInfo, ...appwriteKeys),
+			_updatedAt: updatedUserInfo.$updatedAt,
+			_createdAt: updatedUserInfo.$createdAt
+		});
+	});
+
 	let isLoading = true;
 
 	$: if ($lsSvelte.usersLocation) isLoading = false;
