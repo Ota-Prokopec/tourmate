@@ -11,15 +11,6 @@ export const load: LayoutLoad = (event) => {
 
 	if (!browser) return event.data; // only the browser side
 
-	//real-time user update
-	collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
-		data.user = Object.assign(data.user, {
-			...lodash.omit(updatedUserInfo, ...appwriteKeys),
-			_updatedAt: updatedUserInfo.$updatedAt,
-			_createdAt: updatedUserInfo.$createdAt
-		});
-	});
-
 	// real-time users current loacation update
 	watchUsersLocation(
 		async (location) => {
