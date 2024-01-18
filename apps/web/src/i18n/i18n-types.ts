@@ -395,7 +395,7 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * O​p​e​n​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​n​d​ ​c​l​i​c​k​ ​o​n​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​w​e​ ​s​e​n​t​ ​y​o​u​.
+			 * O​p​e​n​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​n​d​ ​c​l​i​c​k​ ​o​n​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​w​e​ ​s​e​n​t​ ​y​o​u​.​ ​O​p​e​n​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​U​R​L​ ​o​n​l​y​ ​i​n​ ​t​h​e​ ​s​a​m​e​ ​b​r​o​w​s​e​r​ ​o​f​ ​t​h​e​ ​s​a​m​e​ ​d​e​v​i​c​e​ ​t​h​a​t​ ​y​o​u​ ​r​e​g​i​s​t​e​r​e​d​ ​t​h​e​ ​u​s​e​r​!
 			 */
 			text: string
 		}
@@ -1159,7 +1159,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * Open your email and click on the address we sent you.
+			 * Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user!
 			 */
 			text: () => LocalizedString
 		}

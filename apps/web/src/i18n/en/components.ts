@@ -12,7 +12,7 @@ export const componentsEN = {
 	},
 	EmailSent: {
 		title: 'We sent you email confirmation.',
-		text: 'Open your email and click on the address we sent you.'
+		text: 'Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user!'
 	},
 	MyIdInput: {
 		label: 'Enter your ID'
