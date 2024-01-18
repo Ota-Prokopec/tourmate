@@ -11,19 +11,15 @@ export const getUsersLocation = (
 	return new Promise((res) => {
 		if (typeof window === 'undefined') throw new Error('You called this on server side')
 
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				function (position) {
-					res([position.coords.latitude, position.coords.longitude])
-				},
-				(err) => {
-					throw err
-				},
-				options,
-			)
-		} else {
-			throw new Error('Users location was not successfull')
-		}
+		navigator.geolocation.getCurrentPosition(
+			function (position) {
+				res([position.coords.latitude, position.coords.longitude])
+			},
+			(err) => {
+				throw err
+			},
+			options,
+		)
 	})
 }
 
@@ -31,6 +27,15 @@ export const watchUsersLocation = (
 	callback: (location: Location) => void,
 	options: PositionOptions = { enableHighAccuracy: true },
 ): void => {
+	navigator.geolocation.getCurrentPosition(
+		(position) => {
+			callback([position.coords.latitude, position.coords.longitude])
+		},
+		(err) => {
+			throw err
+		},
+		options,
+	)
 	navigator.geolocation.watchPosition(
 		(position) => {
 			callback([position.coords.latitude, position.coords.longitude])
