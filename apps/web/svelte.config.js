@@ -8,7 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter(),
-		env: { dir: '../../.env.development', publicPrefix: 'PUBLIC_' },
+		env: { dir: '../../.env', publicPrefix: 'PUBLIC_' },
 		alias: {
 			$lib: path.resolve('src', 'lib'),
 			$root: path.resolve('/'),
