@@ -16,11 +16,6 @@ export const load: PageServerLoad = async (event) => {
 	const myId = urlParams.get('myId');
 
 	//for ssr
-
-	console.log(process.env.CLIENT_HOSTNAME);
-	console.log(process.env.APPWRITE_PROJECT_ID);
-	console.log(event.url.origin);
-
 	await event.cookies.set(`a_session_${process.env.APPWRITE_PROJECT_ID}`, secret, {
 		sameSite: 'none',
 		domain: process.env.CLIENT_HOSTNAME_COOKIES,

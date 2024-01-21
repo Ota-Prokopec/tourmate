@@ -1,16 +1,16 @@
 {
 	"private": true,
 	"scripts": {
-		"build": "dotenv -e .env.development -- turbo run build --force",
-		"dev": "dotenv -e .env.development -- turbo run dev",
-		"api": "dotenv -e .env.development -- turbo run dev --filter=api",
-		"web": "dotenv -e .env.development -- turbo run dev --filter=web",
+		"build": "dotenv -e .env -- turbo run build --force",
+		"dev": "dotenv -e .env -- turbo run dev",
+		"api": "dotenv -e .env -- turbo run dev --filter=api",
+		"web": "dotenv -e .env -- turbo run dev --filter=web",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
-		"vitest-web": "dotenv -e .env.development -- turbo run vitest --filter=web",
-		"build-api": "dotenv -e .env.development -- turbo run build --filter=api --force",
-		"build-web": "dotenv -e .env.development turbo run build --filter=web --force",
-		"web-preview": "dotenv -e .env.development turbo run preview --filter=web"
+		"vitest-web": "dotenv -e .env -- turbo run vitest --filter=web",
+		"build-api": "dotenv -e .env -- turbo run build --filter=api --force",
+		"build-web": "dotenv -e .env turbo run build --filter=web --force",
+		"web-preview": "dotenv -e .env turbo run preview --filter=web"
 	},
 	"devDependencies": {
 		"dotenv-cli": "^7.2.1",
