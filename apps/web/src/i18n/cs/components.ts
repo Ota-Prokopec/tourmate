@@ -8,14 +8,14 @@ export const componentsCS = {
 		label: 'Zadejte heslo'
 	},
 	UsernameInput: {
-		label: 'Zadejte uživatelské jméno'
+		label: 'Zadejte své jméno'
 	},
 	EmailSent: {
 		title: 'Poslali jsme vám potvrzení e-mailem.',
 		text: 'Otevřete svůj e-mail a klikněte na odkaz, který jsme vám poslali. Ověřovací adresu URL otevřete pouze ve stejném prohlížeči na stejném zařízení, na kterém jste uživatele zaregistrovali!'
 	},
 	MyIdInput: {
-		label: 'Zadejte své ID'
+		label: 'Zadejte své vlastní Tourmate ID'
 	},
 	MonumentCardComponent: {
 		reallyDeleteTheMonumentLabel: 'Opravdu chcete smazat svůj zážitek? Nelze ji obnovit.',

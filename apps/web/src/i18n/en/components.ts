@@ -8,14 +8,14 @@ export const componentsEN = {
 		label: 'Enter password'
 	},
 	UsernameInput: {
-		label: 'Enter username'
+		label: 'Enter your name'
 	},
 	EmailSent: {
 		title: 'We sent you email confirmation.',
 		text: 'Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user!'
 	},
 	MyIdInput: {
-		label: 'Enter your ID'
+		label: 'Enter your custom Tourmate ID'
 	},
 
 	MonumentCardComponent: {

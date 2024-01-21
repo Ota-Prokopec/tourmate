@@ -17,8 +17,6 @@
 
 	let { username, myId } = data;
 
-	let errMessage = '';
-
 	onMount(async () => {
 		try {
 			//session in localstorage for client to appwrite

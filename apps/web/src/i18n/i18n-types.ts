@@ -385,7 +385,7 @@ type RootTranslation = {
 		}
 		UsernameInput: {
 			/**
-			 * E​n​t​e​r​ ​u​s​e​r​n​a​m​e
+			 * E​n​t​e​r​ ​y​o​u​r​ ​n​a​m​e
 			 */
 			label: string
 		}
@@ -401,7 +401,7 @@ type RootTranslation = {
 		}
 		MyIdInput: {
 			/**
-			 * E​n​t​e​r​ ​y​o​u​r​ ​I​D
+			 * E​n​t​e​r​ ​y​o​u​r​ ​c​u​s​t​o​m​ ​T​o​u​r​m​a​t​e​ ​I​D
 			 */
 			label: string
 		}
@@ -1149,7 +1149,7 @@ export type TranslationFunctions = {
 		}
 		UsernameInput: {
 			/**
-			 * Enter username
+			 * Enter your name
 			 */
 			label: () => LocalizedString
 		}
@@ -1165,7 +1165,7 @@ export type TranslationFunctions = {
 		}
 		MyIdInput: {
 			/**
-			 * Enter your ID
+			 * Enter your custom Tourmate ID
 			 */
 			label: () => LocalizedString
 		}

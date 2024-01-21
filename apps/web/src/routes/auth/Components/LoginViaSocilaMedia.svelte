@@ -38,7 +38,6 @@
 	const login = async (platform: SocialPlatform) => {
 		await logout();
 		const successURL = createSuccessURL();
-		console.log(successURL);
 
 		await user.createOAuth2Session(platform, successURL.href, `${location.origin}/oauth2/failure`);
 	};
