@@ -39,12 +39,12 @@ export default mutationField('createExperience', {
 
 		const document = await buckets.experiences
 			.uploadBase64(args.input.picture)
-			.then(async ({ url }) => {
+			.then(async ({ secure_url }) => {
 				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not Authed', '403')
 				return await collections.experience.createDocument({
 					connectedMonumentId: args.input.connnectedMonumentId,
 					userId: ctx.user.$id,
-					pictureUrl: url,
+					pictureUrl: secure_url,
 					latitude: Math.round(args.input.location[0]),
 					longitude: Math.round(args.input.location[1]),
 				})

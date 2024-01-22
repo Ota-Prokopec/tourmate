@@ -20,6 +20,8 @@ const requestMiddleware: RequestMiddleware = (req) => {
 export default [
 	url,
 	{
+		cache: 'default',
+
 		requestMiddleware: requestMiddleware,
 		credentials: 'include'
 	} as RequestConfig

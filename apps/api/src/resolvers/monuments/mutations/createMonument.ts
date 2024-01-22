@@ -47,7 +47,6 @@ export default mutationField('createMonument', {
 
 			// all promises before the monument it selfs will be created
 			const [file, placeDetail] = await Promise.all([filePromise, placeDetailPromise])
-
 			//create monument
 			const document = await collections.monument.createDocument(
 				{
@@ -59,7 +58,7 @@ export default mutationField('createMonument', {
 					about: args.input.about,
 					name: args.input.name,
 					userId: ctx.user.$id,
-					pictureURL: file.url,
+					pictureURL: file.secure_url,
 					questionId: question?._id,
 				},
 				[ctx.user],
