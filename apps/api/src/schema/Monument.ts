@@ -39,7 +39,6 @@ export default objectType({
 						'user is not authorizated to perform this request (Experiences)',
 						'403',
 					)
-				if (!userId) userId = ctx.user.$id //if no input it will be the user that is logged in
 
 				const { collections } = ctx.appwrite
 				return await getUser(userId, collections)
