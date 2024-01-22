@@ -5,7 +5,6 @@
 /// <reference lib="webworker" />
 
 import { build, files, version } from '$service-worker';
-import { dev } from '$app/environment';
 
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;
@@ -40,7 +39,6 @@ sw.addEventListener('activate', (event) => {
 
 sw.addEventListener('fetch', (event) => {
 	// ignore POST requests etc
-	if (dev) return;
 	if (!(event.request.method === 'GET')) return;
 
 	async function respond() {
