@@ -21,7 +21,6 @@ export default [
 	url,
 	{
 		cache: 'default',
-
 		requestMiddleware: requestMiddleware,
 		credentials: 'include'
 	} as RequestConfig
