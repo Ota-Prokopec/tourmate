@@ -24,7 +24,7 @@
 	export let minZoom: number | undefined = undefined;
 	export let showUser = false;
 	export let deg = 0;
-	let style = `https://api.maptiler.com/maps/basic-v2/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
+	let style = `https://api.maptiler.com/maps/14ef5671-4032-4e51-8c5f-a1f88500bf75/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
 
 	//events
 
