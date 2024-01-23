@@ -1,6 +1,8 @@
 import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
+import { locale } from '$src/i18n/i18n-svelte';
 
 import * as maptiler from '@maptiler/client';
+import { get } from 'svelte/store';
 const defaultTypes: maptiler.ReverseGeocodingOptions['types'] = ['locality'];
 
 const mapTiler = (apiKey: string) => {
@@ -9,7 +11,7 @@ const mapTiler = (apiKey: string) => {
 	const reverseGeocoding = async (
 		lat: number,
 		long: number,
-		{ language = 'cs', limit = 1, types = defaultTypes }
+		{ language = get(locale), limit = 1, types = defaultTypes }
 	) => {
 		const res = (
 			await maptiler.geocoding.reverse([long, lat], {
@@ -25,7 +27,7 @@ const mapTiler = (apiKey: string) => {
 
 	const fowardGeocoding = async (
 		text: string,
-		{ limit = 10, lang = 'cs', fuzzyMatch = true, autocomplete = true }
+		{ limit = 10, lang = get(locale), fuzzyMatch = true, autocomplete = true }
 	) => {
 		const res = (
 			await maptiler.geocoding.forward(text, {
