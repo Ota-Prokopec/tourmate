@@ -20,7 +20,7 @@ sw.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
 		const cache = await caches.open(CACHE);
-		await cache.addAll(ASSETS);
+		//await cache.addAll(ASSETS);
 	}
 
 	event.waitUntil(addFilesToCache());
@@ -66,7 +66,7 @@ sw.addEventListener('fetch', (event) => {
 			}
 
 			if (response.status === 200 && response.ok) {
-				cache.put(event.request, response.clone());
+				//cache.put(event.request, response.clone());
 			}
 
 			return response;
