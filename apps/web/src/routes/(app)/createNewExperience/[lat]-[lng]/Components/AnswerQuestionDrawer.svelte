@@ -38,8 +38,6 @@
 
 	export let question: Question;
 
-	console.log(question.pickingAnswers);
-
 	let textAnswer: string = '';
 	let numberAnswer: number = 0;
 	let radioAnswer: string = '';

@@ -21,12 +21,13 @@ export default mutationField('answerQuestion', {
 		const question = await collections.question.getDocument(questionId)
 		if (!question) throw new Error('Question bellow this id was not found')
 
-		let answerDoc: Answer | null
+		let answerDoc: Answer | null = null
 		if (question.answerType === 'text') {
-			answerDoc = await collections.answerTypeText.getDocument(question.answerId)
+			answerDoc = await adminCollections.answerTypeText.getDocument(question.answerId)
 		} else if (question.answerType === 'number') {
-			answerDoc = await collections.answerTypeNumber.getDocument(question.answerId)
-		} else answerDoc = await collections.answerTypeRadio.getDocument(question.answerId)
+			answerDoc = await adminCollections.answerTypeNumber.getDocument(question.answerId)
+		} else
+			answerDoc = await adminCollections.answerTypeRadio.getDocument(question.answerId)
 
 		if (!answerDoc) throw new Error('Answer bellow this question was not found')
 

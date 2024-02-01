@@ -1,24 +1,18 @@
+import { permissions } from '@app/appwrite-ssr-graphql'
 import cloudinary from '@app/cloudinary-server'
 import {
+	QuestionWithCorrectAnswerRequired,
 	isQuestionTypeNumber,
 	isQuestionTypeRadio,
 	isQuestionTypeText,
 	type Answer,
-	type AnswerType,
 	type GraphqlDocument,
 	type Question,
-	Location,
-	QuestionWithCorrectAnswerRequired,
 } from '@app/ts-types'
-import { arg, mutationField } from 'nexus'
-import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
-import { permissions } from '@app/appwrite-ssr-graphql'
 import { ApolloError } from 'apollo-server-express'
-import appwrite, { Queries } from '../../../lib/appwrite/appwrite'
-import { locationQueries } from '@app/utils'
-
-/**90km => 90 000meters */
-const notificationsRange = 90_000
+import { arg, mutationField } from 'nexus'
+import appwrite from '../../../lib/appwrite/appwrite'
+import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 
 export default mutationField('createMonument', {
 	type: 'Monument',
@@ -40,13 +34,17 @@ export default mutationField('createMonument', {
 			)
 
 			//add optional question
-			const question = await saveQuestion(
+			const questionPromise = saveQuestion(
 				args.input.question,
 				permissions.owner(ctx.user.$id),
 			)
 
 			// all promises before the monument it selfs will be created
-			const [file, placeDetail] = await Promise.all([filePromise, placeDetailPromise])
+			const [file, placeDetail, question] = await Promise.all([
+				filePromise,
+				placeDetailPromise,
+				questionPromise,
+			])
 			//create monument
 			const document = await collections.monument.createDocument(
 				{
