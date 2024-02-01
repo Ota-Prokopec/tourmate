@@ -1,201 +1,96 @@
 <script lang="ts">
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { twMerge } from 'tailwind-merge';
-	import ShootButton from './ShootButton.svelte';
-	import { browser } from '$app/environment';
-	import Icon from '../Common/Icon.svelte';
-	import { SyncLoader } from 'svelte-loading-spinners';
-	import { blobToBase64, elementIdGenerator } from '@app/utils';
-	import imageSvelte from '@app/image-svelte';
-	import DetectPinch from '../Common/DetectPinch.svelte';
 	import type { Base64 } from '@app/ts-types';
+	import '@capacitor-community/camera-preview';
+	import {
+		CameraPreview,
+		type CameraPreviewOptions,
+		type CameraSampleOptions
+	} from '@capacitor-community/camera-preview';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import Card from '../Common/Card.svelte';
+	import Row from '../Common/Row.svelte';
+	import FlipCameraButton from './FlipCameraButton.svelte';
+	import ShootButton from './ShootButton.svelte';
+	import { twMerge } from 'tailwind-merge';
+	import { base64ToFile, device, fileToBase64 } from '@app/utils';
+	import MediaQuery from '../MediaQueries/MediaQuery.svelte';
+	import TakePhotoFromPhone from './TakePhotoFromPhone.svelte';
+	import { navigate } from '$lib/utils/navigator';
+	import Center from '../Common/Center.svelte';
+	import Loading from '../Common/Loading.svelte';
 
-	const dispatch = createEventDispatcher<{
-		image: { base64: string | Base64 };
-	}>();
+	const dispatch = createEventDispatcher<{ image: { base64: Base64; file: File } }>();
+
+	export let isLoading = true;
+	export let quality = 100;
+
+	onMount(async () => {
+		const windowWidth = document.body.clientWidth;
+		const windowHeight = document.body.clientHeight;
+
+		const cameraPreviewOptions: CameraPreviewOptions = {
+			position: 'front',
+			height: windowHeight - 70,
+			width: windowWidth,
+			parent: 'cameraPreview',
+			className: 'cameraPreview',
+			enableZoom: true,
+			enableHighResolution: false
+		};
+		await CameraPreview.start(cameraPreviewOptions);
+		isLoading = false;
+	});
+
+	const shoot = async () => {
+		const cameraPreviewPictureOptions: CameraSampleOptions = {
+			quality: quality
+		};
+
+		const result = await CameraPreview.captureSample(cameraPreviewPictureOptions);
+		const base64PictureData = result.value;
+		const file = base64ToFile(base64PictureData, 'picture.jpg');
+		dispatch('image', { base64: base64PictureData, file: file });
+	};
+
+	const flipCamera = async () => {
+		CameraPreview.flip();
+	};
 
 	let className = '';
 	export { className as class };
-
-	let result: Base64 | string = '';
-	const [actions, ableToUndo] = imageSvelte({ howManyImagesBeforeUndoAvailable: 1 }, (url) => {
-		result = url;
-	});
-	let videoElement: HTMLVideoElement | undefined;
-	$: canvas = browser ? document.createElement('canvas') : undefined;
-
-	let isLoading = true;
-	export let facingMode: 'user' | 'environment' = 'user';
-
-	$: mediaStreamConstraints = {
-		video: {
-			aspectRatio: 9 / 16,
-			deviceId: cameraDeviceId,
-			frameRate: { min: 1, max: 120, ideal: 120 },
-			facingMode: facingMode,
-			width: { ideal: browser ? document.body.offsetWidth : 0 },
-			height: { ideal: browser ? document.body.offsetHeight : 0 }
-		},
-		audio: false
-	} as MediaStreamConstraints;
-
-	let cameraDevices: {
-		user: MediaDeviceInfo;
-		environment: MediaDeviceInfo;
-	};
-	let cameraDeviceId: string | undefined;
-	let imageCapture: ImageCapture | undefined;
-	let videoTrack: MediaStreamTrack | undefined;
-
-	//
-	$: if (!isLoading) startCamera();
-
-	const startCamera = async () => {
-		if (!videoElement) throw new Error('videoElement is not defined');
-		const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
-		videoTrack = stream.getVideoTracks()[0];
-		if (!videoTrack) throw new Error('videoTrack is not defined');
-		videoTrack.applyConstraints();
-		imageCapture = new ImageCapture(videoTrack);
-		if (videoElement) videoElement.srcObject = stream; //set video to video element
-	};
-
-	// get camera devices
-	onMount(async () => {
-		onLoad();
-		const devs = await navigator.mediaDevices.enumerateDevices();
-		const vidDevs = devs.filter((device) => device.kind === 'videoinput');
-		const user = vidDevs.filter(
-			(device) => device.label.includes('ace') || device.label.includes('ront') // ace = face, ront = front
-		)[0];
-		const environment = vidDevs.filter(
-			(device) => !device.label.includes('ace') && !device.label.includes('ront')
-		)[0];
-		if (!user || !environment) throw new Error('environment or user is not defined');
-		cameraDevices = {
-			user: user,
-			environment: environment
-		};
-		cameraDeviceId = cameraDevices[facingMode].deviceId;
-	});
-
-	const onLoad = () => {
-		isLoading = false;
-	};
-
-	const swapCameras = () => {
-		// 		function switchCameras(track, camera) {
-		//   const constraints = track.getConstraints();
-		//   constraints.facingMode = camera;
-		//   track.applyConstraints(constraints);
-		// }
-	};
-
-	const takePicture = async () => {
-		if (!canvas) throw new Error('canvas is not defined');
-		if (!videoElement) throw new Error('videoElement is not defined');
-		if (!imageCapture) throw new Error('imageCapture is not defined');
-
-		isLoading = true;
-
-		const pictureBlob = await imageCapture.takePhoto();
-		const pictureBitmap = await createImageBitmap(pictureBlob);
-
-		drawCanvas(pictureBitmap);
-	};
-
-	const drawCanvas = async (pictureBitmap: ImageBitmap) => {
-		if (!canvas) throw new Error('canvas is not defined');
-		if (!videoElement) throw new Error('videoElement is not defined');
-
-		const vHeight = videoElement.offsetHeight;
-		const vWidth = videoElement.offsetWidth;
-
-		canvas.height = vHeight;
-		canvas.width = vWidth;
-
-		canvas.getContext('2d')?.clearRect(0, 0, pictureBitmap.width, pictureBitmap.height);
-
-		canvas
-			.getContext('2d')
-			?.drawImage(
-				pictureBitmap,
-				(pictureBitmap.width - vWidth) / 2,
-				(pictureBitmap.height - vHeight) / 2,
-				vWidth,
-				vHeight,
-				0,
-				0,
-				vWidth,
-				vHeight
-			);
-
-		const base64 = await canvas.toDataURL('image/png');
-
-		if (facingMode === 'user') {
-			await actions.load(base64);
-			await actions.flipX();
-		} else {
-			await actions.load(base64);
-		}
-
-		done(result);
-	};
-
-	const done = (base64: string) => {
-		dispatch('image', {
-			base64: base64
-		});
-	};
-
-	const zoomIn = () => {
-		zoom(1);
-	};
-	const zoomOut = () => {
-		zoom(-1);
-	};
-
-	const zoom = (addZoom: number) => {
-		const capabilities = videoTrack?.getCapabilities();
-		if (!capabilities || (capabilities && !('zoom' in capabilities))) {
-			console.log('your cam cant zoom');
-			return;
-		}
-		videoTrack?.applyConstraints({ advanced: [{ zoom: capabilities.zoom.min + addZoom }] });
-	};
 </script>
 
-<DetectPinch
-	on:zoomIn={zoomIn}
-	on:zoomOut={zoomOut}
-	class="h-full w-full relative flex justify-center items-center"
->
-	{#if isLoading}
-		<div class="z-50">
-			<SyncLoader color="black" size={60} />
-		</div>
-	{/if}
-	<video
-		autoplay
-		bind:this={videoElement}
+{#if device.recognizeWidth() !== 'mobile'}
+	<TakePhotoFromPhone
+		on:cancel={() => navigate(-1)}
+		on:image={async (e) => {
+			dispatch('image', { base64: await fileToBase64(e.detail), file: e.detail });
+		}}
+	/>
+{/if}
+
+<MediaQuery class="w-full h-full" size="mobile">
+	<Card
 		class={twMerge(
-			'h-full object-cover absolute',
-			isLoading && 'blur-sm',
-			facingMode === 'user' ? 'scale-x-[-1]' : '',
+			'!p-[0px] flex justify-center items-center mobile:w-full h-full rounded-none shadow-none',
 			className
 		)}
 	>
-		<track kind="captions" />
-	</video>
-
-	<div class="absolute bottom-0 mb-24 flex justify-center items-center w-full">
-		<ShootButton class="active:animate-ping" on:click={takePicture} />
-		{#if cameraDevices && cameraDevices.user && cameraDevices.environment}
-			<Icon
-				on:click={swapCameras}
-				icon="fas fa-sync-alt"
-				class="text-4xl absolute right-0 m-14 active:animate-ping"
-			/>
+		{#if isLoading}
+			<Center class="h-[calc(100%-70px)] w-full">
+				<Loading type="circle3" />
+			</Center>
 		{/if}
-	</div>
-</DetectPinch>
+		<div id="cameraPreview" class="relative !h-[calc(100%-70px)]" />
+		<Row class="mt-[2px] justify-center items-center relative w-full h-[60px] ">
+			<ShootButton on:click={shoot} class="" />
+			<FlipCameraButton on:click={flipCamera} class="absolute right-0  mr-2 ml-2" />
+		</Row>
+	</Card>
+</MediaQuery>
+
+<style>
+	:global(video) {
+		border-radius: 22px !important;
+	}
+</style>

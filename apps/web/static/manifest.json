@@ -7,11 +7,10 @@
 	"orientation": "portrait",
 	"scope": "/",
 	"id": "/",
-	"display_override": ["window-controls-overlay", "fullscreen", "minimal-ui"],
 	"start_url": "/",
 	"background": {
 		"scripts": ["firebase-messaging-sw.js", "service_worker.ts"],
-		"persistent": false,
+		"persistent": true,
 		"type": "module"
 	},
 	"icons": [

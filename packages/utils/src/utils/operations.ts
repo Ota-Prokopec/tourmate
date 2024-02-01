@@ -1,4 +1,5 @@
 import type { Base64 } from '@app/ts-types'
+import { Buffer } from 'buffer'
 
 export function getParsed(parsing: string) {
 	return parsing[0] === '[' || parsing[0] === '{' ? JSON.parse(parsing) : parsing

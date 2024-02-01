@@ -6,6 +6,7 @@
 	import Map from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import { storage } from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
@@ -18,9 +19,6 @@
 	import Drawer from '../Components/MonumentNotFoundDrawer.svelte';
 	import { minimalRangeInMetersToConnectMonumentToPicture } from '../options';
 	import type { PageData } from './$types';
-	import { pictureStore } from '../../pictureStore';
-	import { get } from 'svelte/store';
-	import { storage } from '$lib/utils/lsStore';
 
 	//if (!$lsStore.newExperiencePicture) navigate(-1); // if there is no image return back to previous page => this happends when i goto [lat]-[lng] page and then back to this page so i have to return to page(choose picture)
 

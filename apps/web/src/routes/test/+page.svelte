@@ -1,9 +1,14 @@
 <script lang="ts">
-	import * as appwrite from 'appwrite';
-	import LoadMoreButton from '$lib/components/Buttons/LoadMoreButton.svelte';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
+	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
 </script>
 
-<LoadMoreButton />
+<TakePhoto />
+
+<style>
+	:global(.camera-header) {
+		display: none !important;
+	}
+	video {
+		height: 100vh !important;
+	}
+</style>
