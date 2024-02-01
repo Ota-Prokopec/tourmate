@@ -60,34 +60,23 @@
 	export { className as class };
 </script>
 
-{#if device.recognizeWidth() !== 'mobile'}
-	<TakePhotoFromPhone
-		on:cancel={() => navigate(-1)}
-		on:image={async (e) => {
-			dispatch('image', { base64: await fileToBase64(e.detail), file: e.detail });
-		}}
-	/>
-{/if}
-
-<MediaQuery class="w-full h-full" size="mobile">
-	<Card
-		class={twMerge(
-			'!p-[0px] flex justify-center items-center mobile:w-full h-full rounded-none shadow-none',
-			className
-		)}
-	>
-		{#if isLoading}
-			<Center class="h-[calc(100%-70px)] w-full">
-				<Loading type="circle3" />
-			</Center>
-		{/if}
-		<div id="cameraPreview" class="relative !h-[calc(100%-70px)]" />
-		<Row class="mt-[2px] justify-center items-center relative w-full h-[60px] ">
-			<ShootButton on:click={shoot} class="" />
-			<FlipCameraButton on:click={flipCamera} class="absolute right-0  mr-2 ml-2" />
-		</Row>
-	</Card>
-</MediaQuery>
+<Card
+	class={twMerge(
+		'!p-[0px] flex justify-center items-center mobile:w-full h-full rounded-none shadow-none',
+		className
+	)}
+>
+	{#if isLoading}
+		<Center class="h-[calc(100%-70px)] w-full">
+			<Loading type="circle3" />
+		</Center>
+	{/if}
+	<div id="cameraPreview" class="relative !h-[calc(100%-70px)]" />
+	<Row class="mt-[2px] justify-center items-center relative w-full h-[60px] ">
+		<ShootButton on:click={shoot} class="" />
+		<FlipCameraButton on:click={flipCamera} class="absolute right-0  mr-2 ml-2" />
+	</Row>
+</Card>
 
 <style>
 	:global(video) {

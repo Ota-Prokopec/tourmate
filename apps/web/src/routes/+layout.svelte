@@ -11,9 +11,6 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
-	import { defineCustomElements } from '@ionic/pwa-elements/loader';
-
-	defineCustomElements(window);
 
 	let mounted = false;
 	onMount(() => (mounted = true));
