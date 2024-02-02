@@ -60,6 +60,7 @@
 
 	const flipCamera = async () => {
 		cameraPosition = cameraPosition === 'front' ? 'rear' : 'front';
+		await CameraPreview.stop();
 		onLoad();
 	};
 
