@@ -23,14 +23,15 @@
 
 	export let isLoading = true;
 	export let quality = 100;
+	export let aspectRatio = 5 / 3;
 
 	onMount(async () => {
 		const windowWidth = document.body.clientWidth;
 		const windowHeight = document.body.clientHeight;
 
 		const cameraPreviewOptions: CameraPreviewOptions = {
-			position: 'front',
-			height: windowHeight - 70,
+			position: 'rear',
+			height: windowWidth * aspectRatio,
 			width: windowWidth,
 			parent: 'cameraPreview',
 			className: 'cameraPreview',
@@ -62,7 +63,7 @@
 
 <Card
 	class={twMerge(
-		'!p-[0px] flex justify-center items-center mobile:w-full h-full rounded-none shadow-none',
+		'!p-[0px] flex justify-center items-center mobile:w-full h-full rounded-none shadow-none !gap-2',
 		className
 	)}
 >
@@ -71,8 +72,8 @@
 			<Loading type="circle3" />
 		</Center>
 	{/if}
-	<div id="cameraPreview" class="relative !h-[calc(100%-70px)]" />
-	<Row class="mt-[2px] justify-center items-center relative w-full h-[60px] ">
+	<div id="cameraPreview" class="relative !h-auto" />
+	<Row class=" justify-center items-center relative w-full h-[60px] ">
 		<ShootButton on:click={shoot} class="" />
 		<FlipCameraButton on:click={flipCamera} class="absolute right-0  mr-2 ml-2" />
 	</Row>
