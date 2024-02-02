@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Base64 } from '@app/ts-types';
+	import { base64ToFile } from '@app/utils';
 	import '@capacitor-community/camera-preview';
 	import {
 		CameraPreview,
@@ -7,17 +8,13 @@
 		type CameraSampleOptions
 	} from '@capacitor-community/camera-preview';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { twMerge } from 'tailwind-merge';
 	import Card from '../Common/Card.svelte';
+	import Center from '../Common/Center.svelte';
+	import Loading from '../Common/Loading.svelte';
 	import Row from '../Common/Row.svelte';
 	import FlipCameraButton from './FlipCameraButton.svelte';
 	import ShootButton from './ShootButton.svelte';
-	import { twMerge } from 'tailwind-merge';
-	import { base64ToFile, device, fileToBase64 } from '@app/utils';
-	import MediaQuery from '../MediaQueries/MediaQuery.svelte';
-	import TakePhotoFromPhone from './TakePhotoFromPhone.svelte';
-	import { navigate } from '$lib/utils/navigator';
-	import Center from '../Common/Center.svelte';
-	import Loading from '../Common/Loading.svelte';
 
 	const dispatch = createEventDispatcher<{ image: { base64: Base64; file: File } }>();
 
@@ -32,8 +29,8 @@
 
 		const cameraPreviewOptions: CameraPreviewOptions = {
 			position: cameraPosition,
-			height: windowWidth * aspectRatio,
-			width: windowWidth,
+			height: windowWidth * aspectRatio * 2,
+			width: windowWidth * 2,
 			parent: 'cameraPreview',
 			className: 'cameraPreview',
 			enableZoom: true,

@@ -27,5 +27,7 @@ declare namespace NodeJS {
 		readonly CLOUDINARY_ROOT_FOLDER_NAME: string
 		readonly FIREBASE_PRIVATE_KEY_ID: string
 		readonly IOS_AUTHORIZATION_HEADER_NAME: string
+		readonly WIKI_CLIENT_ID: string
+		readonly WIKI_CLIENT_SECRET: string
 	}
 }
