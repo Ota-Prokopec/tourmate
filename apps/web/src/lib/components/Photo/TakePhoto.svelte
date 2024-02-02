@@ -24,13 +24,14 @@
 	export let isLoading = true;
 	export let quality = 100;
 	export let aspectRatio = 5 / 3;
+	export let cameraPosition: 'rear' | 'front' = 'rear';
 
-	onMount(async () => {
+	const onLoad = async () => {
 		const windowWidth = document.body.clientWidth;
 		const windowHeight = document.body.clientHeight;
 
 		const cameraPreviewOptions: CameraPreviewOptions = {
-			position: 'rear',
+			position: cameraPosition,
 			height: windowWidth * aspectRatio,
 			width: windowWidth,
 			parent: 'cameraPreview',
@@ -39,9 +40,12 @@
 			enableHighResolution: false,
 			lockAndroidOrientation: true
 		};
+
 		await CameraPreview.start(cameraPreviewOptions);
 		isLoading = false;
-	});
+	};
+
+	onMount(onLoad);
 
 	const shoot = async () => {
 		const cameraPreviewPictureOptions: CameraSampleOptions = {
@@ -55,7 +59,8 @@
 	};
 
 	const flipCamera = async () => {
-		CameraPreview.flip();
+		cameraPosition = cameraPosition === 'front' ? 'rear' : 'front';
+		onLoad();
 	};
 
 	let className = '';
