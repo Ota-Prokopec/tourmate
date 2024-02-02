@@ -36,7 +36,8 @@
 			parent: 'cameraPreview',
 			className: 'cameraPreview',
 			enableZoom: true,
-			enableHighResolution: false
+			enableHighResolution: false,
+			lockAndroidOrientation: true
 		};
 		await CameraPreview.start(cameraPreviewOptions);
 		isLoading = false;
