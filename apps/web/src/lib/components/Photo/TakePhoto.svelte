@@ -23,7 +23,7 @@
 
 	export let isLoading = true;
 	export let quality = 100;
-	export let aspectRatio = 5 / 3;
+	export let aspectRatio = 3 / 5;
 	export let cameraPosition: 'rear' | 'front' = 'rear';
 
 	const onLoad = async () => {
