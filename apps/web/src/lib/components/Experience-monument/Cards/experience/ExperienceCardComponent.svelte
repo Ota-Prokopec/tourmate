@@ -100,7 +100,7 @@
 		on:dismiss
 		{dismissable}
 		class={twMerge(
-			'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none p-2 border-0',
+			'relative justify-self-center gap-0 h-auto w-auto shadow-none border-none p-2 border-2 bord',
 			className
 		)}
 	>
@@ -137,7 +137,7 @@
 			{#if experience.connectedMonument}
 				<MonumentCard class="mt-[-10px]" size="tiny" monument={experience.connectedMonument} />
 			{:else}
-				<Text>
+				<Text class="border-b-2 border-gray-400 rounded-md">
 					{$LL.component.ExperienceCardComponent.monumentThatWasConnectedToTheExperienceWasDeleted()}
 				</Text>
 			{/if}

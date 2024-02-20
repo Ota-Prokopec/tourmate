@@ -4,7 +4,6 @@
 	import UserItemSkeleton from '$lib/components/User/UserItemSkeleton.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { UserInfo } from '@app/ts-types';
-	import MonumentNotFoundDrawer from '../../createNewExperience/[lat]-[lng]/Components/MonumentNotFoundDrawer.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import NoContent from '$lib/components/Common/NoContent.svelte';
 
@@ -19,7 +18,7 @@
 		isLoading = true; // true only if there are no monuments in the usersMonuments
 
 		await sdk
-			.getListOfUsers({ limit: limit, offset: users.length, searchingText: textValue })
+			.getListOfUsers({ limit: 20, offset: users.length, searchingText: textValue })
 			.then(({ getListOfUsers: newUsers }) => {
 				users = newUsers;
 			});

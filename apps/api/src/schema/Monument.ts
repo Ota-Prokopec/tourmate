@@ -65,9 +65,11 @@ export default objectType({
 			type: 'PlaceDetail',
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
+
 				const placeDetail = await collections.placeDetail.getDocument(
 					source.placeDetailId,
 				)
+
 				if (!placeDetail) throw new Error('placeDetail was not found')
 				return placeDetail
 			},

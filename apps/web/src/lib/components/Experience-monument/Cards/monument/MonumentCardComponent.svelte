@@ -155,7 +155,7 @@
 </Alert>
 
 {#if isCardVisible}
-	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full sm:min-w-[400px]', className)}>
+	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full ', className)}>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
 			<Row class="justify-between w-full">

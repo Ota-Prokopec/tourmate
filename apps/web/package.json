@@ -19,6 +19,7 @@
 		"check-missing-dependencies": " dependency-check package.json src/**/* --missing"
 	},
 	"devDependencies": {
+		"@capacitor/android": "^5.6.0",
 		"@floating-ui/dom": "^1.4.5",
 		"@graphql-codegen/cli": "^5.0.0",
 		"@graphql-codegen/typescript": "^4.0.1",
@@ -27,6 +28,7 @@
 		"@graphql-codegen/typescript-operations": "^4.0.1",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/adapter-vercel": "^3.0.1",
 		"@sveltejs/kit": "^1.20.4",
 		"@sveltestack/svelte-query": "^1.6.0",
@@ -78,6 +80,7 @@
 		"@benzara/svelte-animated-counter": "^0.0.3",
 		"@capacitor-community/camera-preview": "^5.0.0",
 		"@capacitor/camera": "^5.0.9",
+		"@capacitor/cli": "^5.6.0",
 		"@capacitor/core": "^5.6.0",
 		"@cloudinary/url-gen": "^1.11.2",
 		"@ionic/pwa-elements": "^3.2.2",
