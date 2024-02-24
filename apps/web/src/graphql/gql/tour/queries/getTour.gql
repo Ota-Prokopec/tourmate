@@ -31,12 +31,11 @@ query getTour($tourId: String!) {
 			location
 			userId
 			name
-			questionId
 			about
 			topics
 			placeDetailId
-			transports
 			pictureURL
+			transports
 			user {
 				_createdAt
 				_updatedAt
@@ -47,6 +46,7 @@ query getTour($tourId: String!) {
 				userId
 				myId
 				username
+
 				profilePictureURL
 			}
 			placeDetail {
@@ -68,19 +68,24 @@ query getTour($tourId: String!) {
 				userId
 				monumentId
 				user {
-					_createdAt
-					_updatedAt
-					_collectionId
 					_id
-					_permissions
-					_databaseId
 					userId
 					myId
 					username
 					profilePictureURL
 				}
 			}
-			totalLikesCount
+			liked {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				monumentId
+			}
+			questionId
 			question {
 				_createdAt
 				_updatedAt
@@ -93,7 +98,10 @@ query getTour($tourId: String!) {
 				pickingAnswers
 				type
 			}
-			liked {
+			usersAnswerToQuestion {
+				answeredCorrectly
+			}
+			usersConnectedExperiences {
 				_createdAt
 				_updatedAt
 				_collectionId
@@ -101,8 +109,11 @@ query getTour($tourId: String!) {
 				_permissions
 				_databaseId
 				userId
-				monumentId
+				pictureUrl
+				location
+				connectedMonumentId
 			}
+			totalLikesCount
 		}
 	}
 }

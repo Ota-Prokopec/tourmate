@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_MAP_TILER_API_KEY } from '$env/static/public';
 	import { lsStore } from '$lib/utils/lsStore';
-	import type { Location } from '@app/ts-types';
+	import type { Base64, Location } from '@app/ts-types';
 	import type { Map } from 'maplibre-gl';
 	import { createEventDispatcher } from 'svelte';
 	import { FillExtrusionLayer, GeolocateControl, MapLibre } from 'svelte-maplibre';
@@ -23,6 +23,7 @@
 	export let maxZoom: number | undefined = undefined;
 	export let minZoom: number | undefined = undefined;
 	export let showUser = false;
+	export let userProfilePicture: string | Base64 | undefined = undefined;
 	export let deg = 0;
 	let style = `https://api.maptiler.com/maps/4f1c74c8-1b8c-4deb-b478-1f58653a6389/style.json?key=${PUBLIC_MAP_TILER_API_KEY}`;
 
@@ -106,8 +107,8 @@
 					'fill-extrusion-opacity': 0.6
 				}}
 			/>
-			{#if showUser && usersLocation}
-				<UserMarker location={usersLocation} />
+			{#if showUser && usersLocation && userProfilePicture}
+				<UserMarker {userProfilePicture} location={usersLocation} />
 			{/if}
 			<slot />
 		</MapLibre>

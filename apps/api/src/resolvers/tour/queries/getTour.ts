@@ -9,15 +9,9 @@ export default queryField('getTour', {
 		if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authenticated')
 		const { collections } = ctx.appwrite
 
-		console.log(args.tourId)
-
 		const query = Queries.tour.equal('$id', args.tourId)
 
-		console.log(query)
-
-		const tour = await collections.tour.getDocument(query)
-
-		console.log(tour)
+		const tour = await collections.tour.getDocument([query])
 
 		if (!tour) throw new ApolloError('Tour was not found')
 

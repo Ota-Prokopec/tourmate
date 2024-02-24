@@ -10,6 +10,7 @@
 
 	export let hidden = true;
 	export let chosen: MonumentCard[] = [];
+	export let disableEditing = false;
 
 	const cardClick = (monument: MonumentCard) => {
 		chosen = chosen.filter((item) => item._id !== monument._id);
@@ -29,9 +30,9 @@
 					disableOwnerOptions
 					disableSeeMoreButton
 					disableSharing
-					class={'border-2 border-blue-300'}
+					class={!disableEditing ? 'border-2 border-blue-300' : ''}
 					on:click={() => {
-						cardClick(monument);
+						if (!disableEditing) cardClick(monument);
 					}}
 					size="tiny"
 					{monument}

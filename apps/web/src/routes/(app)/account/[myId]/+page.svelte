@@ -19,17 +19,21 @@
 	import { Button } from 'flowbite-svelte';
 	import IconHeart from '$lib/components/Icons/IconHeart.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
+	import ToursSection from './Components/ToursSection.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
 
-	let category: 'monuments' | 'experiences' = 'experiences';
+	type Category = 'monuments' | 'experiences' | 'tours';
+
+	let category: Category = 'tours';
 
 	$: isMyAccount = data.user.userId === usersProfile?.userId;
 
-	const categories = [
+	const categories: { title: string; key: Category }[] = [
 		{ title: $LL.page.account.pictures(), key: 'experiences' },
-		{ title: $LL.page.account.monuments(), key: 'monuments' }
+		{ title: $LL.page.account.monuments(), key: 'monuments' },
+		{ title: $LL.page.account.tours(), key: 'tours' }
 	] as const;
 
 	let screenProfilePicEditor = false;
@@ -111,6 +115,8 @@
 					{isMyAccount}
 					cardsLimit={data.cardsLimit}
 				/>
+			{:else if category === 'tours'}
+				<ToursSection userId={data.usersProfile.userId} />
 			{/if}
 		</Column>
 	</Columns>

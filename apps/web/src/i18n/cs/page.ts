@@ -35,6 +35,7 @@ export const pageCS = {
 	account: {
 		monuments: 'Zážitky',
 		pictures: 'Obrázky',
+		tours: 'Stesky',
 		editProfileButtonLabel: 'Upravit profil',
 		seeLikedMonumentsButtonLabel: 'Vidět oblíbené',
 		settings: {
@@ -113,5 +114,8 @@ export const pageCS = {
 	monumentsCount: {
 		title: 'Počet zážitků',
 		label: 'zážitků vytvořeno'
+	},
+	tour: {
+		distanceToNextTargetLabel: 'Distance to next target is: '
 	}
 } satisfies BaseTranslation;

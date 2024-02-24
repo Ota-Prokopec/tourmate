@@ -114,6 +114,10 @@ type RootTranslation = {
 			 */
 			pictures: string
 			/**
+			 * T​o​u​r​s
+			 */
+			tours: string
+			/**
 			 * E​d​i​t​ ​p​r​o​f​i​l​e
 			 */
 			editProfileButtonLabel: string
@@ -296,6 +300,12 @@ type RootTranslation = {
 			 * E​x​p​e​r​i​e​n​c​e​s​ ​m​a​d​e
 			 */
 			label: string
+		}
+		tour: {
+			/**
+			 * D​i​s​t​a​n​c​e​ ​t​o​ ​n​e​x​t​ ​t​a​r​g​e​t​ ​i​s​:​ 
+			 */
+			distanceToNextTargetLabel: string
 		}
 	}
 	common: {
@@ -741,6 +751,12 @@ type RootTranslation = {
 				label: string
 			}
 		}
+		TourNavigateToAccomplishMonumentCard: {
+			/**
+			 * Y​o​u​ ​a​r​e​ ​a​t​ ​t​h​e​ ​c​h​e​c​k​p​o​i​n​t​,​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​c​o​m​p​l​i​s​h​ ​i​t​ ​n​o​w​?
+			 */
+			title: string
+		}
 	}
 	error: {
 		/**
@@ -886,6 +902,10 @@ export type TranslationFunctions = {
 			 * Pictures
 			 */
 			pictures: () => LocalizedString
+			/**
+			 * Tours
+			 */
+			tours: () => LocalizedString
 			/**
 			 * Edit profile
 			 */
@@ -1068,6 +1088,12 @@ export type TranslationFunctions = {
 			 * Experiences made
 			 */
 			label: () => LocalizedString
+		}
+		tour: {
+			/**
+			 * Distance to next target is: 
+			 */
+			distanceToNextTargetLabel: () => LocalizedString
 		}
 	}
 	common: {
@@ -1510,6 +1536,12 @@ export type TranslationFunctions = {
 				 */
 				label: () => LocalizedString
 			}
+		}
+		TourNavigateToAccomplishMonumentCard: {
+			/**
+			 * You are at the checkpoint, do you want to accomplish it now?
+			 */
+			title: () => LocalizedString
 		}
 	}
 	error: {

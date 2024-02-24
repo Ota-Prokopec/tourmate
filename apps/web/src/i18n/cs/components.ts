@@ -159,5 +159,8 @@ export const componentsCS = {
 		nameInput: {
 			label: 'jméno trasy'
 		}
+	},
+	TourNavigateToAccomplishMonumentCard: {
+		title: 'Jste u kontrolního bodu, chcete ho dosáhnout hned?'
 	}
 } satisfies BaseTranslation;

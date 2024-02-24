@@ -163,5 +163,8 @@ export const componentsEN = {
 		nameInput: {
 			label: 'name of the tour'
 		}
+	},
+	TourNavigateToAccomplishMonumentCard: {
+		title: 'You are at the checkpoint, do you want to accomplish it now?'
 	}
 } satisfies BaseTranslation;

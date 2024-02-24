@@ -56,7 +56,6 @@
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let disablePlaceLink = false;
-	$: console.log(disablePlaceLink);
 
 	export let dismissable = false;
 	export let disableOwnerOptions = false;

@@ -3,11 +3,10 @@
 	import Paginating from '$lib/components/Common/Paginating.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import type { Base64, Tour } from '@app/ts-types';
-	import type { PageData } from './$types';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import TourCardComponent from '$lib/components/Experience-monument/Cards/tour/TourCardComponent.svelte';
 
-	export let data: PageData;
+	export let userId: string;
 
 	let tours: (Omit<Tour, 'monuments'> & { initialTourPicture: string | Base64 })[] = [];
 	let initialLoading = false;
@@ -21,7 +20,7 @@
 			.getListOfTours({
 				limit: 4,
 				offset: tours.length,
-				userId: data.user.userId
+				userId: userId
 			})
 			.then(({ getListOfTours: data }) => {
 				tours = [
