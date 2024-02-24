@@ -6,28 +6,27 @@
 
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
+	import { collections } from '$lib/appwrite/appwrite';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
 	import Notification from '$lib/components/Notification/Notification.svelte';
 	import lsSvelte, { storage } from '$lib/utils/lsStore';
+	import { appwriteKeys } from '@app/appwrite-client';
+	import lodash from 'lodash';
 	import type { LayoutData } from './$types';
 	import Bar from './Components/Bar.svelte';
-	import { navigate } from '$lib/utils/navigator';
-	import lodash from 'lodash';
-	import { appwriteKeys } from '@app/appwrite-client';
-	import { collections } from '$lib/appwrite/appwrite';
+	import { browser } from '$app/environment';
 
 	export let data: LayoutData;
 
 	//real-time user update
-	collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
-		data.user = Object.assign(data.user, {
-			...lodash.omit(updatedUserInfo, ...appwriteKeys),
-			_updatedAt: updatedUserInfo.$updatedAt,
-			_createdAt: updatedUserInfo.$createdAt
+	if (browser)
+		collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
+			data.user = Object.assign(data.user, {
+				...lodash.omit(updatedUserInfo, ...appwriteKeys),
+				_updatedAt: updatedUserInfo.$updatedAt,
+				_createdAt: updatedUserInfo.$createdAt
+			});
 		});
-	});
 
 	let isLoading = true;
 

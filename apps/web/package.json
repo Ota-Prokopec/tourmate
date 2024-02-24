@@ -91,6 +91,7 @@
 		"@pqina/pintura": "^8.62.0",
 		"@pqina/svelte-pintura": "^9.0.1",
 		"@skeletonlabs/skeleton": "^2.6.0",
+		"@splidejs/svelte-splide": "^0.2.9",
 		"@svelteuidev/composables": "^0.15.3",
 		"@svelteuidev/core": "^0.15.3",
 		"@svelteuidev/dates": "^0.15.3",

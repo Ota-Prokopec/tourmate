@@ -17,6 +17,7 @@ export * from './Others';
 export * from './PlaceDetails';
 export * from './Question';
 export * from './Topic';
+export * from './Tour';
 export * from './Transport';
 export * from './TsTypes';
 export * from './Application/ColorTheme';

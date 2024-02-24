@@ -733,6 +733,14 @@ type RootTranslation = {
 			 */
 			label: string
 		}
+		CheckpointsSaveDrawer: {
+			nameInput: {
+				/**
+				 * n​a​m​e​ ​o​f​ ​t​h​e​ ​t​o​u​r
+				 */
+				label: string
+			}
+		}
 	}
 	error: {
 		/**
@@ -1494,6 +1502,14 @@ export type TranslationFunctions = {
 			 * What Tourmate offers you
 			 */
 			label: () => LocalizedString
+		}
+		CheckpointsSaveDrawer: {
+			nameInput: {
+				/**
+				 * name of the tour
+				 */
+				label: () => LocalizedString
+			}
 		}
 	}
 	error: {

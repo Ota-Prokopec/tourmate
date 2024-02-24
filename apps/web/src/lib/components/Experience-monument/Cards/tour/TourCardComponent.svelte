@@ -1,0 +1,36 @@
+<script lang="ts">
+	import Alert from '$lib/components/Alert/Alert.svelte';
+	import Card from '$lib/components/Common/Card.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import LL from '$src/i18n/i18n-svelte';
+	import type { Base64, UserInfo } from '@app/ts-types';
+	import { Button } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
+	import CardImage from '../CardImage.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
+	import UserItem from '$lib/components/User/UserItem.svelte';
+	import Rows from '$lib/components/Common/Rows.svelte';
+	import Columns from '$lib/components/Common/Columns.svelte';
+
+	export let dismissable = false;
+
+	export let data: {
+		img: string | Base64;
+		tourName: string;
+		creator: UserInfo;
+	};
+
+	let className = '';
+	export { className as class };
+</script>
+
+<Card on:click on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full ', className)}>
+	<Columns columns="1fr 2fr" class="gap-4">
+		<CardImage disableFullScreen imgSrc={data.img} />
+		<Column>
+			<UserItem user={data.creator} />
+			<Text>{data.tourName}</Text>
+		</Column>
+	</Columns>
+</Card>

@@ -154,5 +154,10 @@ export const componentsCS = {
 	},
 	WhatAppOffersButton: {
 		label: 'Co vám Tourmate nabízí'
+	},
+	CheckpointsSaveDrawer: {
+		nameInput: {
+			label: 'jméno trasy'
+		}
 	}
 } satisfies BaseTranslation;

@@ -48,6 +48,11 @@ input CreateMonumentInput {
   transports: [Transport!]!
 }
 
+input CreateTourInput {
+  monumentIds: [String!]!
+  tourName: String!
+}
+
 type EmailLogin {
   session: String!
 }
@@ -143,6 +148,7 @@ type Mutation {
   answerQuestion(answer: StringOrNumber!, monumentId: String!): UsersAnswerToQuestion!
   createExperience(input: CreateExperienceInput!): Experience!
   createMonument(input: CreateMonumentInput!): Monument!
+  createTour(input: CreateTourInput!): Tour!
   deleteExperience(experienceId: String!): Boolean!
   deleteMonument(monumentId: String!): Boolean!
   likeExperience(experienceId: String!): ExperienceLike!
@@ -166,8 +172,10 @@ type Query {
   getListOfExperiences(limit: Int, location: LocationInput, offset: Int, userId: String): [Experience!]!
   getListOfMonumentLikeDocuments(limit: Int = 50, offset: Int, userId: String): [MonumentLike!]!
   getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
+  getListOfTours(limit: Int, offset: Int, userId: String): [Tour!]!
   getListOfUsers(limit: Int = 50, offset: Int, searchingText: String): [User!]!
   getMonument(id: String!): Monument!
+  getTour(tourId: String!): Tour!
   getUser(myId: String, userId: String): User!
   logInViaEmail(email: String!, password: String!): EmailLogin!
   logout: Boolean!
@@ -198,6 +206,20 @@ input QuestionInput {
 scalar StringOrNumber
 
 scalar Topic
+
+type Tour {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  creator: User!
+  monumentIds: [String!]!
+  monuments: [Monument!]!
+  tourName: String!
+  userId: String!
+}
 
 scalar Transport
 

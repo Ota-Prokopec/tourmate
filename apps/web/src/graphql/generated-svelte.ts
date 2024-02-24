@@ -72,6 +72,11 @@ export type CreateMonumentInput = {
   transports: Array<Scalars['Transport']['input']>;
 };
 
+export type CreateTourInput = {
+  monumentIds: Array<Scalars['String']['input']>;
+  tourName: Scalars['String']['input'];
+};
+
 export type EmailLogin = {
   __typename?: 'EmailLogin';
   session: Scalars['String']['output'];
@@ -168,6 +173,7 @@ export type Mutation = {
   answerQuestion: UsersAnswerToQuestion;
   createExperience: Experience;
   createMonument: Monument;
+  createTour: Tour;
   deleteExperience: Scalars['Boolean']['output'];
   deleteMonument: Scalars['Boolean']['output'];
   likeExperience: ExperienceLike;
@@ -188,6 +194,11 @@ export type MutationCreateExperienceArgs = {
 
 export type MutationCreateMonumentArgs = {
   input: CreateMonumentInput;
+};
+
+
+export type MutationCreateTourArgs = {
+  input: CreateTourInput;
 };
 
 
@@ -229,8 +240,10 @@ export type Query = {
   getListOfExperiences: Array<Experience>;
   getListOfMonumentLikeDocuments: Array<MonumentLike>;
   getListOfMonuments: Array<Monument>;
+  getListOfTours: Array<Tour>;
   getListOfUsers: Array<User>;
   getMonument: Monument;
+  getTour: Tour;
   getUser: User;
   logInViaEmail: EmailLogin;
   logout: Scalars['Boolean']['output'];
@@ -277,6 +290,13 @@ export type QueryGetListOfMonumentsArgs = {
 };
 
 
+export type QueryGetListOfToursArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGetListOfUsersArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -286,6 +306,11 @@ export type QueryGetListOfUsersArgs = {
 
 export type QueryGetMonumentArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetTourArgs = {
+  tourId: Scalars['String']['input'];
 };
 
 
@@ -329,6 +354,21 @@ export type QuestionInput = {
   pickingAnswers?: InputMaybe<Array<Scalars['String']['input']>>;
   question: Scalars['String']['input'];
   type: Scalars['AnswerType']['input'];
+};
+
+export type Tour = {
+  __typename?: 'Tour';
+  _collectionId: Scalars['String']['output'];
+  _createdAt: Scalars['String']['output'];
+  _databaseId: Scalars['String']['output'];
+  _id: Scalars['String']['output'];
+  _permissions: Array<Scalars['String']['output']>;
+  _updatedAt: Scalars['String']['output'];
+  creator: User;
+  monumentIds: Array<Scalars['String']['output']>;
+  monuments: Array<Monument>;
+  tourName: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
 };
 
 export type User = {
@@ -566,6 +606,29 @@ export type AnswerQuestionMutationVariables = Exact<{
 
 
 export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } };
+
+export type CrateTourMutationVariables = Exact<{
+  input: CreateTourInput;
+}>;
+
+
+export type CrateTourMutation = { __typename?: 'Mutation', createTour: { __typename?: 'Tour', tourName: string } };
+
+export type GetListOfToursQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetListOfToursQuery = { __typename?: 'Query', getListOfTours: Array<{ __typename?: 'Tour', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, tourName: string, monumentIds: Array<string>, monuments: Array<{ __typename?: 'Monument', pictureURL: string }>, creator: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: string } }> };
+
+export type GetTourQueryVariables = Exact<{
+  tourId: Scalars['String']['input'];
+}>;
+
+
+export type GetTourQuery = { __typename?: 'Query', getTour: { __typename?: 'Tour', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, tourName: string, monumentIds: Array<string>, creator: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _databaseId: string, _permissions: Array<string>, userId: string, myId: string, username: string, profilePictureURL: string }, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, questionId?: string | null, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, transports: Array<any>, pictureURL: string, totalLikesCount: number, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: string }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: string } }>, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer?: string|number | null, pickingAnswers?: Array<string> | null, type: any } | null, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null }> } };
 
 
 export const CreateAccountDoc = gql`
@@ -1705,6 +1768,153 @@ export const AnswerQuestionDoc = gql`
   }
 }
     `;
+export const CrateTourDoc = gql`
+    mutation crateTour($input: CreateTourInput!) {
+  createTour(input: $input) {
+    tourName
+  }
+}
+    `;
+export const GetListOfToursDoc = gql`
+    query getListOfTours($userId: String, $limit: Int, $offset: Int) {
+  getListOfTours(userId: $userId, limit: $limit, offset: $offset) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    tourName
+    monumentIds
+    monuments {
+      pictureURL
+    }
+    creator {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      myId
+      username
+      profilePictureURL
+    }
+  }
+}
+    `;
+export const GetTourDoc = gql`
+    query getTour($tourId: String!) {
+  getTour(tourId: $tourId) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    tourName
+    monumentIds
+    creator {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _databaseId
+      _permissions
+      userId
+      myId
+      username
+      profilePictureURL
+    }
+    monuments {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      location
+      userId
+      name
+      questionId
+      about
+      topics
+      placeDetailId
+      transports
+      pictureURL
+      user {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        myId
+        username
+        profilePictureURL
+      }
+      placeDetail {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        name
+      }
+      likes {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        monumentId
+        user {
+          _createdAt
+          _updatedAt
+          _collectionId
+          _id
+          _permissions
+          _databaseId
+          userId
+          myId
+          username
+          profilePictureURL
+        }
+      }
+      totalLikesCount
+      question {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        question
+        correctAnswer
+        pickingAnswers
+        type
+      }
+      liked {
+        _createdAt
+        _updatedAt
+        _collectionId
+        _id
+        _permissions
+        _databaseId
+        userId
+        monumentId
+      }
+    }
+  }
+}
+    `;
 export const createAccount = (
             options: Omit<
               WatchQueryOptions<CreateAccountQueryVariables>, 
@@ -2489,3 +2699,85 @@ export const answerQuestion = (
             });
             return m;
           }
+export const crateTour = (
+            options: Omit<
+              MutationOptions<any, CrateTourMutationVariables>, 
+              "mutation"
+            >
+          ) => {
+            const m = client.mutate<CrateTourMutation, CrateTourMutationVariables>({
+              mutation: CrateTourDoc,
+              ...options,
+            });
+            return m;
+          }
+export const getListOfTours = (
+            options: Omit<
+              WatchQueryOptions<GetListOfToursQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetListOfToursQuery> & {
+              query: ObservableQuery<
+                GetListOfToursQuery,
+                GetListOfToursQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetListOfToursDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetListOfToursQuery> & {
+                query: ObservableQuery<
+                  GetListOfToursQuery,
+                  GetListOfToursQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const getTour = (
+            options: Omit<
+              WatchQueryOptions<GetTourQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetTourQuery> & {
+              query: ObservableQuery<
+                GetTourQuery,
+                GetTourQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetTourDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetTourQuery> & {
+                query: ObservableQuery<
+                  GetTourQuery,
+                  GetTourQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        

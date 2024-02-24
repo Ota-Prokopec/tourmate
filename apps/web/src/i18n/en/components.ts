@@ -158,5 +158,10 @@ export const componentsEN = {
 	},
 	WhatAppOffersButton: {
 		label: 'What Tourmate offers you'
+	},
+	CheckpointsSaveDrawer: {
+		nameInput: {
+			label: 'name of the tour'
+		}
 	}
 } satisfies BaseTranslation;

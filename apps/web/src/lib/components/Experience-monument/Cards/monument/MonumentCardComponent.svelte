@@ -55,6 +55,9 @@
 	export let isCardVisible = true;
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
+	export let disablePlaceLink = false;
+	$: console.log(disablePlaceLink);
+
 	export let dismissable = false;
 	export let disableOwnerOptions = false;
 	let liked: LikeSectionState | undefined =
@@ -155,7 +158,7 @@
 </Alert>
 
 {#if isCardVisible}
-	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full ', className)}>
+	<Card on:click on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full ', className)}>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
 			<Row class="justify-between w-full">
@@ -192,7 +195,7 @@
 				<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
 			{/if}
 
-			<CardHeader {monument} />
+			<CardHeader {disablePlaceLink} {monument} />
 		</svelte:component>
 
 		{#if size !== 'tiny'}

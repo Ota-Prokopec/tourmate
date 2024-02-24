@@ -1,0 +1,5 @@
+mutation crateTour($input: CreateTourInput!) {
+	createTour(input: $input) {
+		tourName
+	}
+}

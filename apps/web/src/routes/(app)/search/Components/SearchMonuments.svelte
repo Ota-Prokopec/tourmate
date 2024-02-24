@@ -37,7 +37,7 @@
 		<FullPageLoading />
 	{:else if monuments?.length}
 		{#each monuments as monument}
-			<MonumentCardComponent size="normal" {monument} />
+			<slot {monument} />
 		{/each}
 	{:else}
 		<NoContent />

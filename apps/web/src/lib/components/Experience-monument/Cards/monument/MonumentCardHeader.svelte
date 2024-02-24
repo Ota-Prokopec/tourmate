@@ -9,13 +9,19 @@
 	import { getUrlForSearchPage } from '$src/routes/(app)/search/tools';
 
 	export let monument: { name: string; placeDetail: { name: string } };
+	export let disablePlaceLink = false;
 </script>
 
 <Column class="gap-2 items-start">
 	<Text class="mb-2 text-xl font-bold text-black">
 		{monument.name}
 	</Text>
-	<button on:click={() => navigate(getUrlForSearchPage('places', monument.placeDetail.name).href)}>
+	<button
+		on:click={() => {
+			if (!disablePlaceLink)
+				navigate(getUrlForSearchPage('places', monument.placeDetail.name).href);
+		}}
+	>
 		<Columns columns="min-content auto" class="gap-1">
 			<Icon class="child:w-6 child:h-6">
 				<IconLocation />

@@ -27,6 +27,8 @@ import type {
 	UserInfoGraphqlDocument,
 	UsersAnswerDocumentCreate,
 	UsersAnswerGraphqlDocument,
+	TourGraphqlDocument,
+	TourDocumentCreate,
 } from '@app/ts-types'
 
 export type Collections = ReturnType<typeof collectionsAdmin>
@@ -92,6 +94,7 @@ export const collectionsClient = (
 			LocationForNotificationsGraphqlDocument,
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
+		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
 	}
 }
 
@@ -151,5 +154,6 @@ export const collectionsAdmin = (
 			LocationForNotificationsGraphqlDocument,
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
+		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
 	}
 }
