@@ -8,10 +8,13 @@
 	import type { MonumentCard } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import AnswerQuestionDrawer from '../../createNewExperience/[lat]-[lng]/Components/AnswerQuestionDrawer.svelte';
 
-	const dispatch = createEventDispatcher<{ dismiss: undefined; navigate: undefined }>();
+	const dispatch = createEventDispatcher<{ dismiss: undefined; accomplish: undefined }>();
 
 	export let monument: MonumentCard;
+
+	export let answerQuestionDrawerHidden = true;
 </script>
 
 <Card dismissable class="absolute z-50 w-[80%] h-auto m-[10%]">
@@ -23,9 +26,22 @@
 
 		<MonumentCardComponent size="tiny" {monument} />
 
+		<Button color="green" on:click={() => (answerQuestionDrawerHidden = false)}>
+			answer question (overwrite)
+		</Button>
+
+		{#if monument.question}
+			<AnswerQuestionDrawer
+				bind:hidden={answerQuestionDrawerHidden}
+				usersAnswer={null}
+				isLoading={false}
+				question={monument.question}
+			/>
+		{/if}
+
 		<Row class="w-full h-auto gap-2 justify-end flex">
 			<Button on:click={() => dispatch('dismiss')} color="red">{$LL.common.no()}</Button>
-			<Button on:click={() => dispatch('navigate')} color="green">{$LL.common.yes()}</Button>
+			<Button on:click={() => dispatch('accomplish')} color="green">{$LL.common.yes()}</Button>
 		</Row>
 	</Column>
 </Card>

@@ -4,7 +4,7 @@ import { Location, LocationForDocument } from './Location'
 
 export type Experience = {
 	userId: string
-	pictureUrl: (URL & string) | string
+	pictureUrl?: (URL & string) | string | null | undefined
 	location: Location
 	connectedMonumentId: string
 }

@@ -19,7 +19,11 @@
 		"noImplicitReturns": true,
 		"importHelpers": true,
 		"allowUnusedLabels": false,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
 	"include": [
 		"src/**/*.d.ts",

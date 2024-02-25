@@ -11,8 +11,6 @@ export default mutationField('createExperience', {
 	resolve: async (s, args, ctx) => {
 		const { collections } = ctx.appwrite
 
-		if (!isBase64(args.input.picture))
-			throw new Error('input.imgSrc musts be a valid base64 string')
 		if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 
 		const monument = await collections.monument.getDocument(
@@ -37,18 +35,18 @@ export default mutationField('createExperience', {
 				)
 		}
 
-		const document = await buckets.experiences
-			.uploadBase64(args.input.picture)
-			.then(async ({ secure_url }) => {
-				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not Authed', '403')
-				return await collections.experience.createDocument({
-					connectedMonumentId: args.input.connnectedMonumentId,
-					userId: ctx.user.$id,
-					pictureUrl: secure_url,
-					latitude: Math.round(args.input.location[0]),
-					longitude: Math.round(args.input.location[1]),
-				})
-			})
+		const picture = args.input.picture
+			? await buckets.experiences.uploadBase64(args.input.picture)
+			: null
+
+		const document = await collections.experience.createDocument({
+			connectedMonumentId: args.input.connnectedMonumentId,
+			userId: ctx.user.$id,
+			pictureUrl: picture?.secure_url ?? null,
+			latitude: Math.round(args.input.location[0]),
+			longitude: Math.round(args.input.location[1]),
+		})
+
 		const res = fromLatDocumentLongIntoLocationDocument(document)[0]
 		if (!res) throw new ApolloError('creating experience was no successful')
 		return res

@@ -49,8 +49,6 @@
 			radioAnswer
 		});
 	};
-
-	console.log(question);
 </script>
 
 <Drawer

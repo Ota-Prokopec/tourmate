@@ -6,7 +6,7 @@
 	import IconPlus from '$lib/components/Icons/IconPlus.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
-	import type { MonumentCard } from '@app/ts-types';
+	import type { Experience, MonumentCard } from '@app/ts-types';
 	import CheckpointsListDrawer from '../Components/CheckpointsListDrawer.svelte';
 	import CheckpointsSearchDrawer from '../Components/CheckpointsSearchDrawer.svelte';
 	import CheckpointsSaveDrawer from '../Components/CheckpointsSaveDrawer.svelte';
@@ -19,6 +19,9 @@
 	import { normalizeMeters } from '@app/utils';
 	import Card from '$lib/components/Common/Card.svelte';
 	import TourNavigateToAccomplishMonumentCard from '../Components/TourNavigateToAccomplishMonumentCard.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import { alert } from '$src/routes/alertStore';
+	import { Progressbar } from 'flowbite-svelte';
 
 	export let data: PageData;
 
@@ -28,7 +31,11 @@
 
 	let showNavigationCard = false;
 
-	export let monuments: MonumentCard[] = data.tour.monuments;
+	export let allMonuments: MonumentCard[] = data.tour.monuments;
+	export let accomplihedExperiences: Experience[] = [];
+	$: monumentsToAccomplish = allMonuments.filter(
+		(item) => !accomplihedExperiences.find((exp) => exp.connectedMonumentId === item._id)
+	);
 
 	let userCurrentLocation = $lsStore.usersLocation;
 	$: userCurrentLocation = $lsStore.usersLocation;
@@ -39,7 +46,7 @@
 	let closestMonument: MonumentCard | undefined = undefined;
 
 	$: if (userCurrentLocation)
-		closestMonument = monuments
+		closestMonument = monumentsToAccomplish
 			.toSorted((a, b) => {
 				if (!userCurrentLocation) throw new Error('userCurrentLocation is not defined');
 				const userFromA = distanceTo(userCurrentLocation, a.location);
@@ -62,27 +69,42 @@
 	}
 	showNavigationCard = true;
 
-	const navigateToAccomplish = () => {
-		navi;
+	const accomplish = async () => {
+		try {
+			if (!closestMonument) throw new Error('closestMonument not defined');
+			if (!userCurrentLocation) throw new Error('userCurrentLocation not defined');
+
+			const createdExperience = (
+				await sdk.createExperience({
+					input: {
+						connnectedMonumentId: closestMonument._id,
+						location: userCurrentLocation,
+						picture: null //without the picture
+					}
+				})
+			).createExperience;
+			accomplihedExperiences = [...accomplihedExperiences, createdExperience];
+		} catch (error) {
+			alert('Error', '500', { color: 'red' });
+		}
 	};
 </script>
 
 {#if closestMonument && showNavigationCard}
 	<TourNavigateToAccomplishMonumentCard
-		on:navigate={navigateToAccomplish}
+		on:accomplish={accomplish}
 		on:dismiss={() => (showNavigationCard = false)}
 		monument={closestMonument}
 	/>
 {/if}
 
 <Map showUser userProfilePicture={data.user.profilePictureURL}>
-	{#each monuments as monument}
+	{#each allMonuments as monument}
 		<MonumentMarker disableShowingDetails {monument} />
 	{/each}
 </Map>
 
-<CheckpointsSearchDrawer bind:chosen={monuments} bind:hidden={searchHidden} />
-<CheckpointsListDrawer disableEditing bind:chosen={monuments} bind:hidden={listHidden} />
+<CheckpointsListDrawer disableEditing bind:chosen={allMonuments} bind:hidden={listHidden} />
 
 <Columns columns="1fr 3fr 1fr" class="absolute bottom-0 w-full h-auto justify-between p-2">
 	<Icon
@@ -91,6 +113,9 @@
 	>
 		<IconList />
 	</Icon>
+	<Progressbar
+		progress={allMonuments.length / (allMonuments.length - monumentsToAccomplish.length)}
+	/>
 	{#if distanceToClosestMonument}
 		<Text class="font-bold"
 			>{`${$LL.page.tour.distanceToNextTargetLabel()} ${normalizeMeters(
