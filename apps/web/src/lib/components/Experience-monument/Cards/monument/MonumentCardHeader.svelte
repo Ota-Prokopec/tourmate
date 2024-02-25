@@ -6,7 +6,7 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import { navigate } from '$lib/utils/navigator';
-	import { getUrlForSearchPage } from '$src/routes/(app)/search/tools';
+	import { getUrlForSearchPage } from '$src/routes/(app)/(navBarLayout)/search/tools';
 
 	export let monument: { name: string; placeDetail: { name: string } };
 	export let disablePlaceLink = false;

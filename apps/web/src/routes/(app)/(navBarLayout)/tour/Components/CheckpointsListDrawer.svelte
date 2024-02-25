@@ -3,7 +3,6 @@
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import SearchInput from '$lib/components/Inputs/SearchInput.svelte';
 	import type { MonumentCard } from '@app/ts-types';
-	import SearchMonuments from '../../search/Components/SearchMonuments.svelte';
 	import { twMerge } from 'tailwind-merge';
 	import Column from '$lib/components/Common/Column.svelte';
 	import NoContent from '$lib/components/Common/NoContent.svelte';

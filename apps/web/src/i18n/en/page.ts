@@ -117,6 +117,7 @@ export const pageEN = {
 		label: 'Experiences made'
 	},
 	tour: {
-		distanceToNextTargetLabel: 'Distance to next target is: '
+		distanceToNextTargetLabel: 'Distance to next target is: ',
+		youFinished: 'You finished the tour'
 	}
 } satisfies BaseTranslation;

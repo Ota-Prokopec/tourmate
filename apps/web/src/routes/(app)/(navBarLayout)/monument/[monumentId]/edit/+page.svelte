@@ -8,7 +8,7 @@
 	import Marker from '$lib/components/Map/Marker.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import LL from '$src/i18n/i18n-svelte';
-	import AddQuestionButton from '$src/routes/(app)/addMonument/detail/Components/AddQuestionButton.svelte';
+	import AddQuestionButton from '$src/routes/(app)/(navBarLayout)/addMonument/detail/Components/AddQuestionButton.svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { MonumentMarkerData, Question } from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';

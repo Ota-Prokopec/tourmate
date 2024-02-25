@@ -5,7 +5,7 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import LL from '$src/i18n/i18n-svelte';
-	import type { MonumentCard } from '@app/ts-types';
+	import { isMonumentWithQuestion, type MonumentCard } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import AnswerQuestionDrawer from '../../createNewExperience/[lat]-[lng]/Components/AnswerQuestionDrawer.svelte';
@@ -26,22 +26,27 @@
 
 		<MonumentCardComponent size="tiny" {monument} />
 
-		<Button color="green" on:click={() => (answerQuestionDrawerHidden = false)}>
-			answer question (overwrite)
-		</Button>
+		{#if isMonumentWithQuestion(monument) && !monument.usersAnswerToQuestion?.answeredCorrectly}
+			<Button color="green" on:click={() => (answerQuestionDrawerHidden = false)}>
+				answer question (overwrite)
+			</Button>
+		{/if}
 
-		{#if monument.question}
+		{#if isMonumentWithQuestion(monument)}
 			<AnswerQuestionDrawer
 				bind:hidden={answerQuestionDrawerHidden}
-				usersAnswer={null}
 				isLoading={false}
-				question={monument.question}
+				bind:monument
 			/>
 		{/if}
 
 		<Row class="w-full h-auto gap-2 justify-end flex">
 			<Button on:click={() => dispatch('dismiss')} color="red">{$LL.common.no()}</Button>
-			<Button on:click={() => dispatch('accomplish')} color="green">{$LL.common.yes()}</Button>
+			<Button
+				disabled={!monument.question || !monument.usersAnswerToQuestion?.answeredCorrectly}
+				on:click={() => dispatch('accomplish')}
+				color="green">{$LL.common.yes()}</Button
+			>
 		</Row>
 	</Column>
 </Card>

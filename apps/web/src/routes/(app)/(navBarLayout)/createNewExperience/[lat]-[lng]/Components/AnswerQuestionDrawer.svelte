@@ -10,8 +10,11 @@
 	import TextForm from '$lib/components/Experience-monument/question/Forms/TextForm.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
+	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
+	import { alert } from '$src/routes/alertStore';
 	import {
+		type TMonumentCardWithQuestion,
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
 		isQuestionTypeText,
@@ -20,34 +23,51 @@
 		type UsersAnswer
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import QuestionAnsweredCorrectlyCard from './QuestionAnsweredCorrectlyCard.svelte';
 	import QuestionAnsweredWrongCard from './QuestionAnsweredWrongCard.svelte';
 
-	const dispatch = createEventDispatcher<{
-		answer: {
-			textAnswer: string | undefined;
-			numberAnswer: number | undefined;
-			radioAnswer: string | undefined;
-		};
-	}>();
-
 	export let isLoading: boolean;
 	export let hidden = true;
-	export let usersAnswer: Nullable<Pick<UsersAnswer, 'answeredCorrectly'>>;
 
-	export let question: Question;
+	export let monument: TMonumentCardWithQuestion;
+	export let question: Question = monument.question;
 
 	let textAnswer: string = '';
 	let numberAnswer: number = 0;
 	let radioAnswer: string = '';
 
-	const answer = () => {
-		dispatch('answer', {
-			textAnswer,
-			numberAnswer,
-			radioAnswer
-		});
+	const answerQuestion = async (param: {
+		textAnswer: string | undefined;
+		numberAnswer: number | undefined;
+		radioAnswer: string | undefined;
+	}) => {
+		try {
+			isLoading = true;
+			if (!question) throw new Error('There is no question in monument');
+			if (!monument) throw new Error('Monument is not defined');
+			let answer: number | string;
+
+			if (question.type === 'text' && typeof param.textAnswer === 'string')
+				answer = param.textAnswer;
+			else if (question.type === 'number' && typeof param.numberAnswer === 'number')
+				answer = param.numberAnswer;
+			else if (question.type === 'radio' && typeof param.radioAnswer === 'string')
+				answer = param.radioAnswer;
+			else throw new Error('There is no answer from user');
+
+			const usersAnswer = (
+				await sdk.answerQuestion({
+					answer: answer,
+					monumentId: monument?._id
+				})
+			).answerQuestion;
+
+			//only thing you have to do is to bind monument to this monument
+			monument.usersAnswerToQuestion = usersAnswer;
+		} catch (error) {
+			alert('', $LL.page.createNewExperience.Footer.answerQuestionError(), { color: 'red' });
+		}
+		isLoading = false;
 	};
 </script>
 
@@ -64,9 +84,9 @@
 		</Right>
 	</MediaQuery>
 
-	{#if usersAnswer?.answeredCorrectly}
+	{#if monument.usersAnswerToQuestion?.answeredCorrectly}
 		<QuestionAnsweredCorrectlyCard />
-	{:else if usersAnswer && !usersAnswer.answeredCorrectly}
+	{:else if monument.usersAnswerToQuestion && !monument.usersAnswerToQuestion.answeredCorrectly}
 		<QuestionAnsweredWrongCard />
 	{:else}
 		<Column class="justify-center items-center">
@@ -83,7 +103,15 @@
 				/>
 			{/if}
 
-			<Button on:click={answer} color="green">
+			<Button
+				on:click={() =>
+					answerQuestion({
+						textAnswer,
+						numberAnswer,
+						radioAnswer
+					})}
+				color="green"
+			>
 				{#if isLoading}
 					<Loading />
 				{:else}

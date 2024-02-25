@@ -6,7 +6,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
-	import type { MonumentCard } from '@app/ts-types';
+	import { isMonumentWithQuestion, type MonumentCard } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import AnswerQuestionDrawer from './AnswerQuestionDrawer.svelte';
@@ -28,47 +28,13 @@
 		(isUserCloseEnoughToMonument && monument && !monument.question) ||
 		(isUserCloseEnoughToMonument && monument?.question && usersAnswer?.answeredCorrectly);
 
-	const anwerQuestion = async (param: {
-		textAnswer: string | undefined;
-		numberAnswer: number | undefined;
-		radioAnswer: string | undefined;
-	}) => {
-		try {
-			isAnsweringLoading = true;
-			if (!question) throw new Error('There is no question in monument');
-			if (!monument) throw new Error('Monument is not defined');
-			let answer: number | string;
-
-			if (question.type === 'text' && typeof param.textAnswer === 'string')
-				answer = param.textAnswer;
-			else if (question.type === 'number' && typeof param.numberAnswer === 'number')
-				answer = param.numberAnswer;
-			else if (question.type === 'radio' && typeof param.radioAnswer === 'string')
-				answer = param.radioAnswer;
-			else throw new Error('There is no answer from user');
-
-			usersAnswer = (
-				await sdk.answerQuestion({
-					answer: answer,
-					monumentId: monument?._id
-				})
-			).answerQuestion;
-		} catch (error) {
-			alert('', $LL.page.createNewExperience.Footer.answerQuestionError(), { color: 'red' });
-		}
-		isAnsweringLoading = false;
-	};
-
 	let answerQuestionDrawerHidden = true;
 </script>
 
-{#if monument?.question}
+{#if monument && isMonumentWithQuestion(monument)}
 	<AnswerQuestionDrawer
+		bind:monument
 		isLoading={isAnsweringLoading}
-		on:answer={(e) => {
-			anwerQuestion(e.detail);
-		}}
-		{usersAnswer}
 		question={monument?.question}
 		bind:hidden={answerQuestionDrawerHidden}
 	/>

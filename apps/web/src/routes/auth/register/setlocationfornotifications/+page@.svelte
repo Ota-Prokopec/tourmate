@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Alert from '$lib/components/Alert/Alert.svelte';
 	import { navigate } from '$lib/utils/navigator';
-	import SetLocationForNotificationsPage from '$src/routes/(app)/account/[myId]/settings/setlocationfornotifications/Components/SetLocationForNotificationsPage.svelte';
+	import SetLocationForNotificationsPage from '$src/routes/(app)/(navBarLayout)/account/[myId]/settings/setlocationfornotifications/Components/SetLocationForNotificationsPage.svelte';
 	import type { PageData } from './$types';
 	import { getUsersLocation } from '@app/utils';
 	import lsStore from '$lib/utils/lsStore';

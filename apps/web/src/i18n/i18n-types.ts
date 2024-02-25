@@ -306,6 +306,10 @@ type RootTranslation = {
 			 * D​i​s​t​a​n​c​e​ ​t​o​ ​n​e​x​t​ ​t​a​r​g​e​t​ ​i​s​:​ 
 			 */
 			distanceToNextTargetLabel: string
+			/**
+			 * Y​o​u​ ​f​i​n​i​s​h​e​d​ ​t​h​e​ ​t​o​u​r
+			 */
+			youFinished: string
 		}
 	}
 	common: {
@@ -1094,6 +1098,10 @@ export type TranslationFunctions = {
 			 * Distance to next target is: 
 			 */
 			distanceToNextTargetLabel: () => LocalizedString
+			/**
+			 * You finished the tour
+			 */
+			youFinished: () => LocalizedString
 		}
 	}
 	common: {

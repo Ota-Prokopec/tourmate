@@ -116,6 +116,7 @@ export const pageCS = {
 		label: 'zážitků vytvořeno'
 	},
 	tour: {
-		distanceToNextTargetLabel: 'Distance to next target is: '
+		distanceToNextTargetLabel: 'Vzdálenost do dalšího místa je: ',
+		youFinished: 'Pokořil jste celou tůru'
 	}
 } satisfies BaseTranslation;

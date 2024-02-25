@@ -21,7 +21,7 @@
 	import TourNavigateToAccomplishMonumentCard from '../Components/TourNavigateToAccomplishMonumentCard.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { alert } from '$src/routes/alertStore';
-	import { Progressbar } from 'flowbite-svelte';
+	import ProgressBar from '$lib/components/Common/ProgressBar.svelte';
 
 	export let data: PageData;
 
@@ -32,16 +32,20 @@
 	let showNavigationCard = false;
 
 	export let allMonuments: MonumentCard[] = data.tour.monuments;
-	export let accomplihedExperiences: Experience[] = [];
+	export let accomplihedExperiences: Experience[] = data.tour.monuments.flatMap(
+		(monument) => monument.usersConnectedExperiences
+	);
+
 	$: monumentsToAccomplish = allMonuments.filter(
 		(item) => !accomplihedExperiences.find((exp) => exp.connectedMonumentId === item._id)
 	);
 
+	$: console.log(accomplihedExperiences);
+
+	$: console.log(monumentsToAccomplish);
+
 	let userCurrentLocation = $lsStore.usersLocation;
 	$: userCurrentLocation = $lsStore.usersLocation;
-
-	let isSaving = false;
-	let saved: false | { tourName: string } = false;
 
 	let closestMonument: MonumentCard | undefined = undefined;
 
@@ -88,13 +92,15 @@
 			alert('Error', '500', { color: 'red' });
 		}
 	};
+
+	$: isTourFinished = monumentsToAccomplish.length === 0;
 </script>
 
 {#if closestMonument && showNavigationCard}
 	<TourNavigateToAccomplishMonumentCard
 		on:accomplish={accomplish}
 		on:dismiss={() => (showNavigationCard = false)}
-		monument={closestMonument}
+		bind:monument={closestMonument}
 	/>
 {/if}
 
@@ -106,22 +112,32 @@
 
 <CheckpointsListDrawer disableEditing bind:chosen={allMonuments} bind:hidden={listHidden} />
 
-<Columns columns="1fr 3fr 1fr" class="absolute bottom-0 w-full h-auto justify-between p-2">
+<Columns
+	columns="1fr 3fr 1fr"
+	class="absolute bottom-0 w-full h-auto p-2 child:flex child:justify-self-center "
+>
 	<Icon
 		on:click={() => (listHidden = false)}
 		class="child:w-10 child:h-10 p-2 rounded-full bg-green-400 child:fill-white "
 	>
 		<IconList />
 	</Icon>
-	<Progressbar
-		progress={allMonuments.length / (allMonuments.length - monumentsToAccomplish.length)}
-	/>
-	{#if distanceToClosestMonument}
-		<Text class="font-bold"
-			>{`${$LL.page.tour.distanceToNextTargetLabel()} ${normalizeMeters(
-				distanceToClosestMonument
-			)}`}</Text
-		>
-	{/if}
+	<Row class="gap-2 justify-center">
+		{#if distanceToClosestMonument && !isTourFinished}
+			<Text class="font-bold  text-center"
+				>{`${$LL.page.tour.distanceToNextTargetLabel()} ${normalizeMeters(
+					distanceToClosestMonument
+				)}`}</Text
+			>
+		{:else if isTourFinished}
+			<Text class="font-bold text-center">{$LL.page.tour.youFinished()}</Text>
+		{/if}
+		<ProgressBar
+			labelInside
+			progress={allMonuments.length - monumentsToAccomplish.length}
+			max={allMonuments.length}
+		/>
+	</Row>
+
 	<ButtonNext on:click={() => (saveHidden = false)} class="" />
 </Columns>

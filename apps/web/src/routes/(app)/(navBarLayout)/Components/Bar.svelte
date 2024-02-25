@@ -10,7 +10,7 @@
 	import IconPlus from '$lib/components/Icons/IconPlus.svelte';
 	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
-	import { mapOrTakePhoto } from '../+layout.svelte';
+	import { mapOrTakePhoto } from '../../+layout.svelte';
 
 	export let userId: string;
 	export let profilePictureURL: string | URL;

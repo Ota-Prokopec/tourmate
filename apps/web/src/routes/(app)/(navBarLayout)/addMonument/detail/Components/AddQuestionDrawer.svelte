@@ -25,9 +25,9 @@
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
-	import NumberForm from '../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';
-	import RadioForm from '../../../../../lib/components/Experience-monument/question/Forms/RadioForm.svelte';
-	import TextForm from '../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
+	import NumberForm from '../../../../../../lib/components/Experience-monument/question/Forms/NumberForm.svelte';
+	import RadioForm from '../../../../../../lib/components/Experience-monument/question/Forms/RadioForm.svelte';
+	import TextForm from '../../../../../../lib/components/Experience-monument/question/Forms/TextForm.svelte';
 
 	const dispatch = createEventDispatcher<{
 		save: QuestionWithCorrectAnswerRequired;

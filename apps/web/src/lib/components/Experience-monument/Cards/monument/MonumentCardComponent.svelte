@@ -43,9 +43,8 @@
 	let usersLocation = $lsStore.usersLocation;
 	$: usersLocation = $lsStore.usersLocation;
 
-	type T = $$Generic<'normal' | 'small' | 'tiny'>;
-
-	export let size: T;
+	type TSize = $$Generic<'normal' | 'small' | 'tiny'>;
+	export let size: TSize;
 
 	export let monument: typeof size extends 'normal' ? MonumentCard : SmallMonumentCard;
 

@@ -7,7 +7,7 @@
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
-	import MonumentCreateForm from '$src/routes/(app)/monument/Components/MonumentCreateForm.svelte';
+	import MonumentCreateForm from '$src/routes/(app)/(navBarLayout)/monument/Components/MonumentCreateForm.svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type {
 		Answer,

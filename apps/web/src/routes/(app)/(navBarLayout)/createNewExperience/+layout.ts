@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
-import { LayoutLoad } from '../$types';
 import type { Base64 } from '@app/ts-types';
+import type { LayoutLoad } from './$types';
 
 export const ssr = false;
 
