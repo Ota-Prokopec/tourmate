@@ -50,7 +50,7 @@ export interface NexusGenInputs {
   CreateExperienceInput: { // input type
     connnectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
-    picture?: string | null; // String
+    picture: string; // String!
   }
   CreateMonumentInput: { // input type
     about: string; // String!
@@ -130,7 +130,7 @@ export interface NexusGenObjects {
     _updatedAt: string; // String!
     connectedMonumentId: string; // String!
     location: NexusGenScalars['Location']; // Location!
-    pictureUrl?: string | null; // String
+    pictureUrl: string; // String!
     userId: string; // String!
   }
   ExperienceLike: { // root type
@@ -270,7 +270,7 @@ export interface NexusGenFieldTypes {
     liked: NexusGenRootTypes['ExperienceLike'] | null; // ExperienceLike
     likes: NexusGenRootTypes['ExperienceLike'][]; // [ExperienceLike!]!
     location: NexusGenScalars['Location']; // Location!
-    pictureUrl: string | null; // String
+    pictureUrl: string; // String!
     totalLikesCount: number; // Int!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // String!

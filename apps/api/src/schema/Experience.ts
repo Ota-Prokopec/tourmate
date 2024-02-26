@@ -15,7 +15,7 @@ export default objectType({
 		t.list.string('_permissions')
 		t.string('_databaseId')
 		t.string('userId')
-		t.nullable.field('pictureUrl', { type: 'String' })
+		t.field('pictureUrl', { type: 'String' })
 		t.field('location', { type: 'Location' })
 		t.string('connectedMonumentId')
 		t.field('user', {

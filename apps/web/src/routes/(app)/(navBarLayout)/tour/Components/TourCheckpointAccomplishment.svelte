@@ -57,7 +57,7 @@
 					input: {
 						connnectedMonumentId: monument._id,
 						location: userCurrentLocation,
-						picture: null //without the picture
+						picture: null //with a picture
 					}
 				})
 			).createExperience;

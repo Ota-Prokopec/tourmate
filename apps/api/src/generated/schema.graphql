@@ -34,7 +34,7 @@ input CreateAccountInput {
 input CreateExperienceInput {
   connnectedMonumentId: String!
   location: Location!
-  picture: String
+  picture: String!
 }
 
 input CreateMonumentInput {
@@ -69,7 +69,7 @@ type Experience {
   liked: ExperienceLike
   likes: [ExperienceLike!]!
   location: Location!
-  pictureUrl: String
+  pictureUrl: String!
   totalLikesCount: Int!
   user: User!
   userId: String!

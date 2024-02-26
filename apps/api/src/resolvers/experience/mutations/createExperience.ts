@@ -35,14 +35,12 @@ export default mutationField('createExperience', {
 				)
 		}
 
-		const picture = args.input.picture
-			? await buckets.experiences.uploadBase64(args.input.picture)
-			: null
+		const picture = await buckets.experiences.uploadBase64(args.input.picture)
 
 		const document = await collections.experience.createDocument({
 			connectedMonumentId: args.input.connnectedMonumentId,
 			userId: ctx.user.$id,
-			pictureUrl: picture?.secure_url ?? null,
+			pictureUrl: picture?.secure_url,
 			latitude: Math.round(args.input.location[0]),
 			longitude: Math.round(args.input.location[1]),
 		})
