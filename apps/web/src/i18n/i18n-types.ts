@@ -755,7 +755,7 @@ type RootTranslation = {
 				label: string
 			}
 		}
-		TourNavigateToAccomplishMonumentCard: {
+		TourCheckpointAccomplishment: {
 			/**
 			 * Y​o​u​ ​a​r​e​ ​a​t​ ​t​h​e​ ​c​h​e​c​k​p​o​i​n​t​,​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​c​o​m​p​l​i​s​h​ ​i​t​ ​n​o​w​?
 			 */
@@ -1551,7 +1551,7 @@ export type TranslationFunctions = {
 				label: () => LocalizedString
 			}
 		}
-		TourNavigateToAccomplishMonumentCard: {
+		TourCheckpointAccomplishment: {
 			/**
 			 * You are at the checkpoint, do you want to accomplish it now?
 			 */

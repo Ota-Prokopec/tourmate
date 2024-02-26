@@ -18,7 +18,7 @@
 	import { normalizeMeters } from '@app/utils';
 	import { distanceTo } from 'geolocation-utils';
 	import CheckpointsListDrawer from '../Components/CheckpointsListDrawer.svelte';
-	import TourNavigateToAccomplishMonumentCard from '../Components/TourNavigateToAccomplishMonumentCard.svelte';
+	import TourCheckpointAccomplishment from '../Components/TourCheckpointAccomplishment.svelte';
 	import type { PageData } from './$types';
 	import Column from '$lib/components/Common/Column.svelte';
 
@@ -57,14 +57,9 @@
 			? distanceTo(userCurrentLocation, closestMonument.location)
 			: undefined;
 
-	$: if (
-		distanceToClosestMonument &&
-		distanceToClosestMonument < data.minimalDistanceToAccomplishMonument
-	) {
-		tourAccomplishCardHidden = false;
-	}
-
 	const accomplish = async () => {
+		console.log('accomplish');
+
 		try {
 			if (!closestMonument) throw new Error('closestMonument not defined');
 			if (!userCurrentLocation) throw new Error('userCurrentLocation not defined');
@@ -85,12 +80,12 @@
 	};
 </script>
 
-{#if closestMonument && distanceToClosestMonument}
-	<TourNavigateToAccomplishMonumentCard
+{#if closestMonument && typeof distanceToClosestMonument === 'number' && !tourAccomplishCardHidden}
+	<TourCheckpointAccomplishment
 		bind:cardHidden={tourAccomplishCardHidden}
 		distanceToMonument={distanceToClosestMonument}
 		distanceToReachMonument={distanceToAccomplishMonument}
-		on:accomplish={accomplish}
+		on:test={() => console.log('test')}
 		bind:monument={closestMonument}
 	/>
 {/if}

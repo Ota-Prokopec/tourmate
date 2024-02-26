@@ -160,7 +160,7 @@ export const componentsCS = {
 			label: 'jméno trasy'
 		}
 	},
-	TourNavigateToAccomplishMonumentCard: {
+	TourCheckpointAccomplishment: {
 		title: 'Jste u kontrolního bodu, chcete ho dosáhnout hned?',
 		distanceToIs:
 			'Vzdálenost k tomuto kontrolnímu bodu je: {distance: string}, musíte dosáhnout alespoň: {distanceToReach: string}'

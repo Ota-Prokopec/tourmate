@@ -74,7 +74,7 @@
 <Drawer
 	bind:hidden
 	placement="auto"
-	class="!z-50 w-full max-w-[400px] mobile:h-[calc(100%-100px)] fixed mobile:top-[100px]"
+	class="!z-50 w-full sm:max-w-[400px]  mobile:h-[calc(100%-100px)] fixed mobile:top-[100px]"
 >
 	<MediaQuery size="mobile">
 		<Right>

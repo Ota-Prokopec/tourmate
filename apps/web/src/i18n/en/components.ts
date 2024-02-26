@@ -164,7 +164,7 @@ export const componentsEN = {
 			label: 'name of the tour'
 		}
 	},
-	TourNavigateToAccomplishMonumentCard: {
+	TourCheckpointAccomplishment: {
 		title: 'You are at the checkpoint, do you want to accomplish it now?',
 		distanceToIs:
 			'Distance to this checkpoint is: {distance: string}, you have to reach at least: {distanceToReach: string}'
