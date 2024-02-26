@@ -760,6 +760,12 @@ type RootTranslation = {
 			 * Y​o​u​ ​a​r​e​ ​a​t​ ​t​h​e​ ​c​h​e​c​k​p​o​i​n​t​,​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​c​o​m​p​l​i​s​h​ ​i​t​ ​n​o​w​?
 			 */
 			title: string
+			/**
+			 * D​i​s​t​a​n​c​e​ ​t​o​ ​t​h​i​s​ ​c​h​e​c​k​p​o​i​n​t​ ​i​s​:​ ​{​d​i​s​t​a​n​c​e​}​,​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​r​e​a​c​h​ ​a​t​ ​l​e​a​s​t​:​ ​{​d​i​s​t​a​n​c​e​T​o​R​e​a​c​h​}
+			 * @param {string} distance
+			 * @param {string} distanceToReach
+			 */
+			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
 		}
 	}
 	error: {
@@ -1550,6 +1556,10 @@ export type TranslationFunctions = {
 			 * You are at the checkpoint, do you want to accomplish it now?
 			 */
 			title: () => LocalizedString
+			/**
+			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}
+			 */
+			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
 		}
 	}
 	error: {

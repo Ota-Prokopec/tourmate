@@ -25,6 +25,7 @@
 		<Column>
 			{#each chosen as monument}
 				<MonumentCardComponent
+					disableAccountLink
 					disablePlaceLink={true}
 					disableOwnerOptions
 					disableSeeMoreButton
@@ -33,7 +34,7 @@
 					on:click={() => {
 						if (!disableEditing) cardClick(monument);
 					}}
-					size="tiny"
+					size="normal"
 					{monument}
 				/>
 			{/each}

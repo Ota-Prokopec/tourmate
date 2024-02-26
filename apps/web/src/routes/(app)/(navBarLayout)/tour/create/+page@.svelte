@@ -33,7 +33,7 @@
 			})
 		).createTour;
 		isSaving = false;
-		navigate('/tour/mytours');
+		navigate(-1);
 	};
 </script>
 

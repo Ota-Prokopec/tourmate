@@ -16,5 +16,5 @@
 	{#if showWrittenProgress}
 		<span>{progress}/{max}</span>
 	{/if}
-	<Progressbar color="blue" size="h-4" {labelInside} progress={value} />
+	<Progressbar color="blue" size="h-4 w-full" {labelInside} progress={value} />
 </div>

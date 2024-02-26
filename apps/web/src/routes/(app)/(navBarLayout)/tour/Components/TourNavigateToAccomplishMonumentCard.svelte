@@ -9,25 +9,48 @@
 	import { Button } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import AnswerQuestionDrawer from '../../createNewExperience/[lat]-[lng]/Components/AnswerQuestionDrawer.svelte';
+	import ScanningAnimation from '$lib/components/Common/ScanningAnimation.svelte';
+	import { normalizeMeters } from '@app/utils';
+	import Drawer from '$lib/components/Common/Drawer.svelte';
 
 	const dispatch = createEventDispatcher<{ dismiss: undefined; accomplish: undefined }>();
 
 	export let monument: MonumentCard;
+	export let distanceToMonument: number;
+	export let distanceToReachMonument: number;
+	export let cardHidden: boolean = true;
 
 	export let answerQuestionDrawerHidden = true;
 </script>
 
-<Card dismissable class="absolute z-50 w-[80%] h-auto m-[10%]">
-	<Column class="gap-2">
+<Drawer
+	bind:hidden={cardHidden}
+	placement="auto"
+	class="absolute z-50 mobile:w-full w-[80%] h-auto sm:m-[10%]"
+>
+	<Column class="gap-2 justify-center items-center">
 		<Text
 			class="font-bold text-center
     ">{$LL.component.TourNavigateToAccomplishMonumentCard.title()}</Text
 		>
 
-		<MonumentCardComponent size="tiny" {monument} />
+		<MonumentCardComponent disablePlaceLink size="tiny" {monument} />
+
+		<Text class="text-center font-bold">
+			{$LL.component.TourNavigateToAccomplishMonumentCard.distanceToIs({
+				distance: normalizeMeters(distanceToMonument),
+				distanceToReach: normalizeMeters(distanceToReachMonument)
+			})}
+		</Text>
 
 		{#if isMonumentWithQuestion(monument) && !monument.usersAnswerToQuestion?.answeredCorrectly}
-			<Button color="green" on:click={() => (answerQuestionDrawerHidden = false)}>
+			<Button
+				disabled={(monument.question &&
+					monument.usersAnswerToQuestion?.answeredCorrectly === false) ||
+					(monument.question && monument.usersAnswerToQuestion === null)}
+				color="green"
+				on:click={() => (answerQuestionDrawerHidden = false)}
+			>
 				answer question (overwrite)
 			</Button>
 		{/if}
@@ -40,13 +63,6 @@
 			/>
 		{/if}
 
-		<Row class="w-full h-auto gap-2 justify-end flex">
-			<Button on:click={() => dispatch('dismiss')} color="red">{$LL.common.no()}</Button>
-			<Button
-				disabled={!monument.question || !monument.usersAnswerToQuestion?.answeredCorrectly}
-				on:click={() => dispatch('accomplish')}
-				color="green">{$LL.common.yes()}</Button
-			>
-		</Row>
+		<ScanningAnimation />
 	</Column>
-</Card>
+</Drawer>

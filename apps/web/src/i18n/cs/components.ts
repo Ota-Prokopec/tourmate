@@ -161,6 +161,8 @@ export const componentsCS = {
 		}
 	},
 	TourNavigateToAccomplishMonumentCard: {
-		title: 'Jste u kontrolního bodu, chcete ho dosáhnout hned?'
+		title: 'Jste u kontrolního bodu, chcete ho dosáhnout hned?',
+		distanceToIs:
+			'Vzdálenost k tomuto kontrolnímu bodu je: {distance: string}, musíte dosáhnout alespoň: {distanceToReach: string}'
 	}
 } satisfies BaseTranslation;

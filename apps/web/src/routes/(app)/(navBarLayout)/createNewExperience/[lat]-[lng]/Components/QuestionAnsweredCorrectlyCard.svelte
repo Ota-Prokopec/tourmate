@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
-	import SuccessCard from '$lib/components/Common/SuccessCard.svelte';
+	import SuccessCard from '$lib/components/Cards/SuccessCard.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import LL from '$src/i18n/i18n-svelte';
 </script>

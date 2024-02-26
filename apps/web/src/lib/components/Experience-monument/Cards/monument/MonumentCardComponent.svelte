@@ -55,7 +55,7 @@
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
 	export let disablePlaceLink = false;
-
+	export let disableAccountLink = false;
 	export let dismissable = false;
 	export let disableOwnerOptions = false;
 	let liked: LikeSectionState | undefined =
@@ -161,7 +161,12 @@
 		{#if size !== 'tiny'}
 			<Row class="justify-between w-full">
 				{#if isMonumentCard(monument)}
-					<UserItem avatarClass="w-10 h-10" class="h-auto" user={monument.user} />
+					<UserItem
+						disableProfileLinkOnClick={disableAccountLink}
+						avatarClass="w-10 h-10"
+						class="h-auto"
+						user={monument.user}
+					/>
 				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
@@ -189,7 +194,7 @@
 				}}
 				imgSrc={monument.pictureURL}
 			/>
-			{#if size !== 'tiny'}
+			{#if size === 'normal'}
 				<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
 			{/if}
 

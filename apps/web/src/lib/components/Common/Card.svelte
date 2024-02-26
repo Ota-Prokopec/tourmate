@@ -7,18 +7,18 @@
 	const dispatch = createEventDispatcher<{ dismiss: undefined }>();
 
 	export let dismissable = false;
-	export let disable = false;
+	export let disabled = false;
 
 	const dismiss = () => {
-		disable = true;
 		dispatch('dismiss');
+		disabled = true;
 	};
 
 	let className = '';
 	export { className as class };
 </script>
 
-{#if !disable}
+{#if !disabled}
 	<Card
 		on:click
 		padding="md"
