@@ -2,13 +2,13 @@
 	import Column from '$lib/components/Common/Column.svelte';
 	import Paginating from '$lib/components/Common/Paginating.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import type { Base64, Tour } from '@app/ts-types';
+	import type { Base64, GraphqlDocument, TTourCard, Tour } from '@app/ts-types';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import TourCardComponent from '$lib/components/Experience-monument/Cards/tour/TourCardComponent.svelte';
 
 	export let userId: string;
 
-	let tours: (Omit<Tour, 'monuments'> & { initialTourPicture: string | Base64 })[] = [];
+	let tours: TTourCard[] = [];
 	let initialLoading = false;
 	let loadingMoreItems = false;
 
@@ -30,10 +30,9 @@
 						if (!initialTourPicture) throw new Error('Tour has no monuments included');
 
 						return {
-							userId: item.userId,
-							tourName: item.tourName,
 							initialTourPicture: initialTourPicture,
-							user: item.creator
+							user: item.creator,
+							...item
 						};
 					})
 				];
@@ -58,6 +57,8 @@
 	</svelte:fragment>
 
 	<TourCardComponent
-		data={{ img: item.initialTourPicture, tourName: item.tourName, creator: item.user }}
+		data={{
+			...item
+		}}
 	/>
 </Paginating>

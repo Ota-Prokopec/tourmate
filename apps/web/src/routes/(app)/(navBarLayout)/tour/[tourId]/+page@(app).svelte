@@ -21,6 +21,7 @@
 	import TourCheckpointAccomplishment from '../Components/TourCheckpointAccomplishment.svelte';
 	import type { PageData } from './$types';
 	import Column from '$lib/components/Common/Column.svelte';
+	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 
 	export let data: PageData;
 
@@ -56,36 +57,16 @@
 		userCurrentLocation && closestMonument
 			? distanceTo(userCurrentLocation, closestMonument.location)
 			: undefined;
-
-	const accomplish = async () => {
-		console.log('accomplish');
-
-		try {
-			if (!closestMonument) throw new Error('closestMonument not defined');
-			if (!userCurrentLocation) throw new Error('userCurrentLocation not defined');
-
-			const createdExperience = (
-				await sdk.createExperience({
-					input: {
-						connnectedMonumentId: closestMonument._id,
-						location: userCurrentLocation,
-						picture: null //without the picture
-					}
-				})
-			).createExperience;
-			accomplihedExperiences = [...accomplihedExperiences, createdExperience];
-		} catch (error) {
-			alert('Error', '', { color: 'red' });
-		}
-	};
 </script>
 
 {#if closestMonument && typeof distanceToClosestMonument === 'number' && !tourAccomplishCardHidden}
 	<TourCheckpointAccomplishment
+		bind:accomplihedExperiences
+		bind:userCurrentLocation
+		on:message={() => console.log('test')}
 		bind:cardHidden={tourAccomplishCardHidden}
 		distanceToMonument={distanceToClosestMonument}
 		distanceToReachMonument={distanceToAccomplishMonument}
-		on:test={() => console.log('test')}
 		bind:monument={closestMonument}
 	/>
 {/if}
@@ -96,9 +77,9 @@
 			<TourCardComponent
 				class=""
 				data={{
-					img: allMonuments.at(0)?.pictureURL ?? '',
-					tourName: data.tour.tourName,
-					creator: data.tour.creator
+					initialTourPicture: allMonuments.at(0)?.pictureURL ?? '',
+
+					...data.tour
 				}}
 			/>
 			<Text class="font-bold text-center">{$LL.page.tour.youFinished()}</Text>
@@ -112,7 +93,18 @@
 	{/each}
 </Map>
 
-<CheckpointsListDrawer disableEditing bind:chosen={allMonuments} bind:hidden={listHidden} />
+<CheckpointsListDrawer
+	disableEditing
+	let:monument
+	bind:chosen={allMonuments}
+	bind:hidden={listHidden}
+>
+	<Icon class="child:fill-green-400">
+		{#if monument.usersConnectedExperiences.length}
+			<IconCheck />
+		{/if}
+	</Icon>
+</CheckpointsListDrawer>
 
 <Columns
 	columns="1fr 3fr 1fr"

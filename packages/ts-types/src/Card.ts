@@ -8,8 +8,10 @@ import {
 	MonumentLikeGraphqlDocument,
 } from './Likes'
 import { Monument } from './Monument'
+import { Base64 } from './Others'
 import { PlaceDetail } from './PlaceDetails'
 import { Question } from './Question'
+import { Tour } from './Tour'
 
 export type MonumentCard = GraphqlDocument<Monument> & {
 	placeDetail: PlaceDetail
@@ -42,6 +44,13 @@ export type ExperienceCard = GraphqlDocument<Experience> & {
 	liked?: ExperienceLikeGraphqlDocument | null | undefined
 	connectedMonument?: SmallMonumentCard | null | undefined
 }
+
+export type TTourCard = GraphqlDocument<
+	Omit<Tour, 'monuments' | 'user'> & {
+		initialTourPicture: string | Base64
+		creator: UserInfo
+	}
+>
 
 export const isMonumentWithQuestion = (
 	monument: MonumentCard | TMonumentCardWithQuestion,

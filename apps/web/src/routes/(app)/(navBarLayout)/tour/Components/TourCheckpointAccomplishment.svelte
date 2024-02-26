@@ -5,21 +5,27 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import LL from '$src/i18n/i18n-svelte';
-	import { isMonumentWithQuestion, type MonumentCard } from '@app/ts-types';
+	import {
+		type Experience,
+		isMonumentWithQuestion,
+		type Location,
+		type MonumentCard
+	} from '@app/ts-types';
 	import { normalizeMeters } from '@app/utils';
 	import { Button } from 'flowbite-svelte';
 	import AnswerQuestionDrawer from '../../createNewExperience/[lat]-[lng]/Components/AnswerQuestionDrawer.svelte';
+	import { browser } from '$app/environment';
 	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher<{ accomplish: undefined; test: undefined }>();
-
-	dispatch('test');
+	import { sdk } from '$src/graphql/sdk';
+	import { alert } from '$src/routes/alertStore';
 
 	export let monument: MonumentCard;
 	let question = monument.question;
 	export let distanceToMonument: number;
 	export let distanceToReachMonument: number;
 	export let cardHidden: boolean = true;
+	export let userCurrentLocation: Location | null | undefined;
+	export let accomplihedExperiences: Experience[];
 
 	export let answerQuestionDrawerHidden = true;
 
@@ -38,8 +44,32 @@
 		(!(question && userHasNotAnsweredYet) || !question || (question && userAnsweredCorrectly));
 
 	$: if (accomplishCheckpoint) {
-		dispatch('accomplish');
+		accomplish();
 	}
+
+	const accomplish = async () => {
+		try {
+			if (!monument) throw new Error('closestMonument not defined');
+			if (!userCurrentLocation) throw new Error('userCurrentLocation not defined');
+
+			const createdExperience = (
+				await sdk.createExperience({
+					input: {
+						connnectedMonumentId: monument._id,
+						location: userCurrentLocation,
+						picture: null //without the picture
+					}
+				})
+			).createExperience;
+			accomplihedExperiences = [...accomplihedExperiences, createdExperience];
+		} catch (error) {
+			alert(
+				'',
+				$LL.component.TourCheckpointAccomplishment.AnswerToQuestionOfThisMonumentIsWrongYouCantContinue(),
+				{ color: 'red' }
+			);
+		}
+	};
 </script>
 
 <Drawer

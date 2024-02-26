@@ -757,15 +757,19 @@ type RootTranslation = {
 		}
 		TourCheckpointAccomplishment: {
 			/**
-			 * Y​o​u​ ​a​r​e​ ​a​t​ ​t​h​e​ ​c​h​e​c​k​p​o​i​n​t​,​ ​d​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​c​o​m​p​l​i​s​h​ ​i​t​ ​n​o​w​?
+			 * T​h​i​s​ ​i​s​ ​t​h​e​ ​n​e​a​r​e​s​t​ ​c​h​e​c​k​p​o​i​n​t​ ​t​h​a​t​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​a​c​h​i​e​v​e
 			 */
 			title: string
 			/**
-			 * D​i​s​t​a​n​c​e​ ​t​o​ ​t​h​i​s​ ​c​h​e​c​k​p​o​i​n​t​ ​i​s​:​ ​{​d​i​s​t​a​n​c​e​}​,​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​r​e​a​c​h​ ​a​t​ ​l​e​a​s​t​:​ ​{​d​i​s​t​a​n​c​e​T​o​R​e​a​c​h​}
+			 * D​i​s​t​a​n​c​e​ ​t​o​ ​t​h​i​s​ ​c​h​e​c​k​p​o​i​n​t​ ​i​s​:​ ​{​d​i​s​t​a​n​c​e​}​,​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​r​e​a​c​h​ ​a​t​ ​l​e​a​s​t​:​ ​{​d​i​s​t​a​n​c​e​T​o​R​e​a​c​h​}​.​ ​A​f​t​e​r​ ​c​o​m​p​l​e​t​i​n​g​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​i​l​l​ ​b​e​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​a​c​c​o​m​p​l​i​s​h​e​d​ ​b​y​ ​y​o​u​ ​w​i​t​h​o​u​ ​a​ ​p​i​c​t​u​r​e​.
 			 * @param {string} distance
 			 * @param {string} distanceToReach
 			 */
 			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​t​h​e​ ​a​n​s​w​e​r​ ​t​o​ ​t​h​i​s​ ​q​u​e​s​t​i​o​n​ ​i​s​ ​w​r​o​n​g​,​ ​y​o​u​ ​a​n​s​w​e​r​e​d​ ​w​r​o​n​g​,​ ​s​o​ ​y​o​u​ ​c​a​n​ ​n​o​t​ ​c​o​n​t​i​n​u​e​ ​i​n​ ​t​h​e​ ​t​o​u​r​.
+			 */
+			AnswerToQuestionOfThisMonumentIsWrongYouCantContinue: string
 		}
 	}
 	error: {
@@ -1553,13 +1557,17 @@ export type TranslationFunctions = {
 		}
 		TourCheckpointAccomplishment: {
 			/**
-			 * You are at the checkpoint, do you want to accomplish it now?
+			 * This is the nearest checkpoint that you have to achieve
 			 */
 			title: () => LocalizedString
 			/**
-			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}
+			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}. After completing the experience will be automatically accomplished by you withou a picture.
 			 */
 			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
+			/**
+			 * We are sorry, the answer to this question is wrong, you answered wrong, so you can not continue in the tour.
+			 */
+			AnswerToQuestionOfThisMonumentIsWrongYouCantContinue: () => LocalizedString
 		}
 	}
 	error: {

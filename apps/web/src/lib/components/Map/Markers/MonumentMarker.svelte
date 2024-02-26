@@ -17,6 +17,7 @@
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import IconImages from '$lib/components/Icons/IconImages.svelte';
 	import Full from '$lib/components/Common/Full.svelte';
+	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 
 	export let monument: MonumentMarkerData;
 	export let disableShowingDetails = false;
@@ -96,8 +97,8 @@
 	location={monument.location}
 >
 	{#if userAlreadyHasExperienceConnectedToThisMonument}
-		<Icon class="child:fill-gray-900 absolute right-0 top-0 p-[2px]">
-			<IconImages />
+		<Icon class="child:fill-green-400 absolute right-0 top-0 p-[2px]">
+			<IconCheck />
 		</Icon>
 	{/if}
 

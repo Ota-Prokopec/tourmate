@@ -34,9 +34,11 @@
 					on:click={() => {
 						if (!disableEditing) cardClick(monument);
 					}}
-					size="normal"
+					size="tiny"
 					{monument}
-				/>
+				>
+					<slot item={1} {monument} />
+				</MonumentCardComponent>
 			{/each}
 		</Column>
 	{:else}
