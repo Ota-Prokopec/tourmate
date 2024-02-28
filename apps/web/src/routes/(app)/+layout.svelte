@@ -6,38 +6,31 @@
 
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
+	import { collections } from '$lib/appwrite/appwrite';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconQuestion from '$lib/components/Icons/IconQuestion.svelte';
 	import Notification from '$lib/components/Notification/Notification.svelte';
 	import lsSvelte, { storage } from '$lib/utils/lsStore';
-	import type { LayoutData } from './$types';
-	import Bar from './Components/Bar.svelte';
-	import { navigate } from '$lib/utils/navigator';
-	import lodash from 'lodash';
 	import { appwriteKeys } from '@app/appwrite-client';
-	import { collections } from '$lib/appwrite/appwrite';
+	import lodash from 'lodash';
+	import type { LayoutData } from './$types';
+	import Bar from './(navBarLayout)/Components/Bar.svelte';
+	import { browser } from '$app/environment';
 
 	export let data: LayoutData;
 
 	//real-time user update
-	collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
-		data.user = Object.assign(data.user, {
-			...lodash.omit(updatedUserInfo, ...appwriteKeys),
-			_updatedAt: updatedUserInfo.$updatedAt,
-			_createdAt: updatedUserInfo.$createdAt
+	if (browser)
+		collections.userInfo.listenUpdate(data.user._documentId, (updatedUserInfo) => {
+			data.user = Object.assign(data.user, {
+				...lodash.omit(updatedUserInfo, ...appwriteKeys),
+				_updatedAt: updatedUserInfo.$updatedAt,
+				_createdAt: updatedUserInfo.$createdAt
+			});
 		});
-	});
 
 	let isLoading = true;
 
 	$: if ($lsSvelte.usersLocation) isLoading = false;
-
-	const usernameSplited = data.user.username.split(' ');
-
-	const usersInitials = `${usernameSplited[0]?.at(0)} ${
-		usernameSplited.length >= 2 && usernameSplited[1]?.at(0)
-	}`;
 
 	//this is for /createNewExperience/[]/[] so when i am getting back from that and i have a picture stored in lsStore => i have to delete it that i did not have it there infinite years =>  the picture is there only for being it restored when user reloads the page
 	beforeNavigate((e) => {
@@ -54,17 +47,5 @@
 {#if isLoading}
 	<FullPageLoading />
 {:else}
-	<div class="w-full h-full flex flex-wrap flex-col items-center justify-center">
-		<div class="w-full h-[calc(100%-64px)] top-0 absolute overflow-scroll">
-			<slot />
-		</div>
-
-		<div class="w-full h-auto fixed bottom-0 flex justify-center z-50">
-			<Bar
-				userId={data.user.myId}
-				profilePictureURL={data.user.profilePictureURL}
-				{usersInitials}
-			/>
-		</div>
-	</div>
+	<slot />
 {/if}

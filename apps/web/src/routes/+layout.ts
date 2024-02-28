@@ -3,7 +3,7 @@ import { setLocale } from '$src/i18n/i18n-svelte';
 import { loadLocaleAsync } from '$src/i18n/i18n-util.async';
 import { getSystemLanguageAbbreviation, getThemeInternalMode } from '@app/utils';
 import { error } from '@sveltejs/kit';
-import { LayoutLoad } from './$types';
+import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async (event) => {
 	if (!browser) return; // !use this only on browser (client side)

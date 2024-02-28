@@ -158,5 +158,15 @@ export const componentsEN = {
 	},
 	WhatAppOffersButton: {
 		label: 'What Tourmate offers you'
+	},
+	CheckpointsSaveDrawer: {
+		nameInput: {
+			label: 'name of the tour'
+		}
+	},
+	TourCheckpointAccomplishment: {
+		title: 'This is the nearest checkpoint that you have to achieve',
+		distanceToIs:
+			'Distance to this checkpoint is: {distance: string}, you have to reach at least: {distanceToReach: string}. After completing the experience will be automatically accomplished by you withou a picture.'
 	}
 } satisfies BaseTranslation;

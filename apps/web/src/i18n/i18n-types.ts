@@ -114,6 +114,10 @@ type RootTranslation = {
 			 */
 			pictures: string
 			/**
+			 * T​o​u​r​s
+			 */
+			tours: string
+			/**
 			 * E​d​i​t​ ​p​r​o​f​i​l​e
 			 */
 			editProfileButtonLabel: string
@@ -296,6 +300,16 @@ type RootTranslation = {
 			 * E​x​p​e​r​i​e​n​c​e​s​ ​m​a​d​e
 			 */
 			label: string
+		}
+		tour: {
+			/**
+			 * D​i​s​t​a​n​c​e​ ​t​o​ ​n​e​x​t​ ​t​a​r​g​e​t​ ​i​s​:​ 
+			 */
+			distanceToNextTargetLabel: string
+			/**
+			 * Y​o​u​ ​f​i​n​i​s​h​e​d​ ​t​h​e​ ​t​o​u​r
+			 */
+			youFinished: string
 		}
 	}
 	common: {
@@ -733,6 +747,26 @@ type RootTranslation = {
 			 */
 			label: string
 		}
+		CheckpointsSaveDrawer: {
+			nameInput: {
+				/**
+				 * n​a​m​e​ ​o​f​ ​t​h​e​ ​t​o​u​r
+				 */
+				label: string
+			}
+		}
+		TourCheckpointAccomplishment: {
+			/**
+			 * T​h​i​s​ ​i​s​ ​t​h​e​ ​n​e​a​r​e​s​t​ ​c​h​e​c​k​p​o​i​n​t​ ​t​h​a​t​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​a​c​h​i​e​v​e
+			 */
+			title: string
+			/**
+			 * D​i​s​t​a​n​c​e​ ​t​o​ ​t​h​i​s​ ​c​h​e​c​k​p​o​i​n​t​ ​i​s​:​ ​{​d​i​s​t​a​n​c​e​}​,​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​r​e​a​c​h​ ​a​t​ ​l​e​a​s​t​:​ ​{​d​i​s​t​a​n​c​e​T​o​R​e​a​c​h​}​.​ ​A​f​t​e​r​ ​c​o​m​p​l​e​t​i​n​g​ ​t​h​e​ ​e​x​p​e​r​i​e​n​c​e​ ​w​i​l​l​ ​b​e​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​a​c​c​o​m​p​l​i​s​h​e​d​ ​b​y​ ​y​o​u​ ​w​i​t​h​o​u​ ​a​ ​p​i​c​t​u​r​e​.
+			 * @param {string} distance
+			 * @param {string} distanceToReach
+			 */
+			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
+		}
 	}
 	error: {
 		/**
@@ -878,6 +912,10 @@ export type TranslationFunctions = {
 			 * Pictures
 			 */
 			pictures: () => LocalizedString
+			/**
+			 * Tours
+			 */
+			tours: () => LocalizedString
 			/**
 			 * Edit profile
 			 */
@@ -1060,6 +1098,16 @@ export type TranslationFunctions = {
 			 * Experiences made
 			 */
 			label: () => LocalizedString
+		}
+		tour: {
+			/**
+			 * Distance to next target is: 
+			 */
+			distanceToNextTargetLabel: () => LocalizedString
+			/**
+			 * You finished the tour
+			 */
+			youFinished: () => LocalizedString
 		}
 	}
 	common: {
@@ -1494,6 +1542,24 @@ export type TranslationFunctions = {
 			 * What Tourmate offers you
 			 */
 			label: () => LocalizedString
+		}
+		CheckpointsSaveDrawer: {
+			nameInput: {
+				/**
+				 * name of the tour
+				 */
+				label: () => LocalizedString
+			}
+		}
+		TourCheckpointAccomplishment: {
+			/**
+			 * This is the nearest checkpoint that you have to achieve
+			 */
+			title: () => LocalizedString
+			/**
+			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}. After completing the experience will be automatically accomplished by you withou a picture.
+			 */
+			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
 		}
 	}
 	error: {

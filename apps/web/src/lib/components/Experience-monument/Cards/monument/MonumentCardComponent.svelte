@@ -43,9 +43,8 @@
 	let usersLocation = $lsStore.usersLocation;
 	$: usersLocation = $lsStore.usersLocation;
 
-	type T = $$Generic<'normal' | 'small' | 'tiny'>;
-
-	export let size: T;
+	type TSize = $$Generic<'normal' | 'small' | 'tiny'>;
+	export let size: TSize;
 
 	export let monument: typeof size extends 'normal' ? MonumentCard : SmallMonumentCard;
 
@@ -55,6 +54,8 @@
 	export let isCardVisible = true;
 	export let disableSeeMoreButton = false;
 	export let disableSharing = false;
+	export let disablePlaceLink = false;
+	export let disableAccountLink = false;
 	export let dismissable = false;
 	export let disableOwnerOptions = false;
 	let liked: LikeSectionState | undefined =
@@ -155,12 +156,17 @@
 </Alert>
 
 {#if isCardVisible}
-	<Card on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full sm:min-w-[400px]', className)}>
+	<Card on:click on:dismiss {dismissable} class={twMerge('gap-2 mobile:w-full ', className)}>
 		<slot slot="dismissArea" name="dismissArea" />
 		{#if size !== 'tiny'}
 			<Row class="justify-between w-full">
 				{#if isMonumentCard(monument)}
-					<UserItem avatarClass="w-10 h-10" class="h-auto" user={monument.user} />
+					<UserItem
+						disableProfileLinkOnClick={disableAccountLink}
+						avatarClass="w-10 h-10"
+						class="h-auto"
+						user={monument.user}
+					/>
 				{/if}
 
 				<Column class="gap-0 flex justify-center items-center">
@@ -188,11 +194,11 @@
 				}}
 				imgSrc={monument.pictureURL}
 			/>
-			{#if size !== 'tiny'}
+			{#if size === 'normal'}
 				<Left class="pl-4"><Text>{distanceInMetersNormalized}</Text></Left>
 			{/if}
 
-			<CardHeader {monument} />
+			<CardHeader {disablePlaceLink} {monument} />
 		</svelte:component>
 
 		{#if size !== 'tiny'}

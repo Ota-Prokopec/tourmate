@@ -1,0 +1,28 @@
+query getListOfTours($userId: String, $limit: Int, $offset: Int) {
+	getListOfTours(userId: $userId, limit: $limit, offset: $offset) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		tourName
+		monumentIds
+		monuments {
+			pictureURL
+		}
+		creator {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			myId
+			username
+			profilePictureURL
+		}
+	}
+}

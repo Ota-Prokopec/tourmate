@@ -4,6 +4,8 @@
 
 export { default as Account } from './Account';
 export * from './Account';
+export { default as CheckpointCompletion } from './CheckpointCompletion';
+export * from './CheckpointCompletion';
 export { default as EmailLogin } from './EmailLogin';
 export * from './EmailLogin';
 export { default as Experience } from './Experience';
@@ -18,6 +20,8 @@ export { default as PlaceDetail } from './PlaceDetail';
 export * from './PlaceDetail';
 export { default as Question } from './Question';
 export * from './Question';
+export { default as Tour } from './Tour';
+export * from './Tour';
 export { default as User } from './User';
 export * from './User';
 export { default as UsersAnswerToQuestion } from './UsersAnswerToQuestion';

@@ -154,5 +154,15 @@ export const componentsCS = {
 	},
 	WhatAppOffersButton: {
 		label: 'Co vám Tourmate nabízí'
+	},
+	CheckpointsSaveDrawer: {
+		nameInput: {
+			label: 'jméno trasy'
+		}
+	},
+	TourCheckpointAccomplishment: {
+		title: 'Toto je nejbližší kontrolní místo, kterého musíte dosáhnout.',
+		distanceToIs:
+			'Vzdálenost k tomuto kontrolnímu bodu je: {distance: string}, musíte dosáhnout alespoň: {distanceToReach: string}. Po dosažení se zážitek automaticky splní bez udané fotograrie.'
 	}
 } satisfies BaseTranslation;

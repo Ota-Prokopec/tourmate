@@ -12,8 +12,10 @@ import type {
 	PlaceDetailDocument,
 	QuestionDocument,
 	RadioTypeAnswerDocument,
+	TCheckpointCompletionDocument,
 	TextTypeAnswerDocument,
 	TokenDocument,
+	TourDocument,
 	UserInfoDocument,
 	UsersAnswerDocument,
 } from '@app/ts-types'
@@ -32,6 +34,8 @@ const query = {
 	question: Query<QuestionDocument>(),
 	usersAnswer: Query<UsersAnswerDocument>(),
 	locationForNotification: Query<LocationForNotificationsDocument>(),
+	tour: Query<TourDocument>(),
+	checkpointCompletion: Query<TCheckpointCompletionDocument>(),
 } satisfies Record<CollectionName, any>
 
 export type QueryType = (typeof query)[keyof typeof query]

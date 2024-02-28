@@ -36,6 +36,7 @@ export const pageEN = {
 	account: {
 		monuments: 'Experiences',
 		pictures: 'Pictures',
+		tours: 'Tours',
 		editProfileButtonLabel: 'Edit profile',
 		seeLikedMonumentsButtonLabel: 'See liked',
 		settings: {
@@ -114,5 +115,9 @@ export const pageEN = {
 	monumentsCount: {
 		title: 'Experiences count',
 		label: 'Experiences made'
+	},
+	tour: {
+		distanceToNextTargetLabel: 'Distance to next target is: ',
+		youFinished: 'You finished the tour'
 	}
 } satisfies BaseTranslation;

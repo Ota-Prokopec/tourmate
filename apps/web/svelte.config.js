@@ -13,8 +13,7 @@ const config = {
 			$lib: path.resolve('src', 'lib'),
 			$root: path.resolve('/'),
 			$src: path.resolve('src'),
-			$routes: path.resolve('src', 'routes'),
-			$server: path.resolve('src', 'lib/server')
+			$routes: path.resolve('src', 'routes')
 		}
 	}
 };

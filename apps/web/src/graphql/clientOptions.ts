@@ -2,6 +2,7 @@ import { RequestConfig, RequestMiddleware } from 'graphql-request/build/esm/type
 import { PUBLIC_IOS_AUTHORIZATION_HEADER_NAME, PUBLIC_SERVER_HOSTNAME } from '$env/static/public';
 import { browser } from '$app/environment';
 import { storage } from '$lib/utils/lsStore';
+import { InMemoryCache } from '@apollo/client';
 
 const url = `${PUBLIC_SERVER_HOSTNAME}/graphql`;
 
@@ -20,7 +21,7 @@ const requestMiddleware: RequestMiddleware = (req) => {
 export default [
 	url,
 	{
-		cache: 'default',
+		cache: 'force-cache',
 		requestMiddleware: requestMiddleware,
 		credentials: 'include'
 	} as RequestConfig

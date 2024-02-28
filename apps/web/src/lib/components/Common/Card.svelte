@@ -7,19 +7,23 @@
 	const dispatch = createEventDispatcher<{ dismiss: undefined }>();
 
 	export let dismissable = false;
-	export let disable = false;
+	export let disabled = false;
 
 	const dismiss = () => {
-		disable = true;
 		dispatch('dismiss');
+		disabled = true;
 	};
 
 	let className = '';
 	export { className as class };
 </script>
 
-{#if !disable}
-	<Card padding="md" class={twMerge('relative !gap-0 h-auto mobile:max-w-none', className)}>
+{#if !disabled}
+	<Card
+		on:click
+		padding="md"
+		class={twMerge('relative !gap-0 h-auto mobile:max-w-none', className)}
+	>
 		{#if dismissable}
 			<div class="w-full h-auto flex justify-end gap-2">
 				<slot name="dismissArea" />

@@ -21,26 +21,13 @@ export const context = async ({ req, res }: { res: Response; req: Request }) => 
 			cookies,
 		)
 		const sessionForIos = req.headers ? req.headers.authorization : undefined
-		console.log(sessionForIos)
 
 		const session = sessionForAndroid ?? sessionForIos
 		try {
 			if (!session) throw new Error('User is not authenticated')
 			appwrite = appwriteConnections.setSession(session)
 
-			/*appwrite.account.updatePreferences({
-				colorTheme: 'dark',
-				language: 'en',
-				mapRange: 3000,
-				termsAccepted: true,
-			})*/
-
 			user = await appwrite.account.get()
-
-			// appwrite.account.updatePrefs<Preferences>({
-			// 	mapRange: 400,
-			// 	termsAccepted: true,
-			// })
 		} catch (error) {
 			appwrite = appwriteConnections.setNone()
 			//user is equal to null
