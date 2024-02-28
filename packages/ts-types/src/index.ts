@@ -6,6 +6,7 @@ export * from './Account';
 export * from './Answer';
 export * from './Card';
 export * from './Checking';
+export * from './CheckpointsCompletion';
 export * from './Document';
 export * from './Experience';
 export * from './Likes';

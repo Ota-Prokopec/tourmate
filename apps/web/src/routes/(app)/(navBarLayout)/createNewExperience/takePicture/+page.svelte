@@ -16,8 +16,6 @@
 		storage.newExperiencePicture = base64;
 		navigate(`/createNewExperience/${location.at(0)}-${location.at(1)}`);
 	};
-
-	console.log(device.recognizeWidth());
 </script>
 
 {#if device.recognizeWidth() !== 'mobile'}

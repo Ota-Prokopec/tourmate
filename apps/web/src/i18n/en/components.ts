@@ -167,8 +167,6 @@ export const componentsEN = {
 	TourCheckpointAccomplishment: {
 		title: 'This is the nearest checkpoint that you have to achieve',
 		distanceToIs:
-			'Distance to this checkpoint is: {distance: string}, you have to reach at least: {distanceToReach: string}. After completing the experience will be automatically accomplished by you withou a picture.',
-		AnswerToQuestionOfThisMonumentIsWrongYouCantContinue:
-			'We are sorry, the answer to this question is wrong, you answered wrong, so you can not continue in the tour.'
+			'Distance to this checkpoint is: {distance: string}, you have to reach at least: {distanceToReach: string}. After completing the experience will be automatically accomplished by you withou a picture.'
 	}
 } satisfies BaseTranslation;

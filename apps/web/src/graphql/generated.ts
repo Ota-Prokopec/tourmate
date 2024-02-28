@@ -46,6 +46,19 @@ export type Account = {
   username: Scalars['String']['output'];
 };
 
+export type CheckpointCompletion = {
+  __typename?: 'CheckpointCompletion';
+  _collectionId: Scalars['String']['output'];
+  _createdAt: Scalars['String']['output'];
+  _databaseId: Scalars['String']['output'];
+  _id: Scalars['String']['output'];
+  _permissions: Array<Scalars['String']['output']>;
+  _updatedAt: Scalars['String']['output'];
+  monumentId: Scalars['String']['output'];
+  tourId: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
 export type CreateAccountInput = {
   myId: Scalars['String']['input'];
   username: Scalars['String']['input'];
@@ -167,6 +180,7 @@ export type MonumentLike = {
 export type Mutation = {
   __typename?: 'Mutation';
   answerQuestion: UsersAnswerToQuestion;
+  createCheckpointCompletion: CheckpointCompletion;
   createExperience: Experience;
   createMonument: Monument;
   createTour: Tour;
@@ -180,6 +194,12 @@ export type Mutation = {
 export type MutationAnswerQuestionArgs = {
   answer: Scalars['StringOrNumber']['input'];
   monumentId: Scalars['String']['input'];
+};
+
+
+export type MutationCreateCheckpointCompletionArgs = {
+  monumentId: Scalars['String']['input'];
+  tourId: Scalars['String']['input'];
 };
 
 
@@ -365,6 +385,7 @@ export type Tour = {
   monuments: Array<Monument>;
   tourName: Scalars['String']['output'];
   userId: Scalars['String']['output'];
+  usersCheckpointsCompletionData: Array<CheckpointCompletion>;
 };
 
 export type User = {
@@ -460,6 +481,14 @@ export type SetSessionQueryVariables = Exact<{
 
 
 export type SetSessionQuery = { __typename?: 'Query', setSession: boolean };
+
+export type CreateCheckpointCompletionMutationVariables = Exact<{
+  monumentId: Scalars['String']['input'];
+  tourId: Scalars['String']['input'];
+}>;
+
+
+export type CreateCheckpointCompletionMutation = { __typename?: 'Mutation', createCheckpointCompletion: { __typename?: 'CheckpointCompletion', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, tourId: string, monumentId: string } };
 
 export type CreateExperienceMutationVariables = Exact<{
   input: CreateExperienceInput;
@@ -624,7 +653,7 @@ export type GetTourQueryVariables = Exact<{
 }>;
 
 
-export type GetTourQuery = { __typename?: 'Query', getTour: { __typename?: 'Tour', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, tourName: string, monumentIds: Array<string>, creator: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _databaseId: string, _permissions: Array<string>, userId: string, myId: string, username: string, profilePictureURL: string }, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: string, transports: Array<any>, questionId?: string | null, totalLikesCount: number, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: string }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: string } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer?: string|number | null, pickingAnswers?: Array<string> | null, type: any } | null, usersAnswerToQuestion?: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } | null, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: string, location: [number, number], connectedMonumentId: string }> }> } };
+export type GetTourQuery = { __typename?: 'Query', getTour: { __typename?: 'Tour', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, tourName: string, monumentIds: Array<string>, creator: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _databaseId: string, _permissions: Array<string>, userId: string, myId: string, username: string, profilePictureURL: string }, monuments: Array<{ __typename?: 'Monument', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, location: [number, number], userId: string, name: string, about?: string | null, topics: Array<"castle" | "monument" | "person" | "animals" | "hiking">, placeDetailId: string, pictureURL: string, transports: Array<any>, questionId?: string | null, totalLikesCount: number, user: { __typename?: 'User', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, profilePictureURL: string }, placeDetail: { __typename?: 'PlaceDetail', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, name: string }, likes: Array<{ __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string, user: { __typename?: 'User', _id: string, userId: string, myId: string, username: string, profilePictureURL: string } }>, liked?: { __typename?: 'MonumentLike', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, monumentId: string } | null, question?: { __typename?: 'Question', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, question: string, correctAnswer?: string|number | null, pickingAnswers?: Array<string> | null, type: any } | null, usersAnswerToQuestion?: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } | null, usersConnectedExperiences: Array<{ __typename?: 'Experience', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, pictureUrl: string, location: [number, number], connectedMonumentId: string }> }>, usersCheckpointsCompletionData: Array<{ __typename?: 'CheckpointCompletion', _createdAt: string, _updatedAt: string, _collectionId: string, _id: string, _permissions: Array<string>, _databaseId: string, userId: string, tourId: string, monumentId: string }> } };
 
 
 export const CreateAccountDocument = gql`
@@ -753,6 +782,21 @@ export const LogoutDocument = gql`
 export const SetSessionDocument = gql`
     query setSession($session: String!) {
   setSession(session: $session)
+}
+    `;
+export const CreateCheckpointCompletionDocument = gql`
+    mutation createCheckpointCompletion($monumentId: String!, $tourId: String!) {
+  createCheckpointCompletion(monumentId: $monumentId, tourId: $tourId) {
+    _createdAt
+    _updatedAt
+    _collectionId
+    _id
+    _permissions
+    _databaseId
+    userId
+    tourId
+    monumentId
+  }
 }
     `;
 export const CreateExperienceDocument = gql`
@@ -1919,6 +1963,17 @@ export const GetTourDocument = gql`
       }
       totalLikesCount
     }
+    usersCheckpointsCompletionData {
+      _createdAt
+      _updatedAt
+      _collectionId
+      _id
+      _permissions
+      _databaseId
+      userId
+      tourId
+      monumentId
+    }
   }
 }
     `;
@@ -1956,6 +2011,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     setSession(variables: SetSessionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SetSessionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<SetSessionQuery>(SetSessionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'setSession', 'query');
+    },
+    createCheckpointCompletion(variables: CreateCheckpointCompletionMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateCheckpointCompletionMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateCheckpointCompletionMutation>(CreateCheckpointCompletionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createCheckpointCompletion', 'mutation');
     },
     createExperience(variables: CreateExperienceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateExperienceMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateExperienceMutation>(CreateExperienceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createExperience', 'mutation');

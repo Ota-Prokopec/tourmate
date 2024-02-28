@@ -163,8 +163,6 @@ export const componentsCS = {
 	TourCheckpointAccomplishment: {
 		title: 'Toto je nejbližší kontrolní místo, kterého musíte dosáhnout.',
 		distanceToIs:
-			'Vzdálenost k tomuto kontrolnímu bodu je: {distance: string}, musíte dosáhnout alespoň: {distanceToReach: string}. Po dosažení se zážitek automaticky splní bez udané fotograrie.',
-		AnswerToQuestionOfThisMonumentIsWrongYouCantContinue:
-			'Je nám líto, ale odpověď na tuto otázku je špatná, odpověděli jste špatně, takže nemůžete pokračovat v tůře.'
+			'Vzdálenost k tomuto kontrolnímu bodu je: {distance: string}, musíte dosáhnout alespoň: {distanceToReach: string}. Po dosažení se zážitek automaticky splní bez udané fotograrie.'
 	}
 } satisfies BaseTranslation;

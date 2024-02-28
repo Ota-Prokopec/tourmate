@@ -4,30 +4,28 @@
 	import ScanningAnimation from '$lib/components/Common/ScanningAnimation.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
+	import { alert } from '$src/routes/alertStore';
 	import {
-		type Experience,
+		type TourGraphqlDocument,
 		isMonumentWithQuestion,
+		type Base64,
 		type Location,
-		type MonumentCard
+		type MonumentCard,
+		type TCheckpointCompletion
 	} from '@app/ts-types';
 	import { normalizeMeters } from '@app/utils';
 	import { Button } from 'flowbite-svelte';
-	import AnswerQuestionDrawer from '../../createNewExperience/[lat]-[lng]/Components/AnswerQuestionDrawer.svelte';
-	import { browser } from '$app/environment';
-	import { createEventDispatcher } from 'svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import { alert } from '$src/routes/alertStore';
 
 	export let monument: MonumentCard;
+	export let tour: TourGraphqlDocument;
 	let question = monument.question;
 	export let distanceToMonument: number;
 	export let distanceToReachMonument: number;
 	export let cardHidden: boolean = true;
 	export let userCurrentLocation: Location | null | undefined;
-	export let accomplihedExperiences: Experience[];
-
-	export let answerQuestionDrawerHidden = true;
+	export let accomplishedCheckpoints: TCheckpointCompletion[];
 
 	//auto-accomplishment for monument when user is at the location
 	let userHasNotAnsweredYet = question && !monument.usersAnswerToQuestion ? true : false;
@@ -52,22 +50,15 @@
 			if (!monument) throw new Error('closestMonument not defined');
 			if (!userCurrentLocation) throw new Error('userCurrentLocation not defined');
 
-			const createdExperience = (
-				await sdk.createExperience({
-					input: {
-						connnectedMonumentId: monument._id,
-						location: userCurrentLocation,
-						picture: null //with a picture
-					}
+			const createdCheckpointAccomplishment = (
+				await sdk.createCheckpointCompletion({
+					monumentId: monument._id,
+					tourId: tour._id
 				})
-			).createExperience;
-			accomplihedExperiences = [...accomplihedExperiences, createdExperience];
+			).createCheckpointCompletion;
+			accomplishedCheckpoints = [...accomplishedCheckpoints, createdCheckpointAccomplishment];
 		} catch (error) {
-			alert(
-				'',
-				$LL.component.TourCheckpointAccomplishment.AnswerToQuestionOfThisMonumentIsWrongYouCantContinue(),
-				{ color: 'red' }
-			);
+			alert('Error', '500 error', { color: 'red' });
 		}
 	};
 </script>
@@ -91,24 +82,6 @@
 				distanceToReach: normalizeMeters(distanceToReachMonument)
 			})}
 		</Text>
-
-		{#if isMonumentWithQuestion(monument) && !monument.usersAnswerToQuestion?.answeredCorrectly}
-			<Button
-				disabled={monument.usersAnswerToQuestion?.answeredCorrectly === false}
-				color="green"
-				on:click={() => (answerQuestionDrawerHidden = false)}
-			>
-				answer question (overwrite)
-			</Button>
-		{/if}
-
-		{#if isMonumentWithQuestion(monument)}
-			<AnswerQuestionDrawer
-				bind:hidden={answerQuestionDrawerHidden}
-				isLoading={false}
-				bind:monument
-			/>
-		{/if}
 
 		<ScanningAnimation />
 	</Column>

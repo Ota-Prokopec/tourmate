@@ -29,6 +29,9 @@ import type {
 	UsersAnswerGraphqlDocument,
 	TourGraphqlDocument,
 	TourDocumentCreate,
+	TCheckpointCompletionDocument,
+	TCheckpointCompletionDocumentCreate,
+	TCheckpointCompletionGraphqlDocument,
 } from '@app/ts-types'
 
 export type Collections = ReturnType<typeof collectionsAdmin>
@@ -95,6 +98,10 @@ export const collectionsClient = (
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
 		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
+		checkpointCompletion: new Collection<
+			TCheckpointCompletionGraphqlDocument,
+			TCheckpointCompletionDocumentCreate
+		>('experiences', 'checkpointsCompletion'),
 	}
 }
 
@@ -155,5 +162,9 @@ export const collectionsAdmin = (
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
 		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
+		checkpointCompletion: new Collection<
+			TCheckpointCompletionGraphqlDocument,
+			TCheckpointCompletionDocumentCreate
+		>('experiences', 'checkpointsCompletion'),
 	}
 }

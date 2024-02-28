@@ -1,42 +1,48 @@
 <script lang="ts">
 	import ButtonNext from '$lib/components/Buttons/ButtonNext.svelte';
 	import SuccessCard from '$lib/components/Cards/SuccessCard.svelte';
+	import Column from '$lib/components/Common/Column.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import ProgressBar from '$lib/components/Common/ProgressBar.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import TourCardComponent from '$lib/components/Experience-monument/Cards/tour/TourCardComponent.svelte';
+	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 	import IconList from '$lib/components/Icons/IconList.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import MonumentMarker from '$lib/components/Map/Markers/MonumentMarker.svelte';
 	import lsStore from '$lib/utils/lsStore';
-	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
-	import { alert } from '$src/routes/alertStore';
-	import type { Experience, MonumentCard } from '@app/ts-types';
+	import type { MonumentCard, TCheckpointCompletionGraphqlDocument } from '@app/ts-types';
 	import { normalizeMeters } from '@app/utils';
 	import { distanceTo } from 'geolocation-utils';
 	import CheckpointsListDrawer from '../Components/CheckpointsListDrawer.svelte';
 	import TourCheckpointAccomplishment from '../Components/TourCheckpointAccomplishment.svelte';
 	import type { PageData } from './$types';
-	import Column from '$lib/components/Common/Column.svelte';
-	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
+	import IconLocationArrow from '$lib/components/Icons/IconLocationArrow.svelte';
+	import BubbleIconWrapper from '$lib/components/Icons/BubbleIconWrapper.svelte';
 
 	export let data: PageData;
+
+	let tour = data.tour;
 
 	export let listHidden = true;
 	export let distanceToAccomplishMonument = data.minimalDistanceToAccomplishMonument;
 	$: isTourFinished = monumentsToAccomplish.length === 0;
 	let tourAccomplishCardHidden = true;
+
 	export let allMonuments: MonumentCard[] = data.tour.monuments;
-	export let accomplihedExperiences: Experience[] = data.tour.monuments.flatMap(
-		(monument) => monument.usersConnectedExperiences
-	);
+
+	export let accomplishedCheckpoints: TCheckpointCompletionGraphqlDocument[] =
+		data.tour.usersCheckpointsCompletionData;
 	let closestMonument: MonumentCard | undefined = undefined;
 
+	let monumentsToAccomplish = allMonuments.filter(
+		(item) => !accomplishedCheckpoints.find((checkpoint) => checkpoint.monumentId === item._id)
+	);
 	$: monumentsToAccomplish = allMonuments.filter(
-		(item) => !accomplihedExperiences.find((exp) => exp.connectedMonumentId === item._id)
+		(item) => !accomplishedCheckpoints.find((checkpoint) => checkpoint.monumentId === item._id)
 	);
 
 	let userCurrentLocation = $lsStore.usersLocation;
@@ -61,7 +67,8 @@
 
 {#if closestMonument && typeof distanceToClosestMonument === 'number' && !tourAccomplishCardHidden}
 	<TourCheckpointAccomplishment
-		bind:accomplihedExperiences
+		bind:accomplishedCheckpoints
+		{tour}
 		bind:userCurrentLocation
 		on:message={() => console.log('test')}
 		bind:cardHidden={tourAccomplishCardHidden}
@@ -100,7 +107,10 @@
 	bind:hidden={listHidden}
 >
 	<Icon class="child:fill-green-400">
-		{#if monument.usersConnectedExperiences.length}
+		{@const isAccomplished = accomplishedCheckpoints.find(
+			(checkpoint) => checkpoint.monumentId === monument._id
+		)}
+		{#if isAccomplished}
 			<IconCheck />
 		{/if}
 	</Icon>
@@ -133,5 +143,7 @@
 		/>
 	</Row>
 
-	<ButtonNext on:click={() => (tourAccomplishCardHidden = false)} class="" />
+	<BubbleIconWrapper on:click={() => (tourAccomplishCardHidden = false)} class="">
+		<IconLocationArrow />
+	</BubbleIconWrapper>
 </Columns>

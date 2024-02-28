@@ -24,6 +24,18 @@ type Account {
 
 scalar AnswerType
 
+type CheckpointCompletion {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  monumentId: String!
+  tourId: String!
+  userId: String!
+}
+
 scalar ColorTheme
 
 input CreateAccountInput {
@@ -146,6 +158,7 @@ type MonumentLike {
 
 type Mutation {
   answerQuestion(answer: StringOrNumber!, monumentId: String!): UsersAnswerToQuestion!
+  createCheckpointCompletion(monumentId: String!, tourId: String!): CheckpointCompletion!
   createExperience(input: CreateExperienceInput!): Experience!
   createMonument(input: CreateMonumentInput!): Monument!
   createTour(input: CreateTourInput!): Tour!
@@ -219,6 +232,7 @@ type Tour {
   monuments: [Monument!]!
   tourName: String!
   userId: String!
+  usersCheckpointsCompletionData: [CheckpointCompletion!]!
 }
 
 scalar Transport

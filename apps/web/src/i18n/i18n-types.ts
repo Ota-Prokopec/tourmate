@@ -766,10 +766,6 @@ type RootTranslation = {
 			 * @param {string} distanceToReach
 			 */
 			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
-			/**
-			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​t​h​e​ ​a​n​s​w​e​r​ ​t​o​ ​t​h​i​s​ ​q​u​e​s​t​i​o​n​ ​i​s​ ​w​r​o​n​g​,​ ​y​o​u​ ​a​n​s​w​e​r​e​d​ ​w​r​o​n​g​,​ ​s​o​ ​y​o​u​ ​c​a​n​ ​n​o​t​ ​c​o​n​t​i​n​u​e​ ​i​n​ ​t​h​e​ ​t​o​u​r​.
-			 */
-			AnswerToQuestionOfThisMonumentIsWrongYouCantContinue: string
 		}
 	}
 	error: {
@@ -1564,10 +1560,6 @@ export type TranslationFunctions = {
 			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}. After completing the experience will be automatically accomplished by you withou a picture.
 			 */
 			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
-			/**
-			 * We are sorry, the answer to this question is wrong, you answered wrong, so you can not continue in the tour.
-			 */
-			AnswerToQuestionOfThisMonumentIsWrongYouCantContinue: () => LocalizedString
 		}
 	}
 	error: {

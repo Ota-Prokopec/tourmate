@@ -4,6 +4,8 @@
 
 export { default as Account } from './Account';
 export * from './Account';
+export { default as CheckpointCompletion } from './CheckpointCompletion';
+export * from './CheckpointCompletion';
 export { default as EmailLogin } from './EmailLogin';
 export * from './EmailLogin';
 export { default as Experience } from './Experience';

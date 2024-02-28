@@ -115,5 +115,16 @@ query getTour($tourId: String!) {
 			}
 			totalLikesCount
 		}
+		usersCheckpointsCompletionData {
+			_createdAt
+			_updatedAt
+			_collectionId
+			_id
+			_permissions
+			_databaseId
+			userId
+			tourId
+			monumentId
+		}
 	}
 }
