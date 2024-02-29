@@ -1,73 +1,54 @@
 <script lang="ts">
-	import Column from '$lib/components/Common/Column.svelte';
-	import NotFound from '$lib/components/Common/NoContent.svelte';
+	import CreateYourFirstMonumentButton from '$lib/components/Buttons/CreateYourFirstMonumentButton.svelte';
+	import Paginating from '$lib/components/Common/Paginating.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import LL from '$src/i18n/i18n-svelte';
-	import { alert } from '$src/routes/alertStore';
-	import type { Location, MonumentCard, Topic, Transport } from '@app/ts-types';
+	import { disableExperimentalFragmentVariables } from '@apollo/client';
+	import type { MonumentCard } from '@app/ts-types';
 
-	export let searchingLocation: Location | undefined = undefined;
-	let isLoading = true;
-	let isLoadMoreButtonLoading = false;
+	export let userId: string | undefined = undefined;
+	export let cardsLimit: number;
+	export let distableCreateNewButton = false;
+	let monuments: MonumentCard[] = [];
+	let initialLoading = false;
+	let loadingMoreItems = false;
 
-	export let limit: number = 10;
-	export let offset = 0;
-	export let monuments: MonumentCard[] = [];
-	export let topics: Topic[] = [];
-	export let transports: Transport[] = [];
-	export let searchingText: string | undefined = undefined;
+	const loadMonuments = async () => {
+		initialLoading = monuments.length === 0 ? true : false; // true only if there are no monuments in the usersMonuments
+		loadingMoreItems = monuments.length > 0 ? true : false; //true only when there already is some monument in the usersMonuments
 
-	const addMonuments = async (
-		topics?: Topic[],
-		transports?: Transport[],
-		location?: Location | undefined,
-		searchingText?: string
-	) => {
-		try {
-			isLoadMoreButtonLoading = true;
-			offset += limit;
-
-			const newMonuments = (
-				await sdk.getListOfMonumentCards({
-					topics,
-					transports,
-					limit,
-					name: searchingText,
-					location: location
-						? {
-								location: location,
-								rangeMeters: 2500
-						  }
-						: undefined
-				})
-			).getListOfMonuments;
-			monuments = newMonuments;
-		} catch (error) {
-			alert('', $LL.error.monumentLoadErrorMessage(), { color: 'red' });
-		}
-
-		isLoading = false;
+		await sdk
+			.getListOfMonumentCards({ userId: userId, limit: cardsLimit, offset: monuments.length })
+			.then(({ getListOfMonuments: newMonuments }) => {
+				monuments = [...monuments, ...newMonuments];
+			});
+		initialLoading = false;
+		loadingMoreItems = false;
 	};
 
-	$: addMonuments(topics, transports, searchingLocation, searchingText);
+	loadMonuments();
 </script>
 
-<Column class="gap-4 justify-center items-center w-full ">
-	{#if isLoading}
+<Paginating
+	wrapperClassName="mobile:w-full"
+	{loadingMoreItems}
+	let:item
+	{initialLoading}
+	list={monuments}
+	on:loadMore={loadMonuments}
+>
+	<svelte:fragment slot="loading">
 		<MonumentCardSkeleton size="normal" />
 		<MonumentCardSkeleton size="normal" />
 		<MonumentCardSkeleton size="normal" />
-		<MonumentCardSkeleton size="normal" />
-		<MonumentCardSkeleton size="normal" />
-		<MonumentCardSkeleton size="normal" />
-		<MonumentCardSkeleton size="normal" />
-	{:else if monuments && monuments?.length > 0}
-		{#each monuments as monument}
-			<MonumentCardComponent size="normal" {monument} />
-		{/each}
-	{:else}
-		<NotFound />
-	{/if}
-</Column>
+	</svelte:fragment>
+
+	<MonumentCardComponent size="normal" monument={item} />
+
+	<svelte:fragment slot="noContent">
+		{#if !distableCreateNewButton}
+			<CreateYourFirstMonumentButton />
+		{/if}
+	</svelte:fragment>
+</Paginating>

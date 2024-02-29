@@ -309,6 +309,7 @@ export type QueryGetListOfMonumentsArgs = {
 export type QueryGetListOfToursArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+  tourName?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -643,6 +644,7 @@ export type GetListOfToursQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+  tourName?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -1817,8 +1819,13 @@ export const CrateTourDocument = gql`
 }
     `;
 export const GetListOfToursDocument = gql`
-    query getListOfTours($userId: String, $limit: Int, $offset: Int) {
-  getListOfTours(userId: $userId, limit: $limit, offset: $offset) {
+    query getListOfTours($userId: String, $limit: Int, $offset: Int, $tourName: String) {
+  getListOfTours(
+    userId: $userId
+    limit: $limit
+    offset: $offset
+    tourName: $tourName
+  ) {
     _createdAt
     _updatedAt
     _collectionId

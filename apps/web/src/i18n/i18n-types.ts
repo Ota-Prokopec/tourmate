@@ -767,6 +767,12 @@ type RootTranslation = {
 			 */
 			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
 		}
+		ButtonGoToTourPage: {
+			/**
+			 * G​o​ ​t​o​ ​t​o​u​r​s
+			 */
+			label: string
+		}
 	}
 	error: {
 		/**
@@ -1560,6 +1566,12 @@ export type TranslationFunctions = {
 			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}. After completing the experience will be automatically accomplished by you withou a picture.
 			 */
 			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
+		}
+		ButtonGoToTourPage: {
+			/**
+			 * Go to tours
+			 */
+			label: () => LocalizedString
 		}
 	}
 	error: {

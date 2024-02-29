@@ -13,6 +13,9 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { page } from '$app/stores';
 	import { getUrlForSearchPage } from './tools';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import IconPach from '$lib/components/Icons/IconPach.svelte';
+	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
 
 	export let data: PageData;
 

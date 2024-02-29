@@ -3,23 +3,22 @@
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
+	import Columns from '$lib/components/Common/Columns.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
-	import ProfilePictureEditor from '$lib/components/Common/ProfilePictureEditor.svelte';
+	import Left from '$lib/components/Common/Left.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import SkeletonLine from '$lib/components/Common/SkeletonLine.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import IconHeart from '$lib/components/Icons/IconHeart.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
+	import ExperiencePaginator from '$lib/components/Paginators/ExperiencePaginator.svelte';
+	import MonumentsPaginator from '$lib/components/Paginators/MonumentsPaginator.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
-	import type { Base64, MonumentCard } from '@app/ts-types';
-	import type { PageData } from './$types';
-	import ExperienceSection from './Components/ExperienceSection.svelte';
-	import MonumentsSection from './Components/MonumentsSection.svelte';
-	import Left from '$lib/components/Common/Left.svelte';
+	import type { Base64 } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
-	import IconHeart from '$lib/components/Icons/IconHeart.svelte';
-	import Columns from '$lib/components/Common/Columns.svelte';
-	import ToursSection from './Components/ToursSection.svelte';
+	import type { PageData } from './$types';
+	import ToursPaginator from '$lib/components/Paginators/ToursPaginator.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
@@ -104,19 +103,11 @@
 
 		<Column class="gap-10 justify-center items-center">
 			{#if category === 'experiences'}
-				<ExperienceSection
-					userId={data.usersProfile.userId}
-					{isMyAccount}
-					cardsLimit={data.cardsLimit}
-				/>
+				<ExperiencePaginator cardsLimit={data.cardsLimit} userId={data.usersProfile.userId} />
 			{:else if category === 'monuments'}
-				<MonumentsSection
-					userId={data.usersProfile.userId}
-					{isMyAccount}
-					cardsLimit={data.cardsLimit}
-				/>
+				<MonumentsPaginator userId={data.usersProfile.userId} cardsLimit={data.cardsLimit} />
 			{:else if category === 'tours'}
-				<ToursSection userId={data.usersProfile.userId} />
+				<ToursPaginator userId={data.usersProfile.userId} />
 			{/if}
 		</Column>
 	</Columns>

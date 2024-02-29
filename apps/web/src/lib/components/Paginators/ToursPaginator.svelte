@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Column from '$lib/components/Common/Column.svelte';
-	import Paginating from '$lib/components/Common/Paginating.svelte';
-	import { sdk } from '$src/graphql/sdk';
-	import type { Base64, GraphqlDocument, TTourCard, Tour } from '@app/ts-types';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
+	import Paginating from '$lib/components/Common/Paginating.svelte';
 	import TourCardComponent from '$lib/components/Experience-monument/Cards/tour/TourCardComponent.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import type { TTourCard } from '@app/ts-types';
 
-	export let userId: string;
+	export let userId: string | undefined = undefined;
+	export let searchingText: string | undefined = undefined;
 
 	let tours: TTourCard[] = [];
 	let initialLoading = false;
@@ -20,7 +20,8 @@
 			.getListOfTours({
 				limit: 4,
 				offset: tours.length,
-				userId: userId
+				userId: userId,
+				tourName: searchingText
 			})
 			.then(({ getListOfTours: data }) => {
 				tours = [

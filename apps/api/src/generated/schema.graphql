@@ -185,7 +185,7 @@ type Query {
   getListOfExperiences(limit: Int, location: LocationInput, offset: Int, userId: String): [Experience!]!
   getListOfMonumentLikeDocuments(limit: Int = 50, offset: Int, userId: String): [MonumentLike!]!
   getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
-  getListOfTours(limit: Int, offset: Int, userId: String): [Tour!]!
+  getListOfTours(limit: Int, offset: Int, tourName: String, userId: String): [Tour!]!
   getListOfUsers(limit: Int = 50, offset: Int, searchingText: String): [User!]!
   getMonument(id: String!): Monument!
   getTour(tourId: String!): Tour!

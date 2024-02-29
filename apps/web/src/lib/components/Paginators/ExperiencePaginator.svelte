@@ -10,9 +10,9 @@
 	import CreateYourFirstPictureButton from '$lib/components/Buttons/CreateYourFirstPictureButton.svelte';
 	import Paginating from '$lib/components/Common/Paginating.svelte';
 
-	export let userId: string;
+	export let userId: string | undefined = undefined;
 	export let cardsLimit: number;
-	export let isMyAccount: boolean;
+	export let distableCreateNewButton = false;
 	let usersExperiences: ExperienceCard[] = [];
 	let initialLoading = false;
 	let loadingMoreItems = false;
@@ -49,7 +49,7 @@
 	<ExperienceCardComponent experience={item} />
 
 	<svelte:fragment slot="noContent">
-		{#if isMyAccount}
+		{#if !distableCreateNewButton}
 			<CreateYourFirstPictureButton />
 		{/if}
 	</svelte:fragment>
