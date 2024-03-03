@@ -25,7 +25,7 @@
 
 	type Category = 'monuments' | 'experiences' | 'tours';
 
-	let category: Category = 'tours';
+	let category: Category = 'monuments';
 
 	$: isMyAccount = data.user.userId === usersProfile?.userId;
 

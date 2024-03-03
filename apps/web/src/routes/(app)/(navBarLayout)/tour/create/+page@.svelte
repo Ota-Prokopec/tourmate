@@ -12,6 +12,8 @@
 	import CheckpointsSaveDrawer from '../Components/CheckpointsSaveDrawer.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import { navigate } from '$lib/utils/navigator';
+	import { alert } from '$src/routes/alertStore';
+	import LL from '$src/i18n/i18n-svelte';
 
 	export let searchHidden = true;
 	export let listHidden = true;
@@ -20,7 +22,6 @@
 	export let monuments: MonumentCard[] = [];
 
 	let isSaving = false;
-	let saved: false | { tourName: string } = false;
 
 	const save = async ({ tourName, monuments }: { tourName: string; monuments: MonumentCard[] }) => {
 		isSaving = true;
@@ -33,7 +34,8 @@
 			})
 		).createTour;
 		isSaving = false;
-		navigate(-1);
+		alert('', $LL.page.tour.create.tourSavedMessage(), { color: 'green', timeOut: 2000 });
+		navigate('/');
 	};
 </script>
 

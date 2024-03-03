@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
+	import Columns from '$lib/components/Common/Columns.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
+	import Rows from '$lib/components/Common/Rows.svelte';
 	import ScanningAnimation from '$lib/components/Common/ScanningAnimation.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
@@ -8,15 +10,12 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import {
-		type TourGraphqlDocument,
-		isMonumentWithQuestion,
-		type Base64,
 		type Location,
 		type MonumentCard,
-		type TCheckpointCompletion
+		type TCheckpointCompletion,
+		type TourGraphqlDocument
 	} from '@app/ts-types';
-	import { normalizeMeters } from '@app/utils';
-	import { Button } from 'flowbite-svelte';
+	import { normalizeMeters, watchUsersDegreeToTarget } from '@app/utils';
 
 	export let monument: MonumentCard;
 	export let tour: TourGraphqlDocument;
@@ -26,6 +25,7 @@
 	export let cardHidden: boolean = true;
 	export let userCurrentLocation: Location | null | undefined;
 	export let accomplishedCheckpoints: TCheckpointCompletion[];
+	export let headingToClosestMonument: number;
 
 	//auto-accomplishment for monument when user is at the location
 	let userHasNotAnsweredYet = question && !monument.usersAnswerToQuestion ? true : false;

@@ -3,10 +3,8 @@
 	import SearchInput from '$lib/components/Inputs/SearchInput.svelte';
 	import type { PageData } from './$types';
 	import type { Category } from './types';
-	import SearchMonuments from './Components/SearchMonuments.svelte';
-	import SearchPlaces from './Components/SearchPlaces.svelte';
+
 	import Geocoding from '$lib/components/Map/Geocoding/Geocoding.svelte';
-	import SearchUsers from './Components/SearchUsers.svelte';
 	import { browser } from '$app/environment';
 	import { changeURLwithoutReloading } from '@app/utils';
 	import type { Location } from '@app/ts-types';
@@ -16,6 +14,9 @@
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import IconPach from '$lib/components/Icons/IconPach.svelte';
 	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
+	import MonumentsSearch from '$lib/components/Search/MonumentsSearch.svelte';
+	import PlacesSearch from '$lib/components/Search/PlacesSearch.svelte';
+	import UsersSearch from '$lib/components/Search/UsersSearch.svelte';
 
 	export let data: PageData;
 
@@ -73,11 +74,11 @@
 
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 justify-start items-start">
 			{#if chosenCategory === 'monuments'}
-				<SearchMonuments limit={data.search.resultLimit} {searchingText} />
+				<MonumentsSearch limit={data.search.resultLimit} {searchingText} />
 			{:else if chosenCategory === 'places'}
-				<SearchPlaces limit={data.search.resultLimit} {searchingLocation} />
+				<PlacesSearch limit={data.search.resultLimit} {searchingLocation} />
 			{:else if chosenCategory === 'users'}
-				<SearchUsers limit={data.search.resultLimit} {searchingText} />
+				<UsersSearch limit={data.search.resultLimit} {searchingText} />
 			{/if}
 		</div>
 	{/if}

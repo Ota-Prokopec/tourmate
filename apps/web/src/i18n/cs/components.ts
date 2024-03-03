@@ -165,7 +165,7 @@ export const componentsCS = {
 		distanceToIs:
 			'Vzdálenost k tomuto kontrolnímu bodu je: {distance: string}, musíte dosáhnout alespoň: {distanceToReach: string}. Po dosažení se zážitek automaticky splní bez udané fotograrie.'
 	},
-	ButtonGoToTourPage: {
-		label: 'Go to tours'
+	ButtonCreateTour: {
+		label: 'Vytvoř túru'
 	}
 } satisfies BaseTranslation;

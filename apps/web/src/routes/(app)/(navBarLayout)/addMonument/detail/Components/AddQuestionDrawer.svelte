@@ -143,13 +143,6 @@
 			</Alert>
 		</Center>
 	{/if}
-	<MediaQuery size="mobile">
-		<Right>
-			<Icon on:click={() => (hidden = true)} class="child:h-10 child:w-10">
-				<IconTimes />
-			</Icon>
-		</Right>
-	</MediaQuery>
 
 	<Column>
 		<Title>{$LL.component.AddQuestionDrawer.yourQuestion()}</Title>

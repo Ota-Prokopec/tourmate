@@ -26,7 +26,7 @@
 	import Row from '$lib/components/Common/Row.svelte';
 	import { Button } from 'flowbite-svelte';
 	import IconRoute from '$lib/components/Icons/IconRoute.svelte';
-	import ButtonGoToTourPage from '$lib/components/Buttons/ButtonGoToTourPage.svelte';
+	import ButtonGoToTourPage from '$lib/components/Buttons/ButtonCreateTour.svelte';
 
 	export let data: PageData;
 
@@ -128,5 +128,5 @@
 		on:click={next}
 		class="absolute bottom-0 right-0 mb-24 mr-4 flex flex-wrap flex-row gap-2"
 	/>
-	<ButtonGoToTourPage class="absolute bottom-0 right-0 m-2" />
+	<ButtonGoToTourPage link="/tour/create" class="absolute bottom-0 right-0 m-2" />
 </Full>

@@ -1,14 +1,5 @@
 <script lang="ts">
-	import TakePhoto from '$lib/components/Photo/TakePhoto.svelte';
+	import HeartCheckbox from '$lib/components/Checkboxs/HeartCheckbox.svelte';
+
+	let checked = false;
 </script>
-
-<TakePhoto />
-
-<style>
-	:global(.camera-header) {
-		display: none !important;
-	}
-	video {
-		height: 100vh !important;
-	}
-</style>

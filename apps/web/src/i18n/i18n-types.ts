@@ -310,6 +310,12 @@ type RootTranslation = {
 			 * Y​o​u​ ​f​i​n​i​s​h​e​d​ ​t​h​e​ ​t​o​u​r
 			 */
 			youFinished: string
+			create: {
+				/**
+				 * Y​o​u​r​ ​t​o​u​r​ ​h​a​s​ ​b​e​e​n​ ​s​a​v​e​d
+				 */
+				tourSavedMessage: string
+			}
 		}
 	}
 	common: {
@@ -767,9 +773,9 @@ type RootTranslation = {
 			 */
 			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
 		}
-		ButtonGoToTourPage: {
+		ButtonCreateTour: {
 			/**
-			 * G​o​ ​t​o​ ​t​o​u​r​s
+			 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​t​o​u​r
 			 */
 			label: string
 		}
@@ -1114,6 +1120,12 @@ export type TranslationFunctions = {
 			 * You finished the tour
 			 */
 			youFinished: () => LocalizedString
+			create: {
+				/**
+				 * Your tour has been saved
+				 */
+				tourSavedMessage: () => LocalizedString
+			}
 		}
 	}
 	common: {
@@ -1567,9 +1579,9 @@ export type TranslationFunctions = {
 			 */
 			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
 		}
-		ButtonGoToTourPage: {
+		ButtonCreateTour: {
 			/**
-			 * Go to tours
+			 * Create a new tour
 			 */
 			label: () => LocalizedString
 		}

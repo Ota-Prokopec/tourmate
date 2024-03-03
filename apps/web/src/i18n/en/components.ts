@@ -169,7 +169,7 @@ export const componentsEN = {
 		distanceToIs:
 			'Distance to this checkpoint is: {distance: string}, you have to reach at least: {distanceToReach: string}. After completing the experience will be automatically accomplished by you withou a picture.'
 	},
-	ButtonGoToTourPage: {
-		label: 'Go to tours'
+	ButtonCreateTour: {
+		label: 'Create a new tour'
 	}
 } satisfies BaseTranslation;
