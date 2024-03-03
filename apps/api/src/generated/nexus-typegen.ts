@@ -686,6 +686,7 @@ export interface NexusGenArgTypes {
     getListOfTours: { // args
       limit?: number | null; // Int
       offset?: number | null; // Int
+      tourName?: string | null; // String
       userId?: string | null; // String
     }
     getListOfUsers: { // args

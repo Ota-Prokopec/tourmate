@@ -310,6 +310,12 @@ type RootTranslation = {
 			 * Y​o​u​ ​f​i​n​i​s​h​e​d​ ​t​h​e​ ​t​o​u​r
 			 */
 			youFinished: string
+			create: {
+				/**
+				 * Y​o​u​r​ ​t​o​u​r​ ​h​a​s​ ​b​e​e​n​ ​s​a​v​e​d
+				 */
+				tourSavedMessage: string
+			}
 		}
 	}
 	common: {
@@ -767,6 +773,12 @@ type RootTranslation = {
 			 */
 			distanceToIs: RequiredParams<'distance' | 'distanceToReach'>
 		}
+		ButtonCreateTour: {
+			/**
+			 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​t​o​u​r
+			 */
+			label: string
+		}
 	}
 	error: {
 		/**
@@ -1108,6 +1120,12 @@ export type TranslationFunctions = {
 			 * You finished the tour
 			 */
 			youFinished: () => LocalizedString
+			create: {
+				/**
+				 * Your tour has been saved
+				 */
+				tourSavedMessage: () => LocalizedString
+			}
 		}
 	}
 	common: {
@@ -1560,6 +1578,12 @@ export type TranslationFunctions = {
 			 * Distance to this checkpoint is: {distance}, you have to reach at least: {distanceToReach}. After completing the experience will be automatically accomplished by you withou a picture.
 			 */
 			distanceToIs: (arg: { distance: string, distanceToReach: string }) => LocalizedString
+		}
+		ButtonCreateTour: {
+			/**
+			 * Create a new tour
+			 */
+			label: () => LocalizedString
 		}
 	}
 	error: {

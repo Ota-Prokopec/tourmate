@@ -6,8 +6,9 @@ export type AlertOpitions = {
 	message: string;
 	title: string;
 	details?: {
-		color: Color;
+		color?: Color;
 		buttons?: { title: string; onClick: () => any }[];
+		timeOut?: number;
 	};
 };
 
@@ -24,4 +25,6 @@ export const alert = (title: string, message: string, options?: AlertOpitions['d
 		message,
 		details: options
 	});
+	if (options?.timeOut)
+		setTimeout(() => alertStore.update((e) => ({ ...e, shown: false })), options.timeOut);
 };

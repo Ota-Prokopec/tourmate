@@ -117,6 +117,9 @@ export const pageCS = {
 	},
 	tour: {
 		distanceToNextTargetLabel: 'Vzdálenost do dalšího místa je: ',
-		youFinished: 'Pokořil jste celou tůru'
+		youFinished: 'Pokořil jste celou tůru',
+		create: {
+			tourSavedMessage: 'Vaše túra byla uložena'
+		}
 	}
 } satisfies BaseTranslation;

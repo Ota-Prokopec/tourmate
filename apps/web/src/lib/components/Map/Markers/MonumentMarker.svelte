@@ -48,12 +48,6 @@
 	bind:hidden={detailHidden}
 	placement="left"
 >
-	<MediaQuery size="mobile">
-		<Right>
-			<Icon on:click={() => (detailHidden = true)} class="child:w-10 child:h-10"><IconTimes /></Icon
-			>
-		</Right>
-	</MediaQuery>
 	{#if monumentCardDataPromise}
 		{#await monumentCardDataPromise}
 			<Center class="w-full h-full">

@@ -1,5 +1,5 @@
-query getListOfTours($userId: String, $limit: Int, $offset: Int) {
-	getListOfTours(userId: $userId, limit: $limit, offset: $offset) {
+query getListOfTours($userId: String, $limit: Int, $offset: Int, $tourName: String) {
+	getListOfTours(userId: $userId, limit: $limit, offset: $offset, tourName: $tourName) {
 		_createdAt
 		_updatedAt
 		_collectionId

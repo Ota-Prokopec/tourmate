@@ -76,14 +76,6 @@
 	placement="auto"
 	class="!z-50 w-full sm:max-w-[400px]  mobile:h-[calc(100%-100px)] fixed mobile:top-[100px]"
 >
-	<MediaQuery size="mobile">
-		<Right>
-			<Icon on:click={() => (hidden = true)} class="child:h-10 child:w-10">
-				<IconTimes />
-			</Icon>
-		</Right>
-	</MediaQuery>
-
 	{#if monument.usersAnswerToQuestion?.answeredCorrectly}
 		<QuestionAnsweredCorrectlyCard />
 	{:else if monument.usersAnswerToQuestion && !monument.usersAnswerToQuestion.answeredCorrectly}

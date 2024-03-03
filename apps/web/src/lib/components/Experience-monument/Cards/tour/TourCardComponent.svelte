@@ -32,7 +32,7 @@
 	<Columns columns="1fr 2fr" class="gap-4">
 		<CardImage disableFullScreen imgSrc={data.initialTourPicture} />
 		<Column>
-			<UserItem user={data.creator} />
+			<UserItem disableProfileLinkOnClick user={data.creator} />
 			<Text>{data.tourName}</Text>
 		</Column>
 	</Columns>

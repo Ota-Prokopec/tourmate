@@ -30,7 +30,7 @@
 					disableOwnerOptions
 					disableSeeMoreButton
 					disableSharing
-					class={!disableEditing ? 'border-2 border-blue-300' : ''}
+					class={!disableEditing ? 'border-[3px] border-orange-500' : ''}
 					on:click={() => {
 						if (!disableEditing) cardClick(monument);
 					}}

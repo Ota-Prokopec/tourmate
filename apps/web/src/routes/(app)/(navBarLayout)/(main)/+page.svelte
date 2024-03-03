@@ -12,6 +12,8 @@
 	import type { MonumentMarkerData } from '@app/ts-types';
 	import { getUsersLocation } from '@app/utils';
 	import type { PageData } from './$types';
+	import IconRoute from '$lib/components/Icons/IconRoute.svelte';
+	import ButtonGoToTourPage from '$lib/components/Buttons/ButtonCreateTour.svelte';
 
 	export let data: PageData;
 	let location = $lsStore.usersLocation;
@@ -50,6 +52,11 @@
 	bind:zoom={mapZoom}
 	userCenter={location}
 >
+	<ButtonGoToTourPage
+		size="small"
+		class="absolute top-[calc(50%-12px)] child:left-1 child:relative left-[-16px]"
+	/>
+
 	<Icon
 		on:click={() => (settingsHidden = false)}
 		class="absolute top-0 right-0 m-4 child:fill-black child:w-9 child:h-9"

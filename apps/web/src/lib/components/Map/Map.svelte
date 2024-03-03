@@ -3,7 +3,7 @@
 	import { lsStore } from '$lib/utils/lsStore';
 	import type { Base64, Location } from '@app/ts-types';
 	import type { Map } from 'maplibre-gl';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { FillExtrusionLayer, GeolocateControl, MapLibre } from 'svelte-maplibre';
 	import { twMerge } from 'tailwind-merge';
 	import FullPageLoading from '../Common/FullPageLoading.svelte';

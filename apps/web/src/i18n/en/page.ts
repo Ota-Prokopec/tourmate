@@ -118,6 +118,9 @@ export const pageEN = {
 	},
 	tour: {
 		distanceToNextTargetLabel: 'Distance to next target is: ',
-		youFinished: 'You finished the tour'
+		youFinished: 'You finished the tour',
+		create: {
+			tourSavedMessage: 'Your tour has been saved'
+		}
 	}
 } satisfies BaseTranslation;

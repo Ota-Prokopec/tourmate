@@ -16,7 +16,7 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import type { MonumentCard, TCheckpointCompletionGraphqlDocument } from '@app/ts-types';
 	import { normalizeMeters } from '@app/utils';
-	import { distanceTo } from 'geolocation-utils';
+	import { distanceTo, headingDistanceTo } from 'geolocation-utils';
 	import CheckpointsListDrawer from '../Components/CheckpointsListDrawer.svelte';
 	import TourCheckpointAccomplishment from '../Components/TourCheckpointAccomplishment.svelte';
 	import type { PageData } from './$types';
@@ -27,14 +27,14 @@
 
 	let tour = data.tour;
 
-	export let listHidden = true;
-	export let distanceToAccomplishMonument = data.minimalDistanceToAccomplishMonument;
+	let listHidden = true;
+	let distanceToAccomplishMonument = data.minimalDistanceToAccomplishMonument;
 	$: isTourFinished = monumentsToAccomplish.length === 0;
 	let tourAccomplishCardHidden = true;
 
-	export let allMonuments: MonumentCard[] = data.tour.monuments;
+	let allMonuments: MonumentCard[] = data.tour.monuments;
 
-	export let accomplishedCheckpoints: TCheckpointCompletionGraphqlDocument[] =
+	let accomplishedCheckpoints: TCheckpointCompletionGraphqlDocument[] =
 		data.tour.usersCheckpointsCompletionData;
 	let closestMonument: MonumentCard | undefined = undefined;
 
@@ -59,14 +59,19 @@
 			})
 			.at(0);
 
-	$: distanceToClosestMonument =
-		userCurrentLocation && closestMonument
-			? distanceTo(userCurrentLocation, closestMonument.location)
-			: undefined;
+	let distanceToClosestMonument: number | null;
+	let headingToClosestMonument: number | null;
+
+	$: if (userCurrentLocation && closestMonument) {
+		const { distance, heading } = headingDistanceTo(userCurrentLocation, closestMonument.location);
+		distanceToClosestMonument = distance;
+		headingToClosestMonument = heading;
+	}
 </script>
 
-{#if closestMonument && typeof distanceToClosestMonument === 'number' && !tourAccomplishCardHidden}
+{#if closestMonument && typeof distanceToClosestMonument === 'number' && typeof headingToClosestMonument === 'number' && !tourAccomplishCardHidden}
 	<TourCheckpointAccomplishment
+		{headingToClosestMonument}
 		bind:accomplishedCheckpoints
 		{tour}
 		bind:userCurrentLocation
