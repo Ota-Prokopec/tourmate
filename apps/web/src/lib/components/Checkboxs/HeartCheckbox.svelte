@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
+	const dispatch = createEventDispatcher();
 
 	export let checked = false;
 
@@ -8,7 +10,7 @@
 </script>
 
 <div class={twMerge('heart-container', className)} title="Like">
-	<input type="checkbox" bind:checked class="checkbox" id="Give-It-An-Id" />
+	<input on:change type="checkbox" bind:checked class="checkbox" id="Give-It-An-Id" />
 	<div class="svg-container">
 		<svg viewBox="0 0 24 24" class="svg-outline" xmlns="http://www.w3.org/2000/svg">
 			<path
