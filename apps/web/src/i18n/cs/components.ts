@@ -167,5 +167,15 @@ export const componentsCS = {
 	},
 	ButtonCreateTour: {
 		label: 'Vytvoř túru'
+	},
+	TourCardComponent: {
+		shareTour: {
+			title: 'Try out this tour'
+		}
+	},
+	SystemDownAlert: {
+		title: 'Omlouváme se, naše systémy jsou dočasně nedostupné',
+		message: 'Pracujeme na tom',
+		donationAsking: 'Můžete nás podpořit darem, abychom mohli koupit lepší server'
 	}
 } satisfies BaseTranslation;

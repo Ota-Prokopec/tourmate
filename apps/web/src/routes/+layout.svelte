@@ -11,9 +11,11 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
+	import { sdk } from '$src/graphql/sdk';
+	import type { TSystemHealthStatus } from '@app/ts-types';
+	import SystemDownAlert from '$lib/components/Common/SystemDownAlert.svelte';
 
-	let mounted = false;
-	onMount(() => (mounted = true));
+	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
 	const queryClient = new QueryClient();
 
@@ -24,7 +26,24 @@
 			goto('/auth/login');
 		}
 	});
+
+	//ssr - server side call about appwrite and qraphql server status
+	sdk
+		.getSystemHealthStatus()
+		.then((result) => {
+			systemStatus = result.getSystemHealthStatus;
+		})
+		.catch((error) => {
+			systemStatus = {
+				appwriteService: false,
+				graphqlService: false
+			};
+		});
 </script>
+
+{#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService)}
+	<SystemDownAlert />
+{/if}
 
 <Alert
 	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"

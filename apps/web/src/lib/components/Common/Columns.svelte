@@ -7,9 +7,10 @@
 	export { className as class };
 </script>
 
-<div
+<button
+	on:click
 	style={`grid-template-columns: ${columns}`}
 	class={twMerge('w-auto h-auto grid gap-4', className)}
 >
 	<slot />
-</div>
+</button>

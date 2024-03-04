@@ -204,6 +204,10 @@ export interface NexusGenObjects {
     question: string; // String!
     type: NexusGenScalars['AnswerType']; // AnswerType!
   }
+  SystemHealthStatus: { // root type
+    appwriteService: boolean; // Boolean!
+    graphqlService: boolean; // Boolean!
+  }
   Tour: { // root type
     _collectionId: string; // String!
     _createdAt: string; // String!
@@ -377,6 +381,7 @@ export interface NexusGenFieldTypes {
     getListOfTours: NexusGenRootTypes['Tour'][]; // [Tour!]!
     getListOfUsers: NexusGenRootTypes['User'][]; // [User!]!
     getMonument: NexusGenRootTypes['Monument']; // Monument!
+    getSystemHealthStatus: NexusGenRootTypes['SystemHealthStatus']; // SystemHealthStatus!
     getTour: NexusGenRootTypes['Tour']; // Tour!
     getUser: NexusGenRootTypes['User']; // User!
     logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
@@ -395,6 +400,10 @@ export interface NexusGenFieldTypes {
     pickingAnswers: string[] | null; // [String!]
     question: string; // String!
     type: NexusGenScalars['AnswerType']; // AnswerType!
+  }
+  SystemHealthStatus: { // field return type
+    appwriteService: boolean; // Boolean!
+    graphqlService: boolean; // Boolean!
   }
   Tour: { // field return type
     _collectionId: string; // String!
@@ -564,6 +573,7 @@ export interface NexusGenFieldTypeNames {
     getListOfTours: 'Tour'
     getListOfUsers: 'User'
     getMonument: 'Monument'
+    getSystemHealthStatus: 'SystemHealthStatus'
     getTour: 'Tour'
     getUser: 'User'
     logInViaEmail: 'EmailLogin'
@@ -582,6 +592,10 @@ export interface NexusGenFieldTypeNames {
     pickingAnswers: 'String'
     question: 'String'
     type: 'AnswerType'
+  }
+  SystemHealthStatus: { // field return type name
+    appwriteService: 'Boolean'
+    graphqlService: 'Boolean'
   }
   Tour: { // field return type name
     _collectionId: 'String'

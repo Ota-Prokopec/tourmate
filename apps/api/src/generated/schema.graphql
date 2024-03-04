@@ -188,6 +188,7 @@ type Query {
   getListOfTours(limit: Int, offset: Int, tourName: String, userId: String): [Tour!]!
   getListOfUsers(limit: Int = 50, offset: Int, searchingText: String): [User!]!
   getMonument(id: String!): Monument!
+  getSystemHealthStatus: SystemHealthStatus!
   getTour(tourId: String!): Tour!
   getUser(myId: String, userId: String): User!
   logInViaEmail(email: String!, password: String!): EmailLogin!
@@ -217,6 +218,11 @@ input QuestionInput {
 }
 
 scalar StringOrNumber
+
+type SystemHealthStatus {
+  appwriteService: Boolean!
+  graphqlService: Boolean!
+}
 
 scalar Topic
 

@@ -48,6 +48,8 @@ export { default as createMonumentInput } from './monuments/schema/createMonumen
 export * from './monuments/schema/createMonumentInput';
 export { default as answerQuestion } from './questions/mutations/answerQuestion';
 export * from './questions/mutations/answerQuestion';
+export { default as getSystemHealthStatus } from './systemHealth/queries/getSystemHealthStatus';
+export * from './systemHealth/queries/getSystemHealthStatus';
 export { default as createTour } from './tour/mutations/createTour';
 export * from './tour/mutations/createTour';
 export { default as getListOfTours } from './tour/queries/getListOfTours';

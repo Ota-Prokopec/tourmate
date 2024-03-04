@@ -779,6 +779,28 @@ type RootTranslation = {
 			 */
 			label: string
 		}
+		TourCardComponent: {
+			shareTour: {
+				/**
+				 * T​r​y​ ​o​u​t​ ​t​h​i​s​ ​t​o​u​r
+				 */
+				title: string
+			}
+		}
+		SystemDownAlert: {
+			/**
+			 * W​e​ ​a​r​e​ ​s​o​r​r​y​,​ ​o​u​r​ ​s​y​s​t​e​m​s​ ​a​r​e​ ​t​e​m​p​o​r​a​r​i​l​y​ ​d​o
+			 */
+			title: string
+			/**
+			 * W​e​ ​a​r​e​ ​w​o​r​k​i​n​g​ ​o​n​ ​i​t
+			 */
+			message: string
+			/**
+			 * Y​o​u​ ​c​a​n​ ​s​u​p​p​o​r​t​ ​u​s​ ​b​y​ ​d​o​n​a​t​i​n​g​,​ ​s​o​ ​w​e​ ​c​o​u​l​d​ ​b​u​y​ ​a​ ​b​e​t​t​e​r​ ​s​e​r​v​e​r
+			 */
+			donationAsking: string
+		}
 	}
 	error: {
 		/**
@@ -1584,6 +1606,28 @@ export type TranslationFunctions = {
 			 * Create a new tour
 			 */
 			label: () => LocalizedString
+		}
+		TourCardComponent: {
+			shareTour: {
+				/**
+				 * Try out this tour
+				 */
+				title: () => LocalizedString
+			}
+		}
+		SystemDownAlert: {
+			/**
+			 * We are sorry, our systems are temporarily do
+			 */
+			title: () => LocalizedString
+			/**
+			 * We are working on it
+			 */
+			message: () => LocalizedString
+			/**
+			 * You can support us by donating, so we could buy a better server
+			 */
+			donationAsking: () => LocalizedString
 		}
 	}
 	error: {
