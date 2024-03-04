@@ -263,6 +263,7 @@ export type Query = {
   getListOfTours: Array<Tour>;
   getListOfUsers: Array<User>;
   getMonument: Monument;
+  getSystemHealthStatus: SystemHealthStatus;
   getTour: Tour;
   getUser: User;
   logInViaEmail: EmailLogin;
@@ -375,6 +376,12 @@ export type QuestionInput = {
   pickingAnswers?: InputMaybe<Array<Scalars['String']['input']>>;
   question: Scalars['String']['input'];
   type: Scalars['AnswerType']['input'];
+};
+
+export type SystemHealthStatus = {
+  __typename?: 'SystemHealthStatus';
+  appwriteService: Scalars['Boolean']['output'];
+  graphqlService: Scalars['Boolean']['output'];
 };
 
 export type Tour = {
@@ -636,6 +643,11 @@ export type AnswerQuestionMutationVariables = Exact<{
 
 
 export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } };
+
+export type GetSystemHealthStatusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSystemHealthStatusQuery = { __typename?: 'Query', getSystemHealthStatus: { __typename?: 'SystemHealthStatus', appwriteService: boolean, graphqlService: boolean } };
 
 export type CrateTourMutationVariables = Exact<{
   input: CreateTourInput;
@@ -1815,6 +1827,14 @@ export const AnswerQuestionDoc = gql`
   }
 }
     `;
+export const GetSystemHealthStatusDoc = gql`
+    query getSystemHealthStatus {
+  getSystemHealthStatus {
+    appwriteService
+    graphqlService
+  }
+}
+    `;
 export const CrateTourDoc = gql`
     mutation crateTour($input: CreateTourInput!) {
   createTour(input: $input) {
@@ -2784,6 +2804,41 @@ export const answerQuestion = (
             });
             return m;
           }
+export const getSystemHealthStatus = (
+            options: Omit<
+              WatchQueryOptions<GetSystemHealthStatusQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<GetSystemHealthStatusQuery> & {
+              query: ObservableQuery<
+                GetSystemHealthStatusQuery,
+                GetSystemHealthStatusQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: GetSystemHealthStatusDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<GetSystemHealthStatusQuery> & {
+                query: ObservableQuery<
+                  GetSystemHealthStatusQuery,
+                  GetSystemHealthStatusQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
 export const crateTour = (
             options: Omit<
               MutationOptions<any, CrateTourMutationVariables>, 

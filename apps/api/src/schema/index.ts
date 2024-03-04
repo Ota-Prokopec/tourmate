@@ -20,6 +20,8 @@ export { default as PlaceDetail } from './PlaceDetail';
 export * from './PlaceDetail';
 export { default as Question } from './Question';
 export * from './Question';
+export { default as SystemHealthStatus } from './SystemHealthStatus';
+export * from './SystemHealthStatus';
 export { default as Tour } from './Tour';
 export * from './Tour';
 export { default as User } from './User';

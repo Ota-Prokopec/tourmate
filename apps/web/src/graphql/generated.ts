@@ -259,6 +259,7 @@ export type Query = {
   getListOfTours: Array<Tour>;
   getListOfUsers: Array<User>;
   getMonument: Monument;
+  getSystemHealthStatus: SystemHealthStatus;
   getTour: Tour;
   getUser: User;
   logInViaEmail: EmailLogin;
@@ -371,6 +372,12 @@ export type QuestionInput = {
   pickingAnswers?: InputMaybe<Array<Scalars['String']['input']>>;
   question: Scalars['String']['input'];
   type: Scalars['AnswerType']['input'];
+};
+
+export type SystemHealthStatus = {
+  __typename?: 'SystemHealthStatus';
+  appwriteService: Scalars['Boolean']['output'];
+  graphqlService: Scalars['Boolean']['output'];
 };
 
 export type Tour = {
@@ -632,6 +639,11 @@ export type AnswerQuestionMutationVariables = Exact<{
 
 
 export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'UsersAnswerToQuestion', answeredCorrectly: boolean } };
+
+export type GetSystemHealthStatusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSystemHealthStatusQuery = { __typename?: 'Query', getSystemHealthStatus: { __typename?: 'SystemHealthStatus', appwriteService: boolean, graphqlService: boolean } };
 
 export type CrateTourMutationVariables = Exact<{
   input: CreateTourInput;
@@ -1811,6 +1823,14 @@ export const AnswerQuestionDocument = gql`
   }
 }
     `;
+export const GetSystemHealthStatusDocument = gql`
+    query getSystemHealthStatus {
+  getSystemHealthStatus {
+    appwriteService
+    graphqlService
+  }
+}
+    `;
 export const CrateTourDocument = gql`
     mutation crateTour($input: CreateTourInput!) {
   createTour(input: $input) {
@@ -2075,6 +2095,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     answerQuestion(variables: AnswerQuestionMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AnswerQuestionMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AnswerQuestionMutation>(AnswerQuestionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'answerQuestion', 'mutation');
+    },
+    getSystemHealthStatus(variables?: GetSystemHealthStatusQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSystemHealthStatusQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSystemHealthStatusQuery>(GetSystemHealthStatusDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSystemHealthStatus', 'query');
     },
     crateTour(variables: CrateTourMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CrateTourMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CrateTourMutation>(CrateTourDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'crateTour', 'mutation');

@@ -33,3 +33,8 @@ export type IPApiResponse = {
 }
 
 export type SocialPlatform = 'facebook' | 'google' | 'discord' | 'github'
+
+export type TSystemHealthStatus = {
+	appwriteService: boolean
+	graphqlService: boolean
+}

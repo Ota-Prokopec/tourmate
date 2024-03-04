@@ -176,5 +176,10 @@ export const componentsEN = {
 		shareTour: {
 			title: 'Try out this tour'
 		}
+	},
+	SystemDownAlert: {
+		title: 'We are sorry, our systems are temporarily do',
+		message: 'We are working on it',
+		donationAsking: 'You can support us by donating, so we could buy a better server'
 	}
 } satisfies BaseTranslation;
