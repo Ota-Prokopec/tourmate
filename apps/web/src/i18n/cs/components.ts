@@ -167,5 +167,10 @@ export const componentsCS = {
 	},
 	ButtonCreateTour: {
 		label: 'Vytvoř túru'
+	},
+	TourCardComponent: {
+		shareTour: {
+			title: 'Try out this tour'
+		}
 	}
 } satisfies BaseTranslation;

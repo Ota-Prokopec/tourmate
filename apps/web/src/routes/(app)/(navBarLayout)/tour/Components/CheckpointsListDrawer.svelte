@@ -37,7 +37,7 @@
 					size="tiny"
 					{monument}
 				>
-					<slot item={1} {monument} />
+					<slot {monument} />
 				</MonumentCardComponent>
 			{/each}
 		</Column>

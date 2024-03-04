@@ -779,6 +779,14 @@ type RootTranslation = {
 			 */
 			label: string
 		}
+		TourCardComponent: {
+			shareTour: {
+				/**
+				 * T​r​y​ ​o​u​t​ ​t​h​i​s​ ​t​o​u​r
+				 */
+				title: string
+			}
+		}
 	}
 	error: {
 		/**
@@ -1584,6 +1592,14 @@ export type TranslationFunctions = {
 			 * Create a new tour
 			 */
 			label: () => LocalizedString
+		}
+		TourCardComponent: {
+			shareTour: {
+				/**
+				 * Try out this tour
+				 */
+				title: () => LocalizedString
+			}
 		}
 	}
 	error: {
