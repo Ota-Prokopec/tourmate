@@ -22,6 +22,7 @@
 	import type { PageData } from './$types';
 	import IconLocationArrow from '$lib/components/Icons/IconLocationArrow.svelte';
 	import BubbleIconWrapper from '$lib/components/Icons/BubbleIconWrapper.svelte';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
 
@@ -139,6 +140,7 @@
 				)}`}</Text
 			>
 		{/if}
+		<ProgressRadial value={50}>50</ProgressRadial>
 		<ProgressBar
 			class="w-full"
 			progress={allMonuments.length - monumentsToAccomplish.length}

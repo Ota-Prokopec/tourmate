@@ -9,6 +9,7 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
+	import Column from '$lib/components/Common/Column.svelte';
 
 	const minlength = 1;
 	let email = '';
@@ -33,7 +34,7 @@
 <!---->
 
 {#if status === 'filling'}
-	<div class="w-full h-min flex flex-wrap flex-row items-center justify-center p-5 gap-6">
+	<Column class="items-center">
 		<Text class="text-center">{$LL.page.forgottenPassword.title()}</Text>
 
 		<div class="max-w-[400px] w-full flex items-center gap-4 flex-wrap mt-[40px] flex-col">
@@ -50,7 +51,7 @@
 				{/if}
 			</Button>
 		</div>
-	</div>
+	</Column>
 {:else if status === 'email-sent'}
 	<EmailSent />
 {/if}
