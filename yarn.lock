@@ -4115,10 +4115,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-5.6.0.tgz#41dd6093d34652cddb5d5bdeee04eafc33826668"
   integrity sha512-TV7t8GKYaJWsn00tFDqBw8+Uqmr8A0fRU1tvTQhyZzGv0sJCGRQL3JGMI3ucuKo3XIZdUP+Lx7/gh2t3lewy7g==
 
-"@skeletonlabs/skeleton@^2.6.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-2.7.0.tgz#fdca725f3155ae41a549b9ab5e5921e3c5028ae6"
-  integrity sha512-XD6aCvEQYp2LtEKM9OelK2HoJZFraM3fvpQpXsnNY82t/QeaZ9WkORCsrVz91puq786FTOktt8beZEe045YLWA==
+"@skeletonlabs/skeleton@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-2.9.0.tgz#d585f2cfb807802bd912ff38a9572a84c1f867a9"
+  integrity sha512-s6l29M0PU+0he8+ifmfA6aA6Hvua58QDgcNlHrm9FFFdlj2D89BkT67f49LihNODOrTia7KewswkbdtYlPe8Ow==
   dependencies:
     esm-env "1.0.0"
 

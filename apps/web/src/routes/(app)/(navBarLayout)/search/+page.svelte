@@ -17,6 +17,7 @@
 	import MonumentsSearch from '$lib/components/Search/MonumentsSearch.svelte';
 	import PlacesSearch from '$lib/components/Search/PlacesSearch.svelte';
 	import UsersSearch from '$lib/components/Search/UsersSearch.svelte';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 
 	export let data: PageData;
 
@@ -74,7 +75,9 @@
 
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 justify-start items-start">
 			{#if chosenCategory === 'monuments'}
-				<MonumentsSearch limit={data.search.resultLimit} {searchingText} />
+				<MonumentsSearch let:monument limit={data.search.resultLimit} {searchingText}>
+					<MonumentCardComponent size="normal" {monument} />
+				</MonumentsSearch>
 			{:else if chosenCategory === 'places'}
 				<PlacesSearch limit={data.search.resultLimit} {searchingLocation} />
 			{:else if chosenCategory === 'users'}
