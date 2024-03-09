@@ -131,17 +131,6 @@
 	</Card>
 {/if}
 
-<MediaQuery size="mobile">
-	{#if !cardShown}
-		<Icon
-			on:click={() => (cardShown = true)}
-			class="absolute top-0 right-0 m-2 z-20 child:w-10 child:h-10 child:fill-black"
-		>
-			<IconTimes />
-		</Icon>
-	{/if}
-</MediaQuery>
-
 <Map showUser userCenter={data.newExperience.location} class="h-full w-full fixed top-0">
 	{#each data.newExperience.nearMonuments as monument}
 		<MonumentMarker

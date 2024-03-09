@@ -12,9 +12,6 @@
 </script>
 
 <Drawer bind:hidden placement="auto" class="h-full mobile:w-full">
-	<Icon on:click={() => (hidden = true)} class="child:w-8 child:h-8 absolute top-0 right-0 m-2">
-		<IconTimes />
-	</Icon>
 	<Geocoding
 		class="mt-[32px]"
 		bind:searchingText
