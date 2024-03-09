@@ -140,7 +140,6 @@
 				)}`}</Text
 			>
 		{/if}
-		<ProgressRadial value={50}>50</ProgressRadial>
 		<ProgressBar
 			class="w-full"
 			progress={allMonuments.length - monumentsToAccomplish.length}
