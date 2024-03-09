@@ -20,11 +20,6 @@
 	class="!z-50 w-auto max-w-[400px] h-[calc(100%-100px)] fixed top-[100px]"
 >
 	<Row class="gap-4 justify-center">
-		<Right>
-			<Icon on:click={() => (hideDrawer = true)} class="child:w-10 child:h-10">
-				<IconTimes />
-			</Icon>
-		</Right>
 		<Text class="text-2xl w-full flex justify-center">
 			{#if nearMonuments.length}
 				{$LL.component.MonumentNotFoundDrawer.cantFindAnyMonumentQuestion()}
