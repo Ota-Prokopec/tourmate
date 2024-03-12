@@ -3,10 +3,8 @@ import { minimalRangeInMetersToConnectMonumentToPicture } from '../../createNewE
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
-	const tourInfo = (await sdkssr(event).getTour({ tourId: event.params.tourId })).getTour;
-
 	return {
 		minimalDistanceToAccomplishMonument: minimalRangeInMetersToConnectMonumentToPicture,
-		tour: tourInfo
+		tourId: event.params.tourId
 	};
 };
