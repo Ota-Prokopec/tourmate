@@ -15,6 +15,7 @@ export default objectType({
 		t.string('userId')
 		t.string('tourName')
 		t.list.string('monumentIds')
+
 		t.field('creator', {
 			type: 'User',
 			resolve: async (source, args, ctx) => {
