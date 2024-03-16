@@ -15,6 +15,7 @@
 	import type { TSystemHealthStatus } from '@app/ts-types';
 	import SystemDownAlert from '$lib/components/Alert/SystemDownAlert.svelte';
 	import GpsOffAlert from '$lib/components/Alert/GPSOffAlert.svelte';
+	import lsStore from '$lib/utils/lsStore';
 
 	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
@@ -46,7 +47,9 @@
 	<SystemDownAlert />
 {/if}
 
-<GpsOffAlert />
+{#if !$lsStore.usersLocation}
+	<GpsOffAlert />
+{/if}
 
 <Alert
 	class="z-[9999] absolute top-0 max-w-[500px] w-[95%] m-2"
