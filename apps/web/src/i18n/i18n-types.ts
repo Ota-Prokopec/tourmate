@@ -801,6 +801,16 @@ type RootTranslation = {
 			 */
 			donationAsking: string
 		}
+		GPSOffAlert: {
+			/**
+			 * Y​o​u​r​ ​G​P​S​ ​i​s​ ​o​f​f​l​i​n​e
+			 */
+			title: string
+			/**
+			 * y​o​u​r​ ​G​P​S​ ​i​s​ ​o​f​f​l​i​n​e​ ​o​r​ ​y​o​u​ ​d​i​d​ ​n​o​t​ ​g​r​a​n​d​e​d​ ​a​ ​p​e​r​m​i​s​s​i​o​n​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​G​P​S​ ​t​o​ ​c​h​r​o​m​e​ ​o​r​ ​s​a​f​a​r​i​ ​b​r​o​w​s​e​r​.
+			 */
+			message: string
+		}
 	}
 	error: {
 		/**
@@ -1628,6 +1638,16 @@ export type TranslationFunctions = {
 			 * You can support us by donating, so we could buy a better server
 			 */
 			donationAsking: () => LocalizedString
+		}
+		GPSOffAlert: {
+			/**
+			 * Your GPS is offline
+			 */
+			title: () => LocalizedString
+			/**
+			 * your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser.
+			 */
+			message: () => LocalizedString
 		}
 	}
 	error: {

@@ -181,5 +181,10 @@ export const componentsEN = {
 		title: 'We are sorry, our systems are temporarily do',
 		message: 'We are working on it',
 		donationAsking: 'You can support us by donating, so we could buy a better server'
+	},
+	GPSOffAlert: {
+		title: 'Your GPS is offline',
+		message:
+			'your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser.'
 	}
 } satisfies BaseTranslation;

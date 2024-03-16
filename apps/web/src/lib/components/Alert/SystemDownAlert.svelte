@@ -1,8 +1,8 @@
 <script lang="ts">
 	import LL from '$src/i18n/i18n-svelte';
-	import Alert from '../Alert/Alert.svelte';
-	import Column from './Column.svelte';
-	import Text from './Text.svelte';
+	import Alert from './Alert.svelte';
+	import Column from '../Common/Column.svelte';
+	import Text from '../Common/Text.svelte';
 </script>
 
 <Alert class="bg-red-100" color="red">

@@ -13,7 +13,9 @@
 	import { alertStore } from './alertStore';
 	import { sdk } from '$src/graphql/sdk';
 	import type { TSystemHealthStatus } from '@app/ts-types';
-	import SystemDownAlert from '$lib/components/Common/SystemDownAlert.svelte';
+	import SystemDownAlert from '$lib/components/Alert/SystemDownAlert.svelte';
+	import GpsOffAlert from '$lib/components/Alert/GPSOffAlert.svelte';
+	import lsStore from '$lib/utils/lsStore';
 
 	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
@@ -43,6 +45,10 @@
 
 {#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService)}
 	<SystemDownAlert />
+{/if}
+
+{#if !$lsStore.usersLocation}
+	<GpsOffAlert />
 {/if}
 
 <Alert

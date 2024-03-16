@@ -177,5 +177,10 @@ export const componentsCS = {
 		title: 'Omlouváme se, naše systémy jsou dočasně nedostupné',
 		message: 'Pracujeme na tom',
 		donationAsking: 'Můžete nás podpořit darem, abychom mohli koupit lepší server'
+	},
+	GPSOffAlert: {
+		title: 'Vaše GPS není zaplá',
+		message:
+			'Vaše GPS není zaplá nebo jste neudělil povolení, prohlížeči chrom nebo safari, o používání GPS'
 	}
 } satisfies BaseTranslation;
