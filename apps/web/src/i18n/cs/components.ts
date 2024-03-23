@@ -182,5 +182,8 @@ export const componentsCS = {
 		title: 'Vaše GPS není zaplá',
 		message:
 			'Vaše GPS není zaplá nebo jste neudělil povolení, prohlížeči chrom nebo safari, o používání GPS'
+	},
+	ButtonLinkToDeveloperPage: {
+		label: 'Vývojář and majitel'
 	}
 } satisfies BaseTranslation;

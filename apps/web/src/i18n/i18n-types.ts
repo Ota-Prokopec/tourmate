@@ -811,6 +811,12 @@ type RootTranslation = {
 			 */
 			message: string
 		}
+		ButtonLinkToDeveloperPage: {
+			/**
+			 * D​e​v​e​l​o​p​e​r​ ​a​n​d​ ​f​o​u​n​d​e​r
+			 */
+			label: string
+		}
 	}
 	error: {
 		/**
@@ -1648,6 +1654,12 @@ export type TranslationFunctions = {
 			 * your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser.
 			 */
 			message: () => LocalizedString
+		}
+		ButtonLinkToDeveloperPage: {
+			/**
+			 * Developer and founder
+			 */
+			label: () => LocalizedString
 		}
 	}
 	error: {

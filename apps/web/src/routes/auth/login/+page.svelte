@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { PUBLIC_SESSION_NAME } from '$env/static/public';
 	import { user } from '$lib/appwrite/appwrite';
+	import ButtonLinkToDeveloperPage from '$lib/components/Buttons/ButtonLinkToDeveloperPage.svelte';
 	import Button from '$lib/components/Common/Button.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Link from '$lib/components/Common/Link.svelte';
@@ -65,4 +66,5 @@
 	<Link href="/auth/forgottenpassword">{$LL.page.signIn.forgottenPassword()}</Link>
 	<Link href="/auth/register">{$LL.page.signIn.signUp()}</Link>
 	<WhatAppOffersButton class="mt-4" />
+	<ButtonLinkToDeveloperPage />
 </Column>

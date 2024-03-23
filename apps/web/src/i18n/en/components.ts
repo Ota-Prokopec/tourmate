@@ -186,5 +186,8 @@ export const componentsEN = {
 		title: 'Your GPS is offline',
 		message:
 			'your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser.'
+	},
+	ButtonLinkToDeveloperPage: {
+		label: 'Developer and founder'
 	}
 } satisfies BaseTranslation;

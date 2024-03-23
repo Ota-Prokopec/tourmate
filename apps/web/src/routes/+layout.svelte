@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../app.css';
 	import { goto } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
 	import { user } from '$lib/appwrite/appwrite';
@@ -9,7 +10,6 @@
 	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
 	import { Button } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
-	import '../app.css';
 	import { alertStore } from './alertStore';
 	import { sdk } from '$src/graphql/sdk';
 	import type { TSystemHealthStatus } from '@app/ts-types';
