@@ -32,6 +32,8 @@ app.use(
 			'https://experiences-web-lovat.vercel.app',
 			'https://studio.apollographql.com',
 			'https://sdz3jzhr-4444.euw.devtunnels.ms',
+			'https://www.otaprokopec.cz/',
+			'http://localhost:4173/',
 		],
 		credentials: true,
 	}),
