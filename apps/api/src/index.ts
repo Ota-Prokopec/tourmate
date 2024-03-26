@@ -5,7 +5,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
-export const server = new ApolloServer({ schema, context: context })
+export const server = new ApolloServer({ schema, context: context, introspection: true })
 //FIXME: this will be possible changed in the future
 const app = express()
 
@@ -32,8 +32,8 @@ app.use(
 			'https://experiences-web-lovat.vercel.app',
 			'https://studio.apollographql.com',
 			'https://sdz3jzhr-4444.euw.devtunnels.ms',
-			'https://www.otaprokopec.cz/',
-			'http://localhost:4173/',
+			'https://www.otaprokopec.cz',
+			'http://localhost:4173',
 		],
 		credentials: true,
 	}),
