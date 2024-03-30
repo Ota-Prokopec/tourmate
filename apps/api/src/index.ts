@@ -14,7 +14,6 @@ const start = async () => {
 	server.applyMiddleware({
 		app,
 		path: '/graphql',
-		cors: false,
 		bodyParserConfig: { limit: '50kB' },
 	})
 }
