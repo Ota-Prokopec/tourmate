@@ -14,9 +14,11 @@ const codegenConfigConfig: CodegenConfig['config'] = {
 			output: '[number, number]' // this means our server will return CustomScalar as number
 		},
 		Topic: '"castle" | "monument" | "person" | "animals" | "hiking"',
+		Transport: '"train"|"bus"|	"car"|"walk"|"bike"',
 		ColorTheme: "'dark' | 'light'",
 		Language: "'en'|'cs'",
-		StringOrNumber: 'string|number'
+		StringOrNumber: 'string|number',
+		AnswerType: "'radio' | 'text' | 'number'"
 	}
 };
 
