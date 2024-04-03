@@ -12,7 +12,7 @@ export const componentsEN = {
 	},
 	EmailSent: {
 		title: 'We sent you email confirmation.',
-		text: 'Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user!'
+		text: 'Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user! It is really necessary!'
 	},
 	MyIdInput: {
 		label: 'Enter your custom Tourmate ID'
@@ -185,7 +185,7 @@ export const componentsEN = {
 	GPSOffAlert: {
 		title: 'Your GPS is offline',
 		message:
-			'your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser.'
+			'your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser. If geolocation is granted and nothing changed, try to move to receive location.'
 	},
 	ButtonLinkToDeveloperPage: {
 		label: 'Developer and founder'
