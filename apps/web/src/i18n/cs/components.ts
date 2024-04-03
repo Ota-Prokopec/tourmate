@@ -12,7 +12,7 @@ export const componentsCS = {
 	},
 	EmailSent: {
 		title: 'Poslali jsme vám potvrzení e-mailem.',
-		text: 'Otevřete svůj e-mail a klikněte na odkaz, který jsme vám poslali. Ověřovací adresu URL otevřete pouze ve stejném prohlížeči na stejném zařízení, na kterém jste uživatele zaregistrovali!'
+		text: 'Otevřete svůj e-mail a klikněte na odkaz, který jsme vám poslali. Ověřovací adresu URL otevřete pouze ve stejném prohlížeči na stejném zařízení, na kterém jste uživatele zaregistrovali! Je to opravdu nezbytné!'
 	},
 	MyIdInput: {
 		label: 'Zadejte své vlastní Tourmate ID'
@@ -181,7 +181,7 @@ export const componentsCS = {
 	GPSOffAlert: {
 		title: 'Vaše GPS není zaplá',
 		message:
-			'Vaše GPS není zaplá nebo jste neudělil povolení, prohlížeči chrom nebo safari, o používání GPS'
+			'Vaše GPS není zaplá nebo jste neudělil povolení, prohlížeči chrom nebo safari, o používání GPS. Jestli jste geolokaci povolili a stále to nefunguje, zkuste se pohnout.'
 	},
 	ButtonLinkToDeveloperPage: {
 		label: 'Vývojář and majitel'

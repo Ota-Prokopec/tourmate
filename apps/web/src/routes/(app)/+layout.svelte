@@ -5,16 +5,16 @@
 </script>
 
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { beforeNavigate } from '$app/navigation';
 	import { collections } from '$lib/appwrite/appwrite';
+	import GpsOffAlert from '$lib/components/Alert/GPSOffAlert.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Notification from '$lib/components/Notification/Notification.svelte';
-	import lsSvelte, { storage } from '$lib/utils/lsStore';
+	import lsSvelte, { lsStore, storage } from '$lib/utils/lsStore';
 	import { appwriteKeys } from '@app/appwrite-client';
 	import lodash from 'lodash';
 	import type { LayoutData } from './$types';
-	import Bar from './(navBarLayout)/Components/Bar.svelte';
-	import { browser } from '$app/environment';
 
 	export let data: LayoutData;
 
@@ -43,6 +43,10 @@
 
 <!--service-worker for notifications in Notification component-->
 <Notification userId={data.user.userId} />
+
+{#if !$lsStore.usersLocation}
+	<GpsOffAlert />
+{/if}
 
 {#if isLoading}
 	<FullPageLoading />

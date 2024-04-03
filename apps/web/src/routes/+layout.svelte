@@ -1,21 +1,19 @@
 <script lang="ts">
-	import '../app.css';
 	import { goto } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
 	import { user } from '$lib/appwrite/appwrite';
 	import Alert from '$lib/components/Alert/Alert.svelte';
+	import SystemDownAlert from '$lib/components/Alert/SystemDownAlert.svelte';
 	import CookiesAlert from '$lib/components/Common/CookiesAlert.svelte';
 	import FullPageLoading from '$lib/components/Common/FullPageLoading.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import { sdk } from '$src/graphql/sdk';
+	import type { TSystemHealthStatus } from '@app/ts-types';
 	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
 	import { Button } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
+	import '../app.css';
 	import { alertStore } from './alertStore';
-	import { sdk } from '$src/graphql/sdk';
-	import type { TSystemHealthStatus } from '@app/ts-types';
-	import SystemDownAlert from '$lib/components/Alert/SystemDownAlert.svelte';
-	import GpsOffAlert from '$lib/components/Alert/GPSOffAlert.svelte';
-	import lsStore from '$lib/utils/lsStore';
 
 	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
@@ -45,10 +43,6 @@
 
 {#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService)}
 	<SystemDownAlert />
-{/if}
-
-{#if !$lsStore.usersLocation}
-	<GpsOffAlert />
 {/if}
 
 <Alert
