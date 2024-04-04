@@ -103,6 +103,7 @@
 		"@types/turf": "^3.5.32",
 		"@types/w3c-image-capture": "^1.0.8",
 		"@urql/svelte": "^4.0.4",
+		"@vercel/analytics": "^1.2.2",
 		"appwrite": "^13.0.0",
 		"browser-image-compression": "^2.0.2",
 		"bytemd": "^1.21.0",
