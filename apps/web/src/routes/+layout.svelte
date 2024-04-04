@@ -15,6 +15,7 @@
 	import '../app.css';
 	import { alertStore } from './alertStore';
 	import { inject } from '@vercel/analytics';
+	import { browser, dev } from '$app/environment';
 
 	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
@@ -41,11 +42,11 @@
 			};
 		});
 
-	//user's analytics
-	inject();
+	if (!dev) inject(); //user's analytics
+	if (browser && !navigator.onLine) goto('/offline'); //go to offline page
 </script>
 
-{#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService)}
+{#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService) && browser && navigator.onLine}
 	<SystemDownAlert />
 {/if}
 
