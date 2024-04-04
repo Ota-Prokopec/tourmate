@@ -14,6 +14,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { alertStore } from './alertStore';
+	import { inject } from '@vercel/analytics';
 
 	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
@@ -39,6 +40,9 @@
 				graphqlService: false
 			};
 		});
+
+	//user's analytics
+	inject();
 </script>
 
 {#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService)}
