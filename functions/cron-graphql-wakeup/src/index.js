@@ -1,4 +1,4 @@
-export default async ({ req, res }) => {
+module.exports = async function ({ req, res }) {
 	const apiUrl = process.env.apiUrl
 
 	const responseFromGraphql = await fetch(apiUrl, { method: 'GET' })
