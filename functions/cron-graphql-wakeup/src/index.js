@@ -1,5 +1,5 @@
-module.exports = async function ({ req, res }) {
-	const apiUrl = process.env.apiUrl
+export default async ({ req, res, log, error }) => {
+	const apiUrl = 'https://api.tourmate.cz'
 
 	const responseFromGraphql = await fetch(apiUrl, { method: 'GET' })
 
