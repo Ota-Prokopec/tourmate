@@ -1,5 +1,21 @@
 {
-	"projectId": "experiences",
-	"projectName": "",
-	"functions": []
+    "projectId": "experiences",
+    "projectName": "",
+    "functions": [
+        {
+            "$id": "cron-graphql-wakeup",
+            "name": "cron-graphql-wakeup",
+            "runtime": "node-18.0",
+            "path": "functions/cron-graphql-wakeup",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "*/10 * * * *",
+            "timeout": 15
+        }
+    ]
 }
