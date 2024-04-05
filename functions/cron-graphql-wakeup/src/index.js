@@ -1,5 +1,5 @@
 module.exports = async function (req, res) {
-	const apiUrl = req.variables['apiUrl'] ?? undefined
+	const apiUrl = req.variables['apiUrl']
 
 	const res = await fetch(apiUrl, { method: 'GET' })
 
