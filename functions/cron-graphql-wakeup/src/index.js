@@ -1,5 +1,5 @@
 module.exports = async function (req, res) {
-	const apiUrl = req.variables['apiUrl']
+	const apiUrl = process.env.apiUrl
 
 	const responseFromGraphql = await fetch(apiUrl, { method: 'GET' })
 
