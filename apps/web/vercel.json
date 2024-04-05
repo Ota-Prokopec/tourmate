@@ -1,3 +1,8 @@
 {
-	"rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+	"crons": [
+		{
+			"path": "/api/cron/graphqlWakeup",
+			"schedule": "*/10 * * * *"
+		}
+	]
 }
