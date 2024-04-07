@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import Column from '$lib/components/Common/Column.svelte';
 	import InstallApp from '$lib/components/Common/InstallApp.svelte';
 	import Left from '$lib/components/Common/Left.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
+	import { post } from '@app/utils';
 	import { Avatar } from 'flowbite-svelte';
 </script>
 

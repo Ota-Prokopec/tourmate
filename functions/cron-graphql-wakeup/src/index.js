@@ -1,9 +1,9 @@
-module.exports = async function (req, res) {
-	const apiUrl = req.variables['apiUrl']
+module.exports = async ({ req, res, log, error }) => {
+	const apiUrl = 'https://api.tourmate.cz'
 
 	const responseFromGraphql = await fetch(apiUrl, { method: 'GET' })
 
-	res.json({
+	return res.json({
 		response: responseFromGraphql,
 	})
 }

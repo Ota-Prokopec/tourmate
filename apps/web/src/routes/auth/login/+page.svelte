@@ -34,7 +34,7 @@
 		try {
 			const { session } = (await sdk.loginViaEmail({ email, password })).logInViaEmail;
 			$lsStore.cookieFallback = { a_session_experiences: session };
-			setClientCookieSession(session);
+			await setClientCookieSession(session);
 
 			goto('/', { invalidateAll: true });
 		} catch (err) {
