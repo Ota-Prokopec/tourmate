@@ -1,4 +1,4 @@
-export default async ({ req, res, log, error }) => {
+module.exports = async ({ req, res, log, error }) => {
 	const apiUrl = 'https://api.tourmate.cz'
 
 	const responseFromGraphql = await fetch(apiUrl, { method: 'GET' })
