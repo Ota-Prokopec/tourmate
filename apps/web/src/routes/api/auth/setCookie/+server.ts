@@ -10,7 +10,10 @@ const schema = z.object({
 export const POST = async (event) => {
 	const payload = schema.parse(await event.request.json());
 
-	event.cookies.set(PUBLIC_SESSION_NAME, payload.session, cookieSettings);
+	event.cookies.set(PUBLIC_SESSION_NAME, payload.session, {
+		...cookieSettings,
+		domain: process.env.CLIENT_HOSTNAME_COOKIES
+	});
 
 	return json(payload);
 };
