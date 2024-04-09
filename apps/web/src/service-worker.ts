@@ -4,6 +4,7 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
+import { dev } from '$app/environment';
 import { build, files, version } from '$service-worker';
 
 // Create a unique cache name for this deployment
@@ -19,6 +20,7 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 sw.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
+		if (dev) return;
 		const cache = await caches.open(CACHE);
 		await cache.addAll(ASSETS);
 	}
@@ -41,6 +43,7 @@ sw.addEventListener('fetch', (event) => {
 	// ignore POST requests etc
 	if (!event.request.url.includes('http')) return;
 	if (!(event.request.method === 'GET')) return;
+	if (dev) return;
 
 	async function respond() {
 		const url = new URL(event.request.url);

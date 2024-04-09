@@ -16,6 +16,7 @@
 	import { alertStore } from './alertStore';
 	import { inject } from '@vercel/analytics';
 	import { browser, dev } from '$app/environment';
+	import OfflinePage from '$lib/components/Pages/OfflinePage.svelte';
 
 	let systemStatus: TSystemHealthStatus | undefined = undefined;
 
@@ -43,7 +44,9 @@
 		});
 
 	if (!dev) inject(); //user's analytics
-	if (browser && !navigator.onLine) goto('/offline'); //go to offline page
+	let isOffline: boolean = false;
+	$: isOffline = browser ? !navigator.onLine : false;
+	$: console.log(isOffline);
 </script>
 
 {#if systemStatus && (!systemStatus?.appwriteService || !systemStatus.graphqlService) && browser && navigator.onLine}
@@ -78,7 +81,11 @@
 		<FullPageLoading />
 	{:else}
 		<div class="w-full h-full bg-white dark:bg-black overflow-auto">
-			<slot />
+			{#if isOffline}
+				<OfflinePage />
+			{:else}
+				<slot />
+			{/if}
 		</div>
 	{/if}
 </QueryClientProvider>
