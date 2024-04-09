@@ -5,6 +5,8 @@ import { getSystemLanguageAbbreviation, getThemeInternalMode } from '@app/utils'
 import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
+export const ssr = false;
+
 export const load: LayoutLoad = async (event) => {
 	if (!browser) return; // !use this only on browser (client side)
 
