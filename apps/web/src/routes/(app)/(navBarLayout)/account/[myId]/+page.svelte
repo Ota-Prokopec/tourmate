@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
-	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
@@ -13,27 +12,21 @@
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
 	import ExperiencePaginator from '$lib/components/Paginators/ExperiencePaginator.svelte';
 	import MonumentsPaginator from '$lib/components/Paginators/MonumentsPaginator.svelte';
+	import ToursPaginator from '$lib/components/Paginators/ToursPaginator.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import type { Base64 } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
+	import type { Category } from '../Components/AccountCategoryPicker';
+	import AccountCategoryPicker from '../Components/AccountCategoryPicker.svelte';
 	import type { PageData } from './$types';
-	import ToursPaginator from '$lib/components/Paginators/ToursPaginator.svelte';
 
 	export let data: PageData;
 	const { usersProfile } = data;
 
-	type Category = 'monuments' | 'experiences' | 'tours';
-
-	let category: Category = 'monuments';
+	let category: Category = 'monuments' as Category;
 
 	$: isMyAccount = data.user.userId === usersProfile?.userId;
-
-	const categories: { title: string; key: Category }[] = [
-		{ title: $LL.page.account.pictures(), key: 'experiences' },
-		{ title: $LL.page.account.monuments(), key: 'monuments' },
-		{ title: $LL.page.account.tours(), key: 'tours' }
-	] as const;
 
 	let screenProfilePicEditor = false;
 	let uploadingProfilePictureIsLoading = false;
@@ -99,10 +92,10 @@
 	{/if}
 
 	<Columns columns="auto_auto" class="mb-2 gap-4">
-		<CategoryPicker {categories} bind:chosenCategory={category} />
+		<AccountCategoryPicker bind:category />
 
 		<Column class="gap-10 justify-center items-center">
-			{#if category === 'experiences'}
+			{#if category === 'photos'}
 				<ExperiencePaginator cardsLimit={data.cardsLimit} userId={data.usersProfile.userId} />
 			{:else if category === 'monuments'}
 				<MonumentsPaginator userId={data.usersProfile.userId} cardsLimit={data.cardsLimit} />
