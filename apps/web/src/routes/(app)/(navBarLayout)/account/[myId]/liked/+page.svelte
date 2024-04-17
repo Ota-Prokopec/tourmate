@@ -37,7 +37,7 @@
 	loadMonuments();
 </script>
 
-<Column class="  mt-4">
+<Column class="mt-4">
 	<Row class="gap-4">
 		<UserItem user={data.usersProfile} />
 		<Icon class="child:w-10 child:h-10 child:fill-red-500 ">

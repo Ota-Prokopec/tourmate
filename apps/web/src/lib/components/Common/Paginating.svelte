@@ -25,7 +25,7 @@
 	export let wrapperClassName = '';
 </script>
 
-<Column class={twMerge('justify-center items-center', wrapperClassName)}>
+<Column class={twMerge('items-center w-full', wrapperClassName)}>
 	{#if initialLoading}
 		<slot name="loading" />
 	{:else if list.length > 0}
