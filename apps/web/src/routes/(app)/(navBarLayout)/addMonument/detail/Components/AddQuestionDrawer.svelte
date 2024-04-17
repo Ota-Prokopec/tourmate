@@ -159,7 +159,10 @@
 			{chosenCategory}
 			on:change={(e) => changeFormTypeByPicker(e.detail)}
 			{categories}
-		/>
+			let:title
+		>
+			{title}</CategoryPicker
+		>
 
 		<Carousel bind:index={carouselIndex} bind:carousel swiping>
 			<RadioForm

@@ -71,7 +71,9 @@
 	{/if}
 
 	{#if showBottom}
-		<CategoryPicker bind:chosenCategory {categories} />
+		<CategoryPicker let:title bind:chosenCategory {categories}>
+			{title}
+		</CategoryPicker>
 
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 justify-start items-start">
 			{#if chosenCategory === 'monuments'}
