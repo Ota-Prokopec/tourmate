@@ -13,9 +13,10 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { Location, MonumentCard, Topic, Transport } from '@app/ts-types';
+	import TagsInput from '../Inputs/TagsInput.svelte';
 
 	export let searchingLocation: Location | undefined;
-	let isLoading = true;
+	export let isLoading = true;
 	let isLoadMoreButtonLoading = false;
 	export let limit: number = 10;
 	let offset = 0;
@@ -30,6 +31,7 @@
 		location?: Location | undefined
 	) => {
 		try {
+			isLoading = true;
 			isLoadMoreButtonLoading = true;
 			offset += limit;
 
@@ -53,6 +55,7 @@
 		}
 
 		isLoading = false;
+		isLoadMoreButtonLoading = false;
 	};
 
 	$: addMonuments(topics, transports, searchingLocation);

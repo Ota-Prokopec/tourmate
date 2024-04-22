@@ -1,30 +1,27 @@
 <script lang="ts">
-	import CategoryPicker from '$lib/components/Common/CategoryPicker.svelte';
-	import SearchInput from '$lib/components/Inputs/SearchInput.svelte';
-	import type { PageData } from './$types';
-	import type { Category } from './types';
-
-	import Geocoding from '$lib/components/Map/Geocoding/Geocoding.svelte';
 	import { browser } from '$app/environment';
-	import { changeURLwithoutReloading } from '@app/utils';
-	import type { Location } from '@app/ts-types';
-	import LL from '$src/i18n/i18n-svelte';
-	import { page } from '$app/stores';
-	import { getUrlForSearchPage } from './tools';
-	import Icon from '$lib/components/Common/Icon.svelte';
-	import IconPach from '$lib/components/Icons/IconPach.svelte';
-	import RiDeviceScan2Line from 'svelte-icons-pack/ri/RiDeviceScan2Line';
+	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import MonumentCardSkeleton from '$lib/components/Experience-monument/Cards/monument/MonumentCardSkeleton.svelte';
+	import SearchInput from '$lib/components/Inputs/SearchInput.svelte';
+	import Geocoding from '$lib/components/Map/Geocoding/Geocoding.svelte';
 	import MonumentsSearch from '$lib/components/Search/MonumentsSearch.svelte';
 	import PlacesSearch from '$lib/components/Search/PlacesSearch.svelte';
 	import UsersSearch from '$lib/components/Search/UsersSearch.svelte';
-	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
+	import LL from '$src/i18n/i18n-svelte';
+	import type { Location } from '@app/ts-types';
+	import { changeURLwithoutReloading } from '@app/utils';
+	import type { PageData } from './$types';
+	import SearchCategoryPicker from './Components/SearchCategoryPicker.svelte';
+	import { getUrlForSearchPage } from './tools';
+	import type { TSearchCategory } from './types';
 
 	export let data: PageData;
 
 	let searchingText = data.search.searchingText;
 	let searchingLocation: Location | undefined;
+	let isLoading = false;
 
-	let chosenCategory: Category = data.search.category; //data.search.category;
+	let chosenCategory: TSearchCategory = data.search.category; //data.search.category;
 
 	const changeUrl = () => {
 		if (!browser) return;
@@ -36,27 +33,12 @@
 		changeUrl();
 	}
 
-	const categories = [
-		{
-			title: $LL.page.search.categories.users(),
-			key: 'users'
-		},
-		{
-			title: $LL.page.search.categories.monuments(),
-			key: 'monuments'
-		},
-		{
-			title: $LL.page.search.categories.places(),
-			key: 'places'
-		}
-	] as const;
-
 	let showBottom = true;
 </script>
 
 <div class="w-full h-auto flex flex-wrap flex-col items-center p-4 gap-3">
 	{#if chosenCategory === 'users' || chosenCategory === 'monuments'}
-		<SearchInput bind:value={searchingText} />
+		<SearchInput {isLoading} bind:value={searchingText} />
 	{/if}
 	{#if chosenCategory === 'places'}
 		<Geocoding
@@ -71,19 +53,27 @@
 	{/if}
 
 	{#if showBottom}
-		<CategoryPicker let:title bind:chosenCategory {categories}>
-			{title}
-		</CategoryPicker>
+		<SearchCategoryPicker bind:category={chosenCategory} />
 
 		<div class="w-full h-auto flex flex-wrap flex-row gap-2 justify-start items-start">
 			{#if chosenCategory === 'monuments'}
-				<MonumentsSearch let:monument limit={data.search.resultLimit} {searchingText}>
+				<MonumentsSearch
+					bind:isLoading
+					let:monument
+					limit={data.search.resultLimit}
+					{searchingText}
+				>
 					<MonumentCardComponent size="normal" {monument} />
+					<svelte:fragment slot="loading">
+						<MonumentCardSkeleton size="normal" />
+						<MonumentCardSkeleton size="normal" />
+						<MonumentCardSkeleton size="normal" />
+					</svelte:fragment>
 				</MonumentsSearch>
 			{:else if chosenCategory === 'places'}
-				<PlacesSearch limit={data.search.resultLimit} {searchingLocation} />
+				<PlacesSearch bind:isLoading limit={data.search.resultLimit} {searchingLocation} />
 			{:else if chosenCategory === 'users'}
-				<UsersSearch limit={data.search.resultLimit} {searchingText} />
+				<UsersSearch bind:isLoading limit={data.search.resultLimit} {searchingText} />
 			{/if}
 		</div>
 	{/if}

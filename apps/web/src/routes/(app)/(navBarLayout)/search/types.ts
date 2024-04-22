@@ -2,9 +2,9 @@ import { z } from 'zod';
 
 const categoryZod = z.union([z.literal('places'), z.literal('users'), z.literal('monuments')]);
 
-export type Category = z.infer<typeof categoryZod>;
+export type TSearchCategory = z.infer<typeof categoryZod>;
 
-export const isCategory = (value: unknown): value is Category => {
+export const isSearchCategory = (value: unknown): value is TSearchCategory => {
 	try {
 		categoryZod.parse(value);
 		return true;

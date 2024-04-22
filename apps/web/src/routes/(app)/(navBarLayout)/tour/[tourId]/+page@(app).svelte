@@ -104,7 +104,7 @@
 
 	<Map showUser userProfilePicture={data.user.profilePictureURL}>
 		{#each allMonuments as monument}
-			<MonumentMarker disableShowingDetails {monument} />
+			<MonumentMarker {monument} />
 		{/each}
 	</Map>
 
