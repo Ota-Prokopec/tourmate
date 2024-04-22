@@ -1,12 +1,12 @@
 import type { PageServerLoad } from './$types';
-import { isCategory } from './types';
+import { isSearchCategory } from './types';
 
 export const load: PageServerLoad = async (event) => {
 	let chosenCategory = event.url.searchParams.get('chosenCategory');
 	let searchingText = event.url.searchParams.get('searchingText') ?? '';
 
-	if (!isCategory(chosenCategory)) chosenCategory = 'places'; //the default category
-	if (!isCategory(chosenCategory)) throw new Error('Invalid chosen category');
+	if (!isSearchCategory(chosenCategory)) chosenCategory = 'places'; //the default category
+	if (!isSearchCategory(chosenCategory)) throw new Error('Invalid chosen category');
 
 	return {
 		search: {

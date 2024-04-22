@@ -12,15 +12,14 @@
 	export let limit: number = 10;
 
 	let tours: TTourCard[] = [];
-	let isLoading = true;
-	let isLoadMoreButtonLoading = false;
+	export let isLoading = true;
 
 	const loadMonuments = async (inputValue: string) => {
 		try {
-			isLoadMoreButtonLoading = true;
+			isLoading = true;
 			await sdk
 				.getListOfTours({
-					limit: 4,
+					limit: limit,
 					tourName: searchingText
 				})
 				.then(({ getListOfTours: data }) => {

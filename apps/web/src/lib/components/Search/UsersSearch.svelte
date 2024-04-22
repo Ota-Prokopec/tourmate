@@ -9,10 +9,9 @@
 
 	export let searchingText: string;
 	export let limit: number;
+	export let isLoading = false;
 
 	let users: UserInfo[] = [];
-
-	let isLoading = false;
 
 	const loadUsers = async (textValue: string) => {
 		isLoading = true; // true only if there are no monuments in the usersMonuments

@@ -17,14 +17,14 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import type { Base64 } from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
-	import type { Category } from '../Components/AccountCategoryPicker';
+	import type { TAccountCategory } from '../Components/AccountCategoryPicker';
 	import AccountCategoryPicker from '../Components/AccountCategoryPicker.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	const { usersProfile } = data;
 
-	let category: Category = 'monuments' as Category;
+	let category: TAccountCategory = 'monuments' as TAccountCategory;
 
 	$: isMyAccount = data.user.userId === usersProfile?.userId;
 

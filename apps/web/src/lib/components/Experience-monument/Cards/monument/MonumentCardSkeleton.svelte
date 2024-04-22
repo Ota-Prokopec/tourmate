@@ -44,7 +44,7 @@
 	{/if}
 
 	<svelte:component this={size === 'tiny' || size === 'small' ? Columns : Column} columns="1fr 1fr">
-		<ImgSkeleton class={twMerge('w-full', size === 'normal' && 'h-[350px]')} />
+		<ImgSkeleton class={twMerge('w-full', size === 'normal' ? 'h-[350px]' : 'h-full')} />
 		{#if size !== 'tiny'}
 			<Left class="pl-4">
 				<SkeletonLine class="w-[5rem]" />

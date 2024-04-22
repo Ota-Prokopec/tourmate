@@ -1,1 +1,1 @@
-export type Category = 'monuments' | 'photos' | 'tours';
+export type TAccountCategory = 'monuments' | 'photos' | 'tours';

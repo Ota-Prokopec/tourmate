@@ -10,12 +10,13 @@
 	export let data: PageData;
 
 	let searchingText: string = '';
+	let isLoading = false;
 </script>
 
 <Column class="flex justify-center items-center p-2">
-	<SearchInput bind:value={searchingText} />
+	<SearchInput {isLoading} bind:value={searchingText} />
 
-	<ToursSearch {searchingText} limit={10} let:tour>
+	<ToursSearch bind:isLoading {searchingText} limit={10} let:tour>
 		<TourCardComponent data={tour} />
 	</ToursSearch>
 </Column>

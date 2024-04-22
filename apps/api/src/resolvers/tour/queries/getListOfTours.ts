@@ -21,6 +21,9 @@ export default queryField('getListOfTours', {
 		if (args.offset) queries.push(Queries.tour.offset(args.offset))
 		if (args.tourName) queries.push(Queries.tour.startsWith('tourName', args.tourName))
 
+		//To the correct sort
+		queries.push(Queries.tour.orderDesc('$updatedAt'))
+
 		const tours = await collections.tour.listDocuments(queries)
 		return tours.documents
 	},
