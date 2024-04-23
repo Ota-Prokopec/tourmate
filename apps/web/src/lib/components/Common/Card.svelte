@@ -8,6 +8,7 @@
 
 	export let dismissable = false;
 	export let disabled = false;
+	export let href: string | undefined = undefined;
 
 	const dismiss = () => {
 		dispatch('dismiss');
@@ -20,6 +21,7 @@
 
 {#if !disabled}
 	<Card
+		{href}
 		on:click
 		padding="md"
 		class={twMerge('relative !gap-0 h-auto mobile:max-w-none cursor-pointer', className)}

@@ -17,6 +17,12 @@
 	import { isLanguage } from '@app/ts-types';
 	import { getSystemLanguageAbbreviation } from '@app/utils';
 	import LoginViaSocilaMedia from '../Components/LoginViaSocilaMedia.svelte';
+	import Card from '$lib/components/Common/Card.svelte';
+	import Text from '$lib/components/Common/Text.svelte';
+	import Icon from '$lib/components/Common/Icon.svelte';
+	import Avatar from '$lib/components/Common/Avatar.svelte';
+	import IconAppwrite from '$lib/components/Icons/IconAppwrite.svelte';
+	import Row from '$lib/components/Common/Row.svelte';
 
 	let password = '';
 	let email = '';
@@ -104,4 +110,13 @@
 	<Link href="/auth/register">{$LL.page.signIn.signUp()}</Link>
 	<ButtonCreateAnonymousSession on:click={createAnonymousSession} />
 	<WhatAppOffersButton class="mt-4" />
+
+	<Card href="https://appwrite.io">
+		<Row class="gap-2">
+			<Text>Powered by Appwrite</Text>
+			<Icon class="child:w-6 child:h-6">
+				<IconAppwrite />
+			</Icon>
+		</Row>
+	</Card>
 </Column>
