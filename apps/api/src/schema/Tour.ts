@@ -15,7 +15,6 @@ export default objectType({
 		t.string('userId')
 		t.string('tourName')
 		t.list.string('monumentIds')
-
 		t.field('creator', {
 			type: 'User',
 			resolve: async (source, args, ctx) => {
@@ -35,7 +34,10 @@ export default objectType({
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
 
-				const queries = [Queries.monument.equal('$id', source.monumentIds)]
+				const queries = [
+					Queries.monument.equal('$id', source.monumentIds),
+					Queries.monument.limit(source.monumentIds.length),
+				]
 
 				const monuments = await collections.monument.listDocuments(queries)
 
