@@ -8,6 +8,8 @@ export { default as updateProfilePicture } from './account/mutations/updateProfi
 export * from './account/mutations/updateProfilePicture';
 export { default as getAccount } from './account/queries/getAccount';
 export * from './account/queries/getAccount';
+export { default as createAnonymousSession } from './auth/queries/createAnonymousSession';
+export * from './auth/queries/createAnonymousSession';
 export { default as loginViaEmail } from './auth/queries/loginViaEmail';
 export * from './auth/queries/loginViaEmail';
 export { default as logout } from './auth/queries/logout';

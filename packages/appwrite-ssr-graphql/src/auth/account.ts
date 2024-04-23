@@ -60,6 +60,20 @@ export default (client: Client, hostname: string) => {
 			return this.createSession(() => promise)
 		}
 
+		createAnonymousSessionViaSSR() {
+			if (!client.config.endpoint || !client.config.project)
+				throw new Error('Project or endpoint is not set')
+			const promise = fetch(`${client.config.endpoint}/account/sessions/anonymous`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'x-appwrite-project': client.config.project,
+				} as HeadersInit,
+			})
+
+			return this.createSession(() => promise)
+		}
+
 		async createSession(callbackFetch: () => Promise<Response>) {
 			try {
 				const response = await callbackFetch()

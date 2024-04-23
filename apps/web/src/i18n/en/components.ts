@@ -189,5 +189,13 @@ export const componentsEN = {
 	},
 	ButtonLinkToDeveloperPage: {
 		label: 'Developer and founder'
+	},
+	ButtonCreateAnonymousSession: {
+		label: 'Continue in anonymous (experimental)',
+		warningPopup: {
+			message:
+				'If you continue with anonymous session, you will not be able to recover your account. Please select a normal way to sign in.',
+			iRead: 'I read'
+		}
 	}
 } satisfies BaseTranslation;

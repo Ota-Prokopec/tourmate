@@ -86,11 +86,6 @@ export type CreateTourInput = {
   tourName: Scalars['String']['input'];
 };
 
-export type EmailLogin = {
-  __typename?: 'EmailLogin';
-  session: Scalars['String']['output'];
-};
-
 export type Experience = {
   __typename?: 'Experience';
   _collectionId: Scalars['String']['output'];
@@ -251,6 +246,7 @@ export type PlaceDetail = {
 export type Query = {
   __typename?: 'Query';
   createAccount: Account;
+  createAnonymousSession: Session;
   getAccount: Account;
   getExperience: Experience;
   getListOfExperiences: Array<Experience>;
@@ -262,7 +258,7 @@ export type Query = {
   getSystemHealthStatus: SystemHealthStatus;
   getTour: Tour;
   getUser: User;
-  logInViaEmail: EmailLogin;
+  logInViaEmail: Session;
   logout: Scalars['Boolean']['output'];
   setSession: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
@@ -374,6 +370,11 @@ export type QuestionInput = {
   type: Scalars['AnswerType']['input'];
 };
 
+export type Session = {
+  __typename?: 'Session';
+  session: Scalars['String']['output'];
+};
+
 export type SystemHealthStatus = {
   __typename?: 'SystemHealthStatus';
   appwriteService: Scalars['Boolean']['output'];
@@ -470,13 +471,18 @@ export type UpdateProfilePictureQueryVariables = Exact<{
 
 export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: string, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
+export type CreateAnonymousSessionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateAnonymousSessionQuery = { __typename?: 'Query', createAnonymousSession: { __typename?: 'Session', session: string } };
+
 export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
+export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'Session', session: string } };
 
 export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -778,6 +784,13 @@ export const UpdateProfilePictureDocument = gql`
       mapRange
       termsAccepted
     }
+  }
+}
+    `;
+export const CreateAnonymousSessionDocument = gql`
+    query createAnonymousSession {
+  createAnonymousSession {
+    session
   }
 }
     `;
@@ -2029,6 +2042,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateProfilePicture(variables: UpdateProfilePictureQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateProfilePictureQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateProfilePictureQuery>(UpdateProfilePictureDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateProfilePicture', 'query');
+    },
+    createAnonymousSession(variables?: CreateAnonymousSessionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateAnonymousSessionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateAnonymousSessionQuery>(CreateAnonymousSessionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createAnonymousSession', 'query');
     },
     loginViaEmail(variables: LoginViaEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginViaEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LoginViaEmailQuery>(LoginViaEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'loginViaEmail', 'query');

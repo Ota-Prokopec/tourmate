@@ -185,5 +185,13 @@ export const componentsCS = {
 	},
 	ButtonLinkToDeveloperPage: {
 		label: 'Vývojář and majitel'
+	},
+	ButtonCreateAnonymousSession: {
+		label: 'Pokračovat v anonymním režimu (experimentální)',
+		warningPopup: {
+			message:
+				'Pokud budete pokračovat v anonymní relaci, nebudete moci obnovit svůj účet. Vyberte prosím normální způsob přihlášení.',
+			iRead: 'Přečetl jsem'
+		}
 	}
 } satisfies BaseTranslation;
