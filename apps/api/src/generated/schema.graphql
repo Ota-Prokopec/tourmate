@@ -65,10 +65,6 @@ input CreateTourInput {
   tourName: String!
 }
 
-type EmailLogin {
-  session: String!
-}
-
 type Experience {
   _collectionId: String!
   _createdAt: String!
@@ -180,6 +176,7 @@ type PlaceDetail {
 
 type Query {
   createAccount(language: Language!, myId: String!, username: String!): Account!
+  createAnonymousSession: Session!
   getAccount: Account!
   getExperience(id: String!): Experience!
   getListOfExperiences(limit: Int, location: LocationInput, offset: Int, userId: String): [Experience!]!
@@ -191,7 +188,7 @@ type Query {
   getSystemHealthStatus: SystemHealthStatus!
   getTour(tourId: String!): Tour!
   getUser(myId: String, userId: String): User!
-  logInViaEmail(email: String!, password: String!): EmailLogin!
+  logInViaEmail(email: String!, password: String!): Session!
   logout: Boolean!
   setSession(session: String!): Boolean!
   updateProfilePicture(picture: String!): Account!
@@ -215,6 +212,10 @@ input QuestionInput {
   pickingAnswers: [String!]
   question: String!
   type: AnswerType!
+}
+
+type Session {
+  session: String!
 }
 
 scalar StringOrNumber

@@ -415,7 +415,7 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * O​p​e​n​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​n​d​ ​c​l​i​c​k​ ​o​n​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​w​e​ ​s​e​n​t​ ​y​o​u​.​ ​O​p​e​n​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​U​R​L​ ​o​n​l​y​ ​i​n​ ​t​h​e​ ​s​a​m​e​ ​b​r​o​w​s​e​r​ ​o​f​ ​t​h​e​ ​s​a​m​e​ ​d​e​v​i​c​e​ ​t​h​a​t​ ​y​o​u​ ​r​e​g​i​s​t​e​r​e​d​ ​t​h​e​ ​u​s​e​r​!
+			 * O​p​e​n​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​n​d​ ​c​l​i​c​k​ ​o​n​ ​t​h​e​ ​a​d​d​r​e​s​s​ ​w​e​ ​s​e​n​t​ ​y​o​u​.​ ​O​p​e​n​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​U​R​L​ ​o​n​l​y​ ​i​n​ ​t​h​e​ ​s​a​m​e​ ​b​r​o​w​s​e​r​ ​o​f​ ​t​h​e​ ​s​a​m​e​ ​d​e​v​i​c​e​ ​t​h​a​t​ ​y​o​u​ ​r​e​g​i​s​t​e​r​e​d​ ​t​h​e​ ​u​s​e​r​!​ ​I​t​ ​i​s​ ​r​e​a​l​l​y​ ​n​e​c​e​s​s​a​r​y​!
 			 */
 			text: string
 		}
@@ -807,7 +807,7 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * y​o​u​r​ ​G​P​S​ ​i​s​ ​o​f​f​l​i​n​e​ ​o​r​ ​y​o​u​ ​d​i​d​ ​n​o​t​ ​g​r​a​n​d​e​d​ ​a​ ​p​e​r​m​i​s​s​i​o​n​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​G​P​S​ ​t​o​ ​c​h​r​o​m​e​ ​o​r​ ​s​a​f​a​r​i​ ​b​r​o​w​s​e​r​.
+			 * y​o​u​r​ ​G​P​S​ ​i​s​ ​o​f​f​l​i​n​e​ ​o​r​ ​y​o​u​ ​d​i​d​ ​n​o​t​ ​g​r​a​n​d​e​d​ ​a​ ​p​e​r​m​i​s​s​i​o​n​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​G​P​S​ ​t​o​ ​c​h​r​o​m​e​ ​o​r​ ​s​a​f​a​r​i​ ​b​r​o​w​s​e​r​.​ ​I​f​ ​g​e​o​l​o​c​a​t​i​o​n​ ​i​s​ ​g​r​a​n​t​e​d​ ​a​n​d​ ​n​o​t​h​i​n​g​ ​c​h​a​n​g​e​d​,​ ​t​r​y​ ​t​o​ ​m​o​v​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​l​o​c​a​t​i​o​n​.
 			 */
 			message: string
 		}
@@ -816,6 +816,22 @@ type RootTranslation = {
 			 * D​e​v​e​l​o​p​e​r​ ​a​n​d​ ​f​o​u​n​d​e​r
 			 */
 			label: string
+		}
+		ButtonCreateAnonymousSession: {
+			/**
+			 * C​o​n​t​i​n​u​e​ ​i​n​ ​a​n​o​n​y​m​o​u​s​ ​(​e​x​p​e​r​i​m​e​n​t​a​l​)
+			 */
+			label: string
+			warningPopup: {
+				/**
+				 * I​f​ ​y​o​u​ ​c​o​n​t​i​n​u​e​ ​w​i​t​h​ ​a​n​o​n​y​m​o​u​s​ ​s​e​s​s​i​o​n​,​ ​y​o​u​ ​w​i​l​l​ ​n​o​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​r​e​c​o​v​e​r​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.​ ​P​l​e​a​s​e​ ​s​e​l​e​c​t​ ​a​ ​n​o​r​m​a​l​ ​w​a​y​ ​t​o​ ​s​i​g​n​ ​i​n​.
+				 */
+				message: string
+				/**
+				 * I​ ​r​e​a​d
+				 */
+				iRead: string
+			}
 		}
 	}
 	error: {
@@ -1263,7 +1279,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user!
+			 * Open your email and click on the address we sent you. Open the verification URL only in the same browser of the same device that you registered the user! It is really necessary!
 			 */
 			text: () => LocalizedString
 		}
@@ -1651,7 +1667,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser.
+			 * your GPS is offline or you did not granded a permission to use your GPS to chrome or safari browser. If geolocation is granted and nothing changed, try to move to receive location.
 			 */
 			message: () => LocalizedString
 		}
@@ -1660,6 +1676,22 @@ export type TranslationFunctions = {
 			 * Developer and founder
 			 */
 			label: () => LocalizedString
+		}
+		ButtonCreateAnonymousSession: {
+			/**
+			 * Continue in anonymous (experimental)
+			 */
+			label: () => LocalizedString
+			warningPopup: {
+				/**
+				 * If you continue with anonymous session, you will not be able to recover your account. Please select a normal way to sign in.
+				 */
+				message: () => LocalizedString
+				/**
+				 * I read
+				 */
+				iRead: () => LocalizedString
+			}
 		}
 	}
 	error: {

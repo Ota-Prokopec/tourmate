@@ -90,11 +90,6 @@ export type CreateTourInput = {
   tourName: Scalars['String']['input'];
 };
 
-export type EmailLogin = {
-  __typename?: 'EmailLogin';
-  session: Scalars['String']['output'];
-};
-
 export type Experience = {
   __typename?: 'Experience';
   _collectionId: Scalars['String']['output'];
@@ -255,6 +250,7 @@ export type PlaceDetail = {
 export type Query = {
   __typename?: 'Query';
   createAccount: Account;
+  createAnonymousSession: Session;
   getAccount: Account;
   getExperience: Experience;
   getListOfExperiences: Array<Experience>;
@@ -266,7 +262,7 @@ export type Query = {
   getSystemHealthStatus: SystemHealthStatus;
   getTour: Tour;
   getUser: User;
-  logInViaEmail: EmailLogin;
+  logInViaEmail: Session;
   logout: Scalars['Boolean']['output'];
   setSession: Scalars['Boolean']['output'];
   updateProfilePicture: Account;
@@ -378,6 +374,11 @@ export type QuestionInput = {
   type: Scalars['AnswerType']['input'];
 };
 
+export type Session = {
+  __typename?: 'Session';
+  session: Scalars['String']['output'];
+};
+
 export type SystemHealthStatus = {
   __typename?: 'SystemHealthStatus';
   appwriteService: Scalars['Boolean']['output'];
@@ -474,13 +475,18 @@ export type UpdateProfilePictureQueryVariables = Exact<{
 
 export type UpdateProfilePictureQuery = { __typename?: 'Query', updateProfilePicture: { __typename?: 'Account', _createdAt: string, _updatedAt: string, _collectionId: string, _documentId: string, _permissions: Array<string>, _databaseId: string, userId: string, myId: string, username: string, status: boolean, emailVerification: boolean, phoneVerification: boolean, profilePictureURL: string, prefs: { __typename?: 'UsersPreferences', mapRange: number, termsAccepted: boolean } } };
 
+export type CreateAnonymousSessionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateAnonymousSessionQuery = { __typename?: 'Query', createAnonymousSession: { __typename?: 'Session', session: string } };
+
 export type LoginViaEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'EmailLogin', session: string } };
+export type LoginViaEmailQuery = { __typename?: 'Query', logInViaEmail: { __typename?: 'Session', session: string } };
 
 export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -782,6 +788,13 @@ export const UpdateProfilePictureDoc = gql`
       mapRange
       termsAccepted
     }
+  }
+}
+    `;
+export const CreateAnonymousSessionDoc = gql`
+    query createAnonymousSession {
+  createAnonymousSession {
+    session
   }
 }
     `;
@@ -2205,6 +2218,41 @@ export const updateProfilePicture = (
                 query: ObservableQuery<
                   UpdateProfilePictureQuery,
                   UpdateProfilePictureQueryVariables
+                >;
+              }
+            >(
+              { data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q },
+              (set) => {
+                q.subscribe((v: any) => {
+                  set({ ...v, query: q });
+                });
+              }
+            );
+            return result;
+          }
+        
+export const createAnonymousSession = (
+            options: Omit<
+              WatchQueryOptions<CreateAnonymousSessionQueryVariables>, 
+              "query"
+            >
+          ): Readable<
+            ApolloQueryResult<CreateAnonymousSessionQuery> & {
+              query: ObservableQuery<
+                CreateAnonymousSessionQuery,
+                CreateAnonymousSessionQueryVariables
+              >;
+            }
+          > => {
+            const q = client.watchQuery({
+              query: CreateAnonymousSessionDoc,
+              ...options,
+            });
+            var result = readable<
+              ApolloQueryResult<CreateAnonymousSessionQuery> & {
+                query: ObservableQuery<
+                  CreateAnonymousSessionQuery,
+                  CreateAnonymousSessionQueryVariables
                 >;
               }
             >(

@@ -129,9 +129,6 @@ export interface NexusGenObjects {
     tourId: string; // String!
     userId: string; // String!
   }
-  EmailLogin: { // root type
-    session: string; // String!
-  }
   Experience: { // root type
     _collectionId: string; // String!
     _createdAt: string; // String!
@@ -203,6 +200,9 @@ export interface NexusGenObjects {
     pickingAnswers?: string[] | null; // [String!]
     question: string; // String!
     type: NexusGenScalars['AnswerType']; // AnswerType!
+  }
+  Session: { // root type
+    session: string; // String!
   }
   SystemHealthStatus: { // root type
     appwriteService: boolean; // Boolean!
@@ -280,9 +280,6 @@ export interface NexusGenFieldTypes {
     monumentId: string; // String!
     tourId: string; // String!
     userId: string; // String!
-  }
-  EmailLogin: { // field return type
-    session: string; // String!
   }
   Experience: { // field return type
     _collectionId: string; // String!
@@ -373,6 +370,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     createAccount: NexusGenRootTypes['Account']; // Account!
+    createAnonymousSession: NexusGenRootTypes['Session']; // Session!
     getAccount: NexusGenRootTypes['Account']; // Account!
     getExperience: NexusGenRootTypes['Experience']; // Experience!
     getListOfExperiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -384,7 +382,7 @@ export interface NexusGenFieldTypes {
     getSystemHealthStatus: NexusGenRootTypes['SystemHealthStatus']; // SystemHealthStatus!
     getTour: NexusGenRootTypes['Tour']; // Tour!
     getUser: NexusGenRootTypes['User']; // User!
-    logInViaEmail: NexusGenRootTypes['EmailLogin']; // EmailLogin!
+    logInViaEmail: NexusGenRootTypes['Session']; // Session!
     logout: boolean; // Boolean!
     setSession: boolean; // Boolean!
     updateProfilePicture: NexusGenRootTypes['Account']; // Account!
@@ -400,6 +398,9 @@ export interface NexusGenFieldTypes {
     pickingAnswers: string[] | null; // [String!]
     question: string; // String!
     type: NexusGenScalars['AnswerType']; // AnswerType!
+  }
+  Session: { // field return type
+    session: string; // String!
   }
   SystemHealthStatus: { // field return type
     appwriteService: boolean; // Boolean!
@@ -472,9 +473,6 @@ export interface NexusGenFieldTypeNames {
     monumentId: 'String'
     tourId: 'String'
     userId: 'String'
-  }
-  EmailLogin: { // field return type name
-    session: 'String'
   }
   Experience: { // field return type name
     _collectionId: 'String'
@@ -565,6 +563,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     createAccount: 'Account'
+    createAnonymousSession: 'Session'
     getAccount: 'Account'
     getExperience: 'Experience'
     getListOfExperiences: 'Experience'
@@ -576,7 +575,7 @@ export interface NexusGenFieldTypeNames {
     getSystemHealthStatus: 'SystemHealthStatus'
     getTour: 'Tour'
     getUser: 'User'
-    logInViaEmail: 'EmailLogin'
+    logInViaEmail: 'Session'
     logout: 'Boolean'
     setSession: 'Boolean'
     updateProfilePicture: 'Account'
@@ -592,6 +591,9 @@ export interface NexusGenFieldTypeNames {
     pickingAnswers: 'String'
     question: 'String'
     type: 'AnswerType'
+  }
+  Session: { // field return type name
+    session: 'String'
   }
   SystemHealthStatus: { // field return type name
     appwriteService: 'Boolean'

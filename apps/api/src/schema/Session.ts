@@ -1,7 +1,7 @@
 import { objectType } from 'nexus'
 
 export default objectType({
-	name: 'EmailLogin',
+	name: 'Session',
 	definition: (t) => {
 		t.string('session')
 	},
