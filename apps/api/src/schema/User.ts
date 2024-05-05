@@ -18,28 +18,18 @@ export default objectType({
 			type: 'String',
 			description: 'This is URL of profile picture. Not its id.',
 		})
-		t.field('experiences', {
-			type: list('Experience'),
+
+		t.field('monuments', {
+			type: list('Monument'),
 			resolve: async (source, args, ctx, info) => {
 				const { collections } = ctx.appwrite
 
-				const queries = [Queries.experience.equal('userId', source.userId)]
+				const queries = [Queries.monument.equal('userId', source.userId)]
+
 				return fromLatDocumentLongIntoLocationDocument(
-					...(await collections.experience.listDocuments(queries)).documents,
+					...(await collections.monument.listDocuments(queries)).documents,
 				)
 			},
-		}),
-			t.field('monuments', {
-				type: list('Monument'),
-				resolve: async (source, args, ctx, info) => {
-					const { collections } = ctx.appwrite
-
-					const queries = [Queries.monument.equal('userId', source.userId)]
-
-					return fromLatDocumentLongIntoLocationDocument(
-						...(await collections.monument.listDocuments(queries)).documents,
-					)
-				},
-			})
+		})
 	},
 })

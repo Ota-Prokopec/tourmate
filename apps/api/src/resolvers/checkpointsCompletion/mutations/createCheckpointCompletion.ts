@@ -1,6 +1,5 @@
-import { mutationField, queryField, stringArg } from 'nexus'
-import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
 import { ApolloError } from 'apollo-server-express'
+import { mutationField, stringArg } from 'nexus'
 
 export default mutationField('createCheckpointCompletion', {
 	type: 'CheckpointCompletion',
@@ -10,7 +9,7 @@ export default mutationField('createCheckpointCompletion', {
 
 		const { collections } = ctx.appwrite
 
-		const res = await collections.checkpointCompletion.createDocument({
+		const res = await collections.tourCheckpointCompletion.createDocument({
 			monumentId: args.monumentId,
 			tourId: args.tourId,
 			userId: ctx.user.$id,
