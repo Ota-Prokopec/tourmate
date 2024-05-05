@@ -2,8 +2,6 @@ import { Query } from '@app/appwrite-ssr-graphql'
 import { CollectionName } from './collections'
 
 import type {
-	Check,
-	ExperienceDocument,
 	ExperienceLikeDocument,
 	LocationForNotificationsDocument,
 	MonumentDocument,
@@ -12,7 +10,8 @@ import type {
 	PlaceDetailDocument,
 	QuestionDocument,
 	RadioTypeAnswerDocument,
-	TCheckpointCompletionDocument,
+	TMonumentCompletionDocument,
+	TTourCheckpointCompletionGraphqlDocument,
 	TextTypeAnswerDocument,
 	TokenDocument,
 	TourDocument,
@@ -22,7 +21,7 @@ import type {
 
 const query = {
 	userInfo: Query<UserInfoDocument>(),
-	experience: Query<ExperienceDocument>(),
+	monumentCompletion: Query<TMonumentCompletionDocument>(),
 	monument: Query<MonumentDocument>(),
 	placeDetail: Query<PlaceDetailDocument>(),
 	token: Query<TokenDocument>(),
@@ -35,7 +34,7 @@ const query = {
 	usersAnswer: Query<UsersAnswerDocument>(),
 	locationForNotification: Query<LocationForNotificationsDocument>(),
 	tour: Query<TourDocument>(),
-	checkpointCompletion: Query<TCheckpointCompletionDocument>(),
+	tourCheckpointCompletion: Query<TTourCheckpointCompletionGraphqlDocument>(),
 } satisfies Record<CollectionName, any>
 
 export type QueryType = (typeof query)[keyof typeof query]

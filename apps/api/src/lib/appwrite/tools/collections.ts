@@ -3,8 +3,6 @@ import { Types } from '@app/appwrite-ssr-graphql'
 import type {
 	LocationForNotificationsGraphqlDocument,
 	LocationForNotificationsDocumentCreate,
-	ExperienceDocumentCreate,
-	ExperienceGraphqlDocument,
 	ExperienceLikeDocumentCreate,
 	ExperienceLikeGraphqlDocument,
 	MonumentDocumentCreate,
@@ -29,9 +27,10 @@ import type {
 	UsersAnswerGraphqlDocument,
 	TourGraphqlDocument,
 	TourDocumentCreate,
-	TCheckpointCompletionDocument,
-	TCheckpointCompletionDocumentCreate,
-	TCheckpointCompletionGraphqlDocument,
+	TMonumentCompletionGraphqlDocument,
+	TMonumentCompletionDocumentCreate,
+	TTourCheckpointCompletionGraphqlDocument,
+	TTourCheckpointCompletionDocumentCreate,
 } from '@app/ts-types'
 
 export type Collections = ReturnType<typeof collectionsAdmin>
@@ -48,10 +47,10 @@ export const collectionsClient = (
 			'experiences',
 			'userInfo',
 		),
-		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>(
-			'experiences',
-			'experiences',
-		),
+		monumentCompletion: new Collection<
+			TMonumentCompletionGraphqlDocument,
+			TMonumentCompletionDocumentCreate
+		>('experiences', 'experiences'),
 		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>(
 			'experiences',
 			'monuments',
@@ -98,9 +97,9 @@ export const collectionsClient = (
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
 		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
-		checkpointCompletion: new Collection<
-			TCheckpointCompletionGraphqlDocument,
-			TCheckpointCompletionDocumentCreate
+		tourCheckpointCompletion: new Collection<
+			TTourCheckpointCompletionGraphqlDocument,
+			TTourCheckpointCompletionDocumentCreate
 		>('experiences', 'checkpointsCompletion'),
 	}
 }
@@ -113,10 +112,10 @@ export const collectionsAdmin = (
 			'experiences',
 			'userInfo',
 		),
-		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>(
-			'experiences',
-			'experiences',
-		),
+		monumentCompletion: new Collection<
+			TMonumentCompletionGraphqlDocument,
+			TMonumentCompletionDocumentCreate
+		>('experiences', 'experiences'),
 		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>(
 			'experiences',
 			'monuments',
@@ -162,9 +161,9 @@ export const collectionsAdmin = (
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
 		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
-		checkpointCompletion: new Collection<
-			TCheckpointCompletionGraphqlDocument,
-			TCheckpointCompletionDocumentCreate
+		tourCheckpointCompletion: new Collection<
+			TTourCheckpointCompletionGraphqlDocument,
+			TTourCheckpointCompletionDocumentCreate
 		>('experiences', 'checkpointsCompletion'),
 	}
 }

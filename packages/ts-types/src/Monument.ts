@@ -1,8 +1,6 @@
-import { UserInfo } from './Account'
 import { Document, GraphqlDocument } from './Document'
-import { Experience, ExperienceGraphqlDocument } from './Experience'
 import { Location, LocationForDocument } from './Location'
-import { AnswerType, Question } from './Question'
+import { TMonumentCompletion } from './MonumentCompletion'
 import { Topic } from './Topic'
 import { Transport } from './Transport'
 
@@ -29,6 +27,6 @@ export type MonumentDocumentCreate = Omit<Monument, 'topics' | 'location'> &
 
 export type MonumentMarkerData = GraphqlDocument<
 	Monument & {
-		usersConnectedExperiences: GraphqlDocument<Experience>[]
+		usersConnectedExperiences: GraphqlDocument<TMonumentCompletion>[]
 	}
 >
