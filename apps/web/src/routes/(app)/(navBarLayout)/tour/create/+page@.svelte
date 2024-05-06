@@ -41,7 +41,7 @@
 
 <Map>
 	{#each monuments as monument}
-		<MonumentMarker {monument} />
+		<MonumentMarker monumentMarkerData={monument} />
 	{/each}
 </Map>
 

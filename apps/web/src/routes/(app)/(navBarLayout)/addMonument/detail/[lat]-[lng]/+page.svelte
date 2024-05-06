@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
+	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import BasicImageInput from '$lib/components/ImageInputs/BasicImageInput.svelte';
 	import Map from '$lib/components/Map/Map.svelte';
 	import Marker from '$lib/components/Map/Marker.svelte';
@@ -10,14 +12,10 @@
 	import MonumentCreateForm from '$src/routes/(app)/(navBarLayout)/monument/Components/MonumentCreateForm.svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type {
-		Answer,
-		AnswerType,
 		Base64,
-		Experience,
 		GraphqlDocument,
 		Location,
 		Monument,
-		Question,
 		QuestionWithCorrectAnswerRequired,
 		Topic,
 		Transport
@@ -26,8 +24,6 @@
 	import AddQuestionButton from '../Components/AddQuestionButton.svelte';
 	import AddQuestionDrawer from '../Components/AddQuestionDrawer.svelte';
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
-	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 
 	export let data: PageData;
 
@@ -43,9 +39,7 @@
 
 	export let question: QuestionWithCorrectAnswerRequired | undefined;
 
-	type ServerResponse = GraphqlDocument<
-		Monument & { usersConnectedExperiences: GraphqlDocument<Experience>[] }
-	>;
+	type ServerResponse = GraphqlDocument<Monument>;
 	let serverResponse: ServerResponse | undefined;
 
 	let isLoading = false;
@@ -122,7 +116,7 @@
 
 <Map userCenter={data.newMonument.location} class="h-[100dvh] fixed top-0">
 	{#if serverResponse}
-		<MonumentMarker monument={serverResponse} />
+		<MonumentMarker monumentMarkerData={serverResponse} />
 	{:else}
 		<Marker class="z-50" location={data.newMonument.location}>
 			<Icon>

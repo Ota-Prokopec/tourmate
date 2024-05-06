@@ -3,8 +3,8 @@ import { Types } from '@app/appwrite-ssr-graphql'
 import type {
 	LocationForNotificationsGraphqlDocument,
 	LocationForNotificationsDocumentCreate,
-	MonumentDocumentCreate,
-	MonumentGraphqlDocument,
+	TMonumentDocumentCreate,
+	TMonumentGraphqlDocument,
 	MonumentLikeDocumentCreate,
 	MonumentLikeGraphqlDocument,
 	NumberTypeAnswerDocumentCreate,
@@ -49,7 +49,7 @@ export const collectionsClient = (
 			TMonumentCompletionGraphqlDocument,
 			TMonumentCompletionDocumentCreate
 		>('experiences', 'monumentCompletions'),
-		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>(
+		monument: new Collection<TMonumentGraphqlDocument, TMonumentDocumentCreate>(
 			'experiences',
 			'monuments',
 		),
@@ -111,7 +111,7 @@ export const collectionsAdmin = (
 			TMonumentCompletionGraphqlDocument,
 			TMonumentCompletionDocumentCreate
 		>('experiences', 'monumentCompletions'),
-		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>(
+		monument: new Collection<TMonumentGraphqlDocument, TMonumentDocumentCreate>(
 			'experiences',
 			'monuments',
 		),

@@ -10,9 +10,9 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import {
+		TTourCheckpointCompletion,
 		type Location,
 		type MonumentCard,
-		type TCheckpointCompletion,
 		type TourGraphqlDocument
 	} from '@app/ts-types';
 	import { normalizeMeters, watchUsersDegreeToTarget } from '@app/utils';
@@ -24,8 +24,7 @@
 	export let distanceToReachMonument: number;
 	export let cardHidden: boolean = true;
 	export let userCurrentLocation: Location | null | undefined;
-	export let accomplishedCheckpoints: TCheckpointCompletion[];
-	export let headingToClosestMonument: number;
+	export let accomplishedCheckpoints: TTourCheckpointCompletion[];
 
 	//auto-accomplishment for monument when user is at the location
 	let userHasNotAnsweredYet = question && !monument.usersAnswerToQuestion ? true : false;
@@ -51,11 +50,11 @@
 			if (!userCurrentLocation) throw new Error('userCurrentLocation not defined');
 
 			const createdCheckpointAccomplishment = (
-				await sdk.createCheckpointCompletion({
+				await sdk.createTourCheckpointCompletion({
 					monumentId: monument._id,
 					tourId: tour._id
 				})
-			).createCheckpointCompletion;
+			).createTourCheckpointCompletion;
 			accomplishedCheckpoints = [...accomplishedCheckpoints, createdCheckpointAccomplishment];
 		} catch (error) {
 			alert('Error', '500 error', { color: 'red' });

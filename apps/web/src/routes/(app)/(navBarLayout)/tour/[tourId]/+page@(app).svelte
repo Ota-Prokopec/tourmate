@@ -11,7 +11,7 @@
 	import lsStore from '$lib/utils/lsStore';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
-	import type { MonumentCard, TCheckpointCompletionGraphqlDocument } from '@app/ts-types';
+	import type { MonumentCard, TTourCheckpointCompletionGraphqlDocument } from '@app/ts-types';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { distanceTo, headingDistanceTo } from 'geolocation-utils';
 	import CheckpointsListDrawer from '../Components/CheckpointsListDrawer.svelte';
@@ -35,8 +35,8 @@
 	let allMonuments: MonumentCard[] = [];
 	$: allMonuments = $tourQueryData.data?.monuments || [];
 
-	let accomplishedCheckpoints: TCheckpointCompletionGraphqlDocument[] = [];
-	$: accomplishedCheckpoints = $tourQueryData.data?.usersCheckpointsCompletionData || [];
+	let accomplishedCheckpoints: TTourCheckpointCompletionGraphqlDocument[] = [];
+	$: accomplishedCheckpoints = $tourQueryData.data?.usersTourCheckpointsCompletionData || [];
 
 	let closestMonument: MonumentCard | undefined = undefined;
 
@@ -60,12 +60,10 @@
 			.at(0);
 
 	let distanceToClosestMonument: number | null;
-	let headingToClosestMonument: number | null;
 
 	$: if (userCurrentLocation && closestMonument) {
 		const { distance, heading } = headingDistanceTo(userCurrentLocation, closestMonument.location);
 		distanceToClosestMonument = distance;
-		headingToClosestMonument = heading;
 	}
 </script>
 
@@ -73,9 +71,8 @@
 	<FullPageLoading />
 {:else}
 	{@const tour = $tourQueryData.data}
-	{#if closestMonument && typeof distanceToClosestMonument === 'number' && typeof headingToClosestMonument === 'number' && !tourAccomplishCardHidden}
+	{#if closestMonument && typeof distanceToClosestMonument === 'number' && !tourAccomplishCardHidden}
 		<TourCheckpointAccomplishment
-			{headingToClosestMonument}
 			bind:accomplishedCheckpoints
 			{tour}
 			bind:userCurrentLocation
@@ -104,7 +101,7 @@
 
 	<Map showUser userProfilePicture={data.user.profilePictureURL}>
 		{#each allMonuments as monument}
-			<MonumentMarker {monument} />
+			<MonumentMarker monumentMarkerData={monument} />
 		{/each}
 	</Map>
 

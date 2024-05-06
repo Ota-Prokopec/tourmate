@@ -9,7 +9,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
-	import type { MonumentMarkerData } from '@app/ts-types';
+	import type { TMonumentMarkerData } from '@app/ts-types';
 	import { getUsersLocation } from '@app/utils';
 	import type { PageData } from './$types';
 	import IconRoute from '$lib/components/Icons/IconRoute.svelte';
@@ -17,7 +17,7 @@
 
 	export let data: PageData;
 	let location = $lsStore.usersLocation;
-	let monumentsPromise: undefined | Promise<{ getListOfMonuments: MonumentMarkerData[] }>;
+	let monumentsPromise: undefined | Promise<{ getListOfMonuments: TMonumentMarkerData[] }>;
 
 	const getMonuments = async (range: number) => {
 		try {
@@ -67,7 +67,11 @@
 	{#await monumentsPromise then monuments}
 		{#if monuments}
 			{#each monuments.getListOfMonuments as monument}
-				<MonumentMarker classDrawer="!pb-bottomNavBarHeightSize" zoom={mapZoom} {monument} />
+				<MonumentMarker
+					classDrawer="!pb-bottomNavBarHeightSize"
+					zoom={mapZoom}
+					monumentMarkerData={monument}
+				/>
 			{/each}
 		{/if}
 	{:catch}

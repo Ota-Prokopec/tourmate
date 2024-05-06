@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Carousel from '$lib/components/Carousel/Carousel.svelte';
+	import SeeOnMapButton from '$lib/components/Buttons/SeeOnMapButton.svelte';
+	import TakePictureHereButton from '$lib/components/Buttons/TakePictureHereButton.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Right from '$lib/components/Common/Right.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import ExperienceCardComponent from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import MonumentCard from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import IconLocation from '$lib/components/Icons/IconLocation.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
@@ -14,11 +14,7 @@
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
-	import { Button, Card } from 'flowbite-svelte';
-	import { minimalRangeInMetersToConnectMonumentToPicture } from '../../createNewExperience/[lat]-[lng]/options';
 	import type { PageData } from './$types';
-	import TakePictureHereButton from '$lib/components/Buttons/TakePictureHereButton.svelte';
-	import SeeOnMapButton from '$lib/components/Buttons/SeeOnMapButton.svelte';
 
 	export let data: PageData;
 
@@ -27,19 +23,6 @@
 
 	let onlyMap = false;
 	let distanceInMeters: number | undefined;
-
-	const takePicture = () => {
-		if (typeof distanceInMeters === 'undefined') throw new Error('distance is not defined');
-		if (distanceInMeters > minimalRangeInMetersToConnectMonumentToPicture) {
-			alert(
-				'',
-				$LL.error.notAbleToConnectMonumentBecauseOfDistanceBetweenMonumentsIsTooSmallErrorMessage(),
-				{ color: 'yellow' }
-			);
-			throw new Error('Your distanceInMeters from monument is bigger that maximal distance.');
-		}
-		goto(`/createNewExperience/${monument.location[0]}-${monument.location[1]}/${monument._id}`);
-	};
 
 	const seeOnMap = () => (onlyMap = true);
 </script>
@@ -62,26 +45,10 @@
 					<MediaQuery size="mobile">
 						<SeeOnMapButton on:click={seeOnMap} />
 					</MediaQuery>
-
-					<TakePictureHereButton on:click={takePicture} />
 				</Column>
 			</Right>
 		</svelte:fragment>
 	</MonumentCard>
-
-	{#if experiences.length}
-		<Card class="bg-transparent !pl-0 !pr-0 mobile:!w-full mobile:max-w-none mobile:!p-10">
-			<Carousel class="h-min" swiping arrows>
-				{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
-					{@const experience = {
-						...experienceWithoutConnectedMonument,
-						connectedMonument: monument
-					}}
-					<ExperienceCardComponent class="p-0 self-center shadow-none w-full" {experience} />
-				{/each}
-			</Carousel>
-		</Card>
-	{/if}
 {/if}
 
 <Map showUser userCenter={data.monument.location} class="h-[100dvh] fixed top-0">

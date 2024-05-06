@@ -1,26 +1,20 @@
 <script lang="ts">
 	import Column from '$lib/components/Common/Column.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
-	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import Right from '$lib/components/Common/Right.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
 	import NumberForm from '$lib/components/Experience-monument/question/Forms/NumberForm.svelte';
 	import RadioForm from '$lib/components/Experience-monument/question/Forms/RadioForm.svelte';
 	import TextForm from '$lib/components/Experience-monument/question/Forms/TextForm.svelte';
-	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
-	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import {
-		type TMonumentCardWithQuestion,
 		isQuestionTypeNumber,
 		isQuestionTypeRadio,
 		isQuestionTypeText,
-		type Nullable,
 		type Question,
-		type UsersAnswer
+		type TMonumentCardWithQuestion
 	} from '@app/ts-types';
 	import { Button } from 'flowbite-svelte';
 	import QuestionAnsweredCorrectlyCard from './QuestionAnsweredCorrectlyCard.svelte';

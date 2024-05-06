@@ -88,6 +88,16 @@ query getListOfLikedMonumentCards($offset: Int, $limit: Int, $userId: String) {
 				answeredCorrectly
 			}
 			totalLikesCount
+			monumentCompletions {
+				_createdAt
+				_updatedAt
+				_collectionId
+				_id
+				_permissions
+				_databaseId
+				userId
+				monumentId
+			}
 		}
 	}
 }

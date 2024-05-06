@@ -1,25 +1,18 @@
 <script lang="ts">
-	import Carousel from '$lib/components/Carousel/Carousel.svelte';
 	import Avatar from '$lib/components/Common/Avatar.svelte';
 	import Center from '$lib/components/Common/Center.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Drawer from '$lib/components/Common/Drawer.svelte';
 	import Icon from '$lib/components/Common/Icon.svelte';
 	import Loading from '$lib/components/Common/Loading.svelte';
-	import Right from '$lib/components/Common/Right.svelte';
-	import ExperienceCard from '$lib/components/Experience-monument/Cards/experience/ExperienceCardComponent.svelte';
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
-	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
+	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import type { MonumentCard, MonumentMarkerData } from '@app/ts-types';
+	import type { MonumentCard, TMonumentMarkerData } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
 	import Marker from '../Marker.svelte';
-	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
-	import IconImages from '$lib/components/Icons/IconImages.svelte';
-	import Full from '$lib/components/Common/Full.svelte';
-	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 
-	export let monumentMarker: MonumentMarkerData;
+	export let monumentMarkerData: TMonumentMarkerData;
 	export let disableShowingDetails = false;
 
 	export let zoom: number | undefined = undefined;
@@ -30,7 +23,7 @@
 	let monumentCardDataPromise: Promise<{ getMonument: MonumentCard }> | undefined;
 	const getMonumentCard = async () => {
 		detailHidden = false;
-		monumentCardDataPromise = sdk.getMonumentCard({ id: monumentMarker._id });
+		monumentCardDataPromise = sdk.getMonumentCard({ id: monumentMarkerData._id });
 	};
 
 	let className = '';
@@ -69,13 +62,13 @@
 	}}
 	on:click
 	class={twMerge('bg-inherit', className)}
-	location={monument.location}
+	location={monumentMarkerData.location}
 >
-	{#if }
+	{#if monumentMarkerData.usersMonumentCompletion}
 		<Icon class="child:fill-green-400 absolute right-0 top-0 p-[2px]">
 			<IconCheck />
 		</Icon>
 	{/if}
 
-	<Avatar class={zoomClass} src={monument.pictureURL} />
+	<Avatar class={zoomClass} src={monumentMarkerData.pictureURL} />
 </Marker>

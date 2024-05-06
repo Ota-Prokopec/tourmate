@@ -16,13 +16,17 @@ export type Monument = {
 	questionId?: string | null | undefined
 }
 
-export type MonumentDocument = Document<Omit<Monument, 'location'> & LocationForDocument>
+export type TMonumentDocument = Document<Omit<Monument, 'location'> & LocationForDocument>
 
-export type MonumentGraphqlDocument = GraphqlDocument<
+export type TMonumentGraphqlDocument = GraphqlDocument<
 	Omit<Monument, 'location'> & LocationForDocument
 >
 
-export type MonumentDocumentCreate = Omit<Monument, 'topics' | 'location'> &
+export type TMonumentDocumentCreate = Omit<Monument, 'topics' | 'location'> &
 	LocationForDocument & { topics?: Topic[] }
 
-export type MonumentMarkerData = GraphqlDocument<Monument>
+export type TMonumentMarkerData = GraphqlDocument<
+	Monument & {
+		usersMonumentCompletion?: GraphqlDocument<TMonumentCompletion>[] | undefined
+	}
+>

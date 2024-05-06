@@ -3,7 +3,7 @@ import { CollectionName } from './collections'
 
 import type {
 	LocationForNotificationsDocument,
-	MonumentDocument,
+	TMonumentDocument,
 	MonumentLikeDocument,
 	NumberTypeAnswerDocument,
 	PlaceDetailDocument,
@@ -21,7 +21,7 @@ import type {
 const query = {
 	userInfo: Query<UserInfoDocument>(),
 	monumentCompletion: Query<TMonumentCompletionDocument>(),
-	monument: Query<MonumentDocument>(),
+	monument: Query<TMonumentDocument>(),
 	placeDetail: Query<PlaceDetailDocument>(),
 	token: Query<TokenDocument>(),
 	monumentLike: Query<MonumentLikeDocument>(),

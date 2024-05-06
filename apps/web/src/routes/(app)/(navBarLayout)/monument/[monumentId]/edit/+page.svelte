@@ -10,7 +10,7 @@
 	import LL from '$src/i18n/i18n-svelte';
 	import AddQuestionButton from '$src/routes/(app)/(navBarLayout)/addMonument/detail/Components/AddQuestionButton.svelte';
 	import { alert } from '$src/routes/alertStore';
-	import type { MonumentMarkerData, Question } from '@app/ts-types';
+	import type { TMonumentMarkerData, Question } from '@app/ts-types';
 	import { AppwriteException } from 'appwrite';
 	import { Button } from 'flowbite-svelte';
 	import MonumentCreateForm from '../../Components/MonumentCreateForm.svelte';
@@ -32,7 +32,7 @@
 	const question: Question | undefined = data.monument.question ?? undefined;
 	let questionDrawerHidden = true;
 
-	let res: MonumentMarkerData | undefined;
+	let res: TMonumentMarkerData | undefined;
 	let error: AppwriteException;
 	let isLoading = false;
 
@@ -87,7 +87,7 @@
 
 <Map userCenter={data.monument.location} class="h-[100dvh] fixed top-0">
 	{#if res}
-		<MonumentMarker monument={res} />
+		<MonumentMarker monumentMarkerData={res} />
 	{:else}
 		<Marker class="z-50" location={data.monument.location}>
 			<Icon icon="fas fa-map-marker-alt" class="text-4xl" />

@@ -16,7 +16,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
-	import type { Location, MonumentMarkerData } from '@app/ts-types';
+	import type { Location, TMonumentMarkerData } from '@app/ts-types';
 	import { locationQueries } from '@app/utils';
 	import { useQuery } from '@sveltestack/svelte-query';
 	import { SyncLoader } from 'svelte-loading-spinners';
@@ -36,7 +36,7 @@
 	let monumentsLoaded = false;
 	let mapWindowCenter: Location | undefined = undefined;
 
-	let monuments: MonumentMarkerData[] = [];
+	let monuments: TMonumentMarkerData[] = [];
 
 	const loadNewMonuments = async () => {
 		if (!markerLocation) throw new Error('markerLocation is not defined');
@@ -120,7 +120,7 @@
 			</Marker>
 		{/if}
 		{#each monuments as monument}
-			<MonumentMarker {monument} />
+			<MonumentMarker monumentMarkerData={monument} />
 		{/each}
 	</GeocodingMap>
 

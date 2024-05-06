@@ -4,7 +4,7 @@
 	import { sdk } from '$src/graphql/sdk';
 	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
-	import type { Location, MonumentMarkerData } from '@app/ts-types';
+	import type { Location, TMonumentMarkerData } from '@app/ts-types';
 	import { isLocation } from '@app/utils';
 	import * as turf from '@turf/turf';
 	import { distanceTo } from 'geolocation-utils';
@@ -14,7 +14,7 @@
 	export let maxZoom = 16;
 	export let minZoom = 16;
 	let locations: Location[] = [];
-	let monuments: MonumentMarkerData[] = [];
+	let monuments: TMonumentMarkerData[] = [];
 
 	$: if (locations.length >= 2) {
 		renderMonuments(locations);
@@ -91,6 +91,6 @@
 	class="w-full h-full absolute top-0 z-10"
 >
 	{#each monuments as monument}
-		<MonumentMarker {monument} />
+		<MonumentMarker monumentMarkerData={monument} />
 	{/each}
 </MeasureDistancesMap>

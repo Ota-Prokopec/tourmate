@@ -10,7 +10,6 @@
 	import Text from '$lib/components/Common/Text.svelte';
 	import IconHeart from '$lib/components/Icons/IconHeart.svelte';
 	import AvatarImageInput from '$lib/components/ImageInputs/AvatarImageInput.svelte';
-	import ExperiencePaginator from '$lib/components/Paginators/ExperiencePaginator.svelte';
 	import MonumentsPaginator from '$lib/components/Paginators/MonumentsPaginator.svelte';
 	import ToursPaginator from '$lib/components/Paginators/ToursPaginator.svelte';
 	import { sdk } from '$src/graphql/sdk';
@@ -95,9 +94,7 @@
 		<AccountCategoryPicker bind:category />
 
 		<Column class="gap-10 justify-center items-center">
-			{#if category === 'photos'}
-				<ExperiencePaginator cardsLimit={data.cardsLimit} userId={data.usersProfile.userId} />
-			{:else if category === 'monuments'}
+			{#if category === 'monuments'}
 				<MonumentsPaginator userId={data.usersProfile.userId} cardsLimit={data.cardsLimit} />
 			{:else if category === 'tours'}
 				<ToursPaginator userId={data.usersProfile.userId} />
