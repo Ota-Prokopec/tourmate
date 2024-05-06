@@ -1,12 +1,9 @@
 <script lang="ts">
-	import Alert from '$lib/components/Alert/Alert.svelte';
-	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
-	import OwnerOptions from '../OwnerOptions.svelte';
-	import { distanceTo } from 'geolocation-utils';
-	import LL from '$src/i18n/i18n-svelte';
-	import { navigate } from '$lib/utils/navigator';
 	import { goto } from '$app/navigation';
 	import { Queries, collections, user } from '$lib/appwrite/appwrite';
+	import Alert from '$lib/components/Alert/Alert.svelte';
+	import MoreInformationButton from '$lib/components/Buttons/MoreInformationButton.svelte';
+	import SeeOnGoogleMapsButton from '$lib/components/Buttons/SeeOnGoogleMapsButton.svelte';
 	import Card from '$lib/components/Common/Card.svelte';
 	import Column from '$lib/components/Common/Column.svelte';
 	import Columns from '$lib/components/Common/Columns.svelte';
@@ -15,21 +12,23 @@
 	import Right from '$lib/components/Common/Right.svelte';
 	import Row from '$lib/components/Common/Row.svelte';
 	import Text from '$lib/components/Common/Text.svelte';
-	import UserItem from '$lib/components/User/UserItem.svelte';
 	import IconShare from '$lib/components/Icons/IconShare.svelte';
+	import type { LikeSectionState } from '$lib/components/LikeSection/LikeSectionState';
+	import UserItem from '$lib/components/User/UserItem.svelte';
 	import lsStore from '$lib/utils/lsStore';
+	import { navigate } from '$lib/utils/navigator';
 	import { sdk } from '$src/graphql/sdk';
+	import LL from '$src/i18n/i18n-svelte';
 	import { alert } from '$src/routes/alertStore';
 	import type { MonumentCard, SmallMonumentCard } from '@app/ts-types';
 	import { getLocationUrlOfGoogleMaps, normalizeMeters } from '@app/utils';
-	import { Button, Modal } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
+	import { distanceTo } from 'geolocation-utils';
 	import { twMerge } from 'tailwind-merge';
 	import CardImage from '../CardImage.svelte';
+	import OwnerOptions from '../OwnerOptions.svelte';
 	import CardFooter from './MonumentCardFooter.svelte';
 	import CardHeader from './MonumentCardHeader.svelte';
-	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
-	import SeeOnGoogleMapsButton from '$lib/components/Buttons/SeeOnGoogleMapsButton.svelte';
-	import MoreInformationButton from '$lib/components/Buttons/MoreInformationButton.svelte';
 
 	const isMonumentCard = (card: MonumentCard | SmallMonumentCard): card is MonumentCard => {
 		return 'liked' in monument;
@@ -218,16 +217,6 @@
 				</Right>
 				{#if !disableSeeMoreButton}
 					<MoreInformationButton on:click={() => goto(`/monument/${monument._id}`)} />
-				{/if}
-				{#if isMonumentCard(monument)}
-					{#if monument.usersConnectedExperiences.length}
-						<Row class="w-full h-auto justify-end p-2 gap-2">
-							<Text>{$LL.component.MonumentCardComponent.pictureAlreadyTaken()}</Text>
-							<Icon class="child:fill-green-500 child:w-4 child:h-4">
-								<IconCheck />
-							</Icon>
-						</Row>
-					{/if}
 				{/if}
 			</Column>
 		{/if}

@@ -101,21 +101,10 @@ query getTour($tourId: String!) {
 			usersAnswerToQuestion {
 				answeredCorrectly
 			}
-			usersConnectedExperiences {
-				_createdAt
-				_updatedAt
-				_collectionId
-				_id
-				_permissions
-				_databaseId
-				userId
-				pictureUrl
-				location
-				connectedMonumentId
-			}
+
 			totalLikesCount
 		}
-		usersCheckpointsCompletionData {
+		usersTourCheckpointsCompletionData {
 			_createdAt
 			_updatedAt
 			_collectionId

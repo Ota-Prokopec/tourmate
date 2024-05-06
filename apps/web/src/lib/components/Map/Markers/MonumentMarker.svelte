@@ -11,7 +11,7 @@
 	import MonumentCardComponent from '$lib/components/Experience-monument/Cards/monument/MonumentCardComponent.svelte';
 	import IconTimes from '$lib/components/Icons/IconTimes.svelte';
 	import { sdk } from '$src/graphql/sdk';
-	import type { MonumentCardWithConnectedExperiences, MonumentMarkerData } from '@app/ts-types';
+	import type { MonumentCard, MonumentMarkerData } from '@app/ts-types';
 	import { twMerge } from 'tailwind-merge';
 	import Marker from '../Marker.svelte';
 	import MediaQuery from '$lib/components/MediaQueries/MediaQuery.svelte';
@@ -19,22 +19,18 @@
 	import Full from '$lib/components/Common/Full.svelte';
 	import IconCheck from '$lib/components/Icons/IconCheck.svelte';
 
-	export let monument: MonumentMarkerData;
+	export let monumentMarker: MonumentMarkerData;
 	export let disableShowingDetails = false;
-	let userAlreadyHasExperienceConnectedToThisMonument =
-		monument.usersConnectedExperiences.length !== 0;
 
 	export let zoom: number | undefined = undefined;
 	export let detailHidden = true;
 
 	$: zoomClass = zoom && zoom > 18 ? 'w-20 h-20' : 'w-14 h-14';
 
-	let monumentCardDataPromise:
-		| Promise<{ getMonument: MonumentCardWithConnectedExperiences }>
-		| undefined;
+	let monumentCardDataPromise: Promise<{ getMonument: MonumentCard }> | undefined;
 	const getMonumentCard = async () => {
 		detailHidden = false;
-		monumentCardDataPromise = sdk.getMonumentCardWithConnectedExperiences({ id: monument._id });
+		monumentCardDataPromise = sdk.getMonumentCard({ id: monumentMarker._id });
 	};
 
 	let className = '';
@@ -62,21 +58,6 @@
 					size="normal"
 					{monument}
 				/>
-				{#if monument.connectedExperiences.length}
-					<Carousel class="h-min" swiping arrows>
-						{#each monument.connectedExperiences as experienceWithoutConnectedMonument}
-							{@const experience = {
-								...experienceWithoutConnectedMonument,
-								connectedMonument: monument
-							}}
-							<ExperienceCard
-								disableOwnerOptions
-								class="p-0 self-center shadow-none"
-								{experience}
-							/>
-						{/each}
-					</Carousel>
-				{/if}
 			</Column>
 		{/await}
 	{/if}
@@ -90,7 +71,7 @@
 	class={twMerge('bg-inherit', className)}
 	location={monument.location}
 >
-	{#if userAlreadyHasExperienceConnectedToThisMonument}
+	{#if }
 		<Icon class="child:fill-green-400 absolute right-0 top-0 p-[2px]">
 			<IconCheck />
 		</Icon>

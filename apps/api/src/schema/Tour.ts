@@ -45,21 +45,21 @@ export default objectType({
 				return res
 			},
 		})
-		t.field('usersCheckpointsCompletionData', {
-			type: list('CheckpointCompletion'),
+		t.field('usersTourCheckpointsCompletionData', {
+			type: list('TourCheckpointCompletion'),
 			resolve: async (source, args, ctx) => {
 				const { collections } = ctx.appwrite
 
 				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authenticated')
 
 				const queries = [
-					Queries.checkpointCompletion.equal('monumentId', source.monumentIds), //monumentId = monument.id
-					Queries.checkpointCompletion.equal('tourId', source._id), //tourId = tour.id
-					Queries.checkpointCompletion.equal('userId', ctx.user.$id), //userId = user.id
+					Queries.tourCheckpointCompletion.equal('monumentId', source.monumentIds), //monumentId = monument.id
+					Queries.tourCheckpointCompletion.equal('tourId', source._id), //tourId = tour.id
+					Queries.tourCheckpointCompletion.equal('userId', ctx.user.$id), //userId = user.id
 				]
 
 				const checkpointsCompletions =
-					await collections.checkpointCompletion.listDocuments(queries)
+					await collections.tourCheckpointCompletion.listDocuments(queries)
 
 				return checkpointsCompletions.documents
 			},

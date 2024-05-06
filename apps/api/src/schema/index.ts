@@ -4,14 +4,10 @@
 
 export { default as Account } from './Account';
 export * from './Account';
-export { default as CheckpointCompletion } from './CheckpointCompletion';
-export * from './CheckpointCompletion';
-export { default as Experience } from './Experience';
-export * from './Experience';
-export { default as ExperienceLike } from './ExperienceLike';
-export * from './ExperienceLike';
 export { default as Monument } from './Monument';
 export * from './Monument';
+export { default as MonumentCompletion } from './MonumentCompletion';
+export * from './MonumentCompletion';
 export { default as MonumentLike } from './MonumentLike';
 export * from './MonumentLike';
 export { default as PlaceDetail } from './PlaceDetail';
@@ -24,6 +20,8 @@ export { default as SystemHealthStatus } from './SystemHealthStatus';
 export * from './SystemHealthStatus';
 export { default as Tour } from './Tour';
 export * from './Tour';
+export { default as TourCheckpointCompletion } from './TourCheckpointCompletion';
+export * from './TourCheckpointCompletion';
 export { default as User } from './User';
 export * from './User';
 export { default as UsersAnswerToQuestion } from './UsersAnswerToQuestion';

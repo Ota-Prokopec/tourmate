@@ -59,7 +59,7 @@ export default queryField('getListOfMonuments', {
 		if (offset) queries.push(Queries.monument.offset(offset))
 
 		//desc sorting
-		queries.push(Queries.experience.orderDesc('$createdAt'))
+		queries.push(Queries.monument.orderDesc('$createdAt'))
 
 		return fromLatDocumentLongIntoLocationDocument(
 			...(await collections.monument.listDocuments(queries)).documents,

@@ -34,5 +34,6 @@ export default <DatabaseType extends Record<string, any>>() => {
 		select: (attributes: Key[]) => Query.select(attributes.map((att) => att.toString())),
 		startsWith: <TKey extends Key>(attribute: Key, value: DatabaseType[TKey]) =>
 			Query.startsWith(attribute.toString(), value),
+		noLimit: () => Query.limit(999999999999999999999999999999999999999999),
 	}
 }

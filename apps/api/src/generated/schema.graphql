@@ -24,18 +24,6 @@ type Account {
 
 scalar AnswerType
 
-type CheckpointCompletion {
-  _collectionId: String!
-  _createdAt: String!
-  _databaseId: String!
-  _id: String!
-  _permissions: [String!]!
-  _updatedAt: String!
-  monumentId: String!
-  tourId: String!
-  userId: String!
-}
-
 scalar ColorTheme
 
 input CreateAccountInput {
@@ -43,10 +31,8 @@ input CreateAccountInput {
   username: String!
 }
 
-input CreateExperienceInput {
-  connnectedMonumentId: String!
-  location: Location!
-  picture: String!
+input CreateMonumentCompletionInput {
+  monumentId: String!
 }
 
 input CreateMonumentInput {
@@ -63,36 +49,6 @@ input CreateMonumentInput {
 input CreateTourInput {
   monumentIds: [String!]!
   tourName: String!
-}
-
-type Experience {
-  _collectionId: String!
-  _createdAt: String!
-  _databaseId: String!
-  _id: String!
-  _permissions: [String!]!
-  _updatedAt: String!
-  connectedMonument: Monument
-  connectedMonumentId: String!
-  liked: ExperienceLike
-  likes: [ExperienceLike!]!
-  location: Location!
-  pictureUrl: String!
-  totalLikesCount: Int!
-  user: User!
-  userId: String!
-}
-
-type ExperienceLike {
-  _collectionId: String!
-  _createdAt: String!
-  _databaseId: String!
-  _id: String!
-  _permissions: [String!]!
-  _updatedAt: String!
-  experienceId: String!
-  user: User!
-  userId: String!
 }
 
 scalar Language
@@ -112,12 +68,11 @@ type Monument {
   _permissions: [String!]!
   _updatedAt: String!
   about: String
-  connectedExperiences: [Experience!]!
   liked: MonumentLike
   likes: [MonumentLike!]!
   location: Location!
+  monumentCompletions: [MonumentCompletion!]!
   name: String!
-  nearExperiences: [Experience!]!
 
   """This it an URL not id of picture"""
   pictureURL: String!
@@ -131,7 +86,19 @@ type Monument {
   user: User!
   userId: String!
   usersAnswerToQuestion: UsersAnswerToQuestion
-  usersConnectedExperiences: [Experience!]!
+}
+
+type MonumentCompletion {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  monument: Monument
+  monumentId: String!
+  user: User!
+  userId: String!
 }
 
 input MonumentInputByName {
@@ -154,13 +121,11 @@ type MonumentLike {
 
 type Mutation {
   answerQuestion(answer: StringOrNumber!, monumentId: String!): UsersAnswerToQuestion!
-  createCheckpointCompletion(monumentId: String!, tourId: String!): CheckpointCompletion!
-  createExperience(input: CreateExperienceInput!): Experience!
   createMonument(input: CreateMonumentInput!): Monument!
+  createMonumentCompletion(input: CreateMonumentCompletionInput!): MonumentCompletion!
   createTour(input: CreateTourInput!): Tour!
-  deleteExperience(experienceId: String!): Boolean!
+  createTourCheckpointCompletion(monumentId: String!, tourId: String!): TourCheckpointCompletion!
   deleteMonument(monumentId: String!): Boolean!
-  likeExperience(experienceId: String!): ExperienceLike!
   likeMonument(monumentId: String!): MonumentLike!
 }
 
@@ -178,8 +143,6 @@ type Query {
   createAccount(language: Language!, myId: String!, username: String!): Account!
   createAnonymousSession: Session!
   getAccount: Account!
-  getExperience(id: String!): Experience!
-  getListOfExperiences(limit: Int, location: LocationInput, offset: Int, userId: String): [Experience!]!
   getListOfMonumentLikeDocuments(limit: Int = 50, offset: Int, userId: String): [MonumentLike!]!
   getListOfMonuments(limit: Int = 50, location: LocationInput, name: String, offset: Int, topics: [Topic!], transports: [Transport!], userId: String): [Monument!]!
   getListOfTours(limit: Int, offset: Int, tourName: String, userId: String): [Tour!]!
@@ -239,7 +202,19 @@ type Tour {
   monuments: [Monument!]!
   tourName: String!
   userId: String!
-  usersCheckpointsCompletionData: [CheckpointCompletion!]!
+  usersTourCheckpointsCompletionData: [TourCheckpointCompletion!]!
+}
+
+type TourCheckpointCompletion {
+  _collectionId: String!
+  _createdAt: String!
+  _databaseId: String!
+  _id: String!
+  _permissions: [String!]!
+  _updatedAt: String!
+  monumentId: String!
+  tourId: String!
+  userId: String!
 }
 
 scalar Transport
@@ -256,7 +231,6 @@ type User {
   _id: String!
   _permissions: [String!]!
   _updatedAt: String!
-  experiences: [Experience!]!
   monuments: [Monument!]!
   myId: String!
 

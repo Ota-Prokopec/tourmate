@@ -1,7 +1,7 @@
 import { objectType } from 'nexus'
 
 export default objectType({
-	name: 'CheckpointCompletion',
+	name: 'TourCheckpointCompletion',
 	definition: (t) => {
 		t.string('_createdAt')
 		t.string('_updatedAt')

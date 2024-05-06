@@ -1,0 +1,12 @@
+mutation createMonumentCompletion($input: CreateMonumentCompletionInput!) {
+	createMonumentCompletion(input: $input) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		monumentId
+	}
+}

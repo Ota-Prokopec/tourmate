@@ -33,7 +33,6 @@ query getListOfLikedMonumentCards($offset: Int, $limit: Int, $userId: String) {
 				userId
 				myId
 				username
-
 				profilePictureURL
 			}
 			placeDetail {
@@ -87,18 +86,6 @@ query getListOfLikedMonumentCards($offset: Int, $limit: Int, $userId: String) {
 			}
 			usersAnswerToQuestion {
 				answeredCorrectly
-			}
-			usersConnectedExperiences {
-				_createdAt
-				_updatedAt
-				_collectionId
-				_id
-				_permissions
-				_databaseId
-				userId
-				pictureUrl
-				location
-				connectedMonumentId
 			}
 			totalLikesCount
 		}

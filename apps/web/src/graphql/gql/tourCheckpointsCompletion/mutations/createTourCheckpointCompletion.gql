@@ -1,0 +1,13 @@
+mutation createTourCheckpointCompletion($monumentId: String!, $tourId: String!) {
+	createTourCheckpointCompletion(monumentId: $monumentId, tourId: $tourId) {
+		_createdAt
+		_updatedAt
+		_collectionId
+		_id
+		_permissions
+		_databaseId
+		userId
+		tourId
+		monumentId
+	}
+}

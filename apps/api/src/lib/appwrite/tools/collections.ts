@@ -3,10 +3,6 @@ import { Types } from '@app/appwrite-ssr-graphql'
 import type {
 	LocationForNotificationsGraphqlDocument,
 	LocationForNotificationsDocumentCreate,
-	ExperienceDocumentCreate,
-	ExperienceGraphqlDocument,
-	ExperienceLikeDocumentCreate,
-	ExperienceLikeGraphqlDocument,
 	MonumentDocumentCreate,
 	MonumentGraphqlDocument,
 	MonumentLikeDocumentCreate,
@@ -29,9 +25,10 @@ import type {
 	UsersAnswerGraphqlDocument,
 	TourGraphqlDocument,
 	TourDocumentCreate,
-	TCheckpointCompletionDocument,
-	TCheckpointCompletionDocumentCreate,
-	TCheckpointCompletionGraphqlDocument,
+	TMonumentCompletionGraphqlDocument,
+	TMonumentCompletionDocumentCreate,
+	TTourCheckpointCompletionGraphqlDocument,
+	TTourCheckpointCompletionDocumentCreate,
 } from '@app/ts-types'
 
 export type Collections = ReturnType<typeof collectionsAdmin>
@@ -48,10 +45,10 @@ export const collectionsClient = (
 			'experiences',
 			'userInfo',
 		),
-		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>(
-			'experiences',
-			'experiences',
-		),
+		monumentCompletion: new Collection<
+			TMonumentCompletionGraphqlDocument,
+			TMonumentCompletionDocumentCreate
+		>('experiences', 'monumentCompletions'),
 		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>(
 			'experiences',
 			'monuments',
@@ -68,10 +65,7 @@ export const collectionsClient = (
 			'experiences',
 			'monument-likes',
 		),
-		experienceLike: new Collection<
-			ExperienceLikeGraphqlDocument,
-			ExperienceLikeDocumentCreate
-		>('experiences', 'experience-likes'),
+
 		answerTypeText: new Collection<
 			TextTypeAnswerGraphqlDocument,
 			TextTypeAnswerDocumentCreate
@@ -98,9 +92,9 @@ export const collectionsClient = (
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
 		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
-		checkpointCompletion: new Collection<
-			TCheckpointCompletionGraphqlDocument,
-			TCheckpointCompletionDocumentCreate
+		tourCheckpointCompletion: new Collection<
+			TTourCheckpointCompletionGraphqlDocument,
+			TTourCheckpointCompletionDocumentCreate
 		>('experiences', 'checkpointsCompletion'),
 	}
 }
@@ -113,10 +107,10 @@ export const collectionsAdmin = (
 			'experiences',
 			'userInfo',
 		),
-		experience: new Collection<ExperienceGraphqlDocument, ExperienceDocumentCreate>(
-			'experiences',
-			'experiences',
-		),
+		monumentCompletion: new Collection<
+			TMonumentCompletionGraphqlDocument,
+			TMonumentCompletionDocumentCreate
+		>('experiences', 'monumentCompletions'),
 		monument: new Collection<MonumentGraphqlDocument, MonumentDocumentCreate>(
 			'experiences',
 			'monuments',
@@ -133,10 +127,7 @@ export const collectionsAdmin = (
 			'experiences',
 			'monument-likes',
 		),
-		experienceLike: new Collection<
-			ExperienceLikeGraphqlDocument,
-			ExperienceLikeDocumentCreate
-		>('experiences', 'experience-likes'),
+
 		answerTypeText: new Collection<
 			TextTypeAnswerGraphqlDocument,
 			TextTypeAnswerDocumentCreate
@@ -149,6 +140,7 @@ export const collectionsAdmin = (
 			RadioTypeAnswerGraphqlDocument,
 			RadioTypeAnswerDocumentCreate
 		>('experiences', 'radioAnswers'),
+
 		question: new Collection<QuestionGraphqlDocument, QuestionDocumentCreate>(
 			'experiences',
 			'question',
@@ -162,9 +154,9 @@ export const collectionsAdmin = (
 			LocationForNotificationsDocumentCreate
 		>('experiences', 'locationForNotifications'),
 		tour: new Collection<TourGraphqlDocument, TourDocumentCreate>('experiences', 'tours'),
-		checkpointCompletion: new Collection<
-			TCheckpointCompletionGraphqlDocument,
-			TCheckpointCompletionDocumentCreate
+		tourCheckpointCompletion: new Collection<
+			TTourCheckpointCompletionGraphqlDocument,
+			TTourCheckpointCompletionDocumentCreate
 		>('experiences', 'checkpointsCompletion'),
 	}
 }

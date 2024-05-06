@@ -1,12 +1,9 @@
 import { appwriteGraphqlKeys } from '@app/appwrite-ssr-graphql'
 import type { Answer } from '@app/ts-types'
-import { isLocation, locationQueries } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
 import lodash from 'lodash'
 import { list, nullable, objectType } from 'nexus'
-import { defaultRangeMeters } from '../arguments/LocationInput'
 import appwrite, { Queries } from '../lib/appwrite/appwrite'
-import { fromLatDocumentLongIntoLocationDocument } from '../lib/database/experiences-monuments'
 import { getUser } from '../lib/users/getUser'
 
 export default objectType({
@@ -44,36 +41,19 @@ export default objectType({
 				return await getUser(userId, collections)
 			},
 		}),
-			t.field('nearExperiences', {
-				type: list('Experience'),
-				resolve: async (source, args, ctx, info) => {
+			t.field('placeDetail', {
+				type: 'PlaceDetail',
+				resolve: async (source, args, ctx) => {
 					const { collections } = ctx.appwrite
-					if (!isLocation(source.location)) throw new Error('location is not valid')
 
-					const queries = [
-						...locationQueries(
-							source.location,
-							ctx.user?.prefs.mapRange ?? defaultRangeMeters,
-						),
-					]
-					return fromLatDocumentLongIntoLocationDocument(
-						...(await collections.experience.listDocuments(queries)).documents,
+					const placeDetail = await collections.placeDetail.getDocument(
+						source.placeDetailId,
 					)
+
+					if (!placeDetail) throw new Error('placeDetail was not found')
+					return placeDetail
 				},
 			})
-		t.field('placeDetail', {
-			type: 'PlaceDetail',
-			resolve: async (source, args, ctx) => {
-				const { collections } = ctx.appwrite
-
-				const placeDetail = await collections.placeDetail.getDocument(
-					source.placeDetailId,
-				)
-
-				if (!placeDetail) throw new Error('placeDetail was not found')
-				return placeDetail
-			},
-		})
 		t.field('likes', {
 			type: list('MonumentLike'),
 			resolve: async (source, args, ctx) => {
@@ -120,27 +100,6 @@ export default objectType({
 				]
 				const likeDoc = await collections.monumentLike.getDocument(queries)
 				return likeDoc
-			},
-		})
-		t.field('connectedExperiences', {
-			type: list('Experience'),
-			resolve: async (source, args, ctx) => {
-				if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
-				const { collections, Queries } = ctx.appwrite
-				const queries = [Queries.experience.equal('connectedMonumentId', source._id)]
-				const expDocs = (await collections.experience.listDocuments(queries)).documents
-				return fromLatDocumentLongIntoLocationDocument(...expDocs)
-			},
-		})
-		t.field('usersConnectedExperiences', {
-			type: list('Experience'),
-			resolve: async (source, args, ctx) => {
-				const { collections, Queries } = ctx.appwrite
-				const queries = [Queries.experience.equal('connectedMonumentId', source._id)]
-				if (ctx.user) queries.push(Queries.experience.equal('userId', ctx.user.$id))
-
-				const expDocs = (await collections.experience.listDocuments(queries)).documents
-				return fromLatDocumentLongIntoLocationDocument(...expDocs)
 			},
 		})
 
@@ -193,6 +152,24 @@ export default objectType({
 				if (!answerDocument) return null
 
 				return { answeredCorrectly: answerDocument.answeredCorrectly }
+			},
+		})
+		t.field('monumentCompletions', {
+			type: list('MonumentCompletion'),
+			resolve: async (source, args, ctx) => {
+				if (!ctx.isAuthed(ctx.user)) throw new ApolloError('User is not authed', '401')
+				const { collections } = ctx.appwrite
+
+				const queries = [
+					Queries.monumentCompletion.equal('monumentId', source._id),
+					Queries.monumentCompletion.noLimit(),
+				]
+
+				const completionsDocuments = await collections.monumentCompletion.listDocuments(
+					queries,
+				)
+
+				return completionsDocuments.documents
 			},
 		})
 	},

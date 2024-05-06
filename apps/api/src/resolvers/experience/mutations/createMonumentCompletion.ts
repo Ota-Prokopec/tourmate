@@ -1,21 +1,16 @@
-import { arg, mutationField } from 'nexus'
-import { isBase64 } from '@app/utils'
 import { ApolloError } from 'apollo-server-express'
-import { fromLatDocumentLongIntoLocationDocument } from '../../../lib/database/experiences-monuments'
-import buckets from '@app/cloudinary-server'
+import { arg, mutationField } from 'nexus'
 import { Queries } from '../../../lib/appwrite/appwrite'
 
-export default mutationField('createExperience', {
-	args: { input: arg({ type: 'CreateExperienceInput' }) },
-	type: 'Experience',
+export default mutationField('createMonumentCompletion', {
+	args: { input: 'CreateMonumentCompletionInput' },
+	type: 'MonumentCompletion',
 	resolve: async (s, args, ctx) => {
 		const { collections } = ctx.appwrite
 
 		if (!ctx.isAuthed(ctx.user)) throw new Error('user is not authed')
 
-		const monument = await collections.monument.getDocument(
-			args.input.connnectedMonumentId,
-		)
+		const monument = await collections.monument.getDocument(args.input.monumentId)
 		if (!monument) throw new ApolloError('No monument was found', '404')
 
 		//checking: question and answer
@@ -35,17 +30,12 @@ export default mutationField('createExperience', {
 				)
 		}
 
-		const picture = await buckets.experiences.uploadBase64(args.input.picture)
-
-		const document = await collections.experience.createDocument({
-			connectedMonumentId: args.input.connnectedMonumentId,
+		const document = await collections.monumentCompletion.createDocument({
+			monumentId: args.input.monumentId,
 			userId: ctx.user.$id,
-			pictureUrl: picture?.secure_url,
-			latitude: Math.round(args.input.location[0]),
-			longitude: Math.round(args.input.location[1]),
 		})
 
-		const res = fromLatDocumentLongIntoLocationDocument(document)[0]
+		const res = document
 		if (!res) throw new ApolloError('creating experience was no successful')
 		return res
 	},
