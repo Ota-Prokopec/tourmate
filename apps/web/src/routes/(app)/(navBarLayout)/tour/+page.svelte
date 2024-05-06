@@ -5,8 +5,6 @@
 	import ToursSearch from '$lib/components/Search/ToursSearch.svelte';
 	import type { PageData } from './$types';
 
-	export let data: PageData;
-
 	let searchingText: string = '';
 	let isLoading = false;
 </script>

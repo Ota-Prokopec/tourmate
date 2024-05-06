@@ -1,17 +1,13 @@
 import { Types } from '@app/appwrite-client';
 import {
-	ExperienceDocument,
-	ExperienceDocumentCreate,
-	ExperienceLikeDocument,
-	ExperienceLikeDocumentCreate,
 	LocationForNotificationsDocument,
 	LocationForNotificationsDocumentCreate,
-	MonumentDocument,
-	MonumentDocumentCreate,
 	MonumentLikeDocument,
 	MonumentLikeDocumentCreate,
 	PlaceDetailDocument,
 	PlaceDetailDocumentCreate,
+	TMonumentDocument,
+	TMonumentDocumentCreate,
 	TokenDocument,
 	TokenDocumentCreate,
 	UserInfoDocument,
@@ -21,11 +17,11 @@ import {
 export default (Collection: Types.Appwrite['Collection']) => {
 	return {
 		userInfo: new Collection<UserInfoDocument, UserInfoDocumentCreate>('experiences', 'userInfo'),
-		experience: new Collection<ExperienceDocument, ExperienceDocumentCreate>(
+
+		monument: new Collection<TMonumentDocument, TMonumentDocumentCreate>(
 			'experiences',
-			'experiences'
+			'monuments'
 		),
-		monument: new Collection<MonumentDocument, MonumentDocumentCreate>('experiences', 'monuments'),
 		token: new Collection<TokenDocument, TokenDocumentCreate>('experiences', 'tokens'),
 		placeDetail: new Collection<PlaceDetailDocument, PlaceDetailDocumentCreate>(
 			'experiences',
@@ -35,10 +31,7 @@ export default (Collection: Types.Appwrite['Collection']) => {
 			'experiences',
 			'monument-likes'
 		),
-		experienceLike: new Collection<ExperienceLikeDocument, ExperienceLikeDocumentCreate>(
-			'experiences',
-			'experience-likes'
-		),
+
 		locationForNotification: new Collection<
 			LocationForNotificationsDocument,
 			LocationForNotificationsDocumentCreate

@@ -19,7 +19,6 @@
 	export let data: PageData;
 
 	const monument = data.monument;
-	const experiences = monument.connectedExperiences;
 
 	let onlyMap = false;
 	let distanceInMeters: number | undefined;

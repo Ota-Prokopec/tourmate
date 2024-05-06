@@ -9,7 +9,6 @@
 	export let category: TAccountCategory = 'monuments';
 
 	const categories: { title: ''; key: TAccountCategory }[] = [
-		{ title: '', key: 'photos' },
 		{ title: '', key: 'monuments' },
 		{ title: '', key: 'tours' }
 	] as const;
@@ -23,9 +22,7 @@
 	bind:chosenCategory={category}
 >
 	<Icon class="child:!fill-white child:w-8 child:h-8">
-		{#if key === 'photos'}
-			<IconImages />
-		{:else if key === 'monuments'}
+		{#if key === 'monuments'}
 			<IconLocation />
 		{:else if key === 'tours'}
 			<IconRoute />
